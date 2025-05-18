@@ -10,7 +10,7 @@
     
 </head>
 <body>
-
+<div class="menu-overlay"></div>
 <header class="header">
     <div class="logo">
         <img src="img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
@@ -18,47 +18,151 @@
     </div>
     <div class="tagline">Keeping People Warm & Connected</div>
     <div class="right-header-items">
-        <!-- 9-dots menu -->
-        <div class="dots-menu" onclick="toggleMenu()">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-        </div>
+        <!-- Hamburger Menu Button -->
+        <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
         
-        <!-- Grid Menu (Hidden by default) -->
-        <nav id="nav-menu" class="nav-menu hidden">
-            <div class="grid-menu">
-                <a href="https://myboiler.com/advice-and-info/" target="page-content" class="grid-item">
-                    <svg class="grid-icon" viewBox="0 0 24 24">
-                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-                    </svg>
-                    <span>Advice</span>
-                </a>
-                <a href="https://myboiler.com/toolbox/" target="page-content" class="grid-item">
-                    <svg class="grid-icon" viewBox="0 0 24 24">
-                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-                    </svg>
-                    <span>Toolbox</span>
-                </a>
-                <a href="https://myboiler.com/calculators/" target="page-content" class="grid-item">
-                    <svg class="grid-icon" viewBox="0 0 24 24">
-                        <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM11 7h2v2h-2V7zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z"/>
-                    </svg>
-                    <span>Calculators</span>
-                </a>
-                <a href="https://boilermanuals.com" target="page-content" class="grid-item">
-                    <svg class="grid-icon" viewBox="0 0 24 24">
+        <!-- Horizontal Navigation Menu -->
+        <nav id="nav-menu" class="nav-menu">
+            <ul class="nav-list">
+                <li class="nav-item nav-item-has-dropdown">
+                    <div class="nav-dropdown-label">
+                        <svg class="nav-icon" viewBox="0 0 24 24">
+                            <path d="M16.5 9.5c0-2.485-2.015-4.5-4.5-4.5s-4.5 2.015-4.5 4.5c0 2.485 2.015 4.5 4.5 4.5s4.5-2.015 4.5-4.5zm-4.5 6c-2.485 0-7.5 1.243-7.5 3.75v1.25h15v-1.25c0-2.507-5.015-3.75-7.5-3.75z"/>
+                        </svg>
+                        <span>Advice</span>
+                    </div>
+                    <div class="mega-menu">
+                        <div class="mega-menu-column">
+                            <h4>BOILERS</h4>
+                            <a href="#">Money and Energy Saving</a>
+                            <a href="#">Boiler Pressure</a>
+                            <a href="#">Boiler Service</a>
+                            <a href="#">Boiler Types</a>
+                            <a href="#">Boiler Energy Efficiency</a>
+                            <a href="#">Installation Efficiency</a>
+                            <a href="#">Open Therm & Modulating Boilers</a>
+                            <a href="#" style="margin-left: 16px;">OpenTherm Capable Boilers</a>
+                            <a href="#" style="margin-left: 16px;">OpenTherm Controls</a>
+                            <a href="#" style="margin-left: 16px;">Modulating Boilers & Smart Controls</a>
+                            <a href="#" style="margin-left: 16px;">Vaillant Boiler and OpenTherm</a>
+                            <a href="#" style="margin-left: 16px;">Worcester Bosch and OpenTherm</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>HEAT PUMPS</h4>
+                            <a href="#">Heat Pumps</a>
+                            <a href="#">Retrofit for an existing Hot Water cylinder</a>
+                            <a href="#">Air Source Heat Pumps</a>
+                            <a href="#">CO2 Heat Pumps</a>
+                            <a href="#">Why heat pumps work well with underfloor heating?</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4><svg class="nav-icon" viewBox="0 0 24 24" style="vertical-align:middle;"><path d="M22 19.59 19.59 22 12 14.41 4.41 22 2 19.59 9.59 12 2 4.41 4.41 2 12 9.59 19.59 2 22 4.41 14.41 12z"/></svg> FAULT CODES</h4>
+                            <a href="#">Glow Worm Fault Codes</a>
+                            <a href="#">Intergas Fault Codes</a>
+                            <a href="#">Potterton Fault Codes</a>
+                            <a href="#">Vaillant Fault Codes</a>
+                            <a href="#">Worcester Bosch Fault Codes</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>MISCELLANEOUS</h4>
+                            <a href="#">Flow Temperature and Power Output relationship</a>
+                            <a href="#">solar thermal</a>
+                            <a href="#">solar thermal service</a>
+                            <a href="#">S Plan & S Plan Plus</a>
+                            <a href="#">Radiators</a>
+                            <a href="#">Fixed price repairs</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item nav-item-has-dropdown">
+                    <div class="nav-dropdown-label">
+                        <svg class="nav-icon" viewBox="0 0 24 24">
+                            <path d="M20.285 2.859l.856.857-17.426 17.426-.857-.857zm-2.285 2.285l-1.428 1.428 2.857 2.857 1.428-1.428zm-2.857 2.857l-1.428 1.428 2.857 2.857 1.428-1.428zm-2.857 2.857l-1.428 1.428 2.857 2.857 1.428-1.428zm-2.857 2.857l-1.428 1.428 2.857 2.857 1.428-1.428zm-2.857 2.857l-1.428 1.428 2.857 2.857 1.428-1.428z"/>
+                        </svg>
+                        <span>Toolbox</span>
+                    </div>
+                    <div class="mega-menu">
+                        <div class="mega-menu-column">
+                            <h4>VAILLANT</h4>
+                            <a href="#">Vaillant P Test Program mode</a>
+                            <a href="#">Vaillant Ecotec Emissions Table</a>
+                            <a href="#">Vaillant Ecotec Boiler Service - How To</a>
+                            <a href="#">Vaillant Diagnostic S and D Codes</a>
+                            <a href="#">Vaillant FGA Tool</a>
+                            <a href="#">Vaillant Fault Codes</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>WORCESTER BOSCH</h4>
+                            <a href="#">Worcester Bosch FGA Tool</a>
+                            <a href="#">Worcester Bosch Fault Codes</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>OTHER BRANDS</h4>
+                            <a href="#">Intergas FGA Tool</a>
+                            <a href="#">Intergas Boiler Service - How To</a>
+                            <a href="#">Intergas Fault Codes</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>MISC</h4>
+                            <a href="#">Fault Codes</a>
+                            <a href="#">Training</a>
+                            <a href="#">GB Gas - Online</a>
+                            <a href="#">Boiler Maximum and Minimum output mode videos</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item nav-item-has-dropdown">
+                    <div class="nav-dropdown-label">
+                        <svg class="nav-icon" viewBox="0 0 24 24">
+                            <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM11 7h2v2h-2V7zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z"/>
+                        </svg>
+                        <span>Calculators</span>
+                        <button class="dropdown-toggle" aria-label="Expand submenu" type="button">
+                            <span class="dropdown-arrow">&#9654;</span>
+                        </button>
+                    </div>
+                    <div class="mega-menu">
+                        <div class="mega-menu-column">
+                            <h4>HEATING DESIGN</h4>
+                            <a href="#">Air Change Rates (ACH)</a>
+                            <a href="#">Boiler Consumption</a>
+                            <a href="#">Heat Source and Heating System Design</a>
+                            <a href="#">Heating System Water Content Calculator</a>
+                            <a href="#">Hot Water Recovery Time</a>
+                            <a href="#">Pipe Size Calculator</a>
+                            <a href="#">Radiator Correction Factor Tool</a>
+                            <a href="#">Volume Flow Rate Q</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>CONVERSION CALCULATORS</h4>
+                            <a href="#">Heat Output (KW) to Flow Rate (LPS/LPM)</a>
+                            <a href="#">Flow Rate(LPM) to Heat Output (KW)</a>
+                            <a href="#">Flow Rate(LPM) to Energy used (kWh) Calculator</a>
+                            <a href="#">BTU to Watts</a>
+                            <a href="#">Radiator New Output</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>GAS</h4>
+                            <a href="#">Gas Combustion Ratio</a>
+                            <a href="#">Gas Rate Calculator</a>
+                            <a href="#">Gas Volume (M^3) to kWh Calculator</a>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>BUFFERS</h4>
+                            <a href="#">Buffer Minimum Volume Calculation</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="https://boilermanuals.com" target="page-content">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
                         <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM11 7h2v2h-2V7zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z"/>
                     </svg>
                     <span>Manuals</span>
-                </a>
-            </div>
+                </a></li>
+            </ul>
         </nav>
     </div>
 </header>
@@ -282,30 +386,76 @@
     <script>
 		function toggleMenu() {
 			const navMenu = document.getElementById('nav-menu');
-			navMenu.classList.toggle('hidden');
+			const overlay = document.querySelector('.menu-overlay');
+			const hamburger = document.querySelector('.hamburger-menu');
+			navMenu.classList.toggle('active');
+			overlay.classList.toggle('active');
+			hamburger.classList.toggle('open');
 		}
 		
 		document.addEventListener('DOMContentLoaded', () => {
 			const navMenu = document.getElementById('nav-menu');
-			const dotsMenu = document.querySelector('.dots-menu');
-		
+			const hamburgerMenu = document.querySelector('.hamburger-menu');
+
+            // Mobile: toggle mega menu with arrow
+            document.querySelectorAll('.nav-dropdown-label').forEach(label => {
+                label.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        const parent = label.closest('.nav-item-has-dropdown');
+                        parent.classList.toggle('active');
+                    }
+                });
+            });
+
+            // Mega menu hover delay for desktop
+            let megaMenuTimeout;
+            const navDropdown = document.querySelector('.nav-item-has-dropdown');
+            const megaMenu = navDropdown ? navDropdown.querySelector('.mega-menu') : null;
+            if (navDropdown && megaMenu) {
+                navDropdown.addEventListener('mouseenter', () => {
+                    if (window.innerWidth >= 769) {
+                        clearTimeout(megaMenuTimeout);
+                        megaMenu.style.display = 'flex';
+                    }
+                });
+                navDropdown.addEventListener('mouseleave', () => {
+                    if (window.innerWidth >= 769) {
+                        megaMenuTimeout = setTimeout(() => {
+                            megaMenu.style.display = 'none';
+                        }, 220);
+                    }
+                });
+                megaMenu.addEventListener('mouseenter', () => {
+                    if (window.innerWidth >= 769) {
+                        clearTimeout(megaMenuTimeout);
+                        megaMenu.style.display = 'flex';
+                    }
+                });
+                megaMenu.addEventListener('mouseleave', () => {
+                    if (window.innerWidth >= 769) {
+                        megaMenuTimeout = setTimeout(() => {
+                            megaMenu.style.display = 'none';
+                        }, 220);
+                    }
+                });
+            }
+
 			// Close menu when clicking a menu item
-			document.querySelectorAll('.grid-menu a').forEach(link => {
+			document.querySelectorAll('.nav-list a').forEach(link => {
 				link.addEventListener('click', () => {
-					navMenu.classList.add('hidden'); // Close the menu
+					navMenu.classList.remove('active');
 					// Update URL hash
 					const href = link.getAttribute('href').replace('pages/', '').replace('.html', '');
 					window.location.hash = href;
 				});
 			});
 		
-		  // Close menu when clicking anywhere outside the menu or toggle button
+			// Close menu when clicking anywhere outside the menu or toggle button
 			document.addEventListener('click', (e) => {
-				// Only close if the menu is open (not hidden)
-				if (!navMenu.classList.contains('hidden')) {
-					// Check if the click is outside navMenu and dotsMenu
-					if (!navMenu.contains(e.target) && !dotsMenu.contains(e.target)) {
-						navMenu.classList.add('hidden');
+				if (navMenu.classList.contains('active')) {
+					if (!navMenu.contains(e.target) && !hamburgerMenu.contains(e.target)) {
+						navMenu.classList.remove('active');
 					}
 				}
 			});
@@ -318,12 +468,18 @@
 					document.getElementById('page-content').src = page;
 				}
 			});
+
+            document.querySelector('.menu-overlay').addEventListener('click', () => {
+                document.getElementById('nav-menu').classList.remove('active');
+                document.querySelector('.menu-overlay').classList.remove('active');
+                document.querySelector('.hamburger-menu').classList.remove('open');
+            });
 		});
 		
 		document.addEventListener('click', function(e) {
-		  if (e.target.tagName === 'A') {
-  		  window.scrollTo({ top: 0, behavior: 'smooth' });
-  			}
+			if (e.target.tagName === 'A') {
+				window.scrollTo({ top: 0, behavior: 'smooth' });
+			}
 		});
 
     </script>

@@ -60,7 +60,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			padding: 10px 20px;
+			padding: 24px 20px;
 		}
 		/* 
 		.logo img {
@@ -72,38 +72,138 @@
 			color: #555;
 		}
 		
-		/* 9-Dots Menu */
-		.dots-menu {
-			display: grid;
-			grid-template-columns: repeat(3, 6px);
-			gap: 4px;
+		/* Navigation Menu Styles */
+		.hamburger-menu {
+			display: none;
+			background: none;
+			border: none;
 			cursor: pointer;
-			z-index:10000;
+			padding: 10px;
+			z-index: 10000;
 		}
-		
-		.dot {
-			width: 6px;
-			height: 6px;
-			background-color: #808080; /* Grey color */
-			border-radius: 50%; /* Makes dots circular */
+
+		.hamburger-line {
+			display: block;
+			width: 24px;
+			height: 2px;
+			background-color: var(--text-color);
+			margin: 4px 0;
+			transition: transform 0.3s ease;
+		}
+
+		.nav-menu {
+			display: none;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			width: 100%;
+			background-color: var(--bg-color);
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			z-index: 9999;
+		}
+
+		.nav-menu.active {
+			display: block;
+		}
+
+		.nav-list {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.nav-list li {
+			margin: 0;
+		}
+
+		.nav-list a {
+			display: flex;
+			align-items: center;
+			padding: 16px 20px;
+			color: var(--text-color);
+			text-decoration: none;
+			transition: background-color 0.3s;
+			border-bottom: 1px solid var(--border-color);
+		}
+
+		.nav-list a:last-child {
+			border-bottom: none;
+		}
+
+		.nav-list a:hover {
+			background-color: var(--card-bg);
+		}
+
+		.nav-icon {
+			width: 20px;
+			height: 20px;
+			margin-right: 12px;
+			fill: currentColor;
+		}
+
+		@media screen and (max-width: 768px) {
+			.hamburger-menu {
+				display: block;
+			}
+
+			.nav-menu {
+				position: fixed;
+				top: 60px; /* Adjust based on your header height */
+				left: 0;
+				width: 100%;
+				height: auto;
+				background-color: var(--bg-color);
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			}
+
+			.nav-list {
+				flex-direction: column;
+			}
+
+			.nav-list a {
+				padding: 16px 20px;
+				justify-content: flex-start;
+			}
+		}
+
+		@media screen and (min-width: 769px) {
+			.nav-menu {
+				position: static;
+				display: block;
+				background: none;
+				box-shadow: none;
+				width: auto;
+			}
+
+			.nav-list {
+				flex-direction: row;
+				gap: 10px;
+			}
+
+			.nav-list a, .nav-dropdown-label {
+				padding: 14px 24px;
+				transition: background 0.2s, color 0.2s;
+				border-radius: 0;
+			}
+
+			.nav-list a {
+				border-bottom: none;
+			}
+
+			.nav-list a:hover, .nav-dropdown-label:hover {
+				background: #2353a2;
+				color: #fff;
+				text-decoration: underline;
+			}
+			.nav-list a:hover .nav-icon, .nav-dropdown-label:hover .nav-icon {
+				fill: #fff;
+				color: #fff;
+			}
 		}
 		
 		/* Grid Menu (Hidden by default) */
-		.nav-menu {
-			position: absolute;
-			top: 50px; /* Adjust based on header height */
-			right: 20px;
-			background-color: #fff;
-			box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-			padding: 10px;
-			border-radius: 4px; /* Optional for a rounded dropdown */
-			 z-index: 9999;
-		}
-		
-		.nav-menu.hidden {
-			display: none; /* Hides the menu by default */
-		}
-		
 		.grid-menu {
 		  display: grid;
 		  grid-template-columns: repeat(3, 1fr);
@@ -422,3 +522,189 @@
                 justify-content: center;
             }
         }
+
+/* Mega Menu Styles */
+.nav-item-has-dropdown {
+    position: relative;
+}
+
+/* Always show mega menu on mobile */
+@media (max-width: 768px) {
+    .mega-menu {
+        display: none !important;
+        position: static;
+        width: 100%;
+        min-width: 0;
+        flex-direction: column;
+        padding: 16px 10px;
+        box-shadow: none;
+        border-top: none;
+        background: #2353a2;
+        color: #fff;
+    }
+    .nav-item-has-dropdown.active .mega-menu {
+        display: flex !important;
+    }
+    .dropdown-toggle {
+        background: none;
+        border: none;
+        padding: 0 0 0 8px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+    }
+    .dropdown-arrow {
+        font-size: 1.1em;
+        transition: transform 0.2s;
+        display: inline-block;
+    }
+    .nav-item-has-dropdown.active .dropdown-arrow {
+        transform: rotate(90deg);
+    }
+    .nav-dropdown-label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        width: 100%;
+    }
+}
+
+/* Desktop: full width, horizontal panel, only on hover/focus */
+@media (min-width: 769px) {
+    .mega-menu {
+        display: none;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 60px; /* Reduced gap for a snug fit */
+        width: 100vw;
+        min-width: 100vw;
+        background: #2353a2;
+        color: #fff;
+        padding: 32px 40px 32px 40px;
+        box-sizing: border-box;
+        z-index: 10000;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+        border-top: 2px solid #2353a2;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    .nav-item-has-dropdown:hover .mega-menu,
+    .nav-item-has-dropdown:focus-within .mega-menu {
+        display: flex;
+    }
+    .mega-menu-column {
+        display: flex;
+        flex-direction: column;
+        min-width: 220px;
+        margin-right: 48px;
+        align-items: flex-start;
+    }
+    .mega-menu-column:last-child {
+        margin-right: 0;
+    }
+    .dropdown-toggle, .dropdown-arrow {
+        display: none !important;
+    }
+    .nav-dropdown-label {
+        cursor: default;
+    }
+}
+
+.mega-menu-column h4 {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 0;
+    letter-spacing: 1px;
+    text-align: left;
+}
+
+.mega-menu-column a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+    transition: color 0.2s;
+    font-weight: 400;
+    text-align: left;
+}
+
+.mega-menu-column a:hover {
+    color: #ffe082;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .menu-overlay {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 9998;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+    }
+    .menu-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    .nav-menu {
+        position: fixed;
+        top: 0; left: 0;
+        width: 80vw;
+        max-width: 340px;
+        height: 100vh;
+        background: #fff;
+        box-shadow: 2px 0 16px rgba(0,0,0,0.12);
+        z-index: 9999;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(.77,0,.18,1);
+        display: flex;
+        flex-direction: column;
+        padding-top: 60px;
+    }
+    .nav-menu.active {
+        transform: translateX(0);
+    }
+    .hamburger-menu {
+        z-index: 10000;
+        position: relative;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    .hamburger-line {
+        width: 28px;
+        height: 3px;
+        background: #222;
+        margin: 4px 0;
+        border-radius: 2px;
+        transition: all 0.3s cubic-bezier(.77,0,.18,1);
+        position: relative;
+    }
+    .hamburger-menu.open .hamburger-line:first-child {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger-menu.open .hamburger-line:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger-menu.open .hamburger-line:last-child {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+    /* Hide nav-menu and overlay by default */
+    .nav-menu, .menu-overlay {
+        pointer-events: none;
+    }
+    .nav-menu.active, .menu-overlay.active {
+        pointer-events: auto;
+    }
+}
