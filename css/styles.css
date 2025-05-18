@@ -735,3 +735,8 @@
         pointer-events: auto;
     }
 }
+
+.nav-dropdown-label span,
+.nav-list a span {
+    font-weight: bold; /* Make navbar labels and Manuals label bold */
+}
