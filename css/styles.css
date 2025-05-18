@@ -112,6 +112,7 @@
 			margin: 0;
 			display: flex;
 			flex-direction: column;
+			gap: 22px;
 		}
 
 		.nav-list li {
@@ -137,10 +138,10 @@
 		}
 
 		.nav-icon {
-			width: 20px;
+			vertical-align: middle;
 			height: 20px;
-			margin-right: 12px;
-			fill: currentColor;
+			width: 20px;
+			display: inline-block;
 		}
 
 		@media screen and (max-width: 768px) {
@@ -160,11 +161,23 @@
 
 			.nav-list {
 				flex-direction: column;
+				gap: 22px;
+				margin-top: 12px;
 			}
 
-			.nav-list a {
-				padding: 16px 20px;
-				justify-content: flex-start;
+			.nav-list li {
+				margin: 0;
+				padding: 0;
+			}
+
+			.nav-list a, .nav-dropdown-label {
+				padding-left: 0 !important;
+				padding-right: 0 !important;
+				border-bottom: none !important;
+				padding-top: 0 !important;
+				padding-bottom: 0 !important;
+				margin-top: 0 !important;
+				margin-bottom: 0 !important;
 			}
 		}
 
@@ -183,7 +196,7 @@
 			}
 
 			.nav-list a, .nav-dropdown-label {
-				padding: 14px 24px;
+				padding: 14px 6px;
 				transition: background 0.2s, color 0.2s;
 				border-radius: 0;
 			}
@@ -195,11 +208,17 @@
 			.nav-list a:hover, .nav-dropdown-label:hover {
 				background: #2353a2;
 				color: #fff;
+				text-decoration: none;
+			}
+			.nav-list a:hover span, .nav-dropdown-label:hover span {
 				text-decoration: underline;
 			}
 			.nav-list a:hover .nav-icon, .nav-dropdown-label:hover .nav-icon {
 				fill: #fff;
 				color: #fff;
+			}
+			.nav-icon {
+				margin-right: 8px;
 			}
 		}
 		
@@ -576,7 +595,7 @@
         position: fixed;
         left: 0;
         right: 0;
-        top: 60px; /* Reduced gap for a snug fit */
+        top: 80px;
         width: 100vw;
         min-width: 100vw;
         background: #2353a2;
@@ -614,22 +633,28 @@
 
 .mega-menu-column h4 {
     color: #fff;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: bold;
-    margin-bottom: 10px;
-    margin-top: 0;
+    margin-bottom: 12px;
+    margin-top: 20px;
     letter-spacing: 1px;
     text-align: left;
+    padding: 0;
 }
 
 .mega-menu-column a {
     color: #fff;
     text-decoration: none;
-    font-size: 0.95rem;
-    margin-bottom: 2px;
+    font-size: 0.85rem;
+    padding: 2px 0;
+    margin-bottom: 4px;
     transition: color 0.2s;
     font-weight: 400;
     text-align: left;
+}
+
+.mega-menu-column a:last-child {
+    margin-bottom: 0;
 }
 
 .mega-menu-column a:hover {
@@ -665,6 +690,7 @@
         display: flex;
         flex-direction: column;
         padding-top: 60px;
+        overflow-y: auto;
     }
     .nav-menu.active {
         transform: translateX(0);
