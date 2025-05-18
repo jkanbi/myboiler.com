@@ -1,0 +1,424 @@
+		@media (prefers-color-scheme: light) {
+		:root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #f0f0f0;
+            --border-color: #cccccc;
+            --button-bg: #e0e0e0;
+            --button-text: #000000;
+            --link-color: #0000ee;
+            --footercols-color:#191970;
+            --footer-link-color:#ffffff;
+            --copyright-color: #000040;
+			
+        }
+			/* Hide dark mode logo by default */
+			.dark-mode-logo {
+				display: none;
+			}
+			.light-mode-logo {
+				display: block;
+			}
+		}
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #121212;
+                --text-color: #ffffff;
+                --card-bg: #2b2b2b;
+                --border-color: #444444;
+                --button-bg: #333333;
+                --button-text: #ffffff;
+                --link-color: #8ab4f8;
+                --footercols-color:#121212;
+                --footer-link-color:#ffffff;
+                --copyright-color: #000000;
+            }
+			.light-mode-logo {
+				display: none;
+			}
+			.dark-mode-logo {
+				display: block;
+			}
+        }
+
+        body {
+            font-family: "Courier Prime", monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+            text-align: center; /* Center everything by default */
+            min-height: 100vh; /* Ensure the body takes up at least the full viewport height */
+			display: flex;
+			flex-direction: column; /* Stack content vertically */
+        }
+
+		/* General Styles */
+		.header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 10px 20px;
+		}
+		/* 
+		.logo img {
+			display: block;
+		} */
+
+		.tagline {
+			font-size: 14px;
+			color: #555;
+		}
+		
+		/* 9-Dots Menu */
+		.dots-menu {
+			display: grid;
+			grid-template-columns: repeat(3, 6px);
+			gap: 4px;
+			cursor: pointer;
+			z-index:10000;
+		}
+		
+		.dot {
+			width: 6px;
+			height: 6px;
+			background-color: #808080; /* Grey color */
+			border-radius: 50%; /* Makes dots circular */
+		}
+		
+		/* Grid Menu (Hidden by default) */
+		.nav-menu {
+			position: absolute;
+			top: 50px; /* Adjust based on header height */
+			right: 20px;
+			background-color: #fff;
+			box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+			padding: 10px;
+			border-radius: 4px; /* Optional for a rounded dropdown */
+			 z-index: 9999;
+		}
+		
+		.nav-menu.hidden {
+			display: none; /* Hides the menu by default */
+		}
+		
+		.grid-menu {
+		  display: grid;
+		  grid-template-columns: repeat(3, 1fr);
+		  gap: 16px;
+		  padding: 16px;
+		  background-color: #fff;
+		  border-radius: 8px;
+		  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+		  outline: 2px solid #D3D3D3; /* Light Grey */
+		}
+		
+		.grid-item {
+		  display: flex;
+		  flex-direction: column;
+		  align-items: center;
+		  text-decoration: none;
+		  color: #5f6368;  /* Default text color */
+		  padding: 16px;
+		  border-radius: 8px;
+		  transition: background-color 0.3s;
+		}
+		
+		.grid-item:hover {
+		  background-color: #f1f3f4;
+		}
+		
+		.grid-icon {
+		  width: 24px;
+		  height: 24px;
+		  margin-bottom: 8px;
+		  fill: currentColor;
+		  fill: #006400; /* Dark Green */
+		}
+		
+		.grid-item span {
+		  font-size: 14px;
+		  text-align: center;
+		}
+		
+		/* Consistency Across Devices */
+		button, .dots-menu {
+			border-radius: 0; /* Removes rounded corners for consistency */
+		}
+		
+		/* updated menu end */
+
+        .content {
+            padding: 20px;
+            transition: margin-top 0.3s ease;
+        }
+
+        /* Grouping for right alignment */
+        .right-header-items {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Full-width banner with adjustable height */
+        .banner {
+            width: 100%;
+            padding-top: 50%; /* This creates a 2:1 aspect ratio for the banner */
+            background-image: url('../img/banner.jpg');  /* Placeholder for image */
+            background-size: cover;
+            background-position: center;
+            background-color: var(--card-bg);  /* Fallback color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-color);  /* For text if you add any */
+            margin-bottom: 20px;  /* Space below the banner */
+        }
+
+		.container {
+		  width: 100%;
+		  max-width: 1200px;
+		  margin: 0 auto;
+		  padding: 20px;
+		}
+		
+		.centered-input {
+		  display: flex;
+		  justify-content: center; /* Centers horizontally */
+		  align-items: center; /* Centers vertically, if needed */
+		  margin-bottom: 20px; /* Add some space below the input */
+		}
+		
+		/* Search Container */
+		
+		.search-container {
+			margin-top: 300px;
+			/* Increased top spacing */
+			margin-bottom: 300px;
+			/* Increased bottom spacing */
+		}
+		
+		/* Guidance Text */
+		
+		.search-guidance {
+			font-size: 1.1em;
+			/* Slightly larger */
+			margin-bottom: 10px;
+			/* Space between text and input */
+			color: #555;
+			/* A softer color than black */
+		}
+		
+		/* Search Input Wrapper */
+		
+		.search-input-wrapper {
+			display: flex;
+			/* Arrange input and buttons in a row */
+			align-items: center;
+			/* Vertically align the items */
+			justify-content: center;
+			/* horizontally align items */
+		}
+		
+		/* Search Input */
+		
+		.search-input {
+			width: 70%;
+			/* Adjust width as needed */
+			max-width: 600px;
+			/* Maximum width for larger screens */
+			padding: 12px 20px;
+			/* Larger padding for better appearance */
+			font-size: 16px;
+			/* Larger font size */
+			border: 1px solid #ccc;
+			border-radius: 24px;
+			/* Rounded corners like Google */
+			outline: none;
+			/* Remove default focus outline */
+			margin-right: 10px;
+			/* Space between the input and buttons */
+		}
+		
+		.search-input:focus {
+			border-color: #4285f4;
+			/* Google's blue color on focus */
+			box-shadow: 0 0 5px rgba(66, 133, 244, 0.5);
+			/* Add a subtle shadow on focus */
+		}
+		
+		/* Search Buttons Container - Inline with input */
+		.search-buttons-inline {
+			display: flex; /* Keep existing buttons in a row */
+		}
+		
+		/* Search Button */
+		
+		.search-button {
+			background-color: #f2f2f2;
+			/* Light gray background */
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			padding: 10px 16px;
+			margin: 0 8px;
+			/* Space between buttons */
+			font-size: 14px;
+			color: #555;
+			cursor: pointer;
+		}
+		
+		.search-button:hover {
+			border-color: #999;
+		}
+		
+		.search-button:focus {
+			outline: none;
+			border-color: #4285f4;
+			/* Google's blue color on focus */
+			box-shadow: 0 0 3px rgba(66, 133, 244, 0.5);
+		}
+		
+		/* Search Buttons Container - Below input */
+		.search-buttons-below {
+			margin-top: 20px; /* Add space above the lower buttons */
+			display: flex;
+			justify-content: center; /* Center the buttons horizontally */
+		}
+						
+		.row {
+		  display: flex;
+		  flex-wrap: wrap;
+		  margin: -10px;
+		}
+		
+		.column {
+		  flex: 1;
+		  padding: 10px;
+		  min-width: 300px;
+
+		}
+
+		.column a{
+			color: inherit;
+			text-decoration: none; /* Removes underline */
+			/*color: var(--bg-color); */
+		}
+		
+
+		.card {
+		  background-color: var(--bg-color); /* Card background color */
+		  border: 1px solid #d3d3d3; /* Light grey border */
+		  border-radius: 8px; /* Rounded corners */
+		  padding: 20px; /* Inner padding */
+		  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+		   text-align: center;
+		}
+		
+		.no-bullets {
+			list-style-type: none; /* Removes bullet points */
+			padding: 0;           /* Removes default padding */
+			margin: 0;            /* Removes default margin */
+		}
+		
+        /* Main footer styles */
+        .footer {
+            background-color: var(--footercols-color);
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .footer-column {
+            flex-basis: calc(25% - 20px); /* 4 columns with some margin */
+            margin-bottom: 20px;
+            color: var(--footer-link-color);
+        }
+
+        .footer-column h3 {
+            margin-top: 0;
+            color: var(--footer-link-color);
+        }
+
+        .footer-column ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: var(--footer-link-color);
+            text-decoration: none;
+        }
+
+
+		.social-media{
+			fill:var(--footer-link-color);
+			justify-content:center;
+		}
+
+		.wp-block-social-link{
+			border-radius:9999px;
+			display: inline-block;
+			padding:5px 7px 5px 7px;
+			margin-top: 30px;
+			margin-left: 10px;
+			margin-right: 10px;
+		}
+		.wp-social-link-x{
+			background-color: black;
+		}
+		
+		.wp-social-link-youtube{
+			background-color: red;
+		}
+		.wp-social-link-bluesky{
+			background-color: #0274be;
+		}
+		.wp-social-link-facebook{
+			background-color: #0866ff;
+		}
+		.wp-social-link-pinterest{
+			background-color: #e60122;
+		}
+		.wp-social-link-whatsapp{
+			background-color: #25d366;
+		}
+
+        /* Copyright footer */
+        .copyright {
+            background-color: var(--copyright-color);
+            color: var(--footer-link-color);
+            text-align: center;
+            padding: 10px 0;
+        }  
+
+        @media screen and (max-width: 768px) {
+        
+       		.tagline{
+				margin-left:20px;
+			}
+
+				
+			/* Search Container */
+			.search-container {
+			  margin-top: 150px; /* Adjust top spacing as needed */
+			  margin-bottom: 150px; /* Spacing after the input */
+			}
+            
+		   .card {
+			margin-right: 40px;
+			}   
+            
+            .footer-column {
+                flex-basis: 100%;
+                text-align: center;
+            }
+            .footer {
+                justify-content: center;
+            }
+        }
