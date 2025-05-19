@@ -741,3 +741,83 @@
 .nav-list a span {
     font-weight: bold; /* Make navbar labels and Manuals label bold */
 }
+
+/* AR Box Pair Grid Styles */
+.ar-box-pair-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  padding: 32px 0;
+  max-width: 700px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.ar-box-pair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-color);
+  border-radius: 16px;
+  border: 1.5px solid #e0e4ea;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+  padding: 26px 16px 18px 16px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+  min-height: 320px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.ar-box-pair:hover, .ar-box-pair:focus {
+  box-shadow: 0 8px 32px rgba(10, 141, 76, 0.16);
+  transform: translateY(-4px) scale(1.025);
+  color: #0a8d4c;
+  border-color: #b6e8d0;
+}
+
+.ar-box-pair img {
+  border-radius: 12px;
+  margin-bottom: 18px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  background: #f5f5f5;
+  box-shadow: 0 2px 8px rgba(10,141,76,0.04);
+}
+
+.ar-box-pair-title {
+  font-size: 1.15rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+  display: block;
+  letter-spacing: 1px;
+  color: var(--text-color);;
+}
+
+.ar-box-pair-text {
+  font-size: 0.97rem;
+  color: #d4d4d4;
+}
+
+@media (min-width: 700px) {
+  .ar-box-pair-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-width: 900px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ar-box-pair {
+    min-height: 0;
+    padding: 16px 8px 10px 8px;
+  }
+  .ar-box-pair-grid {
+    gap: 16px;
+    padding: 18px 0;
+  }
+}

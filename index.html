@@ -195,324 +195,237 @@
   </a>
 </div>
 
-<style>
-.ar-box-pair-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 28px;
-  padding: 32px 0;
-  max-width: 700px;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-.ar-box-pair {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #fff;
-  border-radius: 16px;
-  border: 1.5px solid #e0e4ea;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.07);
-  padding: 26px 16px 18px 16px;
-  text-align: center;
-  text-decoration: none;
-  color: #212121;
-  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
-  min-height: 320px;
-  box-sizing: border-box;
-  position: relative;
-  overflow: hidden;
-}
-.ar-box-pair:hover, .ar-box-pair:focus {
-  box-shadow: 0 8px 32px rgba(10, 141, 76, 0.16);
-  transform: translateY(-4px) scale(1.025);
-  color: #0a8d4c;
-  border-color: #b6e8d0;
-}
-.ar-box-pair img {
-  border-radius: 12px;
-  margin-bottom: 18px;
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  background: #f5f5f5;
-  box-shadow: 0 2px 8px rgba(10,141,76,0.04);
-}
-.ar-box-pair-title {
-  font-size: 1.15rem;
-  font-weight: bold;
-  margin-bottom: 12px;
-  display: block;
-  letter-spacing: 1px;
-  color: #000040;}
-.ar-box-pair-text {
-  font-size: 0.97rem;
-  color: #d4d4d4;
-  display: block;
-  margin-bottom: 0;
-  opacity: 0;
-  max-height: 0;
-  transition: opacity 0.3s, max-height 0.3s;
-  overflow: hidden;
-  pointer-events: none;
-}
-.ar-box-pair:hover .ar-box-pair-text,
-.ar-box-pair:focus .ar-box-pair-text {
-  opacity: 1;
-  max-height: 200px;
-  pointer-events: auto;
-}
-@media (min-width: 700px) {
-  .ar-box-pair-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    max-width: 900px;
-  }
-}
-@media (max-width: 480px) {
-  .ar-box-pair {
-    min-height: 0;
-    padding: 16px 8px 10px 8px;
-  }
-  .ar-box-pair-grid {
-    gap: 16px;
-    padding: 18px 0;
-  }
-}
-</style>
+<!-- Main footer with 4 columns -->
+<footer class="footer">
+    <div class="footer-column">
+        <h3>About Us</h3>
+        <ul>
+            <li><a href="pages/wp-about-us.html" target="page-content">Company</a></li>
+            <li><a href="pages/wp-carbon-emissions.html" target="page-content">Carbon Emissions</a></li>
+            <li><a href="pages/wp-ar-mission.html" target="page-content">Our Mission</a></li>
+            <li><a href="pages/wp-privacy-policy.html" target="page-content">Privacy Policy</a></li>
+            <li><a href="pages/wp-affilate-activity-disclosure.html" target="page-content">Affilates Disclosure</a></li>
 
- 
-    <!-- Main footer with 4 columns -->
-    <footer class="footer">
-        <div class="footer-column">
-            <h3>About Us</h3>
-            <ul>
-                <li><a href="pages/wp-about-us.html" target="page-content">Company</a></li>
-                <li><a href="pages/wp-carbon-emissions.html" target="page-content">Carbon Emissions</a></li>
-                <li><a href="pages/wp-ar-mission.html" target="page-content">Our Mission</a></li>
-                <li><a href="pages/wp-privacy-policy.html" target="page-content">Privacy Policy</a></li>
-                <li><a href="pages/wp-affilate-activity-disclosure.html" target="page-content">Affilates Disclosure</a></li>
-
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Contact Us</h3>
-            <ul>
-                <li>A Rated House,</li>
-                <li>11 Sunnymead Road,</li>
-                <li>London, </li>
-                <li>NW9 8BT</li>
-                <li><a href=tel://+4402081234411>+44 020 8123 4411</li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Quicklinks</h3>
-            <ul>
-                <li><a href="https://boilermanuals.com" target="page-content">Boiler Manuals</a></li>
-                <li><a href="https://combiboiler.com" target="page-content">Combi Boiler</a></li>
-                <li><a href="https://boilerservice.com" target="page-content">Boiler Service</a></li>
-
-                
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Newsletter</h3>
-                <!-- start mailchimp-->
-				<div id="mc_embed_shell">
-					<div id="mc_embed_signup">
-							<form action="https://myboiler.us7.list-manage.com/subscribe/post?u=74520e86378a5e9ad9e26240e&amp;id=de886bf698&amp;f_id=00ccaee4f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">							<div id="mc_embed_signup_scroll">
-								<div class="mc-field-group">
-									<label for="mce-EMAIL">Email Address <span class="asterisk"><!-- (required)  --></span></label><br><br>
-									<input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""><br><br>
-								</div>
-								
-								<!-- Add spacing between the input and submit button -->
-								<!--<div style="margin: 0px 0;"></div> -->
-				
-								<div class="clear foot">
-									<input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Subscribe">
-								</div>
-								<br>
-								<div id="mce-responses" class="clear foot">
-									<div class="response" id="mce-error-response" style="display: none;"></div>
-									<div class="response" id="mce-success-response" style="display: none;"></div>
-								</div>
-				
-								<div aria-hidden="true" style="position: absolute; left: -5000px;">
-									<input type="text" name="b_76b9d06d4164064c0ffb0d455_68a8dc9423" tabindex="-1" value="">
-								</div>
-				
-								<p style="margin: 0px auto;">
-									<a href="http://eepurl.com/i6R-1E" title="Mailchimp - email marketing made easy and fun">
-										<span style="display: inline-block; background-color: transparent; border-radius: 4px;">
-											<img class="refferal_badge" src="https://digitalasset.intuit.com/render/content/dam/intuit/mc-fe/en_us/images/intuit-mc-rewards-text-light.svg" alt="Intuit Mailchimp" style="width: 100px; height: 40px; display: flex; padding: 2px 0px; justify-content: left; align-items: center;">
-										</span>
-									</a>
-								</p>
-							</div>
-						</form>
-					</div>
-				</div>
-
+        </ul>
+    </div>
+    <div class="footer-column">
+        <h3>Contact Us</h3>
+        <ul>
+            <li>A Rated House,</li>
+            <li>11 Sunnymead Road,</li>
+            <li>London, </li>
+            <li>NW9 8BT</li>
+            <li><a href=tel://+4402081234411>+44 020 8123 4411</li>
+        </ul>
+    </div>
+    <div class="footer-column">
+        <h3>Quicklinks</h3>
+        <ul>
+            <li><a href="https://boilermanuals.com" target="page-content">Boiler Manuals</a></li>
+            <li><a href="https://combiboiler.com" target="page-content">Combi Boiler</a></li>
+            <li><a href="https://boilerservice.com" target="page-content">Boiler Service</a></li>
 
             
-            <!-- end mailchimp-->
-        </div>
-    </footer>
+        </ul>
+    </div>
+    <div class="footer-column">
+        <h3>Newsletter</h3>
+            <!-- start mailchimp-->
+			<div id="mc_embed_shell">
+				<div id="mc_embed_signup">
+						<form action="https://myboiler.us7.list-manage.com/subscribe/post?u=74520e86378a5e9ad9e26240e&amp;id=de886bf698&amp;f_id=00ccaee4f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">							<div id="mc_embed_signup_scroll">
+							<div class="mc-field-group">
+								<label for="mce-EMAIL">Email Address <span class="asterisk"><!-- (required)  --></span></label><br><br>
+								<input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""><br><br>
+							</div>
+							
+							<!-- Add spacing between the input and submit button -->
+							<!--<div style="margin: 0px 0;"></div> -->
+			
+							<div class="clear foot">
+								<input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Subscribe">
+							</div>
+							<br>
+							<div id="mce-responses" class="clear foot">
+								<div class="response" id="mce-error-response" style="display: none;"></div>
+								<div class="response" id="mce-success-response" style="display: none;"></div>
+							</div>
+			
+							<div aria-hidden="true" style="position: absolute; left: -5000px;">
+								<input type="text" name="b_76b9d06d4164064c0ffb0d455_68a8dc9423" tabindex="-1" value="">
+							</div>
+			
+							<p style="margin: 0px auto;">
+								<a href="http://eepurl.com/i6R-1E" title="Mailchimp - email marketing made easy and fun">
+									<span style="display: inline-block; background-color: transparent; border-radius: 4px;">
+										<img class="refferal_badge" src="https://digitalasset.intuit.com/render/content/dam/intuit/mc-fe/en_us/images/intuit-mc-rewards-text-light.svg" alt="Intuit Mailchimp" style="width: 100px; height: 40px; display: flex; padding: 2px 0px; justify-content: left; align-items: center;">
+									</span>
+								</a>
+							</p>
+						</div>
+					</form>
+				</div>
+			</div>
 
-    <!-- Copyright footer -->
-    <footer class="footer copyright social-media no-bullets">
-        <li class="wp-social-link wp-social-link-x  wp-block-social-link">
-			<a rel="noopener nofollow" target="_blank" href="https://x.com/myboiler" class="">
-				<svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-				<path d="M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z"></path></svg>
-				<!-- <span class="screenreader">X</span> -->
-			</a>
 
-		<li class="wp-social-link wp-social-link-facebook  wp-block-social-link">
-			<a rel="noopener nofollow" target="_blank" href="https://facebook.com/myboiler" class="wp-block-social-link-anchor">
+        
+        <!-- end mailchimp-->
+    </div>
+</footer>
+
+<!-- Copyright footer -->
+<footer class="footer copyright social-media no-bullets">
+    <li class="wp-social-link wp-social-link-x  wp-block-social-link">
+		<a rel="noopener nofollow" target="_blank" href="https://x.com/myboiler" class="">
 			<svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-			<path d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z"></path></svg>
-			<!--<span class="wp-block-social-link-label screen-reader-text">Facebook</span> -->
-			</a>
-		</li>
-		<!--
-		<li class="wp-social-link wp-social-link-whatsapp  wp-block-social-link">
-			<a href="https://wa.me/442081234411" class="wp-block-social-link-anchor">
-			<svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-			<path d="M 12.011719 2 C 6.5057187 2 2.0234844 6.478375 2.0214844 11.984375 C 2.0204844 13.744375 2.4814687 15.462563 3.3554688 16.976562 L 2 22 L 7.2324219 20.763672 C 8.6914219 21.559672 10.333859 21.977516 12.005859 21.978516 L 12.009766 21.978516 C 17.514766 21.978516 21.995047 17.499141 21.998047 11.994141 C 22.000047 9.3251406 20.962172 6.8157344 19.076172 4.9277344 C 17.190172 3.0407344 14.683719 2.001 12.011719 2 z M 12.009766 4 C 14.145766 4.001 16.153109 4.8337969 17.662109 6.3417969 C 19.171109 7.8517969 20.000047 9.8581875 19.998047 11.992188 C 19.996047 16.396187 16.413812 19.978516 12.007812 19.978516 C 10.674812 19.977516 9.3544062 19.642812 8.1914062 19.007812 L 7.5175781 18.640625 L 6.7734375 18.816406 L 4.8046875 19.28125 L 5.2851562 17.496094 L 5.5019531 16.695312 L 5.0878906 15.976562 C 4.3898906 14.768562 4.0204844 13.387375 4.0214844 11.984375 C 4.0234844 7.582375 7.6067656 4 12.009766 4 z M 8.4765625 7.375 C 8.3095625 7.375 8.0395469 7.4375 7.8105469 7.6875 C 7.5815469 7.9365 6.9355469 8.5395781 6.9355469 9.7675781 C 6.9355469 10.995578 7.8300781 12.182609 7.9550781 12.349609 C 8.0790781 12.515609 9.68175 15.115234 12.21875 16.115234 C 14.32675 16.946234 14.754891 16.782234 15.212891 16.740234 C 15.670891 16.699234 16.690438 16.137687 16.898438 15.554688 C 17.106437 14.971687 17.106922 14.470187 17.044922 14.367188 C 16.982922 14.263188 16.816406 14.201172 16.566406 14.076172 C 16.317406 13.951172 15.090328 13.348625 14.861328 13.265625 C 14.632328 13.182625 14.464828 13.140625 14.298828 13.390625 C 14.132828 13.640625 13.655766 14.201187 13.509766 14.367188 C 13.363766 14.534188 13.21875 14.556641 12.96875 14.431641 C 12.71875 14.305641 11.914938 14.041406 10.960938 13.191406 C 10.218937 12.530406 9.7182656 11.714844 9.5722656 11.464844 C 9.4272656 11.215844 9.5585938 11.079078 9.6835938 10.955078 C 9.7955938 10.843078 9.9316406 10.663578 10.056641 10.517578 C 10.180641 10.371578 10.223641 10.267562 10.306641 10.101562 C 10.389641 9.9355625 10.347156 9.7890625 10.285156 9.6640625 C 10.223156 9.5390625 9.737625 8.3065 9.515625 7.8125 C 9.328625 7.3975 9.131125 7.3878594 8.953125 7.3808594 C 8.808125 7.3748594 8.6425625 7.375 8.4765625 7.375 z"></path></svg>
-			</a> 
-		</li> --> 
+			<path d="M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z"></path></svg>
+			<!-- <span class="screenreader">X</span> -->
+		</a>
 
-    </footer>
+	<li class="wp-social-link wp-social-link-facebook  wp-block-social-link">
+		<a rel="noopener nofollow" target="_blank" href="https://facebook.com/myboiler" class="wp-block-social-link-anchor">
+		<svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+		<path d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z"></path></svg>
+		<!--<span class="wp-block-social-link-label screen-reader-text">Facebook</span> -->
+		</a>
+	</li>
+	<!--
+	<li class="wp-social-link wp-social-link-whatsapp  wp-block-social-link">
+		<a href="https://wa.me/442081234411" class="wp-block-social-link-anchor">
+		<svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+		<path d="M 12.011719 2 C 6.5057187 2 2.0234844 6.478375 2.0214844 11.984375 C 2.0204844 13.744375 2.4814687 15.462563 3.3554688 16.976562 L 2 22 L 7.2324219 20.763672 C 8.6914219 21.559672 10.333859 21.977516 12.005859 21.978516 L 12.009766 21.978516 C 17.514766 21.978516 21.995047 17.499141 21.998047 11.994141 C 22.000047 9.3251406 20.962172 6.8157344 19.076172 4.9277344 C 17.190172 3.0407344 14.683719 2.001 12.011719 2 z M 12.009766 4 C 14.145766 4.001 16.153109 4.8337969 17.662109 6.3417969 C 19.171109 7.8517969 20.000047 9.8581875 19.998047 11.992188 C 19.996047 16.396187 16.413812 19.978516 12.007812 19.978516 C 10.674812 19.977516 9.3544062 19.642812 8.1914062 19.007812 L 7.5175781 18.640625 L 6.7734375 18.816406 L 4.8046875 19.28125 L 5.2851562 17.496094 L 5.5019531 16.695312 L 5.0878906 15.976562 C 4.3898906 14.768562 4.0204844 13.387375 4.0214844 11.984375 C 4.0234844 7.582375 7.6067656 4 12.009766 4 z M 8.4765625 7.375 C 8.3095625 7.375 8.0395469 7.4375 7.8105469 7.6875 C 7.5815469 7.9365 6.9355469 8.5395781 6.9355469 9.7675781 C 6.9355469 10.995578 7.8300781 12.182609 7.9550781 12.349609 C 8.0790781 12.515609 9.68175 15.115234 12.21875 16.115234 C 14.32675 16.946234 14.754891 16.782234 15.212891 16.740234 C 15.670891 16.699234 16.690438 16.137687 16.898438 15.554688 C 17.106437 14.971687 17.106922 14.470187 17.044922 14.367188 C 16.982922 14.263188 16.816406 14.201172 16.566406 14.076172 C 16.317406 13.951172 15.090328 13.348625 14.861328 13.265625 C 14.632328 13.182625 14.464828 13.140625 14.298828 13.390625 C 14.132828 13.640625 13.655766 14.201187 13.509766 14.367188 C 13.363766 14.534188 13.21875 14.556641 12.96875 14.431641 C 12.71875 14.305641 11.914938 14.041406 10.960938 13.191406 C 10.218937 12.530406 9.7182656 11.714844 9.5722656 11.464844 C 9.4272656 11.215844 9.5585938 11.079078 9.6835938 10.955078 C 9.7955938 10.843078 9.9316406 10.663578 10.056641 10.517578 C 10.180641 10.371578 10.223641 10.267562 10.306641 10.101562 C 10.389641 9.9355625 10.347156 9.7890625 10.285156 9.6640625 C 10.223156 9.5390625 9.737625 8.3065 9.515625 7.8125 C 9.328625 7.3975 9.131125 7.3878594 8.953125 7.3808594 C 8.808125 7.3748594 8.6425625 7.375 8.4765625 7.375 z"></path></svg>
+		</a> 
+	</li> --> 
 
-    <footer class="copyright">
-        <p>© 2025 MyBoiler.com - All rights reserved.</p>
-    </footer>
+</footer>
 
-    <script>
-		function toggleMenu() {
-			const navMenu = document.getElementById('nav-menu');
-			const overlay = document.querySelector('.menu-overlay');
-			const hamburger = document.querySelector('.hamburger-menu');
-			navMenu.classList.toggle('active');
-			overlay.classList.toggle('active');
-			hamburger.classList.toggle('open');
-		}
-		
-		document.addEventListener('DOMContentLoaded', () => {
-			const navMenu = document.getElementById('nav-menu');
-			const hamburgerMenu = document.querySelector('.hamburger-menu');
+<footer class="copyright">
+    <p>© 2025 MyBoiler.com - All rights reserved.</p>
+</footer>
 
-            // Mobile: toggle mega menu with arrow
-            document.querySelectorAll('.nav-dropdown-label').forEach(label => {
-                label.addEventListener('click', function(e) {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        const parent = label.closest('.nav-item-has-dropdown');
-                        parent.classList.toggle('active');
-                    }
-                });
+<script>
+	function toggleMenu() {
+		const navMenu = document.getElementById('nav-menu');
+		const overlay = document.querySelector('.menu-overlay');
+		const hamburger = document.querySelector('.hamburger-menu');
+		navMenu.classList.toggle('active');
+		overlay.classList.toggle('active');
+		hamburger.classList.toggle('open');
+	}
+	
+	document.addEventListener('DOMContentLoaded', () => {
+		const navMenu = document.getElementById('nav-menu');
+		const hamburgerMenu = document.querySelector('.hamburger-menu');
+
+        // Mobile: toggle mega menu with arrow
+        document.querySelectorAll('.nav-dropdown-label').forEach(label => {
+            label.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const parent = label.closest('.nav-item-has-dropdown');
+                    parent.classList.toggle('active');
+                }
             });
+        });
 
-            // Mega menu hover delay for desktop
-            let megaMenuTimeout;
-            const navDropdown = document.querySelector('.nav-item-has-dropdown');
-            const megaMenu = navDropdown ? navDropdown.querySelector('.mega-menu') : null;
-            if (navDropdown && megaMenu) {
-                navDropdown.addEventListener('mouseenter', () => {
-                    if (window.innerWidth >= 769) {
-                        clearTimeout(megaMenuTimeout);
-                        megaMenu.style.display = 'flex';
-                    }
-                });
-                navDropdown.addEventListener('mouseleave', () => {
-                    if (window.innerWidth >= 769) {
-                        megaMenuTimeout = setTimeout(() => {
-                            megaMenu.style.display = 'none';
-                        }, 220);
-                    }
-                });
-                megaMenu.addEventListener('mouseenter', () => {
-                    if (window.innerWidth >= 769) {
-                        clearTimeout(megaMenuTimeout);
-                        megaMenu.style.display = 'flex';
-                    }
-                });
-                megaMenu.addEventListener('mouseleave', () => {
-                    if (window.innerWidth >= 769) {
-                        megaMenuTimeout = setTimeout(() => {
-                            megaMenu.style.display = 'none';
-                        }, 220);
-                    }
-                });
-            }
-
-			// Close menu when clicking a menu item
-			document.querySelectorAll('.nav-list a').forEach(link => {
-				link.addEventListener('click', () => {
-					navMenu.classList.remove('active');
-					// Update URL hash
-					const href = link.getAttribute('href').replace('pages/', '').replace('.html', '');
-					window.location.hash = href;
-				});
-			});
-		
-			// Close menu when clicking anywhere outside the menu or toggle button
-			document.addEventListener('click', (e) => {
-				if (navMenu.classList.contains('active')) {
-					if (!navMenu.contains(e.target) && !hamburgerMenu.contains(e.target)) {
-						navMenu.classList.remove('active');
-					}
-				}
-			});
-		
-			// Handle direct navigation via URL hash
-			window.addEventListener('load', () => {
-				const hash = window.location.hash.slice(1);
-				if (hash) {
-					const page = `pages/${hash}.html`;
-					document.getElementById('page-content').src = page;
-				}
-			});
-
-            document.querySelector('.menu-overlay').addEventListener('click', () => {
-                document.getElementById('nav-menu').classList.remove('active');
-                document.querySelector('.menu-overlay').classList.remove('active');
-                document.querySelector('.hamburger-menu').classList.remove('open');
+        // Mega menu hover delay for desktop
+        let megaMenuTimeout;
+        const navDropdown = document.querySelector('.nav-item-has-dropdown');
+        const megaMenu = navDropdown ? navDropdown.querySelector('.mega-menu') : null;
+        if (navDropdown && megaMenu) {
+            navDropdown.addEventListener('mouseenter', () => {
+                if (window.innerWidth >= 769) {
+                    clearTimeout(megaMenuTimeout);
+                    megaMenu.style.display = 'flex';
+                }
             });
+            navDropdown.addEventListener('mouseleave', () => {
+                if (window.innerWidth >= 769) {
+                    megaMenuTimeout = setTimeout(() => {
+                        megaMenu.style.display = 'none';
+                    }, 220);
+                }
+            });
+            megaMenu.addEventListener('mouseenter', () => {
+                if (window.innerWidth >= 769) {
+                    clearTimeout(megaMenuTimeout);
+                    megaMenu.style.display = 'flex';
+                }
+            });
+            megaMenu.addEventListener('mouseleave', () => {
+                if (window.innerWidth >= 769) {
+                    megaMenuTimeout = setTimeout(() => {
+                        megaMenu.style.display = 'none';
+                    }, 220);
+                }
+            });
+        }
+
+		// Close menu when clicking a menu item
+		document.querySelectorAll('.nav-list a').forEach(link => {
+			link.addEventListener('click', () => {
+				navMenu.classList.remove('active');
+				// Update URL hash
+				const href = link.getAttribute('href').replace('pages/', '').replace('.html', '');
+				window.location.hash = href;
+			});
 		});
-		
-		document.addEventListener('click', function(e) {
-			if (e.target.tagName === 'A') {
-				window.scrollTo({ top: 0, behavior: 'smooth' });
+	
+		// Close menu when clicking anywhere outside the menu or toggle button
+		document.addEventListener('click', (e) => {
+			if (navMenu.classList.contains('active')) {
+				if (!navMenu.contains(e.target) && !hamburgerMenu.contains(e.target)) {
+					navMenu.classList.remove('active');
+				}
+			}
+		});
+	
+		// Handle direct navigation via URL hash
+		window.addEventListener('load', () => {
+			const hash = window.location.hash.slice(1);
+			if (hash) {
+				const page = `pages/${hash}.html`;
+				document.getElementById('page-content').src = page;
 			}
 		});
 
-    </script>
+        document.querySelector('.menu-overlay').addEventListener('click', () => {
+            document.getElementById('nav-menu').classList.remove('active');
+            document.querySelector('.menu-overlay').classList.remove('active');
+            document.querySelector('.hamburger-menu').classList.remove('open');
+        });
+	});
+	
+	document.addEventListener('click', function(e) {
+		if (e.target.tagName === 'A') {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		}
+	});
 
-    <style>
-        #app-content {
-            transition: opacity 0.3s ease-in-out;
-        }
+</script>
 
-        #app-content.loading {
-            opacity: 0.5;
-        }
+<style>
+    #app-content {
+        transition: opacity 0.3s ease-in-out;
+    }
 
-        .content-container {
-            width: 100%;
-            /* Adjust height as needed */
-            height: calc(100vh - 200px); /* Subtract header/footer height */
-            margin: 0 auto;
-        }
+    #app-content.loading {
+        opacity: 0.5;
+    }
 
-        #page-content {
-            width: 100%;
-            height: 100%;
-            border: none;
-            overflow: auto;
-        }
-    </style>
+    .content-container {
+        width: 100%;
+        /* Adjust height as needed */
+        height: calc(100vh - 200px); /* Subtract header/footer height */
+        margin: 0 auto;
+    }
+
+    #page-content {
+        width: 100%;
+        height: 100%;
+        border: none;
+        overflow: auto;
+    }
+</style>
 </body>
 </html>
