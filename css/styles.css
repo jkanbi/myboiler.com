@@ -309,6 +309,12 @@
             transition: margin-top 0.3s ease;
         }
 
+        #content-container {
+            padding: 20px 0;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
         /* Grouping for right alignment */
         .right-header-items {
             display: flex;
@@ -830,4 +836,12 @@
     gap: 16px;
     padding: 18px 0;
   }
+}
+
+#page-content {
+    height: auto;
+    min-height: 100%;
+    border: none;
+    overflow: visible;
+    box-sizing: border-box;
 }
