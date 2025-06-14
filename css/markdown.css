@@ -1,0 +1,134 @@
+.content-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: 400px; /* Match approximate height of box pair grid */
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.markdown-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.markdown-content h1 {
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+    color: #2c3e50;
+}
+
+.markdown-content h2 {
+    font-size: 1.5rem;
+    margin: 1.5rem 0 1rem;
+    color: #2c3e50;
+}
+
+.markdown-content h3 {
+    font-size: 1.25rem;
+    margin: 1.25rem 0 0.75rem;
+    color: #2c3e50;
+}
+
+.markdown-content h4 {
+    font-size: 1.1rem;
+    margin: 1rem 0 0.75rem;
+    color: #2c3e50;
+}
+
+.markdown-content p {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.markdown-content ul, .markdown-content ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.markdown-content li {
+    margin-bottom: 0.5rem;
+}
+
+.markdown-content a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.markdown-content a:hover {
+    text-decoration: underline;
+}
+
+.markdown-content blockquote {
+    border-left: 4px solid #3498db;
+    margin: 1rem 0;
+    padding: 0.5rem 0 0.5rem 1rem;
+    color: #666;
+}
+
+.markdown-content code {
+    background-color: #f8f9fa;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+.markdown-content pre {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+.markdown-content pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.markdown-content img {
+    max-width: 100%;
+    height: auto;
+    margin: 1rem 0;
+}
+
+.markdown-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.markdown-content th, .markdown-content td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.markdown-content th {
+    background-color: #f8f9fa;
+}
+
+@media (max-width: 768px) {
+    .markdown-content {
+        padding: 1rem;
+    }
+
+    .markdown-content h1 {
+        font-size: 2rem;
+    }
+
+    .markdown-content h2 {
+        font-size: 1.75rem;
+    }
+
+    .markdown-content h3 {
+        font-size: 1.25rem;
+    }
+} 

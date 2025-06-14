@@ -6,8 +6,10 @@
     <title>MyBoiler.com - Keeping People Warm & Connected</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link rel="stylesheet" type="text/css" href="css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="css/video-banner.css"> 
-    
+    <link rel="stylesheet" type="text/css" href="css/video-banner.css">
+    <link rel="stylesheet" type="text/css" href="css/markdown.css">
+    <!-- Add marked.js for markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 <div class="menu-overlay"></div>
@@ -172,7 +174,7 @@
     </div>
 </header>
 
-<div class="ar-box-pair-grid">
+<div class="ar-box-pair-grid" id="box-pair-grid">
   <a class="ar-box-pair" href="https://myboiler.com/money-and-energy-saving/?source=homepage">
     <img src="https://myboiler.com/wp-content/uploads/2024/07/energy-saving.jpg" alt="Energy Saving" width="100" height="100" />
     <span class="ar-box-pair-title">ENERGY SAVING</span>
@@ -195,17 +197,21 @@
   </a>
 </div>
 
+<!-- Content container that will replace the box pair grid -->
+<div class="content-container" id="content-container" style="display: none;">
+    <div id="page-content" class="markdown-content"></div>
+</div>
+
 <!-- Main footer with 4 columns -->
 <footer class="footer">
     <div class="footer-column">
         <h3>About Us</h3>
         <ul>
-            <li><a href="pages/wp-about-us.html" target="page-content">Company</a></li>
-            <li><a href="pages/wp-carbon-emissions.html" target="page-content">Carbon Emissions</a></li>
-            <li><a href="pages/wp-ar-mission.html" target="page-content">Our Mission</a></li>
-            <li><a href="pages/wp-privacy-policy.html" target="page-content">Privacy Policy</a></li>
-            <li><a href="pages/wp-affilate-activity-disclosure.html" target="page-content">Affilates Disclosure</a></li>
-
+            <li><a href="pages/about-us.md">Company</a></li>
+            <li><a href="pages/carbon-emissions.md">Carbon Emissions</a></li>
+            <li><a href="pages/mission.md">Our Mission</a></li>
+            <li><a href="pages/privacy-policy.md">Privacy Policy</a></li>
+            <li><a href="pages/affiliate-disclosure.md">Affilates Disclosure</a></li>
         </ul>
     </div>
     <div class="footer-column">
@@ -224,8 +230,6 @@
             <li><a href="https://boilermanuals.com" target="page-content">Boiler Manuals</a></li>
             <li><a href="https://combiboiler.com" target="page-content">Combi Boiler</a></li>
             <li><a href="https://boilerservice.com" target="page-content">Boiler Service</a></li>
-
-            
         </ul>
     </div>
     <div class="footer-column">
@@ -415,17 +419,26 @@
 
     .content-container {
         width: 100%;
-        /* Adjust height as needed */
-        height: calc(100vh - 200px); /* Subtract header/footer height */
+        max-width: 100%;
+        height: auto;
+        min-height: 100%;
         margin: 0 auto;
+        overflow: visible;
+        box-sizing: border-box;
     }
 
     #page-content {
         width: 100%;
-        height: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 100%;
         border: none;
-        overflow: auto;
+        overflow: visible;
+        box-sizing: border-box;
     }
 </style>
+
+<!-- Add markdown.js before the closing body tag -->
+<script src="js/markdown.js"></script>
 </body>
 </html>
