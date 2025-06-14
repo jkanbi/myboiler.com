@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="css/markdown.css">
     <!-- Add marked.js for markdown parsing -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Add menu.js for navigation functionality -->
+    <script src="js/menu.js"></script>
 </head>
 <body>
 <div class="menu-overlay"></div>
@@ -174,7 +176,7 @@
     </div>
 </header>
 
-<div class="ar-box-pair-grid" id="box-pair-grid">
+<div class="ar-box-pair-grid">
   <a class="ar-box-pair" href="https://myboiler.com/money-and-energy-saving/?source=homepage">
     <img src="https://myboiler.com/wp-content/uploads/2024/07/energy-saving.jpg" alt="Energy Saving" width="100" height="100" />
     <span class="ar-box-pair-title">ENERGY SAVING</span>
@@ -197,21 +199,17 @@
   </a>
 </div>
 
-<!-- Content container that will replace the box pair grid -->
-<div class="content-container" id="content-container" style="display: none;">
-    <div id="page-content" class="markdown-content"></div>
-</div>
-
 <!-- Main footer with 4 columns -->
 <footer class="footer">
     <div class="footer-column">
         <h3>About Us</h3>
         <ul>
-            <li><a href="pages/about-us.md">Company</a></li>
-            <li><a href="pages/carbon-emissions.md">Carbon Emissions</a></li>
-            <li><a href="pages/mission.md">Our Mission</a></li>
-            <li><a href="pages/privacy-policy.md">Privacy Policy</a></li>
-            <li><a href="pages/affiliate-disclosure.md">Affilates Disclosure</a></li>
+            <li><a href="pages/wp-about-us.html" target="page-content">Company</a></li>
+            <li><a href="pages/wp-carbon-emissions.html" target="page-content">Carbon Emissions</a></li>
+            <li><a href="pages/wp-ar-mission.html" target="page-content">Our Mission</a></li>
+            <li><a href="pages/wp-privacy-policy.html" target="page-content">Privacy Policy</a></li>
+            <li><a href="pages/wp-affilate-activity-disclosure.html" target="page-content">Affilates Disclosure</a></li>
+
         </ul>
     </div>
     <div class="footer-column">
@@ -230,6 +228,8 @@
             <li><a href="https://boilermanuals.com" target="page-content">Boiler Manuals</a></li>
             <li><a href="https://combiboiler.com" target="page-content">Combi Boiler</a></li>
             <li><a href="https://boilerservice.com" target="page-content">Boiler Service</a></li>
+
+            
         </ul>
     </div>
     <div class="footer-column">
@@ -306,107 +306,6 @@
 <footer class="copyright">
     <p>© 2025 MyBoiler.com - All rights reserved.</p>
 </footer>
-
-<script>
-	function toggleMenu() {
-		const navMenu = document.getElementById('nav-menu');
-		const overlay = document.querySelector('.menu-overlay');
-		const hamburger = document.querySelector('.hamburger-menu');
-		navMenu.classList.toggle('active');
-		overlay.classList.toggle('active');
-		hamburger.classList.toggle('open');
-	}
-	
-	document.addEventListener('DOMContentLoaded', () => {
-		const navMenu = document.getElementById('nav-menu');
-		const hamburgerMenu = document.querySelector('.hamburger-menu');
-
-        // Mobile: toggle mega menu with arrow
-        document.querySelectorAll('.nav-dropdown-label').forEach(label => {
-            label.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    const parent = label.closest('.nav-item-has-dropdown');
-                    parent.classList.toggle('active');
-                }
-            });
-        });
-
-        // Mega menu hover delay for desktop
-        let megaMenuTimeout;
-        const navDropdown = document.querySelector('.nav-item-has-dropdown');
-        const megaMenu = navDropdown ? navDropdown.querySelector('.mega-menu') : null;
-        if (navDropdown && megaMenu) {
-            navDropdown.addEventListener('mouseenter', () => {
-                if (window.innerWidth >= 769) {
-                    clearTimeout(megaMenuTimeout);
-                    megaMenu.style.display = 'flex';
-                }
-            });
-            navDropdown.addEventListener('mouseleave', () => {
-                if (window.innerWidth >= 769) {
-                    megaMenuTimeout = setTimeout(() => {
-                        megaMenu.style.display = 'none';
-                    }, 220);
-                }
-            });
-            megaMenu.addEventListener('mouseenter', () => {
-                if (window.innerWidth >= 769) {
-                    clearTimeout(megaMenuTimeout);
-                    megaMenu.style.display = 'flex';
-                }
-            });
-            megaMenu.addEventListener('mouseleave', () => {
-                if (window.innerWidth >= 769) {
-                    megaMenuTimeout = setTimeout(() => {
-                        megaMenu.style.display = 'none';
-                    }, 220);
-                }
-            });
-        }
-
-		// Close menu when clicking a menu item
-		document.querySelectorAll('.nav-list a').forEach(link => {
-			link.addEventListener('click', () => {
-				navMenu.classList.remove('active');
-				// Update URL hash
-				const href = link.getAttribute('href').replace('pages/', '').replace('.html', '');
-				window.location.hash = href;
-			});
-		});
-	
-		// Close menu when clicking anywhere outside the menu or toggle button
-		document.addEventListener('click', (e) => {
-			if (navMenu.classList.contains('active')) {
-				if (!navMenu.contains(e.target) && !hamburgerMenu.contains(e.target)) {
-					navMenu.classList.remove('active');
-				}
-			}
-		});
-	
-		// Handle direct navigation via URL hash
-		window.addEventListener('load', () => {
-			const hash = window.location.hash.slice(1);
-			if (hash) {
-				const page = `pages/${hash}.html`;
-				document.getElementById('page-content').src = page;
-			}
-		});
-
-        document.querySelector('.menu-overlay').addEventListener('click', () => {
-            document.getElementById('nav-menu').classList.remove('active');
-            document.querySelector('.menu-overlay').classList.remove('active');
-            document.querySelector('.hamburger-menu').classList.remove('open');
-        });
-	});
-	
-	document.addEventListener('click', function(e) {
-		if (e.target.tagName === 'A') {
-			window.scrollTo({ top: 0, behavior: 'smooth' });
-		}
-	});
-
-</script>
 
 <style>
     #app-content {
