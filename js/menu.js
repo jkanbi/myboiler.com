@@ -33,7 +33,18 @@ document.addEventListener('DOMContentLoaded', () => {
         label.addEventListener('click', function(e) {
             if (window.innerWidth <= 768) {
                 e.preventDefault();
-                const parent = label.closest('.nav-item-has-dropdown');
+                e.stopPropagation();
+                const parent = this.closest('.nav-item-has-dropdown');
+                const wasActive = parent.classList.contains('active');
+                
+                // Close all other dropdowns
+                document.querySelectorAll('.nav-item-has-dropdown.active').forEach(item => {
+                    if (item !== parent) {
+                        item.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current dropdown
                 parent.classList.toggle('active');
             }
         });
