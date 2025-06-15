@@ -13,7 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return markdown;
         } catch (error) {
             console.error('Error loading markdown:', error);
-            return '# Page Not Found\n\nThe requested page could not be found.';
+            return `
+# Page Not Found
+
+The requested page could not be found. Please check the URL or return to the [homepage](/).
+            `;
         }
     }
 
@@ -22,6 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Convert markdown to HTML using marked
         const html = marked.parse(markdown);
         pageContent.innerHTML = html;
+        
+        // Add error page class if it's a 404
+        if (markdown.includes('Page Not Found')) {
+            pageContent.classList.add('error-page');
+        } else {
+            pageContent.classList.remove('error-page');
+        }
     }
 
     // Show content and hide box pair grid
