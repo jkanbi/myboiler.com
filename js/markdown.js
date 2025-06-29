@@ -73,6 +73,16 @@ The requested page could not be found. Please check the URL or return to the [ho
                 }
             });
         });
+        
+        // Handle external links to open in new tab
+        const externalLinks = document.querySelectorAll('a[href^="http://"], a[href^="https://"]');
+        externalLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Set target to _blank for external links
+                link.setAttribute('target', '_blank');
+                // Don't prevent default - let the link open normally
+            });
+        });
     }
 
     // Handle initial page load

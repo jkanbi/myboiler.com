@@ -85,11 +85,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close menu when clicking a menu item
     document.querySelectorAll('.nav-list a').forEach(link => {
-        link.addEventListener('click', () => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            
+            // Check if it's an external link (starts with http:// or https://)
+            if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
+                // For external links, open in new tab and don't prevent default
+                link.setAttribute('target', '_blank');
+                return; // Don't prevent default, let the link open normally
+            }
+            
+            // For internal links, handle SPA navigation
+            e.preventDefault();
             navMenu.classList.remove('active');
             // Update URL hash
-            const href = link.getAttribute('href').replace('pages/', '').replace('.html', '');
-            window.location.hash = href;
+            const pageHash = href.replace('pages/', '').replace('.html', '');
+            window.location.hash = pageHash;
         });
     });
 
