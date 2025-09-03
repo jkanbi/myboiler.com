@@ -1056,6 +1056,36 @@
   }
 }
 
+@media (min-width: 1200px) {
+  .ar-box-pair-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 24px;
+    max-width: 1400px;
+    padding: 80px 0;
+    margin: 60px auto;
+  }
+  
+  .ar-box-pair {
+    min-height: 280px;
+    padding: 20px 12px 14px 12px;
+  }
+  
+  .ar-box-pair img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 14px;
+  }
+  
+  .ar-box-pair-title {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+  }
+  
+  .ar-box-pair-text {
+    font-size: 0.9rem;
+  }
+}
+
 @media (max-width: 480px) {
   .ar-box-pair {
     min-height: 0;
