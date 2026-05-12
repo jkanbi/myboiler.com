@@ -1,3 +1,62 @@
+/* Inline hero video inserted above the 4-tile grid (homepage). */
+.ar-hero-video {
+  width: calc(100% - 32px);
+  max-width: 1100px;
+  margin: 18px auto 14px;
+  border: 0 !important;
+  border-bottom: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+.ar-hero-video__inner {
+  width: 37.5%;
+  max-width: 420px;
+  margin: 0 auto;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.ar-hero-video__media {
+  display: block;
+  width: 100% !important;
+  height: auto;
+  margin: 0;
+  border: 0 !important;
+  outline: 0 !important;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none;
+}
+
+.ar-hero-video__media:focus,
+.ar-hero-video__media:focus-visible,
+.ar-hero-video__media:active {
+  outline: 0 !important;
+}
+
+@media screen and (max-width: 768px) {
+  .ar-hero-video__inner {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .ar-hero-video__media {
+    width: 100% !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ar-hero-video__media {
+    animation: none;
+  }
+}
+
 .video-banner {
   position: relative;
   width: 100%;

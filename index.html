@@ -8,6 +8,29 @@
     <link rel="stylesheet" type="text/css" href="css/all.min.css">
     <link rel="stylesheet" type="text/css" href="css/video-banner.css">
     <link rel="stylesheet" type="text/css" href="css/markdown.css">
+    <style>
+        .ar-chat-cta { position: relative; }
+        .ar-chat-cta__subtext {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: calc(100% + 8px);
+            transform: translateX(-50%);
+            z-index: 20;
+            pointer-events: none;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.78);
+            color: #fff;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+            max-width: min(52ch, calc(100vw - 48px));
+        }
+        .ar-chat-cta__button:hover ~ .ar-chat-cta__subtext,
+        .ar-chat-cta__button:focus ~ .ar-chat-cta__subtext,
+        .ar-chat-cta__button:focus-visible ~ .ar-chat-cta__subtext {
+            display: block;
+        }
+    </style>
     <!-- Add marked.js for markdown parsing -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <!-- Add menu.js for navigation functionality -->
@@ -174,6 +197,36 @@
         </nav>
     </div>
 </header>
+
+<section class="ar-hero-video" aria-label="Boiler waving video">
+    <div class="ar-hero-video__inner" style="width: 37.5%; max-width: 420px; margin: 0 auto; background: transparent; border: 0; border-bottom: 0; outline: 0; box-shadow: none; border-radius: 14px; overflow: hidden;">
+        <video
+            class="ar-hero-video__media"
+            src="assets/boiler-waving.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            style="display: block; width: 100%; height: auto; border: 0; outline: 0; box-shadow: none; border-radius: 0; background: transparent;"
+        ></video>
+    </div>
+</section>
+
+<div class="ar-chat-cta" aria-label="Talk to Boiler Help AI" style="width: calc(100% - 32px); max-width: 1100px; margin: 8px auto 10px; display: none; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+    <a
+        class="ar-chat-cta__button"
+        href="https://chat.myboiler.com"
+        target="_blank"
+        rel="noopener"
+        style="display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:999px;text-decoration:none;font-weight:700;letter-spacing:0.3px;color:#fff;background:linear-gradient(135deg,#0a8d4c,#2353a2);border:0;box-shadow:0 10px 20px rgba(0,0,0,0.16);"
+    >
+        Click to talk
+    </a>
+    <div class="ar-chat-cta__subtext" style="text-align: center; font-size: 0.95rem; opacity: 1; margin: 0;">
+        Ask about boiler pressure, fault codes, controls, efficiency.
+    </div>
+</div>
 
 <div class="ar-box-pair-grid" id="box-pair-grid">
   <a class="ar-box-pair" href="https://hub.arated.com/money-and-energy-saving/?source=homepage">

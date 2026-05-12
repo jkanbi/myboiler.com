@@ -998,6 +998,52 @@
   box-sizing: border-box;
 }
 
+/* Homepage chat CTA (Option A: link to chat.myboiler.com) */
+.ar-chat-cta {
+  width: calc(100% - 32px);
+  max-width: 1100px;
+  margin: 8px auto 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.ar-chat-cta__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #fff;
+  background: linear-gradient(135deg, #0a8d4c, #2353a2);
+  border: 0;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.ar-chat-cta__button:hover,
+.ar-chat-cta__button:focus {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+}
+
+.ar-chat-cta__button:active {
+  transform: translateY(0px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16);
+}
+
+.ar-chat-cta__subtext {
+  text-align: center;
+  font-size: 0.95rem;
+  opacity: 0.85;
+  max-width: 52ch;
+}
+
 .ar-box-pair {
   display: flex;
   flex-direction: column;
