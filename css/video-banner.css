@@ -44,13 +44,26 @@
 }
 
 @media screen and (max-width: 768px) {
-  .ar-hero-video__inner {
+  .ar-hero-video {
     width: 100%;
-    max-width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    box-sizing: border-box;
+  }
+
+  .ar-hero-video__inner {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .ar-hero-video__media {
     width: 100% !important;
+    max-width: none;
   }
 }
 
