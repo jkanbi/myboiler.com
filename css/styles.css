@@ -1,3 +1,29 @@
+		/* -------------------------------------------------------------------------
+		   THEME: forced light only (automatic system dark/light disabled — no toggle).
+		   To re-enable OS prefers-color-scheme, delete the :root + .light-mode-logo
+		   block below and uncomment the two @media (prefers-color-scheme: …) blocks.
+		   ------------------------------------------------------------------------- */
+		:root {
+            color-scheme: light;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #f0f0f0;
+            --border-color: #cccccc;
+            --button-bg: #e0e0e0;
+            --button-text: #000000;
+            --link-color: #0000ee;
+            --footercols-color:#191970;
+            --footer-link-color:#ffffff;
+            --copyright-color: #000040;
+        }
+		.dark-mode-logo {
+			display: none;
+		}
+		.light-mode-logo {
+			display: block;
+		}
+
+		/*
 		@media (prefers-color-scheme: light) {
 		:root {
             --bg-color: #ffffff;
@@ -12,7 +38,6 @@
             --copyright-color: #000040;
 			
         }
-			/* Hide dark mode logo by default */
 			.dark-mode-logo {
 				display: none;
 			}
@@ -41,6 +66,7 @@
 				display: block;
 			}
         }
+		*/
 
         body {
             margin: 0;
