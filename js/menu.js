@@ -88,11 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', (e) => {
             const href = link.getAttribute('href');
             
-            // Check if it's an external link (starts with http:// or https://)
+            // External links: allow normal navigation (same tab)
             if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
-                // For external links, open in new tab and don't prevent default
-                link.setAttribute('target', '_blank');
-                return; // Don't prevent default, let the link open normally
+                return;
             }
             
             // For internal links, handle SPA navigation
