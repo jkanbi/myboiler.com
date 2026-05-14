@@ -16,9 +16,9 @@
     const isStaticAsset = pathSegments.length > 0 && STATIC_FOLDERS.includes(pathSegments[0]);
     const isRootFile = ROOT_FILES.includes(pathSegments[0] || '') || path === '/';
     
-    // If it's not a static asset or root file, redirect to hub.arated.com
+    // If it's not a static asset or root file, redirect to hub.myboiler.com
     if (!isStaticAsset && !isRootFile) {
-        const redirectUrl = `https://hub.arated.com${path}${window.location.search}`;
+        const redirectUrl = `https://hub.myboiler.com${path}${window.location.search}`;
         console.log(`Redirecting to: ${redirectUrl}`);
         window.location.href = redirectUrl;
     }

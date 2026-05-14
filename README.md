@@ -5,7 +5,7 @@ MyBoiler.com Root - GitHub Pages Implementation
 
 This project implements routing logic for GitHub Pages where:
 - Requests for `css/`, `js/`, `img/`, and `pages/` folders are served from myboiler.com
-- All other requests are redirected to hub.arated.com using client-side JavaScript
+- All other requests are redirected to hub.myboiler.com using client-side JavaScript
 
 ## How It Works
 
@@ -17,7 +17,7 @@ Files in the following folders are served directly from myboiler.com:
 - `pages/` - Page content
 
 ### Redirects
-All other requests are redirected to hub.arated.com using:
+All other requests are redirected to hub.myboiler.com using:
 1. **`redirect.js`** - Client-side redirect script included in `index.html`
 2. **`404.html`** - GitHub Pages 404 page that handles redirects for non-existent routes
 
@@ -51,8 +51,8 @@ This repo intentionally does **not** host the chat backend (API keys must never 
 - `myboiler.com/js/menu.js` → Served from myboiler.com  
 - `myboiler.com/img/myboiler-logo-light.svg` → Served from myboiler.com
 - `myboiler.com/pages/about-us.md` → Served from myboiler.com
-- `myboiler.com/boiler-service/` → Redirected to `hub.arated.com/boiler-service/`
-- `myboiler.com/heat-pumps/` → Redirected to `hub.arated.com/heat-pumps/`
+- `myboiler.com/boiler-service/` → Redirected to `hub.myboiler.com/boiler-service/`
+- `myboiler.com/heat-pumps/` → Redirected to `hub.myboiler.com/heat-pumps/`
 
 ## Configuration
 
