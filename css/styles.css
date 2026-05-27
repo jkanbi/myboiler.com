@@ -796,6 +796,13 @@
     .mega-menu-column a:last-child {
         border-bottom: none;
     }
+
+    .mega-menu-column .calculators-hub-note {
+        margin: 0 20px 8px;
+        color: #fff;
+        font-size: 0.85rem;
+        line-height: 1.35;
+    }
     .dropdown-toggle {
         display: inline-block;
         width: 20px;
@@ -930,6 +937,40 @@
         color: #000000;
         background: transparent;
         text-decoration: none;
+    }
+
+    .mega-menu .calculators-hub-note {
+        margin: 6px 0 12px;
+        color: #475569;
+        font-size: 0.85rem;
+        line-height: 1.35;
+        max-width: 52ch;
+    }
+
+    /* Make the "View calculators on the Hub" link look like a button on desktop */
+    .mega-menu .calculators-hub-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 10px !important;
+        margin: 10px 0 0;
+        border-radius: 999px;
+        background: #2353a2;
+        color: #ffffff !important;
+        text-decoration: none;
+        font-weight: 700;
+        line-height: 1.2;
+        width: auto;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+    }
+
+    .mega-menu .calculators-hub-button:hover,
+    .mega-menu .calculators-hub-button:focus {
+        background: #1f3f8d !important;
+        color: #ffffff !important;
+        text-decoration: none;
+        padding: 10px 10px !important;
     }
 
     .dropdown-toggle,
