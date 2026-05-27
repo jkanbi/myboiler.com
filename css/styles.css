@@ -94,6 +94,7 @@
 		} */
 
 		.tagline {
+			display: none;
 			font-size: 14px;
 			color: #555;
 			font-weight:bold;
