@@ -1,0 +1,10 @@
+{
+  "name": "myboiler-com",
+  "private": true,
+  "scripts": {
+    "serve": "live-server . --port=8000 --entry-file=index.html"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
