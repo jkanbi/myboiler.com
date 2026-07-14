@@ -268,6 +268,88 @@
 				line-height: 1.35;
 			}
 
+			.mega-menu--hub-cards {
+				padding: 0 !important;
+				display: none;
+				gap: 0;
+			}
+
+			.nav-item-has-dropdown.active .mega-menu--hub-cards {
+				display: block;
+			}
+
+			.nav-list .mega-menu-card--hub-home {
+				display: none !important;
+			}
+
+			.nav-list .mega-menu-card {
+				display: flex !important;
+				flex-direction: row !important;
+				align-items: center !important;
+				justify-content: flex-start !important;
+				gap: 8px;
+				padding: 12px 20px !important;
+				margin: 0 !important;
+				border: none !important;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+				border-radius: 0;
+				background: transparent;
+				box-shadow: none;
+				color: #fff;
+				text-decoration: none;
+				min-height: 44px;
+				aspect-ratio: auto;
+				width: 100%;
+			}
+
+			.nav-list .mega-menu-card:last-child {
+				border-bottom: none !important;
+			}
+
+			.nav-list .mega-menu-card-body {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				gap: 0;
+				min-width: 0;
+				flex: 1;
+				text-align: left;
+			}
+
+			.nav-list .mega-menu-card h4 {
+				margin: 0;
+				padding: 0;
+				color: #fff;
+				font-size: 1rem;
+				font-weight: bold;
+				letter-spacing: 0;
+				line-height: 1.2;
+			}
+
+			.nav-list .mega-menu-card-icon {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				width: 20px;
+				height: 20px;
+				margin: 0;
+				flex: 0 0 20px;
+				border-radius: 0;
+				background: transparent;
+				color: #fff;
+				text-align: center;
+			}
+
+			.nav-list .mega-menu-card-icon svg {
+				width: 20px;
+				height: 20px;
+				display: block;
+			}
+
+			.nav-list .mega-menu-card-desc {
+				display: none;
+			}
+
 			.dropdown-toggle {
 				display: inline-block;
 				width: 20px;
@@ -797,6 +879,99 @@
         border-bottom: none;
     }
 
+    .mega-menu--hub-cards {
+        display: none;
+        gap: 0;
+        padding: 0;
+    }
+
+    .nav-item-has-dropdown.active .mega-menu--hub-cards {
+        display: block;
+    }
+
+    .nav-list .mega-menu-card--hub-home {
+        display: none;
+    }
+
+    .nav-list .mega-menu-card {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        padding: 12px 20px;
+        margin: 0;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        color: #fff;
+        text-decoration: none;
+        min-height: 44px;
+        aspect-ratio: auto;
+        width: 100%;
+    }
+
+    .nav-list .mega-menu-card:last-child {
+        border-bottom: none;
+    }
+
+    .nav-list .mega-menu-card-body {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0;
+        min-width: 0;
+        flex: 1;
+        text-align: left;
+    }
+
+    .nav-list .mega-menu-card h4 {
+        margin: 0;
+        padding: 0;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: bold;
+        letter-spacing: 0;
+        line-height: 1.2;
+    }
+
+    .nav-list .mega-menu-card-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        margin: 0;
+        flex: 0 0 20px;
+        border-radius: 0;
+        background: transparent;
+        color: #fff;
+    }
+
+    .nav-list .mega-menu-card-icon svg {
+        width: 20px;
+        height: 20px;
+        display: block;
+    }
+
+    .nav-list .mega-menu-card-desc {
+        display: none;
+    }
+
+    .nav-list .mega-menu-card:hover,
+    .nav-list .mega-menu-card:focus {
+        background-color: transparent;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .nav-list .mega-menu-card:hover h4,
+    .nav-list .mega-menu-card:focus h4 {
+        text-decoration: underline;
+    }
+
     .mega-menu-column .calculators-hub-note {
         margin: 0 20px 8px;
         color: #fff;
@@ -902,6 +1077,127 @@
 
     .nav-item-has-dropdown.is-open .mega-menu {
         display: flex;
+    }
+
+    .mega-menu--hub-cards {
+        display: none;
+        width: min(1080px, calc(100vw - 48px));
+        max-width: min(1080px, calc(100vw - 48px));
+        padding: 20px;
+        gap: 14px;
+        flex-wrap: nowrap;
+        justify-content: stretch;
+        align-items: stretch;
+    }
+
+    .nav-item-has-dropdown.is-open .mega-menu--hub-cards {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .mega-menu-card,
+    .nav-list .mega-menu-card {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 10px;
+        aspect-ratio: 1 / 1;
+        width: 100%;
+        min-height: 0;
+        height: auto;
+        padding: 18px 16px;
+        margin: 0;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        background: #ffffff;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+        text-decoration: none;
+        color: #1e293b;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+        box-sizing: border-box;
+    }
+
+    .mega-menu-card-body {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .mega-menu-card h4 {
+        margin: 0;
+        padding: 0;
+        color: #2353a2;
+        font-size: 0.98rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        line-height: 1.25;
+    }
+
+    .mega-menu-card-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        border-radius: 12px;
+        background: #eef4fb;
+        color: #2353a2;
+    }
+
+    .mega-menu-card-icon svg {
+        width: 24px;
+        height: 24px;
+        display: block;
+    }
+
+    .mega-menu-card-desc {
+        margin: 0;
+        color: #475569;
+        font-size: 0.84rem;
+        line-height: 1.4;
+        font-weight: 400;
+    }
+
+    .mega-menu-card-desc--full {
+        display: block;
+    }
+
+    .mega-menu-card-desc--brief {
+        display: none;
+    }
+
+    .nav-list .mega-menu-card:hover,
+    .nav-list .mega-menu-card:focus {
+        transform: translateY(-2px);
+        border-color: #dbeafe;
+        background: #f8fbff;
+        background-color: #f8fbff;
+        box-shadow: 0 10px 24px rgba(35, 83, 162, 0.08);
+        color: #1e293b;
+        text-decoration: none;
+        outline: none;
+    }
+
+    .nav-list .mega-menu-card:hover .mega-menu-card-icon,
+    .nav-list .mega-menu-card:focus .mega-menu-card-icon {
+        background: #e3edf9;
+        color: #2353a2;
+    }
+
+    .nav-list .mega-menu-card:hover h4,
+    .nav-list .mega-menu-card:focus h4 {
+        color: #2353a2;
+        text-decoration: none;
+    }
+
+    .nav-list .mega-menu-card:hover .mega-menu-card-desc,
+    .nav-list .mega-menu-card:focus .mega-menu-card-desc {
+        color: #475569;
     }
 
     .mega-menu-column {
