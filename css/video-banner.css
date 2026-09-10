@@ -1,4 +1,5 @@
-/* Inline hero video inserted above the 4-tile grid (homepage). */
+/* Legacy hero video styles (replaced by new ar-hero in styles.css) */
+/* Keeping for reference if needed on other pages */
 .ar-hero-video {
   width: calc(100% - 32px);
   max-width: 1320px;
@@ -18,7 +19,6 @@
   border-bottom: 0 !important;
   outline: 0 !important;
   box-shadow: none !important;
-  /* No border-radius + visible overflow: rounded corners were clipping the frame */
   border-radius: 0;
   overflow: visible;
 }
@@ -33,7 +33,6 @@
   border-radius: 0;
   background: transparent !important;
   box-shadow: none;
-  /* Show entire encoded frame (no crop). If file is tight-framed, re-export with padding. */
   object-fit: contain;
 }
 
