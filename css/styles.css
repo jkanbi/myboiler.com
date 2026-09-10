@@ -1395,6 +1395,138 @@
     font-weight: bold; /* Make navbar labels and Manuals label bold */
 }
 
+/* Hero Section - Apple-simple design */
+.ar-hero {
+  width: 100%;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 3.5rem clamp(20px, 5vw, 40px) 3rem;
+}
+
+.ar-hero__container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.ar-hero__content {
+  text-align: center;
+  max-width: 720px;
+}
+
+.ar-hero__headline {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text);
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+}
+
+.ar-hero__subheadline {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0 0 2rem;
+  max-width: 58ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ar-hero__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.ar-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  min-width: 200px;
+  box-sizing: border-box;
+}
+
+.ar-hero__cta--primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(24, 99, 220, 0.25);
+}
+
+.ar-hero__cta--primary:hover,
+.ar-hero__cta--primary:focus {
+  background: var(--accent-dark);
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(24, 99, 220, 0.35);
+  transform: translateY(-1px);
+}
+
+.ar-hero__cta--secondary {
+  background: var(--surface);
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.ar-hero__cta--secondary:hover,
+.ar-hero__cta--secondary:focus {
+  background: var(--bg);
+  color: var(--text);
+  text-decoration: none;
+  border-color: var(--accent);
+  box-shadow: var(--shadow-md);
+}
+
+.ar-hero__mascot {
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.ar-hero__mascot-media {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  object-fit: contain;
+}
+
+/* Topics Section */
+.ar-topics {
+  width: 100%;
+  background: var(--bg);
+  padding: 0;
+}
+
+.ar-topics__header {
+  text-align: center;
+  padding: 2.5rem clamp(20px, 5vw, 40px) 0;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.ar-topics__title {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
 /* AR Box Pair Grid Styles - CombiBoiler design */
 .ar-box-pair-grid {
   display: grid;
@@ -1404,48 +1536,6 @@
   max-width: var(--max-width);
   margin: 0 auto;
   box-sizing: border-box;
-}
-
-/* Homepage chat CTA (Option A: link to chat.myboiler.com) */
-.ar-chat-cta {
-  width: calc(100% - 32px);
-  max-width: var(--max-width);
-  margin: 0 auto 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.ar-chat-cta__button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.7rem 1.35rem;
-  border-radius: 999px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.9375rem;
-  color: #fff;
-  background: var(--accent);
-  border: 0;
-  box-shadow: 0 2px 8px rgba(24, 99, 220, 0.25);
-  transition: background 0.15s ease, box-shadow 0.15s ease;
-}
-
-.ar-chat-cta__button:hover,
-.ar-chat-cta__button:focus {
-  background: var(--accent-dark);
-  color: #fff;
-  text-decoration: none;
-  box-shadow: 0 4px 14px rgba(24, 99, 220, 0.3);
-}
-
-.ar-chat-cta__subtext {
-  text-align: center;
-  font-size: 0.875rem;
-  color: var(--text-muted);
-  max-width: 52ch;
 }
 
 .ar-box-pair {
@@ -1499,10 +1589,47 @@
   line-height: 1.65;
 }
 
+@media (min-width: 600px) {
+  .ar-hero__actions {
+    flex-direction: row;
+    gap: 1rem;
+  }
+}
+
 @media (min-width: 700px) {
   .ar-box-pair-grid {
     grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
     gap: 1rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .ar-hero__container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+  
+  .ar-hero__content {
+    text-align: left;
+    flex: 1;
+    max-width: 620px;
+  }
+  
+  .ar-hero__subheadline {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .ar-hero__actions {
+    justify-content: flex-start;
+  }
+  
+  .ar-hero__mascot {
+    flex: 0 0 300px;
+    max-width: 300px;
+    margin: 0;
   }
 }
 
@@ -1511,6 +1638,11 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     padding: 3rem clamp(20px, 5vw, 40px);
+  }
+  
+  .ar-hero__mascot {
+    flex: 0 0 340px;
+    max-width: 340px;
   }
 }
 
