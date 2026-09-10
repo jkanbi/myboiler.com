@@ -156,21 +156,22 @@
 			font-weight: 500;
 		}
 		
-		/* Navigation Menu Styles - Pill design */
-		.hamburger-menu {
-			display: none;
-			background: none;
-			border: 1px solid var(--border);
-			border-radius: 10px;
-			background: var(--surface);
-			cursor: pointer;
-			padding: 0;
-			width: 2.75rem;
-			height: 2.75rem;
-			align-items: center;
-			justify-content: center;
-			z-index: 10000;
-		}
+	/* Navigation Menu Styles - Pill design */
+	.hamburger-menu {
+		display: none;
+		background: none;
+		border: 1px solid var(--border);
+		border-radius: 10px;
+		background: var(--surface);
+		cursor: pointer;
+		padding: 0;
+		width: 2.75rem;
+		height: 2.75rem;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		z-index: 10000;
+	}
 
 		.hamburger-line {
 			display: block;
