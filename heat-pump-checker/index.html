@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heat Pump Suitability Checker - MyBoiler.com</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        /* Heat pump checker page specific styles */
+        .checker-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .checker-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .checker-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .checker-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .checker-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 60ch;
+        }
+
+        .checker-form {
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
+        }
+
+        .form-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-section:last-of-type {
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--text);
+            box-sizing: border-box;
+            font-family: var(--font);
+            transition: border-color 0.2s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-radio-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9375rem;
+            color: var(--text);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--radius);
+            transition: background 0.2s ease;
+        }
+
+        .form-radio-label:hover {
+            background: var(--bg);
+        }
+
+        .form-radio-label input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 0.85rem 1.75rem;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(24, 99, 220, 0.25);
+        }
+
+        .form-submit:hover,
+        .form-submit:focus {
+            background: var(--accent-dark);
+            box-shadow: 0 6px 20px rgba(24, 99, 220, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .result-card {
+            display: none;
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
+        }
+
+        .result-card.visible {
+            display: block;
+        }
+
+        .result-score {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .result-score-number {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--accent);
+            margin: 0;
+        }
+
+        .result-score-label {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin: 0.5rem 0 0;
+        }
+
+        .result-section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .result-section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .result-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 0.5rem;
+        }
+
+        .result-value {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .result-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .result-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.85rem 1.75rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
+
+        .result-cta--primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(24, 99, 220, 0.25);
+        }
+
+        .result-cta--primary:hover,
+        .result-cta--primary:focus {
+            background: var(--accent-dark);
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(24, 99, 220, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .result-cta--secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .result-cta--secondary:hover,
+        .result-cta--secondary:focus {
+            background: var(--bg);
+            color: var(--text);
+            text-decoration: none;
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .result-cta--whatsapp {
+            background: #25d366;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
+        }
+
+        .result-cta--whatsapp:hover,
+        .result-cta--whatsapp:focus {
+            background: #20bd5c;
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .checker-disclaimer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 70ch;
+            margin: 1rem auto;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .checker-disclaimer strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .footer-links {
+            white-space: nowrap;
+            margin: 0.5rem 0 0;
+        }
+
+        @media (min-width: 600px) {
+            .result-actions {
+                flex-direction: row;
+                gap: 1rem;
+            }
+
+            .result-cta {
+                flex: 1;
+                min-width: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .checker-form,
+            .result-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="checker-page">
+    <!-- Header -->
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+    </header>
+
+    <!-- Checker Content -->
+    <div class="checker-container">
+        <div class="checker-header">
+            <h1 class="checker-headline">Is Your Home Ready for a Heat Pump?</h1>
+            <p class="checker-connector">
+                Answer a few simple questions to get a suitability assessment for your property.
+            </p>
+        </div>
+
+        <!-- Form -->
+        <form id="checker-form" class="checker-form">
+            <div class="form-section">
+                <label for="postcode" class="form-label">Postcode (optional)</label>
+                <input type="text" id="postcode" name="postcode" class="form-input" placeholder="e.g. SW1A 1AA">
+            </div>
+
+            <div class="form-section">
+                <label for="property-type" class="form-label">Property Type</label>
+                <select id="property-type" name="property-type" class="form-select" required>
+                    <option value="">Select...</option>
+                    <option value="detached">Detached</option>
+                    <option value="semi">Semi-detached</option>
+                    <option value="terrace">Terrace</option>
+                    <option value="flat">Flat / Apartment</option>
+                    <option value="bungalow">Bungalow</option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <label for="bedrooms" class="form-label">Number of Bedrooms</label>
+                <select id="bedrooms" name="bedrooms" class="form-select" required>
+                    <option value="">Select...</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5+</option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <label for="current-heating" class="form-label">Current Heating System</label>
+                <select id="current-heating" name="current-heating" class="form-select" required>
+                    <option value="">Select...</option>
+                    <option value="gas-combi">Gas Combi Boiler</option>
+                    <option value="gas-system">Gas System Boiler</option>
+                    <option value="oil">Oil Boiler</option>
+                    <option value="lpg">LPG Boiler</option>
+                    <option value="electric">Electric Heating</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <label for="floor-area" class="form-label">Approximate Floor Area (m²)</label>
+                <input type="text" id="floor-area" name="floor-area" class="form-input" placeholder="e.g. 100 or 'not sure'">
+            </div>
+
+            <div class="form-section">
+                <label class="form-label">Radiators</label>
+                <div class="form-radio-group">
+                    <label class="form-radio-label">
+                        <input type="radio" name="radiators" value="modern" required>
+                        <span>Mostly modern (large, efficient)</span>
+                    </label>
+                    <label class="form-radio-label">
+                        <input type="radio" name="radiators" value="mixed" required>
+                        <span>Mixed sizes</span>
+                    </label>
+                    <label class="form-radio-label">
+                        <input type="radio" name="radiators" value="old" required>
+                        <span>Old cast iron / small singles</span>
+                    </label>
+                    <label class="form-radio-label">
+                        <input type="radio" name="radiators" value="not-sure" required>
+                        <span>Not sure</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <label class="form-label">Outdoor Space for Outdoor Unit</label>
+                <div class="form-radio-group">
+                    <label class="form-radio-label">
+                        <input type="radio" name="outdoor-space" value="yes" required>
+                        <span>Yes, plenty</span>
+                    </label>
+                    <label class="form-radio-label">
+                        <input type="radio" name="outdoor-space" value="limited" required>
+                        <span>Limited</span>
+                    </label>
+                    <label class="form-radio-label">
+                        <input type="radio" name="outdoor-space" value="no" required>
+                        <span>No</span>
+                    </label>
+                    <label class="form-radio-label">
+                        <input type="radio" name="outdoor-space" value="not-sure" required>
+                        <span>Not sure</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <label class="form-label">Hot Water Cylinder Space</label>
+                <div class="form-radio-group">
+                    <label class="form-radio-label">
+                        <input type="radio" name="cylinder-space" value="yes" required>
+                        <span>Yes</span>
+                    </label>
+                    <label class="form-radio-label">
+                        <input type="radio" name="cylinder-space" value="no" required>
+                        <span>No</span>
+                    </label>
+                    <label class="form-radio-label">
+                        <input type="radio" name="cylinder-space" value="not-sure" required>
+                        <span>Not sure</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="form-submit">Check Suitability</button>
+        </form>
+
+        <!-- Result Card (hidden initially) -->
+        <div id="result-card" class="result-card">
+            <div class="result-score">
+                <p class="result-score-number" id="score-number">—</p>
+                <p class="result-score-label">Home Heat Pump Score</p>
+            </div>
+
+            <div class="result-section">
+                <h3 class="result-title">Estimated Heat Loss</h3>
+                <p class="result-value" id="heat-loss-value">—</p>
+            </div>
+
+            <div class="result-section">
+                <h3 class="result-title">Likely Heat Pump Size</h3>
+                <p class="result-value" id="heat-pump-size-value">—</p>
+            </div>
+
+            <div class="result-section">
+                <h3 class="result-title">Radiator Upgrade Likelihood</h3>
+                <p class="result-value" id="radiator-upgrade-value">—</p>
+            </div>
+
+            <div class="result-section">
+                <h3 class="result-title">Grant & Cost Estimate</h3>
+                <p class="result-value" id="grant-cost-value">—</p>
+            </div>
+
+            <div class="result-actions">
+                <a href="/quote/?need=heat-pump" class="result-cta result-cta--primary">Get a Quote</a>
+                <a href="/chat/" class="result-cta result-cta--secondary">Ask Boiler Help AI</a>
+                <a href="https://wa.me/442081234411" class="result-cta result-cta--whatsapp">WhatsApp</a>
+            </div>
+        </div>
+
+        <div class="checker-disclaimer">
+            <strong>Important:</strong> This assessment is indicative only. A professional heat loss survey is required for accurate sizing and costing. MyBoiler connects you with qualified engineers who can provide detailed assessments.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+        <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
+    </footer>
+
+    <script>
+        /**
+         * Heat Pump Suitability Calculator
+         * Simple heuristic-based scoring (weights documented inline)
+         */
+        document.getElementById('checker-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const propertyType = document.getElementById('property-type').value;
+            const bedrooms = document.getElementById('bedrooms').value;
+            const currentHeating = document.getElementById('current-heating').value;
+            const floorArea = document.getElementById('floor-area').value;
+            const radiators = document.querySelector('input[name="radiators"]:checked').value;
+            const outdoorSpace = document.querySelector('input[name="outdoor-space"]:checked').value;
+            const cylinderSpace = document.querySelector('input[name="cylinder-space"]:checked').value;
+            
+            // Calculate score (out of 100)
+            let score = 0;
+            
+            // Property type scoring (weight: 15 points)
+            const propertyScores = {
+                'detached': 15,
+                'semi': 12,
+                'bungalow': 14,
+                'terrace': 10,
+                'flat': 6
+            };
+            score += propertyScores[propertyType] || 10;
+            
+            // Bedrooms (weight: 10 points)
+            const bedroomScores = {
+                '1': 12, '2': 12, '3': 10, '4': 8, '5': 7
+            };
+            score += bedroomScores[bedrooms] || 10;
+            
+            // Current heating (weight: 15 points)
+            const heatingScores = {
+                'gas-system': 15, 'oil': 15, 'lpg': 15,
+                'gas-combi': 10, 'electric': 13, 'other': 10
+            };
+            score += heatingScores[currentHeating] || 10;
+            
+            // Radiators (weight: 20 points)
+            const radiatorScores = {
+                'modern': 20, 'mixed': 13, 'old': 8, 'not-sure': 12
+            };
+            score += radiatorScores[radiators] || 12;
+            
+            // Outdoor space (weight: 25 points - critical)
+            const outdoorScores = {
+                'yes': 25, 'limited': 15, 'no': 0, 'not-sure': 12
+            };
+            score += outdoorScores[outdoorSpace] || 12;
+            
+            // Cylinder space (weight: 15 points)
+            const cylinderScores = {
+                'yes': 15, 'no': 5, 'not-sure': 10
+            };
+            score += cylinderScores[cylinderSpace] || 10;
+            
+            // Estimate heat loss (rough heuristic based on bedrooms and property type)
+            let heatLoss = 0;
+            const bedroomsNum = parseInt(bedrooms) || 3;
+            
+            // Base heat loss on bedrooms (6-8 kW per bedroom average UK)
+            heatLoss = bedroomsNum * 7;
+            
+            // Adjust by property type
+            if (propertyType === 'detached') heatLoss *= 1.3;
+            else if (propertyType === 'semi') heatLoss *= 1.1;
+            else if (propertyType === 'flat') heatLoss *= 0.7;
+            
+            // Parse floor area if provided
+            const floorAreaNum = parseInt(floorArea);
+            if (!isNaN(floorAreaNum) && floorAreaNum > 0) {
+                // Adjust based on floor area (rough: 50-70 W/m²)
+                heatLoss = Math.round((floorAreaNum * 60) / 1000);
+            }
+            
+            heatLoss = Math.round(heatLoss);
+            
+            // Likely heat pump size (typically heat loss × 1.1-1.2 for UK climate)
+            const heatPumpSize = Math.round(heatLoss * 1.15);
+            
+            // Radiator upgrade likelihood
+            let radiatorUpgrade = '';
+            if (radiators === 'modern') {
+                radiatorUpgrade = 'Low — your radiators are likely suitable';
+            } else if (radiators === 'mixed') {
+                radiatorUpgrade = 'Medium — some upgrades may be needed';
+            } else if (radiators === 'old') {
+                radiatorUpgrade = 'High — radiator upgrades likely required';
+            } else {
+                radiatorUpgrade = 'Medium — assessment needed';
+            }
+            
+            // Grant and cost estimate
+            let grantCost = '';
+            if (score >= 70) {
+                grantCost = 'The Boiler Upgrade Scheme (BUS) may provide £7,500 grant support. Typical install cost: £8,000–£14,000. After grant: from £500–£6,500.';
+            } else if (score >= 50) {
+                grantCost = 'The Boiler Upgrade Scheme (BUS) may provide £7,500 grant support. Typical install cost: £10,000–£16,000 (additional work may be needed). After grant: from £2,500–£8,500.';
+            } else {
+                grantCost = 'Heat pumps may be challenging for your property. Professional assessment recommended. Grant eligibility depends on specific circumstances.';
+            }
+            
+            // Update result card
+            document.getElementById('score-number').textContent = score;
+            document.getElementById('heat-loss-value').textContent = `Approximately ${heatLoss} kW`;
+            document.getElementById('heat-pump-size-value').textContent = `${heatPumpSize} kW heat pump (typical)`;
+            document.getElementById('radiator-upgrade-value').textContent = radiatorUpgrade;
+            document.getElementById('grant-cost-value').textContent = grantCost;
+            
+            // Show result card and scroll to it
+            const resultCard = document.getElementById('result-card');
+            resultCard.classList.add('visible');
+            resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    </script>
+</body>
+</html>
