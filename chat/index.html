@@ -125,6 +125,21 @@
             white-space: nowrap;
         }
 
+        .chat-handoff__cta--primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(24, 99, 220, 0.25);
+        }
+
+        .chat-handoff__cta--primary:hover,
+        .chat-handoff__cta--primary:focus {
+            background: var(--accent-dark);
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(24, 99, 220, 0.35);
+            transform: translateY(-1px);
+        }
+
         .chat-handoff__cta--whatsapp {
             background: #25d366;
             color: #fff;
@@ -206,7 +221,8 @@
         <div class="chat-handoff">
             <h2 class="chat-handoff__title">Need a Gas Safe engineer?</h2>
             <div class="chat-handoff__actions">
-                <a href="https://wa.me/442081234411?text=Hi%2C%20I%27d%20like%20a%20boiler%20quote%20via%20MyBoiler" class="chat-handoff__cta chat-handoff__cta--whatsapp">Get a Quote</a>
+                <a href="https://hub.myboiler.com/fixed-price-repairs/" class="chat-handoff__cta chat-handoff__cta--primary">Get a Quote</a>
+                <a href="https://wa.me/442081234411?text=Hi%2C%20I%27d%20like%20a%20boiler%20quote%20via%20MyBoiler" class="chat-handoff__cta chat-handoff__cta--whatsapp">WhatsApp</a>
                 <a href="tel:+442081234411" class="chat-handoff__cta chat-handoff__cta--phone">Call Now</a>
             </div>
         </div>
