@@ -117,7 +117,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.85rem 1.25rem;
+            padding: 0.85rem 1.5rem;
             border-radius: 999px;
             text-decoration: none;
             font-weight: 600;
@@ -125,9 +125,10 @@
             transition: all 0.2s ease;
             box-sizing: border-box;
             text-align: center;
-            white-space: normal;
+            white-space: nowrap;
             line-height: 1.3;
             min-height: 44px;
+            width: 100%;
         }
 
         .decide-card__cta--primary {
@@ -188,16 +189,6 @@
         @media (min-width: 700px) {
             .decide-cards {
                 grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            }
-
-            .decide-card__actions {
-                flex-direction: row;
-                gap: 1rem;
-            }
-
-            .decide-card__cta {
-                flex: 1;
-                min-width: 0;
             }
         }
 
