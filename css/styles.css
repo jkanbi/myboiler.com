@@ -763,38 +763,60 @@
             text-decoration: none;
         }
 
-		.social-media{
-			fill: var(--text);
-			justify-content:center;
-		}
+	.social-media{
+		fill:var(--footer-link-color);
+		justify-content:center;
+	}
 
-		.wp-block-social-link{
-			border-radius: 9999px;
-			display: inline-block;
-			padding: 5px 7px;
-			margin-top: 1rem;
-			margin-left: 0.5rem;
-			margin-right: 0.5rem;
-		}
-		.wp-social-link-x{
-			background-color: #000000;
-		}
-		
-		.wp-social-link-youtube{
-			background-color: #ff0000;
-		}
-		.wp-social-link-bluesky{
-			background-color: #0274be;
-		}
-		.wp-social-link-facebook{
-			background-color: #0866ff;
-		}
-		.wp-social-link-pinterest{
-			background-color: #e60122;
-		}
-		.wp-social-link-whatsapp{
-			background-color: #25d366;
-		}
+	.wp-block-social-link{
+		border-radius:9999px;
+		display: inline-block;
+		padding:5px 7px 5px 7px;
+		margin-top: 30px;
+		margin-left: 10px;
+		margin-right: 10px;
+		transition: opacity 0.2s ease, transform 0.2s ease;
+	}
+	
+	.wp-block-social-link:hover {
+		opacity: 0.85;
+		transform: translateY(-2px);
+	}
+	
+	.wp-block-social-link a {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #ffffff;
+	}
+	
+	.wp-block-social-link svg {
+		fill: currentColor;
+	}
+	
+	.wp-block-social-link svg path {
+		fill: #ffffff;
+	}
+	
+	.wp-social-link-x{
+		background-color: #000000;
+	}
+	
+	.wp-social-link-youtube{
+		background-color: #ff0000;
+	}
+	.wp-social-link-bluesky{
+		background-color: #0274be;
+	}
+	.wp-social-link-facebook{
+		background-color: #0866ff;
+	}
+	.wp-social-link-pinterest{
+		background-color: #e60122;
+	}
+	.wp-social-link-whatsapp{
+		background-color: #25d366;
+	}
 
         /* Copyright footer */
         .copyright {
