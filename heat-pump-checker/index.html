@@ -381,19 +381,27 @@
             </div>
 
             <div class="form-section">
-                <label class="form-label">Radiators</label>
+                <label class="form-label">Heat Distribution</label>
                 <div class="form-radio-group">
                     <label class="form-radio-label">
+                        <input type="radio" name="radiators" value="ufh" required>
+                        <span>Underfloor heating</span>
+                    </label>
+                    <label class="form-radio-label">
+                        <input type="radio" name="radiators" value="ufh-rads" required>
+                        <span>Underfloor heating + radiators</span>
+                    </label>
+                    <label class="form-radio-label">
                         <input type="radio" name="radiators" value="modern" required>
-                        <span>Mostly modern (large, efficient)</span>
+                        <span>Radiators (modern, large panel)</span>
                     </label>
                     <label class="form-radio-label">
                         <input type="radio" name="radiators" value="mixed" required>
-                        <span>Mixed sizes</span>
+                        <span>Radiators (mixed sizes)</span>
                     </label>
                     <label class="form-radio-label">
                         <input type="radio" name="radiators" value="old" required>
-                        <span>Old cast iron / small singles</span>
+                        <span>Radiators (old cast iron / small singles)</span>
                     </label>
                     <label class="form-radio-label">
                         <input type="radio" name="radiators" value="not-sure" required>
@@ -463,7 +471,7 @@
             </div>
 
             <div class="result-section">
-                <h3 class="result-title">Radiator Upgrade Likelihood</h3>
+                <h3 class="result-title">Heat Distribution</h3>
                 <p class="result-value" id="radiator-upgrade-value">—</p>
             </div>
 
@@ -533,9 +541,14 @@
             };
             score += heatingScores[currentHeating] || 10;
             
-            // Radiators (weight: 20 points)
+            // Heat distribution (weight: 20 points - critical for heat pump efficiency)
             const radiatorScores = {
-                'modern': 20, 'mixed': 13, 'old': 8, 'not-sure': 12
+                'ufh': 20,          // Underfloor heating - ideal for heat pumps
+                'ufh-rads': 19,     // UFH + radiators - excellent combo
+                'modern': 18,       // Modern large panel radiators
+                'mixed': 13,        // Mixed - may need some upgrades
+                'old': 8,           // Old/small - likely needs upgrades
+                'not-sure': 12      // Unknown - assume some work needed
             };
             score += radiatorScores[radiators] || 12;
             
@@ -575,16 +588,20 @@
             // Likely heat pump size (typically heat loss × 1.1-1.2 for UK climate)
             const heatPumpSize = Math.round(heatLoss * 1.15);
             
-            // Radiator upgrade likelihood
-            let radiatorUpgrade = '';
-            if (radiators === 'modern') {
-                radiatorUpgrade = 'Low — your radiators are likely suitable';
+            // Heat distribution assessment
+            let distributionAssessment = '';
+            if (radiators === 'ufh') {
+                distributionAssessment = 'Excellent — underfloor heating is ideal for heat pumps (lower flow temps 35-45°C)';
+            } else if (radiators === 'ufh-rads') {
+                distributionAssessment = 'Excellent — UFH portion ideal; radiators may need sizing check for lower temps';
+            } else if (radiators === 'modern') {
+                distributionAssessment = 'Good — modern large radiators typically work well (flow temps 45-55°C)';
             } else if (radiators === 'mixed') {
-                radiatorUpgrade = 'Medium — some upgrades may be needed';
+                distributionAssessment = 'Fair — some radiator upgrades may be needed for optimal efficiency';
             } else if (radiators === 'old') {
-                radiatorUpgrade = 'High — radiator upgrades likely required';
+                distributionAssessment = 'Upgrade likely — old/small radiators often need replacing for heat pump temps';
             } else {
-                radiatorUpgrade = 'Medium — assessment needed';
+                distributionAssessment = 'Assessment needed — emitter sizing is key for heat pump performance';
             }
             
             // Grant and cost estimate
@@ -601,7 +618,7 @@
             document.getElementById('score-number').textContent = score;
             document.getElementById('heat-loss-value').textContent = `Approximately ${heatLoss} kW`;
             document.getElementById('heat-pump-size-value').textContent = `${heatPumpSize} kW heat pump (typical)`;
-            document.getElementById('radiator-upgrade-value').textContent = radiatorUpgrade;
+            document.getElementById('radiator-upgrade-value').textContent = distributionAssessment;
             document.getElementById('grant-cost-value').textContent = grantCost;
             
             // Show result card and scroll to it
