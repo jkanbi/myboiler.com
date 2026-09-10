@@ -479,6 +479,18 @@
 			.nav-icon {
 				margin-right: 8px;
 			}
+
+			/* CTA styling for desktop nav */
+			.nav-item-cta a {
+				background: var(--accent);
+				color: #fff !important;
+				font-weight: 600;
+			}
+
+			.nav-item-cta a:hover {
+				background: var(--accent-dark);
+				color: #fff !important;
+			}
 		}
 		
 		/* Grid Menu (Hidden by default) */
