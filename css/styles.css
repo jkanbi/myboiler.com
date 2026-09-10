@@ -668,9 +668,9 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		min-width: 44px;
-		min-height: 44px;
-		padding:10px;
+		min-width: 40px;
+		min-height: 40px;
+		padding: 6px;
 		margin: 0;
 		transition: opacity 0.2s ease, transform 0.2s ease;
 	}
