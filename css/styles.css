@@ -170,7 +170,8 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		z-index: 10000;
+		z-index: 10001;
+		position: relative;
 	}
 
 		.hamburger-line {
@@ -780,7 +781,8 @@
     }
     .menu-overlay.active {
         opacity: 1;
-        pointer-events: auto;
+        /* Keep pointer-events: none - menu clicks are handled by nav-menu element */
+        /* Overlay visibility is enough to show the darkening effect */
     }
     .nav-menu {
         position: fixed;
@@ -791,7 +793,7 @@
         height: 100vh;
         background: #2353a2;
         box-shadow: 2px 0 16px rgba(0,0,0,0.12);
-        z-index: 9999;
+        z-index: 10000;
         transform: translateX(-100%);
         transition: transform 0.2s ease-out;
         display: flex;
@@ -799,17 +801,18 @@
         padding-top: 60px;
         overflow-y: auto;
         will-change: transform;
+        pointer-events: auto;
     }
     .nav-menu.active {
         transform: translateX(0);
+        visibility: visible;
     }
-    .nav-menu, .menu-overlay {
+    .nav-menu:not(.active) {
         pointer-events: none;
         visibility: hidden;
     }
-    .nav-menu.active, .menu-overlay.active {
-        pointer-events: auto;
-        visibility: visible;
+    .menu-overlay:not(.active) {
+        visibility: hidden;
     }
     .nav-list {
         display: flex;
@@ -817,11 +820,13 @@
         gap: 0;
         margin: 0;
         padding: 0;
+        pointer-events: auto;
     }
     .nav-list li {
         margin: 0;
         padding: 0;
         width: 100%;
+        pointer-events: auto;
     }
     .nav-list a, .nav-dropdown-label {
         padding: 12px 20px !important;
@@ -835,6 +840,8 @@
         box-sizing: border-box;
         color: #fff;
         text-align: left;
+        pointer-events: auto;
+        cursor: pointer;
     }
     .nav-list a span, .nav-dropdown-label span {
         text-align: left;
@@ -846,6 +853,184 @@
         height: 20px;
         fill: #fff;
         flex-shrink: 0;
+    }
+    .mega-menu {
+        display: none;
+        position: static;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 0;
+        box-shadow: none;
+        border-top: none;
+        pointer-events: auto;
+    }
+    .nav-item-has-dropdown.active .mega-menu {
+        display: block;
+    }
+    .mega-menu-column {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+    .mega-menu-column h4 {
+        margin: 10px 20px 6px;
+        padding: 0;
+        color: #fff;
+        font-size: 0.95rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-align: left;
+        line-height: 1.28;
+    }
+    .mega-menu-column a {
+        padding: 10px 20px;
+        margin: 0;
+        color: #fff;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.85rem;
+        text-align: left;
+        display: block;
+        line-height: 1.35;
+        transition: color 0.2s;
+    }
+    .mega-menu-column a:hover,
+    .mega-menu-column a:focus {
+        background-color: transparent !important;
+        color: #ffffff !important;
+        text-decoration: underline !important;
+    }
+    .mega-menu-column a:last-child {
+        border-bottom: none;
+    }
+
+    .mega-menu--hub-cards {
+        display: none;
+        gap: 0;
+        padding: 0;
+    }
+
+    .nav-item-has-dropdown.active .mega-menu--hub-cards {
+        display: block;
+    }
+
+    .nav-list .mega-menu-card--hub-home {
+        display: none;
+    }
+
+    .nav-list .mega-menu-card {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        padding: 12px 20px;
+        margin: 0;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        color: #fff;
+        text-decoration: none;
+        min-height: 44px;
+        aspect-ratio: auto;
+        width: 100%;
+        pointer-events: auto;
+        cursor: pointer;
+    }
+
+    .nav-list .mega-menu-card:last-child {
+        border-bottom: none;
+    }
+
+    .nav-list .mega-menu-card-body {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0;
+        min-width: 0;
+        flex: 1;
+        text-align: left;
+    }
+
+    .nav-list .mega-menu-card h4 {
+        margin: 0;
+        padding: 0;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: bold;
+        letter-spacing: 0;
+        line-height: 1.2;
+    }
+
+    .nav-list .mega-menu-card-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        margin: 0;
+        flex: 0 0 20px;
+        border-radius: 0;
+        background: transparent;
+        color: #fff;
+    }
+
+    .nav-list .mega-menu-card-icon svg {
+        width: 20px;
+        height: 20px;
+        display: block;
+    }
+
+    .nav-list .mega-menu-card-desc {
+        display: none;
+    }
+
+    .nav-list .mega-menu-card:hover,
+    .nav-list .mega-menu-card:focus {
+        background-color: transparent;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .nav-list .mega-menu-card:hover h4,
+    .nav-list .mega-menu-card:focus h4 {
+        text-decoration: underline;
+    }
+
+    .mega-menu-column .calculators-hub-note {
+        margin: 0 20px 8px;
+        color: #fff;
+        font-size: 0.85rem;
+        line-height: 1.35;
+    }
+    .dropdown-toggle {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        position: relative;
+        margin-left: 8px;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+    .dropdown-toggle::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 5px 0 5px 8px;
+        border-color: transparent transparent transparent #fff;
+        transition: transform 0.2s ease;
+    }
+    .nav-item-has-dropdown.active .dropdown-toggle::after {
+        transform: translate(-50%, -50%) rotate(90deg);
     }
 }
 
