@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boiler Help AI - MyBoiler.com</title>
+    <title>Get a Quote - MyBoiler.com</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <style>
-        /* Chat page specific styles */
-        .chat-page {
+        /* Quote page specific styles */
+        .quote-page {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             background: var(--bg);
         }
 
-        .chat-container {
+        .quote-container {
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -27,12 +27,12 @@
             box-sizing: border-box;
         }
 
-        .chat-header {
+        .quote-header {
             text-align: center;
             margin-bottom: 2rem;
         }
 
-        .chat-headline {
+        .quote-headline {
             font-size: clamp(1.85rem, 5vw, 2.75rem);
             font-weight: 700;
             line-height: 1.1;
@@ -41,7 +41,7 @@
             letter-spacing: -0.02em;
         }
 
-        .chat-connector {
+        .quote-connector {
             font-size: clamp(1rem, 2vw, 1.125rem);
             line-height: 1.5;
             color: var(--text-muted);
@@ -49,7 +49,7 @@
             max-width: 60ch;
         }
 
-        .chat-widget-wrapper {
+        .quote-form-wrapper {
             width: 100%;
             max-width: 800px;
             margin: 0 auto 2rem;
@@ -58,9 +58,20 @@
             box-shadow: var(--shadow-lg);
             padding: 2rem;
             box-sizing: border-box;
+            overflow: hidden;
         }
 
-        .chat-safety-note {
+        .hs-form-frame {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /* HubSpot form styling overrides */
+        .hs-form-frame iframe {
+            max-width: 100% !important;
+        }
+
+        .quote-safety-note {
             text-align: center;
             font-size: 0.875rem;
             color: var(--text-muted);
@@ -73,7 +84,7 @@
             border: 1px solid var(--border-subtle);
         }
 
-        .chat-safety-note strong {
+        .quote-safety-note strong {
             color: var(--text);
             font-weight: 600;
         }
@@ -83,16 +94,8 @@
             margin: 0.5rem 0 0;
         }
 
-        /* ElevenLabs widget container styling */
-        elevenlabs-convai {
-            display: block;
-            width: 100%;
-            max-width: 100%;
-            min-height: 280px;
-        }
-
         /* Handoff strip styling */
-        .chat-handoff {
+        .quote-handoff {
             text-align: center;
             margin: 2rem auto 1rem;
             padding: 1.5rem 1.5rem;
@@ -103,21 +106,21 @@
             max-width: 600px;
         }
 
-        .chat-handoff__title {
+        .quote-handoff__title {
             font-size: 1.125rem;
             font-weight: 600;
             color: var(--text);
             margin: 0 0 1rem;
         }
 
-        .chat-handoff__actions {
+        .quote-handoff__actions {
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
             align-items: stretch;
         }
 
-        .chat-handoff__cta {
+        .quote-handoff__cta {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -131,29 +134,14 @@
             white-space: nowrap;
         }
 
-        .chat-handoff__cta--primary {
-            background: var(--accent);
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(24, 99, 220, 0.25);
-        }
-
-        .chat-handoff__cta--primary:hover,
-        .chat-handoff__cta--primary:focus {
-            background: var(--accent-dark);
-            color: #fff;
-            text-decoration: none;
-            box-shadow: 0 6px 20px rgba(24, 99, 220, 0.35);
-            transform: translateY(-1px);
-        }
-
-        .chat-handoff__cta--whatsapp {
+        .quote-handoff__cta--whatsapp {
             background: #25d366;
             color: #fff;
             box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
         }
 
-        .chat-handoff__cta--whatsapp:hover,
-        .chat-handoff__cta--whatsapp:focus {
+        .quote-handoff__cta--whatsapp:hover,
+        .quote-handoff__cta--whatsapp:focus {
             background: #20bd5c;
             color: #fff;
             text-decoration: none;
@@ -161,15 +149,15 @@
             transform: translateY(-1px);
         }
 
-        .chat-handoff__cta--phone {
+        .quote-handoff__cta--phone {
             background: var(--surface);
             color: var(--text);
             border: 1.5px solid var(--border);
             box-shadow: var(--shadow-sm);
         }
 
-        .chat-handoff__cta--phone:hover,
-        .chat-handoff__cta--phone:focus {
+        .quote-handoff__cta--phone:hover,
+        .quote-handoff__cta--phone:focus {
             background: var(--bg);
             color: var(--text);
             text-decoration: none;
@@ -178,32 +166,43 @@
             transform: translateY(-1px);
         }
 
+        .quote-handoff__cta--secondary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(24, 99, 220, 0.25);
+        }
+
+        .quote-handoff__cta--secondary:hover,
+        .quote-handoff__cta--secondary:focus {
+            background: var(--accent-dark);
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(24, 99, 220, 0.35);
+            transform: translateY(-1px);
+        }
+
         @media (min-width: 600px) {
-            .chat-handoff__actions {
+            .quote-handoff__actions {
                 flex-direction: row;
                 gap: 1rem;
                 justify-content: center;
             }
 
-            .chat-handoff__cta {
+            .quote-handoff__cta {
                 min-width: 160px;
             }
         }
 
         @media (max-width: 768px) {
-            .chat-widget-wrapper {
+            .quote-form-wrapper {
                 padding: 1.5rem 1rem;
                 max-width: 100%;
                 overflow: hidden;
             }
-
-            elevenlabs-convai {
-                min-height: 240px;
-            }
         }
     </style>
 </head>
-<body class="chat-page">
+<body class="quote-page">
     <!-- Header -->
     <header class="header">
         <a href="/" class="logo">
@@ -213,30 +212,31 @@
         <div class="tagline">Smarter Heating & Hot Water</div>
     </header>
 
-    <!-- Chat Content -->
-    <div class="chat-container">
-        <div class="chat-header">
-            <h1 class="chat-headline">Boiler Help AI</h1>
-            <p class="chat-connector">
-                Ask questions about boilers, heating systems, and hot water — get instant guidance powered by AI.
+    <!-- Quote Content -->
+    <div class="quote-container">
+        <div class="quote-header">
+            <h1 class="quote-headline">Get a Quote</h1>
+            <p class="quote-connector">
+                Request a quote from a Gas Safe registered engineer via MyBoiler — your asset-light connector to professional heating and hot water services.
             </p>
         </div>
 
-        <div class="chat-widget-wrapper">
-            <elevenlabs-convai agent-id="agent_7301m25f8n0re8qt7mxhswq0te2q"></elevenlabs-convai>
+        <div class="quote-form-wrapper">
+            <!-- HubSpot form embed -->
+            <div class="hs-form-frame" data-region="eu1" data-form-id="1666a82a-a502-4902-9f6e-c34405b00cf2" data-portal-id="148934146"></div>
         </div>
 
-        <div class="chat-handoff">
-            <h2 class="chat-handoff__title">Need a Gas Safe engineer?</h2>
-            <div class="chat-handoff__actions">
-                <a href="/quote/" class="chat-handoff__cta chat-handoff__cta--primary">Get a Quote</a>
-                <a href="https://wa.me/442081234411?text=Hi%2C%20I%27d%20like%20a%20boiler%20quote%20via%20MyBoiler" class="chat-handoff__cta chat-handoff__cta--whatsapp">WhatsApp</a>
-                <a href="tel:+442081234411" class="chat-handoff__cta chat-handoff__cta--phone">Call Now</a>
+        <div class="quote-handoff">
+            <h2 class="quote-handoff__title">Prefer to contact us directly?</h2>
+            <div class="quote-handoff__actions">
+                <a href="https://wa.me/442081234411?text=Hi%2C%20I%27d%20like%20a%20boiler%20quote%20via%20MyBoiler" class="quote-handoff__cta quote-handoff__cta--whatsapp">WhatsApp</a>
+                <a href="tel:+442081234411" class="quote-handoff__cta quote-handoff__cta--phone">Call Now</a>
+                <a href="/chat/" class="quote-handoff__cta quote-handoff__cta--secondary">Ask Boiler Help AI</a>
             </div>
         </div>
 
-        <div class="chat-safety-note">
-            <strong>Important:</strong> This AI assistant provides general guidance only and is not a substitute for professional advice. For gas work, always consult a Gas Safe registered engineer.
+        <div class="quote-safety-note">
+            <strong>Important:</strong> MyBoiler connects you with Gas Safe registered engineers for professional heating and hot water services. All work is performed by qualified professionals.
         </div>
     </div>
 
@@ -246,7 +246,7 @@
         <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
     </footer>
 
-    <!-- ElevenLabs ConvAI Widget Script - data-cfasync prevents Cloudflare Rocket Loader interference -->
-    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript" data-cfasync="false"></script>
+    <!-- HubSpot form script - data-cfasync prevents Cloudflare Rocket Loader interference -->
+    <script src="https://js-eu1.hsforms.net/forms/embed/148934146.js" defer data-cfasync="false"></script>
 </body>
 </html>
