@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boiler Help AI - MyBoiler.com</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        /* Chat page specific styles */
+        .chat-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .chat-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .chat-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .chat-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0 0 1.25rem;
+            max-width: 60ch;
+        }
+
+        .chat-widget-wrapper {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .chat-safety-note {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 60ch;
+            margin: 0 auto;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .chat-safety-note strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .footer-links {
+            white-space: nowrap;
+            margin: 0.5rem 0 0;
+        }
+
+        /* ElevenLabs widget container styling */
+        elevenlabs-convai {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            min-height: 280px;
+        }
+
+        @media (max-width: 768px) {
+            .chat-widget-wrapper {
+                padding: 1.5rem 1rem;
+                max-width: 100%;
+                overflow: hidden;
+            }
+
+            elevenlabs-convai {
+                min-height: 240px;
+            }
+        }
+    </style>
+</head>
+<body class="chat-page">
+    <!-- Header -->
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+    </header>
+
+    <!-- Chat Content -->
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1 class="chat-headline">Boiler Help AI</h1>
+            <p class="chat-connector">
+                Ask questions about boilers, heating systems, and hot water — get instant guidance powered by AI.
+            </p>
+        </div>
+
+        <div class="chat-widget-wrapper">
+            <elevenlabs-convai agent-id="agent_7301m25f8n0re8qt7mxhswq0te2q"></elevenlabs-convai>
+        </div>
+
+        <div class="chat-safety-note">
+            <strong>Important:</strong> This AI assistant provides general guidance only and is not a substitute for professional advice. For gas work, always consult a Gas Safe registered engineer.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+        <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
+    </footer>
+
+    <!-- ElevenLabs ConvAI Widget Script -->
+    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+</body>
+</html>
