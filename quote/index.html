@@ -205,7 +205,6 @@
 <body class="quote-page">
     <!-- Header with full navigation -->
     <div class="menu-overlay"></div>
-    <div class="nav-mega-backdrop" aria-hidden="true"></div>
     <header class="header">
         <a href="/" class="logo">
             <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
@@ -214,7 +213,7 @@
         <div class="tagline">Smarter Heating & Hot Water</div>
         <div class="right-header-items">
             <!-- Hamburger Menu Button -->
-            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu" aria-expanded="false">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
@@ -280,6 +279,6 @@
     <!-- HubSpot form script - data-cfasync prevents Cloudflare Rocket Loader interference -->
     <script src="https://js-eu1.hsforms.net/forms/embed/148934146.js" defer data-cfasync="false"></script>
     <!-- Add menu.js for navigation functionality -->
-    <script src="/js/menu.js"></script>
+    <script src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>
