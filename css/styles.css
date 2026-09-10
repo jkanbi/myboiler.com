@@ -1400,7 +1400,7 @@
   width: 100%;
   background: var(--surface);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 3.5rem clamp(20px, 5vw, 40px) 3rem;
+  padding: clamp(2.5rem, 6vw, 4rem) clamp(20px, 5vw, 40px) clamp(2rem, 5vw, 3.5rem);
 }
 
 .ar-hero__container {
@@ -1409,7 +1409,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2.5rem;
+  gap: 2rem;
 }
 
 .ar-hero__content {
@@ -1418,29 +1418,32 @@
 }
 
 .ar-hero__headline {
-  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-size: clamp(1.85rem, 5.5vw, 3.25rem);
   font-weight: 700;
   line-height: 1.1;
   color: var(--text);
-  margin: 0 0 1rem;
+  margin: 0 0 0.85rem;
   letter-spacing: -0.02em;
 }
 
 .ar-hero__subheadline {
-  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
   line-height: 1.5;
   color: var(--text-muted);
-  margin: 0 0 2rem;
-  max-width: 58ch;
+  margin: 0 0 1.75rem;
+  max-width: 60ch;
   margin-left: auto;
   margin-right: auto;
+  font-weight: 400;
 }
 
 .ar-hero__actions {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 0.85rem;
+  width: 100%;
+  max-width: 400px;
 }
 
 .ar-hero__cta {
@@ -1453,8 +1456,8 @@
   font-weight: 600;
   font-size: 1rem;
   transition: all 0.2s ease;
-  min-width: 200px;
   box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .ar-hero__cta--primary {
@@ -1486,12 +1489,14 @@
   text-decoration: none;
   border-color: var(--accent);
   box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
 
 .ar-hero__mascot {
   width: 100%;
-  max-width: 280px;
+  max-width: 260px;
   margin: 0 auto;
+  opacity: 0.95;
 }
 
 .ar-hero__mascot-media {
@@ -1593,6 +1598,11 @@
   .ar-hero__actions {
     flex-direction: row;
     gap: 1rem;
+    max-width: none;
+  }
+  
+  .ar-hero__cta {
+    min-width: 180px;
   }
 }
 
@@ -1604,16 +1614,20 @@
 }
 
 @media (min-width: 900px) {
+  .ar-hero {
+    padding: clamp(3rem, 6vw, 4.5rem) clamp(20px, 5vw, 40px);
+  }
+  
   .ar-hero__container {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: 3rem;
+    gap: clamp(2.5rem, 4vw, 4rem);
   }
   
   .ar-hero__content {
     text-align: left;
-    flex: 1;
+    flex: 1 1 auto;
     max-width: 620px;
   }
   
@@ -1627,9 +1641,11 @@
   }
   
   .ar-hero__mascot {
-    flex: 0 0 300px;
+    flex: 0 0 auto;
+    width: 300px;
     max-width: 300px;
     margin: 0;
+    opacity: 1;
   }
 }
 
@@ -1641,7 +1657,7 @@
   }
   
   .ar-hero__mascot {
-    flex: 0 0 340px;
+    width: 340px;
     max-width: 340px;
   }
 }
