@@ -1,21 +1,47 @@
 		/* -------------------------------------------------------------------------
 		   THEME: forced light only (automatic system dark/light disabled — no toggle).
-		   To re-enable OS prefers-color-scheme, delete the :root + .light-mode-logo
-		   block below and uncomment the two @media (prefers-color-scheme: …) blocks.
+		   CombiBoiler.com design system tokens — Apple-like simplicity.
 		   ------------------------------------------------------------------------- */
+		@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+		*,
+		*::before,
+		*::after {
+			box-sizing: border-box;
+		}
+
 		:root {
-            color-scheme: light;
-            --bg-color: #ffffff;
-            --text-color: #333333;
-            --card-bg: #f0f0f0;
-            --border-color: #cccccc;
-            --button-bg: #e0e0e0;
-            --button-text: #000000;
-            --link-color: #0000ee;
-            --footercols-color:#191970;
-            --footer-link-color:#ffffff;
-            --copyright-color: #000040;
-        }
+			color-scheme: light;
+			--bg: #ebeced;
+			--surface: #ffffff;
+			--text: #1b1b1b;
+			--text-muted: #6b7280;
+			--border: #dfe2e6;
+			--border-subtle: #e8eaed;
+			--link: #1863dc;
+			--link-hover: #0f4eb5;
+			--accent: #1863dc;
+			--accent-dark: #0f4eb5;
+			--footer-bg: #ffffff;
+			--footer-text: #6b7280;
+			--shadow-sm: 0 1px 3px rgba(27, 27, 27, 0.04);
+			--shadow-md: 0 8px 24px rgba(27, 27, 27, 0.06);
+			--shadow-lg: 0 16px 48px rgba(27, 27, 27, 0.08);
+			--radius: 12px;
+			--radius-lg: 20px;
+			--max-width: 1140px;
+			--font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+			/* Legacy vars for compatibility */
+			--bg-color: #ebeced;
+			--text-color: #1b1b1b;
+			--card-bg: #ffffff;
+			--border-color: #dfe2e6;
+			--footercols-color: #ffffff;
+			--footer-link-color: #6b7280;
+			--copyright-color: #ffffff;
+		}
+		
 		.dark-mode-logo {
 			display: none;
 		}
@@ -71,50 +97,86 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: "Arial", monospace;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
+            font-family: var(--font);
+            font-size: 1rem;
+            line-height: 1.6;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             text-align: left;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-		/* General Styles */
+        a {
+            color: var(--link);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--link-hover);
+            text-decoration: underline;
+        }
+
+		/* Header Styles - CombiBoiler design system */
 		.header {
+			background: var(--surface);
+			position: sticky;
+			top: 0;
+			z-index: 1000;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			padding: 10px 20px;
+			padding: 0.9rem clamp(20px, 5vw, 40px);
+			box-shadow: var(--shadow-sm);
 		}
-		/* 
+		
+		.logo {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.75rem;
+			min-width: 0;
+			flex: 0 1 auto;
+		}
+
 		.logo img {
 			display: block;
-		} */
+			width: auto;
+			height: 40px;
+			flex-shrink: 0;
+			object-fit: contain;
+		}
 
 		.tagline {
 			display: none;
 			font-size: 14px;
-			color: #555;
-			font-weight:bold;
+			color: var(--text-muted);
+			font-weight: 500;
 		}
 		
-		/* Navigation Menu Styles */
+		/* Navigation Menu Styles - Pill design */
 		.hamburger-menu {
 			display: none;
 			background: none;
-			border: none;
+			border: 1px solid var(--border);
+			border-radius: 10px;
+			background: var(--surface);
 			cursor: pointer;
-			padding: 10px;
+			padding: 0;
+			width: 2.75rem;
+			height: 2.75rem;
+			align-items: center;
+			justify-content: center;
 			z-index: 10000;
 		}
 
 		.hamburger-line {
 			display: block;
-			width: 24px;
+			width: 20px;
 			height: 2px;
-			background-color: var(--text-color);
+			background-color: var(--text);
 			margin: 4px 0;
 			transition: transform 0.3s ease;
 		}
@@ -125,8 +187,8 @@
 			top: 100%;
 			left: 0;
 			width: 100%;
-			background-color: var(--bg-color);
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			background-color: var(--surface);
+			box-shadow: var(--shadow-md);
 			z-index: 9999;
 		}
 
@@ -140,7 +202,7 @@
 			margin: 0;
 			display: flex;
 			flex-direction: column;
-			gap: 22px;
+			gap: 0;
 		}
 
 		.nav-list li {
@@ -150,11 +212,10 @@
 		.nav-list a {
 			display: flex;
 			align-items: center;
-			/* padding: 16px 20px; */
-			color: var(--text-color);
+			color: var(--text);
 			text-decoration: none;
-			transition: background-color 0.3s;
-			border-bottom: 1px solid var(--border-color);
+			transition: background-color 0.15s;
+			border-bottom: 1px solid var(--border);
 		}
 
 		.nav-list a:last-child {
@@ -162,7 +223,7 @@
 		}
 
 		.nav-list a:hover {
-			background-color: var(--card-bg);
+			background-color: var(--bg);
 		}
 
 		.nav-icon {
@@ -170,6 +231,7 @@
 			height: 20px;
 			width: 20px;
 			display: inline-block;
+			fill: currentColor;
 		}
 
 		@media screen and (max-width: 768px) {
@@ -365,6 +427,10 @@
 		}
 
 		@media screen and (min-width: 769px) {
+			.hamburger-menu {
+				display: none;
+			}
+
 			.nav-menu {
 				position: static;
 				display: block;
@@ -375,14 +441,20 @@
 
 			.nav-list {
 				flex-direction: row;
-				gap: 10px;
+				gap: 0.25rem;
 			}
 
 			.nav-list a, .nav-dropdown-label {
-				padding: 14px 6px;
-				transition: background 0.2s, color 0.2s;
-				border-radius: 0;
-				padding-bottom: 20px;
+				display: inline-flex;
+				align-items: center;
+				min-height: 2.5rem;
+				padding: 0.4rem 0.85rem;
+				font-size: 0.9375rem;
+				font-weight: 500;
+				line-height: 1.2;
+				border-radius: 999px;
+				transition: background 0.15s ease, color 0.15s ease;
+				border: none;
 			}
 
 			.nav-list a {
@@ -390,17 +462,20 @@
 			}
 
 			.nav-list a:hover, .nav-dropdown-label:hover {
-				background: #2353a2;
-				color: #fff;
+				background: var(--bg);
+				color: var(--text);
 				text-decoration: none;
 			}
+			
 			.nav-list a:hover span, .nav-dropdown-label:hover span {
-				text-decoration: underline;
+				text-decoration: none;
 			}
+			
 			.nav-list a:hover .nav-icon, .nav-dropdown-label:hover .nav-icon {
-				fill: #fff;
-				color: #fff;
+				fill: var(--text);
+				color: var(--text);
 			}
+			
 			.nav-icon {
 				margin-right: 8px;
 			}
@@ -634,62 +709,79 @@
 			margin: 0;            /* Removes default margin */
 		}
 		
-        /* Main footer styles */
+        /* Main footer styles - CombiBoiler design */
         .footer {
-            background-color: var(--footercols-color);
-            padding: 12px;
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
+            background-color: var(--footer-bg);
+            padding: 3rem clamp(20px, 5vw, 40px) 2rem;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr 1fr;
+            gap: 2rem 3rem;
             margin-top: auto;
             position: relative;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 0.875rem;
+            color: var(--footer-text);
+            line-height: 1.65;
         }
 
         .footer-column {
-            flex-basis: calc(25% - 20px); /* 4 columns with some margin */
-            margin-bottom: 20px;
-            color: var(--footer-link-color);
+            display: flex;
+            flex-direction: column;
         }
 
         .footer-column h3 {
-            margin-top: 0;
-            color: var(--footer-link-color);
+            margin: 0 0 0.85rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-muted);
         }
 
         .footer-column ul {
             list-style-type: none;
             padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
         }
 
         .footer-column li {
-            margin-bottom: 10px;
+            margin: 0;
         }
 
         .footer-column a {
-            color: var(--footer-link-color);
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9375rem;
+        }
+
+        .footer-column a:hover {
+            color: var(--link);
             text-decoration: none;
         }
 
-
 		.social-media{
-			fill:var(--footer-link-color);
+			fill: var(--text);
 			justify-content:center;
 		}
 
 		.wp-block-social-link{
-			border-radius:9999px;
+			border-radius: 9999px;
 			display: inline-block;
-			padding:5px 7px 5px 7px;
-			margin-top: 30px;
-			margin-left: 10px;
-			margin-right: 10px;
+			padding: 5px 7px;
+			margin-top: 1rem;
+			margin-left: 0.5rem;
+			margin-right: 0.5rem;
 		}
 		.wp-social-link-x{
-			background-color: black;
+			background-color: #000000;
 		}
 		
 		.wp-social-link-youtube{
-			background-color: red;
+			background-color: #ff0000;
 		}
 		.wp-social-link-bluesky{
 			background-color: #0274be;
@@ -707,17 +799,32 @@
         /* Copyright footer */
         .copyright {
             background-color: var(--copyright-color);
-            color: var(--footer-link-color);
+            color: var(--footer-text);
             text-align: center;
-            padding: 10px 0;
-        }  
+            padding: 1.5rem clamp(20px, 5vw, 40px) 1rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+        
+        .copyright p {
+            margin: 0;
+            font-size: 0.8125rem;
+        }
+        
+        .copyright a {
+            color: var(--text);
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .copyright a:hover {
+            color: var(--link);
+        }
 
         @media screen and (max-width: 768px) {
         
        		.tagline{
 				margin-left:20px;
 			}
-
 				
 			/* Search Container */
 			.search-container {
@@ -729,12 +836,10 @@
 			margin-right: 40px;
 			}   
             
-            .footer-column {
-                flex-basis: 100%;
-                text-align: center;
-            }
             .footer {
-                justify-content: center;
+                grid-template-columns: 1fr;
+                gap: 1.75rem;
+                padding: 2rem clamp(20px, 5vw, 40px);
             }
         }
 
@@ -1290,13 +1395,13 @@
     font-weight: bold; /* Make navbar labels and Manuals label bold */
 }
 
-/* AR Box Pair Grid Styles */
+/* AR Box Pair Grid Styles - CombiBoiler design */
 .ar-box-pair-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 28px;
-  padding: 32px 0;
-  max-width: 700px;
+  gap: 1rem;
+  padding: 2rem clamp(20px, 5vw, 40px);
+  max-width: var(--max-width);
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -1304,8 +1409,8 @@
 /* Homepage chat CTA (Option A: link to chat.myboiler.com) */
 .ar-chat-cta {
   width: calc(100% - 32px);
-  max-width: 1100px;
-  margin: 8px auto 10px;
+  max-width: var(--max-width);
+  margin: 0 auto 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1316,34 +1421,30 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 18px;
+  padding: 0.7rem 1.35rem;
   border-radius: 999px;
   text-decoration: none;
-  font-weight: 700;
-  letter-spacing: 0.3px;
+  font-weight: 600;
+  font-size: 0.9375rem;
   color: #fff;
-  background: linear-gradient(135deg, #0a8d4c, #2353a2);
+  background: var(--accent);
   border: 0;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  box-shadow: 0 2px 8px rgba(24, 99, 220, 0.25);
+  transition: background 0.15s ease, box-shadow 0.15s ease;
 }
 
 .ar-chat-cta__button:hover,
 .ar-chat-cta__button:focus {
-  transform: translateY(-1px);
-  filter: brightness(1.05);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
-}
-
-.ar-chat-cta__button:active {
-  transform: translateY(0px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16);
+  background: var(--accent-dark);
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(24, 99, 220, 0.3);
 }
 
 .ar-chat-cta__subtext {
   text-align: center;
-  font-size: 0.95rem;
-  opacity: 0.85;
+  font-size: 0.875rem;
+  color: var(--text-muted);
   max-width: 52ch;
 }
 
@@ -1351,98 +1452,65 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: var(--bg-color);
-  border-radius: 16px;
-  border: 1.5px solid #e0e4ea;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.07);
-  padding: 26px 16px 18px 16px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: none;
+  box-shadow: var(--shadow-sm);
+  padding: 1.35rem 1.4rem 1.25rem;
   text-align: center;
   text-decoration: none;
-  color: var(--text-color);
-  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
-  min-height: 320px;
+  color: var(--text);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  min-height: 280px;
   box-sizing: border-box;
   position: relative;
-  overflow: hidden;
 }
 
 .ar-box-pair:hover, .ar-box-pair:focus {
-  box-shadow: 0 8px 32px rgba(10, 141, 76, 0.16);
-  transform: translateY(-4px) scale(1.025);
-  color: #0a8d4c;
-  border-color: #b6e8d0;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+  color: var(--text);
+  text-decoration: none;
 }
 
 .ar-box-pair img {
-  border-radius: 12px;
-  margin-bottom: 18px;
-  width: 100px;
-  height: 100px;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-  background: #f5f5f5;
-  box-shadow: 0 2px 8px rgba(10,141,76,0.04);
+  background: var(--bg);
+  box-shadow: var(--shadow-sm);
 }
 
 .ar-box-pair-title {
-  font-size: 1.15rem;
-  font-weight: bold;
-  margin-bottom: 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
   display: block;
-  letter-spacing: 1px;
-  color: var(--text-color);;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
 
 .ar-box-pair-text {
-  font-size: 0.97rem;
-  color: #d4d4d4;
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  line-height: 1.65;
 }
 
 @media (min-width: 700px) {
   .ar-box-pair-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    max-width: 900px;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 1rem;
   }
 }
 
 @media (min-width: 1200px) {
   .ar-box-pair-grid {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 24px;
-    max-width: 1400px;
-    padding: 80px 0;
-    margin: 60px auto;
-  }
-  
-  .ar-box-pair {
-    min-height: 280px;
-    padding: 20px 12px 14px 12px;
-  }
-  
-  .ar-box-pair img {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 14px;
-  }
-  
-  .ar-box-pair-title {
-    font-size: 1.05rem;
-    margin-bottom: 10px;
-  }
-  
-  .ar-box-pair-text {
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .ar-box-pair {
-    min-height: 0;
-    padding: 16px 8px 10px 8px;
-  }
-  .ar-box-pair-grid {
-    gap: 16px;
-    padding: 18px 0;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 3rem clamp(20px, 5vw, 40px);
   }
 }
 
