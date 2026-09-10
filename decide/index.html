@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repair, Replace or Heat Pump? - MyBoiler.com</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        /* Decide page specific styles */
+        .decide-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .decide-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .decide-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .decide-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .decide-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 60ch;
+        }
+
+        .decide-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1000px;
+            margin-bottom: 2rem;
+        }
+
+        .decide-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .decide-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 56px rgba(27, 27, 27, 0.12);
+        }
+
+        .decide-card__label {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .decide-card__title {
+            font-size: clamp(1.5rem, 3vw, 1.875rem);
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text);
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
+
+        .decide-card__description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .decide-card__price {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin: 0.5rem 0 0;
+        }
+
+        .decide-card__actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .decide-card__cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.85rem 1.75rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
+
+        .decide-card__cta--primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(24, 99, 220, 0.25);
+        }
+
+        .decide-card__cta--primary:hover,
+        .decide-card__cta--primary:focus {
+            background: var(--accent-dark);
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(24, 99, 220, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .decide-card__cta--secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .decide-card__cta--secondary:hover,
+        .decide-card__cta--secondary:focus {
+            background: var(--bg);
+            color: var(--text);
+            text-decoration: none;
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .decide-disclaimer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 70ch;
+            margin: 2rem auto 1rem;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .decide-disclaimer strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .footer-links {
+            white-space: nowrap;
+            margin: 0.5rem 0 0;
+        }
+
+        @media (min-width: 700px) {
+            .decide-cards {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+
+            .decide-card__actions {
+                flex-direction: row;
+                gap: 1rem;
+            }
+
+            .decide-card__cta {
+                flex: 1;
+                min-width: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .decide-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="decide-page">
+    <!-- Header -->
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+    </header>
+
+    <!-- Decide Content -->
+    <div class="decide-container">
+        <div class="decide-header">
+            <h1 class="decide-headline">What's Right for Your Home?</h1>
+            <p class="decide-connector">
+                MyBoiler connects you with Gas Safe registered engineers to help with repairs, replacements, or heat pump installations.
+            </p>
+        </div>
+
+        <div class="decide-cards">
+            <!-- Repair Card -->
+            <div class="decide-card">
+                <span class="decide-card__label">Option A</span>
+                <h2 class="decide-card__title">Repair Existing Boiler</h2>
+                <p class="decide-card__description">
+                    Get your current boiler fixed by a qualified engineer. Most repairs are quick and cost-effective.
+                </p>
+                <p class="decide-card__price">Typical: £250–£500</p>
+                <p style="font-size: 0.875rem; color: var(--text-muted); margin: 0;">Indicative UK guidance only</p>
+                <div class="decide-card__actions">
+                    <a href="/quote/?need=repair" class="decide-card__cta decide-card__cta--primary">Get a Repair Quote</a>
+                    <a href="/chat/" class="decide-card__cta decide-card__cta--secondary">Ask Boiler Help AI</a>
+                </div>
+            </div>
+
+            <!-- Replace Card -->
+            <div class="decide-card">
+                <span class="decide-card__label">Option B</span>
+                <h2 class="decide-card__title">Replace with New Gas Boiler</h2>
+                <p class="decide-card__description">
+                    Upgrade to a modern, efficient combi boiler. Ideal if your current system is old or beyond repair.
+                </p>
+                <p class="decide-card__price">Typical: £2,500–£4,000</p>
+                <p style="font-size: 0.875rem; color: var(--text-muted); margin: 0;">Indicative UK guidance only</p>
+                <div class="decide-card__actions">
+                    <a href="/quote/?need=new-boiler" class="decide-card__cta decide-card__cta--primary">Get a Boiler Quote</a>
+                    <a href="https://hub.myboiler.com/combi-boiler/" class="decide-card__cta decide-card__cta--secondary">Combi Boiler Guide</a>
+                </div>
+            </div>
+
+            <!-- Heat Pump Card -->
+            <div class="decide-card">
+                <span class="decide-card__label">Option C</span>
+                <h2 class="decide-card__title">Switch to a Heat Pump</h2>
+                <p class="decide-card__description">
+                    Move to low-carbon heating with an air or ground source heat pump. The UK's Boiler Upgrade Scheme (BUS) offers £7,500 grant support.
+                </p>
+                <p class="decide-card__price">After BUS grant may apply</p>
+                <p style="font-size: 0.875rem; color: var(--text-muted); margin: 0;">Current grant subject to eligibility</p>
+                <div class="decide-card__actions">
+                    <a href="/heat-pump-checker/" class="decide-card__cta decide-card__cta--primary">Check Suitability</a>
+                    <a href="/quote/?need=heat-pump" class="decide-card__cta decide-card__cta--secondary">Get a Heat Pump Quote</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="decide-disclaimer">
+            <strong>Important:</strong> MyBoiler is your connector to Gas Safe registered engineers — we don't install. All figures are indicative UK guidance only and not formal quotes. Actual costs depend on your specific circumstances.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+        <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
+    </footer>
+</body>
+</html>
