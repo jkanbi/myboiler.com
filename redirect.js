@@ -3,7 +3,7 @@
     'use strict';
     
     // Define static asset folders that should be served from myboiler.com
-    const STATIC_FOLDERS = ['css', 'js', 'img', 'pages', 'chat'];
+    const STATIC_FOLDERS = ['css', 'js', 'img', 'pages', 'chat', 'quote'];
     
     // Define root files that should be served from myboiler.com
     const ROOT_FILES = ['favicon.ico', 'CNAME', 'robots.txt', ''];
