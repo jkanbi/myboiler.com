@@ -174,12 +174,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
-            // For internal links, handle SPA navigation
-            e.preventDefault();
-            navMenu.classList.remove('active');
-            // Update URL hash
-            const pageHash = href.replace('pages/', '').replace('.html', '');
-            window.location.hash = pageHash;
+            // Root-relative paths: allow normal navigation
+            if (href && href.startsWith('/') && !href.startsWith('//')) {
+                return;
+            }
+            
+            // For pages/*.md or pages/*.html links, handle SPA navigation
+            if (href && href.includes('pages/')) {
+                e.preventDefault();
+                navMenu.classList.remove('active');
+                // Update URL hash
+                const pageHash = href.replace('pages/', '').replace('.html', '');
+                window.location.hash = pageHash;
+            }
         });
     });
 
