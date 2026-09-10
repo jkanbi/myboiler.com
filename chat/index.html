@@ -78,20 +78,28 @@
             font-weight: 600;
         }
 
+        .footer-links {
+            white-space: nowrap;
+            margin: 0.5rem 0 0;
+        }
+
         /* ElevenLabs widget container styling */
         elevenlabs-convai {
             display: block;
             width: 100%;
-            min-height: 500px;
+            max-width: 100%;
+            min-height: 280px;
         }
 
         @media (max-width: 768px) {
             .chat-widget-wrapper {
                 padding: 1.5rem 1rem;
+                max-width: 100%;
+                overflow: hidden;
             }
 
             elevenlabs-convai {
-                min-height: 400px;
+                min-height: 240px;
             }
         }
     </style>
@@ -126,7 +134,8 @@
 
     <!-- Footer -->
     <footer class="copyright">
-        <p>&copy; 2026 MyBoiler.com - All rights reserved. | <a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+        <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
     </footer>
 
     <!-- ElevenLabs ConvAI Widget Script -->
