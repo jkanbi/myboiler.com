@@ -225,4 +225,33 @@ document.addEventListener('click', function(e) {
     if (e.target.tagName === 'A') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-}); 
+});
+
+// Fix absolute URL navigation bug
+// Prevents absolute URLs to myboiler.com from being treated as relative by hash routers
+document.addEventListener('click', function(e) {
+    let target = e.target;
+    
+    // Find the closest anchor tag
+    while (target && target.tagName !== 'A') {
+        target = target.parentElement;
+    }
+    
+    if (!target || target.tagName !== 'A') return;
+    
+    const href = target.getAttribute('href');
+    if (!href) return;
+    
+    // Check if it's an absolute URL to myboiler.com
+    const myboilerPattern = /^https?:\/\/(www\.)?myboiler\.com/i;
+    if (myboilerPattern.test(href)) {
+        e.preventDefault();
+        
+        // Extract the path from the absolute URL
+        const url = new URL(href);
+        const path = url.pathname + url.search + url.hash;
+        
+        // Navigate to the path
+        window.location.href = path;
+    }
+}, true); // Use capture phase to catch clicks before they reach the widget 
