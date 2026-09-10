@@ -1,0 +1,18 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="white"/>
+  <!-- Clipboard outline -->
+  <rect x="50" y="40" width="100" height="140" rx="8" fill="none" stroke="black" stroke-width="4"/>
+  <!-- Clipboard clip -->
+  <path d="M 80 30 Q 80 20 90 20 L 110 20 Q 120 20 120 30 L 120 45 L 80 45 Z" fill="none" stroke="black" stroke-width="4"/>
+  <!-- First checkbox (checked) -->
+  <rect x="65" y="70" width="18" height="18" rx="3" fill="none" stroke="black" stroke-width="3"/>
+  <polyline points="68,78 73,83 81,73" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="95" y1="79" x2="135" y2="79" stroke="black" stroke-width="3"/>
+  <!-- Second checkbox (checked) -->
+  <rect x="65" y="105" width="18" height="18" rx="3" fill="none" stroke="black" stroke-width="3"/>
+  <polyline points="68,113 73,118 81,108" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="95" y1="114" x2="135" y2="114" stroke="black" stroke-width="3"/>
+  <!-- Third checkbox (unchecked) -->
+  <rect x="65" y="140" width="18" height="18" rx="3" fill="none" stroke="black" stroke-width="3"/>
+  <line x1="95" y1="149" x2="135" y2="149" stroke="black" stroke-width="3"/>
+</svg>
