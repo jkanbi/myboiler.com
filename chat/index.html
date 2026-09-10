@@ -85,6 +85,90 @@
             min-height: 500px;
         }
 
+        /* Handoff strip styling */
+        .chat-handoff {
+            text-align: center;
+            margin: 2rem auto 1rem;
+            padding: 1.5rem 1.5rem;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-sm);
+            max-width: 600px;
+        }
+
+        .chat-handoff__title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 1rem;
+        }
+
+        .chat-handoff__actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            align-items: stretch;
+        }
+
+        .chat-handoff__cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
+
+        .chat-handoff__cta--whatsapp {
+            background: #25d366;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
+        }
+
+        .chat-handoff__cta--whatsapp:hover,
+        .chat-handoff__cta--whatsapp:focus {
+            background: #20bd5c;
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .chat-handoff__cta--phone {
+            background: var(--surface);
+            color: var(--text);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chat-handoff__cta--phone:hover,
+        .chat-handoff__cta--phone:focus {
+            background: var(--bg);
+            color: var(--text);
+            text-decoration: none;
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        @media (min-width: 600px) {
+            .chat-handoff__actions {
+                flex-direction: row;
+                gap: 1rem;
+                justify-content: center;
+            }
+
+            .chat-handoff__cta {
+                min-width: 160px;
+            }
+        }
+
         @media (max-width: 768px) {
             .chat-widget-wrapper {
                 padding: 1.5rem 1rem;
@@ -119,6 +203,14 @@
             <elevenlabs-convai agent-id="agent_7301m25f8n0re8qt7mxhswq0te2q"></elevenlabs-convai>
         </div>
 
+        <div class="chat-handoff">
+            <h2 class="chat-handoff__title">Need a Gas Safe engineer?</h2>
+            <div class="chat-handoff__actions">
+                <a href="https://wa.me/442081234411?text=Hi%2C%20I%27d%20like%20a%20boiler%20quote%20via%20MyBoiler" class="chat-handoff__cta chat-handoff__cta--whatsapp">Get a Quote</a>
+                <a href="tel:+442081234411" class="chat-handoff__cta chat-handoff__cta--phone">Call Now</a>
+            </div>
+        </div>
+
         <div class="chat-safety-note">
             <strong>Important:</strong> This AI assistant provides general guidance only and is not a substitute for professional advice. For gas work, always consult a Gas Safe registered engineer.
         </div>
@@ -129,7 +221,7 @@
         <p>&copy; 2026 MyBoiler.com - All rights reserved. | <a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
     </footer>
 
-    <!-- ElevenLabs ConvAI Widget Script -->
-    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+    <!-- ElevenLabs ConvAI Widget Script - data-cfasync prevents Cloudflare Rocket Loader interference -->
+    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript" data-cfasync="false"></script>
 </body>
 </html>
