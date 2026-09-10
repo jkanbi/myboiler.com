@@ -858,7 +858,7 @@
 /* Hero Section - Apple-simple design */
 .ar-hero {
   width: 100%;
-  background: linear-gradient(180deg, #f8f9fa 0%, var(--surface) 100%);
+  background: #e8f4fc;
   border-bottom: 1px solid var(--border-subtle);
   padding: clamp(2.5rem, 6vw, 4rem) clamp(20px, 5vw, 40px) clamp(2rem, 5vw, 3.5rem);
 }
