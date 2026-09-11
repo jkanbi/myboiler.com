@@ -358,7 +358,7 @@
         <div class="tagline">Smarter Heating & Hot Water</div>
         <div class="right-header-items">
             <!-- Hamburger Menu Button -->
-            <button class="hamburger-menu" onclick="if (!window.__cfRLUnblockHandlers) return false; toggleMenu()" aria-label="Toggle Menu" data-cf-modified-d4ed50d62b5909d63fa06994-="">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
@@ -581,7 +581,7 @@
         <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
     </footer>
 
-    <script type="d4ed50d62b5909d63fa06994-text/javascript">
+    <script type="text/javascript" data-cfasync="false">
         /**
          * Boiler Usage Cost Calculator
          * UK-specific formulas extracted from CFF form 20
@@ -605,60 +605,54 @@
         }
 
         /**
-         * Get all input elements
-         */
-        const inputs = {
-            gasRate: document.getElementById('gas-rate'),
-            electricRate: document.getElementById('electric-rate'),
-            hwPower: document.getElementById('hw-power'),
-            chPower: document.getElementById('ch-power'),
-            hwElec: document.getElementById('hw-elec'),
-            chElec: document.getElementById('ch-elec'),
-            hwHours: document.getElementById('hw-hours'),
-            chHours: document.getElementById('ch-hours'),
-            gasStanding: document.getElementById('gas-standing'),
-            electricStanding: document.getElementById('electric-standing')
-        };
-
-        /**
-         * Get all display value elements
-         */
-        const displays = {
-            gasRate: document.getElementById('gas-rate-value'),
-            electricRate: document.getElementById('electric-rate-value'),
-            hwPower: document.getElementById('hw-power-value'),
-            chPower: document.getElementById('ch-power-value'),
-            hwElec: document.getElementById('hw-elec-value'),
-            chElec: document.getElementById('ch-elec-value'),
-            hwHours: document.getElementById('hw-hours-value'),
-            chHours: document.getElementById('ch-hours-value'),
-            gasStanding: document.getElementById('gas-standing-value'),
-            electricStanding: document.getElementById('electric-standing-value')
-        };
-
-        /**
-         * Get all result elements
-         */
-        const results = {
-            hwHourly: document.getElementById('hw-hourly'),
-            chHourly: document.getElementById('ch-hourly'),
-            hwGasKwh: document.getElementById('hw-gas-kwh'),
-            hwElecKwh: document.getElementById('hw-elec-kwh'),
-            chGasKwh: document.getElementById('ch-gas-kwh'),
-            chElecKwh: document.getElementById('ch-elec-kwh'),
-            hwAnnual: document.getElementById('hw-annual'),
-            chAnnual: document.getElementById('ch-annual'),
-            combinedCost: document.getElementById('combined-cost'),
-            gasStandingAnnual: document.getElementById('gas-standing-annual'),
-            electricStandingAnnual: document.getElementById('electric-standing-annual'),
-            totalStanding: document.getElementById('total-standing'),
-            totalAnnual: document.getElementById('total-annual')
-        };
-
-        /**
          * Calculate and update all results
          */
         function calculate() {
+            // Get all input elements
+            const inputs = {
+                gasRate: document.getElementById('gas-rate'),
+                electricRate: document.getElementById('electric-rate'),
+                hwPower: document.getElementById('hw-power'),
+                chPower: document.getElementById('ch-power'),
+                hwElec: document.getElementById('hw-elec'),
+                chElec: document.getElementById('ch-elec'),
+                hwHours: document.getElementById('hw-hours'),
+                chHours: document.getElementById('ch-hours'),
+                gasStanding: document.getElementById('gas-standing'),
+                electricStanding: document.getElementById('electric-standing')
+            };
+
+            // Get all display value elements
+            const displays = {
+                gasRate: document.getElementById('gas-rate-value'),
+                electricRate: document.getElementById('electric-rate-value'),
+                hwPower: document.getElementById('hw-power-value'),
+                chPower: document.getElementById('ch-power-value'),
+                hwElec: document.getElementById('hw-elec-value'),
+                chElec: document.getElementById('ch-elec-value'),
+                hwHours: document.getElementById('hw-hours-value'),
+                chHours: document.getElementById('ch-hours-value'),
+                gasStanding: document.getElementById('gas-standing-value'),
+                electricStanding: document.getElementById('electric-standing-value')
+            };
+
+            // Get all result elements
+            const results = {
+                hwHourly: document.getElementById('hw-hourly'),
+                chHourly: document.getElementById('ch-hourly'),
+                hwGasKwh: document.getElementById('hw-gas-kwh'),
+                hwElecKwh: document.getElementById('hw-elec-kwh'),
+                chGasKwh: document.getElementById('ch-gas-kwh'),
+                chElecKwh: document.getElementById('ch-elec-kwh'),
+                hwAnnual: document.getElementById('hw-annual'),
+                chAnnual: document.getElementById('ch-annual'),
+                combinedCost: document.getElementById('combined-cost'),
+                gasStandingAnnual: document.getElementById('gas-standing-annual'),
+                electricStandingAnnual: document.getElementById('electric-standing-annual'),
+                totalStanding: document.getElementById('total-standing'),
+                totalAnnual: document.getElementById('total-annual')
+            };
+
             // Get all input values
             const gasRate = parseFloat(inputs.gasRate.value) || 0;
             const elecRate = parseFloat(inputs.electricRate.value) || 0;
@@ -747,16 +741,35 @@
             results.totalAnnual.textContent = '£' + formatNumber(totalAnnual, 2);
         }
 
-        // Add event listeners to all inputs
-        Object.values(inputs).forEach(input => {
-            input.addEventListener('input', calculate);
-        });
+        // Initialize on DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all input elements
+            const inputs = [
+                document.getElementById('gas-rate'),
+                document.getElementById('electric-rate'),
+                document.getElementById('hw-power'),
+                document.getElementById('ch-power'),
+                document.getElementById('hw-elec'),
+                document.getElementById('ch-elec'),
+                document.getElementById('hw-hours'),
+                document.getElementById('ch-hours'),
+                document.getElementById('gas-standing'),
+                document.getElementById('electric-standing')
+            ];
 
-        // Initial calculation
-        calculate();
+            // Add event listeners to all inputs
+            inputs.forEach(function(input) {
+                if (input) {
+                    input.addEventListener('input', calculate);
+                }
+            });
+
+            // Initial calculation
+            calculate();
+        });
     </script>
 
     <!-- Add menu.js for navigation functionality -->
-    <script src="/js/menu.js" type="d4ed50d62b5909d63fa06994-text/javascript"></script>
-<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="d4ed50d62b5909d63fa06994-|49" defer></script></body>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
 </html>
