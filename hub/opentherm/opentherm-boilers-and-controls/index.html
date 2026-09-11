@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenTherm Compatible Boilers and Controls - MyBoiler Hub</title>
+    <meta name="description" content="Comprehensive list of OpenTherm compatible boilers from all major manufacturers and OpenTherm capable smart controls. Find compatible combinations for maximum heating efficiency.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-breadcrumb {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2.5rem 0 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--border);
+        }
+
+        .article-content h2:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 1rem;
+        }
+
+        .article-content h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.75rem;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 1rem 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .article-content table thead,
+        .article-content table tbody {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .article-content table th,
+        .article-content table td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid var(--border);
+            word-wrap: break-word;
+        }
+
+        .article-content table th {
+            background: var(--bg-subtle);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content table tr:nth-child(even) {
+            background: var(--bg-subtle);
+        }
+
+        .info-box {
+            background: var(--bg-info);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: var(--radius);
+        }
+
+        .info-box p {
+            margin-bottom: 0;
+        }
+
+        .brand-section {
+            margin: 2rem 0;
+        }
+
+        .ot-logo {
+            max-width: 200px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body class="article-page">
+    <!-- Header with full navigation -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu">
+                <ul class="nav-list">
+                    <!-- Advice Menu -->
+                    <li class="nav-item nav-item-has-dropdown">
+                        <span class="nav-dropdown-label">
+                            <span>Advice</span>
+                            <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>
+                            </svg>
+                        </span>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Boilers</h4>
+                                <a href="https://hub.myboiler.com/money-and-energy-saving/">Money and Energy Saving</a>
+                                <a href="https://hub.myboiler.com/boiler-pressure/">Boiler Pressure</a>
+                                <a href="https://hub.myboiler.com/boiler-service/">Boiler Service</a>
+                                <a href="https://hub.myboiler.com/boiler-types/">Boiler Types</a>
+                                <a href="https://hub.myboiler.com/boiler-energy-efficiency/">Boiler Energy Efficiency</a>
+                                <a href="https://hub.myboiler.com/installation-efficiency/">Installation Efficiency</a>
+                                <h4>OpenTherm & Modulating Boilers</h4>
+                                <a href="https://hub.myboiler.com/opentherm-and-modulating-boilers/">OpenTherm & Modulating Overview</a>
+                                <a href="https://hub.myboiler.com/opentherm-capable-boilers/">OpenTherm Capable Boilers</a>
+                                <a href="https://hub.myboiler.com/opentherm-controls/">OpenTherm Controls</a>
+                                <a href="https://hub.myboiler.com/modulating-boiler-and-smart-controls/">Modulating Boilers & Smart Controls</a>
+                                <a href="/hub/opentherm/vaillant-opentherm/">Vaillant OpenTherm Guide</a>
+                                <a href="/hub/opentherm/worcester-bosch-opentherm/">Worcester OpenTherm Guide</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Heat Pumps</h4>
+                                <a href="https://hub.myboiler.com/heat-pumps/">Heat Pumps Overview</a>
+                                <a href="https://hub.myboiler.com/heat-pump-cylinder-retrofit/">Heat Pump Cylinder Retrofit</a>
+                                <a href="https://hub.myboiler.com/air-source-heat-pump/">Air Source Heat Pump</a>
+                                <a href="https://hub.myboiler.com/are-heat-pumps-a-con/">Are Heat Pumps a Con?</a>
+                                <a href="https://hub.myboiler.com/underfloor-heating/">Underfloor Heating</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Miscellaneous</h4>
+                                <a href="https://hub.myboiler.com/flow-temperature-and-power/">Flow Temperature & Power</a>
+                                <a href="https://hub.myboiler.com/solar-thermal-heating/">Solar Thermal Heating</a>
+                                <a href="https://hub.myboiler.com/solar-thermal-servicing/">Solar Thermal Servicing</a>
+                                <a href="/hub/s-plan/">S Plan Heating Systems</a>
+                                <a href="https://hub.myboiler.com/radiators/">Radiators</a>
+                                <a href="/quote/">Get a Quote</a>
+                                <a href="https://hub.myboiler.com/services/">Services</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Toolbox Menu -->
+                    <li class="nav-item nav-item-has-dropdown">
+                        <span class="nav-dropdown-label">
+                            <span>Toolbox</span>
+                            <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>
+                            </svg>
+                        </span>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Vaillant</h4>
+                                <a href="https://hub.myboiler.com/installer/vaillant-boiler-p-test/">P Test Instructions</a>
+                                <a href="https://hub.myboiler.com/installer/vaillant-boiler-emissions-table/">Emissions Table</a>
+                                <a href="https://hub.myboiler.com/installer/vaillant-ecotec-service-how-to/">Ecotec Service How-To</a>
+                                <a href="/hub/vaillant/vaillant-diagnostic-s-and-d-codes/">Diagnostic S & D Codes</a>
+                                <a href="https://hub.myboiler.com/installer/vaillant-fga-tool/">FGA Tool</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Worcester Bosch</h4>
+                                <a href="https://hub.myboiler.com/installer/worcester-fga-tool/">FGA Tool</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Other Brands</h4>
+                                <a href="https://hub.myboiler.com/installer/intergas-fga-tool/">Intergas FGA Tool</a>
+                                <a href="https://hub.myboiler.com/installer/intergas-service-how-to/">Intergas Service How-To</a>
+                                <h4>Miscellaneous</h4>
+                                <a href="https://hub.myboiler.com/installer/maximum-and-minimum-output-mode-videos/">Max/Min Output Mode Videos</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Calculators Menu -->
+                    <li class="nav-item nav-item-has-dropdown">
+                        <span class="nav-dropdown-label">
+                            <span>Calculators</span>
+                            <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>
+                            </svg>
+                        </span>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Heating Design</h4>
+                                <a href="https://hub.myboiler.com/calculators/air-change-calculator/">Air Change Calculator (ACH)</a>
+                                <a href="https://hub.myboiler.com/calculators/boiler-consumption/">Boiler Consumption</a>
+                                <a href="https://hub.myboiler.com/calculators/heat-source-system-design/">Heat Source/System Design</a>
+                                <a href="https://hub.myboiler.com/calculators/water-content-calculator/">Water Content</a>
+                                <a href="https://hub.myboiler.com/calculators/hot-water-recovery/">Hot Water Recovery</a>
+                                <a href="/hub/calculators/pipe-size-calculator/">Pipe Size Calculator</a>
+                                <a href="https://hub.myboiler.com/calculators/radiator-correction-factor/">Radiator Correction Factor</a>
+                                <a href="https://hub.myboiler.com/calculators/volume-flow-rate-q/">Volume Flow Rate Q</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Conversion Calculators</h4>
+                                <a href="https://hub.myboiler.com/calculators/kw-flow-rate/">KW to Flow Rate & Flow to KW</a>
+                                <a href="https://hub.myboiler.com/calculators/lpm-to-kwh/">LPM to kWh</a>
+                                <a href="https://hub.myboiler.com/calculators/btu-to-watts/">BTU to Watts</a>
+                                <a href="https://hub.myboiler.com/calculators/radiator-new-output/">Radiator New Output</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Gas Calculators</h4>
+                                <a href="https://hub.myboiler.com/calculators/combustion-ratio-calculator/">Combustion Ratio</a>
+                                <a href="https://hub.myboiler.com/calculators/gas-rate-calculator/">Gas Rate</a>
+                                <a href="https://hub.myboiler.com/calculators/m3-to-kwh/">m³ to kWh</a>
+                                <h4>Buffers</h4>
+                                <a href="https://hub.myboiler.com/calculators/buffer-minimum-volume/">Buffer Minimum Volume</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Manuals -->
+                    <li class="nav-item">
+                        <a href="https://boilermanuals.com">Manuals</a>
+                    </li>
+
+                    <!-- Ask AI -->
+                    <li class="nav-item nav-item-cta">
+                        <a href="/chat/">Ask AI</a>
+                    </li>
+
+                    <!-- Exit Hub -->
+                    <li class="nav-item">
+                        <a href="/">Exit Hub</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <div class="article-container">
+        <nav class="article-breadcrumb" aria-label="Breadcrumb">
+            <a href="/hub/">Hub</a> › <a href="https://hub.myboiler.com/opentherm-and-modulating-boilers/">OpenTherm</a> › Boilers & Controls
+        </nav>
+
+        <header class="article-header">
+            <h1 class="article-title">OpenTherm Compatible Boilers and Controls</h1>
+            <p class="article-intro">
+                Comprehensive reference guide to OpenTherm compatible boilers from all major manufacturers and OpenTherm capable heating controls. Find the perfect combination for maximum efficiency.
+            </p>
+        </header>
+
+        <article class="article-content">
+            <p>Listed below are OpenTherm capable and compatible manufacturers and boilers. These boilers have integrated OpenTherm unless specified otherwise in brackets. For more information on OpenTherm, visit the <a href="https://www.opentherm.eu/" target="_blank" rel="noopener">OpenTherm Association</a>. For homeowners wondering what OpenTherm means, see our guide on <a href="https://hub.myboiler.com/modulating-boiler-and-smart-controls/">Modulating Boilers with Smart Controls</a>.</p>
+
+            <h2>What is OpenTherm?</h2>
+            <p><strong>Wikipedia definition:</strong> OpenTherm (OT) is a standard communications protocol used in central heating systems for the communication between a central heating boiler and a thermostatic controller. A two-way communications interface, usually in the form of a slave and master device. As a standard, OpenTherm is independent of any single manufacturer.</p>
+            
+            <p>A controller from manufacturer A can in principle be used to control a boiler from manufacturer B. However, OpenTherm controllers and boilers do not always work properly together. The OpenTherm standard comprises a number of optional features and some devices may include manufacturer-specific features. The presence or absence of such features may impair compatibility with other OpenTherm devices.</p>
+
+            <h2>OpenTherm History</h2>
+            <p>OpenTherm was originally created by Honeywell and was sold to the OpenTherm Association on November 1996 for one British Pound. This was done to make the standard independent of any manufacturer.</p>
+
+            <h2>Modulating Control</h2>
+            <p>Unlike room thermostats that simply tell the boiler when to turn on and off (non-modulating), a modulating control tells the boiler the exact target/setpoint temperature that is required to be achieved. As the current temperature starts getting closer to the set point temperature, the boiler starts reducing the flow temperature to match the required demand.</p>
+
+            <p>This results in:</p>
+            <ul>
+                <li>Higher efficiency through better condensing operation</li>
+                <li>More comfortable temperatures with less overshoot</li>
+                <li>Reduced cycling and wear on components</li>
+                <li>Lower energy consumption</li>
+            </ul>
+
+            <h2>OpenTherm Advanced Setups</h2>
+            <p>OpenTherm is easier to use on combi boilers, as there is no hot water cylinder to control. Stored hot water requires heating to the correct temperatures as required by legionella prevention (recommended 60 degrees). Since OpenTherm can reduce flow temperatures below 60 degrees, on system and regular boilers with stored hot water, cylinder temperature reporting must be present in some form.</p>
+
+            <p>This allows the OpenTherm system to fire at high temperature just for the hot water. In this setup, it is advised that there is priority to the hot water system, otherwise higher temperatures may reach the radiators when you don't want them to.</p>
+
+            <div class="info-box">
+                <p><strong>Note for Manufacturers:</strong> If your boiler model is not in this list, please contact us via our contact form or Twitter to add your OpenTherm compatible products.</p>
+            </div>
+
+            <h2>OpenTherm Compatible Boilers</h2>
+            <p>The following boilers have native OpenTherm support. Some Vaillant Ecotec 4XX series models require additional configuration steps - see <a href="/hub/opentherm/vaillant-opentherm/">Vaillant OpenTherm Guide</a> for details.</p>
+
+            <div class="brand-section">
+                <h3>Alpha Heating Innovation</h3>
+                <p><a href="https://www.alpha-innovation.co.uk" target="_blank" rel="noopener">alpha-innovation.co.uk</a></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alpha Heating</td>
+                            <td>E-Tec S</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Alpha Heating</td>
+                            <td>E-tec Plus</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Alpha Heating</td>
+                            <td>E-tec</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Alpha Heating</td>
+                            <td>Evoke</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Alpha Heating</td>
+                            <td>Intec GS</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Atag Heating Technology</h3>
+                <p><a href="http://atagheating.co.uk" target="_blank" rel="noopener">atagheating.co.uk</a></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Atag</td>
+                            <td>iC</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Atag</td>
+                            <td>iC Economiser</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Atag</td>
+                            <td>iS</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Baxi</h3>
+                <p><a href="http://www.baxi.co.uk/" target="_blank" rel="noopener">baxi.co.uk</a></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Baxi</td>
+                            <td>100 Combi</td>
+                            <td>OpenTherm is Terminals 1 and 2 on the M2 Low Voltage Terminal Block</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Baxi</td>
+                            <td>200 Combi</td>
+                            <td>OpenTherm connector is labelled 'Bus'</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Baxi</td>
+                            <td>400 Combi</td>
+                            <td>OpenTherm connector is labelled 'Bus'</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Baxi</td>
+                            <td>600 Combi</td>
+                            <td>OpenTherm connector is labelled 'Bus'</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Baxi</td>
+                            <td>600 System</td>
+                            <td>OpenTherm connector is labelled 'Low Voltage Controls'</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Baxi</td>
+                            <td>800 Combi – 825 830 836</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Daikin</h3>
+                <p><a href="https://www.daikin.eu/" target="_blank" rel="noopener">daikin.eu</a></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Daikin</td>
+                            <td>D2CND 24Kw</td>
+                            <td>Combi Boiler</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Daikin</td>
+                            <td>D2CND 28kw</td>
+                            <td>Combi Boiler</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Daikin</td>
+                            <td>D2CND 35kw</td>
+                            <td>Combi Boiler</td>
+                            <td>NG</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>EOGB</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>EOGB</td>
+                            <td>Sapphire 23kW</td>
+                            <td>6-23kW Modulation</td>
+                            <td>Oil (HVO & Kerosene)</td>
+                        </tr>
+                        <tr>
+                            <td>EOGB</td>
+                            <td>Sapphire 28kW</td>
+                            <td>6-28kW Modulation</td>
+                            <td>Oil (HVO & Kerosene)</td>
+                        </tr>
+                        <tr>
+                            <td>EOGB</td>
+                            <td>Sapphire 32kW</td>
+                            <td>6-32kW Modulation</td>
+                            <td>Oil (HVO & Kerosene)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Ferroli</h3>
+                <p><a href="http://ferroli.co.uk" target="_blank" rel="noopener">ferroli.co.uk</a></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ferroli</td>
+                            <td>i25, i29 Condensing Combination Boiler</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Ferroli</td>
+                            <td>Bluehelix Tech RRT 24C, 28C, 34C</td>
+                            <td>Condensing Combi Boiler</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Ferroli</td>
+                            <td>Bluehelix Tech RRT 18S, 28S, 30S</td>
+                            <td>Condensing System Boiler</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Fiamma</td>
+                            <td>Combi Elektra Compact 12C, 18C, 24C</td>
+                            <td>12KW, 18KW, 24KW</td>
+                            <td>Electric</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Ideal Boilers</h3>
+                <p><a href="http://idealboilers.com/" target="_blank" rel="noopener">idealboilers.com</a></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ideal</td>
+                            <td>Independent + Combi</td>
+                            <td>Option Kit may be required</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Ideal</td>
+                            <td>Independent Combi</td>
+                            <td>Option Kit may be required</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Ideal</td>
+                            <td>Independent System</td>
+                            <td>Option Kit may be required</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Ideal</td>
+                            <td>Logic Combi+ Combi C</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Ideal</td>
+                            <td>Logic Combi C24, C30, C35</td>
+                            <td>Requires separate harness kit</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Ideal</td>
+                            <td>Logic Code Combi</td>
+                            <td>Requires separate harness kit</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Ideal</td>
+                            <td>I-mini C24, C30</td>
+                            <td>Requires separate harness kit</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Ideal</td>
+                            <td>Vogue Combi C26, C32, C40</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Ideal</td>
+                            <td>Logic + System</td>
+                            <td>Works with Evohome</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Ideal</td>
+                            <td>Logic + Heat</td>
+                            <td>Works with Evohome</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Ideal</td>
+                            <td>Logic Combi ESP1 24, 30, 35</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Ideal Commercial</h3>
+                <p><a href="https://idealcommercialboilers.com/" target="_blank" rel="noopener">idealcommercialboilers.com</a></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ideal Commercial</td>
+                            <td>Evomax</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Ideal Commercial</td>
+                            <td>Imax</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Intergas</h3>
+                <p><a href="http://www.intergasheating.co.uk/" target="_blank" rel="noopener">intergasheating.co.uk</a></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Intergas</td>
+                            <td>Rapid</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Intergas</td>
+                            <td>Rapid Plus</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Intergas</td>
+                            <td>Combi Compact</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Intergas</td>
+                            <td>Compact Range</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Intergas</td>
+                            <td>ECO RF</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Intergas</td>
+                            <td>Xtreme</td>
+                            <td>Dual OpenTherm</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Intergas</td>
+                            <td>Xclusive</td>
+                            <td>Dual OpenTherm</td>
+                            <td>NG</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Keston</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Keston</td>
+                            <td>Combi C30 & C35</td>
+                            <td>Requires separate harness kit</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Keston</td>
+                            <td>System S30</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Keston</td>
+                            <td>Heat 45 and 55</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Main</h3>
+                <p><a href="https://www.mainheating.co.uk" target="_blank" rel="noopener">mainheating.co.uk</a></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Main</td>
+                            <td>Eco Compact Combi 25-30</td>
+                            <td>Same accessories as Baxi</td>
+                            <td>NG</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>KD Navien</h3>
+                <p><a href="http://www.navienuk.com/" target="_blank" rel="noopener">navienuk.com</a></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Navien</td>
+                            <td>NCB300</td>
+                            <td></td>
+                            <td>Natural Gas / LPG</td>
+                        </tr>
+                        <tr>
+                            <td>Navien</td>
+                            <td>NCB500 On</td>
+                            <td></td>
+                            <td>Natural Gas / LPG</td>
+                        </tr>
+                        <tr>
+                            <td>Navien</td>
+                            <td>NCB700 On</td>
+                            <td></td>
+                            <td>Natural Gas / LPG</td>
+                        </tr>
+                        <tr>
+                            <td>Navien</td>
+                            <td>LCB700 Oil</td>
+                            <td></td>
+                            <td>Oil</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Ravenheat</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ravenheat</td>
+                            <td>HE30S Compact</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Ravenheat</td>
+                            <td>HE80</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Ravenheat</td>
+                            <td>HE98S Combi</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Remeha</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Remeha</td>
+                            <td>Avanta</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Remeha</td>
+                            <td>Quinta Ace</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Remeha</td>
+                            <td>Quinta Pro</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Remeha</td>
+                            <td>Gas 110 Eco</td>
+                            <td>Commercial</td>
+                            <td>NG</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Tepeo</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tepeo</td>
+                            <td>ZEB-40S</td>
+                            <td>System Boiler</td>
+                            <td>Electric</td>
+                        </tr>
+                        <tr>
+                            <td>Tepeo</td>
+                            <td>ZEB-40R</td>
+                            <td>Regular Boiler</td>
+                            <td>Electric</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Viessmann</h3>
+                <p><a href="https://www.viessmann.co.uk" target="_blank" rel="noopener">viessmann.co.uk</a></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Viessmann</td>
+                            <td>Vitodens 100W Type WB1A</td>
+                            <td>Connection: X3.3 and X3.4</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Viessmann</td>
+                            <td>Vitodens 100W Type WB1B</td>
+                            <td>Connection: X21.1 and X21.2</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Viessmann</td>
+                            <td>Vitodens 100W Type WB1C</td>
+                            <td>Connection: X21.1 and X21.2</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Viessmann</td>
+                            <td>Vitodens 100W Type B1HA, B1KA</td>
+                            <td>Connection: X21.1 and X21.2</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Viessmann</td>
+                            <td>Vitodens 200-W WB2B 26+ 35 kW</td>
+                            <td>Via Expansion Module OT and OT-A8, Terminal -10 and +10 on expansion A8</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Viessmann</td>
+                            <td>Vitodens 200-W WB2C, B2HA, B2JA, B2LA</td>
+                            <td>Via icm Expander OpenTherm</td>
+                            <td>NG</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Vokera</h3>
+                <p><a href="https://www.vokera.co.uk" target="_blank" rel="noopener">vokera.co.uk</a></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                            <th>Fuel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Vokera</td>
+                            <td>Evolve C</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Vokera</td>
+                            <td>Evolve S</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Vokera</td>
+                            <td>Linea One</td>
+                            <td>Via OpenTherm Kit Part_1221179</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Vokera</td>
+                            <td>Vision Combi</td>
+                            <td>Requires control interface 29450143</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Vokera</td>
+                            <td>Compact A</td>
+                            <td>Requires control interface 29450143</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Vokera</td>
+                            <td>Verve</td>
+                            <td>Heating only mode</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Vokera</td>
+                            <td>Mynute i</td>
+                            <td>Heating only mode</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Vokera</td>
+                            <td>Unica i</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Vokera</td>
+                            <td>Vibe</td>
+                            <td>System boiler</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Vokera</td>
+                            <td>Vision C</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Vokera</td>
+                            <td>Linea HE</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Vokera</td>
+                            <td>Mynute A</td>
+                            <td>System boiler</td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Vokera</td>
+                            <td>Mynute HE</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                        <tr>
+                            <td>Vokera</td>
+                            <td>Unica HE</td>
+                            <td></td>
+                            <td>NG</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><em>Last Updated: 26/09/2022</em></p>
+            </div>
+
+            <h2>Unofficially OpenTherm Compatible Boilers</h2>
+            <p>The following boiler models are capable of OpenTherm using unofficial adaptors. These are mostly Vaillant and Worcester Bosch models. Using the mentioned adaptors may invalidate your warranty on new boilers, but for boilers that are out of warranty there are no known problems. These adaptors are purpose-made by the manufacturers for some European countries where governments have made OpenTherm compulsory.</p>
+
+            <div class="brand-section">
+                <h3>Vaillant (Unofficial)</h3>
+                <p><a href="https://www.vaillant.co.uk" target="_blank" rel="noopener">vaillant.co.uk</a></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Vaillant</td>
+                            <td>Ecotec Pro</td>
+                            <td>Using unofficial VR33 Module - see <a href="/hub/opentherm/vaillant-opentherm/">Vaillant OpenTherm Guide</a></td>
+                        </tr>
+                        <tr>
+                            <td>Vaillant</td>
+                            <td>Ecotec Plus</td>
+                            <td>Using unofficial VR33 Module - Ecotec 4XX requires additional steps</td>
+                        </tr>
+                        <tr>
+                            <td>Vaillant</td>
+                            <td>Ecotec Exclusive</td>
+                            <td>Using unofficial VR33 Module</td>
+                        </tr>
+                        <tr>
+                            <td>Vaillant</td>
+                            <td>Ecofit Pure</td>
+                            <td>Using unofficial VR33 Module</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Glow-Worm (Unofficial)</h3>
+                <p><a href="https://www.glow-worm.co.uk" target="_blank" rel="noopener">glow-worm.co.uk</a></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Glow-Worm</td>
+                            <td>Betacom 1, 2, 3, 4</td>
+                            <td>Requires Adaptor</td>
+                        </tr>
+                        <tr>
+                            <td>Glow-Worm</td>
+                            <td>Easicom 1, 2, 3</td>
+                            <td>Requires Adaptor</td>
+                        </tr>
+                        <tr>
+                            <td>Glow-Worm</td>
+                            <td>Energy 35 Store</td>
+                            <td>Requires Adaptor</td>
+                        </tr>
+                        <tr>
+                            <td>Glow-Worm</td>
+                            <td>Energy Combi</td>
+                            <td>Requires Adaptor</td>
+                        </tr>
+                        <tr>
+                            <td>Glow-Worm</td>
+                            <td>Essential</td>
+                            <td>Requires Adaptor</td>
+                        </tr>
+                        <tr>
+                            <td>Glow-Worm</td>
+                            <td>Flexicom</td>
+                            <td>Requires Adaptor</td>
+                        </tr>
+                        <tr>
+                            <td>Glow-Worm</td>
+                            <td>Ultracom</td>
+                            <td>Requires Adaptor</td>
+                        </tr>
+                        <tr>
+                            <td>Glow-Worm</td>
+                            <td>Ultimate3</td>
+                            <td>Requires Adaptor</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="brand-section">
+                <h3>Worcester Bosch (Unofficial)</h3>
+                <p>See <a href="/hub/opentherm/worcester-bosch-opentherm/">Worcester Bosch OpenTherm Guide</a> for details</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Additional Info</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Worcester Bosch</td>
+                            <td>EMS capable boilers</td>
+                            <td>Using unofficial Nefit Adaptor</td>
+                        </tr>
+                        <tr>
+                            <td>Worcester Bosch</td>
+                            <td>Greenstar i</td>
+                            <td>Requires Adaptor</td>
+                        </tr>
+                        <tr>
+                            <td>Worcester Bosch</td>
+                            <td>Greenstar i Junior</td>
+                            <td>Requires Adaptor (manufactured after July 2013)</td>
+                        </tr>
+                        <tr>
+                            <td>Worcester Bosch</td>
+                            <td>Greenstar Si Compact</td>
+                            <td>Requires Adaptor</td>
+                        </tr>
+                        <tr>
+                            <td>Worcester Bosch</td>
+                            <td>Greenstar CDi Compact</td>
+                            <td>Requires Adaptor</td>
+                        </tr>
+                        <tr>
+                            <td>Worcester Bosch</td>
+                            <td>Greenstar CDi Classic</td>
+                            <td>Requires Adaptor</td>
+                        </tr>
+                        <tr>
+                            <td>Worcester Bosch</td>
+                            <td>Greenstar Highflow CDi</td>
+                            <td>Requires Adaptor</td>
+                        </tr>
+                        <tr>
+                            <td>Worcester Bosch</td>
+                            <td>Greenstar 12i System – 24i System</td>
+                            <td>Requires Adaptor (manufactured after February 2011)</td>
+                        </tr>
+                        <tr>
+                            <td>Worcester Bosch</td>
+                            <td>Greenstar 27i System – 30i System</td>
+                            <td>Requires Adaptor (optional integral diverter valve must be installed)</td>
+                        </tr>
+                        <tr>
+                            <td>Worcester Bosch</td>
+                            <td>Greenstar CDi Classic System</td>
+                            <td>Requires Adaptor (optional integral diverter valve must be installed, manufactured after 16th January 2007 with software version CF12.10 onwards)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><em>Note: Worcester Bosch OpenTherm information is limited. Please accept this list as capable but not yet fully confirmed. There is no confirmation of hot water working with OpenTherm. Last Updated: 24/11/2018</em></p>
+            </div>
+
+            <h2>OpenTherm Compatible Controls</h2>
+            <p>The following are OpenTherm compatible heating controls and smart thermostats. These controls are compatible with OpenTherm capable boilers shown above. For homeowners wondering what OpenTherm means, see the <a href="https://www.opentherm.eu/" target="_blank" rel="noopener">OpenTherm Association</a> fact sheet.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Brand</th>
+                        <th>Model</th>
+                        <th>Wired / Wireless</th>
+                        <th>Radiator Valves</th>
+                        <th>Internet Connected</th>
+                        <th>HomeKit</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Baxi</td>
+                        <td>uSense smart room thermostat</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>Y</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Danfoss</td>
+                        <td>RET2000-OT</td>
+                        <td>Wired</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Delta Dore</td>
+                        <td>Tybox Bus OT – 6053056</td>
+                        <td>Wired</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Drayton</td>
+                        <td>Wiser Kit 1</td>
+                        <td>Wireless</td>
+                        <td>Y</td>
+                        <td>Y</td>
+                        <td>N</td>
+                        <td>Heating Only</td>
+                    </tr>
+                    <tr>
+                        <td>Drayton</td>
+                        <td>Wiser Kit 2</td>
+                        <td>Wireless</td>
+                        <td>Y</td>
+                        <td>Y</td>
+                        <td>N</td>
+                        <td>Heating and Hot Water</td>
+                    </tr>
+                    <tr>
+                        <td>Drayton</td>
+                        <td>Wiser Kit 3</td>
+                        <td>Wireless</td>
+                        <td>Y</td>
+                        <td>Y</td>
+                        <td>N</td>
+                        <td>3 Zone Support</td>
+                    </tr>
+                    <tr>
+                        <td>Drayton</td>
+                        <td>Digistat 2290M</td>
+                        <td>Wired</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>Bluetooth App</td>
+                    </tr>
+                    <tr>
+                        <td>Drayton</td>
+                        <td>Digistat RF901</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>Bluetooth App</td>
+                    </tr>
+                    <tr>
+                        <td>EPH Controls</td>
+                        <td>CP4B</td>
+                        <td>Wired (Batteries)</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>EPH Controls</td>
+                        <td>CP4M</td>
+                        <td>Wired (Mains)</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>EPH Controls</td>
+                        <td>RFRP-OT & RF1A-OT (Pack 4)</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>1 Zone</td>
+                    </tr>
+                    <tr>
+                        <td>EPH Controls</td>
+                        <td>CP4-HW-OT</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>EPH Controls</td>
+                        <td>CP4i</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>Y</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Esi</td>
+                        <td>ESRTP4OT Programmable</td>
+                        <td>Wired</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Esi</td>
+                        <td>ESRTP4RF+ Programmable</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Esi</td>
+                        <td>ESRTP6WHW</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>Y</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Heatmiser</td>
+                        <td>neoHub Mini with NeoAir</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>Y</td>
+                        <td>N</td>
+                        <td>2 Zones with OpenTherm capable</td>
+                    </tr>
+                    <tr>
+                        <td>Honeywell</td>
+                        <td>T87M2018</td>
+                        <td>Wired</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Honeywell</td>
+                        <td>T3M</td>
+                        <td>Wired</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Honeywell</td>
+                        <td>T4M</td>
+                        <td>Wired</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>Optional WC curve setting - no DHW setpoint support</td>
+                    </tr>
+                    <tr>
+                        <td>Honeywell</td>
+                        <td>T4R</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>No DHW setpoint support</td>
+                    </tr>
+                    <tr>
+                        <td>Honeywell</td>
+                        <td>Lyric T6</td>
+                        <td>Wired</td>
+                        <td>Y</td>
+                        <td>Y</td>
+                        <td>Y</td>
+                        <td>DHW setpoint and overnight preheat disable for combis</td>
+                    </tr>
+                    <tr>
+                        <td>Honeywell</td>
+                        <td>Lyric T6R</td>
+                        <td>Wireless</td>
+                        <td>Y</td>
+                        <td>Y</td>
+                        <td>Y</td>
+                        <td>DHW setpoint and overnight preheat disable for combis</td>
+                    </tr>
+                    <tr>
+                        <td>Honeywell</td>
+                        <td>T6R-HW</td>
+                        <td>Wireless</td>
+                        <td>Y</td>
+                        <td>Y</td>
+                        <td>Y</td>
+                        <td>DHW control for storage combis and system boilers</td>
+                    </tr>
+                    <tr>
+                        <td>Honeywell</td>
+                        <td>Evohome</td>
+                        <td>Wireless</td>
+                        <td>Y</td>
+                        <td>Y</td>
+                        <td>N</td>
+                        <td>Requires R8810 OpenTherm bridge</td>
+                    </tr>
+                    <tr>
+                        <td>Honeywell</td>
+                        <td>CM727</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>Requires R8810 OpenTherm bridge</td>
+                    </tr>
+                    <tr>
+                        <td>Honeywell</td>
+                        <td>CMS927B1049 Room Unit</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>Requires R8810 OpenTherm bridge</td>
+                    </tr>
+                    <tr>
+                        <td>Honeywell</td>
+                        <td>CMT937A1011</td>
+                        <td>Wired</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Ideal</td>
+                        <td>Logic RF7</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Ideal</td>
+                        <td>Touch Connect Wifi 214217</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>Y</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Nest</td>
+                        <td>Smart Thermostat 3rd Gen</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>Y</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Nest</td>
+                        <td>Smart Thermostat E 3rd Gen</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>Y</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Remeha</td>
+                        <td>iSense</td>
+                        <td>Wired / Wireless</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Salus</td>
+                        <td>RT520</td>
+                        <td>Wired</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Salus</td>
+                        <td>RT520RF</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Tado</td>
+                        <td>Smart Wired Thermostat</td>
+                        <td>Wired</td>
+                        <td>Y</td>
+                        <td>Y</td>
+                        <td>Y</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Tado</td>
+                        <td>Wireless Extension Kit</td>
+                        <td>Wireless</td>
+                        <td>Y</td>
+                        <td>Y</td>
+                        <td>Y</td>
+                        <td>Extension Kit with receiver BR02/BU02 onwards has OpenTherm support</td>
+                    </tr>
+                    <tr>
+                        <td>Vokera</td>
+                        <td>BeSmart</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>Y</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Vokera</td>
+                        <td>20050690 OT 7 Day RF</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Vokera</td>
+                        <td>OpenTherm RF Programmer 20050690</td>
+                        <td>Wireless</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td>N</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><em>Last Updated: 25/09/2022</em></p>
+
+            <h2>Summary</h2>
+            <p>This comprehensive list covers the majority of OpenTherm compatible boilers and controls available in the UK market. OpenTherm provides significant benefits in terms of efficiency and comfort when properly implemented.</p>
+
+            <p>For brand-specific OpenTherm implementation guides:</p>
+            <ul>
+                <li><a href="/hub/opentherm/vaillant-opentherm/">Vaillant OpenTherm Guide</a> - Including VR33 module installation</li>
+                <li><a href="/hub/opentherm/worcester-bosch-opentherm/">Worcester Bosch OpenTherm Guide</a> - EMS to OpenTherm adaptor information</li>
+            </ul>
+
+            <div class="info-box">
+                <p><strong>Need Help?</strong> If you're unsure about OpenTherm compatibility or installation, always consult with a Gas Safe registered engineer or contact the boiler manufacturer's technical support directly.</p>
+            </div>
+        </article>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="/pages/about-us.md" target="page-content">Company</a></li>
+                <li><a href="/pages/carbon-emissions.md" target="page-content">Carbon Emissions</a></li>
+                <li><a href="/pages/mission.md" target="page-content">Our Mission</a></li>
+                <li><a href="/pages/privacy-policy.md" target="page-content">Privacy Policy</a></li>
+                <li><a href="/pages/affiliate-disclosure.md" target="page-content">Affiliates Disclosure</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul>
+                <li>A Rated House,</li>
+                <li>11 Sunnymead Road,</li>
+                <li>London, </li>
+                <li>NW9 8BT</li>
+                <li><a href="tel://+4402081234411">+44 020 8123 4411</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Sister Sites</h3>
+            <ul>
+                <li><a href="/hub/">MyBoiler Hub</a></li>
+                <li><a href="https://boilermanuals.com">Boiler Manuals</a></li>
+                <li><a href="https://combiboiler.com">Combi Boiler</a></li>
+                <li><a href="https://boilerservice.com">Boiler Service</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Newsletter</h3>
+            <div id="mc_embed_shell">
+                <div id="mc_embed_signup">
+                    <form action="https://myboiler.us7.list-manage.com/subscribe/post?u=74520e86378a5e9ad9e26240e&amp;id=de886bf698&amp;f_id=00ccaee4f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                        <div id="mc_embed_signup_scroll">
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk"></span></label><br><br>
+                                <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""><br><br>
+                            </div>
+                            <div class="clear foot">
+                                <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Subscribe">
+                            </div>
+                            <br>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display: none;"></div>
+                                <div class="response" id="mce-success-response" style="display: none;"></div>
+                            </div>
+                            <div aria-hidden="true" style="position: absolute; left: -5000px;">
+                                <input type="text" name="b_76b9d06d4164064c0ffb0d455_68a8dc9423" tabindex="-1" value="">
+                            </div>
+                            <p style="margin: 0px auto;">
+                                <a href="http://eepurl.com/i6R-1E" title="Mailchimp - email marketing made easy and fun">
+                                    <span style="display: inline-block; background-color: transparent; border-radius: 4px;">
+                                        <img class="refferal_badge" src="https://digitalasset.intuit.com/render/content/dam/intuit/mc-fe/en_us/images/intuit-mc-rewards-text-light.svg" alt="Intuit Mailchimp" style="width: 100px; height: 40px; display: flex; padding: 2px 0px; justify-content: left; align-items: center;">
+                                    </span>
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <footer class="copyright">
+        <ul class="social-media no-bullets">
+            <li class="wp-social-link wp-social-link-x wp-block-social-link">
+                <a rel="noopener nofollow" target="_blank" href="https://x.com/myboiler" class="">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z"></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="wp-social-link wp-social-link-facebook wp-block-social-link">
+                <a rel="noopener nofollow" target="_blank" href="https://facebook.com/myboiler" class="wp-block-social-link-anchor">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z"></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="wp-social-link wp-social-link-youtube wp-block-social-link">
+                <a rel="noopener nofollow" target="_blank" href="https://www.youtube.com/@myboiler" class="wp-block-social-link-anchor">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M21.8,8.001c0,0-0.195-1.378-0.795-1.985c-0.76-0.797-1.613-0.801-2.004-0.847c-2.799-0.202-6.997-0.202-6.997-0.202h-0.009c0,0-4.198,0-6.997,0.202C4.608,5.216,3.756,5.22,2.995,6.016C2.395,6.623,2.2,8.001,2.2,8.001S2,9.62,2,11.238v1.517c0,1.618,0.2,3.237,0.2,3.237s0.195,1.378,0.795,1.985c0.761,0.797,1.76,0.771,2.205,0.855c1.6,0.153,6.8,0.201,6.8,0.201s4.203-0.006,7.001-0.209c0.391-0.047,1.243-0.051,2.004-0.847c0.6-0.607,0.795-1.985,0.795-1.985s0.2-1.618,0.2-3.237v-1.517C22,9.62,21.8,8.001,21.8,8.001z M9.935,14.594l-0.001-5.62l5.404,2.82L9.935,14.594z"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </footer>
+
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+    </footer>
+
+    <script type="text/javascript" data-cfasync="false" src="/js/menu.js"></script>
+</body>
+</html>
