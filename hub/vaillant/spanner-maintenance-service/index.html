@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaillant Spanner Maintenance Service Symbol - MyBoiler Hub</title>
+    <meta name="description" content="Understanding the Vaillant spanner maintenance service symbol. Learn what the spanner icon means on your Vaillant boiler display and how to access the Live Monitor for service information.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-breadcrumb {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 1rem;
+        }
+
+        .article-content h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.75rem;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9375rem;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .article-content thead {
+            background: var(--bg);
+        }
+
+        .article-content th {
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .article-content td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
+            vertical-align: top;
+        }
+
+        .article-content tbody tr:hover {
+            background: var(--bg);
+        }
+
+        @media (max-width: 768px) {
+            .article-content table {
+                font-size: 0.875rem;
+            }
+
+            .article-content th,
+            .article-content td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="article-page">
+    <!-- Header with full navigation -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu">
+                <ul class="nav-list">
+                    <!-- Advice Menu -->
+                    <li class="nav-item nav-item-has-dropdown">
+                        <span class="nav-dropdown-label">
+                            <span>Advice</span>
+                            <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>
+                            </svg>
+                        </span>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Boilers</h4>
+                                <a href="https://hub.myboiler.com/money-and-energy-saving/">Money and Energy Saving</a>
+                                <a href="https://hub.myboiler.com/boiler-pressure/">Boiler Pressure</a>
+                                <a href="https://hub.myboiler.com/boiler-service/">Boiler Service</a>
+                                <a href="https://hub.myboiler.com/boiler-types/">Boiler Types</a>
+                                <a href="https://hub.myboiler.com/boiler-energy-efficiency/">Boiler Energy Efficiency</a>
+                                <a href="https://hub.myboiler.com/installation-efficiency/">Installation Efficiency</a>
+                                <h4>OpenTherm & Modulating Boilers</h4>
+                                <a href="https://hub.myboiler.com/opentherm-and-modulating-boilers/">OpenTherm & Modulating Overview</a>
+                                <a href="https://hub.myboiler.com/opentherm-capable-boilers/">OpenTherm Capable Boilers</a>
+                                <a href="https://hub.myboiler.com/opentherm-controls/">OpenTherm Controls</a>
+                                <a href="https://hub.myboiler.com/modulating-boiler-and-smart-controls/">Modulating Boilers & Smart Controls</a>
+                                <a href="/hub/opentherm/vaillant-opentherm/">Vaillant OpenTherm Guide</a>
+                                <a href="/hub/opentherm/worcester-bosch-opentherm/">Worcester OpenTherm Guide</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Heat Pumps</h4>
+                                <a href="https://hub.myboiler.com/heat-pumps/">Heat Pumps Overview</a>
+                                <a href="https://hub.myboiler.com/heat-pump-cylinder-retrofit/">Heat Pump Cylinder Retrofit</a>
+                                <a href="https://hub.myboiler.com/air-source-heat-pump/">Air Source Heat Pump</a>
+                                <a href="https://hub.myboiler.com/are-heat-pumps-a-con/">Are Heat Pumps a Con?</a>
+                                <a href="https://hub.myboiler.com/underfloor-heating/">Underfloor Heating</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Miscellaneous</h4>
+                                <a href="https://hub.myboiler.com/flow-temperature-and-power/">Flow Temperature & Power</a>
+                                <a href="https://hub.myboiler.com/solar-thermal-heating/">Solar Thermal Heating</a>
+                                <a href="https://hub.myboiler.com/solar-thermal-servicing/">Solar Thermal Servicing</a>
+                                <a href="/hub/s-plan/">S Plan Heating Systems</a>
+                                <a href="https://hub.myboiler.com/radiators/">Radiators</a>
+                                <a href="/quote/">Get a Quote</a>
+                                <a href="https://hub.myboiler.com/services/">Services</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Toolbox Menu -->
+                    <li class="nav-item nav-item-has-dropdown">
+                        <span class="nav-dropdown-label">
+                            <span>Toolbox</span>
+                            <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>
+                            </svg>
+                        </span>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Vaillant</h4>
+                                <a href="https://hub.myboiler.com/installer/vaillant-boiler-p-test/">P Test Instructions</a>
+                                <a href="https://hub.myboiler.com/installer/vaillant-boiler-emissions-table/">Emissions Table</a>
+                                <a href="https://hub.myboiler.com/installer/vaillant-ecotec-service-how-to/">Ecotec Service How-To</a>
+                                <a href="https://hub.myboiler.com/installer/vaillant-diagnostic-codes/">Diagnostic S & D Codes</a>
+                                <a href="https://hub.myboiler.com/installer/vaillant-fga-tool/">FGA Tool</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Worcester Bosch</h4>
+                                <a href="https://hub.myboiler.com/installer/worcester-fga-tool/">FGA Tool</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Other Brands</h4>
+                                <a href="https://hub.myboiler.com/installer/intergas-fga-tool/">Intergas FGA Tool</a>
+                                <a href="https://hub.myboiler.com/installer/intergas-service-how-to/">Intergas Service How-To</a>
+                                <h4>Miscellaneous</h4>
+                                <a href="https://hub.myboiler.com/installer/maximum-and-minimum-output-mode-videos/">Max/Min Output Mode Videos</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Calculators Menu -->
+                    <li class="nav-item nav-item-has-dropdown">
+                        <span class="nav-dropdown-label">
+                            <span>Calculators</span>
+                            <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>
+                            </svg>
+                        </span>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Heating Design</h4>
+                                <a href="https://hub.myboiler.com/calculators/air-change-calculator/">Air Change Calculator (ACH)</a>
+                                <a href="https://hub.myboiler.com/calculators/boiler-consumption/">Boiler Consumption</a>
+                                <a href="https://hub.myboiler.com/calculators/heat-source-system-design/">Heat Source/System Design</a>
+                                <a href="https://hub.myboiler.com/calculators/water-content-calculator/">Water Content</a>
+                                <a href="https://hub.myboiler.com/calculators/hot-water-recovery/">Hot Water Recovery</a>
+                                <a href="/hub/calculators/pipe-size-calculator/">Pipe Size Calculator</a>
+                                <a href="https://hub.myboiler.com/calculators/radiator-correction-factor/">Radiator Correction Factor</a>
+                                <a href="https://hub.myboiler.com/calculators/volume-flow-rate-q/">Volume Flow Rate Q</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Conversion Calculators</h4>
+                                <a href="https://hub.myboiler.com/calculators/kw-flow-rate/">KW to Flow Rate & Flow to KW</a>
+                                <a href="https://hub.myboiler.com/calculators/lpm-to-kwh/">LPM to kWh</a>
+                                <a href="https://hub.myboiler.com/calculators/btu-to-watts/">BTU to Watts</a>
+                                <a href="https://hub.myboiler.com/calculators/radiator-new-output/">Radiator New Output</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Gas Calculators</h4>
+                                <a href="https://hub.myboiler.com/calculators/combustion-ratio-calculator/">Combustion Ratio</a>
+                                <a href="https://hub.myboiler.com/calculators/gas-rate-calculator/">Gas Rate</a>
+                                <a href="https://hub.myboiler.com/calculators/m3-to-kwh/">m³ to kWh</a>
+                                <h4>Buffers</h4>
+                                <a href="https://hub.myboiler.com/calculators/buffer-minimum-volume/">Buffer Minimum Volume</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Manuals -->
+                    <li class="nav-item">
+                        <a href="https://boilermanuals.com">Manuals</a>
+                    </li>
+
+                    <!-- Ask AI -->
+                    <li class="nav-item nav-item-cta">
+                        <a href="/chat/">Ask AI</a>
+                    </li>
+
+                    <!-- Exit Hub -->
+                    <li class="nav-item">
+                        <a href="/">Exit Hub</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <div class="article-container">
+        <nav class="article-breadcrumb" aria-label="Breadcrumb">
+            <a href="/hub/">Hub</a> › <a href="https://hub.myboiler.com/vaillant/">Vaillant</a> › Spanner Maintenance Service
+        </nav>
+
+        <header class="article-header">
+            <h1 class="article-title">Spanner Maintenance Service</h1>
+            <p class="article-intro">
+                Understanding the Vaillant spanner symbol and what it means when your boiler displays the maintenance service icon. Learn how to access the Live Monitor for detailed service information.
+            </p>
+        </header>
+
+        <article class="article-content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>Maintenance / Service required</td>
+                        <td>In the "Live monitor", you can read further information about the reason for the service</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>If the open-ended spanner is displayed, the boiler requires a service.</p>
+
+            <p>Consult your competent person about doing this. The boiler is not in fault mode but continues to operate.</p>
+
+            <p>In the "Live monitor", you can read further information about the reason for the service</p>
+
+            <h2>Status Codes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Status codes</th>
+                        <th>Meaning</th>
+                        <th>Visibility</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>S 00</td>
+                        <td>Heating mode: No heat demand</td>
+                        <td>Displays in Heating mode</td>
+                    </tr>
+                    <tr>
+                        <td>S 02</td>
+                        <td>Heating mode: Water pump running</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>S 03</td>
+                        <td>Heating mode: Ignition sequence</td>
+                        <td>Displays in Heating mode</td>
+                    </tr>
+                    <tr>
+                        <td>S 04</td>
+                        <td>Heating mode: Burner ignited</td>
+                        <td>Displays in Heating mode</td>
+                    </tr>
+                    <tr>
+                        <td>S 06</td>
+                        <td>Heating mode: Fan overrun</td>
+                        <td>Displays in Heating mode</td>
+                    </tr>
+                    <tr>
+                        <td>S 07</td>
+                        <td>Heating mode: Pump overrun</td>
+                        <td>Displays in Heating mode</td>
+                    </tr>
+                    <tr>
+                        <td>S 08</td>
+                        <td>Heating mode: Remaining anti-cycling time xx min</td>
+                        <td>Displays in Heating mode</td>
+                    </tr>
+                    <tr>
+                        <td>S 20</td>
+                        <td>Warmstart demand</td>
+                        <td>Displays in cylinder charging mode</td>
+                    </tr>
+                    <tr>
+                        <td>S 22</td>
+                        <td>DHW mode: Pump running</td>
+                        <td>Displays in cylinder charging mode</td>
+                    </tr>
+                    <tr>
+                        <td>S 31</td>
+                        <td>No heat demand, summer operating mode</td>
+                        <td>Special cases</td>
+                    </tr>
+                    <tr>
+                        <td>S 34</td>
+                        <td>Heating mode: frost protection</td>
+                        <td>Special cases</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>The following menu struction shows you how to get into the Live Monitor section</p>
+
+            <h3>Live Monitor Menu</h3>
+
+            <p>Once you have determined the fault or message, it can be relayed to the engineer, or if you are the engineer look further into the reason for this. If the spanner is showing due to maintenance interval, you can go and reset the maintenance timer.</p>
+        </article>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="/pages/about-us.md" target="page-content">Company</a></li>
+                <li><a href="/pages/carbon-emissions.md" target="page-content">Carbon Emissions</a></li>
+                <li><a href="/pages/mission.md" target="page-content">Our Mission</a></li>
+                <li><a href="/pages/privacy-policy.md" target="page-content">Privacy Policy</a></li>
+                <li><a href="/pages/affiliate-disclosure.md" target="page-content">Affiliates Disclosure</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul>
+                <li>A Rated House,</li>
+                <li>11 Sunnymead Road,</li>
+                <li>London, </li>
+                <li>NW9 8BT</li>
+                <li><a href="tel://+4402081234411">+44 020 8123 4411</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Sister Sites</h3>
+            <ul>
+                <li><a href="/hub/">MyBoiler Hub</a></li>
+                <li><a href="https://boilermanuals.com">Boiler Manuals</a></li>
+                <li><a href="https://combiboiler.com">Combi Boiler</a></li>
+                <li><a href="https://boilerservice.com">Boiler Service</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Newsletter</h3>
+            <div id="mc_embed_shell">
+                <div id="mc_embed_signup">
+                    <form action="https://myboiler.us7.list-manage.com/subscribe/post?u=74520e86378a5e9ad9e26240e&amp;id=de886bf698&amp;f_id=00ccaee4f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                        <div id="mc_embed_signup_scroll">
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk"></span></label><br><br>
+                                <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""><br><br>
+                            </div>
+                            <div class="clear foot">
+                                <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Subscribe">
+                            </div>
+                            <br>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display: none;"></div>
+                                <div class="response" id="mce-success-response" style="display: none;"></div>
+                            </div>
+                            <div aria-hidden="true" style="position: absolute; left: -5000px;">
+                                <input type="text" name="b_76b9d06d4164064c0ffb0d455_68a8dc9423" tabindex="-1" value="">
+                            </div>
+                            <p style="margin: 0px auto;">
+                                <a href="http://eepurl.com/i6R-1E" title="Mailchimp - email marketing made easy and fun">
+                                    <span style="display: inline-block; background-color: transparent; border-radius: 4px;">
+                                        <img class="refferal_badge" src="https://digitalasset.intuit.com/render/content/dam/intuit/mc-fe/en_us/images/intuit-mc-rewards-text-light.svg" alt="Intuit Mailchimp" style="width: 100px; height: 40px; display: flex; padding: 2px 0px; justify-content: left; align-items: center;">
+                                    </span>
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <footer class="copyright">
+        <ul class="social-media no-bullets">
+            <li class="wp-social-link wp-social-link-x wp-block-social-link">
+                <a rel="noopener nofollow" target="_blank" href="https://x.com/myboiler" class="">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z"></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="wp-social-link wp-social-link-facebook wp-block-social-link">
+                <a rel="noopener nofollow" target="_blank" href="https://facebook.com/myboiler" class="wp-block-social-link-anchor">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z"></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="wp-social-link wp-social-link-youtube wp-block-social-link">
+                <a rel="noopener nofollow" target="_blank" href="https://www.youtube.com/@myboiler" class="wp-block-social-link-anchor">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M21.8,8.001c0,0-0.195-1.378-0.795-1.985c-0.76-0.797-1.613-0.801-2.004-0.847c-2.799-0.202-6.997-0.202-6.997-0.202h-0.009c0,0-4.198,0-6.997,0.202C4.608,5.216,3.756,5.22,2.995,6.016C2.395,6.623,2.2,8.001,2.2,8.001S2,9.62,2,11.238v1.517c0,1.618,0.2,3.237,0.2,3.237s0.195,1.378,0.795,1.985c0.761,0.797,1.76,0.771,2.205,0.855c1.6,0.153,6.8,0.201,6.8,0.201s4.203-0.006,7.001-0.209c0.391-0.047,1.243-0.051,2.004-0.847c0.6-0.607,0.795-1.985,0.795-1.985s0.2-1.618,0.2-3.237v-1.517C22,9.62,21.8,8.001,21.8,8.001z M9.935,14.594l-0.001-5.62l5.404,2.82L9.935,14.594z"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </footer>
+
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+    </footer>
+
+    <script type="text/javascript" data-cfasync="false" src="/js/menu.js"></script>
+</body>
+</html>
