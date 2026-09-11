@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBoiler Hub - Expert Guides, Manuals & Tools</title>
+    <meta name="description" content="Your expert resource for boiler and heat pump guidance — manuals, fault codes, calculators, and decision tools.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .hub-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .hub-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: var(--max-width);
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .hub-hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: clamp(2rem, 5vw, 3rem) clamp(1rem, 3vw, 2rem);
+            background: linear-gradient(135deg, #e8f4fc 0%, #f0f9ff 100%);
+            border-radius: var(--radius-lg);
+        }
+
+        .hub-hero__headline {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hub-hero__subheadline {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0 auto 1.5rem;
+            max-width: 60ch;
+        }
+
+        .hub-hero__actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hub-hero__cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.85rem 1.5rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            transition: all 0.2s ease;
+            min-height: 44px;
+            white-space: nowrap;
+        }
+
+        .hub-hero__cta--primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(24, 99, 220, 0.25);
+        }
+
+        .hub-hero__cta--primary:hover {
+            background: var(--accent-dark);
+            box-shadow: 0 6px 20px rgba(24, 99, 220, 0.35);
+            transform: translateY(-1px);
+            color: #fff;
+        }
+
+        .hub-hero__cta--secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hub-hero__cta--secondary:hover {
+            background: var(--bg);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+            color: var(--text);
+        }
+
+        .hub-lanes {
+            margin-bottom: 3rem;
+        }
+
+        .hub-lanes__toggle {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            padding: 0.25rem;
+            background: var(--surface);
+            border-radius: 999px;
+            max-width: 360px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hub-lanes__toggle-btn {
+            flex: 1;
+            padding: 0.65rem 1.5rem;
+            background: transparent;
+            border: none;
+            border-radius: 999px;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: var(--font);
+        }
+
+        .hub-lanes__toggle-btn.active {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(24, 99, 220, 0.2);
+        }
+
+        .hub-lane {
+            display: none;
+        }
+
+        .hub-lane.active {
+            display: block;
+        }
+
+        .hub-lane__title {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            color: var(--text);
+            margin: 0 0 1.5rem;
+            text-align: center;
+        }
+
+        .hub-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .hub-card {
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-sm);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s ease;
+        }
+
+        .hub-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .hub-card__title {
+            font-size: 1.0625rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 0.5rem;
+        }
+
+        .hub-card__description {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .hub-card__badge {
+            display: inline-block;
+            padding: 0.25rem 0.65rem;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.75rem;
+        }
+
+        .hub-card__badge--external {
+            background: var(--text-muted);
+        }
+
+        .hub-disclaimer {
+            background: var(--surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .hub-disclaimer p {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0 0 0.5rem;
+        }
+
+        .hub-disclaimer p:last-child {
+            margin: 0;
+        }
+
+        .hub-disclaimer strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .hub-hero__actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hub-hero__cta {
+                width: 100%;
+            }
+
+            .hub-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="hub-page">
+    <!-- Header with full navigation -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="/chat/">Ask AI</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://boilermanuals.com/fault-codes.html">Fault codes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/heat-pump-checker/">Heat pump check</a>
+                    </li>
+                    <li class="nav-item nav-item-cta">
+                        <a href="/quote/">Get a quote</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/hub/">Hub</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hub Content -->
+    <div class="hub-container">
+        <!-- Hero Section -->
+        <section class="hub-hero" aria-label="MyBoiler Hub">
+            <h1 class="hub-hero__headline">MyBoiler Hub</h1>
+            <p class="hub-hero__subheadline">
+                Your connector to expert guides, manuals, fault codes, and tools for boilers, heat pumps, and controls.
+            </p>
+            <div class="hub-hero__actions">
+                <a href="/chat/" class="hub-hero__cta hub-hero__cta--primary">Ask Boiler Help AI</a>
+                <a href="/quote/" class="hub-hero__cta hub-hero__cta--secondary">Get a Quote</a>
+            </div>
+        </section>
+
+        <!-- Lane Toggle -->
+        <div class="hub-lanes">
+            <div class="hub-lanes__toggle">
+                <button class="hub-lanes__toggle-btn active" onclick="switchLane('home')">Home</button>
+                <button class="hub-lanes__toggle-btn" onclick="switchLane('pro')">Pro</button>
+            </div>
+
+            <!-- Home Lane -->
+            <div id="lane-home" class="hub-lane active">
+                <h2 class="hub-lane__title">For Homeowners</h2>
+                <div class="hub-cards">
+                    <a href="/chat/" class="hub-card">
+                        <span class="hub-card__badge">Tool</span>
+                        <h3 class="hub-card__title">Ask Boiler Help AI</h3>
+                        <p class="hub-card__description">Get instant answers to your boiler and heating questions from our AI assistant.</p>
+                    </a>
+
+                    <a href="/decide/" class="hub-card">
+                        <span class="hub-card__badge">Tool</span>
+                        <h3 class="hub-card__title">Repair, Replace, or Heat Pump?</h3>
+                        <p class="hub-card__description">Find the right option for your home with our decision guide.</p>
+                    </a>
+
+                    <a href="/heat-pump-checker/" class="hub-card">
+                        <span class="hub-card__badge">Tool</span>
+                        <h3 class="hub-card__title">Heat Pump Suitability Check</h3>
+                        <p class="hub-card__description">Quick assessment to see if your home is ready for a heat pump.</p>
+                    </a>
+
+                    <a href="https://boilermanuals.com/fault-codes.html" class="hub-card">
+                        <span class="hub-card__badge hub-card__badge--external">External</span>
+                        <h3 class="hub-card__title">Fault Codes Lookup</h3>
+                        <p class="hub-card__description">Search boiler error codes and understand what they mean.</p>
+                    </a>
+
+                    <a href="https://boilermanuals.com/" class="hub-card">
+                        <span class="hub-card__badge hub-card__badge--external">External</span>
+                        <h3 class="hub-card__title">Boiler Manuals</h3>
+                        <p class="hub-card__description">Access installation, user, and technical manuals for all major brands.</p>
+                    </a>
+
+                    <a href="https://hub.myboiler.com/money-and-energy-saving/" class="hub-card">
+                        <span class="hub-card__badge hub-card__badge--external">Guide</span>
+                        <h3 class="hub-card__title">Save on Heating Bills</h3>
+                        <p class="hub-card__description">Expert tips to optimize your system and reduce energy costs.</p>
+                    </a>
+
+                    <a href="https://hub.myboiler.com/combi-boiler/" class="hub-card">
+                        <span class="hub-card__badge hub-card__badge--external">Guide</span>
+                        <h3 class="hub-card__title">Combi Boiler Guide</h3>
+                        <p class="hub-card__description">Everything you need to know about combination boilers.</p>
+                    </a>
+
+                    <a href="https://hub.myboiler.com/heat-pumps/" class="hub-card">
+                        <span class="hub-card__badge hub-card__badge--external">Guide</span>
+                        <h3 class="hub-card__title">Heat Pumps Guide</h3>
+                        <p class="hub-card__description">Comprehensive information on heat pump technology and installation.</p>
+                    </a>
+
+                    <a href="/quote/" class="hub-card">
+                        <span class="hub-card__badge">Tool</span>
+                        <h3 class="hub-card__title">Get a Quote</h3>
+                        <p class="hub-card__description">Connect with Gas Safe registered engineers for quotes and installation.</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Pro Lane -->
+            <div id="lane-pro" class="hub-lane">
+                <h2 class="hub-lane__title">For Installers & Professionals</h2>
+                <div class="hub-cards">
+                    <a href="/hub/calculators/pipe-size-calculator/" class="hub-card">
+                        <span class="hub-card__badge">Calculator</span>
+                        <h3 class="hub-card__title">Pipe Size Calculator</h3>
+                        <p class="hub-card__description">Calculate the correct pipe sizing for your heating installations.</p>
+                    </a>
+
+                    <a href="https://hub.myboiler.com/calculators/kw-to-flow-rate/" class="hub-card">
+                        <span class="hub-card__badge hub-card__badge--external">Calculator</span>
+                        <h3 class="hub-card__title">kW to Flow Rate</h3>
+                        <p class="hub-card__description">Convert kilowatts to flow rate for system design.</p>
+                    </a>
+
+                    <a href="https://hub.myboiler.com/calculators/flow-rate-to-kw/" class="hub-card">
+                        <span class="hub-card__badge hub-card__badge--external">Calculator</span>
+                        <h3 class="hub-card__title">Flow Rate to kW</h3>
+                        <p class="hub-card__description">Convert flow rate to kilowatts for system calculations.</p>
+                    </a>
+
+                    <a href="https://hub.myboiler.com/calculators/btu-to-watts/" class="hub-card">
+                        <span class="hub-card__badge hub-card__badge--external">Calculator</span>
+                        <h3 class="hub-card__title">BTU to Watts</h3>
+                        <p class="hub-card__description">Convert British Thermal Units to watts.</p>
+                    </a>
+
+                    <a href="https://hub.myboiler.com/calculators/gas-m3-to-kwh/" class="hub-card">
+                        <span class="hub-card__badge hub-card__badge--external">Calculator</span>
+                        <h3 class="hub-card__title">Gas m³ to kWh</h3>
+                        <p class="hub-card__description">Convert gas meter readings from cubic meters to kilowatt-hours.</p>
+                    </a>
+
+                    <a href="https://boilermanuals.com/" class="hub-card">
+                        <span class="hub-card__badge hub-card__badge--external">External</span>
+                        <h3 class="hub-card__title">Technical Manuals</h3>
+                        <p class="hub-card__description">Installation and servicing documentation for all brands.</p>
+                    </a>
+
+                    <a href="https://boilermanuals.com/fault-codes.html" class="hub-card">
+                        <span class="hub-card__badge hub-card__badge--external">External</span>
+                        <h3 class="hub-card__title">Fault Codes Reference</h3>
+                        <p class="hub-card__description">Quick fault code lookup for diagnostics and repairs.</p>
+                    </a>
+
+                    <a href="/chat/" class="hub-card">
+                        <span class="hub-card__badge">Tool</span>
+                        <h3 class="hub-card__title">Ask Boiler Help AI</h3>
+                        <p class="hub-card__description">Technical support and installation guidance from AI.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="hub-disclaimer">
+            <p><strong>Content Migration in Progress</strong></p>
+            <p>We're gradually moving hub content to this new platform. More guides and tools coming soon.</p>
+            <p><strong>Gas Safe Reminder:</strong> All gas work must be carried out by a Gas Safe registered engineer. For electrical work, use a qualified electrician.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="/pages/about-us.md" target="page-content">Company</a></li>
+                <li><a href="/pages/carbon-emissions.md" target="page-content">Carbon Emissions</a></li>
+                <li><a href="/pages/mission.md" target="page-content">Our Mission</a></li>
+                <li><a href="/pages/privacy-policy.md" target="page-content">Privacy Policy</a></li>
+                <li><a href="/pages/affiliate-disclosure.md" target="page-content">Affiliates Disclosure</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul>
+                <li>A Rated House,</li>
+                <li>11 Sunnymead Road,</li>
+                <li>London, </li>
+                <li>NW9 8BT</li>
+                <li><a href="tel://+4402081234411">+44 020 8123 4411</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Sister Sites</h3>
+            <ul>
+                <li><a href="/hub/">MyBoiler Hub</a></li>
+                <li><a href="https://boilermanuals.com">Boiler Manuals</a></li>
+                <li><a href="https://combiboiler.com">Combi Boiler</a></li>
+                <li><a href="https://boilerservice.com">Boiler Service</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Newsletter</h3>
+            <div id="mc_embed_shell">
+                <div id="mc_embed_signup">
+                    <form action="https://myboiler.us7.list-manage.com/subscribe/post?u=74520e86378a5e9ad9e26240e&amp;id=de886bf698&amp;f_id=00ccaee4f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                        <div id="mc_embed_signup_scroll">
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk"></span></label><br><br>
+                                <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""><br><br>
+                            </div>
+                            <div class="clear foot">
+                                <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Subscribe">
+                            </div>
+                            <br>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display: none;"></div>
+                                <div class="response" id="mce-success-response" style="display: none;"></div>
+                            </div>
+                            <div aria-hidden="true" style="position: absolute; left: -5000px;">
+                                <input type="text" name="b_76b9d06d4164064c0ffb0d455_68a8dc9423" tabindex="-1" value="">
+                            </div>
+                            <p style="margin: 0px auto;">
+                                <a href="http://eepurl.com/i6R-1E" title="Mailchimp - email marketing made easy and fun">
+                                    <span style="display: inline-block; background-color: transparent; border-radius: 4px;">
+                                        <img class="refferal_badge" src="https://digitalasset.intuit.com/render/content/dam/intuit/mc-fe/en_us/images/intuit-mc-rewards-text-light.svg" alt="Intuit Mailchimp" style="width: 100px; height: 40px; display: flex; padding: 2px 0px; justify-content: left; align-items: center;">
+                                    </span>
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <footer class="copyright">
+        <ul class="social-media no-bullets">
+            <li class="wp-social-link wp-social-link-x wp-block-social-link">
+                <a rel="noopener nofollow" target="_blank" href="https://x.com/myboiler" class="">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z"></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="wp-social-link wp-social-link-facebook wp-block-social-link">
+                <a rel="noopener nofollow" target="_blank" href="https://facebook.com/myboiler" class="wp-block-social-link-anchor">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z"></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="wp-social-link wp-social-link-youtube wp-block-social-link">
+                <a rel="noopener nofollow" target="_blank" href="https://www.youtube.com/@myboiler" class="wp-block-social-link-anchor">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M21.8,8.001c0,0-0.195-1.378-0.795-1.985c-0.76-0.797-1.613-0.801-2.004-0.847c-2.799-0.202-6.997-0.202-6.997-0.202h-0.009c0,0-4.198,0-6.997,0.202C4.608,5.216,3.756,5.22,2.995,6.016C2.395,6.623,2.2,8.001,2.2,8.001S2,9.62,2,11.238v1.517c0,1.618,0.2,3.237,0.2,3.237s0.195,1.378,0.795,1.985c0.761,0.797,1.76,0.771,2.205,0.855c1.6,0.153,6.8,0.201,6.8,0.201s4.203-0.006,7.001-0.209c0.391-0.047,1.243-0.051,2.004-0.847c0.6-0.607,0.795-1.985,0.795-1.985s0.2-1.618,0.2-3.237v-1.517C22,9.62,21.8,8.001,21.8,8.001z M9.935,14.594l-0.001-5.62l5.404,2.82L9.935,14.594z"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </footer>
+
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+    </footer>
+
+    <script>
+        function switchLane(lane) {
+            const homeBtn = document.querySelector('.hub-lanes__toggle-btn:first-child');
+            const proBtn = document.querySelector('.hub-lanes__toggle-btn:last-child');
+            const homeLane = document.getElementById('lane-home');
+            const proLane = document.getElementById('lane-pro');
+
+            if (lane === 'home') {
+                homeBtn.classList.add('active');
+                proBtn.classList.remove('active');
+                homeLane.classList.add('active');
+                proLane.classList.remove('active');
+            } else {
+                proBtn.classList.add('active');
+                homeBtn.classList.remove('active');
+                proLane.classList.add('active');
+                homeLane.classList.remove('active');
+            }
+        }
+    </script>
+    <script src="/js/menu.js"></script>
+</body>
+</html>
