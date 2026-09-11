@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How To Pair Up Devices - Hive 1 - MyBoiler Hub</title>
+    <meta name="description" content="Troubleshooting guide for Hive 1 thermostat showing 'No RF' message. Learn how to manually reset and pair your Hive heating devices.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-breadcrumb {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .article-header {
+            margin-bottom: 2rem;
+        }
+
+        .article-title {
+            font-size: clamp(1.85rem, 5vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 0.75rem;
+            line-height: 1.3;
+        }
+
+        .article-content p {
+            margin: 0 0 1rem;
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 0 0 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .article-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="article-page">
+    <!-- Header -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="/hub/">Hub</a></li>
+                    <li class="nav-item"><a href="/chat/">Ask AI</a></li>
+                    <li class="nav-item"><a href="/">Exit Hub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <div class="article-container">
+        <nav class="article-breadcrumb" aria-label="Breadcrumb">
+            <a href="/hub/">Hub</a> › <a href="/hub/">How To</a> › Pair up the devices – Hive 1
+        </nav>
+
+        <header class="article-header">
+            <h1 class="article-title">How To – Pair up the devices – Hive 1</h1>
+        </header>
+
+        <article class="article-content">
+            <h2>What to do if your Hive Thermostat has a 'No RF' message on the display</h2>
+            <p>If your thermostat says 'No RF', it means 'No radio frequency' and has lost connection to the Hive Receiver. To fix this, try the below steps:</p>
+
+            <p><strong>Step 1</strong> Press the two buttons on the sides of the thermostat and slide it up and off the wall. Take your thermostat to the receiver which you will find near to your boiler/hot water tank.</p>
+
+            <p><strong>Step 2</strong> Remove the batteries and put them straight back in again. This will turn the thermostat off and on which should help establish a connection to the receiver.</p>
+
+            <p><strong>Step 3</strong> Place the thermostat back on the wall, the thermostat should then display an inside temperature and the letters 'DISP' in the top right hand corner.</p>
+
+            <p><strong>Step 4</strong> Once you see an inside temperature again, try to turn the heating on. Press the '+' to increase the target temperature.</p>
+
+            <p><strong>Step 5</strong> If the heating is on you will see a flame image on the display.</p>
+
+            <p><strong>Step 6</strong> When you can see that the 'status' and 'central heating' lights on the receiver have turned green you're done!</p>
+
+            <p>If the thermostat is still showing a 'No RF' message, the heating devices should be manually reset and paired.</p>
+
+            <p><strong>Hive Hint:</strong> Please be aware that this will reset any heating/hot water schedules that you currently have set up.</p>
+
+            <p>Check your Hive Hub is placed correctly by following the guide here. Restart the hub by switching it off at the wall socket and switching back on again. Give the hub 5-10 minutes to reboot and then go to the dashboard in the app and refresh the page. The 'offline' message should no longer be showing for heating. If the 'offline' message is still showing, follow the below steps:</p>
+
+            <p><strong>Step 1</strong> Take the thermostat off the wall and remove a battery. Switch the boiler off at the isolation switch/fuse spur (this should be located near your Hive Receiver next to your boiler). All of the lights on the receiver will then go out.</p>
+
+            <p><strong>Step 2</strong> Switch boiler back on at the isolation switch/fuse spur – the status light on the receiver should flash either pink/amber then turn to a solid green colour.</p>
+
+            <p><strong>Step 3</strong> Hold the central heating button down on the receiver until the status light is flashing pink. Release the button and then hold it again until the status light is double flashing amber.</p>
+
+            <p><strong>Step 4</strong> To connect the receiver to the hub, put the hub into pairing mode. You can do this by selecting 'Install devices' within the Hive app menu. From there tap 'Add another device' and then 'Go' which will start the hubs search. Leave the hub searching and the receiver will change to a single flash of amber.</p>
+
+            <p><strong>Step 5</strong> To reset the thermostat, hold the thermostat in your hand with the back facing you. Hold down the '+' and '-' buttons on the front of the thermostat at the same time. Keep a hold of those buttons while putting the battery back in and keep holding them in until the word 'FIND' appears on the screen. At this point, let go of the buttons.</p>
+
+            <p><strong>Step 6</strong> The hub should still be searching through the app, when you see the word 'FIND' disappear from the screen, the receiver status light will turn green.</p>
+
+            <p><strong>Step 7</strong> Wait 5 minutes and then go to the dashboard in the app and refresh the page. The 'offline' message should no longer be showing for heating. Once you see an inside temperature display on your thermostat again, try to turn the heating on.</p>
+
+            <p><strong>Step 8</strong> If the heating turns on and you can see that the 'status' and 'central heating' lights on the receiver have turned green you're done!</p>
+        </article>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="/pages/about-us.md" target="page-content">Company</a></li>
+                <li><a href="/pages/carbon-emissions.md" target="page-content">Carbon Emissions</a></li>
+                <li><a href="/pages/mission.md" target="page-content">Our Mission</a></li>
+                <li><a href="/pages/privacy-policy.md" target="page-content">Privacy Policy</a></li>
+                <li><a href="/pages/affiliate-disclosure.md" target="page-content">Affiliates Disclosure</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul>
+                <li>A Rated House,</li>
+                <li>11 Sunnymead Road,</li>
+                <li>London,</li>
+                <li>NW9 8BT</li>
+                <li><a href="tel://+4402081234411">+44 020 8123 4411</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Sister Sites</h3>
+            <ul>
+                <li><a href="/hub/">MyBoiler Hub</a></li>
+                <li><a href="https://boilermanuals.com">Boiler Manuals</a></li>
+                <li><a href="https://combiboiler.com">Combi Boiler</a></li>
+                <li><a href="https://boilerservice.com">Boiler Service</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+    </footer>
+
+    <script src="/js/menu.js"></script>
+</body>
+</html>

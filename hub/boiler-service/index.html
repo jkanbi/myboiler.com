@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boiler Service Guide - MyBoiler Hub</title>
+    <meta name="description" content="Essential boiler service checklist and maintenance guide for modern condensing and non-condensing boilers. Learn what checks should be carried out annually.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-breadcrumb {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .article-header {
+            margin-bottom: 2rem;
+        }
+
+        .article-title {
+            font-size: clamp(1.85rem, 5vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 0.75rem;
+            line-height: 1.3;
+        }
+
+        .article-content h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.5rem;
+            line-height: 1.3;
+        }
+
+        .article-content p {
+            margin: 0 0 1rem;
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 0 0 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9375rem;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .article-content table th,
+        .article-content table td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+
+        .article-content table th {
+            background: var(--bg);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .article-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="article-page">
+    <!-- Header -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="/hub/">Hub</a></li>
+                    <li class="nav-item"><a href="/chat/">Ask AI</a></li>
+                    <li class="nav-item"><a href="/">Exit Hub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <div class="article-container">
+        <nav class="article-breadcrumb" aria-label="Breadcrumb">
+            <a href="/hub/">Hub</a> › <a href="/hub/">Advice</a> › Boiler Service
+        </nav>
+
+        <header class="article-header">
+            <h1 class="article-title">Boiler Service</h1>
+        </header>
+
+        <article class="article-content">
+            <p>A modern boiler is often an electro mechanical appliance that has several moving parts and components of the system that can breakdown when you least expect. Following is information on general checks that should be carried out on a boiler as part of a maintenance schedule.</p>
+
+            <p>Something to note, in Europe boilers may not be maintained on a annual basis, but rather on numbers of hours used, similar to cars or based on a time schedule ie Annual or Biennially (every two years). In the uk, we work on an annual maintenance schedule. Many manufacturers also invalidate extended warranties if the boiler is not serviced on an annual basis.</p>
+
+            <h3>Checklist for modern condensing boilers:</h3>
+            <ul>
+                <li>Visual check externally to boiler.</li>
+                <li>Checks on the flue integrity</li>
+                <li>Gas rating check of boiler in conjunction with FGA (Flue Gas Analysis) emissions check using a calibrated analyser.</li>
+                <li>Checking safety devices</li>
+                <li>Boiler casing removed to check visually internal boiler condition of components ie Fan, Pump, Auto airvent</li>
+                <li>Checks and cleaning of internal heat exchanger dependent on emmissions test and maintenace schedule. (New seals may be required)</li>
+                <li>Expansion vessel pressure if sealed system</li>
+                <li>Condense pump checked / cleaned</li>
+                <li>Boiler fired safely to identify any working faults</li>
+                <li>Boiler parts cleaned, if necessary</li>
+                <li>Check case seals form an effective seal</li>
+                <li>Fill in benchmark to note important checks carried out, or create a report</li>
+                <li>Check Divertor Valve condition</li>
+            </ul>
+
+            <h3>Checklist for non condensing boilers:</h3>
+            <ul>
+                <li>Visual check externally to boiler.</li>
+                <li>Checks on the flue integrity</li>
+                <li>Burner pressure check of boiler in conjunction with FGA (Flue Gas Analysis) emissions check using a calibrated analyser.(If flue gas testing is not possible, a full strip down and clean should be carried out)</li>
+                <li>Checking safety devices</li>
+                <li>Boiler casing removed to check visually internal boiler condition of components ie Fan, Pump, Auto airvent</li>
+                <li>Checks and cleaning of internal heat exchanger dependent on emmissions test and maintenace schedule. (New seals may be required)</li>
+                <li>Expansion vessel pressure if sealed system</li>
+                <li>Boiler fired safely to identify any working faults</li>
+                <li>Boiler parts cleaned, if necessary</li>
+                <li>Check case seals form an effective seal</li>
+                <li>Fill in benchmark to note important checks carried out, or create a report</li>
+            </ul>
+
+            <h3>Combustion Performance Analysis / Emissions Testing and Boiler Service</h3>
+            <p>Most modern boilers require checking their combustion ratios using a flue gas analyser(FGA). Many older non-condensing boilers also can be checked using a FGA. Some older boilers in which you cannot measure the combustion performance, will require full strip down and servicing. Following are the ratios upon which trigger actions happen:</p>
+
+            <p><strong>CO/ CO2 Ratio levels (Carbon Monoxide PPM divided by Carbon Dioxide PPM)</strong></p>
+            <ul>
+                <li>0.0040 and lower – does not require any further action</li>
+                <li>0.0040 to 0.0080 – requires cleaning</li>
+                <li>0.0080 and above – requires full investigation and overhaul and is classed as immediately dangerous.</li>
+            </ul>
+
+            <p><strong>Example calculation:</strong></p>
+            <p>Data CO 10PPM, CO2 9.0%<br>
+            Convert C02 to PPM; 9.0 X 10000 = 90000PPM<br>
+            Ratio = 10/(90000) = 0.0001</p>
+
+            <p>Key: PPM Parts per Million.</p>
+
+            <h3>Other information:</h3>
+            <p>There are other checks that are important that should be carried out by engineers. Checking the water quality of the heating system is crucial for a long lasting system. Making sure correct levels of inhibitor / protector will make sure the system does not corrode internally and cause premature breakdown of parts. Checking other parts of the system can give indication of problems that may be caused by the boiler or to the boiler.</p>
+        </article>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="/pages/about-us.md" target="page-content">Company</a></li>
+                <li><a href="/pages/carbon-emissions.md" target="page-content">Carbon Emissions</a></li>
+                <li><a href="/pages/mission.md" target="page-content">Our Mission</a></li>
+                <li><a href="/pages/privacy-policy.md" target="page-content">Privacy Policy</a></li>
+                <li><a href="/pages/affiliate-disclosure.md" target="page-content">Affiliates Disclosure</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul>
+                <li>A Rated House,</li>
+                <li>11 Sunnymead Road,</li>
+                <li>London,</li>
+                <li>NW9 8BT</li>
+                <li><a href="tel://+4402081234411">+44 020 8123 4411</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Sister Sites</h3>
+            <ul>
+                <li><a href="/hub/">MyBoiler Hub</a></li>
+                <li><a href="https://boilermanuals.com">Boiler Manuals</a></li>
+                <li><a href="https://combiboiler.com">Combi Boiler</a></li>
+                <li><a href="https://boilerservice.com">Boiler Service</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+    </footer>
+
+    <script src="/js/menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advice - Boiler, Heat Pump & Heating Guides - MyBoiler Hub</title>
+    <meta name="description" content="Expert advice and information on boilers, heat pumps, OpenTherm, fault codes, and heating systems.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-breadcrumb {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .article-header {
+            margin-bottom: 2rem;
+        }
+
+        .article-title {
+            font-size: clamp(1.85rem, 5vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 0.75rem;
+            line-height: 1.3;
+        }
+
+        .article-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .article-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="article-page">
+    <!-- Header -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="/hub/">Hub</a></li>
+                    <li class="nav-item"><a href="/chat/">Ask AI</a></li>
+                    <li class="nav-item"><a href="/">Exit Hub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <div class="article-container">
+        <nav class="article-breadcrumb" aria-label="Breadcrumb">
+            <a href="/hub/">Hub</a> › Advice
+        </nav>
+
+        <header class="article-header">
+            <h1 class="article-title">Advice</h1>
+        </header>
+
+        <article class="article-content">
+            <h2>Boilers</h2>
+            <ul>
+                <li><a href="/hub/money-and-energy-saving/">Money and Energy Saving</a></li>
+                <li><a href="/hub/boiler-pressure/">Boiler Pressure</a></li>
+                <li><a href="/hub/boiler-service/">Boiler Service</a></li>
+                <li><a href="https://hub.myboiler.com/boiler-types/">Boiler Types</a></li>
+                <li><a href="https://hub.myboiler.com/boiler-energy-efficiency/">Boiler Energy Efficiency</a></li>
+                <li><a href="https://hub.myboiler.com/installation-efficiency/">Installation Efficiency</a></li>
+            </ul>
+
+            <h2>OpenTherm & Modulating Boilers</h2>
+            <ul>
+                <li><a href="https://hub.myboiler.com/opentherm-and-modulating-boilers/">OpenTherm Capable Boilers</a></li>
+                <li><a href="https://hub.myboiler.com/opentherm-controls/">OpenTherm Controls</a></li>
+                <li><a href="https://hub.myboiler.com/modulating-boiler-and-smart-controls/">Modulating Boilers & Smart Controls</a></li>
+                <li><a href="https://hub.myboiler.com/vaillant-opentherm-guide/">Vaillant Boiler and OpenTherm</a></li>
+                <li><a href="https://hub.myboiler.com/worcester-opentherm-guide/">Worcester Bosch and OpenTherm</a></li>
+            </ul>
+
+            <h2>Heat Pumps</h2>
+            <ul>
+                <li><a href="/hub/heat-pumps/">Heat Pumps</a></li>
+                <li><a href="/hub/heat-pumps/retrofit-an-existing-hot-water-cylinder-with-a-plate-heat-exchanger-for-use-with-a-heat-pump/">Retrofit Existing Hot Water Cylinder</a></li>
+                <li><a href="https://hub.myboiler.com/air-source-heat-pump/">Air Source Heat Pumps</a></li>
+                <li><a href="https://hub.myboiler.com/co2-heat-pumps/">CO2 Heat Pumps</a></li>
+                <li><a href="https://hub.myboiler.com/underfloor-heating/">Why Heat Pumps Work Well with Underfloor Heating</a></li>
+            </ul>
+
+            <h2>Fault Codes</h2>
+            <ul>
+                <li><a href="https://hub.myboiler.com/glow-worm-fault-codes/">Glow Worm Fault Codes</a></li>
+                <li><a href="https://hub.myboiler.com/intergas-fault-codes/">Intergas Fault Codes</a></li>
+                <li><a href="https://hub.myboiler.com/potterton-fault-codes/">Potterton Fault Codes</a></li>
+                <li><a href="https://hub.myboiler.com/vaillant-fault-codes/">Vaillant Fault Codes</a></li>
+                <li><a href="https://hub.myboiler.com/worcester-bosch-fault-codes/">Worcester Bosch Fault Codes</a></li>
+            </ul>
+
+            <h2>Miscellaneous</h2>
+            <ul>
+                <li><a href="https://hub.myboiler.com/flow-temperature-and-power/">Flow Temperature & Power Output Relationship</a></li>
+                <li><a href="https://hub.myboiler.com/solar-thermal-heating/">Solar Thermal</a></li>
+                <li><a href="https://hub.myboiler.com/solar-thermal-servicing/">Solar Thermal Service</a></li>
+                <li><a href="https://hub.myboiler.com/s-plan-heating-systems/">S Plan & S Plan Plus</a></li>
+                <li><a href="https://hub.myboiler.com/radiators/">Radiators</a></li>
+                <li><a href="https://hub.myboiler.com/fixed-price-repairs/">Fixed Price Repairs</a></li>
+            </ul>
+        </article>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="/pages/about-us.md" target="page-content">Company</a></li>
+                <li><a href="/pages/carbon-emissions.md" target="page-content">Carbon Emissions</a></li>
+                <li><a href="/pages/mission.md" target="page-content">Our Mission</a></li>
+                <li><a href="/pages/privacy-policy.md" target="page-content">Privacy Policy</a></li>
+                <li><a href="/pages/affiliate-disclosure.md" target="page-content">Affiliates Disclosure</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul>
+                <li>A Rated House,</li>
+                <li>11 Sunnymead Road,</li>
+                <li>London,</li>
+                <li>NW9 8BT</li>
+                <li><a href="tel://+4402081234411">+44 020 8123 4411</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Sister Sites</h3>
+            <ul>
+                <li><a href="/hub/">MyBoiler Hub</a></li>
+                <li><a href="https://boilermanuals.com">Boiler Manuals</a></li>
+                <li><a href="https://combiboiler.com">Combi Boiler</a></li>
+                <li><a href="https://boilerservice.com">Boiler Service</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+    </footer>
+
+    <script src="/js/menu.js"></script>
+</body>
+</html>
