@@ -345,7 +345,7 @@
         <div class="tagline">Smarter Heating & Hot Water</div>
         <div class="right-header-items">
             <!-- Hamburger Menu Button -->
-            <button class="hamburger-menu" onclick="if (!window.__cfRLUnblockHandlers) return false; toggleMenu()" aria-label="Toggle Menu" data-cf-modified-d4ed50d62b5909d63fa06994-="">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
@@ -457,96 +457,98 @@
         <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
     </footer>
 
-    <script type="d4ed50d62b5909d63fa06994-text/javascript">
+    <script type="text/javascript" data-cfasync="false">
         /**
          * Pipe Size Calculator
          * Formulas extracted from Calculated Fields Form id 16
          */
 
-        const SHC = 4.2; // Specific heat capacity (hardcoded)
+        document.addEventListener('DOMContentLoaded', function() {
+            const SHC = 4.2; // Specific heat capacity (hardcoded)
 
-        // Get DOM elements
-        const kwSlider = document.getElementById('kw-slider');
-        const deltaTSlider = document.getElementById('deltaT-slider');
-        const velocitySlider = document.getElementById('velocity-slider');
+            // Get DOM elements
+            const kwSlider = document.getElementById('kw-slider');
+            const deltaTSlider = document.getElementById('deltaT-slider');
+            const velocitySlider = document.getElementById('velocity-slider');
 
-        const kwValue = document.getElementById('kw-value');
-        const deltaTValue = document.getElementById('deltaT-value');
-        const velocityValue = document.getElementById('velocity-value');
+            const kwValue = document.getElementById('kw-value');
+            const deltaTValue = document.getElementById('deltaT-value');
+            const velocityValue = document.getElementById('velocity-value');
 
-        const lpsResult = document.getElementById('lps-result');
-        const lpmResult = document.getElementById('lpm-result');
-        const diameterResult = document.getElementById('diameter-result');
+            const lpsResult = document.getElementById('lps-result');
+            const lpmResult = document.getElementById('lpm-result');
+            const diameterResult = document.getElementById('diameter-result');
 
-        /**
-         * PREC function - rounds to n decimal places
-         */
-        function PREC(value, decimals) {
-            return Number(value.toFixed(decimals));
-        }
-
-        /**
-         * Calculate and update all results
-         */
-        function calculate() {
-            const KW = parseFloat(kwSlider.value);
-            const DeltaT = parseFloat(deltaTSlider.value);
-            const Velocity = parseFloat(velocitySlider.value);
-
-            // Update display values
-            kwValue.textContent = KW.toFixed(1);
-            deltaTValue.textContent = DeltaT;
-            velocityValue.textContent = Velocity.toFixed(1);
-
-            // Handle division by zero
-            if (DeltaT === 0 || Velocity === 0) {
-                lpsResult.textContent = '—';
-                lpmResult.textContent = '—';
-                diameterResult.textContent = '—';
-                return;
+            /**
+             * PREC function - rounds to n decimal places
+             */
+            function PREC(value, decimals) {
+                return Number(value.toFixed(decimals));
             }
 
-            // Calculate LPS = PREC( KW / (4.2 * DeltaT) , 3 )
-            const LPS = PREC(KW / (SHC * DeltaT), 3);
+            /**
+             * Calculate and update all results
+             */
+            function calculate() {
+                const KW = parseFloat(kwSlider.value);
+                const DeltaT = parseFloat(deltaTSlider.value);
+                const Velocity = parseFloat(velocitySlider.value);
 
-            // Calculate LPM = PREC( (KW / (4.2 * DeltaT)) * 60 , 3 )
-            const LPM = PREC((KW / (SHC * DeltaT)) * 60, 3);
+                // Update display values
+                kwValue.textContent = KW.toFixed(1);
+                deltaTValue.textContent = DeltaT;
+                velocityValue.textContent = Velocity.toFixed(1);
 
-            // Calculate Internal diameter d (mm) = PREC( 2 * SQRT( ((1000/3.14) / Velocity) * LPS ) , 2 )
-            const d = PREC(2 * Math.sqrt(((1000 / 3.14) / Velocity) * LPS), 2);
+                // Handle division by zero
+                if (DeltaT === 0 || Velocity === 0) {
+                    lpsResult.textContent = '—';
+                    lpmResult.textContent = '—';
+                    diameterResult.textContent = '—';
+                    return;
+                }
 
-            // Update results
-            lpsResult.textContent = LPS.toFixed(3);
-            lpmResult.textContent = LPM.toFixed(3);
-            diameterResult.textContent = d.toFixed(2);
+                // Calculate LPS = PREC( KW / (4.2 * DeltaT) , 3 )
+                const LPS = PREC(KW / (SHC * DeltaT), 3);
 
-            // Update slider fill
-            updateSliderFill(kwSlider);
-            updateSliderFill(deltaTSlider);
-            updateSliderFill(velocitySlider);
-        }
+                // Calculate LPM = PREC( (KW / (4.2 * DeltaT)) * 60 , 3 )
+                const LPM = PREC((KW / (SHC * DeltaT)) * 60, 3);
 
-        /**
-         * Update slider background fill
-         */
-        function updateSliderFill(slider) {
-            const value = parseFloat(slider.value);
-            const min = parseFloat(slider.min);
-            const max = parseFloat(slider.max);
-            const percentage = ((value - min) / (max - min)) * 100;
-            slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percentage}%, var(--border) ${percentage}%)`;
-        }
+                // Calculate Internal diameter d (mm) = PREC( 2 * SQRT( ((1000/3.14) / Velocity) * LPS ) , 2 )
+                const d = PREC(2 * Math.sqrt(((1000 / 3.14) / Velocity) * LPS), 2);
 
-        // Add event listeners
-        kwSlider.addEventListener('input', calculate);
-        deltaTSlider.addEventListener('input', calculate);
-        velocitySlider.addEventListener('input', calculate);
+                // Update results
+                lpsResult.textContent = LPS.toFixed(3);
+                lpmResult.textContent = LPM.toFixed(3);
+                diameterResult.textContent = d.toFixed(2);
 
-        // Initial calculation
-        calculate();
+                // Update slider fill
+                updateSliderFill(kwSlider);
+                updateSliderFill(deltaTSlider);
+                updateSliderFill(velocitySlider);
+            }
+
+            /**
+             * Update slider background fill
+             */
+            function updateSliderFill(slider) {
+                const value = parseFloat(slider.value);
+                const min = parseFloat(slider.min);
+                const max = parseFloat(slider.max);
+                const percentage = ((value - min) / (max - min)) * 100;
+                slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percentage}%, var(--border) ${percentage}%)`;
+            }
+
+            // Add event listeners
+            kwSlider.addEventListener('input', calculate);
+            deltaTSlider.addEventListener('input', calculate);
+            velocitySlider.addEventListener('input', calculate);
+
+            // Initial calculation
+            calculate();
+        });
     </script>
 
     <!-- Add menu.js for navigation functionality -->
-    <script src="/js/menu.js" type="d4ed50d62b5909d63fa06994-text/javascript"></script>
-<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="d4ed50d62b5909d63fa06994-|49" defer></script></body>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
 </html>
