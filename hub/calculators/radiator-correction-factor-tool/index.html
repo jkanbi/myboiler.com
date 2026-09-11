@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radiator Correction Factor Tool - MyBoiler.com</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .calculator-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .calculator-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .calculator-breadcrumb {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .calculator-breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .calculator-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .calculator-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .calculator-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 60ch;
+        }
+
+        .calculator-card {
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
+        }
+
+        .calculator-subtitle {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-subtle);
+        }
+
+        .input-group {
+            margin-bottom: 2rem;
+        }
+
+        .input-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+
+        .input-value {
+            font-size: 1.25rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            font-weight: 500;
+            transition: border-color 0.2s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        select.input-field {
+            cursor: pointer;
+        }
+
+        .result-section {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .result-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .result-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .result-unit {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .info-text {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: var(--radius);
+            border-left: 3px solid var(--accent);
+        }
+
+        .conversion-table {
+            width: 100%;
+            margin-top: 2rem;
+            border-collapse: collapse;
+            background: var(--surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .conversion-table th {
+            background: var(--bg);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .conversion-table td {
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+        }
+
+        .conversion-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .calculator-disclaimer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 70ch;
+            margin: 1rem auto;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .calculator-disclaimer strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-container {
+                padding: clamp(1.5rem, 4vw, 2.5rem) clamp(16px, 4vw, 24px);
+            }
+
+            .calculator-header {
+                margin-bottom: 1.5rem;
+            }
+
+            .calculator-card {
+                padding: 1.25rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .input-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .result-section {
+                padding: 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            .result-value {
+                font-size: 2.25rem;
+            }
+
+            .calculator-disclaimer {
+                margin: 0.75rem auto;
+                padding: 0.875rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calculator-container {
+                padding: 1.25rem 12px;
+            }
+
+            .calculator-header {
+                margin-bottom: 1.25rem;
+            }
+
+            .calculator-card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .input-group {
+                margin-bottom: 1.25rem;
+            }
+
+            .input-label {
+                margin-bottom: 0.5rem;
+            }
+
+            .result-section {
+                padding: 1.25rem;
+                margin-top: 1.25rem;
+            }
+
+            .result-label {
+                font-size: 0.8125rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .result-value {
+                font-size: 2rem;
+            }
+
+            .result-unit {
+                font-size: 1rem;
+                margin-top: 0.375rem;
+            }
+
+            .calculator-subtitle {
+                font-size: 1.125rem;
+            }
+
+            .conversion-table {
+                font-size: 0.875rem;
+            }
+
+            .conversion-table th,
+            .conversion-table td {
+                padding: 0.625rem 0.75rem;
+            }
+
+            .calculator-disclaimer {
+                margin: 0.5rem auto;
+                padding: 0.75rem;
+                font-size: 0.8125rem;
+            }
+        }
+    </style>
+</head>
+<body class="calculator-page">
+    <!-- Header with full navigation -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="/chat/">Ask AI</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://boilermanuals.com/fault-codes.html">Fault codes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/heat-pump-checker/">Heat pump check</a>
+                    </li>
+                    <li class="nav-item nav-item-cta">
+                        <a href="/quote/">Get a quote</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://hub.myboiler.com">Hub</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Calculator Content -->
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <div class="calculator-breadcrumb">
+                <a href="/hub/calculators/">Calculators</a> / Radiator Correction Factor
+            </div>
+            <h1 class="calculator-headline">Radiator Correction Factor Tool</h1>
+            <p class="calculator-connector">
+                Calculate radiator output at different delta T values for heat pump systems and conventional heating.
+            </p>
+        </div>
+
+        <!-- Calculator Card 1: Emitter Output at Delta T -->
+        <div class="calculator-card">
+            <h2 class="calculator-subtitle">Emitter Output at Delta T</h2>
+            
+            <!-- Inputs -->
+            <div class="input-group">
+                <div class="input-label">
+                    <span>Emitter Output (BTU / KW)</span>
+                    <span class="input-value" id="output1-value">1000</span>
+                </div>
+                <input type="number" id="output1-input" class="input-field" step="1" value="1000" min="0">
+            </div>
+
+            <div class="input-group">
+                <div class="input-label">
+                    <span>Select Delta T (°C / K)</span>
+                </div>
+                <select id="delta1-select" class="input-field">
+                    <option value="1.00">50</option>
+                    <option value="0.05">5</option>
+                    <option value="0.123">10</option>
+                    <option value="0.209">15</option>
+                    <option value="0.304">20</option>
+                    <option value="0.406">25</option>
+                    <option value="0.515">30</option>
+                    <option value="0.629">35</option>
+                    <option value="0.748">40</option>
+                    <option value="0.872">45</option>
+                    <option value="1.000">50</option>
+                    <option value="1.132">55</option>
+                    <option value="1.267">60</option>
+                    <option value="1.406">65</option>
+                    <option value="1.694">70</option>
+                </select>
+            </div>
+
+            <!-- Result -->
+            <div class="result-section">
+                <div class="result-label">Emitter Output (at Delta T)</div>
+                <div class="result-value" id="result1">1000.00</div>
+                <div class="result-unit">BTU / KW</div>
+            </div>
+
+            <div class="info-text">
+                This calculator will tell you what output you will end up with if you reduce the delta T to the selected from the dropdown.
+            </div>
+        </div>
+
+        <!-- Calculator Card 2: Required Radiator Output at Delta 50°C -->
+        <div class="calculator-card">
+            <h2 class="calculator-subtitle">Required Radiator Output at Delta 50°C</h2>
+            
+            <!-- Inputs -->
+            <div class="input-group">
+                <div class="input-label">
+                    <span>Heatloss (BTU / KW required)</span>
+                    <span class="input-value" id="output2-value">1000</span>
+                </div>
+                <input type="number" id="output2-input" class="input-field" step="1" value="1000" min="0">
+            </div>
+
+            <div class="input-group">
+                <div class="input-label">
+                    <span>Select Delta T (°C / K)</span>
+                </div>
+                <select id="delta2-select" class="input-field">
+                    <option value="1.00">50</option>
+                    <option value="0.05">5</option>
+                    <option value="0.123">10</option>
+                    <option value="0.209">15</option>
+                    <option value="0.304">20</option>
+                    <option value="0.406">25</option>
+                    <option value="0.515">30</option>
+                    <option value="0.629">35</option>
+                    <option value="0.748">40</option>
+                    <option value="0.872">45</option>
+                    <option value="1.000">50</option>
+                    <option value="1.132">55</option>
+                    <option value="1.267">60</option>
+                    <option value="1.406">65</option>
+                    <option value="1.694">70</option>
+                </select>
+            </div>
+
+            <!-- Result -->
+            <div class="result-section">
+                <div class="result-label">Output of Emitter at Delta 50°C needed</div>
+                <div class="result-value" id="result2">1000.00</div>
+                <div class="result-unit">BTU / KW</div>
+            </div>
+
+            <div class="info-text">
+                This calculator is used to work out which standard radiators at 50 degrees delta to meet the needs of heat pumps.
+            </div>
+        </div>
+
+        <!-- Conversion Factor Table -->
+        <div class="calculator-card">
+            <h2 class="calculator-subtitle">Delta T Conversion Factor Table</h2>
+            <table class="conversion-table">
+                <thead>
+                    <tr>
+                        <th>Delta T (°C / K)</th>
+                        <th>Conversion Factor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>5</td><td>0.05</td></tr>
+                    <tr><td>10</td><td>0.123</td></tr>
+                    <tr><td>15</td><td>0.209</td></tr>
+                    <tr><td>17.50</td><td>0.257</td></tr>
+                    <tr><td>20</td><td>0.304</td></tr>
+                    <tr><td>25</td><td>0.406</td></tr>
+                    <tr><td>30</td><td>0.515</td></tr>
+                    <tr><td>35</td><td>0.629</td></tr>
+                    <tr><td>40</td><td>0.748</td></tr>
+                    <tr><td>45</td><td>0.872</td></tr>
+                    <tr><td>50</td><td>1.000</td></tr>
+                    <tr><td>55</td><td>1.132</td></tr>
+                    <tr><td>60</td><td>1.267</td></tr>
+                    <tr><td>65</td><td>1.406</td></tr>
+                    <tr><td>70</td><td>1.694</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="calculator-disclaimer">
+            <strong>Important:</strong> These calculations are based on radiator performance curves. Always consult manufacturer data sheets for specific radiator models and verify calculations with a qualified heating engineer.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+        <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
+    </footer>
+
+    <script type="text/javascript" data-cfasync="false">
+        document.addEventListener('DOMContentLoaded', function() {
+            /**
+             * Radiator Correction Factor Calculator 1
+             * Formula: Result = Output * Factor
+             */
+
+            const output1Input = document.getElementById('output1-input');
+            const delta1Select = document.getElementById('delta1-select');
+            const output1Value = document.getElementById('output1-value');
+            const result1 = document.getElementById('result1');
+
+            function calculate1() {
+                const output = parseFloat(output1Input.value) || 0;
+                const factor = parseFloat(delta1Select.value) || 1;
+
+                output1Value.textContent = output.toFixed(0);
+
+                if (output < 0) {
+                    result1.textContent = '—';
+                    return;
+                }
+
+                const result = output * factor;
+                result1.textContent = result.toFixed(2);
+            }
+
+            output1Input.addEventListener('input', calculate1);
+            delta1Select.addEventListener('change', calculate1);
+
+            calculate1();
+
+            /**
+             * Radiator Correction Factor Calculator 2
+             * Formula: Result = Heatloss / Factor
+             */
+
+            const output2Input = document.getElementById('output2-input');
+            const delta2Select = document.getElementById('delta2-select');
+            const output2Value = document.getElementById('output2-value');
+            const result2 = document.getElementById('result2');
+
+            function calculate2() {
+                const heatloss = parseFloat(output2Input.value) || 0;
+                const factor = parseFloat(delta2Select.value) || 1;
+
+                output2Value.textContent = heatloss.toFixed(0);
+
+                if (heatloss < 0 || factor === 0) {
+                    result2.textContent = '—';
+                    return;
+                }
+
+                const result = heatloss / factor;
+                result2.textContent = result.toFixed(2);
+            }
+
+            output2Input.addEventListener('input', calculate2);
+            delta2Select.addEventListener('change', calculate2);
+
+            calculate2();
+        });
+    </script>
+
+    <script src="/js/menu.js" type="text/javascript" data-cfasync="false"></script>
+</body>
+</html>
