@@ -418,7 +418,7 @@
         </a>
         <div class="tagline">Smarter Heating & Hot Water</div>
         <div class="right-header-items">
-            <button class="hamburger-menu" onclick="if (!window.__cfRLUnblockHandlers) return false; toggleMenu()" aria-label="Toggle Menu" data-cf-modified-d4ed50d62b5909d63fa06994-="">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
@@ -692,151 +692,160 @@
         <p class="footer-links"><a href="/">Home</a> | <a href="/hub/">Hub</a></p>
     </footer>
 
-    <script type="d4ed50d62b5909d63fa06994-text/javascript">
+    <script type="text/javascript" data-cfasync="false">
         /**
          * Hot Water Recovery Time Calculator
          * Mode A: Time from Power (form 14)
          * Mode B: Power from Time (form 36)
          */
 
-        /**
-         * PREC function - rounds to n decimal places
-         */
-        function PREC(value, decimals) {
-            return Number(value.toFixed(decimals));
-        }
+        // Wrap initialization in DOMContentLoaded to ensure DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            /**
+             * PREC function - rounds to n decimal places
+             */
+            function PREC(value, decimals) {
+                return Number(value.toFixed(decimals));
+            }
 
-        /**
-         * Update slider background fill
-         */
-        function updateSliderFill(slider) {
-            const value = parseFloat(slider.value);
-            const min = parseFloat(slider.min);
-            const max = parseFloat(slider.max);
-            const percentage = ((value - min) / (max - min)) * 100;
-            slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percentage}%, var(--border) ${percentage}%)`;
-        }
+            /**
+             * Update slider background fill
+             */
+            function updateSliderFill(slider) {
+                const value = parseFloat(slider.value);
+                const min = parseFloat(slider.min);
+                const max = parseFloat(slider.max);
+                const percentage = ((value - min) / (max - min)) * 100;
+                slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percentage}%, var(--border) ${percentage}%)`;
+            }
 
-        /**
-         * Switch between calculation modes
-         */
-        function switchMode(mode) {
-            const buttons = document.querySelectorAll('.mode-button');
-            const contents = document.querySelectorAll('.mode-content');
+            /**
+             * Switch between calculation modes
+             */
+            window.switchMode = function(mode) {
+                const buttons = document.querySelectorAll('.mode-button');
+                const contents = document.querySelectorAll('.mode-content');
 
-            buttons.forEach(btn => {
-                if (btn.textContent.toLowerCase().replace(/\s+/g, '-') === mode) {
-                    btn.classList.add('active');
+                buttons.forEach(btn => {
+                    if (btn.textContent.toLowerCase().replace(/\s+/g, '-') === mode) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+
+                contents.forEach(content => {
+                    if (content.id === `${mode}-mode`) {
+                        content.classList.add('active');
+                    } else {
+                        content.classList.remove('active');
+                    }
+                });
+
+                // Recalculate on mode switch
+                if (mode === 'time-from-power') {
+                    calculateModeA();
                 } else {
-                    btn.classList.remove('active');
+                    calculateModeB();
                 }
-            });
+            };
 
-            contents.forEach(content => {
-                if (content.id === `${mode}-mode`) {
-                    content.classList.add('active');
-                } else {
-                    content.classList.remove('active');
+            // ========== MODE A: TIME FROM POWER ==========
+
+            const modeAVolume = document.getElementById('mode-a-volume');
+            const modeADeltaT = document.getElementById('mode-a-deltaT');
+            const modeAPower = document.getElementById('mode-a-power');
+
+            const modeAVolumeValue = document.getElementById('mode-a-volume-value');
+            const modeADeltaTValue = document.getElementById('mode-a-deltaT-value');
+            const modeAPowerValue = document.getElementById('mode-a-power-value');
+
+            const modeATimeResult = document.getElementById('mode-a-time-result');
+
+            function calculateModeA() {
+                const volume = parseFloat(modeAVolume.value) || 0;
+                const deltaT = parseFloat(modeADeltaT.value) || 0;
+                const power = parseFloat(modeAPower.value) || 0;
+
+                // Update display values
+                modeAVolumeValue.textContent = volume;
+                modeADeltaTValue.textContent = deltaT;
+                modeAPowerValue.textContent = power;
+
+                // Update slider fill
+                updateSliderFill(modeAPower);
+
+                // Validate inputs
+                if (power === 0) {
+                    modeATimeResult.textContent = '—';
+                    return;
                 }
-            });
 
-            // Recalculate on mode switch
-            if (mode === 'time-from-power') {
-                calculateModeA();
-            } else {
-                calculateModeB();
-            }
-        }
+                // Calculate Time = PREC( (Volume * ΔT) / (14.3 * PowerKW) , 2 )
+                const time = PREC((volume * deltaT) / (14.3 * power), 2);
 
-        // ========== MODE A: TIME FROM POWER ==========
-
-        const modeAVolume = document.getElementById('mode-a-volume');
-        const modeADeltaT = document.getElementById('mode-a-deltaT');
-        const modeAPower = document.getElementById('mode-a-power');
-
-        const modeAVolumeValue = document.getElementById('mode-a-volume-value');
-        const modeADeltaTValue = document.getElementById('mode-a-deltaT-value');
-        const modeAPowerValue = document.getElementById('mode-a-power-value');
-
-        const modeATimeResult = document.getElementById('mode-a-time-result');
-
-        function calculateModeA() {
-            const volume = parseFloat(modeAVolume.value) || 0;
-            const deltaT = parseFloat(modeADeltaT.value) || 0;
-            const power = parseFloat(modeAPower.value) || 0;
-
-            // Update display values
-            modeAVolumeValue.textContent = volume;
-            modeADeltaTValue.textContent = deltaT;
-            modeAPowerValue.textContent = power;
-
-            // Update slider fill
-            updateSliderFill(modeAPower);
-
-            // Validate inputs
-            if (power === 0) {
-                modeATimeResult.textContent = '—';
-                return;
+                // Update result
+                modeATimeResult.textContent = time.toFixed(2);
             }
 
-            // Calculate Time = PREC( (Volume * ΔT) / (14.3 * PowerKW) , 2 )
-            const time = PREC((volume * deltaT) / (14.3 * power), 2);
+            // Add event listeners for Mode A (both input and change)
+            modeAVolume.addEventListener('input', calculateModeA);
+            modeAVolume.addEventListener('change', calculateModeA);
+            modeADeltaT.addEventListener('input', calculateModeA);
+            modeADeltaT.addEventListener('change', calculateModeA);
+            modeAPower.addEventListener('input', calculateModeA);
+            modeAPower.addEventListener('change', calculateModeA);
 
-            // Update result
-            modeATimeResult.textContent = time.toFixed(2);
-        }
+            // ========== MODE B: POWER FROM TIME ==========
 
-        // Add event listeners for Mode A
-        modeAVolume.addEventListener('input', calculateModeA);
-        modeADeltaT.addEventListener('input', calculateModeA);
-        modeAPower.addEventListener('input', calculateModeA);
+            const modeBVolume = document.getElementById('mode-b-volume');
+            const modeBDeltaT = document.getElementById('mode-b-deltaT');
+            const modeBMinutes = document.getElementById('mode-b-minutes');
 
-        // ========== MODE B: POWER FROM TIME ==========
+            const modeBVolumeValue = document.getElementById('mode-b-volume-value');
+            const modeBDeltaTValue = document.getElementById('mode-b-deltaT-value');
+            const modeBMinutesValue = document.getElementById('mode-b-minutes-value');
 
-        const modeBVolume = document.getElementById('mode-b-volume');
-        const modeBDeltaT = document.getElementById('mode-b-deltaT');
-        const modeBMinutes = document.getElementById('mode-b-minutes');
+            const modeBPowerResult = document.getElementById('mode-b-power-result');
 
-        const modeBVolumeValue = document.getElementById('mode-b-volume-value');
-        const modeBDeltaTValue = document.getElementById('mode-b-deltaT-value');
-        const modeBMinutesValue = document.getElementById('mode-b-minutes-value');
+            function calculateModeB() {
+                const volume = parseFloat(modeBVolume.value) || 0;
+                const deltaT = parseFloat(modeBDeltaT.value) || 0;
+                const minutes = parseFloat(modeBMinutes.value) || 0;
 
-        const modeBPowerResult = document.getElementById('mode-b-power-result');
+                // Update display values
+                modeBVolumeValue.textContent = volume;
+                modeBDeltaTValue.textContent = deltaT;
+                modeBMinutesValue.textContent = minutes;
 
-        function calculateModeB() {
-            const volume = parseFloat(modeBVolume.value) || 0;
-            const deltaT = parseFloat(modeBDeltaT.value) || 0;
-            const minutes = parseFloat(modeBMinutes.value) || 0;
+                // Update slider fill
+                updateSliderFill(modeBMinutes);
 
-            // Update display values
-            modeBVolumeValue.textContent = volume;
-            modeBDeltaTValue.textContent = deltaT;
-            modeBMinutesValue.textContent = minutes;
+                // Validate inputs
+                if (minutes === 0) {
+                    modeBPowerResult.textContent = '—';
+                    return;
+                }
 
-            // Update slider fill
-            updateSliderFill(modeBMinutes);
+                // Calculate KW Power = PREC( (Volume * ΔT * 4.2) / (Minutes * 60) , 2 )
+                const power = PREC((volume * deltaT * 4.2) / (minutes * 60), 2);
 
-            // Validate inputs
-            if (minutes === 0) {
-                modeBPowerResult.textContent = '—';
-                return;
+                // Update result
+                modeBPowerResult.textContent = power.toFixed(2);
             }
 
-            // Calculate KW Power = PREC( (Volume * ΔT * 4.2) / (Minutes * 60) , 2 )
-            const power = PREC((volume * deltaT * 4.2) / (minutes * 60), 2);
+            // Add event listeners for Mode B (both input and change)
+            modeBVolume.addEventListener('input', calculateModeB);
+            modeBVolume.addEventListener('change', calculateModeB);
+            modeBDeltaT.addEventListener('input', calculateModeB);
+            modeBDeltaT.addEventListener('change', calculateModeB);
+            modeBMinutes.addEventListener('input', calculateModeB);
+            modeBMinutes.addEventListener('change', calculateModeB);
 
-            // Update result
-            modeBPowerResult.textContent = power.toFixed(2);
-        }
-
-        // Add event listeners for Mode B
-        modeBVolume.addEventListener('input', calculateModeB);
-        modeBDeltaT.addEventListener('input', calculateModeB);
-        modeBMinutes.addEventListener('input', calculateModeB);
-
-        // Initial calculations
-        calculateModeA();
-        calculateModeB();
+            // Initial calculations
+            calculateModeA();
+            calculateModeB();
+        });
     </script>
 
     <!-- Footer -->
@@ -936,6 +945,6 @@
     </footer>
 
     <!-- Add menu.js for navigation functionality -->
-    <script src="/js/menu.js"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>

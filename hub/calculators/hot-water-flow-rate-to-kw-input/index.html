@@ -337,7 +337,7 @@
         </a>
         <div class="tagline">Smarter Heating & Hot Water</div>
         <div class="right-header-items">
-            <button class="hamburger-menu" onclick="if (!window.__cfRLUnblockHandlers) return false; toggleMenu()" aria-label="Toggle Menu" data-cf-modified-d4ed50d62b5909d63fa06994-="">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
@@ -420,53 +420,58 @@
         <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
     </footer>
 
-    <script type="d4ed50d62b5909d63fa06994-text/javascript">
-        const lpmSlider = document.getElementById('lpm-slider');
-        const tempSlider = document.getElementById('temp-slider');
+    <script type="text/javascript" data-cfasync="false">
+        // Wrap initialization in DOMContentLoaded to ensure DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const lpmSlider = document.getElementById('lpm-slider');
+            const tempSlider = document.getElementById('temp-slider');
 
-        const lpmValue = document.getElementById('lpm-value');
-        const tempValue = document.getElementById('temp-value');
+            const lpmValue = document.getElementById('lpm-value');
+            const tempValue = document.getElementById('temp-value');
 
-        const kwResult = document.getElementById('kw-result');
+            const kwResult = document.getElementById('kw-result');
 
-        function PREC(value, decimals) {
-            return Number(value.toFixed(decimals));
-        }
-
-        function calculate() {
-            const LPM = parseFloat(lpmSlider.value);
-            const DeltaT = parseFloat(tempSlider.value);
-
-            lpmValue.textContent = LPM.toFixed(1);
-            tempValue.textContent = DeltaT;
-
-            if (LPM === 0 || DeltaT === 0) {
-                kwResult.textContent = '—';
-                return;
+            function PREC(value, decimals) {
+                return Number(value.toFixed(decimals));
             }
 
-            const KW = PREC(((LPM / 60) * DeltaT * 4.186), 2);
+            function calculate() {
+                const LPM = parseFloat(lpmSlider.value);
+                const DeltaT = parseFloat(tempSlider.value);
 
-            kwResult.textContent = KW.toFixed(2);
+                lpmValue.textContent = LPM.toFixed(1);
+                tempValue.textContent = DeltaT;
 
-            updateSliderFill(lpmSlider);
-            updateSliderFill(tempSlider);
-        }
+                if (LPM === 0 || DeltaT === 0) {
+                    kwResult.textContent = '—';
+                    return;
+                }
 
-        function updateSliderFill(slider) {
-            const value = parseFloat(slider.value);
-            const min = parseFloat(slider.min);
-            const max = parseFloat(slider.max);
-            const percentage = ((value - min) / (max - min)) * 100;
-            slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percentage}%, var(--border) ${percentage}%)`;
-        }
+                const KW = PREC(((LPM / 60) * DeltaT * 4.186), 2);
 
-        lpmSlider.addEventListener('input', calculate);
-        tempSlider.addEventListener('input', calculate);
+                kwResult.textContent = KW.toFixed(2);
 
-        calculate();
+                updateSliderFill(lpmSlider);
+                updateSliderFill(tempSlider);
+            }
+
+            function updateSliderFill(slider) {
+                const value = parseFloat(slider.value);
+                const min = parseFloat(slider.min);
+                const max = parseFloat(slider.max);
+                const percentage = ((value - min) / (max - min)) * 100;
+                slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percentage}%, var(--border) ${percentage}%)`;
+            }
+
+            lpmSlider.addEventListener('input', calculate);
+            lpmSlider.addEventListener('change', calculate);
+            tempSlider.addEventListener('input', calculate);
+            tempSlider.addEventListener('change', calculate);
+
+            calculate();
+        });
     </script>
 
-    <script src="/js/menu.js" type="d4ed50d62b5909d63fa06994-text/javascript"></script>
-<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="d4ed50d62b5909d63fa06994-|49" defer></script></body>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
 </html>

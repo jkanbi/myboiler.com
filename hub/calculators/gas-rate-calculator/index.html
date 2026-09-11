@@ -477,7 +477,7 @@
         <div class="tagline">Smarter Heating & Hot Water</div>
         <div class="right-header-items">
             <!-- Hamburger Menu Button -->
-            <button class="hamburger-menu" onclick="if (!window.__cfRLUnblockHandlers) return false; toggleMenu()" aria-label="Toggle Menu" data-cf-modified-d4ed50d62b5909d63fa06994-="">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
@@ -704,188 +704,196 @@
         <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
     </footer>
 
-    <script type="d4ed50d62b5909d63fa06994-text/javascript">
+    <script type="text/javascript" data-cfasync="false">
         /**
          * Gas Rate Calculator
          * Metric mode (form 64) and Imperial mode (form 66)
          */
 
-        // Constants
-        const CV_METRIC = 10.76; // kW
-        const CV_IMPERIAL = 1040; // BTU
-        const BTU_TO_KW = 3412;
-        const GROSS_TO_NET = 1.11;
+        // Wrap initialization in DOMContentLoaded to ensure DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Constants
+            const CV_METRIC = 10.76; // kW
+            const CV_IMPERIAL = 1040; // BTU
+            const BTU_TO_KW = 3412;
+            const GROSS_TO_NET = 1.11;
 
-        /**
-         * PREC function - rounds to n decimal places
-         */
-        function PREC(value, decimals) {
-            return Number(value.toFixed(decimals));
-        }
+            /**
+             * PREC function - rounds to n decimal places
+             */
+            function PREC(value, decimals) {
+                return Number(value.toFixed(decimals));
+            }
 
-        /**
-         * Update slider background fill
-         */
-        function updateSliderFill(slider) {
-            const value = parseFloat(slider.value);
-            const min = parseFloat(slider.min);
-            const max = parseFloat(slider.max);
-            const percentage = ((value - min) / (max - min)) * 100;
-            slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percentage}%, var(--border) ${percentage}%)`;
-        }
+            /**
+             * Update slider background fill
+             */
+            function updateSliderFill(slider) {
+                const value = parseFloat(slider.value);
+                const min = parseFloat(slider.min);
+                const max = parseFloat(slider.max);
+                const percentage = ((value - min) / (max - min)) * 100;
+                slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percentage}%, var(--border) ${percentage}%)`;
+            }
 
-        /**
-         * Switch between Metric and Imperial modes
-         */
-        function switchMode(mode) {
-            const buttons = document.querySelectorAll('.mode-button');
-            const contents = document.querySelectorAll('.mode-content');
+            /**
+             * Switch between Metric and Imperial modes
+             */
+            window.switchMode = function(mode) {
+                const buttons = document.querySelectorAll('.mode-button');
+                const contents = document.querySelectorAll('.mode-content');
 
-            buttons.forEach(btn => {
-                if (btn.textContent.toLowerCase() === mode) {
-                    btn.classList.add('active');
+                buttons.forEach(btn => {
+                    if (btn.textContent.toLowerCase() === mode) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+
+                contents.forEach(content => {
+                    if (content.id === `${mode}-mode`) {
+                        content.classList.add('active');
+                    } else {
+                        content.classList.remove('active');
+                    }
+                });
+
+                // Recalculate on mode switch
+                if (mode === 'metric') {
+                    calculateMetric();
                 } else {
-                    btn.classList.remove('active');
+                    calculateImperial();
                 }
-            });
+            };
 
-            contents.forEach(content => {
-                if (content.id === `${mode}-mode`) {
-                    content.classList.add('active');
-                } else {
-                    content.classList.remove('active');
+            // ========== METRIC MODE ==========
+
+            const metricStart = document.getElementById('metric-start');
+            const metricFinish = document.getElementById('metric-finish');
+            const metricTimer = document.getElementById('metric-timer');
+
+            const metricStartValue = document.getElementById('metric-start-value');
+            const metricFinishValue = document.getElementById('metric-finish-value');
+            const metricTimerValue = document.getElementById('metric-timer-value');
+
+            const metricGrossKW = document.getElementById('metric-gross-kw');
+            const metricGrossM3h = document.getElementById('metric-gross-m3h');
+            const metricNetKW = document.getElementById('metric-net-kw');
+            const metricNetM3h = document.getElementById('metric-net-m3h');
+
+            function calculateMetric() {
+                const start = parseFloat(metricStart.value) || 0;
+                const finish = parseFloat(metricFinish.value);
+                const timer = parseFloat(metricTimer.value);
+
+                // Update display values
+                metricStartValue.textContent = start.toString().padStart(3, '0');
+                metricFinishValue.textContent = isNaN(finish) ? '—' : finish.toString();
+                metricTimerValue.textContent = timer;
+
+                // Update slider fill
+                updateSliderFill(metricTimer);
+
+                // Validate inputs
+                if (isNaN(finish) || timer === 0 || finish <= start) {
+                    metricGrossKW.textContent = '—';
+                    metricGrossM3h.textContent = '—';
+                    metricNetKW.textContent = '—';
+                    metricNetM3h.textContent = '—';
+                    return;
                 }
-            });
 
-            // Recalculate on mode switch
-            if (mode === 'metric') {
-                calculateMetric();
-            } else {
-                calculateImperial();
-            }
-        }
+                // Calculate Gross KW = PREC( (((Finish-Start)/1000 * 3600 * 10.76) / Timer) , 2 )
+                const grossKW = PREC((((finish - start) / 1000 * 3600 * CV_METRIC) / timer), 2);
 
-        // ========== METRIC MODE ==========
+                // Calculate Gross m3/h = PREC( GrossKW / 10.76 , 2 )
+                const grossM3h = PREC(grossKW / CV_METRIC, 2);
 
-        const metricStart = document.getElementById('metric-start');
-        const metricFinish = document.getElementById('metric-finish');
-        const metricTimer = document.getElementById('metric-timer');
+                // Calculate Net KW = PREC( GrossKW / 1.11 , 2 )
+                const netKW = PREC(grossKW / GROSS_TO_NET, 2);
 
-        const metricStartValue = document.getElementById('metric-start-value');
-        const metricFinishValue = document.getElementById('metric-finish-value');
-        const metricTimerValue = document.getElementById('metric-timer-value');
+                // Calculate Net m3/h = PREC( GrossKW / 10.76 / 1.11 , 2 )
+                const netM3h = PREC(grossKW / CV_METRIC / GROSS_TO_NET, 2);
 
-        const metricGrossKW = document.getElementById('metric-gross-kw');
-        const metricGrossM3h = document.getElementById('metric-gross-m3h');
-        const metricNetKW = document.getElementById('metric-net-kw');
-        const metricNetM3h = document.getElementById('metric-net-m3h');
-
-        function calculateMetric() {
-            const start = parseFloat(metricStart.value) || 0;
-            const finish = parseFloat(metricFinish.value);
-            const timer = parseFloat(metricTimer.value);
-
-            // Update display values
-            metricStartValue.textContent = start.toString().padStart(3, '0');
-            metricFinishValue.textContent = isNaN(finish) ? '—' : finish.toString();
-            metricTimerValue.textContent = timer;
-
-            // Update slider fill
-            updateSliderFill(metricTimer);
-
-            // Validate inputs
-            if (isNaN(finish) || timer === 0 || finish <= start) {
-                metricGrossKW.textContent = '—';
-                metricGrossM3h.textContent = '—';
-                metricNetKW.textContent = '—';
-                metricNetM3h.textContent = '—';
-                return;
+                // Update results
+                metricGrossKW.textContent = grossKW.toFixed(2);
+                metricGrossM3h.textContent = grossM3h.toFixed(2);
+                metricNetKW.textContent = netKW.toFixed(2);
+                metricNetM3h.textContent = netM3h.toFixed(2);
             }
 
-            // Calculate Gross KW = PREC( (((Finish-Start)/1000 * 3600 * 10.76) / Timer) , 2 )
-            const grossKW = PREC((((finish - start) / 1000 * 3600 * CV_METRIC) / timer), 2);
+            // Add event listeners for Metric mode (both input and change)
+            metricStart.addEventListener('input', calculateMetric);
+            metricStart.addEventListener('change', calculateMetric);
+            metricFinish.addEventListener('input', calculateMetric);
+            metricFinish.addEventListener('change', calculateMetric);
+            metricTimer.addEventListener('input', calculateMetric);
+            metricTimer.addEventListener('change', calculateMetric);
 
-            // Calculate Gross m3/h = PREC( GrossKW / 10.76 , 2 )
-            const grossM3h = PREC(grossKW / CV_METRIC, 2);
+            // ========== IMPERIAL MODE ==========
 
-            // Calculate Net KW = PREC( GrossKW / 1.11 , 2 )
-            const netKW = PREC(grossKW / GROSS_TO_NET, 2);
+            const imperialDial = document.getElementById('imperial-dial');
+            const imperialTime = document.getElementById('imperial-time');
 
-            // Calculate Net m3/h = PREC( GrossKW / 10.76 / 1.11 , 2 )
-            const netM3h = PREC(grossKW / CV_METRIC / GROSS_TO_NET, 2);
+            const imperialTimeValue = document.getElementById('imperial-time-value');
 
-            // Update results
-            metricGrossKW.textContent = grossKW.toFixed(2);
-            metricGrossM3h.textContent = grossM3h.toFixed(2);
-            metricNetKW.textContent = netKW.toFixed(2);
-            metricNetM3h.textContent = netM3h.toFixed(2);
-        }
+            const imperialGrossKW = document.getElementById('imperial-gross-kw');
+            const imperialGasRate = document.getElementById('imperial-gas-rate');
+            const imperialNetKW = document.getElementById('imperial-net-kw');
+            const imperialNetM3h = document.getElementById('imperial-net-m3h');
 
-        // Add event listeners for Metric mode
-        metricStart.addEventListener('input', calculateMetric);
-        metricFinish.addEventListener('input', calculateMetric);
-        metricTimer.addEventListener('input', calculateMetric);
+            function calculateImperial() {
+                const dial = parseFloat(imperialDial.value);
+                const time = parseFloat(imperialTime.value);
 
-        // ========== IMPERIAL MODE ==========
+                // Update display values
+                imperialTimeValue.textContent = time;
 
-        const imperialDial = document.getElementById('imperial-dial');
-        const imperialTime = document.getElementById('imperial-time');
+                // Update slider fill
+                updateSliderFill(imperialTime);
 
-        const imperialTimeValue = document.getElementById('imperial-time-value');
+                // Validate inputs
+                if (time === 0) {
+                    imperialGrossKW.textContent = '—';
+                    imperialGasRate.textContent = '—';
+                    imperialNetKW.textContent = '—';
+                    imperialNetM3h.textContent = '—';
+                    return;
+                }
 
-        const imperialGrossKW = document.getElementById('imperial-gross-kw');
-        const imperialGasRate = document.getElementById('imperial-gas-rate');
-        const imperialNetKW = document.getElementById('imperial-net-kw');
-        const imperialNetM3h = document.getElementById('imperial-net-m3h');
+                // Calculate Gross KW = PREC( (((1*3600*1040)/Time/3412)*Dial) , 2 )
+                const grossKW = PREC((((1 * 3600 * CV_IMPERIAL) / time / BTU_TO_KW) * dial), 2);
 
-        function calculateImperial() {
-            const dial = parseFloat(imperialDial.value);
-            const time = parseFloat(imperialTime.value);
+                // Calculate Gas Rate m3/h = PREC( GrossKW / 10.76 , 4 )
+                const gasRate = PREC(grossKW / CV_METRIC, 4);
 
-            // Update display values
-            imperialTimeValue.textContent = time;
+                // Calculate Net KW = PREC( GrossKW / 1.11 , 2 )
+                const netKW = PREC(grossKW / GROSS_TO_NET, 2);
 
-            // Update slider fill
-            updateSliderFill(imperialTime);
+                // Calculate Net m3/h = PREC( GrossKW / 10.76 / 1.11 , 2 )
+                const netM3h = PREC(grossKW / CV_METRIC / GROSS_TO_NET, 2);
 
-            // Validate inputs
-            if (time === 0) {
-                imperialGrossKW.textContent = '—';
-                imperialGasRate.textContent = '—';
-                imperialNetKW.textContent = '—';
-                imperialNetM3h.textContent = '—';
-                return;
+                // Update results
+                imperialGrossKW.textContent = grossKW.toFixed(2);
+                imperialGasRate.textContent = gasRate.toFixed(4);
+                imperialNetKW.textContent = netKW.toFixed(2);
+                imperialNetM3h.textContent = netM3h.toFixed(2);
             }
 
-            // Calculate Gross KW = PREC( (((1*3600*1040)/Time/3412)*Dial) , 2 )
-            const grossKW = PREC((((1 * 3600 * CV_IMPERIAL) / time / BTU_TO_KW) * dial), 2);
+            // Add event listeners for Imperial mode (both input and change)
+            imperialDial.addEventListener('input', calculateImperial);
+            imperialDial.addEventListener('change', calculateImperial);
+            imperialTime.addEventListener('input', calculateImperial);
+            imperialTime.addEventListener('change', calculateImperial);
 
-            // Calculate Gas Rate m3/h = PREC( GrossKW / 10.76 , 4 )
-            const gasRate = PREC(grossKW / CV_METRIC, 4);
-
-            // Calculate Net KW = PREC( GrossKW / 1.11 , 2 )
-            const netKW = PREC(grossKW / GROSS_TO_NET, 2);
-
-            // Calculate Net m3/h = PREC( GrossKW / 10.76 / 1.11 , 2 )
-            const netM3h = PREC(grossKW / CV_METRIC / GROSS_TO_NET, 2);
-
-            // Update results
-            imperialGrossKW.textContent = grossKW.toFixed(2);
-            imperialGasRate.textContent = gasRate.toFixed(4);
-            imperialNetKW.textContent = netKW.toFixed(2);
-            imperialNetM3h.textContent = netM3h.toFixed(2);
-        }
-
-        // Add event listeners for Imperial mode
-        imperialDial.addEventListener('change', calculateImperial);
-        imperialTime.addEventListener('input', calculateImperial);
-
-        // Initial calculations
-        calculateMetric();
-        calculateImperial();
+            // Initial calculations
+            calculateMetric();
+            calculateImperial();
+        });
     </script>
 
     <!-- Add menu.js for navigation functionality -->
-    <script src="/js/menu.js" type="d4ed50d62b5909d63fa06994-text/javascript"></script>
-<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="d4ed50d62b5909d63fa06994-|49" defer></script></body>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
 </html>
