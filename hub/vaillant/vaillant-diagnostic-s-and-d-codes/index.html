@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaillant Diagnostic S-Codes and D-Codes - MyBoiler Hub</title>
+    <meta name="description" content="Complete reference guide for Vaillant ecotec boiler S-codes (status codes) and D-codes (diagnostic parameters). Essential for engineers servicing Vaillant boilers.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-breadcrumb {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 1rem;
+        }
+
+        .article-content ul {
+            margin: 1rem 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.875rem;
+        }
+
+        .article-content table th,
+        .article-content table td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+
+        .article-content table th {
+            background: var(--bg-subtle);
+            font-weight: 600;
+            color: var(--text);
+            position: sticky;
+            top: 0;
+        }
+
+        .article-content table tr:nth-child(even) {
+            background: var(--bg-subtle);
+        }
+
+        .article-content table td:first-child {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        .info-box {
+            background: var(--bg-info);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: var(--radius);
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: var(--radius);
+        }
+    </style>
+</head>
+<body class="article-page">
+    <!-- Header with full navigation -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu">
+                <ul class="nav-list">
+                    <!-- Advice Menu -->
+                    <li class="nav-item nav-item-has-dropdown">
+                        <span class="nav-dropdown-label">
+                            <span>Advice</span>
+                            <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>
+                            </svg>
+                        </span>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Boilers</h4>
+                                <a href="https://hub.myboiler.com/money-and-energy-saving/">Money and Energy Saving</a>
+                                <a href="https://hub.myboiler.com/boiler-pressure/">Boiler Pressure</a>
+                                <a href="https://hub.myboiler.com/boiler-service/">Boiler Service</a>
+                                <a href="https://hub.myboiler.com/boiler-types/">Boiler Types</a>
+                                <a href="https://hub.myboiler.com/boiler-energy-efficiency/">Boiler Energy Efficiency</a>
+                                <a href="https://hub.myboiler.com/installation-efficiency/">Installation Efficiency</a>
+                                <h4>OpenTherm & Modulating Boilers</h4>
+                                <a href="https://hub.myboiler.com/opentherm-and-modulating-boilers/">OpenTherm & Modulating Overview</a>
+                                <a href="https://hub.myboiler.com/opentherm-capable-boilers/">OpenTherm Capable Boilers</a>
+                                <a href="https://hub.myboiler.com/opentherm-controls/">OpenTherm Controls</a>
+                                <a href="https://hub.myboiler.com/modulating-boiler-and-smart-controls/">Modulating Boilers & Smart Controls</a>
+                                <a href="/hub/opentherm/vaillant-opentherm/">Vaillant OpenTherm Guide</a>
+                                <a href="/hub/opentherm/worcester-bosch-opentherm/">Worcester OpenTherm Guide</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Heat Pumps</h4>
+                                <a href="https://hub.myboiler.com/heat-pumps/">Heat Pumps Overview</a>
+                                <a href="https://hub.myboiler.com/heat-pump-cylinder-retrofit/">Heat Pump Cylinder Retrofit</a>
+                                <a href="https://hub.myboiler.com/air-source-heat-pump/">Air Source Heat Pump</a>
+                                <a href="https://hub.myboiler.com/are-heat-pumps-a-con/">Are Heat Pumps a Con?</a>
+                                <a href="https://hub.myboiler.com/underfloor-heating/">Underfloor Heating</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Miscellaneous</h4>
+                                <a href="https://hub.myboiler.com/flow-temperature-and-power/">Flow Temperature & Power</a>
+                                <a href="https://hub.myboiler.com/solar-thermal-heating/">Solar Thermal Heating</a>
+                                <a href="https://hub.myboiler.com/solar-thermal-servicing/">Solar Thermal Servicing</a>
+                                <a href="/hub/s-plan/">S Plan Heating Systems</a>
+                                <a href="https://hub.myboiler.com/radiators/">Radiators</a>
+                                <a href="/quote/">Get a Quote</a>
+                                <a href="https://hub.myboiler.com/services/">Services</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Toolbox Menu -->
+                    <li class="nav-item nav-item-has-dropdown">
+                        <span class="nav-dropdown-label">
+                            <span>Toolbox</span>
+                            <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>
+                            </svg>
+                        </span>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Vaillant</h4>
+                                <a href="https://hub.myboiler.com/installer/vaillant-boiler-p-test/">P Test Instructions</a>
+                                <a href="https://hub.myboiler.com/installer/vaillant-boiler-emissions-table/">Emissions Table</a>
+                                <a href="https://hub.myboiler.com/installer/vaillant-ecotec-service-how-to/">Ecotec Service How-To</a>
+                                <a href="/hub/vaillant/vaillant-diagnostic-s-and-d-codes/">Diagnostic S & D Codes</a>
+                                <a href="/hub/vaillant/vaillant-ecotec-boiler-anti-cycling-time/">Anti-Cycling Time</a>
+                                <a href="https://hub.myboiler.com/installer/vaillant-fga-tool/">FGA Tool</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Worcester Bosch</h4>
+                                <a href="https://hub.myboiler.com/installer/worcester-fga-tool/">FGA Tool</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Other Brands</h4>
+                                <a href="https://hub.myboiler.com/installer/intergas-fga-tool/">Intergas FGA Tool</a>
+                                <a href="https://hub.myboiler.com/installer/intergas-service-how-to/">Intergas Service How-To</a>
+                                <h4>Miscellaneous</h4>
+                                <a href="https://hub.myboiler.com/installer/maximum-and-minimum-output-mode-videos/">Max/Min Output Mode Videos</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Calculators Menu -->
+                    <li class="nav-item nav-item-has-dropdown">
+                        <span class="nav-dropdown-label">
+                            <span>Calculators</span>
+                            <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>
+                            </svg>
+                        </span>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Heating Design</h4>
+                                <a href="https://hub.myboiler.com/calculators/air-change-calculator/">Air Change Calculator (ACH)</a>
+                                <a href="https://hub.myboiler.com/calculators/boiler-consumption/">Boiler Consumption</a>
+                                <a href="https://hub.myboiler.com/calculators/heat-source-system-design/">Heat Source/System Design</a>
+                                <a href="https://hub.myboiler.com/calculators/water-content-calculator/">Water Content</a>
+                                <a href="https://hub.myboiler.com/calculators/hot-water-recovery/">Hot Water Recovery</a>
+                                <a href="/hub/calculators/pipe-size-calculator/">Pipe Size Calculator</a>
+                                <a href="https://hub.myboiler.com/calculators/radiator-correction-factor/">Radiator Correction Factor</a>
+                                <a href="https://hub.myboiler.com/calculators/volume-flow-rate-q/">Volume Flow Rate Q</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Conversion Calculators</h4>
+                                <a href="https://hub.myboiler.com/calculators/kw-flow-rate/">KW to Flow Rate & Flow to KW</a>
+                                <a href="https://hub.myboiler.com/calculators/lpm-to-kwh/">LPM to kWh</a>
+                                <a href="https://hub.myboiler.com/calculators/btu-to-watts/">BTU to Watts</a>
+                                <a href="https://hub.myboiler.com/calculators/radiator-new-output/">Radiator New Output</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Gas Calculators</h4>
+                                <a href="https://hub.myboiler.com/calculators/combustion-ratio-calculator/">Combustion Ratio</a>
+                                <a href="https://hub.myboiler.com/calculators/gas-rate-calculator/">Gas Rate</a>
+                                <a href="https://hub.myboiler.com/calculators/m3-to-kwh/">m³ to kWh</a>
+                                <h4>Buffers</h4>
+                                <a href="https://hub.myboiler.com/calculators/buffer-minimum-volume/">Buffer Minimum Volume</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Manuals -->
+                    <li class="nav-item">
+                        <a href="https://boilermanuals.com">Manuals</a>
+                    </li>
+
+                    <!-- Ask AI -->
+                    <li class="nav-item nav-item-cta">
+                        <a href="/chat/">Ask AI</a>
+                    </li>
+
+                    <!-- Exit Hub -->
+                    <li class="nav-item">
+                        <a href="/">Exit Hub</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <div class="article-container">
+        <nav class="article-breadcrumb" aria-label="Breadcrumb">
+            <a href="/hub/">Hub</a> › <a href="/hub/vaillant/">Vaillant</a> › Diagnostic Codes
+        </nav>
+
+        <header class="article-header">
+            <h1 class="article-title">Vaillant Diagnostic S-Codes & D-Codes</h1>
+            <p class="article-intro">
+                Complete reference guide for Vaillant ecotec boiler status codes (S-codes) and diagnostic parameters (D-codes). Essential technical information for heating engineers.
+            </p>
+        </header>
+
+        <article class="article-content">
+            <div class="warning-box">
+                <p><strong>For Qualified Engineers Only:</strong> This information is intended for Gas Safe registered engineers. Adjusting diagnostic parameters can affect boiler operation and efficiency. Always refer to the manufacturer's installation and servicing instructions.</p>
+            </div>
+
+            <h2>About S-Codes and D-Codes</h2>
+            <p>Vaillant ecotec boilers use two types of codes for diagnostics and configuration:</p>
+            <ul>
+                <li><strong>S-Codes (Status Codes):</strong> Display the current operating status of the boiler. These are read-only indicators showing what the boiler is currently doing.</li>
+                <li><strong>D-Codes (Diagnostic Codes):</strong> Adjustable parameters that control various aspects of boiler operation. These can be modified by qualified engineers to optimize performance.</li>
+            </ul>
+
+            <h2>How to Access S-Codes and D-Codes</h2>
+            <ol>
+                <li>Press the <strong>info button</strong> (i) on the boiler control panel</li>
+                <li>Use the <strong>+</strong> and <strong>-</strong> buttons to scroll through codes</li>
+                <li>For D-codes, press and hold the <strong>info button</strong> for approximately 5 seconds to enter adjustment mode</li>
+                <li>Use <strong>+</strong> and <strong>-</strong> to change values, then press <strong>OK</strong> to confirm</li>
+            </ol>
+
+            <div class="info-box">
+                <p><strong>Note:</strong> Some newer ecotec models may have slightly different navigation. Always consult the specific manual for your boiler model. See <a href="/hub/vaillant/vaillant-ecotec-boiler-anti-cycling-time/">Vaillant Anti-Cycling Time</a> for more configuration information.</p>
+            </div>
+
+            <h2>S-Codes: Status Codes</h2>
+            <p>S-codes indicate the current operating status of your Vaillant boiler. These are read-only displays that help engineers understand what the boiler is doing at any given moment.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>S-Code</th>
+                        <th>Status Description</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>S.0</td>
+                        <td>Heat Request Off</td>
+                        <td>No demand for heating or hot water</td>
+                    </tr>
+                    <tr>
+                        <td>S.1</td>
+                        <td>Heat Request CH</td>
+                        <td>Central heating demand active</td>
+                    </tr>
+                    <tr>
+                        <td>S.2</td>
+                        <td>Heat Request CH & DHW</td>
+                        <td>Both heating and hot water demand</td>
+                    </tr>
+                    <tr>
+                        <td>S.3</td>
+                        <td>Burner Start CH</td>
+                        <td>Burner starting for central heating</td>
+                    </tr>
+                    <tr>
+                        <td>S.4</td>
+                        <td>Burner Operation CH</td>
+                        <td>Burner running for central heating</td>
+                    </tr>
+                    <tr>
+                        <td>S.5</td>
+                        <td>Burner Start DHW</td>
+                        <td>Burner starting for hot water</td>
+                    </tr>
+                    <tr>
+                        <td>S.6</td>
+                        <td>Burner Operation DHW</td>
+                        <td>Burner running for hot water</td>
+                    </tr>
+                    <tr>
+                        <td>S.7</td>
+                        <td>Burner Off</td>
+                        <td>Burner has been switched off</td>
+                    </tr>
+                    <tr>
+                        <td>S.8</td>
+                        <td>Burner Post-run After CH</td>
+                        <td>Post-purge cycle after heating</td>
+                    </tr>
+                    <tr>
+                        <td>S.10</td>
+                        <td>Heat Request DHW</td>
+                        <td>Hot water demand only</td>
+                    </tr>
+                    <tr>
+                        <td>S.11</td>
+                        <td>Burner Post-run After DHW</td>
+                        <td>Post-purge cycle after hot water</td>
+                    </tr>
+                    <tr>
+                        <td>S.14</td>
+                        <td>Burner Post-run After Fault</td>
+                        <td>Post-purge after error condition</td>
+                    </tr>
+                    <tr>
+                        <td>S.20</td>
+                        <td>Anti-cycling Mode</td>
+                        <td>Boiler in anti-cycling delay (see D.002)</td>
+                    </tr>
+                    <tr>
+                        <td>S.21</td>
+                        <td>Anti-cycling Mode DHW</td>
+                        <td>Anti-cycling delay for hot water</td>
+                    </tr>
+                    <tr>
+                        <td>S.22</td>
+                        <td>Anti-cycling Mode CH Priority</td>
+                        <td>Anti-cycling with heating priority</td>
+                    </tr>
+                    <tr>
+                        <td>S.28</td>
+                        <td>Frost Protection Active</td>
+                        <td>Boiler protecting against freezing</td>
+                    </tr>
+                    <tr>
+                        <td>S.30</td>
+                        <td>Room Temperature Setpoint Reached</td>
+                        <td>Target temperature achieved</td>
+                    </tr>
+                    <tr>
+                        <td>S.31</td>
+                        <td>Boiler Controlled in Summer Mode</td>
+                        <td>Heating off, DHW only</td>
+                    </tr>
+                    <tr>
+                        <td>S.34</td>
+                        <td>Frost Protection Standby</td>
+                        <td>Monitoring for frost conditions</td>
+                    </tr>
+                    <tr>
+                        <td>S.41</td>
+                        <td>DHW Setpoint Reached</td>
+                        <td>Hot water at target temperature</td>
+                    </tr>
+                    <tr>
+                        <td>S.42</td>
+                        <td>Pump Post-Run</td>
+                        <td>Pump running after burner shutdown</td>
+                    </tr>
+                    <tr>
+                        <td>S.51</td>
+                        <td>24 Hour Pump Cycle Active</td>
+                        <td>Automatic pump exercise function</td>
+                    </tr>
+                    <tr>
+                        <td>S.53</td>
+                        <td>Pump Priority Switching</td>
+                        <td>System managing pump priority</td>
+                    </tr>
+                    <tr>
+                        <td>S.54</td>
+                        <td>Combi Flow Turbine Signal Fault</td>
+                        <td>Issue with DHW flow sensor</td>
+                    </tr>
+                    <tr>
+                        <td>S.58</td>
+                        <td>Flue System Fault</td>
+                        <td>Check flue installation and fan</td>
+                    </tr>
+                    <tr>
+                        <td>S.96</td>
+                        <td>Gas Valve Test Mode</td>
+                        <td>System in test/diagnostic mode</td>
+                    </tr>
+                    <tr>
+                        <td>S.98</td>
+                        <td>Boiler Under Service Mode</td>
+                        <td>Engineer service mode active</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>D-Codes: Diagnostic Parameters</h2>
+            <p>D-codes are adjustable parameters that allow engineers to configure and optimize boiler performance. Each D-code controls a specific function or setting.</p>
+
+            <div class="warning-box">
+                <p><strong>Warning:</strong> Incorrect adjustment of D-codes can lead to inefficient operation, increased energy consumption, or boiler faults. Only adjust these parameters if you fully understand their function.</p>
+            </div>
+
+            <h3>Key D-Codes for Central Heating</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>D-Code</th>
+                        <th>Parameter</th>
+                        <th>Range</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>D.0</td>
+                        <td>CH Max Flow Temperature</td>
+                        <td>20-85°C</td>
+                        <td>75°C</td>
+                        <td>Maximum flow temperature for central heating</td>
+                    </tr>
+                    <tr>
+                        <td>D.1</td>
+                        <td>CH Minimum Output</td>
+                        <td>0-100%</td>
+                        <td>0%</td>
+                        <td>Minimum burner power for heating mode</td>
+                    </tr>
+                    <tr>
+                        <td>D.2</td>
+                        <td>Anti-cycling Time</td>
+                        <td>2-60 min</td>
+                        <td>20 min</td>
+                        <td>Wait time before burner restarts (see <a href="/hub/vaillant/vaillant-ecotec-boiler-anti-cycling-time/">Anti-Cycling Guide</a>)</td>
+                    </tr>
+                    <tr>
+                        <td>D.16</td>
+                        <td>Pump Post-run CH</td>
+                        <td>0-30 min</td>
+                        <td>3 min</td>
+                        <td>Pump continues after heating burner stops</td>
+                    </tr>
+                    <tr>
+                        <td>D.17</td>
+                        <td>Pump Post-run DHW</td>
+                        <td>0-30 min</td>
+                        <td>3 min</td>
+                        <td>Pump continues after DHW burner stops</td>
+                    </tr>
+                    <tr>
+                        <td>D.18</td>
+                        <td>Burner Block Time</td>
+                        <td>0-30 min</td>
+                        <td>2 min</td>
+                        <td>Minimum time between ignition attempts</td>
+                    </tr>
+                    <tr>
+                        <td>D.19</td>
+                        <td>Burner Run-on Time</td>
+                        <td>0-15 min</td>
+                        <td>2 min</td>
+                        <td>Minimum burner run time once started</td>
+                    </tr>
+                    <tr>
+                        <td>D.20</td>
+                        <td>System Type</td>
+                        <td>0-4</td>
+                        <td>0</td>
+                        <td>0=Combi, 1=System, 2=Regular, 3/4=Special</td>
+                    </tr>
+                    <tr>
+                        <td>D.27</td>
+                        <td>Pump Speed CH Mode</td>
+                        <td>0-100%</td>
+                        <td>70%</td>
+                        <td>Pump speed during heating operation</td>
+                    </tr>
+                    <tr>
+                        <td>D.40</td>
+                        <td>DHW Maximum Temperature</td>
+                        <td>35-65°C</td>
+                        <td>60°C</td>
+                        <td>Maximum hot water temperature</td>
+                    </tr>
+                    <tr>
+                        <td>D.41</td>
+                        <td>DHW Flow Rate</td>
+                        <td>0-20 l/min</td>
+                        <td>11 l/min</td>
+                        <td>Target DHW flow rate (combis)</td>
+                    </tr>
+                    <tr>
+                        <td>D.47</td>
+                        <td>DHW Comfort Setting</td>
+                        <td>0-3</td>
+                        <td>0</td>
+                        <td>0=Eco, 1-3=Comfort levels</td>
+                    </tr>
+                    <tr>
+                        <td>D.49</td>
+                        <td>Pump Speed DHW Mode</td>
+                        <td>0-100%</td>
+                        <td>70%</td>
+                        <td>Pump speed during hot water operation</td>
+                    </tr>
+                    <tr>
+                        <td>D.52</td>
+                        <td>Pump Overrun Function</td>
+                        <td>0-1</td>
+                        <td>1</td>
+                        <td>0=Off, 1=On (pump exercise)</td>
+                    </tr>
+                    <tr>
+                        <td>D.53</td>
+                        <td>Pump Control Mode</td>
+                        <td>0-3</td>
+                        <td>1</td>
+                        <td>0=Fixed, 1=ΔP-c, 2=ΔP-v, 3=ΔP-3</td>
+                    </tr>
+                    <tr>
+                        <td>D.55</td>
+                        <td>Burner On Gradient</td>
+                        <td>1-120 sec</td>
+                        <td>20 sec</td>
+                        <td>Burner ramp-up time on ignition</td>
+                    </tr>
+                    <tr>
+                        <td>D.71</td>
+                        <td>CH Maximum Output Power</td>
+                        <td>0-100%</td>
+                        <td>100%</td>
+                        <td>Maximum burner power for heating</td>
+                    </tr>
+                    <tr>
+                        <td>D.72</td>
+                        <td>DHW Maximum Output Power</td>
+                        <td>0-100%</td>
+                        <td>100%</td>
+                        <td>Maximum burner power for hot water</td>
+                    </tr>
+                    <tr>
+                        <td>D.82</td>
+                        <td>Condensate Trap Heating</td>
+                        <td>0-1</td>
+                        <td>1</td>
+                        <td>0=Off, 1=On (frost protection)</td>
+                    </tr>
+                    <tr>
+                        <td>D.84</td>
+                        <td>Heat Exchanger Type</td>
+                        <td>0-7</td>
+                        <td>Model</td>
+                        <td>Factory set for specific boiler model</td>
+                    </tr>
+                    <tr>
+                        <td>D.91</td>
+                        <td>Fan Speed Minimum</td>
+                        <td>1000-7000 rpm</td>
+                        <td>Model</td>
+                        <td>Minimum fan speed (factory calibrated)</td>
+                    </tr>
+                    <tr>
+                        <td>D.92</td>
+                        <td>Fan Speed Maximum</td>
+                        <td>1000-7000 rpm</td>
+                        <td>Model</td>
+                        <td>Maximum fan speed (factory calibrated)</td>
+                    </tr>
+                    <tr>
+                        <td>D.96</td>
+                        <td>Partial Load Setting</td>
+                        <td>0-100%</td>
+                        <td>50%</td>
+                        <td>Burner power at partial load</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Advanced Configuration D-Codes</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>D-Code</th>
+                        <th>Parameter</th>
+                        <th>Range</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>D.100</td>
+                        <td>Solar Mode Enable</td>
+                        <td>0-1</td>
+                        <td>0</td>
+                        <td>0=Off, 1=Solar thermal integration</td>
+                    </tr>
+                    <tr>
+                        <td>D.101</td>
+                        <td>Solar Priority</td>
+                        <td>0-1</td>
+                        <td>0</td>
+                        <td>0=Normal, 1=Solar takes priority</td>
+                    </tr>
+                    <tr>
+                        <td>D.102</td>
+                        <td>Solar Cylinder Temperature</td>
+                        <td>0-95°C</td>
+                        <td>60°C</td>
+                        <td>Target for solar heated cylinder</td>
+                    </tr>
+                    <tr>
+                        <td>D.110</td>
+                        <td>Weather Compensation Curve</td>
+                        <td>0.1-4.0</td>
+                        <td>1.5</td>
+                        <td>Heating curve gradient</td>
+                    </tr>
+                    <tr>
+                        <td>D.111</td>
+                        <td>Weather Compensation Offset</td>
+                        <td>-20 to +40°C</td>
+                        <td>0°C</td>
+                        <td>Parallel shift of heating curve</td>
+                    </tr>
+                    <tr>
+                        <td>D.112</td>
+                        <td>Room Influence</td>
+                        <td>0-100%</td>
+                        <td>0%</td>
+                        <td>Room stat influence on WC curve</td>
+                    </tr>
+                    <tr>
+                        <td>D.120</td>
+                        <td>Cascade Mode</td>
+                        <td>0-1</td>
+                        <td>0</td>
+                        <td>0=Single, 1=Cascade configuration</td>
+                    </tr>
+                    <tr>
+                        <td>D.121</td>
+                        <td>Cascade Address</td>
+                        <td>0-16</td>
+                        <td>0</td>
+                        <td>Boiler number in cascade system</td>
+                    </tr>
+                    <tr>
+                        <td>D.122</td>
+                        <td>Cascade Total Boilers</td>
+                        <td>1-16</td>
+                        <td>1</td>
+                        <td>Number of boilers in cascade</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Common D-Code Adjustments</h2>
+
+            <h3>Optimizing for Efficiency</h3>
+            <p>For condensing operation and maximum efficiency:</p>
+            <ul>
+                <li><strong>D.0:</strong> Set to 55-60°C for well-insulated properties with larger radiators</li>
+                <li><strong>D.2:</strong> Increase to 30+ minutes to reduce cycling</li>
+                <li><strong>D.71:</strong> Range rate to match actual heat loss calculation</li>
+                <li><strong>D.110/D.111:</strong> Use weather compensation for optimal efficiency</li>
+            </ul>
+
+            <h3>Reducing Cycling</h3>
+            <p>To minimize short cycling:</p>
+            <ul>
+                <li>Increase <strong>D.2</strong> (anti-cycling time) to 30-40 minutes</li>
+                <li>Adjust <strong>D.1</strong> (minimum output) to match system requirements</li>
+                <li>Increase <strong>D.19</strong> (burner run-on) to ensure longer burn times</li>
+                <li>Consider reducing <strong>D.71</strong> if system is oversized</li>
+            </ul>
+
+            <h3>DHW Performance</h3>
+            <p>For optimal hot water delivery:</p>
+            <ul>
+                <li><strong>D.40:</strong> Set to 60°C for legionella protection with stored hot water</li>
+                <li><strong>D.41:</strong> Adjust flow rate to suit property demands (8-11 l/min typical)</li>
+                <li><strong>D.47:</strong> Use Eco mode (0) to prevent pre-heat losses</li>
+                <li><strong>D.72:</strong> Range rate DHW if oversized</li>
+            </ul>
+
+            <h2>Reading Current Values</h2>
+            <p>Many D-codes also show current operating values when in read mode:</p>
+            <ul>
+                <li>Flow temperature (actual)</li>
+                <li>Return temperature (actual)</li>
+                <li>DHW temperature (actual)</li>
+                <li>Current burner power (%)</li>
+                <li>Current fan speed (rpm)</li>
+                <li>Current pump speed (%)</li>
+            </ul>
+
+            <div class="info-box">
+                <p><strong>Documentation:</strong> Always document any changes made to D-codes in the benchmark log. This helps future engineers understand system configuration and troubleshoot issues.</p>
+            </div>
+
+            <h2>Safety and Compliance</h2>
+            <ul>
+                <li>Only Gas Safe registered engineers should adjust D-codes</li>
+                <li>Some parameters require manufacturer authorization</li>
+                <li>Changes may affect warranty if not properly documented</li>
+                <li>Always perform a full functional test after adjustments</li>
+                <li>Verify flue gas analysis meets Building Regulations</li>
+                <li>Complete benchmark commissioning sheet</li>
+            </ul>
+
+            <h2>Further Resources</h2>
+            <p>For additional Vaillant technical guidance:</p>
+            <ul>
+                <li><a href="/hub/vaillant/vaillant-ecotec-boiler-anti-cycling-time/">Vaillant Anti-Cycling Time Configuration</a></li>
+                <li><a href="https://hub.myboiler.com/installer/vaillant-ecotec-service-how-to/">Ecotec Service How-To Guide</a></li>
+                <li><a href="https://hub.myboiler.com/installer/vaillant-boiler-p-test/">P Test Instructions</a></li>
+                <li><a href="https://hub.myboiler.com/installer/vaillant-boiler-emissions-table/">Emissions Table Reference</a></li>
+                <li><a href="https://hub.myboiler.com/installer/vaillant-fga-tool/">FGA Tool and Analysis</a></li>
+            </ul>
+        </article>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="/pages/about-us.md" target="page-content">Company</a></li>
+                <li><a href="/pages/carbon-emissions.md" target="page-content">Carbon Emissions</a></li>
+                <li><a href="/pages/mission.md" target="page-content">Our Mission</a></li>
+                <li><a href="/pages/privacy-policy.md" target="page-content">Privacy Policy</a></li>
+                <li><a href="/pages/affiliate-disclosure.md" target="page-content">Affiliates Disclosure</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul>
+                <li>A Rated House,</li>
+                <li>11 Sunnymead Road,</li>
+                <li>London, </li>
+                <li>NW9 8BT</li>
+                <li><a href="tel://+4402081234411">+44 020 8123 4411</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Sister Sites</h3>
+            <ul>
+                <li><a href="/hub/">MyBoiler Hub</a></li>
+                <li><a href="https://boilermanuals.com">Boiler Manuals</a></li>
+                <li><a href="https://combiboiler.com">Combi Boiler</a></li>
+                <li><a href="https://boilerservice.com">Boiler Service</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Newsletter</h3>
+            <div id="mc_embed_shell">
+                <div id="mc_embed_signup">
+                    <form action="https://myboiler.us7.list-manage.com/subscribe/post?u=74520e86378a5e9ad9e26240e&amp;id=de886bf698&amp;f_id=00ccaee4f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                        <div id="mc_embed_signup_scroll">
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk"></span></label><br><br>
+                                <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""><br><br>
+                            </div>
+                            <div class="clear foot">
+                                <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Subscribe">
+                            </div>
+                            <br>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display: none;"></div>
+                                <div class="response" id="mce-success-response" style="display: none;"></div>
+                            </div>
+                            <div aria-hidden="true" style="position: absolute; left: -5000px;">
+                                <input type="text" name="b_76b9d06d4164064c0ffb0d455_68a8dc9423" tabindex="-1" value="">
+                            </div>
+                            <p style="margin: 0px auto;">
+                                <a href="http://eepurl.com/i6R-1E" title="Mailchimp - email marketing made easy and fun">
+                                    <span style="display: inline-block; background-color: transparent; border-radius: 4px;">
+                                        <img class="refferal_badge" src="https://digitalasset.intuit.com/render/content/dam/intuit/mc-fe/en_us/images/intuit-mc-rewards-text-light.svg" alt="Intuit Mailchimp" style="width: 100px; height: 40px; display: flex; padding: 2px 0px; justify-content: left; align-items: center;">
+                                    </span>
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <footer class="copyright">
+        <ul class="social-media no-bullets">
+            <li class="wp-social-link wp-social-link-x wp-block-social-link">
+                <a rel="noopener nofollow" target="_blank" href="https://x.com/myboiler" class="">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z"></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="wp-social-link wp-social-link-facebook wp-block-social-link">
+                <a rel="noopener nofollow" target="_blank" href="https://facebook.com/myboiler" class="wp-block-social-link-anchor">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z"></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="wp-social-link wp-social-link-youtube wp-block-social-link">
+                <a rel="noopener nofollow" target="_blank" href="https://www.youtube.com/@myboiler" class="wp-block-social-link-anchor">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M21.8,8.001c0,0-0.195-1.378-0.795-1.985c-0.76-0.797-1.613-0.801-2.004-0.847c-2.799-0.202-6.997-0.202-6.997-0.202h-0.009c0,0-4.198,0-6.997,0.202C4.608,5.216,3.756,5.22,2.995,6.016C2.395,6.623,2.2,8.001,2.2,8.001S2,9.62,2,11.238v1.517c0,1.618,0.2,3.237,0.2,3.237s0.195,1.378,0.795,1.985c0.761,0.797,1.76,0.771,2.205,0.855c1.6,0.153,6.8,0.201,6.8,0.201s4.203-0.006,7.001-0.209c0.391-0.047,1.243-0.051,2.004-0.847c0.6-0.607,0.795-1.985,0.795-1.985s0.2-1.618,0.2-3.237v-1.517C22,9.62,21.8,8.001,21.8,8.001z M9.935,14.594l-0.001-5.62l5.404,2.82L9.935,14.594z"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </footer>
+
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+    </footer>
+
+    <script type="text/javascript" data-cfasync="false" src="/js/menu.js"></script>
+</body>
+</html>
