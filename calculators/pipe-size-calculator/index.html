@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipe Size Calculator - MyBoiler.com</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        /* Calculator page specific styles */
+        .calculator-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .calculator-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .calculator-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .calculator-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 60ch;
+        }
+
+        .calculator-card {
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 2rem;
+        }
+
+        .input-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+
+        .input-value {
+            font-size: 1.25rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .input-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to right, var(--accent) 0%, var(--accent) 0%, var(--border) 0%);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .input-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(24, 99, 220, 0.3);
+            transition: transform 0.1s ease;
+        }
+
+        .input-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .input-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(24, 99, 220, 0.3);
+            transition: transform 0.1s ease;
+        }
+
+        .input-slider::-moz-range-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .input-slider::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: transparent;
+            border-radius: 4px;
+        }
+
+        .input-slider::-moz-range-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: transparent;
+            border-radius: 4px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .result-item {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .result-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .result-unit {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .formula-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .formula-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .formula-legend {
+            font-size: 0.9375rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .formula-legend strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .calculator-disclaimer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 70ch;
+            margin: 1rem auto;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .calculator-disclaimer strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        @media (min-width: 600px) {
+            .results-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .calculator-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="calculator-page">
+    <!-- Header with full navigation -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <!-- Hamburger Menu Button -->
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <!-- Horizontal Navigation Menu -->
+            <nav id="nav-menu" class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="/chat/">Ask AI</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://boilermanuals.com/fault-codes.html">Fault codes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/heat-pump-checker/">Heat pump check</a>
+                    </li>
+                    <li class="nav-item nav-item-cta">
+                        <a href="/quote/">Get a quote</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://hub.myboiler.com">Hub</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Calculator Content -->
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h1 class="calculator-headline">Pipe Size Calculator</h1>
+            <p class="calculator-connector">
+                Calculate the required internal pipe diameter for your heating system based on power, temperature difference, and target velocity.
+            </p>
+        </div>
+
+        <!-- Calculator Card -->
+        <div class="calculator-card">
+            <!-- Inputs -->
+            <div class="input-group">
+                <div class="input-label">
+                    <span>Power (KW)</span>
+                    <span class="input-value" id="kw-value">4.0</span>
+                </div>
+                <input type="range" id="kw-slider" class="input-slider" min="0" max="40" step="0.1" value="4">
+            </div>
+
+            <div class="input-group">
+                <div class="input-label">
+                    <span>Temperature Difference (ΔT °C)</span>
+                    <span class="input-value" id="deltaT-value">5</span>
+                </div>
+                <input type="range" id="deltaT-slider" class="input-slider" min="0" max="20" step="1" value="5">
+            </div>
+
+            <div class="input-group">
+                <div class="input-label">
+                    <span>Target Velocity (v m/s)</span>
+                    <span class="input-value" id="velocity-value">0.9</span>
+                </div>
+                <input type="range" id="velocity-slider" class="input-slider" min="0" max="5" step="0.1" value="0.9">
+            </div>
+
+            <!-- Results -->
+            <div class="results-grid">
+                <div class="result-item">
+                    <div class="result-label">Flow Rate</div>
+                    <div class="result-value" id="lps-result">0.190</div>
+                    <div class="result-unit">litres per second</div>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-label">Flow Rate</div>
+                    <div class="result-value" id="lpm-result">11.429</div>
+                    <div class="result-unit">litres per minute</div>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-label">Internal Diameter</div>
+                    <div class="result-value" id="diameter-result">16.40</div>
+                    <div class="result-unit">millimetres (mm)</div>
+                </div>
+            </div>
+
+            <!-- Formula Legend -->
+            <div class="formula-section">
+                <h3 class="formula-title">Formula Reference</h3>
+                <p class="formula-legend">
+                    <strong>d</strong> = internal diameter (mm)<br>
+                    <strong>v</strong> = target velocity (m/s)<br>
+                    <strong>LPS</strong> = litres per second<br>
+                    <strong>LPM</strong> = litres per minute<br>
+                    <strong>KW</strong> = Kilowatts<br>
+                    <strong>SHC</strong> = Specific heat capacity (4.2)<br>
+                    <strong>ΔT</strong> = Delta T (°C)
+                </p>
+            </div>
+        </div>
+
+        <div class="calculator-disclaimer">
+            <strong>Important:</strong> This calculator provides indicative pipe sizing guidance only. Always consult with a qualified heating engineer for your specific installation requirements.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+        <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
+    </footer>
+
+    <script>
+        /**
+         * Pipe Size Calculator
+         * Formulas extracted from Calculated Fields Form id 16
+         */
+
+        const SHC = 4.2; // Specific heat capacity (hardcoded)
+
+        // Get DOM elements
+        const kwSlider = document.getElementById('kw-slider');
+        const deltaTSlider = document.getElementById('deltaT-slider');
+        const velocitySlider = document.getElementById('velocity-slider');
+
+        const kwValue = document.getElementById('kw-value');
+        const deltaTValue = document.getElementById('deltaT-value');
+        const velocityValue = document.getElementById('velocity-value');
+
+        const lpsResult = document.getElementById('lps-result');
+        const lpmResult = document.getElementById('lpm-result');
+        const diameterResult = document.getElementById('diameter-result');
+
+        /**
+         * PREC function - rounds to n decimal places
+         */
+        function PREC(value, decimals) {
+            return Number(value.toFixed(decimals));
+        }
+
+        /**
+         * Calculate and update all results
+         */
+        function calculate() {
+            const KW = parseFloat(kwSlider.value);
+            const DeltaT = parseFloat(deltaTSlider.value);
+            const Velocity = parseFloat(velocitySlider.value);
+
+            // Update display values
+            kwValue.textContent = KW.toFixed(1);
+            deltaTValue.textContent = DeltaT;
+            velocityValue.textContent = Velocity.toFixed(1);
+
+            // Handle division by zero
+            if (DeltaT === 0 || Velocity === 0) {
+                lpsResult.textContent = '—';
+                lpmResult.textContent = '—';
+                diameterResult.textContent = '—';
+                return;
+            }
+
+            // Calculate LPS = PREC( KW / (4.2 * DeltaT) , 3 )
+            const LPS = PREC(KW / (SHC * DeltaT), 3);
+
+            // Calculate LPM = PREC( (KW / (4.2 * DeltaT)) * 60 , 3 )
+            const LPM = PREC((KW / (SHC * DeltaT)) * 60, 3);
+
+            // Calculate Internal diameter d (mm) = PREC( 2 * SQRT( ((1000/3.14) / Velocity) * LPS ) , 2 )
+            const d = PREC(2 * Math.sqrt(((1000 / 3.14) / Velocity) * LPS), 2);
+
+            // Update results
+            lpsResult.textContent = LPS.toFixed(3);
+            lpmResult.textContent = LPM.toFixed(3);
+            diameterResult.textContent = d.toFixed(2);
+
+            // Update slider fill
+            updateSliderFill(kwSlider);
+            updateSliderFill(deltaTSlider);
+            updateSliderFill(velocitySlider);
+        }
+
+        /**
+         * Update slider background fill
+         */
+        function updateSliderFill(slider) {
+            const value = parseFloat(slider.value);
+            const min = parseFloat(slider.min);
+            const max = parseFloat(slider.max);
+            const percentage = ((value - min) / (max - min)) * 100;
+            slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percentage}%, var(--border) ${percentage}%)`;
+        }
+
+        // Add event listeners
+        kwSlider.addEventListener('input', calculate);
+        deltaTSlider.addEventListener('input', calculate);
+        velocitySlider.addEventListener('input', calculate);
+
+        // Initial calculation
+        calculate();
+    </script>
+
+    <!-- Add menu.js for navigation functionality -->
+    <script src="/js/menu.js"></script>
+</body>
+</html>
