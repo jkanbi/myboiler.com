@@ -94,11 +94,12 @@
             appearance: none;
             width: 24px;
             height: 24px;
-            border-radius: 50%;
+            border-radius: 3px;
             background: var(--accent);
             cursor: pointer;
             box-shadow: 0 2px 8px rgba(24, 99, 220, 0.3);
             transition: transform 0.1s ease;
+            margin-top: -8px;
         }
 
         .input-slider::-webkit-slider-thumb:hover {
@@ -108,7 +109,7 @@
         .input-slider::-moz-range-thumb {
             width: 24px;
             height: 24px;
-            border-radius: 50%;
+            border-radius: 3px;
             background: var(--accent);
             cursor: pointer;
             border: none;
@@ -223,8 +224,111 @@
         }
 
         @media (max-width: 768px) {
+            .calculator-container {
+                padding: clamp(1.5rem, 4vw, 2.5rem) clamp(16px, 4vw, 24px);
+            }
+
+            .calculator-header {
+                margin-bottom: 1.5rem;
+            }
+
             .calculator-card {
-                padding: 1.5rem;
+                padding: 1.25rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .input-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .results-grid {
+                gap: 0.75rem;
+                margin-top: 1.5rem;
+            }
+
+            .result-item {
+                padding: 1rem;
+            }
+
+            .result-value {
+                font-size: 1.75rem;
+            }
+
+            .formula-section {
+                margin-top: 1.5rem;
+                padding-top: 1.5rem;
+            }
+
+            .calculator-disclaimer {
+                margin: 0.75rem auto;
+                padding: 0.875rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calculator-container {
+                padding: 1.25rem 12px;
+            }
+
+            .calculator-header {
+                margin-bottom: 1.25rem;
+            }
+
+            .calculator-card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .input-group {
+                margin-bottom: 1.25rem;
+            }
+
+            .input-label {
+                margin-bottom: 0.5rem;
+            }
+
+            .results-grid {
+                gap: 0.625rem;
+                margin-top: 1.25rem;
+            }
+
+            .result-item {
+                padding: 0.875rem;
+            }
+
+            .result-label {
+                font-size: 0.8125rem;
+                margin-bottom: 0.375rem;
+            }
+
+            .result-value {
+                font-size: 1.5rem;
+            }
+
+            .result-unit {
+                font-size: 0.875rem;
+                margin-top: 0.125rem;
+            }
+
+            .formula-section {
+                margin-top: 1.25rem;
+                padding-top: 1.25rem;
+            }
+
+            .formula-title {
+                font-size: 1rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .formula-legend {
+                font-size: 0.875rem;
+                line-height: 1.6;
+            }
+
+            .calculator-disclaimer {
+                margin: 0.5rem auto;
+                padding: 0.75rem;
+                font-size: 0.8125rem;
             }
         }
     </style>
