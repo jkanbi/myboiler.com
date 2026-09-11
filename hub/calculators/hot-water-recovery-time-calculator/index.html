@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pipe Size Calculator - MyBoiler.com</title>
+    <title>Hot Water Recovery Time Calculator - MyBoiler.com</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <style>
         /* Calculator page specific styles */
@@ -63,6 +63,36 @@
             max-width: 60ch;
         }
 
+        .mode-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .mode-button {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mode-button.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .mode-button:hover:not(.active) {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+
         .calculator-card {
             width: 100%;
             background: var(--surface);
@@ -91,6 +121,23 @@
             font-size: 1.25rem;
             color: var(--accent);
             font-weight: 600;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1.125rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            box-sizing: border-box;
+            transition: border-color 0.2s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
         }
 
         .input-slider {
@@ -232,10 +279,12 @@
             font-weight: 600;
         }
 
-        @media (min-width: 600px) {
-            .results-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+        .mode-content {
+            display: none;
+        }
+
+        .mode-content.active {
+            display: block;
         }
 
         @media (max-width: 768px) {
@@ -277,6 +326,11 @@
             .calculator-disclaimer {
                 margin: 0.75rem auto;
                 padding: 0.875rem;
+            }
+
+            .mode-button {
+                padding: 0.625rem 1.5rem;
+                font-size: 0.9375rem;
             }
         }
 
@@ -344,6 +398,11 @@
                 margin: 0.5rem auto;
                 padding: 0.75rem;
                 font-size: 0.8125rem;
+            }
+
+            .mode-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
             }
         }
     </style>
@@ -505,79 +564,125 @@
     <div class="calculator-container">
         <div class="calculator-header">
             <div class="calculator-breadcrumb">
-                <a href="/hub/">Hub</a> / <a href="/hub/">Calculators</a> / Pipe Size Calculator
+                <a href="/hub/">Hub</a> / <a href="/hub/">Calculators</a> / Hot Water Recovery Time Calculator
             </div>
-            <h1 class="calculator-headline">Pipe Size Calculator</h1>
+            <h1 class="calculator-headline">Hot Water Recovery Time Calculator</h1>
             <p class="calculator-connector">
-                Calculate the required internal pipe diameter for your heating system based on power, temperature difference, and target velocity.
+                Calculate hot water cylinder recovery time from power, or required power from desired recovery time.
             </p>
         </div>
 
-        <!-- Calculator Card -->
-        <div class="calculator-card">
-            <!-- Inputs -->
-            <div class="input-group">
-                <div class="input-label">
-                    <span>Power (KW)</span>
-                    <span class="input-value" id="kw-value">4.0</span>
+        <!-- Mode Toggle -->
+        <div class="mode-toggle">
+            <button class="mode-button active" onclick="switchMode('time-from-power')">Time from Power</button>
+            <button class="mode-button" onclick="switchMode('power-from-time')">Power from Time</button>
+        </div>
+
+        <!-- Mode A: Time from Power Calculator -->
+        <div id="time-from-power-mode" class="mode-content active">
+            <div class="calculator-card">
+                <!-- Inputs -->
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Volume (Litres)</span>
+                        <span class="input-value" id="mode-a-volume-value">100</span>
+                    </div>
+                    <input type="number" id="mode-a-volume" class="input-field" value="100" step="1" min="0">
                 </div>
-                <input type="range" id="kw-slider" class="input-slider" min="0" max="40" step="0.1" value="4">
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Temperature Difference (ΔT °C)</span>
+                        <span class="input-value" id="mode-a-deltaT-value">50</span>
+                    </div>
+                    <input type="number" id="mode-a-deltaT" class="input-field" value="50" step="1" min="0">
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Power (KW)</span>
+                        <span class="input-value" id="mode-a-power-value">15</span>
+                    </div>
+                    <input type="range" id="mode-a-power" class="input-slider" min="0" max="100" step="1" value="15">
+                </div>
+
+                <!-- Results -->
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="result-label">Recovery Time</div>
+                        <div class="result-value" id="mode-a-time-result">23.31</div>
+                        <div class="result-unit">minutes</div>
+                    </div>
+                </div>
+
+                <!-- Formula Legend -->
+                <div class="formula-section">
+                    <h3 class="formula-title">Formula Reference</h3>
+                    <p class="formula-legend">
+                        <strong>Time (minutes)</strong> = (Volume × ΔT) / (14.3 × Power)<br>
+                        <strong>Volume</strong> = cylinder volume in litres<br>
+                        <strong>ΔT</strong> = temperature difference in °C<br>
+                        <strong>Power</strong> = heating power in kilowatts (KW)<br>
+                        <strong>14.3</strong> = constant factor for this calculation
+                    </p>
+                </div>
             </div>
+        </div>
 
-            <div class="input-group">
-                <div class="input-label">
-                    <span>Temperature Difference (ΔT °C)</span>
-                    <span class="input-value" id="deltaT-value">5</span>
-                </div>
-                <input type="range" id="deltaT-slider" class="input-slider" min="0" max="20" step="1" value="5">
-            </div>
-
-            <div class="input-group">
-                <div class="input-label">
-                    <span>Target Velocity (v m/s)</span>
-                    <span class="input-value" id="velocity-value">0.9</span>
-                </div>
-                <input type="range" id="velocity-slider" class="input-slider" min="0" max="5" step="0.1" value="0.9">
-            </div>
-
-            <!-- Results -->
-            <div class="results-grid">
-                <div class="result-item">
-                    <div class="result-label">Flow Rate</div>
-                    <div class="result-value" id="lps-result">0.190</div>
-                    <div class="result-unit">litres per second</div>
+        <!-- Mode B: Power from Time Calculator -->
+        <div id="power-from-time-mode" class="mode-content">
+            <div class="calculator-card">
+                <!-- Inputs -->
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Volume (Litres)</span>
+                        <span class="input-value" id="mode-b-volume-value">100</span>
+                    </div>
+                    <input type="number" id="mode-b-volume" class="input-field" value="100" step="1" min="0">
                 </div>
 
-                <div class="result-item">
-                    <div class="result-label">Flow Rate</div>
-                    <div class="result-value" id="lpm-result">11.429</div>
-                    <div class="result-unit">litres per minute</div>
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Temperature Difference (ΔT °C)</span>
+                        <span class="input-value" id="mode-b-deltaT-value">50</span>
+                    </div>
+                    <input type="number" id="mode-b-deltaT" class="input-field" value="50" step="1" min="0">
                 </div>
 
-                <div class="result-item">
-                    <div class="result-label">Internal Diameter</div>
-                    <div class="result-value" id="diameter-result">16.40</div>
-                    <div class="result-unit">millimetres (mm)</div>
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Recovery Time (Minutes)</span>
+                        <span class="input-value" id="mode-b-minutes-value">15</span>
+                    </div>
+                    <input type="range" id="mode-b-minutes" class="input-slider" min="0" max="360" step="1" value="15">
                 </div>
-            </div>
 
-            <!-- Formula Legend -->
-            <div class="formula-section">
-                <h3 class="formula-title">Formula Reference</h3>
-                <p class="formula-legend">
-                    <strong>d</strong> = internal diameter (mm)<br>
-                    <strong>v</strong> = target velocity (m/s)<br>
-                    <strong>LPS</strong> = litres per second<br>
-                    <strong>LPM</strong> = litres per minute<br>
-                    <strong>KW</strong> = Kilowatts<br>
-                    <strong>SHC</strong> = Specific heat capacity (4.2)<br>
-                    <strong>ΔT</strong> = Delta T (°C)
-                </p>
+                <!-- Results -->
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="result-label">Required Power</div>
+                        <div class="result-value" id="mode-b-power-result">23.33</div>
+                        <div class="result-unit">kilowatts (KW)</div>
+                    </div>
+                </div>
+
+                <!-- Formula Legend -->
+                <div class="formula-section">
+                    <h3 class="formula-title">Formula Reference</h3>
+                    <p class="formula-legend">
+                        <strong>Power (KW)</strong> = (Volume × ΔT × 4.2) / (Minutes × 60)<br>
+                        <strong>Volume</strong> = cylinder volume in litres<br>
+                        <strong>ΔT</strong> = temperature difference in °C<br>
+                        <strong>Minutes</strong> = desired recovery time in minutes<br>
+                        <strong>4.2</strong> = specific heat capacity of water (kJ/kg·°C)<br>
+                        <strong>60</strong> = conversion factor (seconds per minute)
+                    </p>
+                </div>
             </div>
         </div>
 
         <div class="calculator-disclaimer">
-            <strong>Important:</strong> This calculator provides indicative pipe sizing guidance only. Always consult with a qualified heating engineer for your specific installation requirements.
+            <strong>Important:</strong> This calculator provides indicative hot water recovery estimates only. Actual performance may vary based on system efficiency, heat losses, and real-world conditions. Always consult with a qualified heating engineer for your specific installation requirements.
         </div>
     </div>
 
@@ -589,71 +694,16 @@
 
     <script type="d4ed50d62b5909d63fa06994-text/javascript">
         /**
-         * Pipe Size Calculator
-         * Formulas extracted from Calculated Fields Form id 16
+         * Hot Water Recovery Time Calculator
+         * Mode A: Time from Power (form 14)
+         * Mode B: Power from Time (form 36)
          */
-
-        const SHC = 4.2; // Specific heat capacity (hardcoded)
-
-        // Get DOM elements
-        const kwSlider = document.getElementById('kw-slider');
-        const deltaTSlider = document.getElementById('deltaT-slider');
-        const velocitySlider = document.getElementById('velocity-slider');
-
-        const kwValue = document.getElementById('kw-value');
-        const deltaTValue = document.getElementById('deltaT-value');
-        const velocityValue = document.getElementById('velocity-value');
-
-        const lpsResult = document.getElementById('lps-result');
-        const lpmResult = document.getElementById('lpm-result');
-        const diameterResult = document.getElementById('diameter-result');
 
         /**
          * PREC function - rounds to n decimal places
          */
         function PREC(value, decimals) {
             return Number(value.toFixed(decimals));
-        }
-
-        /**
-         * Calculate and update all results
-         */
-        function calculate() {
-            const KW = parseFloat(kwSlider.value);
-            const DeltaT = parseFloat(deltaTSlider.value);
-            const Velocity = parseFloat(velocitySlider.value);
-
-            // Update display values
-            kwValue.textContent = KW.toFixed(1);
-            deltaTValue.textContent = DeltaT;
-            velocityValue.textContent = Velocity.toFixed(1);
-
-            // Handle division by zero
-            if (DeltaT === 0 || Velocity === 0) {
-                lpsResult.textContent = '—';
-                lpmResult.textContent = '—';
-                diameterResult.textContent = '—';
-                return;
-            }
-
-            // Calculate LPS = PREC( KW / (4.2 * DeltaT) , 3 )
-            const LPS = PREC(KW / (SHC * DeltaT), 3);
-
-            // Calculate LPM = PREC( (KW / (4.2 * DeltaT)) * 60 , 3 )
-            const LPM = PREC((KW / (SHC * DeltaT)) * 60, 3);
-
-            // Calculate Internal diameter d (mm) = PREC( 2 * SQRT( ((1000/3.14) / Velocity) * LPS ) , 2 )
-            const d = PREC(2 * Math.sqrt(((1000 / 3.14) / Velocity) * LPS), 2);
-
-            // Update results
-            lpsResult.textContent = LPS.toFixed(3);
-            lpmResult.textContent = LPM.toFixed(3);
-            diameterResult.textContent = d.toFixed(2);
-
-            // Update slider fill
-            updateSliderFill(kwSlider);
-            updateSliderFill(deltaTSlider);
-            updateSliderFill(velocitySlider);
         }
 
         /**
@@ -667,13 +717,126 @@
             slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percentage}%, var(--border) ${percentage}%)`;
         }
 
-        // Add event listeners
-        kwSlider.addEventListener('input', calculate);
-        deltaTSlider.addEventListener('input', calculate);
-        velocitySlider.addEventListener('input', calculate);
+        /**
+         * Switch between calculation modes
+         */
+        function switchMode(mode) {
+            const buttons = document.querySelectorAll('.mode-button');
+            const contents = document.querySelectorAll('.mode-content');
 
-        // Initial calculation
-        calculate();
+            buttons.forEach(btn => {
+                if (btn.textContent.toLowerCase().replace(/\s+/g, '-') === mode) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            contents.forEach(content => {
+                if (content.id === `${mode}-mode`) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+
+            // Recalculate on mode switch
+            if (mode === 'time-from-power') {
+                calculateModeA();
+            } else {
+                calculateModeB();
+            }
+        }
+
+        // ========== MODE A: TIME FROM POWER ==========
+
+        const modeAVolume = document.getElementById('mode-a-volume');
+        const modeADeltaT = document.getElementById('mode-a-deltaT');
+        const modeAPower = document.getElementById('mode-a-power');
+
+        const modeAVolumeValue = document.getElementById('mode-a-volume-value');
+        const modeADeltaTValue = document.getElementById('mode-a-deltaT-value');
+        const modeAPowerValue = document.getElementById('mode-a-power-value');
+
+        const modeATimeResult = document.getElementById('mode-a-time-result');
+
+        function calculateModeA() {
+            const volume = parseFloat(modeAVolume.value) || 0;
+            const deltaT = parseFloat(modeADeltaT.value) || 0;
+            const power = parseFloat(modeAPower.value) || 0;
+
+            // Update display values
+            modeAVolumeValue.textContent = volume;
+            modeADeltaTValue.textContent = deltaT;
+            modeAPowerValue.textContent = power;
+
+            // Update slider fill
+            updateSliderFill(modeAPower);
+
+            // Validate inputs
+            if (power === 0) {
+                modeATimeResult.textContent = '—';
+                return;
+            }
+
+            // Calculate Time = PREC( (Volume * ΔT) / (14.3 * PowerKW) , 2 )
+            const time = PREC((volume * deltaT) / (14.3 * power), 2);
+
+            // Update result
+            modeATimeResult.textContent = time.toFixed(2);
+        }
+
+        // Add event listeners for Mode A
+        modeAVolume.addEventListener('input', calculateModeA);
+        modeADeltaT.addEventListener('input', calculateModeA);
+        modeAPower.addEventListener('input', calculateModeA);
+
+        // ========== MODE B: POWER FROM TIME ==========
+
+        const modeBVolume = document.getElementById('mode-b-volume');
+        const modeBDeltaT = document.getElementById('mode-b-deltaT');
+        const modeBMinutes = document.getElementById('mode-b-minutes');
+
+        const modeBVolumeValue = document.getElementById('mode-b-volume-value');
+        const modeBDeltaTValue = document.getElementById('mode-b-deltaT-value');
+        const modeBMinutesValue = document.getElementById('mode-b-minutes-value');
+
+        const modeBPowerResult = document.getElementById('mode-b-power-result');
+
+        function calculateModeB() {
+            const volume = parseFloat(modeBVolume.value) || 0;
+            const deltaT = parseFloat(modeBDeltaT.value) || 0;
+            const minutes = parseFloat(modeBMinutes.value) || 0;
+
+            // Update display values
+            modeBVolumeValue.textContent = volume;
+            modeBDeltaTValue.textContent = deltaT;
+            modeBMinutesValue.textContent = minutes;
+
+            // Update slider fill
+            updateSliderFill(modeBMinutes);
+
+            // Validate inputs
+            if (minutes === 0) {
+                modeBPowerResult.textContent = '—';
+                return;
+            }
+
+            // Calculate KW Power = PREC( (Volume * ΔT * 4.2) / (Minutes * 60) , 2 )
+            const power = PREC((volume * deltaT * 4.2) / (minutes * 60), 2);
+
+            // Update result
+            modeBPowerResult.textContent = power.toFixed(2);
+        }
+
+        // Add event listeners for Mode B
+        modeBVolume.addEventListener('input', calculateModeB);
+        modeBDeltaT.addEventListener('input', calculateModeB);
+        modeBMinutes.addEventListener('input', calculateModeB);
+
+        // Initial calculations
+        calculateModeA();
+        calculateModeB();
     </script>
 
     <!-- Footer -->
