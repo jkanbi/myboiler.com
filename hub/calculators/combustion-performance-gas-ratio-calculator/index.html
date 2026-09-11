@@ -317,7 +317,7 @@
         <div class="tagline">Smarter Heating & Hot Water</div>
         <div class="right-header-items">
             <!-- Hamburger Menu Button -->
-            <button class="hamburger-menu" onclick="if (!window.__cfRLUnblockHandlers) return false; toggleMenu()" aria-label="Toggle Menu" data-cf-modified-d4ed50d62b5909d63fa06994-="">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
@@ -459,101 +459,107 @@
         <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
     </footer>
 
-    <script type="d4ed50d62b5909d63fa06994-text/javascript">
+    <script type="text/javascript" data-cfasync="false">
         /**
          * Combustion Performance Gas Ratio Calculator
          * Formulas extracted from Calculated Fields Form id 13
          */
 
-        // Get DOM elements
-        const oxygenInput = document.getElementById('oxygen-input');
-        const co2Input = document.getElementById('co2-input');
-        const coInput = document.getElementById('co-input');
-        const applianceType = document.getElementById('appliance-type');
-        const coActionLevel = document.getElementById('co-action-level');
+        // Wrap initialization in DOMContentLoaded to ensure DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get DOM elements
+            const oxygenInput = document.getElementById('oxygen-input');
+            const co2Input = document.getElementById('co2-input');
+            const coInput = document.getElementById('co-input');
+            const applianceType = document.getElementById('appliance-type');
+            const coActionLevel = document.getElementById('co-action-level');
 
-        const ratioResult = document.getElementById('ratio-result');
-        const ratioPassFail = document.getElementById('ratio-pass-fail');
-        const ratioLimit = document.getElementById('ratio-limit');
-        const coLevelResult = document.getElementById('co-level-result');
-        const coPassFail = document.getElementById('co-pass-fail');
-        const coMax = document.getElementById('co-max');
+            const ratioResult = document.getElementById('ratio-result');
+            const ratioPassFail = document.getElementById('ratio-pass-fail');
+            const ratioLimit = document.getElementById('ratio-limit');
+            const coLevelResult = document.getElementById('co-level-result');
+            const coPassFail = document.getElementById('co-pass-fail');
+            const coMax = document.getElementById('co-max');
 
-        /**
-         * PREC function - rounds to n decimal places
-         */
-        function PREC(value, decimals) {
-            return Number(value.toFixed(decimals));
-        }
+            /**
+             * PREC function - rounds to n decimal places
+             */
+            function PREC(value, decimals) {
+                return Number(value.toFixed(decimals));
+            }
 
-        /**
-         * Calculate and update all results
-         */
-        function calculate() {
-            const O2 = parseFloat(oxygenInput.value) || 0;
-            const CO2 = parseFloat(co2Input.value) || 0;
-            const CO = parseFloat(coInput.value) || 0;
-            const applianceLimit = applianceType.value;
-            const coLimit = parseFloat(coActionLevel.value);
+            /**
+             * Calculate and update all results
+             */
+            function calculate() {
+                const O2 = parseFloat(oxygenInput.value) || 0;
+                const CO2 = parseFloat(co2Input.value) || 0;
+                const CO = parseFloat(coInput.value) || 0;
+                const applianceLimit = applianceType.value;
+                const coLimit = parseFloat(coActionLevel.value);
 
-            // Update CO level display
-            coLevelResult.textContent = CO;
+                // Update CO level display
+                coLevelResult.textContent = CO;
 
-            // Update CO max display
-            coMax.textContent = `Max: ${coLimit} PPM`;
+                // Update CO max display
+                coMax.textContent = `Max: ${coLimit} PPM`;
 
-            // Handle special case: Flueless cooker hob
-            if (applianceLimit === 'special') {
-                ratioResult.textContent = '—';
-                ratioPassFail.textContent = 'Assess flame picture';
-                ratioPassFail.className = 'result-value';
-                ratioLimit.textContent = 'Visual inspection required';
-            } else {
-                const limit = parseFloat(applianceLimit);
-                ratioLimit.textContent = `Limit: ${limit}`;
-
-                // Calculate CO/CO2 Ratio = PREC( CO_PPM / (CO2_PCT * 10000) , 4 )
-                if (CO2 === 0) {
+                // Handle special case: Flueless cooker hob
+                if (applianceLimit === 'special') {
                     ratioResult.textContent = '—';
-                    ratioPassFail.textContent = '—';
+                    ratioPassFail.textContent = 'Assess flame picture';
                     ratioPassFail.className = 'result-value';
+                    ratioLimit.textContent = 'Visual inspection required';
                 } else {
-                    const ratio = PREC(CO / (CO2 * 10000), 4);
-                    ratioResult.textContent = ratio.toFixed(4);
+                    const limit = parseFloat(applianceLimit);
+                    ratioLimit.textContent = `Limit: ${limit}`;
 
-                    // Determine Pass/Fail for ratio
-                    if (ratio < limit) {
-                        ratioPassFail.textContent = 'PASS';
-                        ratioPassFail.className = 'result-value pass';
+                    // Calculate CO/CO2 Ratio = PREC( CO_PPM / (CO2_PCT * 10000) , 4 )
+                    if (CO2 === 0) {
+                        ratioResult.textContent = '—';
+                        ratioPassFail.textContent = '—';
+                        ratioPassFail.className = 'result-value';
                     } else {
-                        ratioPassFail.textContent = 'FAIL';
-                        ratioPassFail.className = 'result-value fail';
+                        const ratio = PREC(CO / (CO2 * 10000), 4);
+                        ratioResult.textContent = ratio.toFixed(4);
+
+                        // Determine Pass/Fail for ratio
+                        if (ratio < limit) {
+                            ratioPassFail.textContent = 'PASS';
+                            ratioPassFail.className = 'result-value pass';
+                        } else {
+                            ratioPassFail.textContent = 'FAIL';
+                            ratioPassFail.className = 'result-value fail';
+                        }
                     }
+                }
+
+                // Determine Pass/Fail for CO level
+                if (CO < coLimit) {
+                    coPassFail.textContent = 'PASS';
+                    coPassFail.className = 'result-value pass';
+                } else {
+                    coPassFail.textContent = 'FAIL';
+                    coPassFail.className = 'result-value fail';
                 }
             }
 
-            // Determine Pass/Fail for CO level
-            if (CO < coLimit) {
-                coPassFail.textContent = 'PASS';
-                coPassFail.className = 'result-value pass';
-            } else {
-                coPassFail.textContent = 'FAIL';
-                coPassFail.className = 'result-value fail';
-            }
-        }
+            // Add event listeners (both input and change)
+            oxygenInput.addEventListener('input', calculate);
+            oxygenInput.addEventListener('change', calculate);
+            co2Input.addEventListener('input', calculate);
+            co2Input.addEventListener('change', calculate);
+            coInput.addEventListener('input', calculate);
+            coInput.addEventListener('change', calculate);
+            applianceType.addEventListener('change', calculate);
+            coActionLevel.addEventListener('change', calculate);
 
-        // Add event listeners
-        oxygenInput.addEventListener('input', calculate);
-        co2Input.addEventListener('input', calculate);
-        coInput.addEventListener('input', calculate);
-        applianceType.addEventListener('change', calculate);
-        coActionLevel.addEventListener('change', calculate);
-
-        // Initial calculation
-        calculate();
+            // Initial calculation
+            calculate();
+        });
     </script>
 
     <!-- Add menu.js for navigation functionality -->
-    <script src="/js/menu.js" type="d4ed50d62b5909d63fa06994-text/javascript"></script>
-<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="d4ed50d62b5909d63fa06994-|49" defer></script></body>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
 </html>

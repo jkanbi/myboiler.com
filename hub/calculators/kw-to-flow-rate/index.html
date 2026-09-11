@@ -361,7 +361,7 @@
         </a>
         <div class="tagline">Smarter Heating & Hot Water</div>
         <div class="right-header-items">
-            <button class="hamburger-menu" onclick="if (!window.__cfRLUnblockHandlers) return false; toggleMenu()" aria-label="Toggle Menu" data-cf-modified-d4ed50d62b5909d63fa06994-="">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
@@ -465,66 +465,72 @@
         <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
     </footer>
 
-    <script type="d4ed50d62b5909d63fa06994-text/javascript">
-        const kwSlider = document.getElementById('kw-slider');
-        const dtSlider = document.getElementById('dt-slider');
-        const shcInput = document.getElementById('shc-input');
+    <script type="text/javascript" data-cfasync="false">
+        // Wrap initialization in DOMContentLoaded to ensure DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const kwSlider = document.getElementById('kw-slider');
+            const dtSlider = document.getElementById('dt-slider');
+            const shcInput = document.getElementById('shc-input');
 
-        const kwValue = document.getElementById('kw-value');
-        const dtValue = document.getElementById('dt-value');
-        const shcValue = document.getElementById('shc-value');
+            const kwValue = document.getElementById('kw-value');
+            const dtValue = document.getElementById('dt-value');
+            const shcValue = document.getElementById('shc-value');
 
-        const lpsResult = document.getElementById('lps-result');
-        const lpmResult = document.getElementById('lpm-result');
-        const lphResult = document.getElementById('lph-result');
+            const lpsResult = document.getElementById('lps-result');
+            const lpmResult = document.getElementById('lpm-result');
+            const lphResult = document.getElementById('lph-result');
 
-        function PREC(value, decimals) {
-            return Number(value.toFixed(decimals));
-        }
-
-        function calculate() {
-            const KW = parseFloat(kwSlider.value);
-            const Dt = parseFloat(dtSlider.value);
-            const SHC = parseFloat(shcInput.value);
-
-            kwValue.textContent = KW;
-            dtValue.textContent = Dt;
-            shcValue.textContent = SHC;
-
-            if (Dt === 0 || SHC === 0) {
-                lpsResult.textContent = '—';
-                lpmResult.textContent = '—';
-                lphResult.textContent = '—';
-                return;
+            function PREC(value, decimals) {
+                return Number(value.toFixed(decimals));
             }
 
-            const LPS = PREC(KW / (SHC * Dt), 4);
-            const LPM = PREC(LPS * 60, 4);
-            const LPH = PREC(LPS * 3600, 4);
+            function calculate() {
+                const KW = parseFloat(kwSlider.value);
+                const Dt = parseFloat(dtSlider.value);
+                const SHC = parseFloat(shcInput.value);
 
-            lpsResult.textContent = LPS.toFixed(4);
-            lpmResult.textContent = LPM.toFixed(4);
-            lphResult.textContent = LPH.toFixed(4);
+                kwValue.textContent = KW;
+                dtValue.textContent = Dt;
+                shcValue.textContent = SHC;
 
-            updateSliderFill(kwSlider);
-            updateSliderFill(dtSlider);
-        }
+                if (Dt === 0 || SHC === 0) {
+                    lpsResult.textContent = '—';
+                    lpmResult.textContent = '—';
+                    lphResult.textContent = '—';
+                    return;
+                }
 
-        function updateSliderFill(slider) {
-            const value = parseFloat(slider.value);
-            const min = parseFloat(slider.min);
-            const max = parseFloat(slider.max);
-            const percentage = ((value - min) / (max - min)) * 100;
-            slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percentage}%, var(--border) ${percentage}%)`;
-        }
+                const LPS = PREC(KW / (SHC * Dt), 4);
+                const LPM = PREC(LPS * 60, 4);
+                const LPH = PREC(LPS * 3600, 4);
 
-        kwSlider.addEventListener('input', calculate);
-        dtSlider.addEventListener('input', calculate);
-        shcInput.addEventListener('input', calculate);
+                lpsResult.textContent = LPS.toFixed(4);
+                lpmResult.textContent = LPM.toFixed(4);
+                lphResult.textContent = LPH.toFixed(4);
 
-        calculate();
+                updateSliderFill(kwSlider);
+                updateSliderFill(dtSlider);
+            }
+
+            function updateSliderFill(slider) {
+                const value = parseFloat(slider.value);
+                const min = parseFloat(slider.min);
+                const max = parseFloat(slider.max);
+                const percentage = ((value - min) / (max - min)) * 100;
+                slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percentage}%, var(--border) ${percentage}%)`;
+            }
+
+            kwSlider.addEventListener('input', calculate);
+            kwSlider.addEventListener('change', calculate);
+            dtSlider.addEventListener('input', calculate);
+            dtSlider.addEventListener('change', calculate);
+            shcInput.addEventListener('input', calculate);
+            shcInput.addEventListener('change', calculate);
+
+            calculate();
+        });
     </script>
 
-    <script src="/js/menu.js" type="d4ed50d62b5909d63fa06994-text/javascript"></script>
-<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="d4ed50d62b5909d63fa06994-|49" defer></script></body>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
 </html>
