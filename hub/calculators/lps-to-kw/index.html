@@ -357,7 +357,7 @@
         </a>
         <div class="tagline">Smarter Heating & Hot Water</div>
         <div class="right-header-items">
-            <button class="hamburger-menu" onclick="if (!window.__cfRLUnblockHandlers) return false; toggleMenu()" aria-label="Toggle Menu" data-cf-modified-d4ed50d62b5909d63fa06994-="">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
@@ -452,69 +452,71 @@
         <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
     </footer>
 
-    <script type="d4ed50d62b5909d63fa06994-text/javascript">
-        /**
-         * LPS to KW Calculator
-         * Formula: KW = F * (Dt * SHC)
-         */
+    <script type="text/javascript" data-cfasync="false">
+        document.addEventListener('DOMContentLoaded', function() {
+            /**
+             * LPS to KW Calculator
+             * Formula: KW = F * (Dt * SHC)
+             */
 
-        const flowInput = document.getElementById('flow-input');
-        const dtSlider = document.getElementById('dt-slider');
-        const shcInput = document.getElementById('shc-input');
+            const flowInput = document.getElementById('flow-input');
+            const dtSlider = document.getElementById('dt-slider');
+            const shcInput = document.getElementById('shc-input');
 
-        const flowValue = document.getElementById('flow-value');
-        const dtValue = document.getElementById('dt-value');
-        const shcValue = document.getElementById('shc-value');
+            const flowValue = document.getElementById('flow-value');
+            const dtValue = document.getElementById('dt-value');
+            const shcValue = document.getElementById('shc-value');
 
-        const kwResult = document.getElementById('kw-result');
+            const kwResult = document.getElementById('kw-result');
 
-        function formatResult(value) {
-            if (value >= 1000) {
-                return value.toFixed(2);
-            } else if (value >= 100) {
-                return value.toFixed(3);
-            } else if (value >= 10) {
-                return value.toFixed(3);
-            } else {
-                return value.toFixed(4);
-            }
-        }
-
-        function calculate() {
-            const F = parseFloat(flowInput.value) || 0;
-            const Dt = parseFloat(dtSlider.value) || 0;
-            const SHC = parseFloat(shcInput.value) || 0;
-
-            flowValue.textContent = F.toFixed(3);
-            dtValue.textContent = Dt;
-            shcValue.textContent = SHC.toFixed(3);
-
-            if (F < 0 || Dt < 0 || SHC < 0) {
-                kwResult.textContent = '—';
-                return;
+            function formatResult(value) {
+                if (value >= 1000) {
+                    return value.toFixed(2);
+                } else if (value >= 100) {
+                    return value.toFixed(3);
+                } else if (value >= 10) {
+                    return value.toFixed(3);
+                } else {
+                    return value.toFixed(4);
+                }
             }
 
-            const KW = F * (Dt * SHC);
-            kwResult.textContent = formatResult(KW);
+            function calculate() {
+                const F = parseFloat(flowInput.value) || 0;
+                const Dt = parseFloat(dtSlider.value) || 0;
+                const SHC = parseFloat(shcInput.value) || 0;
 
-            updateSliderFill(dtSlider);
-        }
+                flowValue.textContent = F.toFixed(3);
+                dtValue.textContent = Dt;
+                shcValue.textContent = SHC.toFixed(3);
 
-        function updateSliderFill(slider) {
-            const value = parseFloat(slider.value);
-            const min = parseFloat(slider.min);
-            const max = parseFloat(slider.max);
-            const percentage = ((value - min) / (max - min)) * 100;
-            slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percentage}%, var(--border) ${percentage}%)`;
-        }
+                if (F < 0 || Dt < 0 || SHC < 0) {
+                    kwResult.textContent = '—';
+                    return;
+                }
 
-        flowInput.addEventListener('input', calculate);
-        dtSlider.addEventListener('input', calculate);
-        shcInput.addEventListener('input', calculate);
+                const KW = F * (Dt * SHC);
+                kwResult.textContent = formatResult(KW);
 
-        calculate();
+                updateSliderFill(dtSlider);
+            }
+
+            function updateSliderFill(slider) {
+                const value = parseFloat(slider.value);
+                const min = parseFloat(slider.min);
+                const max = parseFloat(slider.max);
+                const percentage = ((value - min) / (max - min)) * 100;
+                slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percentage}%, var(--border) ${percentage}%)`;
+            }
+
+            flowInput.addEventListener('input', calculate);
+            dtSlider.addEventListener('input', calculate);
+            shcInput.addEventListener('input', calculate);
+
+            calculate();
+        });
     </script>
 
-    <script src="/js/menu.js" type="d4ed50d62b5909d63fa06994-text/javascript"></script>
-<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="d4ed50d62b5909d63fa06994-|49" defer></script></body>
+    <script src="/js/menu.js" type="text/javascript" data-cfasync="false"></script>
+</body>
 </html>

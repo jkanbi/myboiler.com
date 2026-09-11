@@ -327,7 +327,7 @@
         </a>
         <div class="tagline">Smarter Heating & Hot Water</div>
         <div class="right-header-items">
-            <button class="hamburger-menu" onclick="if (!window.__cfRLUnblockHandlers) return false; toggleMenu()" aria-label="Toggle Menu" data-cf-modified-d4ed50d62b5909d63fa06994-="">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
@@ -444,72 +444,74 @@
         <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
     </footer>
 
-    <script type="d4ed50d62b5909d63fa06994-text/javascript">
-        /**
-         * Gas Volume to kWh Calculator
-         * Metric: kWh = PREC(m³ × 1.02264 × 40 / 3.6, 3)
-         * Imperial: kWh = PREC(ft³ × 0.0283 × 1.02264 × 40 / 3.6, 3)
-         * Cost = PREC(kWh × rate, 2)
-         */
+    <script type="text/javascript" data-cfasync="false">
+        document.addEventListener('DOMContentLoaded', function() {
+            /**
+             * Gas Volume to kWh Calculator
+             * Metric: kWh = PREC(m³ × 1.02264 × 40 / 3.6, 3)
+             * Imperial: kWh = PREC(ft³ × 0.0283 × 1.02264 × 40 / 3.6, 3)
+             * Cost = PREC(kWh × rate, 2)
+             */
 
-        const cubicMetersInput = document.getElementById('cubic-meters');
-        const metricRateInput = document.getElementById('metric-rate');
-        const metricKwhDisplay = document.getElementById('metric-kwh');
-        const metricCostDisplay = document.getElementById('metric-cost');
+            const cubicMetersInput = document.getElementById('cubic-meters');
+            const metricRateInput = document.getElementById('metric-rate');
+            const metricKwhDisplay = document.getElementById('metric-kwh');
+            const metricCostDisplay = document.getElementById('metric-cost');
 
-        const cubicFeetInput = document.getElementById('cubic-feet');
-        const imperialRateInput = document.getElementById('imperial-rate');
-        const imperialKwhDisplay = document.getElementById('imperial-kwh');
-        const imperialCostDisplay = document.getElementById('imperial-cost');
+            const cubicFeetInput = document.getElementById('cubic-feet');
+            const imperialRateInput = document.getElementById('imperial-rate');
+            const imperialKwhDisplay = document.getElementById('imperial-kwh');
+            const imperialCostDisplay = document.getElementById('imperial-cost');
 
-        function PREC(value, decimals) {
-            return Number(value.toFixed(decimals));
-        }
-
-        function calculateMetric() {
-            const m3 = parseFloat(cubicMetersInput.value) || 0;
-            const rate = parseFloat(metricRateInput.value) || 0;
-
-            if (m3 < 0 || rate < 0) {
-                metricKwhDisplay.textContent = '—';
-                metricCostDisplay.textContent = '—';
-                return;
+            function PREC(value, decimals) {
+                return Number(value.toFixed(decimals));
             }
 
-            const kwh = PREC(m3 * 1.02264 * 40 / 3.6, 3);
-            const cost = PREC(kwh * rate, 2);
+            function calculateMetric() {
+                const m3 = parseFloat(cubicMetersInput.value) || 0;
+                const rate = parseFloat(metricRateInput.value) || 0;
 
-            metricKwhDisplay.textContent = kwh.toFixed(3);
-            metricCostDisplay.textContent = '£' + cost.toFixed(2);
-        }
+                if (m3 < 0 || rate < 0) {
+                    metricKwhDisplay.textContent = '—';
+                    metricCostDisplay.textContent = '—';
+                    return;
+                }
 
-        function calculateImperial() {
-            const ft3 = parseFloat(cubicFeetInput.value) || 0;
-            const rate = parseFloat(imperialRateInput.value) || 0;
+                const kwh = PREC(m3 * 1.02264 * 40 / 3.6, 3);
+                const cost = PREC(kwh * rate, 2);
 
-            if (ft3 < 0 || rate < 0) {
-                imperialKwhDisplay.textContent = '—';
-                imperialCostDisplay.textContent = '—';
-                return;
+                metricKwhDisplay.textContent = kwh.toFixed(3);
+                metricCostDisplay.textContent = '£' + cost.toFixed(2);
             }
 
-            const kwh = PREC(ft3 * 0.0283 * 1.02264 * 40 / 3.6, 3);
-            const cost = PREC(kwh * rate, 2);
+            function calculateImperial() {
+                const ft3 = parseFloat(cubicFeetInput.value) || 0;
+                const rate = parseFloat(imperialRateInput.value) || 0;
 
-            imperialKwhDisplay.textContent = kwh.toFixed(3);
-            imperialCostDisplay.textContent = '£' + cost.toFixed(2);
-        }
+                if (ft3 < 0 || rate < 0) {
+                    imperialKwhDisplay.textContent = '—';
+                    imperialCostDisplay.textContent = '—';
+                    return;
+                }
 
-        cubicMetersInput.addEventListener('input', calculateMetric);
-        metricRateInput.addEventListener('input', calculateMetric);
+                const kwh = PREC(ft3 * 0.0283 * 1.02264 * 40 / 3.6, 3);
+                const cost = PREC(kwh * rate, 2);
 
-        cubicFeetInput.addEventListener('input', calculateImperial);
-        imperialRateInput.addEventListener('input', calculateImperial);
+                imperialKwhDisplay.textContent = kwh.toFixed(3);
+                imperialCostDisplay.textContent = '£' + cost.toFixed(2);
+            }
 
-        calculateMetric();
-        calculateImperial();
+            cubicMetersInput.addEventListener('input', calculateMetric);
+            metricRateInput.addEventListener('input', calculateMetric);
+
+            cubicFeetInput.addEventListener('input', calculateImperial);
+            imperialRateInput.addEventListener('input', calculateImperial);
+
+            calculateMetric();
+            calculateImperial();
+        });
     </script>
 
-    <script src="/js/menu.js" type="d4ed50d62b5909d63fa06994-text/javascript"></script>
-<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="d4ed50d62b5909d63fa06994-|49" defer></script></body>
+    <script src="/js/menu.js" type="text/javascript" data-cfasync="false"></script>
+</body>
 </html>

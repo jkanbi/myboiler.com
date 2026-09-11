@@ -323,7 +323,7 @@
         </a>
         <div class="tagline">Smarter Heating & Hot Water</div>
         <div class="right-header-items">
-            <button class="hamburger-menu" onclick="if (!window.__cfRLUnblockHandlers) return false; toggleMenu()" aria-label="Toggle Menu" data-cf-modified-d4ed50d62b5909d63fa06994-="">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
@@ -402,79 +402,81 @@
         <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
     </footer>
 
-    <script type="d4ed50d62b5909d63fa06994-text/javascript">
-        /**
-         * LPS and LPM Convertor
-         * Two modes: LPS to LPM and LPM to LPS
-         */
+    <script type="text/javascript" data-cfasync="false">
+        document.addEventListener('DOMContentLoaded', function() {
+            /**
+             * LPS and LPM Convertor
+             * Two modes: LPS to LPM and LPM to LPS
+             */
 
-        let currentMode = 'lps-to-lpm';
+            let currentMode = 'lps-to-lpm';
 
-        const inputField = document.getElementById('input-field');
-        const inputValueDisplay = document.getElementById('input-value');
-        const resultDisplay = document.getElementById('result');
+            const inputField = document.getElementById('input-field');
+            const inputValueDisplay = document.getElementById('input-value');
+            const resultDisplay = document.getElementById('result');
 
-        const inputLabel = document.getElementById('input-label');
-        const resultLabel = document.getElementById('result-label');
-        const resultUnit = document.getElementById('result-unit');
-        const formulaText = document.getElementById('formula-text');
+            const inputLabel = document.getElementById('input-label');
+            const resultLabel = document.getElementById('result-label');
+            const resultUnit = document.getElementById('result-unit');
+            const formulaText = document.getElementById('formula-text');
 
-        const lpsToLpmBtn = document.getElementById('lps-to-lpm-btn');
-        const lpmToLpsBtn = document.getElementById('lpm-to-lps-btn');
+            const lpsToLpmBtn = document.getElementById('lps-to-lpm-btn');
+            const lpmToLpsBtn = document.getElementById('lpm-to-lps-btn');
 
-        function PREC(value, decimals) {
-            return Number(value.toFixed(decimals));
-        }
-
-        function setMode(mode) {
-            currentMode = mode;
-
-            if (mode === 'lps-to-lpm') {
-                lpsToLpmBtn.classList.add('active');
-                lpmToLpsBtn.classList.remove('active');
-                inputLabel.textContent = 'Litres Per Second (LPS)';
-                resultLabel.textContent = 'Litres Per Minute (LPM)';
-                resultUnit.textContent = 'LPM';
-                formulaText.textContent = 'LPM = LPS × 60';
-                inputField.value = '1';
-            } else {
-                lpmToLpsBtn.classList.add('active');
-                lpsToLpmBtn.classList.remove('active');
-                inputLabel.textContent = 'Litres Per Minute (LPM)';
-                resultLabel.textContent = 'Litres Per Second (LPS)';
-                resultUnit.textContent = 'LPS';
-                formulaText.textContent = 'LPS = LPM ÷ 60';
-                inputField.value = '5';
+            function PREC(value, decimals) {
+                return Number(value.toFixed(decimals));
             }
+
+            window.setMode = function(mode) {
+                currentMode = mode;
+
+                if (mode === 'lps-to-lpm') {
+                    lpsToLpmBtn.classList.add('active');
+                    lpmToLpsBtn.classList.remove('active');
+                    inputLabel.textContent = 'Litres Per Second (LPS)';
+                    resultLabel.textContent = 'Litres Per Minute (LPM)';
+                    resultUnit.textContent = 'LPM';
+                    formulaText.textContent = 'LPM = LPS × 60';
+                    inputField.value = '1';
+                } else {
+                    lpmToLpsBtn.classList.add('active');
+                    lpsToLpmBtn.classList.remove('active');
+                    inputLabel.textContent = 'Litres Per Minute (LPM)';
+                    resultLabel.textContent = 'Litres Per Second (LPS)';
+                    resultUnit.textContent = 'LPS';
+                    formulaText.textContent = 'LPS = LPM ÷ 60';
+                    inputField.value = '5';
+                }
+
+                calculate();
+            };
+
+            function calculate() {
+                const inputValue = parseFloat(inputField.value) || 0;
+                inputValueDisplay.textContent = inputValue.toFixed(4);
+
+                if (inputValue < 0) {
+                    resultDisplay.textContent = '—';
+                    return;
+                }
+
+                let result;
+
+                if (currentMode === 'lps-to-lpm') {
+                    result = PREC(inputValue * 60, 4);
+                } else {
+                    result = PREC(inputValue / 60, 4);
+                }
+
+                resultDisplay.textContent = result.toFixed(4);
+            }
+
+            inputField.addEventListener('input', calculate);
 
             calculate();
-        }
-
-        function calculate() {
-            const inputValue = parseFloat(inputField.value) || 0;
-            inputValueDisplay.textContent = inputValue.toFixed(4);
-
-            if (inputValue < 0) {
-                resultDisplay.textContent = '—';
-                return;
-            }
-
-            let result;
-
-            if (currentMode === 'lps-to-lpm') {
-                result = PREC(inputValue * 60, 4);
-            } else {
-                result = PREC(inputValue / 60, 4);
-            }
-
-            resultDisplay.textContent = result.toFixed(4);
-        }
-
-        inputField.addEventListener('input', calculate);
-
-        calculate();
+        });
     </script>
 
-    <script src="/js/menu.js" type="d4ed50d62b5909d63fa06994-text/javascript"></script>
-<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="d4ed50d62b5909d63fa06994-|49" defer></script></body>
+    <script src="/js/menu.js" type="text/javascript" data-cfasync="false"></script>
+</body>
 </html>
