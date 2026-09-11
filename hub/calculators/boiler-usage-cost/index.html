@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boiler Usage Cost Calculator - MyBoiler.com</title>
+    <meta name="description" content="Calculate your boiler running costs including hot water, central heating, and standing charges for UK homes.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        /* Calculator page specific styles */
+        .calculator-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .calculator-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .calculator-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .calculator-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 60ch;
+        }
+
+        .calculator-card {
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-subtle);
+        }
+
+        .section-group {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .input-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+
+        .input-value {
+            font-size: 1.125rem;
+            color: var(--accent);
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            box-sizing: border-box;
+            transition: border-color 0.15s ease;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .results-section {
+            background: var(--bg);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        .result-subsection {
+            margin-bottom: 2rem;
+        }
+
+        .result-subsection:last-child {
+            margin-bottom: 0;
+        }
+
+        .subsection-title {
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.875rem 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-row.highlight {
+            background: linear-gradient(135deg, rgba(24, 99, 220, 0.08), rgba(24, 99, 220, 0.04));
+            border: 1px solid rgba(24, 99, 220, 0.2);
+            font-weight: 600;
+        }
+
+        .result-label-text {
+            font-size: 0.9375rem;
+            color: var(--text);
+        }
+
+        .result-value-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .result-row.highlight .result-value-text {
+            font-size: 1.375rem;
+        }
+
+        .calculator-disclaimer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 70ch;
+            margin: 1rem auto;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .calculator-disclaimer strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-container {
+                padding: clamp(1.5rem, 4vw, 2.5rem) clamp(16px, 4vw, 24px);
+            }
+
+            .calculator-header {
+                margin-bottom: 1.5rem;
+            }
+
+            .calculator-card {
+                padding: 1.25rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .section-group {
+                margin-bottom: 2rem;
+            }
+
+            .input-group {
+                margin-bottom: 1.25rem;
+            }
+
+            .results-section {
+                padding: 1.25rem;
+                margin-top: 1.5rem;
+            }
+
+            .result-subsection {
+                margin-bottom: 1.5rem;
+            }
+
+            .subsection-title {
+                font-size: 0.9375rem;
+            }
+
+            .result-row {
+                padding: 0.75rem 0.875rem;
+            }
+
+            .result-label-text {
+                font-size: 0.875rem;
+            }
+
+            .result-value-text {
+                font-size: 1.125rem;
+            }
+
+            .result-row.highlight .result-value-text {
+                font-size: 1.25rem;
+            }
+
+            .calculator-disclaimer {
+                margin: 0.75rem auto;
+                padding: 0.875rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calculator-container {
+                padding: 1.25rem 12px;
+            }
+
+            .calculator-header {
+                margin-bottom: 1.25rem;
+            }
+
+            .calculator-card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .section-title {
+                font-size: 0.9375rem;
+                margin-bottom: 1rem;
+            }
+
+            .section-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .input-group {
+                margin-bottom: 1rem;
+            }
+
+            .input-label {
+                font-size: 0.875rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .input-value {
+                font-size: 1rem;
+            }
+
+            .input-field {
+                padding: 0.625rem 0.875rem;
+                font-size: 0.9375rem;
+            }
+
+            .results-section {
+                padding: 1rem;
+                margin-top: 1.25rem;
+            }
+
+            .result-subsection {
+                margin-bottom: 1.25rem;
+            }
+
+            .subsection-title {
+                font-size: 0.875rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .result-row {
+                padding: 0.625rem 0.75rem;
+            }
+
+            .result-label-text {
+                font-size: 0.8125rem;
+            }
+
+            .result-value-text {
+                font-size: 1rem;
+            }
+
+            .result-row.highlight .result-value-text {
+                font-size: 1.125rem;
+            }
+
+            .calculator-disclaimer {
+                margin: 0.5rem auto;
+                padding: 0.75rem;
+                font-size: 0.8125rem;
+            }
+        }
+    </style>
+</head>
+<body class="calculator-page">
+    <!-- Header with full navigation -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <!-- Hamburger Menu Button -->
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <!-- Horizontal Navigation Menu -->
+            <nav id="nav-menu" class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="/chat/">Ask AI</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://boilermanuals.com/fault-codes.html">Fault codes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/heat-pump-checker/">Heat pump check</a>
+                    </li>
+                    <li class="nav-item nav-item-cta">
+                        <a href="/quote/">Get a quote</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://hub.myboiler.com">Hub</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Calculator Content -->
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h1 class="calculator-headline">Boiler Usage Cost Calculator</h1>
+            <p class="calculator-connector">
+                Calculate your boiler's running costs including hot water, central heating, and standing charges with UK-specific formulas.
+            </p>
+        </div>
+
+        <!-- Calculator Card -->
+        <div class="calculator-card">
+            <!-- Energy Rates Section -->
+            <div class="section-group">
+                <h2 class="section-title">Energy Rates</h2>
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Gas Rate (£/kWh)</span>
+                        <span class="input-value" id="gas-rate-value">0.08</span>
+                    </div>
+                    <input type="number" id="gas-rate" class="input-field" value="0.08" step="0.01" min="0">
+                </div>
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Electric Rate (£/kWh)</span>
+                        <span class="input-value" id="electric-rate-value">0.30</span>
+                    </div>
+                    <input type="number" id="electric-rate" class="input-field" value="0.30" step="0.01" min="0">
+                </div>
+            </div>
+
+            <!-- Appliance Power Section -->
+            <div class="section-group">
+                <h2 class="section-title">Appliance Power</h2>
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Hot Water Power (kW)</span>
+                        <span class="input-value" id="hw-power-value">36</span>
+                    </div>
+                    <input type="number" id="hw-power" class="input-field" value="36" step="0.1" min="0">
+                </div>
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Central Heating Power (kW)</span>
+                        <span class="input-value" id="ch-power-value">20</span>
+                    </div>
+                    <input type="number" id="ch-power" class="input-field" value="20" step="0.1" min="0">
+                </div>
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>HW Boiler Electrical Consumption Max (kW)</span>
+                        <span class="input-value" id="hw-elec-value">0.153</span>
+                    </div>
+                    <input type="number" id="hw-elec" class="input-field" value="0.153" step="0.001" min="0">
+                </div>
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>CH Boiler Electrical Consumption Max (kW)</span>
+                        <span class="input-value" id="ch-elec-value">0.100</span>
+                    </div>
+                    <input type="number" id="ch-elec" class="input-field" value="0.100" step="0.001" min="0">
+                </div>
+            </div>
+
+            <!-- Usage Hours Section -->
+            <div class="section-group">
+                <h2 class="section-title">Annual Usage Hours</h2>
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Hot Water Usage (hours/year)</span>
+                        <span class="input-value" id="hw-hours-value">180</span>
+                    </div>
+                    <input type="number" id="hw-hours" class="input-field" value="180" step="1" min="0">
+                </div>
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Central Heating Usage (hours/year)</span>
+                        <span class="input-value" id="ch-hours-value">1000</span>
+                    </div>
+                    <input type="number" id="ch-hours" class="input-field" value="1000" step="1" min="0">
+                </div>
+            </div>
+
+            <!-- Standing Charges Section -->
+            <div class="section-group">
+                <h2 class="section-title">Standing Charges</h2>
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Gas Standing Cost (£/day)</span>
+                        <span class="input-value" id="gas-standing-value">0.29</span>
+                    </div>
+                    <input type="number" id="gas-standing" class="input-field" value="0.29" step="0.01" min="0">
+                </div>
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Electric Standing Cost (£/day)</span>
+                        <span class="input-value" id="electric-standing-value">0.53</span>
+                    </div>
+                    <input type="number" id="electric-standing" class="input-field" value="0.53" step="0.01" min="0">
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section">
+                <h2 class="section-title">Results</h2>
+                
+                <!-- Hourly Costs -->
+                <div class="result-subsection">
+                    <div class="subsection-title">Hourly Costs</div>
+                    <div class="result-row">
+                        <span class="result-label-text">Hot Water £/hour</span>
+                        <span class="result-value-text" id="hw-hourly">£2.93</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label-text">Central Heating £/hour</span>
+                        <span class="result-value-text" id="ch-hourly">£1.65</span>
+                    </div>
+                </div>
+
+                <!-- Annual kWh -->
+                <div class="result-subsection">
+                    <div class="subsection-title">Annual Energy Consumption</div>
+                    <div class="result-row">
+                        <span class="result-label-text">Hot Water Gas (kWh/year)</span>
+                        <span class="result-value-text" id="hw-gas-kwh">6,480</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label-text">Hot Water Electric (kWh/year)</span>
+                        <span class="result-value-text" id="hw-elec-kwh">27.54</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label-text">Central Heating Gas (kWh/year)</span>
+                        <span class="result-value-text" id="ch-gas-kwh">20,000</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label-text">Central Heating Electric (kWh/year)</span>
+                        <span class="result-value-text" id="ch-elec-kwh">100.00</span>
+                    </div>
+                </div>
+
+                <!-- Annual Costs -->
+                <div class="result-subsection">
+                    <div class="subsection-title">Annual Running Costs</div>
+                    <div class="result-row">
+                        <span class="result-label-text">Hot Water £/year</span>
+                        <span class="result-value-text" id="hw-annual">£526.66</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label-text">Central Heating £/year</span>
+                        <span class="result-value-text" id="ch-annual">£1,645.90</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label-text">Combined Hot Water & CH Cost</span>
+                        <span class="result-value-text" id="combined-cost">£2,172.56</span>
+                    </div>
+                </div>
+
+                <!-- Standing Charges -->
+                <div class="result-subsection">
+                    <div class="subsection-title">Standing Charges</div>
+                    <div class="result-row">
+                        <span class="result-label-text">Gas Standing £/year</span>
+                        <span class="result-value-text" id="gas-standing-annual">£105.85</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label-text">Electric Standing £/year</span>
+                        <span class="result-value-text" id="electric-standing-annual">£193.45</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label-text">Total Standing Charges</span>
+                        <span class="result-value-text" id="total-standing">£299.30</span>
+                    </div>
+                </div>
+
+                <!-- Total -->
+                <div class="result-subsection">
+                    <div class="result-row highlight">
+                        <span class="result-label-text">Heating & Hot Water £/Year (Total)</span>
+                        <span class="result-value-text" id="total-annual">£2,471.86</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculator-disclaimer">
+            <strong>Important:</strong> This calculator uses UK-specific formulas and provides estimated running costs based on your inputs. Actual costs may vary based on usage patterns, boiler efficiency, and current energy tariffs. Always consult your energy provider for precise rates.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+        <p class="footer-links"><a href="/">Home</a> | <a href="https://hub.myboiler.com">Hub</a></p>
+    </footer>
+
+    <script type="text/javascript" data-cfasync="false">
+        /**
+         * Boiler Usage Cost Calculator
+         * UK-specific formulas extracted from CFF form 20
+         * Note: CH hourly cost formula uses HW electrical consumption (fieldname6) as per original form
+         */
+
+        /**
+         * PREC function - rounds to n decimal places
+         */
+        function PREC(value, decimals) {
+            return Number(value.toFixed(decimals));
+        }
+
+        /**
+         * Format number with thousand separators
+         */
+        function formatNumber(value, decimals = 2) {
+            const parts = value.toFixed(decimals).split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            return parts.join('.');
+        }
+
+        /**
+         * Calculate and update all results
+         */
+        function calculate() {
+            // Get all input elements
+            const inputs = {
+                gasRate: document.getElementById('gas-rate'),
+                electricRate: document.getElementById('electric-rate'),
+                hwPower: document.getElementById('hw-power'),
+                chPower: document.getElementById('ch-power'),
+                hwElec: document.getElementById('hw-elec'),
+                chElec: document.getElementById('ch-elec'),
+                hwHours: document.getElementById('hw-hours'),
+                chHours: document.getElementById('ch-hours'),
+                gasStanding: document.getElementById('gas-standing'),
+                electricStanding: document.getElementById('electric-standing')
+            };
+
+            // Get all display value elements
+            const displays = {
+                gasRate: document.getElementById('gas-rate-value'),
+                electricRate: document.getElementById('electric-rate-value'),
+                hwPower: document.getElementById('hw-power-value'),
+                chPower: document.getElementById('ch-power-value'),
+                hwElec: document.getElementById('hw-elec-value'),
+                chElec: document.getElementById('ch-elec-value'),
+                hwHours: document.getElementById('hw-hours-value'),
+                chHours: document.getElementById('ch-hours-value'),
+                gasStanding: document.getElementById('gas-standing-value'),
+                electricStanding: document.getElementById('electric-standing-value')
+            };
+
+            // Get all result elements
+            const results = {
+                hwHourly: document.getElementById('hw-hourly'),
+                chHourly: document.getElementById('ch-hourly'),
+                hwGasKwh: document.getElementById('hw-gas-kwh'),
+                hwElecKwh: document.getElementById('hw-elec-kwh'),
+                chGasKwh: document.getElementById('ch-gas-kwh'),
+                chElecKwh: document.getElementById('ch-elec-kwh'),
+                hwAnnual: document.getElementById('hw-annual'),
+                chAnnual: document.getElementById('ch-annual'),
+                combinedCost: document.getElementById('combined-cost'),
+                gasStandingAnnual: document.getElementById('gas-standing-annual'),
+                electricStandingAnnual: document.getElementById('electric-standing-annual'),
+                totalStanding: document.getElementById('total-standing'),
+                totalAnnual: document.getElementById('total-annual')
+            };
+
+            // Get all input values
+            const gasRate = parseFloat(inputs.gasRate.value) || 0;
+            const elecRate = parseFloat(inputs.electricRate.value) || 0;
+            const hwKW = parseFloat(inputs.hwPower.value) || 0;
+            const chKW = parseFloat(inputs.chPower.value) || 0;
+            const hwElecKW = parseFloat(inputs.hwElec.value) || 0;
+            const chElecKW = parseFloat(inputs.chElec.value) || 0;
+            const hwHours = parseFloat(inputs.hwHours.value) || 0;
+            const chHours = parseFloat(inputs.chHours.value) || 0;
+            const gasDay = parseFloat(inputs.gasStanding.value) || 0;
+            const elecDay = parseFloat(inputs.electricStanding.value) || 0;
+
+            // Update display values
+            displays.gasRate.textContent = gasRate.toFixed(2);
+            displays.electricRate.textContent = elecRate.toFixed(2);
+            displays.hwPower.textContent = hwKW.toFixed(1);
+            displays.chPower.textContent = chKW.toFixed(1);
+            displays.hwElec.textContent = hwElecKW.toFixed(3);
+            displays.chElec.textContent = chElecKW.toFixed(3);
+            displays.hwHours.textContent = Math.round(hwHours).toString();
+            displays.chHours.textContent = Math.round(chHours).toString();
+            displays.gasStanding.textContent = gasDay.toFixed(2);
+            displays.electricStanding.textContent = elecDay.toFixed(2);
+
+            // HOURLY COSTS
+            // HW £/hour = PREC( (gasRate * HW_KW) + (elecRate * HW_elecKW) , 2 )
+            const hwHourly = PREC((gasRate * hwKW) + (elecRate * hwElecKW), 2);
+            
+            // CH £/hour = PREC( (gasRate * CH_KW) + (elecRate * HW_elecKW) , 2 )
+            // NOTE: Original form uses fieldname6 (HW elec) for CH hourly cost - kept exact
+            const chHourly = PREC((gasRate * chKW) + (elecRate * hwElecKW), 2);
+
+            // ANNUAL kWh
+            // HW Gas kWh/year = HW_KW * HW_hours
+            const hwGasKwh = hwKW * hwHours;
+            
+            // HW Electric kWh/year = HW_elecKW * HW_hours
+            const hwElecKwh = hwElecKW * hwHours;
+            
+            // CH Gas kWh/year = CH_KW * CH_hours
+            const chGasKwh = chKW * chHours;
+            
+            // CH Electric kWh/year = CH_elecKW * CH_hours
+            const chElecKwh = chElecKW * chHours;
+
+            // ANNUAL £
+            // HW £/year = PREC( (gasRate * HW_gas_kWh) + (elecRate * HW_elec_kWh) , 2 )
+            const hwAnnual = PREC((gasRate * hwGasKwh) + (elecRate * hwElecKwh), 2);
+            
+            // CH £/year = PREC( (gasRate * CH_gas_kWh) + (elecRate * CH_elec_kWh) , 2 )
+            const chAnnual = PREC((gasRate * chGasKwh) + (elecRate * chElecKwh), 2);
+            
+            // Hot Water and CH Combined Cost = PREC( HW_year + CH_year , 2 )
+            const combinedCost = PREC(hwAnnual + chAnnual, 2);
+
+            // STANDING CHARGES
+            // Gas standing £/year = PREC( gasDay * 365 , 2 )
+            const gasStandingAnnual = PREC(gasDay * 365, 2);
+            
+            // Electric standing £/year = elecDay * 365
+            const elecStandingAnnual = elecDay * 365;
+            
+            // Total Standing = gasYear + elecYear
+            const totalStanding = gasStandingAnnual + elecStandingAnnual;
+            
+            // Heating & Hot Water £/Year = PREC( combined + totalStanding , 2 )
+            const totalAnnual = PREC(combinedCost + totalStanding, 2);
+
+            // Update results display
+            results.hwHourly.textContent = '£' + hwHourly.toFixed(2);
+            results.chHourly.textContent = '£' + chHourly.toFixed(2);
+            
+            results.hwGasKwh.textContent = formatNumber(hwGasKwh, 0);
+            results.hwElecKwh.textContent = formatNumber(hwElecKwh, 2);
+            results.chGasKwh.textContent = formatNumber(chGasKwh, 0);
+            results.chElecKwh.textContent = formatNumber(chElecKwh, 2);
+            
+            results.hwAnnual.textContent = '£' + formatNumber(hwAnnual, 2);
+            results.chAnnual.textContent = '£' + formatNumber(chAnnual, 2);
+            results.combinedCost.textContent = '£' + formatNumber(combinedCost, 2);
+            
+            results.gasStandingAnnual.textContent = '£' + formatNumber(gasStandingAnnual, 2);
+            results.electricStandingAnnual.textContent = '£' + formatNumber(elecStandingAnnual, 2);
+            results.totalStanding.textContent = '£' + formatNumber(totalStanding, 2);
+            
+            results.totalAnnual.textContent = '£' + formatNumber(totalAnnual, 2);
+        }
+
+        // Initialize on DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all input elements
+            const inputs = [
+                document.getElementById('gas-rate'),
+                document.getElementById('electric-rate'),
+                document.getElementById('hw-power'),
+                document.getElementById('ch-power'),
+                document.getElementById('hw-elec'),
+                document.getElementById('ch-elec'),
+                document.getElementById('hw-hours'),
+                document.getElementById('ch-hours'),
+                document.getElementById('gas-standing'),
+                document.getElementById('electric-standing')
+            ];
+
+            // Add event listeners to all inputs
+            inputs.forEach(function(input) {
+                if (input) {
+                    input.addEventListener('input', calculate);
+                }
+            });
+
+            // Initial calculation
+            calculate();
+        });
+    </script>
+
+    <!-- Add menu.js for navigation functionality -->
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
