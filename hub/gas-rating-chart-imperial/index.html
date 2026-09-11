@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gas Rating Chart Imperial - MyBoiler Hub</title>
+    <meta name="description" content="Complete gas rating chart for Imperial meters with time in seconds converted to KW gross and net values. Includes conversion formulas.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-breadcrumb {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9375rem;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .article-content thead {
+            background: var(--bg);
+        }
+
+        .article-content th {
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text);
+            border-bottom: 2px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 1;
+        }
+
+        .article-content td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
+            vertical-align: top;
+        }
+
+        .article-content tbody tr:hover {
+            background: var(--bg);
+        }
+
+        .conversion-formulas {
+            background: var(--bg);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            margin: 1.5rem 0;
+        }
+
+        .conversion-formulas p {
+            margin: 0.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .article-content table {
+                font-size: 0.875rem;
+            }
+
+            .article-content th,
+            .article-content td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="article-page">
+    <!-- Header with full navigation -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu">
+                <ul class="nav-list">
+                    <!-- Advice Menu -->
+                    <li class="nav-item nav-item-has-dropdown">
+                        <span class="nav-dropdown-label">
+                            <span>Advice</span>
+                            <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>
+                            </svg>
+                        </span>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Boilers</h4>
+                                <a href="https://hub.myboiler.com/money-and-energy-saving/">Money and Energy Saving</a>
+                                <a href="https://hub.myboiler.com/boiler-pressure/">Boiler Pressure</a>
+                                <a href="https://hub.myboiler.com/boiler-service/">Boiler Service</a>
+                                <a href="https://hub.myboiler.com/boiler-types/">Boiler Types</a>
+                                <a href="https://hub.myboiler.com/boiler-energy-efficiency/">Boiler Energy Efficiency</a>
+                                <a href="https://hub.myboiler.com/installation-efficiency/">Installation Efficiency</a>
+                                <h4>OpenTherm & Modulating Boilers</h4>
+                                <a href="https://hub.myboiler.com/opentherm-and-modulating-boilers/">OpenTherm & Modulating Overview</a>
+                                <a href="https://hub.myboiler.com/opentherm-capable-boilers/">OpenTherm Capable Boilers</a>
+                                <a href="https://hub.myboiler.com/opentherm-controls/">OpenTherm Controls</a>
+                                <a href="https://hub.myboiler.com/modulating-boiler-and-smart-controls/">Modulating Boilers & Smart Controls</a>
+                                <a href="/hub/opentherm/vaillant-opentherm/">Vaillant OpenTherm Guide</a>
+                                <a href="/hub/opentherm/worcester-bosch-opentherm/">Worcester OpenTherm Guide</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Heat Pumps</h4>
+                                <a href="https://hub.myboiler.com/heat-pumps/">Heat Pumps Overview</a>
+                                <a href="https://hub.myboiler.com/heat-pump-cylinder-retrofit/">Heat Pump Cylinder Retrofit</a>
+                                <a href="https://hub.myboiler.com/air-source-heat-pump/">Air Source Heat Pump</a>
+                                <a href="https://hub.myboiler.com/are-heat-pumps-a-con/">Are Heat Pumps a Con?</a>
+                                <a href="https://hub.myboiler.com/underfloor-heating/">Underfloor Heating</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Miscellaneous</h4>
+                                <a href="https://hub.myboiler.com/flow-temperature-and-power/">Flow Temperature & Power</a>
+                                <a href="https://hub.myboiler.com/solar-thermal-heating/">Solar Thermal Heating</a>
+                                <a href="https://hub.myboiler.com/solar-thermal-servicing/">Solar Thermal Servicing</a>
+                                <a href="https://hub.myboiler.com/s-plan-heating-systems/">S Plan Heating Systems</a>
+                                <a href="https://hub.myboiler.com/radiators/">Radiators</a>
+                                <a href="/quote/">Get a Quote</a>
+                                <a href="https://hub.myboiler.com/services/">Services</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Toolbox Menu -->
+                    <li class="nav-item nav-item-has-dropdown">
+                        <span class="nav-dropdown-label">
+                            <span>Toolbox</span>
+                            <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>
+                            </svg>
+                        </span>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Vaillant</h4>
+                                <a href="https://hub.myboiler.com/installer/vaillant-boiler-p-test/">P Test Instructions</a>
+                                <a href="https://hub.myboiler.com/installer/vaillant-boiler-emissions-table/">Emissions Table</a>
+                                <a href="https://hub.myboiler.com/installer/vaillant-ecotec-service-how-to/">Ecotec Service How-To</a>
+                                <a href="https://hub.myboiler.com/installer/vaillant-diagnostic-codes/">Diagnostic S & D Codes</a>
+                                <a href="https://hub.myboiler.com/installer/vaillant-fga-tool/">FGA Tool</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Worcester Bosch</h4>
+                                <a href="https://hub.myboiler.com/installer/worcester-fga-tool/">FGA Tool</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Other Brands</h4>
+                                <a href="https://hub.myboiler.com/installer/intergas-fga-tool/">Intergas FGA Tool</a>
+                                <a href="https://hub.myboiler.com/installer/intergas-service-how-to/">Intergas Service How-To</a>
+                                <h4>Miscellaneous</h4>
+                                <a href="https://hub.myboiler.com/installer/maximum-and-minimum-output-mode-videos/">Max/Min Output Mode Videos</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Calculators Menu -->
+                    <li class="nav-item nav-item-has-dropdown">
+                        <span class="nav-dropdown-label">
+                            <span>Calculators</span>
+                            <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>
+                            </svg>
+                        </span>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Heating Design</h4>
+                                <a href="https://hub.myboiler.com/calculators/air-change-calculator/">Air Change Calculator (ACH)</a>
+                                <a href="https://hub.myboiler.com/calculators/boiler-consumption/">Boiler Consumption</a>
+                                <a href="https://hub.myboiler.com/calculators/heat-source-system-design/">Heat Source/System Design</a>
+                                <a href="https://hub.myboiler.com/calculators/water-content-calculator/">Water Content</a>
+                                <a href="https://hub.myboiler.com/calculators/hot-water-recovery/">Hot Water Recovery</a>
+                                <a href="/hub/calculators/pipe-size-calculator/">Pipe Size Calculator</a>
+                                <a href="https://hub.myboiler.com/calculators/radiator-correction-factor/">Radiator Correction Factor</a>
+                                <a href="https://hub.myboiler.com/calculators/volume-flow-rate-q/">Volume Flow Rate Q</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Conversion Calculators</h4>
+                                <a href="https://hub.myboiler.com/calculators/kw-flow-rate/">KW to Flow Rate & Flow to KW</a>
+                                <a href="https://hub.myboiler.com/calculators/lpm-to-kwh/">LPM to kWh</a>
+                                <a href="https://hub.myboiler.com/calculators/btu-to-watts/">BTU to Watts</a>
+                                <a href="https://hub.myboiler.com/calculators/radiator-new-output/">Radiator New Output</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Gas Calculators</h4>
+                                <a href="https://hub.myboiler.com/calculators/combustion-ratio-calculator/">Combustion Ratio</a>
+                                <a href="https://hub.myboiler.com/calculators/gas-rate-calculator/">Gas Rate</a>
+                                <a href="https://hub.myboiler.com/calculators/m3-to-kwh/">m³ to kWh</a>
+                                <h4>Buffers</h4>
+                                <a href="https://hub.myboiler.com/calculators/buffer-minimum-volume/">Buffer Minimum Volume</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Manuals -->
+                    <li class="nav-item">
+                        <a href="https://boilermanuals.com">Manuals</a>
+                    </li>
+
+                    <!-- Ask AI -->
+                    <li class="nav-item nav-item-cta">
+                        <a href="/chat/">Ask AI</a>
+                    </li>
+
+                    <!-- Exit Hub -->
+                    <li class="nav-item">
+                        <a href="/">Exit Hub</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <div class="article-container">
+        <nav class="article-breadcrumb" aria-label="Breadcrumb">
+            <a href="/hub/">Hub</a> › Gas Rating Chart Imperial
+        </nav>
+
+        <header class="article-header">
+            <h1 class="article-title">Gas Rating Chart Imperial</h1>
+            <p class="article-intro">
+                Complete gas rating chart for Imperial meters. The assumptions are such that CV is 38.76MJ/m³, with a MJ to KW conversion of 3.6.
+            </p>
+        </header>
+
+        <article class="article-content">
+            <div class="conversion-formulas">
+                <p><strong>Converting from ft³/hr to m³/hr:</strong> ft³ / 35.3 = m³/hr</p>
+                <p><strong>Converting from m³/hr to ft³/hr:</strong> m³/hr × 35.3 = ft³/hr</p>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time in Seconds</th>
+                        <th>KW Gross</th>
+                        <th>KW net</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>1097.30</td><td>988.56</td></tr>
+                    <tr><td>2</td><td>548.65</td><td>494.28</td></tr>
+                    <tr><td>3</td><td>365.77</td><td>329.52</td></tr>
+                    <tr><td>4</td><td>274.33</td><td>247.14</td></tr>
+                    <tr><td>5</td><td>219.46</td><td>197.71</td></tr>
+                    <tr><td>6</td><td>182.88</td><td>164.76</td></tr>
+                    <tr><td>7</td><td>156.76</td><td>141.22</td></tr>
+                    <tr><td>8</td><td>137.16</td><td>123.57</td></tr>
+                    <tr><td>9</td><td>121.92</td><td>109.84</td></tr>
+                    <tr><td>10</td><td>109.73</td><td>98.86</td></tr>
+                    <tr><td>11</td><td>99.75</td><td>89.87</td></tr>
+                    <tr><td>12</td><td>91.44</td><td>82.38</td></tr>
+                    <tr><td>13</td><td>84.41</td><td>76.04</td></tr>
+                    <tr><td>14</td><td>78.38</td><td>70.61</td></tr>
+                    <tr><td>15</td><td>73.15</td><td>65.90</td></tr>
+                    <tr><td>16</td><td>68.58</td><td>61.79</td></tr>
+                    <tr><td>17</td><td>64.55</td><td>58.15</td></tr>
+                    <tr><td>18</td><td>60.96</td><td>54.92</td></tr>
+                    <tr><td>19</td><td>57.75</td><td>52.03</td></tr>
+                    <tr><td>20</td><td>54.87</td><td>49.43</td></tr>
+                    <tr><td>21</td><td>52.25</td><td>47.07</td></tr>
+                    <tr><td>22</td><td>49.88</td><td>44.93</td></tr>
+                    <tr><td>23</td><td>47.71</td><td>42.98</td></tr>
+                    <tr><td>24</td><td>45.72</td><td>41.19</td></tr>
+                    <tr><td>25</td><td>43.89</td><td>39.54</td></tr>
+                    <tr><td>26</td><td>42.20</td><td>38.02</td></tr>
+                    <tr><td>27</td><td>40.64</td><td>36.61</td></tr>
+                    <tr><td>28</td><td>39.19</td><td>35.31</td></tr>
+                    <tr><td>29</td><td>37.84</td><td>34.09</td></tr>
+                    <tr><td>30</td><td>36.58</td><td>32.95</td></tr>
+                    <tr><td>31</td><td>35.40</td><td>31.89</td></tr>
+                    <tr><td>32</td><td>34.29</td><td>30.89</td></tr>
+                    <tr><td>33</td><td>33.25</td><td>29.96</td></tr>
+                    <tr><td>34</td><td>32.27</td><td>29.08</td></tr>
+                    <tr><td>35</td><td>31.35</td><td>28.24</td></tr>
+                    <tr><td>36</td><td>30.48</td><td>27.46</td></tr>
+                    <tr><td>37</td><td>29.66</td><td>26.72</td></tr>
+                    <tr><td>38</td><td>28.88</td><td>26.01</td></tr>
+                    <tr><td>39</td><td>28.14</td><td>25.35</td></tr>
+                    <tr><td>40</td><td>27.43</td><td>24.71</td></tr>
+                    <tr><td>41</td><td>26.76</td><td>24.11</td></tr>
+                    <tr><td>42</td><td>26.13</td><td>23.54</td></tr>
+                    <tr><td>43</td><td>25.52</td><td>22.99</td></tr>
+                    <tr><td>44</td><td>24.94</td><td>22.47</td></tr>
+                    <tr><td>45</td><td>24.38</td><td>21.97</td></tr>
+                    <tr><td>46</td><td>23.85</td><td>21.49</td></tr>
+                    <tr><td>47</td><td>23.35</td><td>21.03</td></tr>
+                    <tr><td>48</td><td>22.86</td><td>20.60</td></tr>
+                    <tr><td>49</td><td>22.39</td><td>20.17</td></tr>
+                    <tr><td>50</td><td>21.95</td><td>19.77</td></tr>
+                    <tr><td>51</td><td>21.52</td><td>19.38</td></tr>
+                    <tr><td>52</td><td>21.10</td><td>19.01</td></tr>
+                    <tr><td>53</td><td>20.70</td><td>18.65</td></tr>
+                    <tr><td>54</td><td>20.32</td><td>18.31</td></tr>
+                    <tr><td>55</td><td>19.95</td><td>17.97</td></tr>
+                    <tr><td>56</td><td>19.59</td><td>17.65</td></tr>
+                    <tr><td>57</td><td>19.25</td><td>17.34</td></tr>
+                    <tr><td>58</td><td>18.92</td><td>17.04</td></tr>
+                    <tr><td>59</td><td>18.60</td><td>16.76</td></tr>
+                    <tr><td>60</td><td>18.29</td><td>16.48</td></tr>
+                    <tr><td>61</td><td>17.99</td><td>16.21</td></tr>
+                    <tr><td>62</td><td>17.70</td><td>15.94</td></tr>
+                    <tr><td>63</td><td>17.42</td><td>15.69</td></tr>
+                    <tr><td>64</td><td>17.15</td><td>15.45</td></tr>
+                    <tr><td>65</td><td>16.88</td><td>15.21</td></tr>
+                    <tr><td>66</td><td>16.63</td><td>14.98</td></tr>
+                    <tr><td>67</td><td>16.38</td><td>14.75</td></tr>
+                    <tr><td>68</td><td>16.14</td><td>14.54</td></tr>
+                    <tr><td>69</td><td>15.90</td><td>14.33</td></tr>
+                    <tr><td>70</td><td>15.68</td><td>14.12</td></tr>
+                    <tr><td>71</td><td>15.45</td><td>13.92</td></tr>
+                    <tr><td>72</td><td>15.24</td><td>13.73</td></tr>
+                    <tr><td>73</td><td>15.03</td><td>13.54</td></tr>
+                    <tr><td>74</td><td>14.83</td><td>13.36</td></tr>
+                    <tr><td>75</td><td>14.63</td><td>13.18</td></tr>
+                    <tr><td>76</td><td>14.44</td><td>13.01</td></tr>
+                    <tr><td>77</td><td>14.25</td><td>12.84</td></tr>
+                    <tr><td>78</td><td>14.07</td><td>12.67</td></tr>
+                    <tr><td>79</td><td>13.89</td><td>12.51</td></tr>
+                    <tr><td>80</td><td>13.72</td><td>12.36</td></tr>
+                    <tr><td>81</td><td>13.55</td><td>12.20</td></tr>
+                    <tr><td>82</td><td>13.38</td><td>12.06</td></tr>
+                    <tr><td>83</td><td>13.22</td><td>11.91</td></tr>
+                    <tr><td>84</td><td>13.06</td><td>11.77</td></tr>
+                    <tr><td>85</td><td>12.91</td><td>11.63</td></tr>
+                    <tr><td>86</td><td>12.76</td><td>11.49</td></tr>
+                    <tr><td>87</td><td>12.61</td><td>11.36</td></tr>
+                    <tr><td>88</td><td>12.47</td><td>11.23</td></tr>
+                    <tr><td>89</td><td>12.33</td><td>11.11</td></tr>
+                    <tr><td>90</td><td>12.19</td><td>10.98</td></tr>
+                    <tr><td>91</td><td>12.06</td><td>10.86</td></tr>
+                    <tr><td>92</td><td>11.93</td><td>10.75</td></tr>
+                    <tr><td>93</td><td>11.80</td><td>10.63</td></tr>
+                    <tr><td>94</td><td>11.67</td><td>10.52</td></tr>
+                    <tr><td>95</td><td>11.55</td><td>10.41</td></tr>
+                    <tr><td>96</td><td>11.43</td><td>10.30</td></tr>
+                    <tr><td>97</td><td>11.31</td><td>10.19</td></tr>
+                    <tr><td>98</td><td>11.20</td><td>10.09</td></tr>
+                    <tr><td>99</td><td>11.08</td><td>9.99</td></tr>
+                    <tr><td>100</td><td>10.97</td><td>9.89</td></tr>
+                    <tr><td>101</td><td>10.86</td><td>9.79</td></tr>
+                    <tr><td>102</td><td>10.76</td><td>9.69</td></tr>
+                    <tr><td>103</td><td>10.65</td><td>9.60</td></tr>
+                    <tr><td>104</td><td>10.55</td><td>9.51</td></tr>
+                    <tr><td>105</td><td>10.45</td><td>9.41</td></tr>
+                    <tr><td>106</td><td>10.35</td><td>9.33</td></tr>
+                    <tr><td>107</td><td>10.26</td><td>9.24</td></tr>
+                    <tr><td>108</td><td>10.16</td><td>9.15</td></tr>
+                    <tr><td>109</td><td>10.07</td><td>9.07</td></tr>
+                    <tr><td>110</td><td>9.98</td><td>8.99</td></tr>
+                    <tr><td>111</td><td>9.89</td><td>8.91</td></tr>
+                    <tr><td>112</td><td>9.80</td><td>8.83</td></tr>
+                    <tr><td>113</td><td>9.71</td><td>8.75</td></tr>
+                    <tr><td>114</td><td>9.63</td><td>8.67</td></tr>
+                    <tr><td>115</td><td>9.54</td><td>8.60</td></tr>
+                    <tr><td>116</td><td>9.46</td><td>8.52</td></tr>
+                    <tr><td>117</td><td>9.38</td><td>8.45</td></tr>
+                    <tr><td>118</td><td>9.30</td><td>8.38</td></tr>
+                    <tr><td>119</td><td>9.22</td><td>8.31</td></tr>
+                    <tr><td>120</td><td>9.14</td><td>8.24</td></tr>
+                    <tr><td>121</td><td>9.07</td><td>8.17</td></tr>
+                    <tr><td>122</td><td>8.99</td><td>8.10</td></tr>
+                    <tr><td>123</td><td>8.92</td><td>8.04</td></tr>
+                    <tr><td>124</td><td>8.85</td><td>7.97</td></tr>
+                    <tr><td>125</td><td>8.78</td><td>7.91</td></tr>
+                    <tr><td>126</td><td>8.71</td><td>7.85</td></tr>
+                    <tr><td>127</td><td>8.64</td><td>7.78</td></tr>
+                    <tr><td>128</td><td>8.57</td><td>7.72</td></tr>
+                    <tr><td>129</td><td>8.51</td><td>7.66</td></tr>
+                    <tr><td>130</td><td>8.44</td><td>7.60</td></tr>
+                    <tr><td>131</td><td>8.38</td><td>7.55</td></tr>
+                    <tr><td>132</td><td>8.31</td><td>7.49</td></tr>
+                    <tr><td>133</td><td>8.25</td><td>7.43</td></tr>
+                    <tr><td>134</td><td>8.19</td><td>7.38</td></tr>
+                    <tr><td>135</td><td>8.13</td><td>7.32</td></tr>
+                    <tr><td>136</td><td>8.07</td><td>7.27</td></tr>
+                    <tr><td>137</td><td>8.01</td><td>7.22</td></tr>
+                    <tr><td>138</td><td>7.95</td><td>7.16</td></tr>
+                    <tr><td>139</td><td>7.89</td><td>7.11</td></tr>
+                    <tr><td>140</td><td>7.84</td><td>7.06</td></tr>
+                    <tr><td>141</td><td>7.78</td><td>7.01</td></tr>
+                    <tr><td>142</td><td>7.73</td><td>6.96</td></tr>
+                    <tr><td>143</td><td>7.67</td><td>6.91</td></tr>
+                    <tr><td>144</td><td>7.62</td><td>6.87</td></tr>
+                    <tr><td>145</td><td>7.57</td><td>6.82</td></tr>
+                    <tr><td>146</td><td>7.52</td><td>6.77</td></tr>
+                    <tr><td>147</td><td>7.46</td><td>6.72</td></tr>
+                    <tr><td>148</td><td>7.41</td><td>6.68</td></tr>
+                    <tr><td>149</td><td>7.36</td><td>6.63</td></tr>
+                    <tr><td>150</td><td>7.32</td><td>6.59</td></tr>
+                    <tr><td>151</td><td>7.27</td><td>6.55</td></tr>
+                    <tr><td>152</td><td>7.22</td><td>6.50</td></tr>
+                    <tr><td>153</td><td>7.17</td><td>6.46</td></tr>
+                    <tr><td>154</td><td>7.13</td><td>6.42</td></tr>
+                    <tr><td>155</td><td>7.08</td><td>6.38</td></tr>
+                    <tr><td>156</td><td>7.03</td><td>6.34</td></tr>
+                    <tr><td>157</td><td>6.99</td><td>6.30</td></tr>
+                    <tr><td>158</td><td>6.94</td><td>6.26</td></tr>
+                    <tr><td>159</td><td>6.90</td><td>6.22</td></tr>
+                    <tr><td>160</td><td>6.86</td><td>6.18</td></tr>
+                    <tr><td>161</td><td>6.82</td><td>6.14</td></tr>
+                    <tr><td>162</td><td>6.77</td><td>6.10</td></tr>
+                    <tr><td>163</td><td>6.73</td><td>6.06</td></tr>
+                    <tr><td>164</td><td>6.69</td><td>6.03</td></tr>
+                    <tr><td>165</td><td>6.65</td><td>5.99</td></tr>
+                    <tr><td>166</td><td>6.61</td><td>5.96</td></tr>
+                    <tr><td>167</td><td>6.57</td><td>5.92</td></tr>
+                    <tr><td>168</td><td>6.53</td><td>5.88</td></tr>
+                    <tr><td>169</td><td>6.49</td><td>5.85</td></tr>
+                    <tr><td>170</td><td>6.45</td><td>5.82</td></tr>
+                    <tr><td>171</td><td>6.42</td><td>5.78</td></tr>
+                    <tr><td>172</td><td>6.38</td><td>5.75</td></tr>
+                    <tr><td>173</td><td>6.34</td><td>5.71</td></tr>
+                    <tr><td>174</td><td>6.31</td><td>5.68</td></tr>
+                    <tr><td>175</td><td>6.27</td><td>5.65</td></tr>
+                    <tr><td>176</td><td>6.23</td><td>5.62</td></tr>
+                    <tr><td>177</td><td>6.20</td><td>5.59</td></tr>
+                    <tr><td>178</td><td>6.16</td><td>5.55</td></tr>
+                    <tr><td>179</td><td>6.13</td><td>5.52</td></tr>
+                    <tr><td>180</td><td>6.10</td><td>5.49</td></tr>
+                    <tr><td>181</td><td>6.06</td><td>5.46</td></tr>
+                    <tr><td>182</td><td>6.03</td><td>5.43</td></tr>
+                    <tr><td>183</td><td>6.00</td><td>5.40</td></tr>
+                    <tr><td>184</td><td>5.96</td><td>5.37</td></tr>
+                    <tr><td>185</td><td>5.93</td><td>5.34</td></tr>
+                    <tr><td>186</td><td>5.90</td><td>5.31</td></tr>
+                    <tr><td>187</td><td>5.87</td><td>5.29</td></tr>
+                    <tr><td>188</td><td>5.84</td><td>5.26</td></tr>
+                    <tr><td>189</td><td>5.81</td><td>5.23</td></tr>
+                    <tr><td>190</td><td>5.78</td><td>5.20</td></tr>
+                    <tr><td>191</td><td>5.75</td><td>5.18</td></tr>
+                    <tr><td>192</td><td>5.72</td><td>5.15</td></tr>
+                    <tr><td>193</td><td>5.69</td><td>5.12</td></tr>
+                    <tr><td>194</td><td>5.66</td><td>5.10</td></tr>
+                    <tr><td>195</td><td>5.63</td><td>5.07</td></tr>
+                    <tr><td>196</td><td>5.60</td><td>5.04</td></tr>
+                    <tr><td>197</td><td>5.57</td><td>5.02</td></tr>
+                    <tr><td>198</td><td>5.54</td><td>4.99</td></tr>
+                    <tr><td>199</td><td>5.51</td><td>4.97</td></tr>
+                    <tr><td>200</td><td>5.49</td><td>4.94</td></tr>
+                </tbody>
+            </table>
+        </article>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="/pages/about-us.md" target="page-content">Company</a></li>
+                <li><a href="/pages/carbon-emissions.md" target="page-content">Carbon Emissions</a></li>
+                <li><a href="/pages/mission.md" target="page-content">Our Mission</a></li>
+                <li><a href="/pages/privacy-policy.md" target="page-content">Privacy Policy</a></li>
+                <li><a href="/pages/affiliate-disclosure.md" target="page-content">Affiliates Disclosure</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul>
+                <li>A Rated House,</li>
+                <li>11 Sunnymead Road,</li>
+                <li>London, </li>
+                <li>NW9 8BT</li>
+                <li><a href="tel://+4402081234411">+44 020 8123 4411</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Sister Sites</h3>
+            <ul>
+                <li><a href="/hub/">MyBoiler Hub</a></li>
+                <li><a href="https://boilermanuals.com">Boiler Manuals</a></li>
+                <li><a href="https://combiboiler.com">Combi Boiler</a></li>
+                <li><a href="https://boilerservice.com">Boiler Service</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Newsletter</h3>
+            <div id="mc_embed_shell">
+                <div id="mc_embed_signup">
+                    <form action="https://myboiler.us7.list-manage.com/subscribe/post?u=74520e86378a5e9ad9e26240e&amp;id=de886bf698&amp;f_id=00ccaee4f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                        <div id="mc_embed_signup_scroll">
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk"></span></label><br><br>
+                                <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""><br><br>
+                            </div>
+                            <div class="clear foot">
+                                <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Subscribe">
+                            </div>
+                            <br>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display: none;"></div>
+                                <div class="response" id="mce-success-response" style="display: none;"></div>
+                            </div>
+                            <div aria-hidden="true" style="position: absolute; left: -5000px;">
+                                <input type="text" name="b_76b9d06d4164064c0ffb0d455_68a8dc9423" tabindex="-1" value="">
+                            </div>
+                            <p style="margin: 0px auto;">
+                                <a href="http://eepurl.com/i6R-1E" title="Mailchimp - email marketing made easy and fun">
+                                    <span style="display: inline-block; background-color: transparent; border-radius: 4px;">
+                                        <img class="refferal_badge" src="https://digitalasset.intuit.com/render/content/dam/intuit/mc-fe/en_us/images/intuit-mc-rewards-text-light.svg" alt="Intuit Mailchimp" style="width: 100px; height: 40px; display: flex; padding: 2px 0px; justify-content: left; align-items: center;">
+                                    </span>
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <footer class="copyright">
+        <ul class="social-media no-bullets">
+            <li class="wp-social-link wp-social-link-x wp-block-social-link">
+                <a rel="noopener nofollow" target="_blank" href="https://x.com/myboiler" class="">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z"></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="wp-social-link wp-social-link-facebook wp-block-social-link">
+                <a rel="noopener nofollow" target="_blank" href="https://facebook.com/myboiler" class="wp-block-social-link-anchor">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z"></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="wp-social-link wp-social-link-youtube wp-block-social-link">
+                <a rel="noopener nofollow" target="_blank" href="https://www.youtube.com/@myboiler" class="wp-block-social-link-anchor">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M21.8,8.001c0,0-0.195-1.378-0.795-1.985c-0.76-0.797-1.613-0.801-2.004-0.847c-2.799-0.202-6.997-0.202-6.997-0.202h-0.009c0,0-4.198,0-6.997,0.202C4.608,5.216,3.756,5.22,2.995,6.016C2.395,6.623,2.2,8.001,2.2,8.001S2,9.62,2,11.238v1.517c0,1.618,0.2,3.237,0.2,3.237s0.195,1.378,0.795,1.985c0.761,0.797,1.76,0.771,2.205,0.855c1.6,0.153,6.8,0.201,6.8,0.201s4.203-0.006,7.001-0.209c0.391-0.047,1.243-0.051,2.004-0.847c0.6-0.607,0.795-1.985,0.795-1.985s0.2-1.618,0.2-3.237v-1.517C22,9.62,21.8,8.001,21.8,8.001z M9.935,14.594l-0.001-5.62l5.404,2.82L9.935,14.594z"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </footer>
+
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+    </footer>
+
+    <script type="text/javascript" data-cfasync="false" src="/js/menu.js"></script>
+</body>
+</html>
