@@ -416,8 +416,8 @@
 			}
 
 			.nav-item-has-dropdown.is-open .mega-menu,
-			.nav-item-has-dropdown:hover .mega-menu,
-			.nav-item-has-dropdown:focus-within .mega-menu {
+			.nav-item-has-dropdown:hover:not(.is-dismissed) .mega-menu,
+			.nav-item-has-dropdown:focus-within:not(.is-dismissed) .mega-menu {
 				display: grid;
 				grid-template-columns: repeat(3, 1fr);
 				gap: 2rem;

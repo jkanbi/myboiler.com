@@ -82,9 +82,21 @@ document.addEventListener('DOMContentLoaded', () => {
         megaCloseTimer = null;
     }
 
+    function openDesktopMega(item) {
+        clearMegaCloseTimer();
+        document.querySelectorAll('.nav-item-has-dropdown').forEach((other) => {
+            other.classList.toggle('is-open', other === item);
+            other.classList.remove('is-dismissed');
+        });
+        syncNavMegaBackdrop();
+    }
+
     function closeAllDesktopMegas() {
         clearMegaCloseTimer();
-        document.querySelectorAll('.nav-item-has-dropdown.is-open').forEach((el) => {
+        document.querySelectorAll('.nav-item-has-dropdown').forEach((el) => {
+            if (el.classList.contains('is-open')) {
+                el.classList.add('is-dismissed');
+            }
             el.classList.remove('is-open');
         });
         syncNavMegaBackdrop();
@@ -100,15 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         item.addEventListener('mouseenter', () => {
             if (!isDesktopNav()) return;
-            clearMegaCloseTimer();
-            document.querySelectorAll('.nav-item-has-dropdown.is-open').forEach((other) => {
-                if (other !== item) other.classList.remove('is-open');
-            });
-            item.classList.add('is-open');
-            syncNavMegaBackdrop();
+            openDesktopMega(item);
         });
 
         item.addEventListener('mouseleave', () => {
+            item.classList.remove('is-dismissed');
             if (!isDesktopNav()) return;
             scheduleMegaClose(item);
         });
@@ -125,17 +133,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         item.addEventListener('focusin', () => {
             if (!isDesktopNav()) return;
-            clearMegaCloseTimer();
-            document.querySelectorAll('.nav-item-has-dropdown.is-open').forEach((other) => {
-                if (other !== item) other.classList.remove('is-open');
-            });
-            item.classList.add('is-open');
-            syncNavMegaBackdrop();
+            openDesktopMega(item);
         });
 
         item.addEventListener('focusout', (e) => {
             if (!isDesktopNav()) return;
             if (item.contains(e.relatedTarget)) return;
+            item.classList.remove('is-dismissed');
             scheduleMegaClose(item);
         });
     });
