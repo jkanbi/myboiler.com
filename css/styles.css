@@ -306,6 +306,12 @@
 				display: none;
 			}
 
+			/* Mobile drawer overlay must never paint or capture clicks on desktop */
+			.menu-overlay {
+				display: none !important;
+				pointer-events: none;
+			}
+
 			.nav-menu {
 				position: static;
 				display: block;
@@ -367,7 +373,15 @@
 				color: #fff !important;
 			}
 
-			/* Desktop Mega Menu Styles */
+			/* Desktop Mega Menu Styles
+			   Stacking contract: .header is sticky z-index 1000. The mega panel lives
+			   inside that context, so a full-page backdrop MUST stay below 1000.
+			   A higher backdrop (e.g. 9999) covers the trigger, steals :hover /
+			   mouseenter, and the menu open/closes in a blink loop. */
+			.header {
+				overflow: visible;
+			}
+
 			.nav-item-has-dropdown {
 				position: relative;
 			}
@@ -384,21 +398,32 @@
 				border-radius: var(--radius-lg);
 				box-shadow: var(--shadow-lg);
 				padding: 2rem;
-				z-index: 10000;
+				z-index: 2;
 				opacity: 0;
 				pointer-events: none;
 				transition: opacity 0.2s ease;
 			}
 
-		.nav-item-has-dropdown.is-open .mega-menu,
-		.nav-item-has-dropdown:hover .mega-menu,
-		.nav-item-has-dropdown:focus-within .mega-menu {
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			gap: 2rem;
-			opacity: 1;
-			pointer-events: auto;
-		}
+			/* Invisible bridge across the 12px gap so hover is not lost
+			   between the trigger and the panel. */
+			.nav-item-has-dropdown .mega-menu::before {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 100%;
+				height: 12px;
+			}
+
+			.nav-item-has-dropdown.is-open .mega-menu,
+			.nav-item-has-dropdown:hover:not(.is-dismissed) .mega-menu,
+			.nav-item-has-dropdown:focus-within:not(.is-dismissed) .mega-menu {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 2rem;
+				opacity: 1;
+				pointer-events: auto;
+			}
 
 			.mega-menu-column {
 				min-width: 0;
@@ -431,7 +456,10 @@
 				text-decoration: none;
 			}
 
-			/* Desktop Mega Menu Backdrop */
+			/* Dim the page behind the header + mega. z-index 900 stays below
+			   .header (1000) so the dimmer cannot steal hover from the menu.
+			   The `~` sibling fallback is intentionally omitted: the backdrop
+			   sits before the nav items, so that selector never matches. */
 			.nav-mega-backdrop {
 				display: none;
 				position: fixed;
@@ -441,22 +469,16 @@
 				height: 100%;
 				background: rgba(27, 27, 27, 0.4);
 				backdrop-filter: blur(8px);
-				z-index: 9999;
+				z-index: 900;
 				opacity: 0;
 				pointer-events: none;
 				transition: opacity 0.2s ease;
 			}
 
-		body.nav-mega-open .nav-mega-backdrop,
-		.nav-item-has-dropdown:hover ~ .nav-mega-backdrop,
-		.nav-item-has-dropdown:focus-within ~ .nav-mega-backdrop {
-			display: block;
-			opacity: 1;
-			pointer-events: auto;
-		}
-
-			body.nav-mega-open {
-				overflow: hidden;
+			body.nav-mega-open .nav-mega-backdrop {
+				display: block;
+				opacity: 1;
+				pointer-events: auto;
 			}
 
 			/* Dropdown arrow icon for desktop */

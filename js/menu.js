@@ -1,4 +1,5 @@
 function toggleMenu() {
+    if (window.innerWidth >= 769) return;
     const navMenu = document.getElementById('nav-menu');
     const overlay = document.querySelector('.menu-overlay');
     const hamburger = document.querySelector('.hamburger-menu');
@@ -24,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 navMenu.classList.remove('active');
                 document.querySelector('.menu-overlay').classList.remove('active');
                 hamburgerMenu.classList.remove('open');
+            } else {
+                closeAllDesktopMegas();
             }
         }, 100);
     });
@@ -52,7 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Desktop: centered mega menus + full-page blur backdrop (modal-style)
+    // Desktop: hover/focus mega menus. Backdrop dims the page only — it must
+    // stay below the header stacking context so it cannot steal hover.
     const navMegaBackdrop = document.querySelector('.nav-mega-backdrop');
     let megaCloseTimer = null;
     const MEGA_CLOSE_MS = 420;
@@ -78,9 +82,21 @@ document.addEventListener('DOMContentLoaded', () => {
         megaCloseTimer = null;
     }
 
+    function openDesktopMega(item) {
+        clearMegaCloseTimer();
+        document.querySelectorAll('.nav-item-has-dropdown').forEach((other) => {
+            other.classList.toggle('is-open', other === item);
+            other.classList.remove('is-dismissed');
+        });
+        syncNavMegaBackdrop();
+    }
+
     function closeAllDesktopMegas() {
         clearMegaCloseTimer();
-        document.querySelectorAll('.nav-item-has-dropdown.is-open').forEach((el) => {
+        document.querySelectorAll('.nav-item-has-dropdown').forEach((el) => {
+            if (el.classList.contains('is-open')) {
+                el.classList.add('is-dismissed');
+            }
             el.classList.remove('is-open');
         });
         syncNavMegaBackdrop();
@@ -96,15 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         item.addEventListener('mouseenter', () => {
             if (!isDesktopNav()) return;
-            clearMegaCloseTimer();
-            document.querySelectorAll('.nav-item-has-dropdown.is-open').forEach((other) => {
-                if (other !== item) other.classList.remove('is-open');
-            });
-            item.classList.add('is-open');
-            syncNavMegaBackdrop();
+            openDesktopMega(item);
         });
 
         item.addEventListener('mouseleave', () => {
+            item.classList.remove('is-dismissed');
             if (!isDesktopNav()) return;
             scheduleMegaClose(item);
         });
@@ -121,17 +133,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         item.addEventListener('focusin', () => {
             if (!isDesktopNav()) return;
-            clearMegaCloseTimer();
-            document.querySelectorAll('.nav-item-has-dropdown.is-open').forEach((other) => {
-                if (other !== item) other.classList.remove('is-open');
-            });
-            item.classList.add('is-open');
-            syncNavMegaBackdrop();
+            openDesktopMega(item);
         });
 
         item.addEventListener('focusout', (e) => {
             if (!isDesktopNav()) return;
             if (item.contains(e.relatedTarget)) return;
+            item.classList.remove('is-dismissed');
             scheduleMegaClose(item);
         });
     });
