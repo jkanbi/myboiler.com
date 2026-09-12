@@ -575,8 +575,8 @@
 
         <!-- Mode Toggle -->
         <div class="mode-toggle">
-            <button class="mode-button active" onclick="switchMode('time-from-power')">Time from Power</button>
-            <button class="mode-button" onclick="switchMode('power-from-time')">Power from Time</button>
+            <button class="mode-button active" data-mode="time-from-power" onclick="switchMode('time-from-power')">Time Required</button>
+            <button class="mode-button" data-mode="power-from-time" onclick="switchMode('power-from-time')">Power Required</button>
         </div>
 
         <!-- Mode A: Time from Power Calculator -->
@@ -728,7 +728,7 @@
                 const contents = document.querySelectorAll('.mode-content');
 
                 buttons.forEach(btn => {
-                    if (btn.textContent.toLowerCase().replace(/\s+/g, '-') === mode) {
+                    if (btn.dataset.mode === mode) {
                         btn.classList.add('active');
                     } else {
                         btn.classList.remove('active');
