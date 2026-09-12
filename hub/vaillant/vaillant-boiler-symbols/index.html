@@ -125,6 +125,23 @@
             background: var(--bg);
         }
 
+        .article-content td img.symbol {
+            display: block;
+            max-width: 72px;
+            max-height: 86px;
+            width: auto;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .article-content .remastered-image {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 1rem auto 0;
+            border-radius: var(--radius);
+        }
+
         @media (max-width: 768px) {
             .article-content table {
                 font-size: 0.875rem;
@@ -318,126 +335,136 @@
                 <tbody>
                     <tr>
                         <td>0</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/vaillant-ecotec-current-temperature-c.jpg" alt="Current flow temperature display" width="139" height="73" loading="lazy"></td>
                         <td>Current Flow temperature of heated water leaving the boiler heat exchanger</td>
                         <td>All</td>
                     </tr>
                     <tr>
                         <td>1</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/vaillant-flame-symbol.png" alt="Vaillant flame symbol" width="29" height="51" loading="lazy"></td>
                         <td>Flame: Permanently on: Correct burner operation; Burner on</td>
                         <td>New Ecotec</td>
                     </tr>
                     <tr>
                         <td>2</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/vaillant-boiler-symbol-bar-graph.png" alt="Vaillant burner modulation bar graph" width="38" height="60" loading="lazy"></td>
                         <td><strong>Display of the current burner modulation rate (bar graph display)</strong><br>The bar graph will go up and down depending on the power level the boiler is firing at.</td>
                         <td>New Ecotec</td>
                     </tr>
                     <tr>
                         <td>3</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/vaillant-flame.png" alt="Older Ecotec flame symbol" width="28" height="86" loading="lazy"></td>
                         <td>Flame: Permanently on: Correct burner operation; Burner on</td>
                         <td>Older Ecotec</td>
                     </tr>
                     <tr>
                         <td>4</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/vaillant-flame-failure-symbol.png" alt="Flame failure lockout symbol" width="42" height="55" loading="lazy"></td>
                         <td>Flame with cross: Boiler is at lock out and will display fault code</td>
                         <td>Older Ecotec</td>
                     </tr>
                     <tr>
                         <td>5</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/filling-pressure-bar.png" alt="Heating system filling pressure bar graph" width="31" height="74" loading="lazy"></td>
                         <td><strong>Display of the current filling pressure of the heating system (bar graph display)</strong><br>The filling pressure must be in the mid range between the two dotted lines.<br>– Permanently on: The filling pressure is within the permitted range.<br>– Flashing: The filling pressure is outside of the permitted range</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>6</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/heating-mode-symbol.png" alt="Heating mode active symbol" width="24" height="30" loading="lazy"></td>
                         <td><strong>Heating mode active</strong><br>– Permanently on: Heat demand, heating mode</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>6.1</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/heating-mode-symbol.png" alt="Heating mode burner on symbol" width="24" height="30" loading="lazy"></td>
                         <td><strong>Heating mode active</strong><br>– Flashing: Burner on in heating mode</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>7</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/tap-symbol.png" alt="Hot water tap symbol" width="27" height="20" loading="lazy"></td>
                         <td><strong>Hot water generation active</strong><br>– Permanently on: In draw-off mode before burner is on<br>– Flashing: Burner on in draw-off mode</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>7.1</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/tap-symbol.png" alt="Hot water tap symbol flashing" width="27" height="20" loading="lazy"></td>
                         <td><strong>Hot water generation active</strong><br>– Flashing: Burner on in draw-off mode</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>8</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/comfort-mode-symbol.png" alt="Comfort mode hot water symbol" width="28" height="35" loading="lazy"></td>
                         <td><strong>Hot water generation active</strong><br>For VUI (Storage Combination) / VUW (Combination) boilers:<br>– Permanently on, burner is on: In draw-off mode</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>8.1</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/comfort-mode-symbol.png" alt="Comfort mode hot water symbol flashing" width="28" height="35" loading="lazy"></td>
                         <td><strong>Hot water generation active</strong><br>– Flashing: Burner on in draw-off mode</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>9</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/comfort-mode-symbol.png" alt="Cylinder hot water time slot symbol" width="28" height="35" loading="lazy"></td>
                         <td><strong>Hot water generation active</strong><br>On VU (System / OpenVent) boilers:<br>– Permanently on: time slot activated for hot water generation</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>9.1</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/comfort-mode-symbol.png" alt="Cylinder heating active symbol" width="28" height="35" loading="lazy"></td>
                         <td><strong>Hot water generation active</strong><br>– Flashing: Domestic hot water cylinder is being heated, burner on</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>10</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/service-spanner-symbol.png" alt="Service spanner symbol" width="27" height="26" loading="lazy"></td>
                         <td><strong>Maintenance / Service required</strong><br>In the "Live monitor", you can read further information about the reason for the service</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>11</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/umbrella-summer-mode-symbol.png" alt="Summer mode umbrella symbol" width="27" height="31" loading="lazy"></td>
                         <td><strong>Summer mode active</strong><br>Heating mode is switched off<br>Decrease the heating flow temp until it says off. Increase the flow temp to original value to turn heating back on.</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>12</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/hourglass.png" alt="Anti-cycling hourglass symbol" width="22" height="26" loading="lazy"></td>
                         <td><strong>Boiler anti-cycling time is active</strong><br>This function is used to prevent frequent on/off operations, and therefore contributes to prolonging the life of your boiler. The symbol also appears if the boiler is in a waiting period.</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>13</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/vaillant-pump-symbol.png" alt="Internal pump running symbol" width="42" height="41" loading="lazy"></td>
                         <td>Internal pump is running</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>14</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/vaillant-gas-valve-symbol.png" alt="Gas valve activated symbol" width="39" height="46" loading="lazy"></td>
                         <td>Gas valve is activated</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>15</td>
-                        <td></td>
+                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/fault-code-symbol.png" alt="Fault code F.XX symbol" width="28" height="43" loading="lazy"></td>
                         <td><strong>F.XX Fault in the boiler</strong><br>Appears instead of the basic display. A plain text display explains the displayed fault code.<br>Example: F.10 Flow NTC short circuit.</td>
                         <td></td>
                     </tr>
                 </tbody>
             </table>
+
+            <h2>For the new remastered with black display</h2>
+            <img
+                class="remastered-image"
+                src="/hub/vaillant/vaillant-boiler-symbols/symbols/vaillant-boiler-symbols-for-remastered.jpg"
+                alt="Vaillant remastered black display boiler symbols reference"
+                width="867"
+                height="1217"
+                loading="lazy"
+            >
         </article>
     </div>
 

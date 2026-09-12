@@ -39,11 +39,9 @@ All other requests are redirected to hub.myboiler.com using:
 
 Simply push your changes to the GitHub repository and GitHub Pages will automatically deploy them.
 
-## Chat (Option A)
+## Chat
 
-The homepage includes a "Click to talk" button that links to `chat.myboiler.com`.
-
-This repo intentionally does **not** host the chat backend (API keys must never be exposed in browser JS on a public static site). Host the chat app on a separate deployment (e.g. Vercel/Cloudflare) and point the `chat.myboiler.com` DNS/CNAME to it.
+Ask AI / Boiler Help AI lives at `/chat/` on this site. The page embeds an ElevenLabs Conversational AI widget; there is no separate `chat.myboiler.com` subdomain.
 
 ## Example Requests
 
