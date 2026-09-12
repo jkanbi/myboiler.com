@@ -1,4 +1,5 @@
 function toggleMenu() {
+    if (window.innerWidth >= 769) return;
     const navMenu = document.getElementById('nav-menu');
     const overlay = document.querySelector('.menu-overlay');
     const hamburger = document.querySelector('.hamburger-menu');
@@ -24,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 navMenu.classList.remove('active');
                 document.querySelector('.menu-overlay').classList.remove('active');
                 hamburgerMenu.classList.remove('open');
+            } else {
+                closeAllDesktopMegas();
             }
         }, 100);
     });
@@ -52,7 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Desktop: centered mega menus + full-page blur backdrop (modal-style)
+    // Desktop: hover/focus mega menus. Backdrop dims the page only — it must
+    // stay below the header stacking context so it cannot steal hover.
     const navMegaBackdrop = document.querySelector('.nav-mega-backdrop');
     let megaCloseTimer = null;
     const MEGA_CLOSE_MS = 420;
