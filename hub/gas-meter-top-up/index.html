@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gas Meter Top Up - MyBoiler Hub</title>
+    <meta name="description" content="How to manually top up prepaid gas meters, including Landis+Gyr 2-button digital smart meters and Liberty keypad meters.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-breadcrumb {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .article-header {
+            margin-bottom: 2rem;
+        }
+
+        .article-title {
+            font-size: clamp(1.85rem, 5vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-content h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.75rem;
+            line-height: 1.3;
+        }
+
+        .article-content p {
+            margin: 0 0 1rem;
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 0 0 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-content img {
+            display: block;
+            width: 100%;
+            max-width: 420px;
+            height: auto;
+            aspect-ratio: 3 / 2;
+            object-fit: cover;
+            margin: 0.75rem auto 1.25rem;
+            border-radius: var(--radius);
+        }
+
+        .article-note {
+            margin-top: 2rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .article-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="article-page">
+    <!-- Header -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+
+            <nav id="nav-menu" class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="/">Hub</a></li>
+                    <li class="nav-item"><a href="/chat/">Ask AI</a></li>
+                    <li class="nav-item"><a href="/">Exit Hub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <div class="article-container">
+        <nav class="article-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Hub</a> › <a href="/hub/calculators/gas-rate-calculator/">Gas Tools</a> › Gas Meter Top Up
+        </nav>
+
+        <header class="article-header">
+            <h1 class="article-title">Gas Meter Top Up</h1>
+        </header>
+
+        <article class="article-content">
+            <p>Need to add credit to a prepaid gas meter yourself? Use the steps below for the two most common meter styles.</p>
+
+            <h2>2 Button Meter Manual Top-Up</h2>
+            <h3>Landis+Gyr Digital Smart Meter</h3>
+            <img
+                src="/hub/gas-meter-top-up/landys-gyr-digital-smart-meter.jpg"
+                alt="Landis+Gyr digital smart gas meter with A and B buttons"
+                width="420"
+                height="280"
+                loading="eager"
+            >
+            <p>Here’s how to manually top up your gas using the meter:</p>
+            <ul>
+                <li>Press button <strong>A</strong> to wake the screen,</li>
+                <li>then press it <strong>twice</strong> to get to <strong>Credit Entry</strong></li>
+                <li>Press button <strong>B</strong>, then <strong>A</strong> to enter the code and short press <strong>B</strong> to move forward to the next digit.</li>
+                <li>Finally press and <strong>hold button B</strong> to submit.</li>
+            </ul>
+            <p>If you make a mistake, repeatedly short press <strong>B</strong> to get back to the correct digit.</p>
+
+            <h2>Liberty Gas Meter (Keypad Style)</h2>
+            <img
+                src="/hub/gas-meter-top-up/liberty-eg4-meter.jpg"
+                alt="Liberty EG4 keypad prepaid gas meter"
+                width="420"
+                height="280"
+                loading="lazy"
+            >
+            <ul>
+                <li>Press the blue <strong>A</strong> key to start. The screen will show <strong>VEND MODE</strong>.</li>
+                <li>Type your 20-digit code on the meter keypad.</li>
+                <li>Once started, the blue <strong>A</strong> key becomes a <strong>delete</strong> button, so you can go back and delete one number at a time.</li>
+                <li>When you’ve entered all 20 digits, press <strong>B</strong>. Your meter will then either accept or reject the code.</li>
+            </ul>
+            <p>If it accepts it, you’ll see <strong>ACCEPTED</strong>, then the amount of the top-up, and <strong>ADDED</strong>.</p>
+            <p>If you type in the wrong code 5 times, the display will show <strong>KEY LOCKED</strong> for 20 seconds and block input for that duration.</p>
+
+            <p class="article-note"><em>Information is guidance only; repairs require qualified professionals. Affiliate links may earn us commissions at no extra cost. Do your own due diligence; we accept no liability.</em></p>
+        </article>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="/pages/about-us.md" target="page-content">Company</a></li>
+                <li><a href="/pages/carbon-emissions.md" target="page-content">Carbon Emissions</a></li>
+                <li><a href="/pages/mission.md" target="page-content">Our Mission</a></li>
+                <li><a href="/pages/privacy-policy.md" target="page-content">Privacy Policy</a></li>
+                <li><a href="/pages/affiliate-disclosure.md" target="page-content">Affiliates Disclosure</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul>
+                <li>A Rated House,</li>
+                <li>11 Sunnymead Road,</li>
+                <li>London,</li>
+                <li>NW9 8BT</li>
+                <li><a href="tel://+4402081234411">+44 020 8123 4411</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Sister Sites</h3>
+            <ul>
+                <li><a href="/">MyBoiler Hub</a></li>
+                <li><a href="https://boilermanuals.com">Boiler Manuals</a></li>
+                <li><a href="https://combiboiler.com">Combi Boiler</a></li>
+                <li><a href="https://boilerservice.com">Boiler Service</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+    </footer>
+
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
