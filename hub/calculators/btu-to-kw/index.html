@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vaillant P Test Program Mode - MyBoiler Hub</title>
-    <meta name="description" content="Learn how to run test programs on your Vaillant boiler, including purging mode, maximum fire test, and minimum fire test modes.">
+    <title>BTU to Watts Calculator - MyBoiler.com</title>
+    <meta name="description" content="Convert BTU (British Thermal Units) to Watts and kilowatts instantly. Essential conversion tool for heating professionals and homeowners.">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <style>
-        .article-page {
+        .calculator-page {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             background: var(--bg);
         }
 
-        .article-container {
+        .calculator-container {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
             max-width: 900px;
             margin: 0 auto;
@@ -23,151 +26,162 @@
             box-sizing: border-box;
         }
 
-        .article-breadcrumb {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
         }
 
-        .article-breadcrumb a {
+        .calculator-breadcrumb {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .calculator-breadcrumb a {
             color: var(--accent);
             text-decoration: none;
         }
 
-        .article-breadcrumb a:hover {
+        .calculator-breadcrumb a:hover {
             text-decoration: underline;
         }
 
-        .article-header {
-            margin-bottom: 2.5rem;
-        }
-
-        .article-title {
-            font-size: clamp(2rem, 5vw, 3rem);
+        .calculator-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
             font-weight: 700;
             line-height: 1.1;
             color: var(--text);
-            margin: 0 0 1rem;
+            margin: 0 0 0.75rem;
             letter-spacing: -0.02em;
         }
 
-        .article-intro {
-            font-size: 1.125rem;
-            line-height: 1.6;
+        .calculator-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
             color: var(--text-muted);
-            margin: 0 0 2rem;
+            margin: 0;
+            max-width: 60ch;
         }
 
-        .article-content {
+        .calculator-card {
+            width: 100%;
             background: var(--surface);
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            padding: clamp(1.5rem, 4vw, 3rem);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
             margin-bottom: 2rem;
         }
 
-        .article-content p {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--text);
-            margin: 0 0 1.25rem;
+        .input-group {
+            margin-bottom: 2rem;
         }
 
-        .article-content h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text);
-            margin: 2rem 0 1rem;
-        }
-
-        .article-content h3 {
-            font-size: 1.25rem;
+        .input-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 0.9375rem;
             font-weight: 600;
             color: var(--text);
-            margin: 1.5rem 0 1rem;
+            margin-bottom: 0.75rem;
         }
 
-        .article-content ul {
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1.125rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            box-sizing: border-box;
+            transition: border-color 0.2s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .result-item {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .result-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .result-unit {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .instructions-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .instructions-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .instructions-content {
+            font-size: 0.9375rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+
+        .instructions-content strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .instructions-content ul {
             margin: 1rem 0;
             padding-left: 1.5rem;
         }
 
-        .article-content li {
-            margin: 0.5rem 0;
-            line-height: 1.7;
+        .instructions-content li {
+            margin-bottom: 0.5rem;
         }
 
-        .article-content strong {
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .test-program-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-            background: var(--bg);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-        }
-
-        .test-program-table th,
-        .test-program-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border-subtle);
-        }
-
-        .test-program-table th {
-            background: var(--accent-light);
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .test-program-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .test-program-table code {
-            font-family: 'Courier New', monospace;
-            background: var(--surface);
-            padding: 0.25rem 0.5rem;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-        }
-
-        .instruction-box {
-            background: var(--accent-light);
-            border-left: 4px solid var(--accent);
-            padding: 1.25rem;
-            border-radius: var(--radius-md);
-            margin: 1.5rem 0;
-        }
-
-        .instruction-box p:last-child {
-            margin-bottom: 0;
-        }
-
-        .contact-section {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            margin-top: 2rem;
-            text-align: center;
-        }
-
-        .contact-section h4 {
-            margin: 0 0 1rem;
-            color: var(--text);
-        }
-
-        .contact-section p {
-            margin: 0.5rem 0;
-            color: var(--text-muted);
+        @media (max-width: 640px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body class="article-page">
+<body class="calculator-page">
     <!-- Header with full navigation -->
     <div class="menu-overlay"></div>
     <div class="nav-mega-backdrop" aria-hidden="true"></div>
@@ -222,7 +236,7 @@
                                 <a href="https://hub.myboiler.com/flow-temperature-and-power/">Flow Temperature & Power</a>
                                 <a href="https://hub.myboiler.com/solar-thermal-heating/">Solar Thermal Heating</a>
                                 <a href="https://hub.myboiler.com/solar-thermal-servicing/">Solar Thermal Servicing</a>
-                                <a href="https://hub.myboiler.com/s-plan-heating-systems/">S Plan Heating Systems</a>
+                                <a href="/hub/s-plan/">S Plan Heating Systems</a>
                                 <a href="https://hub.myboiler.com/radiators/">Radiators</a>
                                 <a href="/quote/">Get a Quote</a>
                                 <a href="https://hub.myboiler.com/services/">Services</a>
@@ -317,78 +331,64 @@
         </div>
     </header>
 
-    <!-- Article Content -->
-    <div class="article-container">
-        <nav class="article-breadcrumb" aria-label="Breadcrumb">
-            <a href="/hub/">Hub</a> › <a href="/hub/vaillant/">Vaillant</a> › Vaillant P Test Program Mode
-        </nav>
-
-        <header class="article-header">
-            <h1 class="article-title">Vaillant P Test Program Mode</h1>
-            <p class="article-intro">
-                Run test programs on your Vaillant boiler for sequential activation of special functions. Learn how to access purging mode, maximum fire test, and minimum fire test modes.
+    <!-- Calculator Content -->
+    <div class="calculator-container">
+        <header class="calculator-header">
+            <nav class="calculator-breadcrumb" aria-label="Breadcrumb">
+                <a href="/hub/">Hub</a> › <a href="/hub/calculators/">Calculators</a> › BTU to Watts
+            </nav>
+            <h1 class="calculator-headline">BTU to Watts Calculator</h1>
+            <p class="calculator-connector">
+                Convert BTU (British Thermal Units) to Watts and kilowatts for heating system specifications.
             </p>
         </header>
 
-        <article class="article-content">
-            <h2>Run a Test Program</h2>
-            <p>
-                By running a test program allows the sequential activation of special functions to test your boiler. The test programs are activated by pressing the Power 'ON' switch and '+' simultaneously for 5 seconds.
-            </p>
-
-            <div class="instruction-box">
-                <p><strong>Activation:</strong> Press the Power 'ON' switch and '+' simultaneously for 5 seconds.</p>
-                <p><strong>Navigation:</strong> By default 'P.0/P.1' will display. Scroll by pressing the '+' button.</p>
-                <p><strong>Start Test:</strong> Press the 'i' button to start the unit and test the selected program.</p>
-                <p><strong>Abort:</strong> A test program can be aborted at any time by pressing the 'i' and '+' buttons simultaneously.</p>
+        <div class="calculator-card">
+            <div class="input-group">
+                <label class="input-label">
+                    <span>BTU/h (British Thermal Units per hour)</span>
+                </label>
+                <input type="number" id="btuInput" class="input-field" value="10000" min="0" step="100">
             </div>
 
-            <h2>Test Program Modes</h2>
-            <p>For information on each Test Program refer to the table below:</p>
-
-            <table class="test-program-table">
-                <thead>
-                    <tr>
-                        <th>Code</th>
-                        <th>Test Program</th>
-                        <th>Meaning</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>P.0</code></td>
-                        <td>Purging mode</td>
-                        <td>Test program used for purging air and placing divertor valve into middle position with pump cycling periodically.</td>
-                    </tr>
-                    <tr>
-                        <td><code>P.1</code></td>
-                        <td>Maximum fire Test Mode</td>
-                        <td>Test Program used when the unit runs at full load after successful ignition.</td>
-                    </tr>
-                    <tr>
-                        <td><code>P.2</code></td>
-                        <td>Minimum fire Test mode</td>
-                        <td>Test program used when the unit runs with minimum gas consumption after successful ignition.</td>
-                    </tr>
-                    <tr>
-                        <td><code>P.5</code></td>
-                        <td>STB Testing</td>
-                        <td>Program for STB (Safety Temperature Limiter) testing; the device heats up, bypassing the regular shutdown procedure, until it reaches the STB shutdown temperature of 97°C.</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>Important Notes</h2>
-            <p>
-                The information provided above is from the Vaillant Ecotec Installation manual. For newer Ecotec models, please use the installation assistant provided with your boiler.
-            </p>
-
-            <div class="contact-section">
-                <h4>Contact Us</h4>
-                <p>A Rated House, 11 Sunnymead Road, London, NW9 8BT</p>
-                <p><a href="tel:+442081234411">+44 020 8123 4411</a></p>
+            <div class="results-grid">
+                <div class="result-item">
+                    <div class="result-label">Watts</div>
+                    <div class="result-value" id="wattsResult">2931</div>
+                    <div class="result-unit">W</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Kilowatts</div>
+                    <div class="result-value" id="kwResult">2.93</div>
+                    <div class="result-unit">kW</div>
+                </div>
             </div>
-        </article>
+
+            <div class="instructions-section">
+                <h3 class="instructions-title">About BTU to Watts Conversion</h3>
+                <div class="instructions-content">
+                    <p><strong>Conversion Formula:</strong> 1 BTU/h = 0.29307107 Watts</p>
+                    
+                    <p>BTU (British Thermal Unit) is a traditional unit of heat energy commonly used in heating and cooling specifications, particularly in the UK and US. Watts and kilowatts are the metric SI units of power used in modern heating system specifications.</p>
+
+                    <p><strong>Common Uses:</strong></p>
+                    <ul>
+                        <li>Converting boiler ratings from BTU to kW</li>
+                        <li>Comparing radiator outputs across different specification formats</li>
+                        <li>Understanding heat pump capacity ratings</li>
+                        <li>Verifying heating system calculations</li>
+                    </ul>
+
+                    <p><strong>Quick Reference:</strong></p>
+                    <ul>
+                        <li>10,000 BTU/h ≈ 2.93 kW</li>
+                        <li>24,000 BTU/h ≈ 7.03 kW (typical combi boiler)</li>
+                        <li>30,000 BTU/h ≈ 8.79 kW</li>
+                        <li>40,000 BTU/h ≈ 11.72 kW</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -487,6 +487,26 @@
         <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
     </footer>
 
+    <script type="text/javascript" data-cfasync="false">
+        const btuInput = document.getElementById('btuInput');
+        const wattsResult = document.getElementById('wattsResult');
+        const kwResult = document.getElementById('kwResult');
+
+        function calculate() {
+            const btu = parseFloat(btuInput.value) || 0;
+            const watts = btu * 0.29307107;
+            const kw = watts / 1000;
+
+            wattsResult.textContent = Math.round(watts).toLocaleString();
+            kwResult.textContent = kw.toFixed(2);
+        }
+
+        btuInput.addEventListener('input', calculate);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            calculate();
+        });
+    </script>
     <script type="text/javascript" data-cfasync="false" src="/js/menu.js"></script>
 </body>
 </html>
