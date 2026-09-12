@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTU to KW & Watts Calculator - MyBoiler Hub</title>
+    <meta name="description" content="Convert BTU to kilowatts (KW) and watts. Essential calculator for heating system sizing and comparison.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-breadcrumb {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .calculator {
+            background: var(--surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .calculator h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 1.5rem;
+        }
+
+        .calc-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .calc-row label {
+            font-weight: 500;
+            color: var(--text);
+            min-width: 120px;
+        }
+
+        .calc-row input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .calc-row input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(24, 99, 220, 0.1);
+        }
+
+        .calc-result {
+            background: var(--bg);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .calc-result p {
+            margin: 0;
+            font-size: 1.125rem;
+            color: var(--text);
+        }
+
+        .conversion-info {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+        }
+
+        .conversion-info h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 1rem;
+        }
+
+        .conversion-info p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0 0 0.75rem;
+        }
+
+        .conversion-info p:last-child {
+            margin-bottom: 0;
+        }
+
+        .back-to-hub {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-top: 3rem;
+        }
+
+        .back-to-hub:hover {
+            background: var(--bg);
+            border-color: var(--accent);
+            transform: translateX(-4px);
+        }
+
+        @media (max-width: 768px) {
+            .calc-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .calc-row label {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="/hub/">Hub</a></li>
+                    <li class="nav-item"><a href="/chat/">Ask AI</a></li>
+                    <li class="nav-item"><a href="/quote/">Get a Quote</a></li>
+                    <li class="nav-item"><a href="https://boilermanuals.com">Manuals</a></li>
+                    <li class="nav-item"><a href="/">Exit Hub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <nav class="article-breadcrumb" aria-label="Breadcrumb">
+            <a href="/hub/">Hub</a> / <a href="/hub/calculators/">Calculators</a> / <span>BTU to KW & Watts</span>
+        </nav>
+
+        <header class="article-header">
+            <h1 class="article-title">BTU to KW & Watts Calculator</h1>
+        </header>
+
+        <div class="calculator">
+            <h2>Convert BTU to KW and Watts</h2>
+            
+            <div class="calc-row">
+                <label for="btu-input">BTU/h:</label>
+                <input type="number" id="btu-input" placeholder="Enter BTU/h value" step="any">
+            </div>
+
+            <div class="calc-result">
+                <p><strong>Result:</strong></p>
+                <p id="kw-result">KW: -</p>
+                <p id="watts-result">Watts: -</p>
+            </div>
+        </div>
+
+        <div class="conversion-info">
+            <h3>Conversion Formula</h3>
+            <p><strong>1 BTU/h = 0.293071 Watts</strong></p>
+            <p><strong>1 BTU/h = 0.000293071 KW</strong></p>
+            <p>BTU (British Thermal Unit) is commonly used in heating and cooling specifications, particularly in the US and UK markets. Watts and kilowatts (KW) are the SI units for power and are used universally in heating system specifications.</p>
+        </div>
+
+        <a href="/hub/calculators/" class="back-to-hub">
+            <span>←</span>
+            <span>Back to Calculators</span>
+        </a>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="/pages/about-us.md" target="page-content">Company</a></li>
+                <li><a href="/pages/privacy-policy.md" target="page-content">Privacy Policy</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul>
+                <li>A Rated House,</li>
+                <li>11 Sunnymead Road,</li>
+                <li>London, NW9 8BT</li>
+                <li><a href="tel://+4402081234411">+44 020 8123 4411</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Sister Sites</h3>
+            <ul>
+                <li><a href="/">MyBoiler Hub</a></li>
+                <li><a href="https://boilermanuals.com">Boiler Manuals</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+    </footer>
+
+    <script src="/js/menu.js"></script>
+    <script>
+        const btuInput = document.getElementById('btu-input');
+        const kwResult = document.getElementById('kw-result');
+        const wattsResult = document.getElementById('watts-result');
+
+        btuInput.addEventListener('input', function() {
+            const btu = parseFloat(this.value);
+            if (!isNaN(btu) && btu >= 0) {
+                const watts = btu * 0.293071;
+                const kw = watts / 1000;
+                
+                kwResult.textContent = `KW: ${kw.toFixed(4)}`;
+                wattsResult.textContent = `Watts: ${watts.toFixed(2)}`;
+            } else {
+                kwResult.textContent = 'KW: -';
+                wattsResult.textContent = 'Watts: -';
+            }
+        });
+    </script>
+</body>
+</html>
