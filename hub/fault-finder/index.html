@@ -133,6 +133,33 @@
                 grid-template-columns: 1fr;
             }
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource { display:block; margin: 0.75rem 0 1.25rem; }
+
     </style>
 </head>
 <body class="article-page">
@@ -198,6 +225,10 @@
             <span>Back to Hub</span>
         </a>
     </div>
+
+                <img src="/hub/fault-finder/images/combiselect.png" alt="Combiselect" loading="lazy">
+            <img src="/hub/fault-finder/images/systemselect.png" alt="Systemselect" loading="lazy">
+            <img src="/hub/fault-finder/images/openventselect.png" alt="Openventselect" loading="lazy">
 
     <footer class="footer">
         <div class="footer-column">

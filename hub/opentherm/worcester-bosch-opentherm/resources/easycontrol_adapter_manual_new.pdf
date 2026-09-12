@@ -1,0 +1,1012 @@
+
+
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<!-- page-id 4337485 -->
+<!-- CMS Version 513 -->
+
+<title>Welcome to Bosch EasyControl | Bosch Home Comfort</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Welcome to Bosch EasyControl of Bosch. The smart thermostat which autonomously adapts to your life." />
+<meta name="robots" content="index,follow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Welcome to Bosch EasyControl | Bosch Home Comfort" />
+<meta property="og:description" content="Welcome to Bosch EasyControl of Bosch. The smart thermostat which autonomously adapts to your life." />
+<meta property="og:image" content="https://www.bosch-homecomfort.com/global/media/country_pool/bosch-easycrontrol/uk_009_easycontrol_lady.jpg" />
+<meta property="og:url" content="https://www.bosch-homecomfort.com/global/en/bosch-easycontrol/" />
+<meta property="og:locale" content="en_GLOBAL" />
+<meta property="og:site_name" content="Bosch Home Comfort" />
+<link rel="canonical" href="https://www.bosch-homecomfort.com/global/en/bosch-easycontrol/" />
+<!-- base -->
+<link rel="icon" href="https://www.bosch-homecomfort.com/resources/assets/favicons/boschtt/favicon.ico">
+<link rel="preload" href="https://www.bosch-homecomfort.com/resources/assets/fonts/BoschSans-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://www.bosch-homecomfort.com/resources/assets/fonts/BoschSans-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://www.bosch-homecomfort.com/resources/assets/criticalcss/boschtt/critical.css?2026_403">
+<link rel="stylesheet" type="text/css" href="https://www.bosch-homecomfort.com/resources/assets/main.css?2026_403">
+<script type="module" src="https://dock.ui.bosch.tech/releases/4-latest/build/dock-privacy-settings.esm.js" crossorigin="anonymous"></script>
+
+<script nomodule="" src="https://dock.ui.bosch.tech/releases/4-latest/build/dock-privacy-settings.js" crossorigin="anonymous"></script>
+
+<!-- Google Analytics -->
+<!-- Data Layer Object -->
+<script>
+function init_datalayer() {
+if (window.dataLayer === undefined) {
+window.dataLayer = [];
+}
+window.dataLayer.push({
+page: {
+pageInfo: {
+pageURL: 'https://www.bosch-homecomfort.com/global/en/bosch-easycontrol/',
+pageName: 'Welcome to Bosch EasyControl | Bosch Home Comfort',
+pageType: 'residential',
+pageCategory: 'Bosch EasyControl',
+pageSubCategory: 'Bosch EasyControl',
+breadcrumps: [ "Bosch EasyControl" ],
+language: 'en',
+country: 'GLOBAL'
+}
+}
+});
+}
+privacySettingValue = window.localStorage.getItem("privacySettingValue");
+if (typeof privacySettingValue != "undefined" && privacySettingValue >= 3) {
+if (window.dataLayer === undefined) {
+window.dataLayer = [];
+}
+window.dataLayer.push({
+page: {
+pageInfo: {
+pageURL: 'https://www.bosch-homecomfort.com/global/en/bosch-easycontrol/',
+pageName: 'Welcome to Bosch EasyControl | Bosch Home Comfort',
+pageType: 'residential',
+pageCategory: 'Bosch EasyControl',
+pageSubCategory: 'Bosch EasyControl',
+breadcrumps: [ "Bosch EasyControl" ],
+language: 'en',
+country: 'GLOBAL'
+}
+}
+});
+}
+</script>
+<!-- TMS Properties -->
+<script>
+privacySettingValue = window.localStorage.getItem("privacySettingValue");
+if (typeof privacySettingValue != "undefined" && privacySettingValue >= 3) {
+(
+function(w,d,s,l,i){
+w[l]=w[l]||[];
+w[l].push({
+'gtm.start':new Date().getTime(),
+event:'gtm.js'
+});
+var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),
+dl=l!='dataLayer'?'&l='+l:'';
+j.async=true;
+j.src='https://sst.bosch-homecomfort.com/gtm.js?id='+i+dl;
+f.parentNode.insertBefore(j,f);
+}
+)(
+window,
+document,
+'script',
+'dataLayer',
+'GTM-MDHTQPZ'
+);
+}
+</script>
+<!-- End Google Analytics -->
+ 
+
+</head>
+<body class="">
+<dock-privacy-settings cookie-name="do-consent"
+cookie-same-site="Lax"
+cookie-secure="true"
+consent-categories="analysis,marketing"
+consent-domain=".bosch-homecomfort.com"
+consent-path="/global"
+consent-lifetime-accepted="365"
+consent-lifetime-declined="31"
+link-url-marketing=" https://www.bosch-homecomfort.com/global/en/privacy/"
+link-url-comfort=" https://www.bosch-homecomfort.com/global/en/privacy/"
+link-url-imprint=" https://www.bosch-homecomfort.com/global/en/imprint/"
+link-url-policy=" https://www.bosch-homecomfort.com/global/en/privacy/"
+locale= "en-gb"
+fallback-locale="en-gb"
+style="font-size: 14px;">
+</dock-privacy-settings>
+<header class="Header Header-v2 -primary -is-sticky " >
+<div class="Header_top -container">
+ <a
+class="Header_logo
+"
+href="https://www.bosch-homecomfort.com/global/en/"
+target="_self"
+aria-label="Bosch Home Comfort"
+
+><img class="Logo" alt="Bosch Home Comfort" title="Bosch Home Comfort" src="https://www.bosch-homecomfort.com/resources/assets/img/bosch.svg" width="110" height="24" /></a>
+<div class="Header_metaLinks">
+<div class="Header_gbIdentifier">
+<span class="Header_gbIdentifierLabel">Home Comfort</span>
+</div>
+<div class="Header_quickLinks">
+ <a
+class="Btn Btn-integrated -with-icon
+trackingElement"
+href="https://www.bosch-homecomfort.com/global/en/contact/"
+title="Contact"
+target="_self"
+tabindex="0"
+data-track_domevent="click"
+data-track_dyn_pagename="Contact"
+data-track_dyn_eventtarget="Contact"
+data-track_dyn_eventaction="quick links"
+data-track_dyn_elementtype="Navigation"
+data-track_dyn_eventname="navi_click"
+data-track_dyn_eventgroup="navigation"
+data-track_dyn_clickdetail="quick links"
+data-track_dyn_clickurl="https://www.bosch-homecomfort.com/global/en/contact/"
+><svg role="presentation" width="24" height="24" class="Icon Icon-mail Btn_Icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><path d="M24 44v88c0 8.8 7.2 16 16 16h112c8.8 0 16-7.2 16-16V44H24zm127.4 8L96 91.1 40.6 52h110.8zm.6 88H40c-4.4 0-8-3.6-8-8V55.7l64 45.2 64-45.2V132c0 4.4-3.6 8-8 8z"/></svg><span class="Btn_label">Contact</span></a>
+<div class="Header_languageSwitch"> <button class="Btn Btn-integrated Btn-LanguageSelection -with-icon" data-popover="click" data-placement="bottom" aria-expanded="false" title="Language"> <svg class="Icon Icon-globe Btn_Icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"> <path d="M96 16c-44.1 0-80 35.9-80 80s35.9 80 80 80 80-35.9 80-80-35.9-80-80-80zm71.9 76H140c-.7-27.4-8.7-50.7-20.5-64.1 27 9.4 46.7 34.3 48.4 64.1zM92 24.5V92H60.1c1-34.6 14.8-63.5 31.9-67.5zm0 75.5v67.5c-17.1-4-30.9-32.9-31.9-67.5H92zm8 67.5V100h31.9c-1 34.6-14.8 63.5-31.9 67.5zm0-75.5V24.5c17.1 4 30.9 32.9 31.9 67.5H100zM72.6 27.9C60.7 41.3 52.8 64.6 52.1 92h-28c1.7-29.8 21.4-54.7 48.5-64.1zM24.1 100H52c.7 27.4 8.7 50.7 20.5 64.1-27-9.4-46.7-34.3-48.4-64.1zm95.3 64.1c11.9-13.3 19.8-36.7 20.5-64.1h27.9c-1.6 29.8-21.3 54.7-48.4 64.1z"/> </svg> <span class="Btn_label"> <span class="Btn_labelCountry"><span class="Btn_labelLang">en</span> </span> </button> <div id="LanguageSelection" class="Popover -with-close-btn -floating"> <button class="Popover_close Btn Btn-integrated -with-icon -without-label" aria-label="Close" title="Close"> <svg width="24" height="24" class="Icon Icon-close Btn_Icon"
+data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-close.svg" data-cache="604800">
+</svg> </button> <div class="Popover_content"> <div class="Popover_title Hl Hl-6" role="heading" aria-level="2"> Language </div> <div class="Dropdown"> <select onchange="window.location.href=this.value" aria-label="Language">  <option value="https://www.bosch-homecomfort.com/global/en/bosch-easycontrol/">English</option>  <option value="https://www.bosch-homecomfort.com/global/de/bosch-easycontrol/">German</option> </select> </div> </div> <div class="Popover_arrow" data-popper-arrow></div> </div> </div>
+</div>
+</div>
+</div>
+<div class="Header_searchSuggestions -primary" data-all-results-label="Show all results">
+<div class="-container"></div>
+</div>
+<nav class="Header_meta -container" aria-label="Navigation path">
+<ol class="Breadcrumbs">
+<li>
+ <a
+class="Breadcrumbs_link
+trackingElement"
+href="https://www.bosch-homecomfort.com/global/en/bosch-easycontrol/"
+target="_self"
+aria-current="page"
+data-track_domevent="click"
+data-track_dyn_pagename="Bosch EasyControl"
+data-track_dyn_eventtarget="Bosch EasyControl"
+data-track_dyn_eventaction="breadcrumb"
+data-track_dyn_elementtype="Navigation"
+data-track_dyn_eventname="navi_click"
+data-track_dyn_eventgroup="navigation"
+data-track_dyn_clickdetail="breadcrumb"
+data-track_dyn_clickurl="https://www.bosch-homecomfort.com/global/en/bosch-easycontrol/"
+><span class="Breadcrumbs_label">Bosch EasyControl</span></a>
+</li>
+</ol>
+</nav>
+</header>
+<div id="page-scrollTop" tabindex="-1"></div>
+<div class="page " >
+<main id="mainContent">
+<!-- Pagecontent -->
+ 
+
+		<section id="section-5405481" class="StageCommerce Section Section-space -primary" >
+	  			<div class="container">
+<div class="Intro Columns">
+<div class="Intro_inner Column">
+<h1 class="Hl Hl-2">
+Welcome to Bosch EasyControl
+</h1 >
+<p class="-size-l ">The smart thermostat which autonomously adapts to your life.</p>
+</div>
+</div>
+</div>     
+					<div class="Image StageCommerce_img" style="--aspect-ratio:20/8;" >
+							<picture>
+<source type="image/webp"
+srcset="https://www.bosch-homecomfort.com/global/media/country_pool/bosch-easycrontrol/kv-landing_uk_009_easycontrol_lady_600x240.webp 600w , https://www.bosch-homecomfort.com/global/media/country_pool/bosch-easycrontrol/kv-landing_uk_009_easycontrol_lady_900x360.webp 900w , https://www.bosch-homecomfort.com/global/media/country_pool/bosch-easycrontrol/kv-landing_uk_009_easycontrol_lady_1600x640.webp 1600w ">
+<source srcset="https://www.bosch-homecomfort.com/global/media/country_pool/bosch-easycrontrol/kv-landing_uk_009_easycontrol_lady_600x240original.jpg 600w , https://www.bosch-homecomfort.com/global/media/country_pool/bosch-easycrontrol/kv-landing_uk_009_easycontrol_lady_900x360original.jpg 900w , https://www.bosch-homecomfort.com/global/media/country_pool/bosch-easycrontrol/kv-landing_uk_009_easycontrol_lady_1600x640original.jpg 1600w ">
+<img class="Image_cover" src="https://www.bosch-homecomfort.com/global/media/country_pool/bosch-easycrontrol/kv-landing_uk_009_easycontrol_lady_1600x640original.jpg" data-sizes="auto" width="1600" height="900" alt="Woman using the Bosch EasyControl panel" title="Woman using the Bosch EasyControl panel" >
+</picture>
+				  	</div>
+		</section>
+
+
+<section id="section-4337179" class="LocationSelect Section Section-space -primary " >
+<div class="container">
+<div class="Intro Columns">
+<div class="Intro_inner Column">
+<h2 class="Hl Hl-4">
+Please select your country
+</h2 >
+</div>
+</div>
+</div>
+<div class="container">
+
+<div class="LocationSelect_lists">
+<div class="LocationSelect_list Columns" data-division="">
+<div class="LocationSelect_content">
+<div class="CountryListTiles">
+<ul class="CountryListTiles_list Columns">
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/at/de/wohngebaeude/service-und-support/apps/bosch-easycontrol-app/"
+title="Austria (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/austria.svg" />
+</span> <span class="Link_label">Austria</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/be/nl/residentieel/service-ondersteuning/onze-apps/bosch-easycontrol/"
+title="Belgium (Flemish) (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/belgium.svg" />
+</span> <span class="Link_label">Belgium (Flemish)</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/be/fr/residentiel/service-et-support/nos-applications/bosch-easycontrol/"
+title="Belgium (French) (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/belgium.svg" />
+</span> <span class="Link_label">Belgium (French)</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/hr/hr/stambeni/podrska/aplikacije/easycontrol/"
+title="Bosnia and Herzegovina (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/bosnia_and_herzegovina.svg" />
+</span> <span class="Link_label">Bosnia and Herzegovina</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/bg/bg/жилищен-сектор/сервиз-и-услуги/смарт-контрол/easycontrol/"
+title="Bulgaria (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/bulgaria.svg" />
+</span> <span class="Link_label">Bulgaria</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/hr/hr/stambeni/podrska/aplikacije/easycontrol/"
+title="Croatia (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/croatia.svg" />
+</span> <span class="Link_label">Croatia</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/gr/el/residential/exipiretisi-pelaton/efarmoges-(apps)/easycontrol/"
+title="Cyprus (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/cyprus.svg" />
+</span> <span class="Link_label">Cyprus</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/cz/cs/rodinne-domy-a-byty/zakaznicka-podpora/aplikace/bosch-easy-control/"
+title="Czech Republic (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/czech_republic.svg" />
+</span> <span class="Link_label">Czech Republic</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/dk/da/privat/service/apps/bosch-easycontrol/"
+title="Denmark (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/denmark.svg" />
+</span> <span class="Link_label">Denmark</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/ee/et/residential/teenus-ja-tugi/rakendused/bosch-easycontrol-rakendus/"
+title="Estonia (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/estonia.svg" />
+</span> <span class="Link_label">Estonia</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/fr/fr/residentiel/services/applications-mobiles/bosch_easy_control_app_/"
+title="France (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/france.svg" />
+</span> <span class="Link_label">France</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/service-und-support/apps/bosch-easycontrol/"
+title="Germany (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/germany.svg" />
+</span> <span class="Link_label">Germany</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/gr/el/residential/exipiretisi-pelaton/efarmoges-(apps)/easycontrol/"
+title="Greece (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/greece.svg" />
+</span> <span class="Link_label">Greece</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/hu/hu/residential/szolgaltatasok/alkalmazasok/bosch-easy-control.html"
+title="Hungary (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/hungary.svg" />
+</span> <span class="Link_label">Hungary</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/it/it/residenziale/assistenza-e-servizi/app/easycontrol/"
+title="Italy (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/italy.svg" />
+</span> <span class="Link_label">Italy</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/rs/sr/rezidencijalni-objekti/servis-i-podrska/aplikacije/easycontrol/"
+title="Kosovo (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country-flags/europe/kosovo.svg" />
+</span> <span class="Link_label">Kosovo</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/lv/lv/residential/serviss-un-atbalsts/lietotnes/bosch-easycontrol-lietotne/"
+title="Latvia (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/latvia.svg" />
+</span> <span class="Link_label">Latvia</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/lt/lt/residential/servisas-ir-palaikymas/programos/bosch-easycontrol-programele/"
+title="Lithuania (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/lithuania.svg" />
+</span> <span class="Link_label">Lithuania</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/rs/sr/rezidencijalni-objekti/servis-i-podrska/aplikacije/easycontrol/"
+title="Macedonia (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/macedonia.svg" />
+</span> <span class="Link_label">Macedonia</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/gr/el/residential/exipiretisi-pelaton/efarmoges-(apps)/easycontrol/"
+title="Malta (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/malta.svg" />
+</span> <span class="Link_label">Malta</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/ro/ro/rezidential/service-si-suport/apps/easycontrol-de-la-bosch/"
+title="Moldova (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/moldova.svg" />
+</span> <span class="Link_label">Moldova</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/rs/sr/rezidencijalni-objekti/servis-i-podrska/aplikacije/easycontrol/"
+title="Montenegro (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/montenegro.svg" />
+</span> <span class="Link_label">Montenegro</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.nefit-bosch.nl/producten/thermostaten/easycontrol"
+title="Netherlands (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/netherlands.svg" />
+</span> <span class="Link_label">Netherlands</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/pl/pl/budynki-mieszkalne/wsparcie/aplikacje/easycontrol/"
+title="Poland (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/poland.svg" />
+</span> <span class="Link_label">Poland</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/pt/pt/servicos-e-suporte/servicos-de-apoio-ao-cliente/bosch-easycontrol/"
+title="Portugal (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/portugal.svg" />
+</span> <span class="Link_label">Portugal</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/ro/ro/rezidential/service-si-suport/apps/easycontrol-de-la-bosch/"
+title="Romania (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/romania.svg" />
+</span> <span class="Link_label">Romania</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/rs/sr/rezidencijalni-objekti/servis-i-podrska/aplikacije/easycontrol/"
+title="Serbia (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/serbia.svg" />
+</span> <span class="Link_label">Serbia</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/sk/sk/rodinne-a-bytove-domy/sluzby-a-podpora/aplikacie/easycontrol.html"
+title="Slovakia (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country-flags/europe/slovakia.svg" />
+</span> <span class="Link_label">Slovakia</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/si/sl/stanovanjski/storitve/aplikacije/easycontrol/"
+title="Slovenia (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/slovenia.svg" />
+</span> <span class="Link_label">Slovenia</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.junkers-bosch.es/servicios-y-soporte/servicios-post-venta/bosch-easycontrol/"
+title="Spain (opens in new window)"
+target="_blank"
+rel=" noopener"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/spain.svg" />
+</span> <span class="Link_label">Spain</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/tr/tr/residential/servis-hizmetlerimiz/bosch-easycontrol/"
+title="Turkey (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/turkey.svg" />
+</span> <span class="Link_label">Turkey</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.bosch-homecomfort.com/ua/uk/побутові-системи/база-знань/розумний-регулятор-easycontrol-огляд.html"
+title="Ukraine (opens in new window)"
+target="_blank"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/ukraine.svg" />
+</span> <span class="Link_label">Ukraine</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+<li class="CountryListTiles_item">
+ <a
+class="Link -with-icon
+"
+href="https://www.worcester-bosch.co.uk/products/boiler-controls/bosch-easycontrol"
+title="United Kingdom (opens in new window)"
+target="_blank"
+rel=" noopener"
+data-linktype="external-external"
+
+><span class="CountryListTiles_icon CountryListTiles_flag" aria-hidden="true">
+<img class="Link_icon Image" alt="" src="https://www.bosch-homecomfort.com/global/media/country_flags/united_kingdom.svg" />
+</span> <span class="Link_label">United Kingdom</span> <span class="CountryListTiles_icon CountryListTiles_external-link" aria-hidden="true"> <svg class="Icon Icon-externallink Link_icon" data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg" data-cache="disabled" ></svg></span></a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+<div class="StickyControls">
+ <a
+class="scroll-top-toggler StickyControls_scroll-top Btn Btn-primary -with-icon -without-label mb-0
+"
+href="#page-scrollTop"
+rel=" noopener"
+aria-label="Scroll to top"
+data-linktype="external-external"
+
+><svg class="Icon Icon-forward-right Btn_Icon"
+data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-forward-right.svg"
+data-cache="disabled"
+role="presentation">
+</svg></a>
+</div>
+</main>
+</div>
+<!-- Sticky Element -->
+<footer class="FooterV2 -primary"
+>
+<div class="FooterV2_body">
+<div class="container">
+<div class="FooterV2_orderContainer">
+<h2 class="Hl">Invented for life</h2>
+<ul class="Socials">
+<li class="Socials_item">
+ <a
+class="Socials_link Btn Btn-integrated -with-icon -without-label mb-0
+trackingElement"
+href="https://www.youtube.com/BoschHomeComfortGroup"
+title="Youtube (opens in new window)"
+target="_blank"
+rel=" noopener"
+aria-label="Youtube"
+data-track_domevent="click"
+data-track_dyn_socialname="youtube"
+data-track_dyn_pagename="youtube"
+data-track_dyn_eventtarget=""
+data-track_dyn_eventaction="Social Link"
+data-track_dyn_elementtype="social"
+data-track_dyn_clickurl="https://www.youtube.com/boschhomecomfortgroup"
+><svg class="Icon Icon-youtube Btn_Icon"
+data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-youtube.svg"
+data-cache="604800"
+role="presentation">
+</svg></a>
+</li>
+<li class="Socials_item">
+ <a
+class="Socials_link Btn Btn-integrated -with-icon -without-label mb-0
+trackingElement"
+href="https://www.linkedin.com/company/boschhomecomfortgroup/mycompany/?viewAsMember=true"
+title="LinkedIn (opens in new window)"
+target="_blank"
+rel=" noopener"
+aria-label="LinkedIn"
+data-track_domevent="click"
+data-track_dyn_socialname="linkedin"
+data-track_dyn_pagename="linkedin"
+data-track_dyn_eventtarget=""
+data-track_dyn_eventaction="Social Link"
+data-track_dyn_elementtype="social"
+data-track_dyn_clickurl="https://www.linkedin.com/company/boschhomecomfortgroup/mycompany/?viewasmember=true"
+><svg class="Icon Icon-linkedin Btn_Icon"
+data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-linkedin.svg"
+data-cache="604800"
+role="presentation">
+</svg></a>
+</li>
+</ul>
+<ul class="List List-default">
+<li>
+ <a
+class="Link Link-integrated -with-icon
+"
+href="https://www.bosch-homecomfortgroup.com/en/company/"
+title="About us (opens in new window)"
+target="_blank"
+
+><span class="Link_label">About us</span>
+<svg class="Icon Icon-externallink Link_icon"
+data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg"
+data-cache="604800"
+role="presentation">
+</svg></a>
+</li>
+<li>
+ <a
+class="Link Link-integrated -with-icon
+"
+href="https://www.bosch.com/careers/"
+title="Bosch Global Career (opens in new window)"
+target="_blank"
+rel="nofollow noopener"
+
+><span class="Link_label">Bosch Global Career</span>
+<svg class="Icon Icon-externallink Link_icon"
+data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg"
+data-cache="604800"
+role="presentation">
+</svg></a>
+</li>
+</ul>
+</div>
+<div class="FooterV2_bottomList">
+© Bosch Thermotechnik GmbH 2026, all rights reserved
+<ul class="List List-default">
+<li>
+ <a
+class="Link Link-integrated
+"
+href="https://www.bosch-homecomfort.com/global/en/imprint/"
+title="Imprint"
+target="_self"
+
+>Imprint</a>
+</li>
+<li>
+ <a
+class="Link Link-integrated
+"
+href="https://www.bosch-homecomfort.com/global/en/privacy/"
+title="Privacy"
+target="_self"
+
+>Privacy</a>
+</li>
+<li>
+ <a
+class="Link Link-integrated
+"
+href="https://www.bosch-homecomfort.com/global/en/legal-notes/"
+title="Legal Note"
+target="_self"
+
+>Legal Note</a>
+</li>
+<li>
+ <a
+class="Footer_nav-link Link Link-integrated -with-icon
+"
+href="https://psirt.bosch.com/report-a-vulnerability/"
+title="Product Security (PSIRT) (opens in new window)"
+target="_blank"
+rel=" noopener"
+
+>Product Security (PSIRT)
+<svg class="Icon Icon-externallink Link_icon"
+data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg"
+data-cache="604800"
+role="presentation">
+</svg></a>
+</li>
+<li>
+ <a
+class="Link Link-integrated
+"
+href="https://www.bosch-homecomfort.com/global/en/terms-and-conditions-of-purchase/"
+title="Terms and Conditions of Purchase"
+target="_self"
+
+>Terms and Conditions of Purchase</a>
+</li>
+<li>
+ <a
+class="Footer_nav-link Link Link-integrated -with-icon
+"
+href="https://www.bosch.com/company/supply-chain/"
+title="Purchasing and Logistics (opens in new window)"
+target="_blank"
+rel=" noopener"
+
+>Purchasing and Logistics
+<svg class="Icon Icon-externallink Link_icon"
+data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-externallink.svg"
+data-cache="604800"
+role="presentation">
+</svg></a>
+</li>
+<li>
+ <a
+class="Link Link-integrated
+"
+href="https://www.bosch-homecomfort.com/global/en/accessibility/"
+title="Accessibility"
+target="_self"
+
+>Accessibility</a>
+</li>
+<li>
+ <a
+class="Link Link-integrated
+"
+href="https://www.bosch-homecomfort.com/global/en/eu-data-act/"
+title="EU Data Act"
+target="_self"
+
+>EU Data Act</a>
+</li>
+<li>
+<button data-show-privacy-settings class="Link Link-integrated Btn Btn-integrated" title="Cookie settings" aria-haspopup="dialog"> Cookie settings </button>
+</li>
+</ul>
+ <a
+class="scroll-top-toggler FooterV2_scrollTop Btn Btn-integrated -with-icon -without-label mb-0
+"
+href="#page-scrollTop"
+target="_self"
+rel=" noopener"
+aria-label="Scroll to top"
+
+><svg class="Icon Icon-forward-right Btn_Icon"
+data-src="https://www.bosch-homecomfort.com/resources/assets/svg/icons/icon-forward-right.svg"
+data-cache="604800"
+role="presentation">
+</svg></a>
+</div>
+</div>
+</div>
+</footer>
+<!-- footer resources -->
+
+
+
+                                  
+<script>
+function BoschPrivacyCallback_OnUpdate(consents) {
+//Custom code for client specific usage
+if (consents.comfort) {
+console.log("Info: comfort is on");
+if (!consents.marketing) {
+window.localStorage.setItem("privacySettingValue", '1');
+window.dataLayer = [];
+}
+} else {
+//console.log("Info: comfort is off");
+}
+if (consents.marketing || consents.analysis ) {
+if (consents.marketing) {
+console.log("Info: marketing is on");
+} else {
+console.log("Info: marketing is off");
+}
+if (consents.analysis) {
+console.log("Info: analysis is on");
+} else {
+console.log("Info: analysis is off");
+}
+if (window.localStorage.getItem("privacySettingValue") >= 3) {
+//do nothing
+} else {
+init_ga();
+window.localStorage.setItem("privacySettingValue", '3');
+}
+} else {
+console.log("Info: marketing is off");
+console.log("Info: analysis is off");
+}
+if (!consents.comfort && !consents.marketing && !consents.analysis) {
+window.localStorage.setItem("privacySettingValue", '0');
+window.dataLayer = [];
+}
+}
+</script>
+<script>
+function init_ga() {
+privacySettingValue = window.localStorage.getItem("privacySettingValue");
+init_datalayer();
+window.ga=window.ga||(
+function(w,d,s,l,i){
+w[l]=w[l]||[];
+w[l].push({
+'gtm.start':new Date().getTime(),
+event:'gtm.js'
+});
+var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),
+dl=l!='dataLayer'?'&l='+l:'';
+j.async=true;
+j.src='https://sst.bosch-homecomfort.com/gtm.js?id='+i+dl;
+f.parentNode.insertBefore(j,f);
+}
+)(
+window,
+document,
+'script',
+'dataLayer',
+'GTM-MDHTQPZ'
+);
+var gascript = document.createElement('script');
+gascript.async = true;
+gascript.src = 'https://sst.bosch-homecomfort.com/gtm.js?id=GTM-MDHTQPZ';
+document.getElementsByTagName('head')[0].appendChild(gascript, document.getElementsByTagName('head')[0]);
+}
+</script>
+<script src="https://www.bosch-homecomfort.com/resources/assets/jquery/jquery.min.js?2026_403"></script>
+<script>window.initializeOnlyGA4 = false;</script>
+<script type="text/javascript" src="https://www.bosch-homecomfort.com/ga4/kits/kits.min.js?2026_19"></script>
+<script>
+var CONF = {
+ENV: 'production',
+ASSET_PATH: 'https://www.bosch-homecomfort.com/resources/assets/',
+CONSENT_WALL: {
+}
+}
+</script>
+<script type="text/javascript" src="https://www.bosch-homecomfort.com/resources/assets/main.bundle.js?2026_403"></script>
+<!-- CUSTOMER MAINTAINED JS CODE-->
+<!-- ................................................................. -->
+<!-- ................................................................. -->
+<!--SEO JSON-LD-->
+<script type="application/ld+json">
+{
+"@context": "http://schema.org",
+"@type": "BreadcrumbList",
+"itemListElement": [
+
+{
+"@type": "ListItem",
+"position": 0,
+"item": {
+"@id": "https://www.bosch-homecomfort.com/global/en/",
+"name": "Homecomefort",
+"image": ""
+}
+},
+
+{
+"@type": "ListItem",
+"position": 1,
+"item": {
+"@id": "https://www.bosch-homecomfort.com/global/en/bosch-easycontrol/",
+"name": "Bosch EasyControl",
+"image": ""
+}
+}
+]
+}
+</script>
+<!--END SEO JSON-LD-->
+</body>
+</html>

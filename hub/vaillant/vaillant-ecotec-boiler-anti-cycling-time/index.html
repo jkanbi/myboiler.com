@@ -76,6 +76,33 @@
             font-weight: 600;
             color: var(--text);
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource { display:block; margin: 0.75rem 0 1.25rem; }
+
     </style>
 </head>
 <body class="article-page">
@@ -252,6 +279,7 @@
             <p>If you are an engineer, the maximum anti-cycling time can be adjusted under the setting <strong>D.002</strong> using the following table to produce the desired lockout time.</p>
             
             <p>The adjustable range is 2 to 60 minutes, with the factory default set to 20 minutes. See <a href="/hub/vaillant/vaillant-diagnostic-s-and-d-codes/">Vaillant Diagnostic S & D Codes</a> for more technical parameters.</p>
+                    <img src="/hub/vaillant/vaillant-ecotec-boiler-anti-cycling-time/images/vaillant-burner-anti-cycling-times-table.png" alt="Vaillant Burner Anti Cycling Times Table" loading="lazy">
         </article>
     </div>
 
