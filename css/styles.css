@@ -390,13 +390,15 @@
 				transition: opacity 0.2s ease;
 			}
 
-			.nav-item-has-dropdown.is-open .mega-menu {
-				display: grid;
-				grid-template-columns: repeat(3, 1fr);
-				gap: 2rem;
-				opacity: 1;
-				pointer-events: auto;
-			}
+		.nav-item-has-dropdown.is-open .mega-menu,
+		.nav-item-has-dropdown:hover .mega-menu,
+		.nav-item-has-dropdown:focus-within .mega-menu {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 2rem;
+			opacity: 1;
+			pointer-events: auto;
+		}
 
 			.mega-menu-column {
 				min-width: 0;
@@ -445,11 +447,13 @@
 				transition: opacity 0.2s ease;
 			}
 
-			body.nav-mega-open .nav-mega-backdrop {
-				display: block;
-				opacity: 1;
-				pointer-events: auto;
-			}
+		body.nav-mega-open .nav-mega-backdrop,
+		.nav-item-has-dropdown:hover ~ .nav-mega-backdrop,
+		.nav-item-has-dropdown:focus-within ~ .nav-mega-backdrop {
+			display: block;
+			opacity: 1;
+			pointer-events: auto;
+		}
 
 			body.nav-mega-open {
 				overflow: hidden;
