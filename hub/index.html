@@ -98,6 +98,8 @@
         }
 
         .hub-lanes {
+            --home-accent: #0d9f58;
+            --home-accent-rgb: 13, 159, 88;
             margin-bottom: 3rem;
         }
 
@@ -133,6 +135,11 @@
             background: var(--accent);
             color: #fff;
             box-shadow: 0 2px 8px rgba(24, 99, 220, 0.2);
+        }
+
+        .hub-lanes__toggle-btn:first-child.active {
+            background: var(--home-accent);
+            box-shadow: 0 2px 8px rgba(var(--home-accent-rgb), 0.25);
         }
 
         .hub-lane {
@@ -206,6 +213,18 @@
 
         .hub-card__badge--external {
             background: var(--text-muted);
+        }
+
+        #lane-home .hub-card:hover {
+            border-color: var(--home-accent);
+        }
+
+        #lane-home .hub-card__badge:not(.hub-card__badge--external) {
+            background: var(--home-accent);
+        }
+
+        #lane-home .hub-lane__switch {
+            color: var(--home-accent);
         }
 
         .hub-disclaimer {
@@ -480,7 +499,7 @@
                     </a>
                 </div>
                 <p style="text-align: center; margin-top: 2rem; color: var(--text-muted);">
-                    Are you a professional? <a href="#" onclick="switchLane('pro'); return false;" style="color: var(--accent); font-weight: 600;">Switch to Pro lane</a>
+                    Are you a professional? <a href="#" class="hub-lane__switch" onclick="switchLane('pro'); return false;" style="font-weight: 600;">Switch to Pro lane</a>
                 </p>
             </div>
 
