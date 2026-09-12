@@ -118,6 +118,36 @@
                 font-size: 0.8125rem;
             }
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
     </style>
 </head>
 <body class="article-page">
@@ -154,6 +184,19 @@
         </header>
 
         <article class="article-content">
+            <img
+                src="/hub/heat-pumps/images/aira-6-8kw.png"
+                alt="Aira 6 8Kw"
+                loading="lazy"
+            >
+
+            <img
+                src="/hub/heat-pumps/images/vaillant-ground-source-heat-pump.png"
+                alt="Vaillant Ground Source Heat Pump"
+                loading="lazy"
+            >
+
+
             <p><em>Updated September 2026</em></p>
 
             <p>Heat pumps are an efficient way to heat your home and hot water without burning gas or oil on site. Instead of creating heat, they move it from the air, ground, or water into your heating system. For many London and surrounding homes, an air source heat pump (often with the Boiler Upgrade Scheme grant) is now a realistic alternative to a new boiler.</p>

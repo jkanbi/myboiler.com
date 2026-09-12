@@ -133,6 +133,36 @@
                 padding: 1.5rem;
             }
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
     </style>
 </head>
 <body class="article-page">
@@ -201,7 +231,7 @@
                                 <a href="/hub/s-plan/">S Plan Heating Systems</a>
                                 <a href="/hub/radiators/">Radiators</a>
                                 <a href="/quote/">Get a Quote</a>
-                                <a href="/hub/services/">Services</a>
+
                             </div>
                         </div>
                     </li>
@@ -365,7 +395,13 @@
                 due to implementing subset's of the OpenTherm protocol. Generally the biggest manufacturer's such as Honeywell, Nest, Drayton etc 
                 tend to be closer to the correct implementation.
             </p>
-        </article>
+                    <img
+                src="/hub/opentherm/vaillant-opentherm/images/vaillant-vaillant-vr33-opentherm-module-0020017895.jpg"
+                alt="Vaillant Vaillant Vr33 Opentherm Module 0020017895"
+                loading="lazy"
+            >
+
+</article>
     </div>
 
     <!-- Footer -->

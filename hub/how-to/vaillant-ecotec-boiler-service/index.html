@@ -137,6 +137,36 @@
                 padding: 0.5rem;
             }
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
     </style>
 </head>
 <body class="article-page">
@@ -197,7 +227,7 @@
                                 <a href="/hub/s-plan/">S Plan Heating Systems</a>
                                 <a href="/hub/radiators/">Radiators</a>
                                 <a href="/quote/">Get a Quote</a>
-                                <a href="/hub/services/">Services</a>
+
                             </div>
                         </div>
                     </li>
@@ -554,7 +584,13 @@
                 <li>When the adjusting work is complete, screw the covering cap back in again.</li>
                 <li>Put the front casing back on.</li>
             </ul>
-        </article>
+                    <img
+                src="/hub/how-to/vaillant-ecotec-boiler-service/images/vaillant-ecotec-gas-valve-co2-adjustment.png"
+                alt="Vaillant Ecotec Gas Valve Co2 Adjustment"
+                loading="lazy"
+            >
+
+</article>
     </div>
 
     <footer class="footer">

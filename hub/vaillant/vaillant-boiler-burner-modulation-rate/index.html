@@ -76,6 +76,36 @@
             font-weight: 600;
             color: var(--text);
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
     </style>
 </head>
 <body class="article-page">
@@ -144,7 +174,7 @@
                                 <a href="/hub/s-plan/">S Plan Heating Systems</a>
                                 <a href="/hub/radiators/">Radiators</a>
                                 <a href="/quote/">Get a Quote</a>
-                                <a href="/hub/services/">Services</a>
+
                             </div>
                         </div>
                     </li>
@@ -251,7 +281,13 @@
             <h2>Power level is staying low and not reaching the maximum</h2>
 
             <p>If your power level is staying low no matter what the demand, then there may be an issue that requires an engineer visit. We have experience in this area and may be able to come out to you or provide remote consulting to fix the issue. Please get in touch if you have this issue.</p>
-        </article>
+                    <img
+                src="/hub/vaillant/vaillant-boiler-burner-modulation-rate/images/vaillant-boiler-symbol-bar-graph.png"
+                alt="Vaillant Boiler Symbol Bar Graph"
+                loading="lazy"
+            >
+
+</article>
     </div>
 
     <!-- Footer -->

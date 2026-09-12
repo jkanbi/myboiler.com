@@ -135,6 +135,36 @@
             margin: 1.5rem 0;
             border-radius: var(--radius);
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
     </style>
 </head>
 <body class="article-page">
@@ -203,7 +233,7 @@
                                 <a href="/hub/s-plan/">S Plan Heating Systems</a>
                                 <a href="/hub/radiators/">Radiators</a>
                                 <a href="/quote/">Get a Quote</a>
-                                <a href="/hub/services/">Services</a>
+
                             </div>
                         </div>
                     </li>
@@ -801,7 +831,19 @@
                 <li><a href="/hub/vaillant/vaillant-ecotec-emissions-table/">Emissions Table Reference</a></li>
                 <li><a href="/hub/vaillant/vaillant-fga-tool/">FGA Tool and Analysis</a></li>
             </ul>
-        </article>
+                    <img
+                src="/hub/vaillant/vaillant-diagnostic-s-and-d-codes/images/screen-shot-2017-09-23-at-09.32.12.png"
+                alt="Screen Shot 2017 09 23 At 09.32.12"
+                loading="lazy"
+            >
+
+            <img
+                src="/hub/vaillant/vaillant-diagnostic-s-and-d-codes/images/screen-shot-2017-09-23-at-09.31.04.png"
+                alt="Screen Shot 2017 09 23 At 09.31.04"
+                loading="lazy"
+            >
+
+</article>
     </div>
 
     <!-- Footer -->

@@ -137,6 +137,36 @@
                 padding: 0.5rem;
             }
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
     </style>
 </head>
 <body class="article-page">
@@ -205,7 +235,7 @@
                                 <a href="/hub/s-plan/">S Plan Heating Systems</a>
                                 <a href="/hub/radiators/">Radiators</a>
                                 <a href="/quote/">Get a Quote</a>
-                                <a href="/hub/services/">Services</a>
+
                             </div>
                         </div>
                     </li>
@@ -387,7 +417,34 @@
             <p>If you want to improve and move towards a 1step for the entire year, you will need to increase the size of the radiators in order to work at lower flow temperatures or/and decrease heat loss from the building. This could be by sealing holes, replacing leaky windows, increasing insulation. Usually it costs less overall to increase the size of your radiators than to increase your insulation levels. Insulation over the very long term is more effective. This will be addressed in another article.</p>
 
             <p>You can also improve efficiency automatically by using modulating controls combined with correct settings of these controls. See our article on modulating controls. <a href="/hub/modulating-boiler-and-smart-controls/">Modulating A Rated Boilers with Smart Modulating Thermostats</a> Some modern boilers that have remote monitoring, you can see how efficient they are running as they show you the return water temperature from an app or a dashboard accessible to you / or the heating professional.</p>
-        </article>
+                    <img
+                src="/hub/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/images/combi-boiler-diagram.jpg"
+                alt="Combi Boiler Diagram"
+                loading="lazy"
+            >
+
+            <img
+                src="/hub/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/images/condensing-combi-boiler-underneath.jpg"
+                alt="Condensing Combi Boiler Underneath"
+                loading="lazy"
+            >
+
+            <img
+                src="/hub/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/images/boiler-condensing-efficiency-watermark.jpeg"
+                alt="Boiler Condensing Efficiency Watermark"
+                loading="lazy"
+            >
+
+            <div class="article-video">
+                <iframe
+                    src="https://www.youtube.com/embed/8hslEHQjJ08"
+                    title="YouTube video 8hslEHQjJ08"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+            </div>
+</article>
     </div>
 
     <!-- Footer -->

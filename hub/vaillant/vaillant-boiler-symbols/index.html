@@ -137,6 +137,36 @@
                 padding: 0.5rem;
             }
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
     </style>
 </head>
 <body class="article-page">
@@ -205,7 +235,7 @@
                                 <a href="/hub/s-plan/">S Plan Heating Systems</a>
                                 <a href="/hub/radiators/">Radiators</a>
                                 <a href="/quote/">Get a Quote</a>
-                                <a href="/hub/services/">Services</a>
+
                             </div>
                         </div>
                     </li>
@@ -446,7 +476,35 @@
                 height="1217"
                 loading="lazy"
             >
-        </article>
+                    <img
+                src="/hub/vaillant/vaillant-boiler-symbols/images/vaillant-flame-failure-sysmbol.png"
+                alt="Vaillant Flame Failure Sysmbol"
+                loading="lazy"
+            >
+
+            <img
+                src="/hub/vaillant/vaillant-boiler-symbols/images/screen-shot-2018-10-11-at-19.03.39.png"
+                alt="Screen Shot 2018 10 11 At 19.03.39"
+                loading="lazy"
+            >
+
+            <img
+                src="/hub/vaillant/vaillant-boiler-symbols/images/screen-shot-2018-10-11-at-19.03.52.png"
+                alt="Screen Shot 2018 10 11 At 19.03.52"
+                loading="lazy"
+            >
+
+            <h2>Video</h2>
+            <div class="article-video">
+                <iframe
+                    src="https://www.youtube.com/embed/8hslEHQjJ08"
+                    title="YouTube video 8hslEHQjJ08"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+            </div>
+</article>
     </div>
 
     <!-- Footer -->

@@ -122,6 +122,36 @@
                 padding: 1.5rem;
             }
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
     </style>
 </head>
 <body class="article-page">
@@ -158,6 +188,31 @@
         </header>
 
         <article class="article-content">
+            <img
+                src="/hub/money-and-energy-saving/images/household-energy-breakdown-1.jpg"
+                alt="Household Energy Breakdown 1"
+                loading="lazy"
+            >
+
+            <img
+                src="/hub/money-and-energy-saving/images/thermal-image-front-home.jpg"
+                alt="Thermal Image Front Home"
+                loading="lazy"
+            >
+
+            <img
+                src="/hub/money-and-energy-saving/images/thermal-image-front-home-1600x900.jpg"
+                alt="Thermal Image Front Home 1600X900"
+                loading="lazy"
+            >
+
+            <img
+                src="/hub/money-and-energy-saving/images/boiler-condensing-efficiency-watermark.jpeg"
+                alt="Boiler Condensing Efficiency Watermark"
+                loading="lazy"
+            >
+
+
             <p>Usually a boiler or heating system is not something that is on the top of people's minds … except when your heaters have decided not to turn on and it feels like -100°c, or when you end up having cold shower's. The other time is usually when bills are starting to sky rocket, even then people tend to prioritise on lightbulbs, appliances etc. and not pay enough attention to their heating and hot water systems</p>
 
             <p>Heating and hot water account for up to an astonishing 80 percent [1] of your energy bill. Approx 60 percent is for heating and approx 20 percent for hot water with the rest accounted for by lighting, cooking, electronics, appliances etc.</p>
@@ -255,7 +310,17 @@
             </table>
 
             <p>Sources: [1] https://www.gov.uk/government/statistics/united-kingdom-housing-energy-fact-file-2013</p>
-        </article>
+                    <h2>Video</h2>
+            <div class="article-video">
+                <iframe
+                    src="https://www.youtube.com/embed/8hslEHQjJ08"
+                    title="YouTube video 8hslEHQjJ08"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+            </div>
+</article>
     </div>
 
     <!-- Footer -->

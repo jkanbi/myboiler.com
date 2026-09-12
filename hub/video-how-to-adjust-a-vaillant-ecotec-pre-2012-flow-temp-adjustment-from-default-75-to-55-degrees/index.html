@@ -114,6 +114,10 @@
                 overflow-x: auto;
             }}
         }}
+    
+        .article-video{width:100%;margin:1.25rem 0 1.75rem;border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);box-shadow:var(--shadow-sm);}
+        .article-video iframe{display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;}
+
     </style>
 </head>
 <body class="article-page">
@@ -176,7 +180,7 @@
                                 <a href="/hub/s-plan/">S Plan Heating Systems</a>
                                 <a href="/hub/radiators/">Radiators</a>
                                 <a href="/quote/">Get a Quote</a>
-                                <a href="/hub/services/">Services</a>
+
                             </div>
                         </div>
                     </li>
@@ -244,7 +248,11 @@
         </div>
     </main>
 
-    <footer class="footer">
+                <h2>Video</h2>
+            <div class="article-video">
+                <iframe src="https://www.youtube.com/embed/BsLjZR1n_bc" title="YouTube video BsLjZR1n_bc" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            </div>
+<footer class="footer">
         <div class="footer-content">
             <p>&copy; 2026 MyBoiler.com. All rights reserved.</p>
             <p><a href="/">Visit our Hub</a> for more articles and resources.</p>

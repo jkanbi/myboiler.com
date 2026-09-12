@@ -87,6 +87,36 @@
                 padding: 0.5rem;
             }
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
     </style>
 </head>
 <body class="article-page">
@@ -215,7 +245,13 @@
             </table>
 
             <p>Download link: <a href="https://ams3.digitaloceanspaces.com/boiler-manuals/vokera/Vokera-Easi-Heat-Plus-25C-29C-32C-Installation-Servicing-Manual" target="_blank" rel="noopener">Vokera Easi-Heat Plus Installation & Servicing Manual</a></p>
-        </article>
+                    <img
+                src="/hub/download-file/vokera-easi-heat-plus-25c-29c-32c-installation-and-servicing-instructions-manual/images/vokera-easiheat-plus-25c-29c-32c.jpg"
+                alt="Vokera Easiheat Plus 25C 29C 32C"
+                loading="lazy"
+            >
+
+</article>
     </div>
 
     <footer class="footer">

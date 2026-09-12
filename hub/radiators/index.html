@@ -37,7 +37,37 @@
 <style id="wp-img-auto-sizes-contain-inline-css">
 img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 /*# sourceURL=wp-img-auto-sizes-contain-inline-css */
-</style>
+
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
+    </style>
 <style id="wp-emoji-styles-inline-css">
 
 	img.wp-smiley, img.emoji {
@@ -230,9 +260,7 @@ var JETPACK_MU_WPCOM_SETTINGS = {"assetsUrl":"/hub-wp-content/mu-plugins/wpcomsh
 		<li id="menu-item-17254" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17254"><a href="/hub/solar-thermal/solar-thermal-service/">solar thermal service</a></li>
 		<li id="menu-item-16163" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16163"><a href="/hub/s-plan/">S Plan &#038; S Plan Plus</a></li>
 		<li id="menu-item-17405" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-17397 current_page_item menu-item-17405"><a href="/hub/radiators/" aria-current="page">Radiators</a></li>
-		<li id="menu-item-16920" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16920"><a href="/hub/fixed-price-repairs/">Fixed price repairs</a></li>
-		<li id="menu-item-52" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52"><a href="/hub/services/">Services</a></li>
-	</ul>
+</ul>
 </li>
 </ul>
 </li>
@@ -354,6 +382,19 @@ var JETPACK_MU_WPCOM_SETTINGS = {"assetsUrl":"/hub-wp-content/mu-plugins/wpcomsh
 		
 			
 <article id="post-17397" class="post-17397 page type-page status-publish hentry">
+            <img
+                src="/hub/radiators/images/radiator.jpg"
+                alt="Radiator"
+                loading="lazy"
+            >
+
+            <img
+                src="/hub/radiators/images/myboiler-radiator-image.jpg"
+                alt="Myboiler Radiator Image"
+                loading="lazy"
+            >
+
+
 
 	
 	
@@ -392,7 +433,7 @@ var JETPACK_MU_WPCOM_SETTINGS = {"assetsUrl":"/hub-wp-content/mu-plugins/wpcomsh
 	
 		<div class="footer-widget">
 
-			<aside id="nav_menu-4" class="widget widget_nav_menu"><h4 class="widget-title">About Us</h4><div class="menu-about-us-container"><ul id="menu-about-us" class="menu"><li id="menu-item-18471" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18471"><a href="/hub/company/">Company</a></li>
+			<aside id="nav_menu-4" class="widget widget_nav_menu"><h4 class="widget-title">About Us</h4><div class="menu-about-us-container"><ul id="menu-about-us" class="menu"><li id="menu-item-18471" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18471"><a href="/pages/about-us.md">Company</a></li>
 <li id="menu-item-18474" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18474"><a href="/hub/mission/">Our Mission</a></li>
 <li id="menu-item-3146" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3146"><a href="/hub/terms-and-conditions/">Terms &#038; Conditions</a></li>
 <li id="menu-item-3147" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-3147"><a rel="privacy-policy" href="/hub/privacy-policy/">Privacy Policy</a></li>

@@ -125,6 +125,36 @@
                 padding: 0.5rem;
             }
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
     </style>
 </head>
 <body class="article-page">
@@ -193,7 +223,7 @@
                                 <a href="/hub/s-plan/">S Plan Heating Systems</a>
                                 <a href="/hub/radiators/">Radiators</a>
                                 <a href="/quote/">Get a Quote</a>
-                                <a href="/hub/services/">Services</a>
+
                             </div>
                         </div>
                     </li>
@@ -387,7 +417,19 @@
             <h3>Live Monitor Menu</h3>
 
             <p>Once you have determined the fault or message, it can be relayed to the engineer, or if you are the engineer look further into the reason for this. If the spanner is showing due to maintenance interval, you can go and reset the maintenance timer.</p>
-        </article>
+                    <img
+                src="/hub/vaillant/spanner-maintenance-service/images/service-spanner-symbol.png"
+                alt="Service Spanner Symbol"
+                loading="lazy"
+            >
+
+            <img
+                src="/hub/vaillant/spanner-maintenance-service/images/live-monitor-menu.jpg"
+                alt="Live Monitor Menu"
+                loading="lazy"
+            >
+
+</article>
     </div>
 
     <!-- Footer -->

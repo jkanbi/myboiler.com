@@ -93,6 +93,36 @@
                 padding: 1.5rem;
             }
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
     </style>
 </head>
 <body class="article-page">
@@ -129,6 +159,13 @@
         </header>
 
         <article class="article-content">
+            <img
+                src="/hub/heat-pumps/retrofit-an-existing-hot-water-cylinder-with-a-plate-heat-exchanger-for-use-with-a-heat-pump/images/ashp-dhw-plate-heat-exchanger-for-retrofit-watermark.jpg"
+                alt="Ashp Dhw Plate Heat Exchanger For Retrofit Watermark"
+                loading="lazy"
+            >
+
+
             <p>A heat pump requires a hot water cylinder that is Heat Pump compatible. Usually this means a high surface area coil. The reason for this is that as a heat pump works at a high flow rate with low temperature difference of 5 degrees, you need a high surface area to transfer the heat into the water, otherwise the heat pump won't be able to do it's job correctly.</p>
 
             <p>If you have a relatively new hot water cylinder and cannot see the economic viability of replacing in order to install a heat pump. You can opt for a retrofit solution in the form of a plate heat exchanger. See diagram below (please note this is a simplified diagram to show the concept)</p>

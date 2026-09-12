@@ -125,6 +125,36 @@
                 padding: 0.5rem;
             }
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
     </style>
 </head>
 <body class="article-page">
@@ -193,7 +223,7 @@
                                 <a href="/hub/s-plan/">S Plan Heating Systems</a>
                                 <a href="/hub/radiators/">Radiators</a>
                                 <a href="/quote/">Get a Quote</a>
-                                <a href="/hub/services/">Services</a>
+
                             </div>
                         </div>
                     </li>
@@ -315,7 +345,13 @@
             <p>Where the Combi is being used in a hybrid system setup, similar manner to a System boiler, the same principle applies as that of the System Boiler request, ie radiator symbols means any zone that is requesting heat.</p>
 
             <p>If this symbol is not coming on. It means no control signal is being sent by the heating controls or by the zone valves.</p>
-        </article>
+                    <img
+                src="/hub/vaillant/heating-mode-active/images/screen-shot-2018-10-11-at-19.03.52.png"
+                alt="Screen Shot 2018 10 11 At 19.03.52"
+                loading="lazy"
+            >
+
+</article>
     </div>
 
     <!-- Footer -->

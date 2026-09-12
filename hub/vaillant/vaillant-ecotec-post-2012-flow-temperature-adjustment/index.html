@@ -72,6 +72,36 @@
             font-weight: 600;
             color: var(--text);
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
     </style>
 </head>
 <body class="article-page">
@@ -174,7 +204,23 @@
             <h3>Additional Resources</h3>
 
             <p>If you are unable to adjust the flow temperature or the parasol symbol remains, then you may have a faulty boiler / pcb, that will require a engineer visit to resolve.</p>
-        </article>
+                    <img
+                src="/hub/vaillant/vaillant-ecotec-post-2012-flow-temperature-adjustment/images/umbrella-summer-mode-symbol.png"
+                alt="Umbrella Summer Mode Symbol"
+                loading="lazy"
+            >
+
+            <h2>Video</h2>
+            <div class="article-video">
+                <iframe
+                    src="https://www.youtube.com/embed/iIoFYuSLloM"
+                    title="YouTube video iIoFYuSLloM"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+            </div>
+</article>
     </div>
 
     <footer class="footer">

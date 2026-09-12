@@ -137,6 +137,36 @@
                 padding: 0.5rem;
             }
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
     </style>
 </head>
 <body class="article-page">
@@ -205,7 +235,7 @@
                                 <a href="/hub/s-plan/">S Plan Heating Systems</a>
                                 <a href="/hub/radiators/">Radiators</a>
                                 <a href="/quote/">Get a Quote</a>
-                                <a href="/hub/services/">Services</a>
+
                             </div>
                         </div>
                     </li>
@@ -342,7 +372,29 @@
 
             <h3>Installation Best Practice</h3>
             <p>Having carried out many installations we have determined that the installation shown in the above picture will produce a highly maintainable system and one which minimises corrosion. There are a few key aspects of this method of installation that have very high benefits for the homeowner. There are some variations required dependent on your particular boiler model that are not shown here. You may contact us for a consultation to provide model specific information that will help you get the most out of your system with a very long life system.</p>
-        </article>
+                    <img
+                src="/hub/combi-boiler/images/combi-boiler-diagram.jpg"
+                alt="Combi Boiler Diagram"
+                loading="lazy"
+            >
+
+            <img
+                src="/hub/combi-boiler/images/combi-boiler-integral-flushing-system-v3.jpg"
+                alt="Combi Boiler Integral Flushing System V3"
+                loading="lazy"
+            >
+
+            <h2>Video</h2>
+            <div class="article-video">
+                <iframe
+                    src="https://player.vimeo.com/video/937314269"
+                    title="Vimeo video 937314269"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+            </div>
+</article>
     </div>
 
     <!-- Footer -->

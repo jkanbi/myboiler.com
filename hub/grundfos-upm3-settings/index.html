@@ -106,6 +106,36 @@
                 padding: 0.5rem;
             }
         }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
     </style>
 </head>
 <body class="article-page">
@@ -174,7 +204,7 @@
                                 <a href="/hub/s-plan/">S Plan Heating Systems</a>
                                 <a href="/hub/radiators/">Radiators</a>
                                 <a href="/quote/">Get a Quote</a>
-                                <a href="/hub/services/">Services</a>
+
                             </div>
                         </div>
                     </li>
@@ -288,7 +318,13 @@
             <p>If there is an external pump being used set to proportional pressure maximum curve, then leave underfloor heating manifold pump on constant pressure curves, autoadapt ok. Otherwise speak to UFH manufacturer for recommending setting.</p>
 
             <p><a href="https://sfo2.digitaloceanspaces.com/myboiler/grundfos/UPM3-literature-5439492.pdf" target="_blank" rel="noopener">View Grundfos UPM3 Technical Documentation</a></p>
-        </article>
+                    <img
+                src="/hub/grundfos-upm3-settings/images/upm3-auto-settings.png"
+                alt="Upm3 Auto Settings"
+                loading="lazy"
+            >
+
+</article>
     </div>
 
     <!-- Footer -->
