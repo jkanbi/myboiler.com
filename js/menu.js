@@ -59,19 +59,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // stay below the header stacking context so it cannot steal hover.
     const navMegaBackdrop = document.querySelector('.nav-mega-backdrop');
     let megaCloseTimer = null;
-    const MEGA_CLOSE_MS = 420;
+    const MEGA_CLOSE_MS = 250;
+
+    function insetBackdropBelowHeader() {
+        if (!navMegaBackdrop) return;
+        const header = document.querySelector('.header');
+        const top = header ? Math.round(header.getBoundingClientRect().bottom) : 0;
+        navMegaBackdrop.style.top = `${top}px`;
+    }
 
     function syncNavMegaBackdrop() {
         const anyOpen = document.querySelector('.nav-item-has-dropdown.is-open');
         document.body.classList.toggle('nav-mega-open', !!anyOpen);
         if (navMegaBackdrop) {
             navMegaBackdrop.setAttribute('aria-hidden', anyOpen ? 'false' : 'true');
+            if (anyOpen) {
+                insetBackdropBelowHeader();
+            } else {
+                navMegaBackdrop.style.top = '';
+            }
         }
+    }
+
+    function pointerStillOnDropdown(item) {
+        if (item.matches(':hover')) return true;
+        const mega = item.querySelector('.mega-menu');
+        return !!(mega && mega.matches(':hover'));
     }
 
     function scheduleMegaClose(item) {
         clearTimeout(megaCloseTimer);
         megaCloseTimer = setTimeout(() => {
+            if (pointerStillOnDropdown(item)) return;
             item.classList.remove('is-open');
             syncNavMegaBackdrop();
         }, MEGA_CLOSE_MS);
@@ -115,9 +134,10 @@ document.addEventListener('DOMContentLoaded', () => {
             openDesktopMega(item);
         });
 
-        item.addEventListener('mouseleave', () => {
+        item.addEventListener('mouseleave', (e) => {
             item.classList.remove('is-dismissed');
             if (!isDesktopNav()) return;
+            if (e.relatedTarget && item.contains(e.relatedTarget)) return;
             scheduleMegaClose(item);
         });
 
@@ -150,6 +170,12 @@ document.addEventListener('DOMContentLoaded', () => {
             closeAllDesktopMegas();
         });
     }
+
+    window.addEventListener('resize', () => {
+        if (document.body.classList.contains('nav-mega-open')) {
+            insetBackdropBelowHeader();
+        }
+    });
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && document.body.classList.contains('nav-mega-open')) {

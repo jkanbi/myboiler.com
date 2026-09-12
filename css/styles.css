@@ -386,10 +386,26 @@
 				position: relative;
 			}
 
+			/* Hover shelf on the <li> (not the grid mega) so the pointer never
+			   leaves the dropdown item while moving down onto the panel.
+			   A mega::before bridge fails here: display:grid makes it a cell. */
+			.nav-item-has-dropdown.is-open::after,
+			.nav-item-has-dropdown:hover:not(.is-dismissed)::after,
+			.nav-item-has-dropdown:focus-within:not(.is-dismissed)::after {
+				content: "";
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+				top: 100%;
+				width: min(100vw, 900px);
+				height: 40px;
+				z-index: 1;
+			}
+
 			.nav-item-has-dropdown .mega-menu {
 				display: none;
 				position: absolute;
-				top: calc(100% + 12px);
+				top: 100%;
 				left: 50%;
 				transform: translateX(-50%);
 				min-width: 720px;
@@ -402,17 +418,6 @@
 				opacity: 0;
 				pointer-events: none;
 				transition: opacity 0.2s ease;
-			}
-
-			/* Invisible bridge across the 12px gap so hover is not lost
-			   between the trigger and the panel. */
-			.nav-item-has-dropdown .mega-menu::before {
-				content: "";
-				position: absolute;
-				left: 0;
-				right: 0;
-				bottom: 100%;
-				height: 12px;
 			}
 
 			.nav-item-has-dropdown.is-open .mega-menu,
@@ -456,23 +461,27 @@
 				text-decoration: none;
 			}
 
-			/* Dim the page behind the header + mega. z-index 900 stays below
-			   .header (1000) so the dimmer cannot steal hover from the menu.
-			   The `~` sibling fallback is intentionally omitted: the backdrop
-			   sits before the nav items, so that selector never matches. */
+			/* Dim the page below the header only. JS sets `top` to the header
+			   bottom so the dimmer never covers nav hit-area. z-index stays
+			   below .header (1000). */
 			.nav-mega-backdrop {
 				display: none;
 				position: fixed;
 				top: 0;
+				right: 0;
+				bottom: 0;
 				left: 0;
-				width: 100%;
-				height: 100%;
+				height: auto;
 				background: rgba(27, 27, 27, 0.4);
 				backdrop-filter: blur(8px);
 				z-index: 900;
 				opacity: 0;
 				pointer-events: none;
 				transition: opacity 0.2s ease;
+			}
+
+			body.nav-mega-open .header {
+				z-index: 1100;
 			}
 
 			body.nav-mega-open .nav-mega-backdrop {
