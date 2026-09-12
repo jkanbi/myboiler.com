@@ -88,6 +88,23 @@
             margin-bottom: 2rem;
         }
 
+        .calculator-video {
+            width: 100%;
+            margin-bottom: 2rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .calculator-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
         .input-group {
             margin-bottom: 2rem;
         }
@@ -322,6 +339,46 @@
             font-weight: 600;
         }
 
+        .calculator-related {
+            max-width: 70ch;
+            margin: 0 auto 1.25rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+            text-align: center;
+        }
+
+        .calculator-related__label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .calculator-related__title {
+            display: inline-block;
+            font-size: 1.0625rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            margin-bottom: 0.35rem;
+        }
+
+        .calculator-related__title:hover {
+            text-decoration: underline;
+        }
+
+        .calculator-related__desc {
+            margin: 0;
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
         .mode-content {
             display: none;
         }
@@ -498,74 +555,6 @@
             }
         }
 
-        /* Video Section Styles */
-        .videos-section {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-subtle);
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .videos-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            margin-bottom: 1.5rem;
-            border-radius: var(--radius);
-            background: var(--surface);
-        }
-
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        @media (max-width: 768px) {
-            .videos-section {
-                margin-top: 1.5rem;
-                padding-top: 1.5rem;
-            }
-
-            .videos-title {
-                font-size: 1.25rem;
-                margin-bottom: 1rem;
-            }
-
-            .video-wrapper {
-                margin-bottom: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .videos-section {
-                margin-top: 1.25rem;
-                padding-top: 1.25rem;
-            }
-
-            .videos-title {
-                font-size: 1.125rem;
-                margin-bottom: 0.875rem;
-            }
-
-            .video-wrapper {
-                margin-bottom: 0.875rem;
-            }
-        }
     </style>
 </head>
 <body class="calculator-page">
@@ -710,6 +699,36 @@
                     </div>
                 </div>
             </div>
+
+            <div class="calculator-video">
+                <iframe
+                    src="https://www.youtube.com/embed/uOz7j5yfMJQ"
+                    title="Gas Rate Calculator Tutorial"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+            </div>
+
+            <div class="calculator-video">
+                <iframe
+                    src="https://www.youtube.com/embed/xSi0FvDshE8"
+                    title="Gas Rate Calculator Video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+            </div>
+
+            <div class="calculator-video">
+                <iframe
+                    src="https://www.youtube.com/embed/fVH5mXYe3Vs"
+                    title="How to Use the Gas Rate Calculator"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+            </div>
         </div>
 
         <!-- Imperial Calculator -->
@@ -796,21 +815,14 @@
             </div>
         </div>
 
+        <aside class="calculator-related">
+            <span class="calculator-related__label">Related guide</span>
+            <a class="calculator-related__title" href="https://hub.myboiler.com/gas-meter-top-up/">Gas Meter Top Up</a>
+            <p class="calculator-related__desc">How to manually enter a top-up code on Landis+Gyr and Liberty prepaid gas meters.</p>
+        </aside>
+
         <div class="calculator-disclaimer">
             <strong>Important:</strong> This calculator is for indicative purposes only. Always ensure gas appliances are installed, rated, and maintained by Gas Safe registered engineers in accordance with current regulations.
-        </div>
-
-        <!-- Videos Section -->
-        <div class="videos-section">
-            <h2 class="videos-title">Videos</h2>
-            
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/uOz7j5yfMJQ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Gas Rate Calculator Tutorial"></iframe>
-            </div>
-
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/fVH5mXYe3Vs" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="How to Use the Gas Rate Calculator"></iframe>
-            </div>
         </div>
     </div>
 
