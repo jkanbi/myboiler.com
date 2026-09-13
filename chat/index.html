@@ -52,12 +52,37 @@
         .chat-widget-wrapper {
             width: 100%;
             max-width: 800px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 1rem;
             background: var(--surface);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
-            padding: 2rem;
+            padding: 1rem 1.25rem;
             box-sizing: border-box;
+        }
+
+        .chat-text-input {
+            display: block;
+            width: 100%;
+            border: 0;
+            background: transparent;
+            font: inherit;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--text);
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .chat-text-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .chat-voice-widget {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            position: relative;
+            overflow: hidden;
         }
 
         .chat-safety-note {
@@ -83,12 +108,22 @@
             margin: 0.5rem 0 0;
         }
 
-        /* ElevenLabs widget container styling */
+        /* Keep the widget in document flow instead of a fixed overlay */
         elevenlabs-convai {
-            display: block;
-            width: 100%;
-            max-width: 100%;
-            min-height: 280px;
+            display: block !important;
+            position: relative !important;
+            inset: auto !important;
+            top: auto !important;
+            right: auto !important;
+            bottom: auto !important;
+            left: auto !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            height: auto !important;
+            min-height: 120px;
+            z-index: 1 !important;
+            pointer-events: auto !important;
+            --elevenlabs-convai-widget-width: 100%;
         }
 
         /* Handoff strip styling */
@@ -191,14 +226,21 @@
         }
 
         @media (max-width: 768px) {
-            .chat-widget-wrapper {
-                padding: 1.5rem 1rem;
+            .chat-container {
+                justify-content: flex-start;
+            }
+
+            .chat-widget-wrapper,
+            .chat-voice-widget {
                 max-width: 100%;
-                overflow: hidden;
+            }
+
+            .chat-widget-wrapper {
+                padding: 0.85rem 1rem;
             }
 
             elevenlabs-convai {
-                min-height: 240px;
+                min-height: 96px;
             }
         }
     </style>
@@ -254,7 +296,22 @@
         </div>
 
         <div class="chat-widget-wrapper">
-            <elevenlabs-convai agent-id="agent_7301m25f8n0re8qt7mxhswq0te2q"></elevenlabs-convai>
+            <input
+                id="chat-question"
+                class="chat-text-input"
+                type="text"
+                name="question"
+                placeholder="Ask about boilers, heating, or hot water"
+                autocomplete="off"
+                aria-label="Ask a question"
+            >
+        </div>
+
+        <div class="chat-voice-widget">
+            <elevenlabs-convai
+                agent-id="agent_7301m25f8n0re8qt7mxhswq0te2q"
+                variant="expanded"
+            ></elevenlabs-convai>
         </div>
 
         <div class="chat-handoff">
@@ -279,6 +336,39 @@
 
     <!-- ElevenLabs ConvAI Widget Script - data-cfasync prevents Cloudflare Rocket Loader interference -->
     <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript" data-cfasync="false"></script>
+    <script>
+        (function () {
+            function pinWidgetInFlow(el) {
+                const root = el && el.shadowRoot;
+                if (!root || root.querySelector('style[data-in-flow]')) return;
+                const style = document.createElement('style');
+                style.setAttribute('data-in-flow', 'true');
+                style.textContent = [
+                    ':host { position: relative !important; inset: auto !important; width: 100% !important; height: auto !important; pointer-events: auto !important; z-index: 1 !important; }',
+                    '[class*="_wrapper"] { align-items: stretch !important; width: 100% !important; }',
+                    '[class*="_box"] { width: 100% !important; max-width: 100% !important; box-shadow: none !important; }',
+                    '[class*="_poweredBy"] { align-self: center; }'
+                ].join('');
+                root.appendChild(style);
+            }
+
+            function setup() {
+                const el = document.querySelector('elevenlabs-convai');
+                if (!el) return;
+                pinWidgetInFlow(el);
+                const refresh = function () { pinWidgetInFlow(el); };
+                const observer = new MutationObserver(refresh);
+                observer.observe(el, { childList: true, subtree: true });
+                if (el.shadowRoot) observer.observe(el.shadowRoot, { childList: true });
+            }
+
+            if (window.customElements && customElements.whenDefined) {
+                customElements.whenDefined('elevenlabs-convai').then(setup);
+            } else {
+                setup();
+            }
+        })();
+    </script>
     <!-- Add menu.js for navigation functionality -->
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
