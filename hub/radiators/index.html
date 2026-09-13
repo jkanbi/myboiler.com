@@ -1,42 +1,88 @@
 <!DOCTYPE html>
-<!-- header.php start -->
-
-<html lang="en-GB">
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radiators - MyBoiler Hub</title>
+    <meta name="description" content="| Item | Link | | Single Rads / K1| | | HF Rads P+ | | | Double Rads K2 | | | Single Rads K3| | | Single Rads K4| |">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
 
-	<meta charset="UTF-8">
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"> <!-- user-scalable=0 22/08/19 -->
+.article-header {
+            margin-bottom: 2.5rem;
+        }
 
-	<link rel="profile" href="https://gmpg.org/xfn/11">
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
 
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+        }
 
-	<title>Radiators &#8211; Hub.MyBoiler.com</title>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src='https://www.googletagmanager.com/gtag/js?id=UA-42621317-6' type="5fe0676d8d9db8d28428234a-text/javascript"></script>
-<script type="5fe0676d8d9db8d28428234a-text/javascript">
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
 
-  gtag('config', 'UA-42621317-6');
-</script><meta name='robots' content='max-image-preview:large' />
-<!-- Jetpack Site Verification Tags -->
-<meta name="google-site-verification" content="0I883I9mpuD85f0pTwmr7fHplw5mmeLCdBoX78WptVA">
-<link rel='dns-prefetch' href='//fonts-api.wp.com' />
-<link rel='dns-prefetch' href='//v0.wordpress.com' />
-<link rel='dns-prefetch' href='//widgets.wp.com' />
-<link rel='dns-prefetch' href='//s0.wp.com' />
-<link rel='dns-prefetch' href='//0.gravatar.com' />
-<link rel='dns-prefetch' href='//1.gravatar.com' />
-<link rel='dns-prefetch' href='//2.gravatar.com' />
-<link rel='dns-prefetch' href='//jetpack.wordpress.com' />
-<link rel='dns-prefetch' href='//public-api.wordpress.com' />
-<link rel='dns-prefetch' href='//secure.gravatar.com' />
-<style id="wp-img-auto-sizes-contain-inline-css">
-img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
-/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 1rem;
+        }
+
+        .article-content h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.75rem;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
 
         .article-content img {
             display: block;
@@ -62,570 +108,318 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
             border: 0;
         }
 
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9375rem;
+        }
+
+        .article-content th,
+        .article-content td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+            vertical-align: top;
+        }
+
+        .article-content th {
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin: 0 0 0.4rem;
+            line-height: 1.6;
+        }
+
+        .article-content iframe {
+            max-width: 100%;
+        }
+
         .article-resource {
             display: block;
             margin: 0.75rem 0 1.25rem;
         }
 
     </style>
-<style id="wp-emoji-styles-inline-css">
-
-	img.wp-smiley, img.emoji {
-		display: inline !important;
-		border: none !important;
-		box-shadow: none !important;
-		height: 1em !important;
-		width: 1em !important;
-		margin: 0 0.07em !important;
-		vertical-align: -0.1em !important;
-		background: none !important;
-		padding: 0 !important;
-	}
-/*# sourceURL=wp-emoji-styles-inline-css */
-</style>
-<style id="wp-block-library-inline-css">
-:root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}:root .has-text-align-center{text-align:center}:root .has-text-align-left{text-align:left}:root .has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{word-wrap:normal!important;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal!important}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style^=border-color],[style*=";border-color"],[style*="; border-color"]){border-style:solid}html :where([style^=border-top-color],[style*=";border-top-color"],[style*="; border-top-color"]){border-top-style:solid}html :where([style^=border-right-color],[style*=";border-right-color"],[style*="; border-right-color"]){border-right-style:solid}html :where([style^=border-bottom-color],[style*=";border-bottom-color"],[style*="; border-bottom-color"]){border-bottom-style:solid}html :where([style^=border-left-color],[style*=";border-left-color"],[style*="; border-left-color"]){border-left-style:solid}html :where([style^=border-width],[style*=";border-width"],[style*="; border-width"]){border-style:solid}html :where([style^=border-top-width],[style*=";border-top-width"],[style*="; border-top-width"]){border-top-style:solid}html :where([style^=border-right-width],[style*=";border-right-width"],[style*="; border-right-width"]){border-right-style:solid}html :where([style^=border-bottom-width],[style*=";border-bottom-width"],[style*="; border-bottom-width"]){border-bottom-style:solid}html :where([style^=border-left-width],[style*=";border-left-width"],[style*="; border-left-width"]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
-
-/*# sourceURL=/wp-includes/css/dist/block-library/common.min.css */
-</style>
-<style id="wp-block-library-inline-css-extra">
-.has-text-align-justify{text-align:justify;}
-/*# sourceURL=wp-block-library-inline-css */
-</style>
-
-<style id="classic-theme-styles-inline-css">
-/*! This file is auto-generated */
-.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
-/*# sourceURL=/wp-includes/css/classic-themes.min.css */
-</style>
-
-<style id="global-styles-inline-css">
-:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--primary: #1863dc;--wp--preset--color--secondary: #0f4eb5;--wp--preset--color--tertiary: #ebeced;--wp--preset--color--quaternary: #6b7280;--wp--preset--color--quinary: #ffffff;--wp--preset--color--foreground: #1b1b1b;--wp--preset--color--background: #ebeced;--wp--preset--color--accent: #1863dc;--wp--preset--color--border: #dfe2e6;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--font-family--albert-sans: 'Albert Sans', sans-serif;--wp--preset--font-family--alegreya: Alegreya, serif;--wp--preset--font-family--arvo: Arvo, serif;--wp--preset--font-family--bodoni-moda: 'Bodoni Moda', serif;--wp--preset--font-family--bricolage-grotesque: 'Bricolage Grotesque', sans-serif;--wp--preset--font-family--cabin: Cabin, sans-serif;--wp--preset--font-family--chivo: Chivo, sans-serif;--wp--preset--font-family--commissioner: Commissioner, sans-serif;--wp--preset--font-family--cormorant: Cormorant, serif;--wp--preset--font-family--courier-prime: 'Courier Prime', monospace;--wp--preset--font-family--crimson-pro: 'Crimson Pro', serif;--wp--preset--font-family--dm-mono: 'DM Mono', monospace;--wp--preset--font-family--dm-sans: 'DM Sans', sans-serif;--wp--preset--font-family--dm-serif-display: 'DM Serif Display', serif;--wp--preset--font-family--domine: Domine, serif;--wp--preset--font-family--eb-garamond: 'EB Garamond', serif;--wp--preset--font-family--epilogue: Epilogue, sans-serif;--wp--preset--font-family--fahkwang: Fahkwang, sans-serif;--wp--preset--font-family--figtree: Figtree, sans-serif;--wp--preset--font-family--fira-sans: 'Fira Sans', sans-serif;--wp--preset--font-family--fjalla-one: 'Fjalla One', sans-serif;--wp--preset--font-family--fraunces: Fraunces, serif;--wp--preset--font-family--gabarito: Gabarito, system-ui;--wp--preset--font-family--ibm-plex-mono: 'IBM Plex Mono', monospace;--wp--preset--font-family--ibm-plex-sans: 'IBM Plex Sans', sans-serif;--wp--preset--font-family--ibarra-real-nova: 'Ibarra Real Nova', serif;--wp--preset--font-family--instrument-serif: 'Instrument Serif', serif;--wp--preset--font-family--inter: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;--wp--preset--font-family--josefin-sans: 'Josefin Sans', sans-serif;--wp--preset--font-family--jost: Jost, sans-serif;--wp--preset--font-family--libre-baskerville: 'Libre Baskerville', serif;--wp--preset--font-family--libre-franklin: 'Libre Franklin', sans-serif;--wp--preset--font-family--literata: Literata, serif;--wp--preset--font-family--lora: Lora, serif;--wp--preset--font-family--merriweather: Merriweather, serif;--wp--preset--font-family--montserrat: Montserrat, sans-serif;--wp--preset--font-family--newsreader: Newsreader, serif;--wp--preset--font-family--noto-sans-mono: 'Noto Sans Mono', sans-serif;--wp--preset--font-family--nunito: Nunito, sans-serif;--wp--preset--font-family--open-sans: 'Open Sans', sans-serif;--wp--preset--font-family--overpass: Overpass, sans-serif;--wp--preset--font-family--pt-serif: 'PT Serif', serif;--wp--preset--font-family--petrona: Petrona, serif;--wp--preset--font-family--piazzolla: Piazzolla, serif;--wp--preset--font-family--playfair-display: 'Playfair Display', serif;--wp--preset--font-family--plus-jakarta-sans: 'Plus Jakarta Sans', sans-serif;--wp--preset--font-family--poppins: Poppins, sans-serif;--wp--preset--font-family--raleway: Raleway, sans-serif;--wp--preset--font-family--roboto: Roboto, sans-serif;--wp--preset--font-family--roboto-slab: 'Roboto Slab', serif;--wp--preset--font-family--rubik: Rubik, sans-serif;--wp--preset--font-family--rufina: Rufina, serif;--wp--preset--font-family--sora: Sora, sans-serif;--wp--preset--font-family--source-sans-3: 'Source Sans 3', sans-serif;--wp--preset--font-family--source-serif-4: 'Source Serif 4', serif;--wp--preset--font-family--space-mono: 'Space Mono', monospace;--wp--preset--font-family--syne: Syne, sans-serif;--wp--preset--font-family--texturina: Texturina, serif;--wp--preset--font-family--urbanist: Urbanist, sans-serif;--wp--preset--font-family--work-sans: 'Work Sans', sans-serif;--wp--preset--font-family--system-sans: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);}.wp-block-button{--wp--preset--dimension--25: 25%;--wp--preset--dimension--50: 50%;--wp--preset--dimension--75: 75%;--wp--preset--dimension--100: 100%;}:where(body) { margin: 0; }:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}body{background-color: var(--wp--preset--color--background);color: var(--wp--preset--color--foreground);font-family: var(--wp--preset--font-family--inter);padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px;}a:where(:not(.wp-element-button)){color: var(--wp--preset--color--primary);}:root :where(a:where(:not(.wp-element-button)):hover){color: var(--wp--preset--color--secondary);}h1, h2, h3, h4, h5, h6{color: var(--wp--preset--color--foreground);font-family: var(--wp--preset--font-family--inter);}:root :where(.wp-element-button, .wp-block-button__link){background-color: var(--wp--preset--color--primary);border-radius: 999px;border-width: 0;color: #ffffff;font-family: var(--wp--preset--font-family--inter);font-size: inherit;font-style: inherit;font-weight: 600;letter-spacing: inherit;line-height: inherit;padding-top: calc(0.667em + 2px);padding-right: calc(1.333em + 2px);padding-bottom: calc(0.667em + 2px);padding-left: calc(1.333em + 2px);text-decoration: none;text-transform: inherit;}:root :where(.wp-element-caption, .wp-block-audio figcaption, .wp-block-embed figcaption, .wp-block-gallery figcaption, .wp-block-image figcaption, .wp-block-table figcaption, .wp-block-video figcaption){color: var(--wp--preset--color--quaternary);}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-primary-color{color: var(--wp--preset--color--primary) !important;}.has-secondary-color{color: var(--wp--preset--color--secondary) !important;}.has-tertiary-color{color: var(--wp--preset--color--tertiary) !important;}.has-quaternary-color{color: var(--wp--preset--color--quaternary) !important;}.has-quinary-color{color: var(--wp--preset--color--quinary) !important;}.has-foreground-color{color: var(--wp--preset--color--foreground) !important;}.has-background-color{color: var(--wp--preset--color--background) !important;}.has-accent-color{color: var(--wp--preset--color--accent) !important;}.has-border-color{color: var(--wp--preset--color--border) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-primary-background-color{background-color: var(--wp--preset--color--primary) !important;}.has-secondary-background-color{background-color: var(--wp--preset--color--secondary) !important;}.has-tertiary-background-color{background-color: var(--wp--preset--color--tertiary) !important;}.has-quaternary-background-color{background-color: var(--wp--preset--color--quaternary) !important;}.has-quinary-background-color{background-color: var(--wp--preset--color--quinary) !important;}.has-foreground-background-color{background-color: var(--wp--preset--color--foreground) !important;}.has-background-background-color{background-color: var(--wp--preset--color--background) !important;}.has-accent-background-color{background-color: var(--wp--preset--color--accent) !important;}.has-border-background-color{background-color: var(--wp--preset--color--border) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-primary-border-color{border-color: var(--wp--preset--color--primary) !important;}.has-secondary-border-color{border-color: var(--wp--preset--color--secondary) !important;}.has-tertiary-border-color{border-color: var(--wp--preset--color--tertiary) !important;}.has-quaternary-border-color{border-color: var(--wp--preset--color--quaternary) !important;}.has-quinary-border-color{border-color: var(--wp--preset--color--quinary) !important;}.has-foreground-border-color{border-color: var(--wp--preset--color--foreground) !important;}.has-background-border-color{border-color: var(--wp--preset--color--background) !important;}.has-accent-border-color{border-color: var(--wp--preset--color--accent) !important;}.has-border-border-color{border-color: var(--wp--preset--color--border) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}.has-albert-sans-font-family{font-family: var(--wp--preset--font-family--albert-sans) !important;}.has-alegreya-font-family{font-family: var(--wp--preset--font-family--alegreya) !important;}.has-arvo-font-family{font-family: var(--wp--preset--font-family--arvo) !important;}.has-bodoni-moda-font-family{font-family: var(--wp--preset--font-family--bodoni-moda) !important;}.has-bricolage-grotesque-font-family{font-family: var(--wp--preset--font-family--bricolage-grotesque) !important;}.has-cabin-font-family{font-family: var(--wp--preset--font-family--cabin) !important;}.has-chivo-font-family{font-family: var(--wp--preset--font-family--chivo) !important;}.has-commissioner-font-family{font-family: var(--wp--preset--font-family--commissioner) !important;}.has-cormorant-font-family{font-family: var(--wp--preset--font-family--cormorant) !important;}.has-courier-prime-font-family{font-family: var(--wp--preset--font-family--courier-prime) !important;}.has-crimson-pro-font-family{font-family: var(--wp--preset--font-family--crimson-pro) !important;}.has-dm-mono-font-family{font-family: var(--wp--preset--font-family--dm-mono) !important;}.has-dm-sans-font-family{font-family: var(--wp--preset--font-family--dm-sans) !important;}.has-dm-serif-display-font-family{font-family: var(--wp--preset--font-family--dm-serif-display) !important;}.has-domine-font-family{font-family: var(--wp--preset--font-family--domine) !important;}.has-eb-garamond-font-family{font-family: var(--wp--preset--font-family--eb-garamond) !important;}.has-epilogue-font-family{font-family: var(--wp--preset--font-family--epilogue) !important;}.has-fahkwang-font-family{font-family: var(--wp--preset--font-family--fahkwang) !important;}.has-figtree-font-family{font-family: var(--wp--preset--font-family--figtree) !important;}.has-fira-sans-font-family{font-family: var(--wp--preset--font-family--fira-sans) !important;}.has-fjalla-one-font-family{font-family: var(--wp--preset--font-family--fjalla-one) !important;}.has-fraunces-font-family{font-family: var(--wp--preset--font-family--fraunces) !important;}.has-gabarito-font-family{font-family: var(--wp--preset--font-family--gabarito) !important;}.has-ibm-plex-mono-font-family{font-family: var(--wp--preset--font-family--ibm-plex-mono) !important;}.has-ibm-plex-sans-font-family{font-family: var(--wp--preset--font-family--ibm-plex-sans) !important;}.has-ibarra-real-nova-font-family{font-family: var(--wp--preset--font-family--ibarra-real-nova) !important;}.has-instrument-serif-font-family{font-family: var(--wp--preset--font-family--instrument-serif) !important;}.has-inter-font-family{font-family: var(--wp--preset--font-family--inter) !important;}.has-josefin-sans-font-family{font-family: var(--wp--preset--font-family--josefin-sans) !important;}.has-jost-font-family{font-family: var(--wp--preset--font-family--jost) !important;}.has-libre-baskerville-font-family{font-family: var(--wp--preset--font-family--libre-baskerville) !important;}.has-libre-franklin-font-family{font-family: var(--wp--preset--font-family--libre-franklin) !important;}.has-literata-font-family{font-family: var(--wp--preset--font-family--literata) !important;}.has-lora-font-family{font-family: var(--wp--preset--font-family--lora) !important;}.has-merriweather-font-family{font-family: var(--wp--preset--font-family--merriweather) !important;}.has-montserrat-font-family{font-family: var(--wp--preset--font-family--montserrat) !important;}.has-newsreader-font-family{font-family: var(--wp--preset--font-family--newsreader) !important;}.has-noto-sans-mono-font-family{font-family: var(--wp--preset--font-family--noto-sans-mono) !important;}.has-nunito-font-family{font-family: var(--wp--preset--font-family--nunito) !important;}.has-open-sans-font-family{font-family: var(--wp--preset--font-family--open-sans) !important;}.has-overpass-font-family{font-family: var(--wp--preset--font-family--overpass) !important;}.has-pt-serif-font-family{font-family: var(--wp--preset--font-family--pt-serif) !important;}.has-petrona-font-family{font-family: var(--wp--preset--font-family--petrona) !important;}.has-piazzolla-font-family{font-family: var(--wp--preset--font-family--piazzolla) !important;}.has-playfair-display-font-family{font-family: var(--wp--preset--font-family--playfair-display) !important;}.has-plus-jakarta-sans-font-family{font-family: var(--wp--preset--font-family--plus-jakarta-sans) !important;}.has-poppins-font-family{font-family: var(--wp--preset--font-family--poppins) !important;}.has-raleway-font-family{font-family: var(--wp--preset--font-family--raleway) !important;}.has-roboto-font-family{font-family: var(--wp--preset--font-family--roboto) !important;}.has-roboto-slab-font-family{font-family: var(--wp--preset--font-family--roboto-slab) !important;}.has-rubik-font-family{font-family: var(--wp--preset--font-family--rubik) !important;}.has-rufina-font-family{font-family: var(--wp--preset--font-family--rufina) !important;}.has-sora-font-family{font-family: var(--wp--preset--font-family--sora) !important;}.has-source-sans-3-font-family{font-family: var(--wp--preset--font-family--source-sans-3) !important;}.has-source-serif-4-font-family{font-family: var(--wp--preset--font-family--source-serif-4) !important;}.has-space-mono-font-family{font-family: var(--wp--preset--font-family--space-mono) !important;}.has-syne-font-family{font-family: var(--wp--preset--font-family--syne) !important;}.has-texturina-font-family{font-family: var(--wp--preset--font-family--texturina) !important;}.has-urbanist-font-family{font-family: var(--wp--preset--font-family--urbanist) !important;}.has-work-sans-font-family{font-family: var(--wp--preset--font-family--work-sans) !important;}.has-system-sans-font-family{font-family: var(--wp--preset--font-family--system-sans) !important;}
-/*# sourceURL=global-styles-inline-css */
-</style>
-
-<style id="jetpack-stats-inline-css">
-img#wpstats{display:none}
-/*# sourceURL=jetpack-stats-inline-css */
-</style>
-<link rel='stylesheet' id='ascension-css' href='/hub-wp-content/themes/ascension/style.css?ver=1.1.6' media='all' />
-<style id="ascension-inline-css">
-.site-title a,.site-title a:visited{color:#194f6e;}.site-title a:hover,.site-title a:visited:hover{color:rgba(25, 79, 110, 0.8);}
-.site-description{color:#686868;}
-.hero,.hero .widget h1,.hero .widget h2,.hero .widget h3,.hero .widget h4,.hero .widget h5,.hero .widget h6,.hero .widget p,.hero .widget blockquote,.hero .widget cite,.hero .widget table,.hero .widget ul,.hero .widget ol,.hero .widget li,.hero .widget dd,.hero .widget dt,.hero .widget address,.hero .widget code,.hero .widget pre,.hero .widget .widget-title,.hero .page-header h1{color:#ffffff;}
-.main-navigation ul li a,.main-navigation ul li a:visited,.main-navigation ul li a:hover,.main-navigation ul li a:focus,.main-navigation ul li a:visited:hover{color:#194f6e;}.main-navigation .sub-menu .menu-item-has-children > a::after{border-right-color:#194f6e;border-left-color:#194f6e;}.menu-toggle div{background-color:#194f6e;}.main-navigation ul li a:hover,.main-navigation ul li a:focus{color:rgba(25, 79, 110, 0.8);}
-h1,h2,h3,h4,h5,h6,label,legend,table th,dl dt,.entry-title,.entry-title a,.entry-title a:visited,.widget-title{color:#353535;}.entry-title a:hover,.entry-title a:visited:hover,.entry-title a:focus,.entry-title a:visited:focus,.entry-title a:active,.entry-title a:visited:active{color:rgba(53, 53, 53, 0.8);}
-body,input,select,textarea,input[type="text"]:focus,input[type="email"]:focus,input[type="url"]:focus,input[type="password"]:focus,input[type="search"]:focus,input[type="number"]:focus,input[type="tel"]:focus,input[type="range"]:focus,input[type="date"]:focus,input[type="month"]:focus,input[type="week"]:focus,input[type="time"]:focus,input[type="datetime"]:focus,input[type="datetime-local"]:focus,input[type="color"]:focus,textarea:focus,.navigation.pagination .paging-nav-text{color:#252525;}hr{background-color:rgba(37, 37, 37, 0.1);border-color:rgba(37, 37, 37, 0.1);}input[type="text"],input[type="email"],input[type="url"],input[type="password"],input[type="search"],input[type="number"],input[type="tel"],input[type="range"],input[type="date"],input[type="month"],input[type="week"],input[type="time"],input[type="datetime"],input[type="datetime-local"],input[type="color"],textarea,.select2-container .select2-choice{color:rgba(37, 37, 37, 0.5);border-color:rgba(37, 37, 37, 0.1);}select,fieldset,blockquote,pre,code,abbr,acronym,.hentry table th,.hentry table td{border-color:rgba(37, 37, 37, 0.1);}.hentry table tr:hover td{background-color:rgba(37, 37, 37, 0.05);}
-blockquote,.entry-meta,.entry-footer,.comment-meta .says,.logged-in-as,.wp-block-coblocks-author__heading{color:#686868;}
-.site-footer .widget-title,.site-footer h1,.site-footer h2,.site-footer h3,.site-footer h4,.site-footer h5,.site-footer h6{color:#0a0a0a;}
-.site-footer .widget,.site-footer .widget form label{color:#0a0a0a;}
-.footer-menu ul li a,.footer-menu ul li a:visited{color:#686868;}.site-info-wrapper .social-menu a{background-color:#686868;}.footer-menu ul li a:hover,.footer-menu ul li a:visited:hover{color:rgba(104, 104, 104, 0.8);}
-.site-info-wrapper .site-info-text{color:#0a0a0a;}
-a,a:visited,.entry-title a:hover,.entry-title a:visited:hover{color:#000000;}.navigation.pagination .nav-links .page-numbers.current,.social-menu a:hover{background-color:#000000;}a:hover,a:visited:hover,a:focus,a:visited:focus,a:active,a:visited:active{color:rgba(0, 0, 0, 0.8);}.comment-list li.bypostauthor{border-color:rgba(0, 0, 0, 0.2);}
-button,a.button,a.button:visited,input[type="button"],input[type="reset"],input[type="submit"],.wp-block-button__link,.site-info-wrapper .social-menu a:hover{background-color:#1e73be;border-color:#1e73be;}button:hover,button:active,button:focus,a.button:hover,a.button:active,a.button:focus,a.button:visited:hover,a.button:visited:active,a.button:visited:focus,input[type="button"]:hover,input[type="button"]:active,input[type="button"]:focus,input[type="reset"]:hover,input[type="reset"]:active,input[type="reset"]:focus,input[type="submit"]:hover,input[type="submit"]:active,input[type="submit"]:focus{background-color:rgba(30, 115, 190, 0.8);border-color:rgba(30, 115, 190, 0.8);}
-button,button:hover,button:active,button:focus,a.button,a.button:hover,a.button:active,a.button:focus,a.button:visited,a.button:visited:hover,a.button:visited:active,a.button:visited:focus,input[type="button"],input[type="button"]:hover,input[type="button"]:active,input[type="button"]:focus,input[type="reset"],input[type="reset"]:hover,input[type="reset"]:active,input[type="reset"]:focus,input[type="submit"],input[type="submit"]:hover,input[type="submit"]:active,input[type="submit"]:focus,.wp-block-button__link{color:#ffffff;}
-body{background-color:#ffffff;}.navigation.pagination .nav-links .page-numbers.current{color:#ffffff;}
-.hero{background-color:#dcdcdc;}.hero{-webkit-box-shadow:inset 0 0 0 9999em;-moz-box-shadow:inset 0 0 0 9999em;box-shadow:inset 0 0 0 9999em;color:rgba(220, 220, 220, 0.50);}
-.main-navigation-container,.main-navigation.open,.main-navigation ul ul,.main-navigation .sub-menu{background-color:#ffffff;}.site-header{background-color:#ffffff;}
-.site-footer{background-color:#ffffff;}
-.site-info-wrapper{background-color:#ffffff;}.site-info-wrapper .social-menu a,.site-info-wrapper .social-menu a:visited,.site-info-wrapper .social-menu a:hover,.site-info-wrapper .social-menu a:visited:hover{color:#ffffff;}
-.has-primary-color{color:#03263B;}.has-primary-background-color{background-color:#03263B;}
-.has-secondary-color{color:#0b3954;}.has-secondary-background-color{background-color:#0b3954;}
-.has-tertiary-color{color:#bddae6;}.has-tertiary-background-color{background-color:#bddae6;}
-.has-quaternary-color{color:#ff6663;}.has-quaternary-background-color{background-color:#ff6663;}
-.has-quinary-color{color:#ffffff;}.has-quinary-background-color{background-color:#ffffff;}
-/*# sourceURL=ascension-inline-css */
-</style>
-<style id="jetpack_likes-inline-css">
-#jp-post-flair{padding-top:.5em}#content div.sharedaddy,#main div.sharedaddy,div.sharedaddy{clear:both}div.sharedaddy h3.sd-title{display:inline-block;font-size:9pt;font-weight:700;line-height:1.2;margin:0 0 1em}div.sharedaddy h3.sd-title:before{border-top:1px solid #dcdcde;content:"";display:block;margin-bottom:1em;min-width:30px;width:100%}div.jetpack-likes-widget-wrapper{min-height:50px;position:relative;width:100%}div.jetpack-likes-widget-wrapper .sd-link-color{font-size:12px}div.jetpack-comment-likes-widget-wrapper{min-height:31px;position:relative;width:100%}div.jetpack-comment-likes-widget-wrapper iframe{margin-bottom:0}#likes-other-gravatars{background-color:#fff;border:1px solid #dcdcde;border-radius:4px;box-shadow:none;display:none;height:auto;max-height:240px;min-width:220px;overflow:auto;padding:9px 12px 10px;position:absolute;z-index:1000}#likes-other-gravatars *{line-height:normal}#likes-other-gravatars .likes-text{color:#101517;font-size:12px;font-weight:500;padding-bottom:8px}#likes-other-gravatars :is(li,ul){list-style-type:none;margin:0;padding:0;text-indent:0}#likes-other-gravatars li:before{content:""}#likes-other-gravatars ul.wpl-avatars{display:block;max-height:190px;overflow:auto}#likes-other-gravatars ul.wpl-avatars li{float:none;height:28px;margin:0 0 4px;width:196px}#likes-other-gravatars ul.wpl-avatars li a{align-items:center;border-bottom:none!important;display:flex;gap:8px;margin:0 2px 0 0;text-decoration:none}#likes-other-gravatars ul.wpl-avatars li a span{color:#2c3338;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#likes-other-gravatars ul.wpl-avatars li a img{background:none;border:none;border-radius:50%;box-sizing:border-box;margin:0!important;padding:1px!important;position:static}div.sd-box{border-top:1px solid #00000021}.jetpack-likes-widget-loaded iframe,.jetpack-likes-widget-loading .likes-widget-placeholder,.jetpack-likes-widget-unloaded .likes-widget-placeholder{display:block}.jetpack-likes-widget-loaded .likes-widget-placeholder,.jetpack-likes-widget-loading iframe,.jetpack-likes-widget-unloaded iframe{display:none}.comment-likes-widget,.entry-content .post-likes-widget,.post-likes-widget{border-width:0;margin:0}.comment-likes-widget-placeholder,.post-likes-widget-placeholder{border-width:0;margin:0;position:relative}.comment-likes-widget-placeholder{display:flex;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;height:18px;position:absolute}.comment-likes-widget-placeholder:before{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath fill='%232ea2cc' d='m12 2 2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304'/%3E%3C/svg%3E");background-repeat:no-repeat;background-size:16px 16px;color:#2ea2cc;content:"";display:inline-block;height:16px;padding-right:5px;position:relative;top:3px;width:16px}.post-likes-widget-placeholder .button{display:none}:is(.comment-likes-widget-placeholder,.post-likes-widget-placeholder) .loading{color:#999;font-size:12px}.comment-likes-widget-placeholder .loading{align-self:center;color:#4e4e4e;margin-top:4px;padding-left:5px}div.sharedaddy.sd-like-enabled .sd-like h3{display:none}div.sharedaddy.sd-like-enabled .sd-like .post-likes-widget{float:none;position:absolute;top:0;width:100%}.comment-likes-widget{width:100%}.cs-rating,.pd-rating{display:block!important}.sd-gplus .sd-title{display:none}@media print{.jetpack-likes-widget-wrapper{display:none}}
-/*# sourceURL=/hub-wp-content/plugins/jetpack/_inc/build/likes/style.min.css */
-</style>
-<link rel='stylesheet' id='tablepress-default-css' href='/hub-wp-content/tablepress-combined.min.css?ver=149' media='all' />
-<link rel='stylesheet' id='ascension-fonts-css' href='https://fonts-api.wp.com/css?family=Open%20Sans:300,400,700&#038;subset=latin&#038;ver=1.8.9' media='all' />
-<style id="ascension-fonts-inline-css">
-.site-title{font-family:"Open Sans", sans-serif;}
-.main-navigation ul li a,.main-navigation ul li a:visited,button,a.button,a.fl-button,input[type="button"],input[type="reset"],input[type="submit"]{font-family:"Open Sans", sans-serif;}
-h1,h2,h3,h4,h5,h6,label,legend,table th,dl dt,.entry-title,.widget-title{font-family:"Open Sans", sans-serif;}
-body,p,ol li,ul li,dl dd,.fl-callout-text{font-family:"Open Sans", sans-serif;}
-blockquote,.entry-meta,.entry-footer,.comment-list li .comment-meta .says,.comment-list li .comment-metadata,.comment-reply-link,#respond .logged-in-as{font-family:"Open Sans", sans-serif;}
-/*# sourceURL=ascension-fonts-inline-css */
-</style>
-<style id="jetpack-global-styles-frontend-style-inline-css">
-:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
-/*# sourceURL=jetpack-global-styles-frontend-style-inline-css */
-</style>
-<script id="jetpack-mu-wpcom-settings-js-before" type="5fe0676d8d9db8d28428234a-text/javascript">
-var JETPACK_MU_WPCOM_SETTINGS = {"assetsUrl":"/hub-wp-content/mu-plugins/wpcomsh/jetpack_vendor/automattic/jetpack-mu-wpcom/src/build/"};
-//# sourceURL=jetpack-mu-wpcom-settings-js-before
-</script>
-<script id="jquery-core-js" src="/hub-wp-includes/js/jquery/jquery.min.js?ver=3.7.1" type="5fe0676d8d9db8d28428234a-text/javascript"></script>
-<script id="jquery-migrate-js" src="/hub-wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" type="5fe0676d8d9db8d28428234a-text/javascript"></script>
-
-<link rel="canonical" href="/hub/radiators/" />
-<link rel='shortlink' href='https://wp.me/PaPrQ4-4wB' />
-<style type='text/css'>
-.site-title a,.site-title a:visited{color:194f6e;}
-</style>
-<!-- Jetpack Open Graph Tags -->
-<meta property="og:type" content="article" />
-<meta property="og:title" content="Radiators" />
-<meta property="og:url" content="/hub/radiators/" />
-<meta property="og:description" content="| Item | Link | | Single Rads / K1| | | HF Rads P+ | | | Double Rads K2 | | | Single Rads K3| | | Single Rads K4| |" />
-<meta property="article:published_time" content="2023-10-05T07:51:32+00:00" />
-<meta property="article:modified_time" content="2023-10-05T07:51:32+00:00" />
-<meta property="og:site_name" content="Hub.MyBoiler.com" />
-<meta property="og:image" content="https://s0.wp.com/_si/?t=eyJpbWciOiJodHRwczpcL1wvaHViLm15Ym9pbGVyLmNvbVwvd3AtY29udGVudFwvdXBsb2Fkc1wvMjAyNFwvMDRcL215Ym9pbGVyLXNxdWFyZS5qcGciLCJ0eHQiOiJIdWIuTXlCb2lsZXIuY29tIiwidGVtcGxhdGUiOiJlZGdlIiwiZm9udCI6IiIsImJsb2dfaWQiOjE2MDAyNTEwNH0.8XWjHtjAxE37amNcHxJ3i34BhCuVpLept9plKPS2KD8MQ" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="" />
-<meta property="og:locale" content="en_GB" />
-<meta name="twitter:text:title" content="Radiators" />
-<meta name="twitter:image" content="/hub-wp-content/uploads/2024/04/myboiler-square.jpg" />
-<meta name="twitter:card" content="summary" />
-
-<!-- End Jetpack Open Graph Tags -->
-<link rel="icon" href="/hub-wp-content/uploads/2024/04/myboiler-square-100x100.jpg" sizes="32x32" />
-<link rel="icon" href="/hub-wp-content/uploads/2024/04/myboiler-square-200x200.jpg?crop=1" sizes="192x192" />
-<meta name="msapplication-TileImage" content="/hub-wp-content/uploads/2024/04/myboiler-square.jpg" />
-<link rel="stylesheet" type="text/css" id="wp-custom-css" href="/hub/?custom-css=e77c1c2066" />
-<!--
-<meta name="google-adsense-account" content="ca-pub-7588874142232774">
-<script src="https://analytics.ahrefs.com/analytics.js" data-key="z5SkliNY282HqownejUPGw" async></script>
--->
 </head>
+<body class="article-page">
+    <!-- Header with full navigation -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu">
+                <ul class="nav-list">
+                    
+                    <!-- Home -->
+                    <li class="nav-item">
+                        <a href="https://myboiler.com">Home</a>
+                    </li>
 
-<body class="wp-singular page-template-default page page-id-17397 wp-custom-logo wp-theme-primer wp-child-theme-ascension group-blog layout-two-column-default no-max-width">
-		
-	<div id="page" class="hfeed site">
+                    <!-- Advice Menu -->
+                    <li class="nav-item nav-item-has-dropdown">
+                        <span class="nav-dropdown-label">
+                            <span>Advice</span>
+                            <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>
+                            </svg>
+                        </span>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Boilers</h4>
+                                <a href="/hub/money-and-energy-saving/">Money and Energy Saving</a>
+                                <a href="/hub/boiler-pressure/">Boiler Pressure</a>
+                                <a href="/hub/boiler-service/">Boiler Service</a>
+                                <a href="/hub/boiler-types/">Boiler Types</a>
+                                <a href="/hub/boiler-energy-efficiency/">Boiler Energy Efficiency</a>
+                                <a href="/hub/installation-efficiency/">Installation Efficiency</a>
+                                <h4>OpenTherm & Modulating Boilers</h4>
+                                <a href="/hub/opentherm/opentherm-boilers-and-controls/">OpenTherm & Modulating Overview</a>
+                                <a href="/hub/opentherm/opentherm-boilers-and-controls/">OpenTherm Capable Boilers</a>
+                                <a href="/hub/opentherm/opentherm-boilers-and-controls/">OpenTherm Controls</a>
+                                <a href="/hub/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">Modulating Boilers & Smart Controls</a>
+                                <a href="/hub/opentherm/vaillant-opentherm/">Vaillant OpenTherm Guide</a>
+                                <a href="/hub/opentherm/worcester-bosch-opentherm/">Worcester OpenTherm Guide</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Heat Pumps</h4>
+                                <a href="/hub/heat-pumps/">Heat Pumps Overview</a>
+                                <a href="/hub/heat-pumps/retrofit-an-existing-hot-water-cylinder-with-a-plate-heat-exchanger-for-use-with-a-heat-pump/">Heat Pump Cylinder Retrofit</a>
+                                <a href="/hub/heat-pumps/air-source-heat-pumps/">Air Source Heat Pump</a>
+                                <a href="/hub/are-heat-pumps-a-con/">Are Heat Pumps a Con?</a>
+                                <a href="/hub/why-heat-pumps-work-well-with-underfloor-heating/">Underfloor Heating</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Miscellaneous</h4>
+                                <a href="/hub/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-post-2012-models/">Flow Temperature & Power</a>
+                                <a href="/hub/solar-thermal/">Solar Thermal Heating</a>
+                                <a href="/hub/solar-thermal/">Solar Thermal Servicing</a>
+                                <a href="/hub/s-plan/">S Plan Heating Systems</a>
+                                <a href="/hub/radiators/">Radiators</a>
+                                <a href="/quote/">Get a Quote</a>
 
-		<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+                            </div>
+                        </div>
+                    </li>
 
-				
+                    <!-- Toolbox Menu -->
+                    <li class="nav-item nav-item-has-dropdown">
+                        <span class="nav-dropdown-label">
+                            <span>Toolbox</span>
+                            <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>
+                            </svg>
+                        </span>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Vaillant</h4>
+                                <a href="/hub/vaillant/vaillant-p-test-program-mode/">P Test Instructions</a>
+                                <a href="/hub/vaillant/vaillant-ecotec-emissions-table/">Emissions Table</a>
+                                <a href="/hub/how-to/vaillant-ecotec-boiler-service/">Ecotec Service How-To</a>
+                                <a href="/hub/vaillant/vaillant-diagnostic-s-and-d-codes/">Diagnostic S & D Codes</a>
+                                <a href="/hub/vaillant/vaillant-fga-tool/">FGA Tool</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Worcester Bosch</h4>
+                                <a href="/hub/worcester-bosch-fga-tool/">FGA Tool</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Other Brands</h4>
+                                <a href="/hub/intergas-fga-tool/">Intergas FGA Tool</a>
+                                <a href="/hub/how-to/service-an-intergas-boiler/">Intergas Service How-To</a>
+                                <h4>Miscellaneous</h4>
+                                <a href="/hub/boiler-maximum-and-minimum-output-mode-videos/">Max/Min Output Mode Videos</a>
+                            </div>
+                        </div>
+                    </li>
 
+                    <!-- Calculators Menu -->
+                    <li class="nav-item nav-item-has-dropdown">
+                        <span class="nav-dropdown-label">
+                            <span>Calculators</span>
+                            <svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>
+                            </svg>
+                        </span>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Heating Design</h4>
+                                <a href="/hub/calculators/air-change-calculator/">Air Change Calculator (ACH)</a>
+                                <a href="/hub/calculators/boiler-consumption/">Boiler Consumption</a>
+                                <a href="/hub/calculators/heat-source-system-design/">Heat Source/System Design</a>
+                                <a href="/hub/calculators/water-content-calculator/">Water Content</a>
+                                <a href="/hub/calculators/hot-water-recovery/">Hot Water Recovery</a>
+                                <a href="/hub/calculators/pipe-size-calculator/">Pipe Size Calculator</a>
+                                <a href="/hub/calculators/radiator-correction-factor/">Radiator Correction Factor</a>
+                                <a href="/hub/calculators/volume-flow-rate-q/">Volume Flow Rate Q</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Conversion Calculators</h4>
+                                <a href="/hub/calculators/kw-to-flow-rate/">KW to Flow Rate & Flow to KW</a>
+                                <a href="/hub/calculators/flow-rate-lpm-to-energy-used-kwh/">LPM to kWh</a>
+                                <a href="/hub/calculators/btu-to-watts/">BTU to Watts</a>
+                                <a href="/hub/radiator-new-output/">Radiator New Output</a>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Gas Calculators</h4>
+                                <a href="/hub/calculators/combustion-performance-gas-ratio-calculator/">Combustion Ratio</a>
+                                <a href="/hub/calculators/gas-rate-calculator/">Gas Rate</a>
+                                <a href="/hub/calculators/gas-volume-m3-to-kwh/">m³ to kWh</a>
+                                <h4>Buffers</h4>
+                                <a href="/hub/calculators/buffer-minimum-volume-calculation/">Buffer Minimum Volume</a>
+                            </div>
+                        </div>
+                    </li>
 
-		<header id="masthead" class="site-header" role="banner">
-			<!--  Smart Slider for homepage banner -->
-			
-						<!-- <div id=header-account> -->
-			
+                    <!-- Manuals -->
+                    <li class="nav-item">
+                        <a href="https://boilermanuals.com">Manuals</a>
+                    </li>
 
+                    <!-- Ask AI -->
+                    <li class="nav-item nav-item-cta">
+                        <a href="/chat/">Ask AI</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-			 <!--30-Aug-2021  -->	
-				
-			<!--</div>header-account -->
-			
-						<div class="site-header-wrapper">
+    <!-- Article Content -->
+        <div class="article-container">
+        <header class="article-header">
+            <h1 class="article-title">Radiators</h1>
+            <p class="article-intro">
+                | Item | Link | | Single Rads / K1| | | HF Rads P+ | | | Double Rads K2 | | | Single Rads K3| | | Single Rads K4| |
+            </p>
+        </header>
 
-				
-<div class="site-title-wrapper">
-
-	<a href="/" class="custom-logo-link" rel="home"><img src="/hub-wp-content/uploads/2018/09/myboiler.svg" class="custom-logo" alt="Hub.MyBoiler.com" decoding="async" data-attachment-id="3130" data-permalink="/hub/myboiler-2/" data-orig-file="/hub-wp-content/uploads/2018/09/myboiler.svg" data-orig-size="" data-comments-opened="0" data-image-meta="[]" data-image-title="myboiler" data-image-description="" data-image-caption="" data-large-file="/hub-wp-content/uploads/2018/09/myboiler.svg" /></a>
-	<div class="site-title"><a href="/" rel="home">Hub.MyBoiler.com</a></div>
-	
-</div><!-- .site-title-wrapper -->
-				
-				 
-				
-			<!--31-Aug-2021  -->		
-				
-			<nav class="mb-mega-nav" aria-label="Primary">
-<button type="button" class="mb-mega-nav__toggle" aria-expanded="false" aria-controls="mb-mega-menu"><span class="mb-mega-nav__burger" aria-hidden="true"></span><span class="screen-reader-text">Menu</span></button>
-<ul id="mb-mega-menu" class="mb-mega-menu"><li id="menu-item-home" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://myboiler.com">Home</a></li>
-<li id="menu-item-595" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-ancestor current_page_ancestor menu-item-has-children menu-item-595"><a href="/hub/advice/">Advice</a>
-<ul class="sub-menu">
-	<li id="menu-item-702" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-702"><a href="/hub/boiler-types/">Boilers</a>
-	<ul class="sub-menu">
-		<li id="menu-item-15994" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-15994"><a href="/hub/money-and-energy-saving/">Money and Energy Saving</a></li>
-		<li id="menu-item-1040" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1040"><a href="/hub/boiler-pressure/">Boiler Pressure</a></li>
-		<li id="menu-item-619" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-619"><a href="/hub/boiler-service/">Boiler Service</a></li>
-		<li id="menu-item-730" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-730"><a href="/hub/boiler-types/">Boiler Types</a></li>
-		<li id="menu-item-851" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-851"><a href="/hub/boiler-energy-efficiency/">Boiler Energy Efficiency</a></li>
-		<li id="menu-item-792" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-792"><a href="/hub/energy-saving/">Installation Efficiency</a></li>
-		<li id="menu-item-704" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-704"><a href="/hub/./open-therm/">Open Therm &#038; Modulating Boilers</a></li>
-	</ul>
-</li>
-	<li id="menu-item-16276" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-16276"><a href="/hub/heat-pumps/">Heat Pumps</a>
-	<ul class="sub-menu">
-		<li id="menu-item-16279" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16279"><a href="/hub/heat-pumps/">Heat Pumps</a></li>
-		<li id="menu-item-16277" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16277"><a href="/hub/heat-pumps/retrofit-an-existing-hot-water-cylinder-with-a-plate-heat-exchanger-for-use-with-a-heat-pump/">Retrofit for an existing Hot Water cylinder</a></li>
-		<li id="menu-item-16327" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16327"><a href="/hub/heat-pumps/air-source-heat-pump/">Air Source Heat Pumps</a></li>
-		<li id="menu-item-16288" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16288"><a href="/hub/heat-pumps/co2-heat-pumps/">CO2 Heat Pumps</a></li>
-		<li id="menu-item-18138" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18138"><a href="/hub/w-hy-heat-pumps-work-well-with-underfloor-heating/">Why heat pumps work well with underfloor heating?</a></li>
-	</ul>
-</li>
-	<li id="menu-item-18139" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home current-menu-ancestor current-menu-parent menu-item-has-children menu-item-18139"><a href="/">Miscellaneous</a>
-	<ul class="sub-menu">
-		<li id="menu-item-15084" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-15084"><a href="/hub/the-relationship-between-flow-temperature-and-power-output/">Flow Temperature and Power Output relationship</a></li>
-		<li id="menu-item-17253" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17253"><a href="/hub/solar-thermal/">solar thermal</a></li>
-		<li id="menu-item-17254" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17254"><a href="/hub/solar-thermal/solar-thermal-service/">solar thermal service</a></li>
-		<li id="menu-item-16163" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16163"><a href="/hub/s-plan/">S Plan &#038; S Plan Plus</a></li>
-		<li id="menu-item-17405" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-17397 current_page_item menu-item-17405"><a href="/hub/radiators/" aria-current="page">Radiators</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li id="menu-item-604" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-604"><a href="/hub/installer/">Toolbox</a>
-<ul class="sub-menu">
-	<li id="menu-item-3736" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3736"><a href="/">Vaillant</a>
-	<ul class="sub-menu">
-		<li id="menu-item-3735" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3735"><a href="/hub/vaillant-p-test-program-mode/">Vaillant P Test Program mode</a></li>
-		<li id="menu-item-1051" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1051"><a href="/hub/vaillant-ecotec-emissions-table/">Vaillant Ecotec Emissions Table</a></li>
-		<li id="menu-item-3721" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3721"><a href="/hub/how-to/how-to-service-a-vaillant-ecotec-boiler/">Vaillant Ecotec Boiler Service &#8211; How To</a></li>
-		<li id="menu-item-3738" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3738"><a href="/hub/vaillant-diagnostic-d-codes/">Vaillant Diagnostic S and D Codes</a></li>
-		<li id="menu-item-6764" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6764"><a href="/hub/vaillant/vaillant-fga-tool/">Vaillant FGA Tool</a></li>
-	</ul>
-</li>
-	<li id="menu-item-7046" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-has-children menu-item-7046"><a href="/">Worcester Bosch</a>
-	<ul class="sub-menu">
-		<li id="menu-item-6761" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6761"><a href="/hub/worcester-bosch-fga-tool/">Worcester Bosch FGA Tool</a></li>
-	</ul>
-</li>
-	<li id="menu-item-10923" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-10923"><a href="/hub/intergas/">Other Brands</a>
-	<ul class="sub-menu">
-		<li id="menu-item-6768" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6768"><a href="/hub/intergas-fga-tool/">Intergas FGA Tool</a></li>
-		<li id="menu-item-7050" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7050"><a href="/hub/how-to/how-to-service-an-intergas-boiler/">Intergas Boiler Service &#8211; How To</a></li>
-	</ul>
-</li>
-	<li id="menu-item-15429" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-has-children menu-item-15429"><a href="/">MISC</a>
-	<ul class="sub-menu">
-		<li id="menu-item-16698" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16698"><a href="/hub/boiler-maximum-and-minimum-output-mode-videos/">Boiler Maximum and Minimum output mode videos</a></li>
-	</ul>
-</li>
-</ul>
-</li>
-<li id="menu-item-3665" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3665"><a href="/calculators">Calculators</a>
-<ul class="sub-menu">
-	<li id="menu-item-17931" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-has-children menu-item-17931"><a href="/">Heating Design</a>
-	<ul class="sub-menu">
-		<li id="menu-item-18081" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18081"><a href="/hub/air-change-rates-ach/">Air Change Rates (ACH)</a></li>
-		<li id="menu-item-5851" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5851"><a href="/hub/boiler-consumption-calculator/">Boiler Consumption</a></li>
-		<li id="menu-item-3664" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3664"><a href="/heating-system-output-calculator/">Heat Source and Heating System Design</a></li>
-		<li id="menu-item-17955" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17955"><a href="/hub/calculators/heating-system-water-content-calculator/">Heating System Water Content Calculator</a></li>
-		<li id="menu-item-2908" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2908"><a href="/hub/hot-water-recovery-time-calculator/">Hot Water Recovery Time</a></li>
-		<li id="menu-item-15193" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-15193"><a href="/hub/calculators/pipe-size-calculator/">Pipe Size Calculator</a></li>
-		<li id="menu-item-16297" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16297"><a href="/hub/calculators/radiator-correction-factor-tool/">Radiator Correction Factor Tool</a></li>
-		<li id="menu-item-2929" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2929"><a href="/hub/volume-flow-rate-q-calculator/">Volume Flow Rate Q</a></li>
-	</ul>
-</li>
-	<li id="menu-item-2974" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-2974"><a href="/hub/heating-design-calculators/">Conversion Calculators</a>
-	<ul class="sub-menu">
-		<li id="menu-item-15337" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-15337"><a href="/hub/calculators/kw-to-flow-rate/">Heat Output (KW) to Flow Rate (LPS/LPM)</a></li>
-		<li id="menu-item-2847" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2847"><a href="/hub/calculators/hot-water-flow-rate-to-kw-input/">Flow Rate(LPM) to Heat Output (KW)</a></li>
-		<li id="menu-item-15800" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-15800"><a href="/hub/calculators/flow-rate-lpm-to-energy-used-kwh/">Flow Rate(LPM) to Energy used (kWh) Calculator</a></li>
-		<li id="menu-item-18059" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18059"><a href="/hub/calculators/btu-to-kw/">BTU to Watts</a></li>
-		<li id="menu-item-17929" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17929"><a href="/hub/radiator-new-output/">Radiator New Output</a></li>
-	</ul>
-</li>
-	<li id="menu-item-17930" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-has-children menu-item-17930"><a href="/">Gas</a>
-	<ul class="sub-menu">
-		<li id="menu-item-2869" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2869"><a href="/hub/gas-ratio-calculator/">Gas Combustion Ratio</a></li>
-		<li id="menu-item-2846" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2846"><a href="/hub/gas-rate-calculator/">Gas Rate Calculator</a></li>
-		<li id="menu-item-18647" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18647"><a href="/hub/calculators/gas-volume-m3-to-kwh/">Gas volume m3 to kwh</a></li>
-	</ul>
-</li>
-	<li id="menu-item-17935" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-has-children menu-item-17935"><a href="/">Buffers</a>
-	<ul class="sub-menu">
-		<li id="menu-item-17934" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17934"><a href="/hub/calculators/buffer-minimum-volume-calculation/">Buffer Minimum Volume Calculation</a></li>
-	</ul>
-</li>
-</ul>
-</li>
-<li id="menu-item-18216" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-18216"><a href="https://boilermanuals.com">Manuals</a></li>
-</ul></nav></div><!-- .site-header-wrapper -->
-
-						
-
-			  <!--30-Aug-2021  -->
-			
-
-		</header><!-- #masthead -->
-
-		
-<div class="hero">
-
-	
-	<div class="hero-inner">
-
-		
-	</div>
-
-</div>
-		
-		<!--  added by jk, smart slider -->
-		<div class="smart-slider">
-				</div><!--end smart slider -->
-		
-
-				<div class="main-heading2" style="background-color: transparent;">
-			<h2 style="text-transform: none;">Radiators</h2>
-		</div>
-				<div class="page-title content" style="background-color: none;">
-		<h4>		
-		</h4>
-		</div>	
-
-		<!-- added 28/02/20, JK-->
-		  			<div id="content" class="site-content"> <!-- apanel -->
-		
-
-
-		<!-- <div id="content" class="site-content "> -->
-		<!-- end header.php -->	
-
-
-<!-- page.php -->
-
-<div id="primary" class="content-area">
-
-	<main id="main" class="site-main" role="main">
-
-		
-			
-<article id="post-17397" class="post-17397 page type-page status-publish hentry">
-            <img
-                src="/hub/radiators/images/radiator.jpg"
-                alt="Radiator"
-                loading="lazy"
-            >
-
-            <img
-                src="/hub/radiators/images/myboiler-radiator-image.jpg"
-                alt="Myboiler Radiator Image"
-                loading="lazy"
-            >
-
-
-
-	
-	
-<div class="page-content">
-
-	<p>| Item | Link |<br />
-| Single Rads / K1| <a href="https://www.ultraheat.co.uk/product/compact-4-sf" rel="nofollow">https://www.ultraheat.co.uk/product/compact-4-sf</a> |<br />
-| HF Rads P+ |https://www.ultraheat.co.uk/product/compact-4-hf |<br />
-| Double Rads K2 |https://www.ultraheat.co.uk/product/compact-4-df |<br />
-| Single Rads K3|https://www.ultraheat.co.uk/product/compact-4-ts |<br />
+        <article class="article-content">
+<p>| Item | Link |<br>
+| Single Rads / K1| <a href="https://www.ultraheat.co.uk/product/compact-4-sf" rel="nofollow">https://www.ultraheat.co.uk/product/compact-4-sf</a> |<br>
+| HF Rads P+ |https://www.ultraheat.co.uk/product/compact-4-hf |<br>
+| Double Rads K2 |https://www.ultraheat.co.uk/product/compact-4-df |<br>
+| Single Rads K3|https://www.ultraheat.co.uk/product/compact-4-ts |<br>
 | Single Rads K4|https://www.ultraheat.co.uk/product/compact-4-qs |</p>
+        </article>
+    </div>
 
-</div><!-- .page-content -->
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="/pages/about-us.md" target="page-content">Company</a></li>
+                <li><a href="/pages/carbon-emissions.md" target="page-content">Carbon Emissions</a></li>
+                <li><a href="/pages/mission.md" target="page-content">Our Mission</a></li>
+                <li><a href="/pages/privacy-policy.md" target="page-content">Privacy Policy</a></li>
+                <li><a href="/pages/affiliate-disclosure.md" target="page-content">Affiliates Disclosure</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul>
+                <li>A Rated House,</li>
+                <li>11 Sunnymead Road,</li>
+                <li>London, </li>
+                <li>NW9 8BT</li>
+                <li><a href="tel://+4402081234411">+44 020 8123 4411</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Sister Sites</h3>
+            <ul>
+                <li><a href="/">MyBoiler Hub</a></li>
+                <li><a href="https://boilermanuals.com">Boiler Manuals</a></li>
+                <li><a href="https://combiboiler.com">Combi Boiler</a></li>
+                <li><a href="https://boilerservice.com">Boiler Service</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Newsletter</h3>
+            <div id="mc_embed_shell">
+                <div id="mc_embed_signup">
+                    <form action="https://myboiler.us7.list-manage.com/subscribe/post?u=74520e86378a5e9ad9e26240e&amp;id=de886bf698&amp;f_id=00ccaee4f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                        <div id="mc_embed_signup_scroll">
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk"></span></label><br><br>
+                                <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""><br><br>
+                            </div>
+                            <div class="clear foot">
+                                <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Subscribe">
+                            </div>
+                            <br>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display: none;"></div>
+                                <div class="response" id="mce-success-response" style="display: none;"></div>
+                            </div>
+                            <div aria-hidden="true" style="position: absolute; left: -5000px;">
+                                <input type="text" name="b_76b9d06d4164064c0ffb0d455_68a8dc9423" tabindex="-1" value="">
+                            </div>
+                            <p style="margin: 0px auto;">
+                                <a href="http://eepurl.com/i6R-1E" title="Mailchimp - email marketing made easy and fun">
+                                    <span style="display: inline-block; background-color: transparent; border-radius: 4px;">
+                                        <img class="refferal_badge" src="https://digitalasset.intuit.com/render/content/dam/intuit/mc-fe/en_us/images/intuit-mc-rewards-text-light.svg" alt="Intuit Mailchimp" style="width: 100px; height: 40px; display: flex; padding: 2px 0px; justify-content: left; align-items: center;">
+                                    </span>
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-	
-</article><!-- #post-## -->
+    <footer class="copyright">
+        <ul class="social-media no-bullets">
+            <li class="social-link social-link-x">
+                <a rel="noopener nofollow" target="_blank" href="https://x.com/myboiler">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z"></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="social-link social-link-facebook">
+                <a rel="noopener nofollow" target="_blank" href="https://facebook.com/myboiler">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z"></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="social-link social-link-youtube">
+                <a rel="noopener nofollow" target="_blank" href="https://www.youtube.com/@myboiler">
+                    <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M21.8,8.001c0,0-0.195-1.378-0.795-1.985c-0.76-0.797-1.613-0.801-2.004-0.847c-2.799-0.202-6.997-0.202-6.997-0.202h-0.009c0,0-4.198,0-6.997,0.202C4.608,5.216,3.756,5.22,2.995,6.016C2.395,6.623,2.2,8.001,2.2,8.001S2,9.62,2,11.238v1.517c0,1.618,0.2,3.237,0.2,3.237s0.195,1.378,0.795,1.985c0.761,0.797,1.76,0.771,2.205,0.855c1.6,0.153,6.8,0.201,6.8,0.201s4.203-0.006,7.001-0.209c0.391-0.047,1.243-0.051,2.004-0.847c0.6-0.607,0.795-1.985,0.795-1.985s0.2-1.618,0.2-3.237v-1.517C22,9.62,21.8,8.001,21.8,8.001z M9.935,14.594l-0.001-5.62l5.404,2.82L9.935,14.594z"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </footer>
 
-			
-		
-	</main><!-- #main -->
+    <footer class="copyright">
+        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
+    </footer>
 
-</div><!-- #primary -->
-
-
-
-	
-		</div><!-- #content -->
-
-		
-		<footer id="colophon" class="site-footer">
-
-			<div class="site-footer-inner">
-
-					<div class="footer-widget-area columns-4">
-
-	
-		<div class="footer-widget">
-
-			<aside id="nav_menu-4" class="widget widget_nav_menu"><h4 class="widget-title">About Us</h4><div class="menu-about-us-container"><ul id="menu-about-us" class="menu"><li id="menu-item-18471" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18471"><a href="/pages/about-us.md">Company</a></li>
-<li id="menu-item-18474" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18474"><a href="/hub/mission/">Our Mission</a></li>
-<li id="menu-item-3146" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3146"><a href="/hub/terms-and-conditions/">Terms &#038; Conditions</a></li>
-<li id="menu-item-3147" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-3147"><a rel="privacy-policy" href="/hub/privacy-policy/">Privacy Policy</a></li>
-<li id="menu-item-18475" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18475"><a href="/hub/carbon-emissions/">Carbon Emissions</a></li>
-<li id="menu-item-18476" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18476"><a href="/hub/affilate-activity-disclosure/">Affiliates Disclosure</a></li>
-</ul></div></aside>
-		</div>
-
-	
-		<div class="footer-widget">
-
-			<aside id="custom_html-12" class="widget_text widget widget_custom_html"><h4 class="widget-title">Contact Us</h4><div class="textwidget custom-html-widget">A Rated House,<br />
-11 Sunnymead Road,<br />
-London,<br />
-NW9 8BT<br />
-<a href="tel:+442081234411">+44 020 8123 4411</a></div></aside>
-		</div>
-
-	
-		<div class="footer-widget">
-
-			<aside id="nav_menu-3" class="widget widget_nav_menu"><h4 class="widget-title">Sister Sites</h4><div class="menu-sister-sites-container"><ul id="menu-sister-sites" class="menu"><li id="menu-item-18697" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-18697"><a href="/">MyBoiler Hub</a></li>
-<li id="menu-item-14635" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14635"><a href="https://boilermanuals.com">Boiler Manuals</a></li>
-<li id="menu-item-16635" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16635"><a href="https://combiboiler.com">Combi Boiler</a></li>
-<li id="menu-item-16636" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16636"><a href="https://boilerservice.com">Boiler Service</a></li>
-</ul></div></aside>
-		</div>
-
-	
-		<div class="footer-widget">
-
-			
-		</div>
-
-	
-	</div>
-	
-			</div><!-- .site-footer-inner -->
-
-		</footer><!-- #colophon -->
-		
-		<!-- added by jk 28/06/2025 -->
-		
-		
-<div class="site-info-wrapper">
-
-	<div class="site-info">
-
-		<div class="site-info-inner">
-
-			
-<div class="site-info-text">
-
-	© 2026 MyBoiler.com - All rights reserved.
-</div>
-
-		</div><!-- .site-info-inner -->
-
-	</div><!-- .site-info -->
-
-</div><!-- .site-info-wrapper -->
-
-	</div><!-- #page -->
-
-	<!--  -->
-<script type="speculationrules">
-{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/ascension/*","/wp-content/themes/primer/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
-</script>
-<meta id="bilmur" property="bilmur:data" content="" data-customproperties="{&quot;woo_active&quot;:&quot;0&quot;,&quot;logged_in&quot;:&quot;0&quot;,&quot;wptheme&quot;:&quot;ascension&quot;,&quot;wptheme_is_block&quot;:&quot;0&quot;}" data-provider="wordpress.com" data-service="atomic"  data-site-tz="Etc/GMT-0"  >
-<script defer src="https://s0.wp.com/wp-content/js/bilmur.min.js?m=202637" type="5fe0676d8d9db8d28428234a-text/javascript"></script>
-	<script type="5fe0676d8d9db8d28428234a-text/javascript">
-			// List of Themes, Classes and Regular expressions
-		var template_name = 'primer';
-		switch(template_name) {
-			case 'twentyeleven' :
-					var classes = ['entry-meta'];
-					var regex = ' by <a(.*?)\/a>;<span class="sep"> by <\/span>';
-					break;
-			case 'twentyten' :
-					var classes = ['entry-meta'];
-					var regex = ' by <a(.*?)\/a>;<span class="meta-sep">by<\/span>';
-					break;
-			case 'object' :
-					var classes = ['post-details', 'post'];
-					var regex = ' by <span(.*?)\/span>;<p class="post-details">by';
-					break;
-			case 'theme-revenge' :
-					var classes = ['post-entry-meta'];
-					var regex = 'By <a(.*?)\/a> on';
-					break;
-			case 'Magnificent' :
-					var classes = ['meta-info'];
-					var regex = '<span>by<\/span> <a(.*?)\/a>;Posted by <a(.*?)\/a> on ';
-					break;
-			case 'wp-clearphoto' :
-					var classes = ['meta'];
-					var regex = '\\|\\s*<\/span>\\s*<span class="meta-author">\\s*<a(.*?)\/a>';
-					break;
-			case 'wp-clearphoto1' :
-					var classes = ['meta'];
-					var regex = '\\|\\s*<\/span>\\s*<span class="meta-author">\\s*<a(.*?)\/a>';
-					break;
-			default:
-					var classes = ['entry-meta'];
-					var regex = ' by <a(.*?)\/a>;<span class="sep"> by <\/span>; <span class="meta-sep">by<\/span>;<span class="meta-sep"> by <\/span>';
-		}
-				if (typeof classes[0] !== 'undefined' && classes[0] !== null) {
-				for(var i = 0; i < classes.length; i++) {
-					var elements = document.querySelectorAll('.'+classes[i]);
-					for (var j = 0; j < elements.length; j++) {
-						var regex_array = regex.split(";");
-						for(var k = 0; k < regex_array.length; k++) {
-							 if (elements[j].innerHTML.match(new RegExp(regex_array[k], "i"))) {
-								 var replaced_txt = elements[j].innerHTML.replace(new RegExp(regex_array[k], "i"), '');
-								 elements[j].innerHTML = replaced_txt;
-							 }
-						}
-					}			
-				}
-			}
-						
-		</script>
-		<script type="5fe0676d8d9db8d28428234a-text/javascript">
-	/* IE11 skip link focus fix */
-	/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
-	</script>
-	<script id="primer-navigation-js" src="/hub-wp-content/themes/primer/assets/js/navigation.min.js?ver=1.8.9" type="5fe0676d8d9db8d28428234a-text/javascript"></script>
-<script id="jetpack-stats-js-before" type="5fe0676d8d9db8d28428234a-text/javascript">
-_stq = window._stq || [];
-_stq.push([ "view", {"v":"ext","blog":"160025104","post":"17397","tz":"0","srv":"myboiler.com","hp":"atomic","ac":"2","amp":"0","j":"1:16.2"} ]);
-_stq.push([ "clickTrackerInit", "160025104", "17397" ]);
-//# sourceURL=jetpack-stats-js-before
-</script>
-<script data-wp-strategy="defer" defer fetchpriority="low" id="jetpack-stats-js" src="https://stats.wp.com/e-202637.js" type="5fe0676d8d9db8d28428234a-text/javascript"></script>
-<script id="wp-emoji-settings" type="application/json">
-{"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"concatemoji":"/hub-wp-includes/js/wp-emoji-release.min.js?ver=7.1"}}
-</script>
-<script type="5fe0676d8d9db8d28428234a-module">
-/*! This file is auto-generated */
-var e="script#wp-emoji-settings",t=document.querySelector(e);if(!(t instanceof HTMLScriptElement))throw new Error("Element missing: "+e);const r=JSON.parse(t.text),s=(window._wpemojiSettings=r,"wpEmojiSettingsSupports"),o=["flag","emoji"];function i(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(s,JSON.stringify(t))}catch(e){}}function c(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0);const r=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);return t.every((e,t)=>e===r[t])}function p(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var n=e.getImageData(16,16,1,1);for(let e=0;e<n.data.length;e++)if(0!==n.data[e])return!1;return!0}function u(e,t,n,r){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!r(e,"\ud83e\u1fac8")}return!1}function f(e,t,n,r){let a;const s=(a="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):document.createElement("canvas")).getContext("2d",{willReadFrequently:!0}),o=(s.textBaseline="top",s.font="600 32px Arial",{});return e.forEach(e=>{o[e]=t(s,e,n,r)}),o}function a(e){var t=document.createElement("script");t.src=e,t.defer=!0,document.head.appendChild(t)}r.supports={everything:!0,everythingExceptFlag:!0},new Promise(t=>{let n=function(){try{var e=JSON.parse(sessionStorage.getItem(s));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(o),u.toString(),c.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"});const a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=e=>{i(n=e.data),a.terminate(),t(n)})}catch(e){}i(n=f(o,u,c,p))}t(n)}).then(e=>{for(const n in e)r.supports[n]=e[n],r.supports.everything=r.supports.everything&&r.supports[n],"flag"!==n&&(r.supports.everythingExceptFlag=r.supports.everythingExceptFlag&&r.supports[n]);var t;r.supports.everythingExceptFlag=r.supports.everythingExceptFlag&&!r.supports.flag,r.supports.everything||((t=r.source||{}).concatemoji?a(t.concatemoji):t.wpemoji&&t.twemoji&&(a(t.twemoji),a(t.wpemoji)))});
-//# sourceURL=/hub-wp-includes/js/wp-emoji-loader.min.js
-</script>
-<style class="wp-fonts-local">
-@font-face{font-family:Inter;font-style:normal;font-weight:100;font-display:fallback;src:url('https://fonts.wp.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyeMZ1rib2Bg-4.woff2') format('woff2');}
-@font-face{font-family:Inter;font-style:normal;font-weight:200;font-display:fallback;src:url('https://fonts.wp.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuDyfMZ1rib2Bg-4.woff2') format('woff2');}
-@font-face{font-family:Inter;font-style:normal;font-weight:300;font-display:fallback;src:url('https://fonts.wp.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuOKfMZ1rib2Bg-4.woff2') format('woff2');}
-@font-face{font-family:Inter;font-style:normal;font-weight:400;font-display:fallback;src:url('https://fonts.wp.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZ1rib2Bg-4.woff2') format('woff2');}
-@font-face{font-family:Inter;font-style:normal;font-weight:500;font-display:fallback;src:url('https://fonts.wp.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fMZ1rib2Bg-4.woff2') format('woff2');}
-@font-face{font-family:Inter;font-style:normal;font-weight:600;font-display:fallback;src:url('https://fonts.wp.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYMZ1rib2Bg-4.woff2') format('woff2');}
-@font-face{font-family:Inter;font-style:normal;font-weight:700;font-display:fallback;src:url('https://fonts.wp.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuYMZ1rib2Bg-4.woff2') format('woff2');}
-@font-face{font-family:Inter;font-style:normal;font-weight:800;font-display:fallback;src:url('https://fonts.wp.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuDyYMZ1rib2Bg-4.woff2') format('woff2');}
-@font-face{font-family:Inter;font-style:normal;font-weight:900;font-display:fallback;src:url('https://fonts.wp.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuBWYMZ1rib2Bg-4.woff2') format('woff2');}
-</style>
-
-	
-	<div id="mb-cookie-notice" role="dialog" aria-label="Cookie notice" hidden>
-		<div class="mb-cookie-notice__inner">
-			<p class="mb-cookie-notice__text">We use cookies to ensure that we give you the best experience on our website. If you continue to use this site we will assume that you are happy with it. <a href="/hub/privacy-policy/">Privacy Policy</a></p>
-			<div class="mb-cookie-notice__actions">
-				<button type="button" class="mb-cookie-notice__ok" data-mb-cookie-accept aria-label="Ok">Ok</button>
-				<button type="button" class="mb-cookie-notice__close" data-mb-cookie-close aria-label="Close">&times;</button>
-			</div>
-		</div>
-	</div>
-	<script type="5fe0676d8d9db8d28428234a-text/javascript">
-	(function () {
-	  var COOKIE = 'cookie_notice_accepted', DAYS = 30;
-	  function readCookie(name) {
-	    var prefix = name + '=', parts = document.cookie.split('; ');
-	    for (var i = 0; i < parts.length; i++) {
-	      if (parts[i].indexOf(prefix) === 0) return decodeURIComponent(parts[i].slice(prefix.length));
-	    }
-	    return null;
-	  }
-	  function writeCookie(name, value, days) {
-	    var d = new Date(); d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
-	    document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + d.toUTCString() + '; path=/; SameSite=Lax';
-	  }
-	  var el = document.getElementById('mb-cookie-notice');
-    if (!el) return;
-    if (readCookie(COOKIE)) { el.hidden = true; return; }
-    el.hidden = false;
-    function accept() { writeCookie(COOKIE, 'true', DAYS); el.hidden = true; }
-    var ok = el.querySelector('[data-mb-cookie-accept]');
-    var close = el.querySelector('[data-mb-cookie-close]');
-    if (ok) ok.addEventListener('click', accept);
-    if (close) close.addEventListener('click', accept);
-  })();
-  </script>
-
-<script type="5fe0676d8d9db8d28428234a-text/javascript">(function(){function ready(fn){if(document.readyState!=='loading')fn();else document.addEventListener('DOMContentLoaded',fn)}ready(function(){var nav=document.querySelector('.mb-mega-nav');if(!nav)return;var toggle=nav.querySelector('.mb-mega-nav__toggle'),menu=nav.querySelector('.mb-mega-menu');if(toggle&&menu)toggle.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();var open=nav.classList.toggle('is-open');toggle.setAttribute('aria-expanded',open?'true':'false')});nav.querySelectorAll('.mb-mega-menu > .menu-item-has-children').forEach(function(li){if(li.querySelector(':scope > .sub-menu > .menu-item-has-children'))li.classList.add('mb-is-mega')});nav.querySelectorAll('.mb-mega-menu > .menu-item-has-children > a').forEach(function(a){a.addEventListener('click',function(e){if(window.matchMedia('(max-width:1024px)').matches){e.preventDefault();var li=a.parentElement,was=li.classList.contains('mb-open');nav.querySelectorAll('.mb-mega-menu > .menu-item-has-children.mb-open').forEach(function(x){x.classList.remove('mb-open')});if(!was)li.classList.add('mb-open')}})})})})();</script>
-
-
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
 </html>
-<!-- END page.php -->
