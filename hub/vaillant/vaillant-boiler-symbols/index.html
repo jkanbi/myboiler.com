@@ -119,6 +119,21 @@
             margin: 0 auto;
         }
 
+        .article-content td img.symbol.symbol--flashing {
+            animation: vaillant-symbol-flash 1s step-end infinite;
+        }
+
+        @keyframes vaillant-symbol-flash {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .article-content td img.symbol.symbol--flashing {
+                animation: none;
+            }
+        }
+
         .article-content .remastered-image {
             display: block;
             max-width: 100%;
@@ -388,7 +403,7 @@
                     </tr>
                     <tr>
                         <td>6.1</td>
-                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/heating-mode-symbol.png" alt="Heating mode burner on symbol" width="24" height="30" loading="lazy"></td>
+                        <td><img class="symbol symbol--flashing" src="/hub/vaillant/vaillant-boiler-symbols/symbols/heating-mode-symbol.png" alt="Heating mode burner on symbol, flashing" width="24" height="30" loading="lazy"></td>
                         <td><strong>Heating mode active</strong><br>– Flashing: Burner on in heating mode</td>
                         <td></td>
                     </tr>
@@ -400,7 +415,7 @@
                     </tr>
                     <tr>
                         <td>7.1</td>
-                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/tap-symbol.png" alt="Hot water tap symbol flashing" width="27" height="20" loading="lazy"></td>
+                        <td><img class="symbol symbol--flashing" src="/hub/vaillant/vaillant-boiler-symbols/symbols/tap-symbol.png" alt="Hot water tap symbol flashing" width="27" height="20" loading="lazy"></td>
                         <td><strong>Hot water generation active</strong><br>– Flashing: Burner on in draw-off mode</td>
                         <td></td>
                     </tr>
@@ -412,7 +427,7 @@
                     </tr>
                     <tr>
                         <td>8.1</td>
-                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/comfort-mode-symbol.png" alt="Comfort mode hot water symbol flashing" width="28" height="35" loading="lazy"></td>
+                        <td><img class="symbol symbol--flashing" src="/hub/vaillant/vaillant-boiler-symbols/symbols/comfort-mode-symbol.png" alt="Comfort mode hot water symbol flashing" width="28" height="35" loading="lazy"></td>
                         <td><strong>Hot water generation active</strong><br>– Flashing: Burner on in draw-off mode</td>
                         <td></td>
                     </tr>
@@ -424,7 +439,7 @@
                     </tr>
                     <tr>
                         <td>9.1</td>
-                        <td><img class="symbol" src="/hub/vaillant/vaillant-boiler-symbols/symbols/comfort-mode-symbol.png" alt="Cylinder heating active symbol" width="28" height="35" loading="lazy"></td>
+                        <td><img class="symbol symbol--flashing" src="/hub/vaillant/vaillant-boiler-symbols/symbols/comfort-mode-symbol.png" alt="Cylinder heating active symbol, flashing" width="28" height="35" loading="lazy"></td>
                         <td><strong>Hot water generation active</strong><br>– Flashing: Domestic hot water cylinder is being heated, burner on</td>
                         <td></td>
                     </tr>
@@ -468,31 +483,12 @@
             </table>
 
             <h2>For the new remastered with black display</h2>
-            <img
-                class="remastered-image"
-                src="/hub/vaillant/vaillant-boiler-symbols/symbols/vaillant-boiler-symbols-for-remastered.jpg"
-                alt="Vaillant remastered black display boiler symbols reference"
-                width="867"
-                height="1217"
-                loading="lazy"
-            >
-                    <img
-                src="/hub/vaillant/vaillant-boiler-symbols/images/vaillant-flame-failure-sysmbol.png"
-                alt="Vaillant Flame Failure Sysmbol"
-                loading="lazy"
-            >
+            <img class="remastered-image" src="/hub/vaillant/vaillant-boiler-symbols/symbols/vaillant-boiler-symbols-for-remastered.jpg" alt="Vaillant remastered black display boiler symbols reference" width="867" height="1217" loading="lazy">
+                    <img src="/hub/vaillant/vaillant-boiler-symbols/images/vaillant-flame-failure-sysmbol.png" alt="Vaillant Flame Failure Sysmbol" loading="lazy">
 
-            <img
-                src="/hub/vaillant/vaillant-boiler-symbols/images/screen-shot-2018-10-11-at-19.03.39.png"
-                alt="Screen Shot 2018 10 11 At 19.03.39"
-                loading="lazy"
-            >
+            <img src="/hub/vaillant/vaillant-boiler-symbols/images/screen-shot-2018-10-11-at-19.03.39.png" alt="Screen Shot 2018 10 11 At 19.03.39" loading="lazy">
 
-            <img
-                src="/hub/vaillant/vaillant-boiler-symbols/images/screen-shot-2018-10-11-at-19.03.52.png"
-                alt="Screen Shot 2018 10 11 At 19.03.52"
-                loading="lazy"
-            >
+            <img src="/hub/vaillant/vaillant-boiler-symbols/images/screen-shot-2018-10-11-at-19.03.52.png" alt="Screen Shot 2018 10 11 At 19.03.52" loading="lazy">
 
             <h2>Video</h2>
             <div class="article-video">
@@ -502,7 +498,7 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
                     loading="lazy"
-                ></iframe>
+></iframe>
             </div>
 </article>
     </div>
@@ -575,22 +571,22 @@
 
     <footer class="copyright">
         <ul class="social-media no-bullets">
-            <li class="wp-social-link wp-social-link-x wp-block-social-link">
-                <a rel="noopener nofollow" target="_blank" href="https://x.com/myboiler" class="">
+            <li class="social-link social-link-x">
+                <a rel="noopener nofollow" target="_blank" href="https://x.com/myboiler">
                     <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
                         <path d="M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z"></path>
                     </svg>
                 </a>
             </li>
-            <li class="wp-social-link wp-social-link-facebook wp-block-social-link">
-                <a rel="noopener nofollow" target="_blank" href="https://facebook.com/myboiler" class="wp-block-social-link-anchor">
+            <li class="social-link social-link-facebook">
+                <a rel="noopener nofollow" target="_blank" href="https://facebook.com/myboiler">
                     <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
                         <path d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z"></path>
                     </svg>
                 </a>
             </li>
-            <li class="wp-social-link wp-social-link-youtube wp-block-social-link">
-                <a rel="noopener nofollow" target="_blank" href="https://www.youtube.com/@myboiler" class="wp-block-social-link-anchor">
+            <li class="social-link social-link-youtube">
+                <a rel="noopener nofollow" target="_blank" href="https://www.youtube.com/@myboiler">
                     <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
                         <path d="M21.8,8.001c0,0-0.195-1.378-0.795-1.985c-0.76-0.797-1.613-0.801-2.004-0.847c-2.799-0.202-6.997-0.202-6.997-0.202h-0.009c0,0-4.198,0-6.997,0.202C4.608,5.216,3.756,5.22,2.995,6.016C2.395,6.623,2.2,8.001,2.2,8.001S2,9.62,2,11.238v1.517c0,1.618,0.2,3.237,0.2,3.237s0.195,1.378,0.795,1.985c0.761,0.797,1.76,0.771,2.205,0.855c1.6,0.153,6.8,0.201,6.8,0.201s4.203-0.006,7.001-0.209c0.391-0.047,1.243-0.051,2.004-0.847c0.6-0.607,0.795-1.985,0.795-1.985s0.2-1.618,0.2-3.237v-1.517C22,9.62,21.8,8.001,21.8,8.001z M9.935,14.594l-0.001-5.62l5.404,2.82L9.935,14.594z"></path>
                     </svg>
