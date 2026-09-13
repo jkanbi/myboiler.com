@@ -470,11 +470,11 @@
             const kwResult = document.getElementById('kw-result');
 
             function formatResult(value) {
-                if (value >= 1000) {
+                if (value>= 1000) {
                     return value.toFixed(2);
-                } else if (value >= 100) {
+                } else if (value>= 100) {
                     return value.toFixed(3);
-                } else if (value >= 10) {
+                } else if (value>= 10) {
                     return value.toFixed(3);
                 } else {
                     return value.toFixed(4);

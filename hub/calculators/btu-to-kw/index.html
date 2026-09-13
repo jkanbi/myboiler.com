@@ -251,7 +251,7 @@
 
         btuInput.addEventListener('input', function() {
             const btu = parseFloat(this.value);
-            if (!isNaN(btu) && btu >= 0) {
+            if (!isNaN(btu) && btu>= 0) {
                 const watts = btu * 0.293071;
                 const kw = watts / 1000;
                 
