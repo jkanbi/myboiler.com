@@ -424,7 +424,7 @@
 			body.nav-mega-open .nav-mega-backdrop {
 				display: block;
 				opacity: 1;
-				pointer-events: auto;
+				pointer-events: none;
 			}
 
 			/* Dropdown arrow icon for desktop */

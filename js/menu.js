@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function insetBackdropBelowHeader() {
         const header = document.querySelector('.header');
         const top = header ? Math.round(header.getBoundingClientRect().bottom) : 0;
-        document.documentElement.style.setProperty('--nav-mega-top', `${top + 8}px`);
+        document.documentElement.style.setProperty('--nav-mega-top', `${top}px`);
         if (navMegaBackdrop) {
             navMegaBackdrop.style.top = `${top}px`;
         }
@@ -100,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function closeAllDesktopMegas() {
+        clearMegaCloseTimer();
         document.querySelectorAll('.nav-item-has-dropdown').forEach((el) => {
             el.classList.remove('is-open', 'active');
             const label = el.querySelector('.nav-dropdown-label');
@@ -132,6 +133,42 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key !== 'Enter' && e.key !== ' ') return;
             toggleFromLabel(e);
         });
+    });
+
+    let megaCloseTimer = null;
+    const MEGA_CLOSE_MS = 200;
+
+    function clearMegaCloseTimer() {
+        clearTimeout(megaCloseTimer);
+        megaCloseTimer = null;
+    }
+
+    function openDesktopMega(item) {
+        if (!isDesktopNav()) return;
+        clearMegaCloseTimer();
+        document.querySelectorAll('.nav-item-has-dropdown').forEach((other) => {
+            setDropdownOpen(other, other === item);
+        });
+    }
+
+    function scheduleMegaClose() {
+        if (!isDesktopNav()) return;
+        clearMegaCloseTimer();
+        megaCloseTimer = setTimeout(() => {
+            const open = document.querySelector('.nav-item-has-dropdown.is-open');
+            if (open && (open.matches(':hover') || open.querySelector('.mega-menu:hover'))) return;
+            closeAllDesktopMegas();
+        }, MEGA_CLOSE_MS);
+    }
+
+    document.querySelectorAll('.nav-item-has-dropdown').forEach((item) => {
+        const mega = item.querySelector('.mega-menu');
+        if (!mega) return;
+
+        item.addEventListener('mouseenter', () => openDesktopMega(item));
+        item.addEventListener('mouseleave', scheduleMegaClose);
+        mega.addEventListener('mouseenter', () => openDesktopMega(item));
+        mega.addEventListener('mouseleave', scheduleMegaClose);
     });
 
     if (navMegaBackdrop) {
