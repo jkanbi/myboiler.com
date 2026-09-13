@@ -329,11 +329,9 @@
 				color: #fff !important;
 			}
 
-			/* Desktop Mega Menu Styles
-			   Stacking contract: .header is sticky z-index 1000. The mega panel lives
-			   inside that context, so a full-page backdrop MUST stay below 1000.
-			   A higher backdrop (e.g. 9999) covers the trigger, steals :hover /
-			   mouseenter, and the menu open/closes in a blink loop. */
+			/* Desktop mega menus are position:fixed so clicks hit the panel, not
+			   the dimmer. Sticky headers swallow hit-testing on overflowed
+			   absolute children, which made Advice/Toolbox/Calculators links dead. */
 			.header {
 				overflow: visible;
 			}
@@ -342,43 +340,26 @@
 				position: relative;
 			}
 
-			/* Hover shelf on the <li> (not the grid mega) so the pointer never
-			   leaves the dropdown item while moving down onto the panel.
-			   A mega::before bridge fails here: display:grid makes it a cell. */
-			.nav-item-has-dropdown.is-open::after,
-			.nav-item-has-dropdown:hover:not(.is-dismissed)::after,
-			.nav-item-has-dropdown:focus-within:not(.is-dismissed)::after {
-				content: "";
-				position: absolute;
-				left: 50%;
-				transform: translateX(-50%);
-				top: 100%;
-				width: min(100vw, 900px);
-				height: 40px;
-				z-index: 1;
-			}
-
 			.nav-item-has-dropdown .mega-menu {
 				display: none;
-				position: absolute;
-				top: 100%;
+				position: fixed;
+				top: var(--nav-mega-top, 4.75rem);
 				left: 50%;
 				transform: translateX(-50%);
-				min-width: 720px;
+				width: min(900px, calc(100vw - 2rem));
+				min-width: 0;
 				max-width: 900px;
 				background: #e8f4fc;
 				border-radius: var(--radius-lg);
 				box-shadow: var(--shadow-lg);
 				padding: 2rem;
-				z-index: 2;
+				z-index: 1200;
 				opacity: 0;
 				pointer-events: none;
-				transition: opacity 0.2s ease;
 			}
 
 			.nav-item-has-dropdown.is-open .mega-menu,
-			.nav-item-has-dropdown:hover:not(.is-dismissed) .mega-menu,
-			.nav-item-has-dropdown:focus-within:not(.is-dismissed) .mega-menu {
+			.nav-item-has-dropdown.active .mega-menu {
 				display: grid;
 				grid-template-columns: repeat(3, 1fr);
 				gap: 2rem;

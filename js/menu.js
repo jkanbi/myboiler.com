@@ -15,8 +15,10 @@ function setMobileMenuOpen(open) {
     document.body.classList.toggle('menu-open', open);
 
     if (!open) {
-        document.querySelectorAll('.nav-item-has-dropdown.active').forEach((item) => {
-            item.classList.remove('active');
+        document.querySelectorAll('.nav-item-has-dropdown').forEach((item) => {
+            item.classList.remove('active', 'is-open');
+            const label = item.querySelector('.nav-dropdown-label');
+            if (label) label.setAttribute('aria-expanded', 'false');
         });
     }
 }
@@ -56,49 +58,27 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isMobileNav()) setMobileMenuOpen(false);
         });
     }
-    // Mobile: toggle mega menu with arrow
-    document.querySelectorAll('.nav-dropdown-label').forEach(label => {
-        label.addEventListener('click', function(e) {
-            if (window.innerWidth <= 768) {
-                // Prevent default to stop any navigation
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const parent = this.closest('.nav-item-has-dropdown');
-                const wasActive = parent.classList.contains('active');
-                
-                // Close all other dropdowns
-                document.querySelectorAll('.nav-item-has-dropdown.active').forEach(item => {
-                    if (item !== parent) {
-                        item.classList.remove('active');
-                    }
-                });
-                
-                // Toggle current dropdown
-                parent.classList.toggle('active');
-            }
-        });
-    });
-
-    // Desktop: hover/focus mega menus. Backdrop dims the page only — it must
-    // stay below the header stacking context so it cannot steal hover.
     const navMegaBackdrop = document.querySelector('.nav-mega-backdrop');
-    let megaCloseTimer = null;
-    const MEGA_CLOSE_MS = 250;
+
+    function isDesktopNav() {
+        return window.innerWidth >= 769;
+    }
 
     function insetBackdropBelowHeader() {
-        if (!navMegaBackdrop) return;
         const header = document.querySelector('.header');
         const top = header ? Math.round(header.getBoundingClientRect().bottom) : 0;
-        navMegaBackdrop.style.top = `${top}px`;
+        document.documentElement.style.setProperty('--nav-mega-top', `${top + 8}px`);
+        if (navMegaBackdrop) {
+            navMegaBackdrop.style.top = `${top}px`;
+        }
     }
 
     function syncNavMegaBackdrop() {
-        const anyOpen = document.querySelector('.nav-item-has-dropdown.is-open');
-        document.body.classList.toggle('nav-mega-open', !!anyOpen);
+        const desktopOpen = isDesktopNav() && !!document.querySelector('.nav-item-has-dropdown.is-open');
+        document.body.classList.toggle('nav-mega-open', desktopOpen);
         if (navMegaBackdrop) {
-            navMegaBackdrop.setAttribute('aria-hidden', anyOpen ? 'false' : 'true');
-            if (anyOpen) {
+            navMegaBackdrop.setAttribute('aria-hidden', desktopOpen ? 'false' : 'true');
+            if (desktopOpen) {
                 insetBackdropBelowHeader();
             } else {
                 navMegaBackdrop.style.top = '';
@@ -106,86 +86,51 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function pointerStillOnDropdown(item) {
-        if (item.matches(':hover')) return true;
-        const mega = item.querySelector('.mega-menu');
-        return !!(mega && mega.matches(':hover'));
-    }
-
-    function scheduleMegaClose(item) {
-        clearTimeout(megaCloseTimer);
-        megaCloseTimer = setTimeout(() => {
-            if (pointerStillOnDropdown(item)) return;
-            item.classList.remove('is-open');
-            syncNavMegaBackdrop();
-        }, MEGA_CLOSE_MS);
-    }
-
-    function clearMegaCloseTimer() {
-        clearTimeout(megaCloseTimer);
-        megaCloseTimer = null;
-    }
-
-    function openDesktopMega(item) {
-        clearMegaCloseTimer();
-        document.querySelectorAll('.nav-item-has-dropdown').forEach((other) => {
-            other.classList.toggle('is-open', other === item);
-            other.classList.remove('is-dismissed');
-        });
+    function setDropdownOpen(item, open) {
+        item.classList.toggle('is-open', open);
+        item.classList.toggle('active', open);
+        const label = item.querySelector('.nav-dropdown-label');
+        if (label) {
+            label.setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
+        if (open && isDesktopNav()) {
+            insetBackdropBelowHeader();
+        }
         syncNavMegaBackdrop();
     }
 
     function closeAllDesktopMegas() {
-        clearMegaCloseTimer();
         document.querySelectorAll('.nav-item-has-dropdown').forEach((el) => {
-            if (el.classList.contains('is-open')) {
-                el.classList.add('is-dismissed');
-            }
-            el.classList.remove('is-open');
+            el.classList.remove('is-open', 'active');
+            const label = el.querySelector('.nav-dropdown-label');
+            if (label) label.setAttribute('aria-expanded', 'false');
         });
         syncNavMegaBackdrop();
     }
 
-    function isDesktopNav() {
-        return window.innerWidth >= 769;
-    }
+    document.querySelectorAll('.nav-dropdown-label').forEach((label) => {
+        const parent = label.closest('.nav-item-has-dropdown');
+        if (!parent) return;
 
-    document.querySelectorAll('.nav-item-has-dropdown').forEach((item) => {
-        const mega = item.querySelector('.mega-menu');
-        if (!mega) return;
+        label.setAttribute('role', 'button');
+        label.setAttribute('tabindex', '0');
+        label.setAttribute('aria-haspopup', 'true');
+        label.setAttribute('aria-expanded', 'false');
 
-        item.addEventListener('mouseenter', () => {
-            if (!isDesktopNav()) return;
-            openDesktopMega(item);
-        });
+        function toggleFromLabel(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const willOpen = !parent.classList.contains('is-open');
+            document.querySelectorAll('.nav-item-has-dropdown').forEach((other) => {
+                if (other !== parent) setDropdownOpen(other, false);
+            });
+            setDropdownOpen(parent, willOpen);
+        }
 
-        item.addEventListener('mouseleave', (e) => {
-            item.classList.remove('is-dismissed');
-            if (!isDesktopNav()) return;
-            if (e.relatedTarget && item.contains(e.relatedTarget)) return;
-            scheduleMegaClose(item);
-        });
-
-        mega.addEventListener('mouseenter', () => {
-            if (!isDesktopNav()) return;
-            clearMegaCloseTimer();
-        });
-
-        mega.addEventListener('mouseleave', () => {
-            if (!isDesktopNav()) return;
-            scheduleMegaClose(item);
-        });
-
-        item.addEventListener('focusin', () => {
-            if (!isDesktopNav()) return;
-            openDesktopMega(item);
-        });
-
-        item.addEventListener('focusout', (e) => {
-            if (!isDesktopNav()) return;
-            if (item.contains(e.relatedTarget)) return;
-            item.classList.remove('is-dismissed');
-            scheduleMegaClose(item);
+        label.addEventListener('click', toggleFromLabel);
+        label.addEventListener('keydown', (e) => {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            toggleFromLabel(e);
         });
     });
 
@@ -195,6 +140,12 @@ document.addEventListener('DOMContentLoaded', () => {
             closeAllDesktopMegas();
         });
     }
+
+    document.addEventListener('click', (e) => {
+        if (!isDesktopNav()) return;
+        if (e.target.closest('.nav-item-has-dropdown')) return;
+        closeAllDesktopMegas();
+    });
 
     window.addEventListener('resize', () => {
         if (document.body.classList.contains('nav-mega-open')) {
