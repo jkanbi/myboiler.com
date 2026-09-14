@@ -58,6 +58,43 @@
             margin-bottom: 2rem;
         }
 
+        .mode-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .mode-button {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mode-button.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .mode-button:hover:not(.active) {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+
+        .calculator-card[data-unit="metric"] .imperial-section,
+        .calculator-card[data-unit="metric"] .formula-text[data-unit="imperial"],
+        .calculator-card[data-unit="imperial"] .metric-section,
+        .calculator-card[data-unit="imperial"] .formula-text[data-unit="metric"] {
+            display: none;
+        }
+
         .section-title {
             font-size: 1.25rem;
             font-weight: 700;
@@ -346,8 +383,13 @@
             </p>
         </div>
 
+        <div class="mode-toggle">
+            <button type="button" class="mode-button active" data-unit="metric">Metric</button>
+            <button type="button" class="mode-button" data-unit="imperial">Imperial</button>
+        </div>
+
         <!-- Calculator Card -->
-        <div class="calculator-card">
+        <div class="calculator-card" data-unit="metric">
             <!-- Metric Section -->
             <div class="metric-section">
                 <h2 class="section-title">Metric Conversion</h2>
@@ -375,8 +417,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="section-divider"></div>
 
             <!-- Imperial Section -->
             <div class="imperial-section">
@@ -409,8 +449,8 @@
             <!-- Formula -->
             <div class="formula-section">
                 <h3 class="formula-title">Conversion Formulas</h3>
-                <div class="formula-text">Metric: kWh = m³ × 1.02264 × 40 ÷ 3.6</div>
-                <div class="formula-text">Imperial: kWh = ft³ × 0.0283 × 1.02264 × 40 ÷ 3.6</div>
+                <div class="formula-text" data-unit="metric">Metric: kWh = m³ × 1.02264 × 40 ÷ 3.6</div>
+                <div class="formula-text" data-unit="imperial">Imperial: kWh = ft³ × 0.0283 × 1.02264 × 40 ÷ 3.6</div>
                 <div class="formula-text">Cost = kWh × Unit Rate</div>
             </div>
         </div>
@@ -482,6 +522,23 @@
 
             cubicFeetInput.addEventListener('input', calculateImperial);
             imperialRateInput.addEventListener('input', calculateImperial);
+
+            const card = document.querySelector('.calculator-card');
+            const unitButtons = document.querySelectorAll('.mode-button');
+
+            function setUnit(unit) {
+                card.setAttribute('data-unit', unit);
+                unitButtons.forEach(function (btn) {
+                    const active = btn.getAttribute('data-unit') === unit;
+                    btn.classList.toggle('active', active);
+                });
+            }
+
+            unitButtons.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    setUnit(btn.getAttribute('data-unit'));
+                });
+            });
 
             calculateMetric();
             calculateImperial();
