@@ -49,66 +49,70 @@
             max-width: 60ch;
         }
 
-        .chat-widget-wrapper {
+        .chat-voice-widget {
             width: 100%;
             max-width: 800px;
             margin: 0 auto 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chat-call-card {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            padding: 1.35rem 1.5rem;
             background: var(--surface);
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            padding: 0.65rem 0.65rem 0.65rem 1.1rem;
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-sm);
             box-sizing: border-box;
-            display: flex;
-            align-items: center;
-            gap: 0.65rem;
+            text-align: center;
         }
 
-        .chat-text-input {
-            display: block;
-            flex: 1;
-            min-width: 0;
-            width: auto;
-            border: 0;
-            background: transparent;
-            font: inherit;
-            font-size: 1rem;
-            line-height: 1.5;
+        .chat-call-card__title {
+            font-size: 1.125rem;
+            font-weight: 600;
             color: var(--text);
-            outline: none;
-            box-sizing: border-box;
+            margin: 0 0 0.35rem;
         }
 
-        .chat-text-input::placeholder {
+        .chat-call-card__copy {
+            font-size: 0.9375rem;
+            line-height: 1.5;
             color: var(--text-muted);
+            margin: 0 0 1rem;
         }
 
-        .chat-go {
-            flex: 0 0 auto;
+        .chat-call-card__button {
             appearance: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            min-width: 180px;
             border: 0;
-            background: var(--accent);
+            background: #111;
             color: #fff;
             font: inherit;
             font-size: 0.9375rem;
             font-weight: 600;
             line-height: 1;
-            padding: 0.7rem 1.15rem;
+            padding: 0.85rem 1.4rem;
             border-radius: 999px;
             cursor: pointer;
-            box-shadow: 0 4px 14px rgba(24, 99, 220, 0.25);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
         }
 
-        .chat-go:hover,
-        .chat-go:focus {
-            background: var(--accent-dark);
+        .chat-call-card__button:hover,
+        .chat-call-card__button:focus {
+            background: #000;
         }
 
-        .chat-voice-widget {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-            position: relative;
-            overflow: hidden;
+        .chat-call-card__button svg {
+            width: 18px;
+            height: 18px;
+            flex: 0 0 auto;
         }
 
         .chat-safety-note {
@@ -148,7 +152,7 @@
             width: 100% !important;
             max-width: 100% !important;
             height: auto !important;
-            min-height: 120px;
+            min-height: 420px;
             z-index: 1 !important;
             pointer-events: auto !important;
             --elevenlabs-convai-widget-width: 100%;
@@ -260,19 +264,11 @@
                 justify-content: flex-start;
             }
 
-            .chat-widget-wrapper,
             .chat-voice-widget,
+            .chat-call-card,
             .chat-handoff,
             .chat-safety-note {
                 max-width: 100%;
-            }
-
-            .chat-widget-wrapper {
-                padding: 0.55rem 0.55rem 0.55rem 0.9rem;
-            }
-
-            elevenlabs-convai {
-                min-height: 96px;
             }
         }
     </style>
@@ -309,27 +305,26 @@
             </p>
         </div>
 
-        <form class="chat-widget-wrapper" id="chat-question-form" action="#" method="post">
-            <input
-                id="chat-question"
-                class="chat-text-input"
-                type="text"
-                name="question"
-                placeholder="Ask about boilers, heating, or hot water"
-                autocomplete="off"
-                enterkeyhint="send"
-                inputmode="text"
-                aria-label="Ask a question"
-            >
-            <button type="submit" class="chat-go">Go</button>
-        </form>
-
         <div class="chat-voice-widget">
             <elevenlabs-convai
                 agent-id="agent_7301m25f8n0re8qt7mxhswq0te2q"
                 variant="expanded"
                 allow-events="true"
+                text-input="true"
+                default-expanded="true"
+                always-expanded="true"
             ></elevenlabs-convai>
+        </div>
+
+        <div class="chat-call-card">
+            <h2 class="chat-call-card__title">Prefer to talk?</h2>
+            <p class="chat-call-card__copy">Start a voice call with Boiler Help — same assistant, over the phone.</p>
+            <button type="button" class="chat-call-card__button" id="chat-start-call">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                Start a call
+            </button>
         </div>
 
         <div class="chat-handoff">
@@ -347,31 +342,46 @@
     </div>
 
     <!-- ElevenLabs ConvAI Widget Script - data-cfasync prevents Cloudflare Rocket Loader interference -->
-    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript" data-cfasync="false"></script>
+    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript" data-cfasync="false"></script>
     <script>
         (function () {
             function pinWidgetInFlow(el) {
-                const root = el && el.shadowRoot;
-                if (!root || root.querySelector('style[data-in-flow]')) return;
-                const style = document.createElement('style');
-                style.setAttribute('data-in-flow', 'true');
-                style.textContent = [
-                    ':host { position: relative !important; inset: auto !important; width: 100% !important; height: auto !important; pointer-events: auto !important; z-index: 1 !important; }',
+                if (!el) return;
+                const css = [
+                    ':host { position: relative !important; inset: auto !important; width: 100% !important; height: auto !important; min-height: 420px !important; pointer-events: auto !important; z-index: 1 !important; }',
+                    '.overlay { position: relative !important; inset: auto !important; width: 100% !important; height: auto !important; align-items: stretch !important; }',
+                    '.sheet { position: relative !important; inset: auto !important; width: 100% !important; max-width: 100% !important; height: 420px !important; max-height: none !important; box-shadow: none !important; }',
                     '[class*="_wrapper"] { align-items: stretch !important; width: 100% !important; }',
                     '[class*="_box"] { width: 100% !important; max-width: 100% !important; box-shadow: none !important; }',
-                    '[class*="_poweredBy"] { align-self: center; }'
+                    '[class*="_poweredBy"] { align-self: center; }',
+                    'div:has(> button[aria-label="Start a call"]) { position: absolute !important; width: 0 !important; height: 0 !important; overflow: hidden !important; opacity: 0 !important; pointer-events: none !important; }'
                 ].join('');
-                root.appendChild(style);
-            }
 
-            function setup() {
-                const el = document.querySelector('elevenlabs-convai');
-                if (!el) return;
-                pinWidgetInFlow(el);
-                const refresh = function () { pinWidgetInFlow(el); };
-                const observer = new MutationObserver(refresh);
-                observer.observe(el, { childList: true, subtree: true });
-                if (el.shadowRoot) observer.observe(el.shadowRoot, { childList: true });
+                function inject(root) {
+                    if (!root) return;
+                    let style = root.querySelector('style[data-in-flow]');
+                    if (!style) {
+                        style = document.createElement('style');
+                        style.setAttribute('data-in-flow', 'true');
+                        root.appendChild(style);
+                    }
+                    if (style.textContent !== css) style.textContent = css;
+                }
+
+                function walk(node) {
+                    if (!node) return;
+                    if (node.shadowRoot) {
+                        inject(node.shadowRoot);
+                        walk(node.shadowRoot);
+                    }
+                    if (node.querySelectorAll) {
+                        node.querySelectorAll('*').forEach(function (child) {
+                            if (child.shadowRoot) walk(child);
+                        });
+                    }
+                }
+
+                walk(el);
             }
 
             function collectShadow(root, selector, acc) {
@@ -390,64 +400,47 @@
                 return collectShadow(document.querySelector('elevenlabs-convai'), 'button', []);
             }
 
+            function buttonLabel(btn) {
+                return ((btn.getAttribute('aria-label') || '') + ' ' + (btn.getAttribute('title') || '') + ' ' + (btn.textContent || '')).toLowerCase().replace(/\s+/g, ' ').trim();
+            }
+
             function clickNamedButton(name) {
                 const needle = String(name).toLowerCase();
                 const match = widgetButtons().find(function (btn) {
-                    const label = ((btn.getAttribute('aria-label') || '') + ' ' + (btn.getAttribute('title') || '') + ' ' + (btn.textContent || '')).toLowerCase();
-                    return label.indexOf(needle) !== -1;
+                    return buttonLabel(btn).indexOf(needle) !== -1;
                 });
                 if (!match) return false;
                 match.click();
                 return true;
             }
 
-            function sendIntoWidget(text) {
-                const widget = document.querySelector('elevenlabs-convai');
-                if (!widget) return;
-                widget.setAttribute('allow-events', 'true');
-                widget.dispatchEvent(new CustomEvent('elevenlabs-agent:user-message', {
-                    detail: { text: text },
-                    bubbles: true,
-                    composed: true
-                }));
-
-                const fields = collectShadow(widget, 'textarea, input[type="text"], [contenteditable="true"]', []);
-                const field = fields[0];
-                if (!field) return;
-                if ('value' in field) {
-                    const proto = Object.getPrototypeOf(field);
-                    const desc = Object.getOwnPropertyDescriptor(proto, 'value');
-                    if (desc && desc.set) desc.set.call(field, text);
-                    else field.value = text;
-                } else {
-                    field.textContent = text;
-                }
-                field.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
-                field.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', code: 'Enter', keyCode: 13, which: 13, bubbles: true, composed: true }));
-            }
-
-            function activateQuestion(text) {
+            function startVoiceCall() {
                 const widget = document.querySelector('elevenlabs-convai');
                 if (widget) widget.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 clickNamedButton('agree');
-                window.setTimeout(function () { clickNamedButton('start a call'); }, 250);
-                window.setTimeout(function () { sendIntoWidget(text); }, 500);
-                window.setTimeout(function () { sendIntoWidget(text); }, 1600);
+                if (!clickNamedButton('start a call')) {
+                    window.setTimeout(function () {
+                        clickNamedButton('agree');
+                        clickNamedButton('start a call');
+                    }, 300);
+                }
             }
 
-            const form = document.getElementById('chat-question-form');
-            const input = document.getElementById('chat-question');
-            if (form && input) {
-                form.addEventListener('submit', function (e) {
+            function setup() {
+                const el = document.querySelector('elevenlabs-convai');
+                if (!el) return;
+                pinWidgetInFlow(el);
+                const refresh = function () { pinWidgetInFlow(el); };
+                const observer = new MutationObserver(refresh);
+                observer.observe(el, { childList: true, subtree: true });
+                if (el.shadowRoot) observer.observe(el.shadowRoot, { childList: true });
+            }
+
+            const callButton = document.getElementById('chat-start-call');
+            if (callButton) {
+                callButton.addEventListener('click', function (e) {
                     e.preventDefault();
-                    const text = (input.value || '').replace(/^\s+|\s+$/g, '');
-                    if (!text) {
-                        input.focus();
-                        return;
-                    }
-                    activateQuestion(text);
-                    input.value = '';
-                    input.blur();
+                    startVoiceCall();
                 });
             }
 
