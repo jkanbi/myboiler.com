@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toolbox - MyBoiler Hub</title>
-    <meta name="description" content="Toolbox Vaillant Vaillant P Test Program Mode Vaillant Ecotec Emissions Table Vaillant Ecotec Boiler Service – How To Vaillant Diagnostic S and D Codes Vaillant FGA Tool Vaillant Fault Codes Worces…">
+    <meta name="description" content="Installer toolbox for Vaillant, Worcester Bosch, Intergas, and other heating tools, FGA guides, and fault-code resources.">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <style>
         .article-page {
@@ -17,13 +17,13 @@
         .article-container {
             flex: 1;
             padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
             width: 100%;
             box-sizing: border-box;
         }
 
-.article-header {
+        .article-header {
             margin-bottom: 2.5rem;
         }
 
@@ -40,115 +40,74 @@
             font-size: 1.125rem;
             line-height: 1.6;
             color: var(--text-muted);
-            margin: 0 0 2rem;
+            margin: 0;
+            max-width: 60ch;
         }
 
-        .article-content {
+        .toolbox-sections {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.25rem;
+        }
+
+        .toolbox-section {
+            margin: 0;
+            padding: 1.5rem 1.6rem 1.35rem;
             background: var(--surface);
             border-radius: var(--radius-lg);
+            border: 1px solid var(--border-subtle);
             box-shadow: var(--shadow-sm);
-            padding: clamp(1.5rem, 4vw, 3rem);
-            margin-bottom: 2rem;
         }
 
-        .article-content p {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--text);
-            margin: 0 0 1.25rem;
-        }
-
-        .article-content h2 {
-            font-size: 1.5rem;
+        .toolbox-section__title {
+            font-size: 1.25rem;
             font-weight: 700;
             color: var(--text);
-            margin: 2rem 0 1rem;
-        }
-
-        .article-content h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text);
-            margin: 1.5rem 0 1rem;
-        }
-
-        .article-content h4 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--text);
-            margin: 1.25rem 0 0.75rem;
-        }
-
-        .article-content strong {
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .article-content img {
-            display: block;
-            max-width: min(100%, 720px);
-            height: auto;
-            margin: 1rem auto 1.5rem;
-            border-radius: var(--radius);
-        }
-
-        .article-video {
-            width: 100%;
-            margin: 1.25rem 0 1.75rem;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            background: var(--surface);
-            box-shadow: var(--shadow-sm);
-        }
-        .article-video iframe {
-            display: block;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            height: auto;
-            border: 0;
-        }
-
-
-        .article-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-            font-size: 0.9375rem;
-        }
-
-        .article-content th,
-        .article-content td {
-            padding: 0.75rem;
-            text-align: left;
+            margin: 0 0 1rem;
+            padding-bottom: 0.75rem;
             border-bottom: 1px solid var(--border-subtle);
-            vertical-align: top;
         }
 
-        .article-content th {
-            font-weight: 600;
-            border-bottom: 2px solid var(--border);
+        .toolbox-section__list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
         }
 
-        .article-content ul,
-        .article-content ol {
-            margin: 0 0 1.25rem;
-            padding-left: 1.5rem;
+        .toolbox-section__list li {
+            margin: 0;
         }
 
-        .article-content li {
-            margin: 0 0 0.4rem;
-            line-height: 1.6;
-        }
-
-        .article-content iframe {
-            max-width: 100%;
-        }
-
-        .article-resource {
+        .toolbox-section__list a {
             display: block;
-            margin: 0.75rem 0 1.25rem;
+            padding: 0.55rem 0;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            line-height: 1.4;
+            border-bottom: 1px solid var(--border-subtle);
         }
 
+        .toolbox-section__list li:last-child a {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .toolbox-section__list a:hover,
+        .toolbox-section__list a:focus {
+            color: var(--accent-dark);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .article-container {
+                padding: clamp(1.5rem, 4vw, 2.5rem) clamp(16px, 4vw, 24px);
+            }
+
+            .toolbox-sections {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body class="article-page">
@@ -310,43 +269,49 @@
         <header class="article-header">
             <h1 class="article-title">Toolbox</h1>
             <p class="article-intro">
-                Toolbox Vaillant Vaillant P Test Program Mode Vaillant Ecotec Emissions Table Vaillant Ecotec Boiler Service – How To Vaillant Diagnostic S and D Codes Vaillant FGA Tool Vaillant Fault Codes Worces…
+                Service tools, FGA guides, diagnostics, and fault-code resources grouped by brand.
             </p>
         </header>
 
-        <article class="article-content">
-<h1>Toolbox</h1>
-<hr/>
-<h2>Vaillant</h2>
-<ul>
-<li><a href="/hub/vaillant-p-test-program-mode/">Vaillant P Test Program Mode</a></li>
-<li><a href="/hub/vaillant/vaillant-ecotec-emissions-table/">Vaillant Ecotec Emissions Table</a></li>
-<li><a href="/hub/how-to/how-to-service-a-vaillant-ecotec-boiler/">Vaillant Ecotec Boiler Service – How To</a></li>
-<li><a href="/hub/vaillant-diagnostic-d-codes/">Vaillant Diagnostic S and D Codes</a></li>
-<li><a href="/hub/vaillant/vaillant-fga-tool/">Vaillant FGA Tool</a></li>
-<li><a href="https://boilermanuals.com/fault-codes.htmlvaillant-fault-codes/">Vaillant Fault Codes</a></li>
-</ul>
-<hr/>
-<h2>Worcester Bosch</h2>
-<ul>
-<li><a href="/hub/worcester-bosch-fga-tool/">Worcester Bosch FGA Tool</a></li>
-<li><a href="/hub/worcester-bosch-fault-codes/">Worcester Bosch Fault Codes</a></li>
-</ul>
-<hr/>
-<h2>Other Brands</h2>
-<ul>
-<li><a href="/hub/intergas-fga-tool/">Intergas FGA Tool</a></li>
-<li><a href="/hub/how-to/how-to-service-an-intergas-boiler/">Intergas Boiler Service – How To</a></li>
-<li><a href="https://boilermanuals.com/fault-codes.htmlintergas-fault-codes/">Intergas Fault Codes</a></li>
-</ul>
-<hr/>
-<h2>Misc</h2>
-<ul>
-<li><a href="https://boilermanuals.com/fault-codes.html">Fault Codes</a></li>
-<li><a href="http://www.gb-gas.co.uk/">GB Gas – Online</a></li>
-<li><a href="/hub/boiler-maximum-and-minimum-output-mode-videos/">Boiler Maximum and Minimum Output Mode Videos</a></li>
-</ul>
-        </article>
+        <div class="toolbox-sections">
+            <section class="toolbox-section" aria-labelledby="toolbox-vaillant">
+                <h2 class="toolbox-section__title" id="toolbox-vaillant">Vaillant</h2>
+                <ul class="toolbox-section__list">
+                    <li><a href="/hub/vaillant/vaillant-p-test-program-mode/">P Test Program Mode</a></li>
+                    <li><a href="/hub/vaillant/vaillant-ecotec-emissions-table/">Ecotec Emissions Table</a></li>
+                    <li><a href="/hub/how-to/how-to-service-a-vaillant-ecotec-boiler/">Ecotec Boiler Service — How To</a></li>
+                    <li><a href="/hub/vaillant/vaillant-diagnostic-s-and-d-codes/">Diagnostic S and D Codes</a></li>
+                    <li><a href="/hub/vaillant/vaillant-fga-tool/">FGA Tool</a></li>
+                    <li><a href="https://boilermanuals.com/fault-codes.html">Vaillant Fault Codes</a></li>
+                </ul>
+            </section>
+
+            <section class="toolbox-section" aria-labelledby="toolbox-worcester">
+                <h2 class="toolbox-section__title" id="toolbox-worcester">Worcester Bosch</h2>
+                <ul class="toolbox-section__list">
+                    <li><a href="/hub/worcester-bosch-fga-tool/">FGA Tool</a></li>
+                    <li><a href="https://boilermanuals.com/fault-codes.html">Fault Codes</a></li>
+                </ul>
+            </section>
+
+            <section class="toolbox-section" aria-labelledby="toolbox-other">
+                <h2 class="toolbox-section__title" id="toolbox-other">Other Brands</h2>
+                <ul class="toolbox-section__list">
+                    <li><a href="/hub/intergas-fga-tool/">Intergas FGA Tool</a></li>
+                    <li><a href="/hub/how-to/how-to-service-an-intergas-boiler/">Intergas Boiler Service — How To</a></li>
+                    <li><a href="https://boilermanuals.com/fault-codes.html">Intergas Fault Codes</a></li>
+                </ul>
+            </section>
+
+            <section class="toolbox-section" aria-labelledby="toolbox-misc">
+                <h2 class="toolbox-section__title" id="toolbox-misc">Misc</h2>
+                <ul class="toolbox-section__list">
+                    <li><a href="https://boilermanuals.com/fault-codes.html">Fault Codes</a></li>
+                    <li><a href="http://www.gb-gas.co.uk/">GB Gas — Online</a></li>
+                    <li><a href="/hub/boiler-maximum-and-minimum-output-mode-videos/">Maximum and Minimum Output Mode Videos</a></li>
+                </ul>
+            </section>
+        </div>
     </div>
 
     <!-- Footer -->
