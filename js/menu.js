@@ -31,6 +31,10 @@ function toggleMenu() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    if (typeof window.installSiteNav === 'function') {
+        window.installSiteNav();
+    }
+
     const navMenu = document.getElementById('nav-menu');
     const hamburgerMenu = document.querySelector('.hamburger-menu');
     const overlay = document.querySelector('.menu-overlay');
