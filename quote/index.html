@@ -61,9 +61,37 @@
             overflow: hidden;
         }
 
+        .quote-form-wrapper:not(.is-ready) {
+            background: transparent;
+            box-shadow: none;
+            padding: 0;
+            min-height: 0;
+        }
+
         .hs-form-frame {
             width: 100%;
             max-width: 100%;
+        }
+
+        /* HubSpot briefly injects a page-level textarea before the iframe form. */
+        .hs-form-frame > textarea,
+        .quote-form-wrapper > textarea {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        .quote-form-wrapper:not(.is-ready) .hs-form-frame {
+            opacity: 0;
+            min-height: 8rem;
         }
 
         /* HubSpot form styling overrides */
@@ -277,8 +305,44 @@
         <p class="footer-links"><a href="/">Home</a> | <a href="/hub/">Hub</a></p>
     </footer>
 
+    <script>
+        (function () {
+            var wrapper = document.querySelector('.quote-form-wrapper');
+            var frame = document.querySelector('.hs-form-frame');
+            if (!wrapper || !frame) return;
+
+            var ready = false;
+            function markReady() {
+                if (ready) return;
+                ready = true;
+                wrapper.classList.add('is-ready');
+            }
+
+            window.addEventListener('message', function (event) {
+                var data = event.data;
+                if (!data || data.type !== 'hsFormCallback') return;
+                if (data.eventName === 'onFormReady' || data.eventName === 'onFormSubmitted') {
+                    markReady();
+                }
+            });
+
+            function watchIframe(iframe) {
+                if (!iframe || iframe.getAttribute('data-quote-watched')) return;
+                iframe.setAttribute('data-quote-watched', '1');
+                iframe.addEventListener('load', markReady);
+            }
+
+            var observer = new MutationObserver(function () {
+                var iframe = frame.querySelector('iframe[title="Form"], iframe[data-test-id]');
+                if (iframe) watchIframe(iframe);
+                if (parseInt(frame.style.height, 10) > 80) markReady();
+            });
+            observer.observe(frame, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+            setTimeout(markReady, 6000);
+        })();
+    </script>
     <!-- HubSpot form script - data-cfasync prevents Cloudflare Rocket Loader interference -->
-    <script src="https://js-eu1.hsforms.net/forms/embed/148934146.js" defer data-cfasync="false"></script>
+    <script src="https://js-eu1.hsforms.net/forms/embed/148934146.js" data-cfasync="false"></script>
     <!-- Add menu.js for navigation functionality -->
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
