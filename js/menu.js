@@ -2,6 +2,25 @@ function isMobileNav() {
     return window.matchMedia('(max-width: 768px)').matches;
 }
 
+function navMenuHost() {
+    const hamburger = document.querySelector('.hamburger-menu');
+    return (hamburger && hamburger.parentElement) || document.querySelector('.right-header-items');
+}
+
+function placeNavForViewport() {
+    const navMenu = document.getElementById('nav-menu');
+    const host = navMenuHost();
+    if (!navMenu || !host) return;
+
+    if (isMobileNav()) {
+        if (navMenu.parentElement !== document.body) {
+            document.body.appendChild(navMenu);
+        }
+    } else if (navMenu.parentElement !== host) {
+        host.appendChild(navMenu);
+    }
+}
+
 function setMobileMenuOpen(open) {
     const navMenu = document.getElementById('nav-menu');
     const overlay = document.querySelector('.menu-overlay');
@@ -40,8 +59,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.querySelector('.menu-overlay');
     let resizeTimeout;
 
+    placeNavForViewport();
+
     if (hamburgerMenu && !hamburgerMenu.hasAttribute('aria-expanded')) {
         hamburgerMenu.setAttribute('aria-expanded', 'false');
+    }
+
+    if (hamburgerMenu) {
+        hamburgerMenu.removeAttribute('onclick');
+        hamburgerMenu.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleMenu();
+        });
     }
 
     // Handle window resize
@@ -49,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearTimeout(resizeTimeout);
 
         resizeTimeout = setTimeout(() => {
+            placeNavForViewport();
             if (window.innerWidth > 768) {
                 setMobileMenuOpen(false);
             } else {

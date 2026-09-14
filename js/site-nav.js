@@ -105,4 +105,12 @@
         if (!nav) return;
         nav.innerHTML = window.SITE_NAV_HTML;
     };
+
+    if (document.getElementById('nav-menu')) {
+        window.installSiteNav();
+    } else if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', window.installSiteNav);
+    } else {
+        window.installSiteNav();
+    }
 })();
