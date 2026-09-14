@@ -1,5 +1,5 @@
 function isMobileNav() {
-    return window.innerWidth <= 768;
+    return window.matchMedia('(max-width: 768px)').matches;
 }
 
 function setMobileMenuOpen(open) {
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navMegaBackdrop = document.querySelector('.nav-mega-backdrop');
 
     function isDesktopNav() {
-        return window.innerWidth >= 769;
+        return window.matchMedia('(min-width: 769px)').matches;
     }
 
     function insetBackdropBelowHeader() {
@@ -109,16 +109,40 @@ document.addEventListener('DOMContentLoaded', () => {
         syncNavMegaBackdrop();
     }
 
+    function mobileDropdownHref(el) {
+        const text = (el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+        if (text.indexOf('advice') === 0) return '/hub/advice/';
+        if (text.indexOf('toolbox') === 0) return '/hub/toolbox/';
+        if (text.indexOf('calculator') === 0) return '/hub/calculators/';
+        return '/hub/';
+    }
+
     document.querySelectorAll('.nav-dropdown-label').forEach((label) => {
         const parent = label.closest('.nav-item-has-dropdown');
         if (!parent) return;
 
-        label.setAttribute('role', 'button');
-        label.setAttribute('tabindex', '0');
-        label.setAttribute('aria-haspopup', 'true');
-        label.setAttribute('aria-expanded', 'false');
+        const href = mobileDropdownHref(label);
+        let trigger = label;
+        if (label.tagName !== 'A') {
+            const link = document.createElement('a');
+            link.className = label.className;
+            link.href = href;
+            link.innerHTML = label.innerHTML;
+            label.replaceWith(link);
+            trigger = link;
+        } else if (!label.getAttribute('href')) {
+            label.href = href;
+        }
+
+        trigger.setAttribute('aria-haspopup', 'true');
+        trigger.setAttribute('aria-expanded', 'false');
 
         function toggleFromLabel(e) {
+            if (isMobileNav()) {
+                e.preventDefault();
+                window.location.assign(trigger.href);
+                return;
+            }
             e.preventDefault();
             e.stopPropagation();
             const willOpen = !parent.classList.contains('is-open');
@@ -128,8 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
             setDropdownOpen(parent, willOpen);
         }
 
-        label.addEventListener('click', toggleFromLabel);
-        label.addEventListener('keydown', (e) => {
+        trigger.addEventListener('click', toggleFromLabel);
+        trigger.addEventListener('keydown', (e) => {
             if (e.key !== 'Enter' && e.key !== ' ') return;
             toggleFromLabel(e);
         });
