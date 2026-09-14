@@ -56,13 +56,18 @@
             background: var(--surface);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
-            padding: 1rem 1.25rem;
+            padding: 0.65rem 0.65rem 0.65rem 1.1rem;
             box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
         }
 
         .chat-text-input {
             display: block;
-            width: 100%;
+            flex: 1;
+            min-width: 0;
+            width: auto;
             border: 0;
             background: transparent;
             font: inherit;
@@ -75,6 +80,27 @@
 
         .chat-text-input::placeholder {
             color: var(--text-muted);
+        }
+
+        .chat-go {
+            flex: 0 0 auto;
+            appearance: none;
+            border: 0;
+            background: var(--accent);
+            color: #fff;
+            font: inherit;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            line-height: 1;
+            padding: 0.7rem 1.15rem;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(24, 99, 220, 0.25);
+        }
+
+        .chat-go:hover,
+        .chat-go:focus {
+            background: var(--accent-dark);
         }
 
         .chat-voice-widget {
@@ -90,12 +116,14 @@
             font-size: 0.875rem;
             color: var(--text-muted);
             line-height: 1.6;
-            max-width: 60ch;
+            width: 100%;
+            max-width: 800px;
             margin: 0 auto;
             padding: 1rem;
             background: var(--surface);
             border-radius: var(--radius);
             border: 1px solid var(--border-subtle);
+            box-sizing: border-box;
         }
 
         .chat-safety-note strong {
@@ -135,7 +163,9 @@
             border-radius: var(--radius-lg);
             border: 1px solid var(--border-subtle);
             box-shadow: var(--shadow-sm);
-            max-width: 600px;
+            width: 100%;
+            max-width: 800px;
+            box-sizing: border-box;
         }
 
         .chat-handoff__title {
@@ -231,12 +261,14 @@
             }
 
             .chat-widget-wrapper,
-            .chat-voice-widget {
+            .chat-voice-widget,
+            .chat-handoff,
+            .chat-safety-note {
                 max-width: 100%;
             }
 
             .chat-widget-wrapper {
-                padding: 0.85rem 1rem;
+                padding: 0.55rem 0.55rem 0.55rem 0.9rem;
             }
 
             elevenlabs-convai {
@@ -277,7 +309,7 @@
             </p>
         </div>
 
-        <div class="chat-widget-wrapper">
+        <form class="chat-widget-wrapper" id="chat-question-form" action="#" method="post">
             <input
                 id="chat-question"
                 class="chat-text-input"
@@ -285,14 +317,18 @@
                 name="question"
                 placeholder="Ask about boilers, heating, or hot water"
                 autocomplete="off"
+                enterkeyhint="send"
+                inputmode="text"
                 aria-label="Ask a question"
             >
-        </div>
+            <button type="submit" class="chat-go">Go</button>
+        </form>
 
         <div class="chat-voice-widget">
             <elevenlabs-convai
                 agent-id="agent_7301m25f8n0re8qt7mxhswq0te2q"
                 variant="expanded"
+                allow-events="true"
             ></elevenlabs-convai>
         </div>
 
@@ -309,12 +345,6 @@
             <strong>Important:</strong> This AI assistant provides general guidance only and is not a substitute for professional advice. For gas work, always consult a Gas Safe registered engineer.
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="copyright">
-        <p>&copy; 2026 MyBoiler.com - All rights reserved.</p>
-        <p class="footer-links"><a href="/">Home</a> | <a href="/hub/">Hub</a></p>
-    </footer>
 
     <!-- ElevenLabs ConvAI Widget Script - data-cfasync prevents Cloudflare Rocket Loader interference -->
     <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript" data-cfasync="false"></script>
@@ -344,6 +374,83 @@
                 if (el.shadowRoot) observer.observe(el.shadowRoot, { childList: true });
             }
 
+            function collectShadow(root, selector, acc) {
+                if (!root) return acc;
+                if (root.querySelectorAll) {
+                    root.querySelectorAll(selector).forEach(function (node) { acc.push(node); });
+                    root.querySelectorAll('*').forEach(function (node) {
+                        if (node.shadowRoot) collectShadow(node.shadowRoot, selector, acc);
+                    });
+                }
+                if (root.shadowRoot) collectShadow(root.shadowRoot, selector, acc);
+                return acc;
+            }
+
+            function widgetButtons() {
+                return collectShadow(document.querySelector('elevenlabs-convai'), 'button', []);
+            }
+
+            function clickNamedButton(name) {
+                const needle = String(name).toLowerCase();
+                const match = widgetButtons().find(function (btn) {
+                    const label = ((btn.getAttribute('aria-label') || '') + ' ' + (btn.getAttribute('title') || '') + ' ' + (btn.textContent || '')).toLowerCase();
+                    return label.indexOf(needle) !== -1;
+                });
+                if (!match) return false;
+                match.click();
+                return true;
+            }
+
+            function sendIntoWidget(text) {
+                const widget = document.querySelector('elevenlabs-convai');
+                if (!widget) return;
+                widget.setAttribute('allow-events', 'true');
+                widget.dispatchEvent(new CustomEvent('elevenlabs-agent:user-message', {
+                    detail: { text: text },
+                    bubbles: true,
+                    composed: true
+                }));
+
+                const fields = collectShadow(widget, 'textarea, input[type="text"], [contenteditable="true"]', []);
+                const field = fields[0];
+                if (!field) return;
+                if ('value' in field) {
+                    const proto = Object.getPrototypeOf(field);
+                    const desc = Object.getOwnPropertyDescriptor(proto, 'value');
+                    if (desc && desc.set) desc.set.call(field, text);
+                    else field.value = text;
+                } else {
+                    field.textContent = text;
+                }
+                field.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+                field.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', code: 'Enter', keyCode: 13, which: 13, bubbles: true, composed: true }));
+            }
+
+            function activateQuestion(text) {
+                const widget = document.querySelector('elevenlabs-convai');
+                if (widget) widget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                clickNamedButton('agree');
+                window.setTimeout(function () { clickNamedButton('start a call'); }, 250);
+                window.setTimeout(function () { sendIntoWidget(text); }, 500);
+                window.setTimeout(function () { sendIntoWidget(text); }, 1600);
+            }
+
+            const form = document.getElementById('chat-question-form');
+            const input = document.getElementById('chat-question');
+            if (form && input) {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const text = (input.value || '').replace(/^\s+|\s+$/g, '');
+                    if (!text) {
+                        input.focus();
+                        return;
+                    }
+                    activateQuestion(text);
+                    input.value = '';
+                    input.blur();
+                });
+            }
+
             if (window.customElements && customElements.whenDefined) {
                 customElements.whenDefined('elevenlabs-convai').then(setup);
             } else {
@@ -352,6 +459,7 @@
         })();
     </script>
     <!-- Add menu.js for navigation functionality -->
+    <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>

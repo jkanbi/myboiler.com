@@ -53,6 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof window.installSiteNav === 'function') {
         window.installSiteNav();
     }
+    if (typeof window.installSiteFooter === 'function') {
+        window.installSiteFooter();
+    }
 
     const navMenu = document.getElementById('nav-menu');
     const hamburgerMenu = document.querySelector('.hamburger-menu');
