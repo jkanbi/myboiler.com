@@ -62,6 +62,7 @@
         }
 
         .quote-form-wrapper:not(.is-ready) {
+            position: relative;
             background: transparent;
             box-shadow: none;
             padding: 0;
@@ -73,9 +74,8 @@
             max-width: 100%;
         }
 
-        /* HubSpot briefly injects a page-level textarea before the iframe form. */
-        .hs-form-frame > textarea,
-        .quote-form-wrapper > textarea {
+        /* HubSpot injects a textarea/placeholder before the iframe form. */
+        .hs-form-frame > :not(iframe) {
             position: absolute !important;
             width: 1px !important;
             height: 1px !important;
@@ -90,13 +90,35 @@
         }
 
         .quote-form-wrapper:not(.is-ready) .hs-form-frame {
+            position: absolute;
+            left: 0;
+            right: 0;
             opacity: 0;
-            min-height: 8rem;
+            pointer-events: none;
         }
 
         /* HubSpot form styling overrides */
         .hs-form-frame iframe {
             max-width: 100% !important;
+        }
+
+        /* reCAPTCHA badge + challenge overlay flash before the form paints. */
+        [id^="hs-forms-embed-frame-recaptcha"],
+        .grecaptcha-badge {
+            position: absolute !important;
+            width: 0 !important;
+            height: 0 !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            box-shadow: none !important;
+        }
+
+        body > div:has(iframe[title*="recaptcha challenge"]):not([style*="visibility: visible"]) {
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
         }
 
         .quote-safety-note {
@@ -222,7 +244,7 @@
         }
 
         @media (max-width: 768px) {
-            .quote-form-wrapper {
+            .quote-form-wrapper.is-ready {
                 padding: 1.5rem 1rem;
                 max-width: 100%;
                 overflow: hidden;
@@ -326,19 +348,11 @@
                 }
             });
 
-            function watchIframe(iframe) {
-                if (!iframe || iframe.getAttribute('data-quote-watched')) return;
-                iframe.setAttribute('data-quote-watched', '1');
-                iframe.addEventListener('load', markReady);
-            }
-
             var observer = new MutationObserver(function () {
-                var iframe = frame.querySelector('iframe[title="Form"], iframe[data-test-id]');
-                if (iframe) watchIframe(iframe);
-                if (parseInt(frame.style.height, 10) > 80) markReady();
+                if (parseInt(frame.style.height, 10) >= 400) markReady();
             });
-            observer.observe(frame, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
-            setTimeout(markReady, 6000);
+            observer.observe(frame, { attributes: true, attributeFilter: ['style'] });
+            setTimeout(markReady, 8000);
         })();
     </script>
     <!-- HubSpot form script - data-cfasync prevents Cloudflare Rocket Loader interference -->
