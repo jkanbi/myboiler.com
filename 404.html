@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script>
         // GitHub Pages 404 redirect script
         (function() {
@@ -28,15 +30,32 @@
                 const redirectUrl = `https://hub.myboiler.com${path}${window.location.search}`;
                 console.log(`404 redirecting to: ${redirectUrl}`);
                 window.location.href = redirectUrl;
+                return;
+            }
+
+            function showNotFound() {
+                var content = document.getElementById('page-content');
+                if (!content) return;
+                document.title = '404 - Page Not Found';
+                content.innerHTML = '<h1>404 - Page Not Found</h1><p>The requested page could not be found.</p>';
+                if (typeof window.installSiteFooter === 'function') {
+                    window.installSiteFooter();
+                }
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', showNotFound);
             } else {
-                // If it should be served locally but doesn't exist, show 404
-                document.body.innerHTML = '<h1>404 - Page Not Found</h1><p>The requested page could not be found.</p>';
+                showNotFound();
             }
         })();
     </script>
 </head>
 <body>
-    <h1>Redirecting...</h1>
-    <p>If you are not redirected automatically, <a href="https://hub.myboiler.com">click here</a>.</p>
+    <div id="page-content">
+        <h1>Redirecting...</h1>
+        <p>If you are not redirected automatically, <a href="https://hub.myboiler.com">click here</a>.</p>
+    </div>
+    <div id="site-footer"></div>
 </body>
 </html> 

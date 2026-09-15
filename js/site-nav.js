@@ -167,14 +167,24 @@
     };
 
     window.installSiteFooter = function () {
+        if (!document.body) return;
         var host = document.getElementById('site-footer');
         if (!host) {
             host = document.createElement('div');
             host.id = 'site-footer';
-            if (!document.body) return;
-            document.body.appendChild(host);
         }
+        document.body.appendChild(host);
         host.innerHTML = window.SITE_FOOTER_HTML;
+        Array.prototype.forEach.call(document.querySelectorAll('footer.footer, footer.copyright'), function (el) {
+            if (!host.contains(el) && el.parentNode) {
+                el.parentNode.removeChild(el);
+            }
+        });
+        Array.prototype.forEach.call(document.querySelectorAll('#site-footer'), function (el) {
+            if (el !== host && el.parentNode) {
+                el.parentNode.removeChild(el);
+            }
+        });
     };
 
     function installSiteChrome() {
