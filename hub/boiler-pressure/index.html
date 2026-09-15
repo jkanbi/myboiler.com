@@ -102,6 +102,40 @@
             border-radius: var(--radius);
         }
 
+        .pressure-photos {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            align-items: start;
+            margin: 0 0 1.5rem;
+        }
+
+        .pressure-photos figure {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pressure-photos img {
+            width: 100%;
+            max-width: none;
+            max-height: 11rem;
+            height: 11rem;
+            object-fit: contain;
+            margin: 0;
+            background: var(--bg);
+        }
+
+        .pressure-photos figcaption {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
         .article-video {
             width: 100%;
             margin: 1.25rem 0 1.75rem;
@@ -154,16 +188,21 @@
         </header>
 
         <article class="article-content">
-            <img src="/hub/boiler-pressure/images/gauge-icon.svg" alt="Gauge Icon" loading="lazy">
-
-            <img src="/hub/boiler-pressure/images/vaillant-pressure-digital-copy.jpeg" alt="Vaillant Pressure Digital Copy" loading="lazy">
-
-            <img src="/hub/boiler-pressure/images/vaillant-pressure-guage-e1538416144578.jpg" alt="Vaillant Pressure Guage E1538416144578" loading="lazy">
+            <div class="pressure-photos">
+                <figure>
+                    <img src="/hub/boiler-pressure/images/gauge-icon.svg" alt="Boiler pressure gauge icon" loading="lazy">
+                </figure>
+                <figure>
+                    <img src="/hub/boiler-pressure/images/vaillant-pressure-digital-copy.jpeg" alt="Vaillant digital boiler pressure display reading 1.2 bar" loading="lazy">
+                    <figcaption>Vaillant digital gauge</figcaption>
+                </figure>
+                <figure>
+                    <img src="/hub/boiler-pressure/images/vaillant-pressure-guage-e1538416144578.jpg" alt="Vaillant analogue boiler pressure gauge" loading="lazy">
+                    <figcaption>Vaillant analogue gauge</figcaption>
+                </figure>
+            </div>
 
             <p>On sealed systems such as combination boilers or ones where the system has an expansion vessel( usually red or grey, if you have a system boiler there will be one inside your boiler. You may also have one externally in addition to the boiler if your system is large enough) guage and filling loop, making sure the boiler pressure / system pressure is set correctly and remains stable during normal operation will prolong the life of the system and keep it working efficiently. Following are the guidelines for typical houses or flats.</p>
-
-            <p><strong>Vaillant Pressure Guage Digital</strong></p>
-            <p><strong>Vaillant Pressure Guage Analogue</strong></p>
 
             <p>Initial boiler pressure is ideally set at 1.2 bar. Routinely many engineers set at between 1 and 2 bar. The exact pressure is dependent on the design of the system and how low/high the boiler is positioned in the house and how many floors their are. As stated for the average house 1.2 bar is recommended.</p>
 
