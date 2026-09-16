@@ -15,6 +15,7 @@
         '<a href="/hub/boiler-pressure/">Boiler Pressure</a>' +
         '<a href="/hub/boiler-service/">Boiler Service</a>' +
         '<a href="/hub/boiler-types/">Boiler Types</a>' +
+        '<a href="/hub/what-is-a-gc-number/">What is a GC Number?</a>' +
         '<a href="/hub/boiler-energy-efficiency/">Boiler Energy Efficiency</a>' +
         '<h4>OpenTherm &amp; Modulating Boilers</h4>' +
         '<a href="/hub/opentherm/opentherm-boilers-and-controls/">OpenTherm &amp; Modulating Overview</a>' +
