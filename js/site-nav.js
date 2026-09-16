@@ -52,6 +52,8 @@
         '<a href="/hub/how-to/vaillant-ecotec-boiler-service/">Ecotec Service How-To</a>' +
         '<a href="/hub/vaillant/vaillant-diagnostic-s-and-d-codes/">Diagnostic S &amp; D Codes</a>' +
         '<a href="/hub/vaillant/vaillant-fga-tool/">FGA Tool</a>' +
+        '<a href="/hub/vaillant/vaillant-vr33-module-installation/">Vaillant VR33 Module Installation</a>' +
+        '<a href="/hub/fault-codes/vaillant-fault-codes/">Vaillant Fault Codes</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Worcester Bosch</h4>' +

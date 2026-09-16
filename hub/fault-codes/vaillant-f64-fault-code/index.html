@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vaillant F64 Fault Code - MyBoiler Hub</title>
+<meta content="Vaillant F64 Fault Code: Electronics / NTC fault. Causes, checks, and typical parts." name="description"/>
+<link href="/hub/fault-codes/vaillant-f64-fault-code/" rel="canonical"/>
+<link href="/css/styles.css" rel="stylesheet" type="text/css"/>
+<style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .article-header { margin-bottom: 2.5rem; }
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+        }
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+        .article-content p { font-size: 1rem; line-height: 1.7; color: var(--text); margin: 0 0 1.25rem; }
+        .article-content h2 { font-size: 1.5rem; font-weight: 700; color: var(--text); margin: 2rem 0 1rem; }
+        .article-content h3 { font-size: 1.25rem; font-weight: 600; color: var(--text); margin: 1.5rem 0 1rem; }
+        .article-content h4 { font-size: 1.125rem; font-weight: 600; color: var(--text); margin: 1.25rem 0 0.75rem; }
+        .article-content ul, .article-content ol { margin: 1rem 0 1.25rem; padding-left: 1.5rem; }
+        .article-content li { font-size: 1rem; line-height: 1.7; color: var(--text); margin-bottom: 0.5rem; }
+        .article-content strong { font-weight: 600; color: var(--text); }
+        .table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+        .article-content table { width: 100%; border-collapse: collapse; margin: 0; font-size: 0.875rem; }
+        .article-content table th, .article-content table td {
+            padding: 0.75rem; text-align: left; border: 1px solid var(--border); vertical-align: top;
+        }
+        .article-content table th { background: var(--bg-subtle); font-weight: 600; color: var(--text); }
+        .article-content table tr:nth-child(even) { background: var(--bg-subtle); }
+        .article-content img {
+            display: block; max-width: min(100%, 720px); height: auto;
+            margin: 1rem auto 1.5rem; border-radius: var(--radius);
+        }
+        .article-content figure { margin: 1rem 0 1.5rem; }
+        .article-content figcaption {
+            text-align: center; font-size: 0.875rem; color: var(--text-muted); margin-top: -0.75rem;
+        }
+        .article-video {
+            width: 100%; margin: 1.25rem 0 1.75rem; border-radius: var(--radius-lg);
+            overflow: hidden; background: var(--surface); box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe { display: block; width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; }
+        .article-back { margin: 0 0 1.25rem; }
+
+        .article-content .ntc-photos {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 1rem 0 1.5rem;
+        }
+        .article-content .ntc-photos img {
+            width: auto;
+            max-width: 11rem;
+            max-height: 11rem;
+            height: 11rem;
+            object-fit: contain;
+            margin: 0;
+        }
+        @media (max-width: 768px) { .article-content { padding: 1.5rem; } }
+
+    </style>
+<script data-cfasync="false" src="/js/site-nav.js" type="text/javascript"></script>
+</head>
+<body class="article-page">
+<div class="menu-overlay"></div>
+<div aria-hidden="true" class="nav-mega-backdrop"></div>
+<header class="header">
+<a class="logo" href="/">
+<img alt="MyBoiler Logo" class="light-mode-logo js-theme-logo" height="44" src="/img/myboiler-logo-light.svg" width="200"/>
+<img alt="MyBoiler Logo" class="dark-mode-logo js-theme-logo" height="44" src="/img/myboiler-logo-dark.svg" width="200"/>
+</a>
+<div class="tagline">Smarter Heating &amp; Hot Water</div>
+<div class="right-header-items">
+<button aria-label="Toggle Menu" class="hamburger-menu" onclick="toggleMenu()">
+<span class="hamburger-line"></span>
+<span class="hamburger-line"></span>
+<span class="hamburger-line"></span>
+</button>
+<nav class="nav-menu" id="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/hub/advice/">Advice</a></li><li class="nav-item"><a href="/hub/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/hub/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+</div>
+</header>
+<div class="article-container">
+<header class="article-header">
+<h1 class="article-title">Vaillant F64 Fault Code</h1>
+<p class="article-intro">Electronics / NTC fault</p>
+</header>
+<article class="article-content">
+<p class="article-back"><a href="/hub/fault-codes/vaillant-fault-codes/">Back to Vaillant Fault Codes</a></p>
+<p><strong>Gas Safe:</strong> Gas work, flue work, and PCB replacement on a gas boiler must be carried out by a Gas Safe registered engineer. Homeowners can check obvious items such as heating pressure, condensate overflow, and whether a control is unplugged — then call an engineer.</p>
+<p>Always confirm the part number against the boiler GC number and the installation manual before ordering.</p>
+<h2>Overview</h2>
+<p>F.64 is a short on the flow or return NTC input, or a failed analogue input on the PCB. Treat it like F.10 / F.11 first.</p>
+<p>Vaillant meaning: <strong>Electronics / NTC fault</strong></p>
+<h2>Possible causes</h2>
+<ul><li>Flow NTC shorted</li><li>Return NTC shorted</li><li>Cable short to earth or between cores</li><li>PCB input failed</li></ul>
+<h2>Possible solutions</h2>
+<ol><li>Unplug flow and return NTCs in turn. If F.64 (or F.10 / F.11) clears, that sensor or lead is shorted.</li><li>Measure both NTCs (~12 kΩ at 20 °C).</li><li>Replace the shorted NTC or loom. Replace the PCB only if the inputs still read a short with sensors unplugged.</li></ol>
+<h2>Possible parts needed</h2>
+<ul><li>Flow/return NTC 193592 or 0020068120</li><li>Harness</li><li>PCB</li></ul>
+<div class="ntc-photos"><img alt="Vaillant NTC Sensor" loading="lazy" src="/hub/fault-codes/vaillant-f00-fault-code/images/1_M_Vaillant_0020068120_jpg_zoom.jpg"/><img alt="Vaillant Flow / Return NTC 193592" loading="lazy" src="/hub/fault-codes/vaillant-f00-fault-code/images/193592.jpg"/></div>
+<figure><img alt="Vaillant PCB X20 Connector" loading="lazy" src="/hub/fault-codes/vaillant-f00-fault-code/images/Vaillant-PCB-X20-Connector.jpg"/><figcaption>Vaillant PCB X20 connector (typical NTC loom)</figcaption></figure><p>See <a href="/hub/fault-codes/vaillant-f10-fault-code/">F.10</a> and <a href="/hub/fault-codes/vaillant-f11-fault-code/">F.11</a>.</p>
+</article>
+</div>
+<div id="site-footer"></div>
+<script data-cfasync="false" src="/js/site-nav.js" type="text/javascript"></script>
+<script data-cfasync="false" src="/js/menu.js" type="text/javascript"></script>
+</body>
+</html>
