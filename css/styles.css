@@ -377,8 +377,12 @@
 				text-transform: uppercase;
 				letter-spacing: 0.08em;
 				color: #1b1b1b;
-				margin: 0 0 0.75rem 0;
+				margin: 2.25rem 0 0.75rem 0;
 				padding: 0;
+			}
+
+			.mega-menu-column h4:first-child {
+				margin-top: 0;
 			}
 
 			.mega-menu-column a {
@@ -977,7 +981,7 @@
         width: 100%;
     }
     .mega-menu-column h4 {
-        margin: 10px 20px 6px;
+        margin: 2.25rem 20px 6px;
         padding: 0;
         color: #fff;
         font-size: 0.95rem;
@@ -985,6 +989,9 @@
         letter-spacing: 1px;
         text-align: left;
         line-height: 1.28;
+    }
+    .mega-menu-column h4:first-child {
+        margin-top: 10px;
     }
     .mega-menu-column a {
         padding: 10px 20px;
