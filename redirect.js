@@ -16,9 +16,10 @@
     const isStaticAsset = pathSegments.length > 0 && STATIC_FOLDERS.includes(pathSegments[0]);
     const isRootFile = ROOT_FILES.includes(pathSegments[0] || '') || path === '/';
     
-    // If it's not a static asset or root file, redirect to hub.myboiler.com
+    // Legacy WP-style paths (no /hub prefix) stay on this site under /hub/...
     if (!isStaticAsset && !isRootFile) {
-        const redirectUrl = `https://hub.myboiler.com${path}${window.location.search}`;
+        const hubPath = path === '/hub' || path.indexOf('/hub/') === 0 ? path : '/hub' + path;
+        const redirectUrl = window.location.origin + hubPath + window.location.search;
         console.log(`Redirecting to: ${redirectUrl}`);
         window.location.href = redirectUrl;
     }

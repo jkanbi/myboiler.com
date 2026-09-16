@@ -15,6 +15,7 @@
         '<a href="/hub/boiler-pressure/">Boiler Pressure</a>' +
         '<a href="/hub/boiler-service/">Boiler Service</a>' +
         '<a href="/hub/boiler-types/">Boiler Types</a>' +
+        '<a href="/hub/what-size-boiler/">What Size Boiler?</a>' +
         '<a href="/hub/what-is-a-gc-number/">What is a GC Number?</a>' +
         '<a href="/hub/boiler-energy-efficiency/">Boiler Energy Efficiency</a>' +
         '<h4>OpenTherm &amp; Modulating Boilers</h4>' +
@@ -65,6 +66,8 @@
         '<a href="/hub/intergas-fga-tool/">Intergas FGA Tool</a>' +
         '<a href="/hub/how-to/service-an-intergas-boiler/">Intergas Service How-To</a>' +
         '<h4>Miscellaneous</h4>' +
+        '<a href="/hub/heating-expansion-vessel-calculator/">Heating expansion vessel calculator</a>' +
+        '<a href="/hub/inhibitor-dosing/">Inhibitor Dosing</a>' +
         '<a href="/hub/boiler-maximum-and-minimum-output-mode-videos/">Max/Min Output Mode Videos</a>' +
         '</div>' +
         '</div>' +
