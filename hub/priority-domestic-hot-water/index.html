@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Priority Domestic Hot Water (PDHW) - MyBoiler Hub</title>
-    <meta name="description" content="Pririty Domestic hot water setup is a technique where the hot water is given priority to heat up at a high flow temperature from the boiler so it is heated up rapidly in order to return to space he…">
+    <meta name="description" content="UK installer guide to priority domestic hot water: cylinder reheat at a high flow while heating runs cooler for condensing efficiency.">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <style>
         .article-page {
@@ -79,6 +79,7 @@
             margin: 1.25rem 0 0.75rem;
         }
 
+        .article-content a { color: var(--accent); }
         .article-content strong {
             font-weight: 600;
             color: var(--text);
@@ -177,12 +178,63 @@
         <header class="article-header">
             <h1 class="article-title">Priority Domestic Hot Water (PDHW)</h1>
             <p class="article-intro">
-                Pririty Domestic hot water setup is a technique where the hot water is given priority to heat up at a high flow temperature from the boiler so it is heated up rapidly in order to return to space he…
+                Dual flow temperatures on a cylinder system: hot, fast reheat, then cooler condensing heat for the radiators.
             </p>
         </header>
 
         <article class="article-content">
-<p class="wp-block-paragraph">Pririty Domestic hot water setup is a technique where the hot water is given priority to heat up at a high flow temperature from the boiler so it is heated up rapidly in order to return to space heating quickly. The space heating is carried out at a lower fixed or variable temperature in order to gain efficiency and optimum comfort levels either via room thermostat, room sensor or weather compensation.</p>
+            <p>On a normal <a href="/hub/s-plan/">S Plan</a> or Y Plan the boiler has <strong>one</strong> flow setpoint. That setpoint is almost always the cylinder’s — typically 65–75 °C — because the coil will not satisfy a 60 °C cylinder stat if the flow is cooler. Heating then runs at that same high temperature all winter, so a condensing boiler spends most of its life above the dew point. That is the problem PDHW is there to fix.</p>
+            <p>Priority domestic hot water is for a <strong>system or regular boiler and a stored cylinder</strong>. The cylinder call takes the full boiler output at a high flow. When the store is satisfied, heating returns at a lower weather-compensated or fixed flow. Output (kW) can also drop with the heating load, instead of sitting at the figure you needed for a combined coil-plus-radiator duty.</p>
+
+            <h2>What it is not</h2>
+            <p>A combi uses the same <em>idea</em> internally: a diverter throws the heat exchanger onto the plate when a tap opens, then back to heating. That is not what installers mean by PDHW. PDHW is stored hot water — open-vented regular or sealed system boiler — with a separate coil and a second temperature.</p>
+            <p>S Plan that can heat the cylinder <em>and</em> the radiators at once, on one boiler knob, is not PDHW either. Both 2-ports can be open; the boiler never learns there are two jobs.</p>
+
+            <h2>Two-pipe, four-pipe, and X-Plan</h2>
+            <p>There is more than one hydraulic way to get two temperatures. The software in the boiler is as important as the valves.</p>
+            <ul>
+                <li><strong>Two-pipe S/Y with a clever boiler</strong> — keep the existing 2-port or 3-port layout if the boiler has a DHW sensor or tank-stat input and can lift flow (and often kW) on a cylinder call, then drop it for CH. Not every make does this. Ideal and Vokèra system boilers, for example, often have no diverter-drive terminals; you can still do a form of priority with valves, but you do not get combi-style internal diverting. Confirm the handbook before you promise dual setpoints.</li>
+                <li><strong>Four-pipe</strong> — separate flow and return to the cylinder coil and to heating. Some system boilers (Viessmann Vitodens 100-W is the usual example) have an <strong>integral diverter</strong> like a combi. Cylinder and heating pipes land on the case; external zone valves can come off. DHW is priority. Viessmann’s system wiring notes want a coil of <strong>more than about 10 kW</strong> so reheats do not drag on. An outdoor sensor is the normal partner so CH can weather-compensate while DHW still gets the high setpoint.</li>
+                <li><strong>Intergas X-Plan</strong> — two independent target flows (Intergas’s leaflet uses examples such as heating 55 °C for Part L and hot water around 65–70 °C). On a cylinder NTC call the boiler goes to the DHW target at a parameterised output matched to the coil. Heating uses a <strong>normally open</strong> 22 mm zone valve, not a standard S-Plan normally-closed 2-port. Intergas quote a training-room 175 L unvented with a 30 kW coil recovering 10–60 °C in about 12 minutes — that coil is not a typical domestic spec; size coil and cylinder to the house.</li>
+                <li><strong>W Plan</strong> — Honeywell V4044C 3-port <em>diverter</em> (not mid-position). Flow is cylinder <em>or</em> heating, never both. Cylinder is the default port; heating only if the cylinder stat is satisfied. That is genuine priority, but it is crude: a cylinder stat set too high, or stuck calling, means <strong>no heating</strong>. It is uncommon on new work because of that inconvenience. DIY Wiki and Hive’s W-Plan notes cover the same trap.</li>
+            </ul>
+            <p>Y Plan mid-position sharing both ports at once is not priority. Convert it (W, S with cylinder lockout, four-pipe, or X-Plan) if you want dual temperatures.</p>
+
+            <h2>Temperatures that actually work</h2>
+            <p>Cylinder water: <strong>60 °C</strong> at the stat (legionella). Primary flow to the coil: at least about 5 °C above that, or the cylinder never satisfies and the boiler sits on the programmer. Fast reheats use 70–80 °C for that window only.</p>
+            <p>Heating after the reheat: as low as the emitters allow. Weather compensation or a room sensor is the clean way. Fixed 45–55 °C is the usual retrofit if the radiators were not oversized. Building Regulations Part L now expects new heating systems to be designed around a 55 °C flow; PDHW is how you still get a hot cylinder without running 75 °C through the rads all day. Without dual setpoints see <a href="/hub/energy-saving/adjust-your-system-regular-boiler-flow-temperature-for-increased-efficiency/">system / regular boiler flow temperature</a>.</p>
+            <p>Coil rating is the recovery time. Undersized coil + large cylinder = a long priority period and a cooling house. If reheats regularly run past 20–30 minutes, check coil kW, pump, and primary sludge — not just the control wires.</p>
+
+            <h2>What you gain</h2>
+            <ul>
+                <li>Heating return can sit in the condensing band most of the year.</li>
+                <li>Cylinder gets max boiler kW for a short time instead of sharing with radiators.</li>
+                <li>The boiler’s <em>heating</em> output can be set to the house load (a 35 kW system boiler might only need ~19 kW on the rads once the cylinder is off the combined duty — that is a real Worcester example from retrofit write-ups, not a design rule).</li>
+                <li>A well-rated coil can allow a smaller cylinder because recovery is short.</li>
+            </ul>
+
+            <h2>Heat pumps</h2>
+            <p>A heat pump still runs a dedicated DHW cycle and pauses space heating. That is not gas PDHW. Flow is capped by the refrigerant; copy 80 °C boiler numbers onto it and you will not get them. Coil or plate area has to be for low-temperature heat.</p>
+
+            <h2>What goes wrong</h2>
+            <ul>
+                <li>Heating 2-port still opening on a HW call — no lockout, no real dual temperature.</li>
+                <li>No cylinder sensor / DHW input on the boiler — flow never lifts for reheat (or never drops for CH).</li>
+                <li>Fitting a normally-closed S-Plan valve where the maker wants normally-open (X-Plan).</li>
+                <li>No pump overrun after DHW — heat left in the exchanger with nowhere useful to go.</li>
+                <li>W Plan cylinder stat too high — heating never gets a port.</li>
+                <li>Promising PDHW on a boiler that cannot do two setpoints, then leaving one knob at 75 °C.</li>
+            </ul>
+            <p>Gas work and unvented cylinder work stay with the correctly registered person. Use the manufacturer’s pipe and wiring sheet for the actual terminals — this page is the logic, not a substitute for the Intergas X-Plan leaflet or a Viessmann 4-pipe diagram.</p>
+
+            <h2>Related</h2>
+            <ul>
+                <li><a href="/hub/system-boiler/">System boilers</a></li>
+                <li><a href="/hub/s-plan/">S Plan and S Plan Plus</a></li>
+                <li><a href="/hub/opentherm/opentherm-boilers-and-controls/">OpenTherm and modulating boilers</a></li>
+                <li><a href="https://www.intergasheating.co.uk/app/uploads/2024/03/Ref-1_X-Plan-Leaflet.pdf">Intergas X-Plan leaflet (PDF)</a></li>
+                <li><a href="https://heatingacademynorthampton.co.uk/pdhw/">Heating Academy PDHW notes</a></li>
+            </ul>
         </article>
     </div>
 

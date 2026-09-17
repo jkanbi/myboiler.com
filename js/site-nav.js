@@ -39,6 +39,7 @@
         '<a href="/hub/solar-thermal/">Solar Thermal Heating</a>' +
         '<a href="/hub/solar-thermal/">Solar Thermal Servicing</a>' +
         '<a href="/hub/s-plan/">S Plan Heating Systems</a>' +
+        '<a href="/hub/priority-domestic-hot-water/">Priority Domestic Hot Water</a>' +
         '<a href="/hub/radiators/">Radiators</a>' +
         '<a href="/quote/">Get a Quote</a>' +
         '</div>' +
