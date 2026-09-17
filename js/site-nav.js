@@ -61,11 +61,14 @@
         '<div class="mega-menu-column">' +
         '<h4>Worcester Bosch</h4>' +
         '<a href="/hub/worcester-bosch-fga-tool/">FGA Tool</a>' +
+        '<a href="/hub/fault-codes/worcester-bosch-fault-codes/">Worcester Bosch Fault Codes</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Other Brands</h4>' +
+        '<a href="/hub/fault-codes/">Fault Codes (A–Z)</a>' +
         '<a href="/hub/intergas-fga-tool/">Intergas FGA Tool</a>' +
         '<a href="/hub/how-to/service-an-intergas-boiler/">Intergas Service How-To</a>' +
+        '<a href="/hub/fault-codes/intergas-fault-codes/">Intergas Fault Codes</a>' +
         '<h4>Miscellaneous</h4>' +
         '<a href="/hub/heating-expansion-vessel-calculator/">Heating expansion vessel calculator</a>' +
         '<a href="/hub/inhibitor-dosing/">Inhibitor Dosing</a>' +
