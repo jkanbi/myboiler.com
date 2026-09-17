@@ -42,11 +42,47 @@ function setMobileMenuOpen(open) {
     }
 }
 
+// Cloudflare Rocket Loader rewrites inline onclick handlers and also binds its
+// own click listener. menu.js adds another listener after removing onclick, so
+// one tap would call toggleMenu twice (open then immediately close). Ignore a
+// second call in the same turn, and stop other listeners on the control.
+let menuToggleLock = false;
+
 function toggleMenu() {
+    if (menuToggleLock) return;
     if (!isMobileNav()) return;
     const navMenu = document.getElementById('nav-menu');
     if (!navMenu) return;
+    menuToggleLock = true;
     setMobileMenuOpen(!navMenu.classList.contains('active'));
+    queueMicrotask(() => {
+        menuToggleLock = false;
+    });
+}
+
+window.toggleMenu = toggleMenu;
+
+function clearRocketLoaderOnClick(hamburger) {
+    hamburger.onclick = null;
+    hamburger.removeAttribute('onclick');
+    Array.from(hamburger.attributes).forEach((attr) => {
+        if (attr.name.indexOf('data-cf-modified') === 0) {
+            hamburger.removeAttribute(attr.name);
+        }
+    });
+}
+
+function bindHamburgerToggle(hamburger) {
+    if (!hamburger) return;
+    clearRocketLoaderOnClick(hamburger);
+    if (hamburger.dataset.navBound === '1') return;
+    hamburger.dataset.navBound = '1';
+    if (!hamburger.getAttribute('type')) hamburger.setAttribute('type', 'button');
+    hamburger.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        toggleMenu();
+    }, true);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -68,13 +104,10 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburgerMenu.setAttribute('aria-expanded', 'false');
     }
 
-    if (hamburgerMenu) {
-        hamburgerMenu.removeAttribute('onclick');
-        hamburgerMenu.addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleMenu();
-        });
-    }
+    bindHamburgerToggle(hamburgerMenu);
+    window.addEventListener('load', () => {
+        bindHamburgerToggle(document.querySelector('.hamburger-menu'));
+    });
 
     // Handle window resize
     window.addEventListener('resize', () => {
