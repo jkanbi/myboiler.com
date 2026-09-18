@@ -31,6 +31,7 @@
         '<a href="/hub/heat-pumps/">Heat Pumps Overview</a>' +
         '<a href="/hub/heat-pumps/retrofit-an-existing-hot-water-cylinder-with-a-plate-heat-exchanger-for-use-with-a-heat-pump/">Heat Pump Cylinder Retrofit</a>' +
         '<a href="/hub/heat-pumps/air-source-heat-pumps/">Air Source Heat Pump</a>' +
+        '<a href="/hub/heat-pumps/hybrid-heat-pumps/">Hybrid Heat Pumps</a>' +
         '<a href="/hub/why-heat-pumps-work-well-with-underfloor-heating/">Underfloor Heating</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
