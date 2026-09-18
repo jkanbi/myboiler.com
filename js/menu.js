@@ -230,11 +230,55 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     let megaCloseTimer = null;
-    const MEGA_CLOSE_MS = 200;
+    let pointerX = 0;
+    let pointerY = 0;
+    const MEGA_CLOSE_MS = 700;
 
     function clearMegaCloseTimer() {
         clearTimeout(megaCloseTimer);
         megaCloseTimer = null;
+    }
+
+    function pointerInMegaCorridor(x, y) {
+        const open = document.querySelector('.nav-item-has-dropdown.is-open');
+        if (!open) return false;
+        const mega = open.querySelector('.mega-menu');
+        if (!mega) return false;
+        const trigger = open.getBoundingClientRect();
+        const panel = mega.getBoundingClientRect();
+        const left = Math.min(trigger.left, panel.left) - 12;
+        const right = Math.max(trigger.right, panel.right) + 12;
+        const top = Math.min(trigger.top, panel.top);
+        const bottom = panel.bottom;
+        return x >= left && x <= right && y >= top && y <= bottom;
+    }
+
+    function shouldKeepMegaOpen() {
+        if (!isDesktopNav()) return false;
+        const open = document.querySelector('.nav-item-has-dropdown.is-open');
+        if (!open) return false;
+        if (open.matches(':hover')) return true;
+        const mega = open.querySelector('.mega-menu');
+        if (mega && mega.matches(':hover')) return true;
+        const header = document.querySelector('.header');
+        if (header && header.matches(':hover')) return true;
+        return pointerInMegaCorridor(pointerX, pointerY);
+    }
+
+    function alignMovedMega(item) {
+        const mega = item && item.querySelector('.mega-menu--moved');
+        if (!mega) return;
+        if (!item.classList.contains('is-open') && !item.classList.contains('active')) {
+            mega.style.left = '';
+            mega.style.transform = '';
+            return;
+        }
+        const trigger = item.getBoundingClientRect();
+        const width = Math.min(360, window.innerWidth - 32);
+        let left = trigger.right - width;
+        left = Math.max(16, Math.min(left, window.innerWidth - width - 16));
+        mega.style.left = `${Math.round(left)}px`;
+        mega.style.transform = 'none';
     }
 
     function openDesktopMega(item) {
@@ -242,6 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearMegaCloseTimer();
         document.querySelectorAll('.nav-item-has-dropdown').forEach((other) => {
             setDropdownOpen(other, other === item);
+            if (other === item) alignMovedMega(other);
         });
     }
 
@@ -249,10 +294,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isDesktopNav()) return;
         clearMegaCloseTimer();
         megaCloseTimer = setTimeout(() => {
-            const open = document.querySelector('.nav-item-has-dropdown.is-open');
-            if (open && (open.matches(':hover') || open.querySelector('.mega-menu:hover'))) return;
+            megaCloseTimer = null;
+            if (shouldKeepMegaOpen()) return;
             closeAllDesktopMegas();
         }, MEGA_CLOSE_MS);
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        pointerX = e.clientX;
+        pointerY = e.clientY;
+        if (!isDesktopNav() || !document.querySelector('.nav-item-has-dropdown.is-open')) return;
+        if (shouldKeepMegaOpen()) {
+            clearMegaCloseTimer();
+        } else if (!megaCloseTimer) {
+            scheduleMegaClose();
+        }
+    });
+
+    const headerEl = document.querySelector('.header');
+    if (headerEl) {
+        headerEl.addEventListener('mouseenter', () => {
+            if (document.querySelector('.nav-item-has-dropdown.is-open')) {
+                clearMegaCloseTimer();
+            }
+        });
+        headerEl.addEventListener('mouseleave', scheduleMegaClose);
     }
 
     document.querySelectorAll('.nav-item-has-dropdown').forEach((item) => {
@@ -281,6 +347,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', () => {
         if (document.body.classList.contains('nav-mega-open')) {
             insetBackdropBelowHeader();
+            const open = document.querySelector('.nav-item-has-dropdown.is-open');
+            if (open) alignMovedMega(open);
         }
     });
 

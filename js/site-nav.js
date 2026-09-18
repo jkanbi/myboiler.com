@@ -6,6 +6,8 @@
 
     window.SITE_NAV_HTML =
         '<ul class="nav-list">' +
+        '<li class="nav-item"><a href="/hub/repairs/"><span>Repairs</span></a></li>' +
+        '<li class="nav-item"><a href="/hub/boiler-cover/"><span>Boiler Cover</span></a></li>' +
         '<li class="nav-item nav-item-has-dropdown">' +
         '<span class="nav-dropdown-label"><span>Advice</span>' + chevron + '</span>' +
         '<div class="mega-menu">' +
@@ -18,6 +20,8 @@
         '<a href="/hub/what-size-boiler/">What Size Boiler?</a>' +
         '<a href="/hub/what-is-a-gc-number/">What is a GC Number?</a>' +
         '<a href="/hub/boiler-energy-efficiency/">Boiler Energy Efficiency</a>' +
+        '<a href="/hub/repairs/">Boiler Repairs</a>' +
+        '<a href="/hub/boiler-cover/">Boiler Cover</a>' +
         '<h4>OpenTherm &amp; Modulating Boilers</h4>' +
         '<a href="/hub/opentherm/opentherm-boilers-and-controls/">OpenTherm &amp; Modulating Overview</a>' +
         '<a href="/hub/opentherm/opentherm-boilers-and-controls/">OpenTherm Capable Boilers</a>' +
@@ -75,11 +79,6 @@
         '<a href="/hub/inhibitor-dosing/">Inhibitor Dosing</a>' +
         '<a href="/hub/boiler-maximum-and-minimum-output-mode-videos/">Max/Min Output Mode Videos</a>' +
         '</div>' +
-        '</div>' +
-        '</li>' +
-        '<li class="nav-item nav-item-has-dropdown">' +
-        '<span class="nav-dropdown-label"><span>Calculators</span>' + chevron + '</span>' +
-        '<div class="mega-menu">' +
         '<div class="mega-menu-column">' +
         '<h4>Heating Design</h4>' +
         '<a href="/hub/air-change-rates-ach/">Air Change Calculator (ACH)</a>' +
@@ -105,6 +104,16 @@
         '<a href="/hub/calculators/gas-volume-m3-to-kwh/">m³ to kWh</a>' +
         '<h4>Buffers</h4>' +
         '<a href="/hub/calculators/buffer-minimum-volume-calculation/">Buffer Minimum Volume</a>' +
+        '</div>' +
+        '</div>' +
+        '</li>' +
+        '<li class="nav-item nav-item-has-dropdown">' +
+        '<span class="nav-dropdown-label"><span>Calculators</span>' + chevron + '</span>' +
+        '<div class="mega-menu mega-menu--moved">' +
+        '<div class="mega-menu-column">' +
+        '<h4>Calculators</h4>' +
+        '<p class="mega-menu-moved-note">Calculators have moved to Toolbox.</p>' +
+        '<a href="/hub/toolbox/#calculators">Open Toolbox</a>' +
         '</div>' +
         '</div>' +
         '</li>' +
