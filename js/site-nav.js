@@ -93,6 +93,7 @@
         '<div class="mega-menu-column">' +
         '<h4>Conversion Calculators</h4>' +
         '<a href="/hub/calculators/kw-to-flow-rate/">KW to Flow Rate &amp; Flow to KW</a>' +
+        '<a href="/hub/calculators/lps-to-kw/">LPS to KW</a>' +
         '<a href="/hub/calculators/flow-rate-lpm-to-energy-used-kwh/">LPM to kWh</a>' +
         '<a href="/hub/calculators/btu-to-kw/">BTU to Watts</a>' +
         '<a href="/hub/radiator-new-output/">Radiator New Output</a>' +
