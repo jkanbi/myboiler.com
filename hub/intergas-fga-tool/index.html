@@ -4,155 +4,202 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intergas FGA Tool - MyBoiler Hub</title>
-    <meta name="description" content="Intergas HRE, Rapid, ECO RF Minimum and Maximum mode Intergas Xclusiv and Xtreme Minimum and Maximum mode">
+    <meta name="description" content="Check Intergas flue-gas analyser readings at maximum and minimum rate, case open: O2 and CO2 pass/fail against the Hub FGA limits.">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <style>
-        .article-page {
+        .calculator-page {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             background: var(--bg);
         }
 
-        .article-container {
+        .calculator-container {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
             width: 100%;
             box-sizing: border-box;
         }
 
-.article-header {
+        .calculator-header {
+            text-align: center;
             margin-bottom: 2.5rem;
         }
 
-        .article-title {
-            font-size: clamp(2rem, 5vw, 3rem);
+        .calculator-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
             font-weight: 700;
             line-height: 1.1;
             color: var(--text);
-            margin: 0 0 1rem;
+            margin: 0 0 0.75rem;
             letter-spacing: -0.02em;
         }
 
-        .article-intro {
-            font-size: 1.125rem;
-            line-height: 1.6;
+        .calculator-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
             color: var(--text-muted);
-            margin: 0 0 2rem;
+            margin: 0 auto;
+            max-width: 62ch;
         }
 
-        .article-content {
+        .calculator-card {
+            width: 100%;
             background: var(--surface);
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            padding: clamp(1.5rem, 4vw, 3rem);
-            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 1.5rem;
         }
 
-        .article-content p {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--text);
-            margin: 0 0 1.25rem;
+        .fga-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
         }
 
-        .article-content h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text);
-            margin: 2rem 0 1rem;
+        .fga-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            min-width: 0;
         }
 
-        .article-content h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text);
-            margin: 1.5rem 0 1rem;
-        }
-
-        .article-content h4 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--text);
-            margin: 1.25rem 0 0.75rem;
-        }
-
-        .article-content strong {
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .article-content img {
+        .input-label {
             display: block;
-            max-width: min(100%, 720px);
-            height: auto;
-            margin: 1rem auto 1.5rem;
-            border-radius: var(--radius);
-        }
-
-        .article-video {
-            width: 100%;
-            margin: 1.25rem 0 1.75rem;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            background: var(--surface);
-            box-shadow: var(--shadow-sm);
-        }
-        .article-video iframe {
-            display: block;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            height: auto;
-            border: 0;
-        }
-
-        .article-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
             font-size: 0.9375rem;
-        }
-
-        .article-content th,
-        .article-content td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border-subtle);
-            vertical-align: top;
-        }
-
-        .article-content th {
             font-weight: 600;
-            border-bottom: 2px solid var(--border);
+            color: var(--text);
         }
 
-        .article-content ul,
-        .article-content ol {
-            margin: 0 0 1.25rem;
-            padding-left: 1.5rem;
+        .input-hint {
+            font-size: 0.8125rem;
+            line-height: 1.4;
+            color: var(--text-muted);
+            margin: 0;
         }
 
-        .article-content li {
-            margin: 0 0 0.4rem;
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            font-weight: 500;
+            box-sizing: border-box;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .result-item {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1rem 0.75rem;
+            text-align: center;
+        }
+
+        .result-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+
+        .result-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            line-height: 1.2;
+        }
+
+        .result-value.pass {
+            color: #10b981;
+        }
+
+        .result-value.fail {
+            color: #ef4444;
+        }
+
+        .related-links {
+            margin: 0;
+            padding-left: 1.25rem;
+            color: var(--text);
             line-height: 1.6;
         }
 
-        .article-content iframe {
-            max-width: 100%;
+        .related-links a {
+            color: var(--accent);
         }
 
-        .article-resource {
-            display: block;
-            margin: 0.75rem 0 1.25rem;
+        .formula-section {
+            margin-top: 1.75rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-subtle);
         }
 
+        .formula-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+        }
+
+        .formula-legend {
+            font-size: 0.9375rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .calculator-disclaimer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 70ch;
+            margin: 0.5rem auto 1rem;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        @media (max-width: 800px) {
+            .fga-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calculator-container {
+                padding: 1.25rem 12px;
+            }
+
+            .calculator-card {
+                padding: 1.15rem;
+            }
+
+            .fga-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
 </head>
-<body class="article-page">
-    <!-- Header with full navigation -->
+<body class="calculator-page">
     <div class="menu-overlay"></div>
     <div class="nav-mega-backdrop" aria-hidden="true"></div>
     <header class="header">
@@ -167,55 +214,131 @@
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
             </button>
-            
             <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/hub/advice/">Advice</a></li><li class="nav-item"><a href="/hub/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/hub/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
         </div>
     </header>
 
-    <!-- Article Content -->
-        <div class="article-container">
-        <header class="article-header">
-            <h1 class="article-title">Intergas FGA Tool</h1>
-            <p class="article-intro">
-                Intergas HRE, Rapid, ECO RF Minimum and Maximum mode Intergas Xclusiv and Xtreme Minimum and Maximum mode
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h1 class="calculator-headline">Intergas FGA Tool</h1>
+            <p class="calculator-connector">
+                Enter analyser readings with the case open at maximum rate (H) and minimum rate (L). Pass/fail uses the original Hub Intergas FGA limits.
             </p>
-        </header>
+        </div>
 
-        <article class="article-content">
-<p><span class="cff-form-name-shortcode"><form action="/hub/intergas-fga-tool/" class="cff-form no-prefetch cff-form-37 cp_cff_11" data-cf-modified-e7ccc37744d09cb3d378caa8-="" data-nonce="9c9d0b0d96" dir="ltr" enctype="multipart/form-data" id="cp_calculatedfieldsf_pform_1" method="post" name="cp_calculatedfieldsf_pform_1" onsubmit="if (!window.__cfRLUnblockHandlers) return false; return fbuilderjQuery.fbuilder.doValidate(this);">
-<input name="cp_calculatedfieldsf_pform_psequence" type="hidden" value="_1"/>
-<input name="cp_calculatedfieldsf_id" type="hidden" value="37"/>
-<input name="cp_ref_page" type="hidden" value="https://myboiler.com/hub"/>
-<pre style="display:none !important;"></pre>
-<div id="fbuilder">
-<div id="fbuilder_1">
-<div id="formheader_1"></div>
-<div id="fieldlist_1"></div>
-<div class="clearer"></div>
-</div>
-<div class="cpcaptchalayer" id="cpcaptchalayer_1" style="display:none;">
-<div class="fields">
-<label>Please enter the security code</label>
-<div class="dfield">
-<span class="cff-captcha-math-label" id="cff_captcha_math_1">1 + 6 = </span>
-<input autocomplete="off" id="hdcaptcha_cp_calculated_fields_form_post_1" name="hdcaptcha_cp_calculated_fields_form_post" size="8" type="text" value=""/>
-<div class="error message" id="hdcaptcha_error_1" style="display:none;"></div>
-</div>
-<div class="clearer"></div>
-</div>
-</div>
-</div>
-<div class="cp_subbtn" id="cp_subbtn_1" style="display:none;">Submit</div><div class="clearer"></div>
-<input id="_cpcff_public_nonce" name="_cpcff_public_nonce" type="hidden" value="63422c5b57"/><input name="_wp_http_referer" type="hidden" value="/intergas-fga-tool/"/></form>
-</span></p>
-<p><a href="/hub/intergas/intergas-hre-rapid-eco-rf-minimum-and-maximum-rate-mode/">Intergas HRE, Rapid, ECO RF Minimum and Maximum mode</a></p>
-<p><a href="/hub/intergas-portal/intergas-xclusiv-and-xtreme-minimum-and-maximum-rate-mode/">Intergas Xclusiv and Xtreme Minimum and Maximum mode</a></p>
-        </article>
+        <div class="calculator-card">
+            <div class="fga-grid">
+                <div class="fga-cell">
+                    <label class="input-label" for="o2-h">O<sub>2</sub> (H) %</label>
+                    <p class="input-hint">Max power, case open. Pass 3.85–5.6%</p>
+                    <input type="number" id="o2-h" class="input-field" inputmode="decimal" step="0.01" min="0" max="21" placeholder="O2 (H)">
+                    <div class="result-item">
+                        <div class="result-label">Result O<sub>2</sub> (H)</div>
+                        <div class="result-value" id="o2-h-result">—</div>
+                    </div>
+                </div>
+
+                <div class="fga-cell">
+                    <label class="input-label" for="co2-h">CO<sub>2</sub> (H) %</label>
+                    <p class="input-hint">Max power, case open. Pass 8.6–9.6%</p>
+                    <input type="number" id="co2-h" class="input-field" inputmode="decimal" step="0.01" min="0" max="20" placeholder="CO2 (H)">
+                    <div class="result-item">
+                        <div class="result-label">Result CO<sub>2</sub> (H)</div>
+                        <div class="result-value" id="co2-h-result">—</div>
+                    </div>
+                </div>
+
+                <div class="fga-cell">
+                    <label class="input-label" for="o2-l">O<sub>2</sub> (L) %</label>
+                    <p class="input-hint">Min power, case open. Pass ≥ O<sub>2</sub> (H) and ≤ 6.00%</p>
+                    <input type="number" id="o2-l" class="input-field" inputmode="decimal" step="0.01" min="0" max="21" placeholder="O2 (L)">
+                    <div class="result-item">
+                        <div class="result-label">Result O<sub>2</sub> (L)</div>
+                        <div class="result-value" id="o2-l-result">—</div>
+                    </div>
+                </div>
+
+                <div class="fga-cell">
+                    <label class="input-label" for="co2-l">CO<sub>2</sub> (L) %</label>
+                    <p class="input-hint">Min power, case open. Pass ≥ 8.4% and ≤ CO<sub>2</sub> (H)</p>
+                    <input type="number" id="co2-l" class="input-field" inputmode="decimal" step="0.01" min="0" max="20" placeholder="CO2 (L)">
+                    <div class="result-item">
+                        <div class="result-label">Result CO<sub>2</sub> (L)</div>
+                        <div class="result-value" id="co2-l-result">—</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="formula-section">
+                <h2 class="formula-title">Limits</h2>
+                <p class="formula-legend">
+                    <strong>O<sub>2</sub> (H)</strong> PASS if 3.85% ≤ O<sub>2</sub> (H) ≤ 5.6%<br>
+                    <strong>CO<sub>2</sub> (H)</strong> PASS if 8.6% ≤ CO<sub>2</sub> (H) ≤ 9.6%<br>
+                    <strong>O<sub>2</sub> (L)</strong> PASS if O<sub>2</sub> (H) ≤ O<sub>2</sub> (L) ≤ 6.00%<br>
+                    <strong>CO<sub>2</sub> (L)</strong> PASS if 8.4% ≤ CO<sub>2</sub> (L) ≤ CO<sub>2</sub> (H)
+                </p>
+            </div>
+        </div>
+
+        <div class="calculator-card">
+            <h2 class="formula-title">Minimum and maximum rate</h2>
+            <ul class="related-links">
+                <li><a href="/hub/intergas/intergas-hre-rapid-eco-rf-minimum-and-maximum-rate-mode/">Intergas HRE, Rapid, ECO RF — minimum and maximum mode</a></li>
+                <li><a href="/hub/boiler-maximum-and-minimum-output-mode-videos/">Xclusive / Xtreme and other brands — max/min output videos</a></li>
+            </ul>
+        </div>
+
+        <div class="calculator-disclaimer">
+            <strong>Important:</strong> Figures are the original Hub Intergas FGA tool (case open). Always check the appliance instruction for that model. A failed reading means do not leave the boiler in service. Gas Safe registered work only.
+        </div>
     </div>
 
-    
+    <script type="text/javascript" data-cfasync="false">
+        document.addEventListener('DOMContentLoaded', function() {
+            const o2hEl = document.getElementById('o2-h');
+            const co2hEl = document.getElementById('co2-h');
+            const o2lEl = document.getElementById('o2-l');
+            const co2lEl = document.getElementById('co2-l');
 
-    
+            function readNumber(el) {
+                const raw = el.value.trim();
+                if (raw === '') return null;
+                const value = parseFloat(raw);
+                return isNaN(value) ? null : value;
+            }
+
+            function setResult(id, state) {
+                const el = document.getElementById(id);
+                el.classList.remove('pass', 'fail');
+                if (state === 'PASS') {
+                    el.textContent = 'PASS';
+                    el.classList.add('pass');
+                } else if (state === 'FAIL') {
+                    el.textContent = 'FAIL';
+                    el.classList.add('fail');
+                } else {
+                    el.textContent = '—';
+                }
+            }
+
+            function calculate() {
+                const o2h = readNumber(o2hEl);
+                const co2h = readNumber(co2hEl);
+                const o2l = readNumber(o2lEl);
+                const co2l = readNumber(co2lEl);
+
+                setResult('o2-h-result', o2h === null ? null : (o2h >= 3.85 && o2h <= 5.6 ? 'PASS' : 'FAIL'));
+                setResult('co2-h-result', co2h === null ? null : (co2h >= 8.6 && co2h <= 9.6 ? 'PASS' : 'FAIL'));
+                setResult('o2-l-result', (o2l === null || o2h === null) ? null : (o2l >= o2h && o2l <= 6 ? 'PASS' : 'FAIL'));
+                setResult('co2-l-result', (co2l === null || co2h === null) ? null : (co2l >= 8.4 && co2l <= co2h ? 'PASS' : 'FAIL'));
+            }
+
+            [o2hEl, co2hEl, o2lEl, co2lEl].forEach(function(el) {
+                el.addEventListener('input', calculate);
+            });
+            calculate();
+        });
+    </script>
 
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
