@@ -148,7 +148,6 @@
         '<li><a href="tel:+442081234411">+44 020 8123 4411</a></li>' +
         '</ul></div>' +
         '<div class="footer-column"><h3>Sister Sites</h3><ul>' +
-        '<li><a href="/hub/">MyBoiler Hub</a></li>' +
         '<li><a href="https://boilermanuals.com">Boiler Manuals</a></li>' +
         '<li><a href="https://combiboiler.com">Combi Boiler</a></li>' +
         '<li><a href="https://boilerservice.com">Boiler Service</a></li>' +
