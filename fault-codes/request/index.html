@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fault Codes Request - MyBoiler Hub</title>
-    <meta name="description" content="Request a boiler fault-code table that is not yet on MyBoiler Hub.">
+    <title>Fault Codes Request - MyBoiler.com</title>
+    <meta name="description" content="Request a boiler fault-code table that is not yet on MyBoiler.com.">
     <link rel="canonical" href="/fault-codes/request/">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/fault-codes.css">
     <style>
         .article-page { min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); }
         .article-container { flex: 1; padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px); max-width: 1100px; margin: 0 auto; width: 100%; box-sizing: border-box; }
@@ -79,7 +80,7 @@
     brand = (brand || "").replace(/[-_]+/g, " ").trim();
     var el = document.getElementById("req-brand");
     if (el && brand) el.textContent = brand;
-    if (brand) document.title = brand + " fault codes request - MyBoiler Hub";
+    if (brand) document.title = brand + " fault codes request - MyBoiler.com";
 })();
 </script>
 
@@ -87,6 +88,7 @@
     </div>
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/fault-codes.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>

@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fault Codes - MyBoiler Hub</title>
-    <meta name="description" content="UK boiler fault codes by brand: Alpha, Ariston, Baxi, Glow-Worm, Intergas, Vaillant, Worcester Bosch and more.">
+    <title>Boiler Fault Codes - MyBoiler.com</title>
+    <meta name="description" content="Search UK boiler fault codes by brand and code — Vaillant F28, Alpha 10, Worcester EA and more — or browse the A–Z list on MyBoiler.com.">
     <link rel="canonical" href="/fault-codes/">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/fault-codes.css">
     <style>
         .article-page { min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); }
         .article-container { flex: 1; padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px); max-width: 1100px; margin: 0 auto; width: 100%; box-sizing: border-box; }
@@ -58,12 +59,29 @@
     </header>
     <div class="article-container">
         <header class="article-header">
-            <h1 class="article-title">Fault Codes</h1>
-            <p class="article-intro">A–Z boiler display codes. Pick a brand, or request one we have not listed yet.</p>
+            <h1 class="article-title">Boiler Fault Codes</h1>
+            <p class="article-intro">Search a display code, or browse brands A–Z. Meanings are for guidance — gas work stays with a Gas Safe registered engineer.</p>
         </header>
         <article class="article-content">
+            <section class="fc-search" aria-label="Search fault codes">
+                <label class="fc-search__label" for="fault-code-search">Search by brand and code</label>
+                <div class="fc-search__row">
+                    <input id="fault-code-search" class="fc-search__input" type="search" placeholder="e.g. Vaillant F28 or Alpha 10" autocomplete="off" enterkeyhint="search">
+                    <button type="button" class="fc-search__button" id="fault-code-search-btn">Search</button>
+                </div>
+                <p class="fc-search__hint">A code on its own works too — try F.28, EA, or E133.</p>
+                <div id="fault-code-results" class="fc-results" hidden></div>
+            </section>
+            <p class="fc-tools">
+                <a href="/fault-finder/">Symptom wizard</a>
+                <a href="/fault-codes/request/">Request a missing brand</a>
+                <a href="/fault-codes/faults-and-fixes/">Faults and fixes</a>
+            </p>
+            <p class="fc-disclaimer">Results come from the MyBoiler.com tables on this site. They deep-link to the brand page, or to an individual Vaillant code guide when we have one.</p>
+
+            <h2>Browse brands A–Z</h2>
             <nav class="letter-nav" aria-label="Jump to letter"><a href="#letter-A">A</a><a href="#letter-B">B</a><a href="#letter-C">C</a><a href="#letter-D">D</a><a href="#letter-E">E</a><a href="#letter-F">F</a><a href="#letter-G">G</a><a href="#letter-H">H</a><a href="#letter-I">I</a><a href="#letter-J">J</a><a href="#letter-K">K</a><a href="#letter-M">M</a><a href="#letter-N">N</a><a href="#letter-P">P</a><a href="#letter-R">R</a><a href="#letter-S">S</a><a href="#letter-T">T</a><a href="#letter-V">V</a><a href="#letter-W">W</a><a href="#letter-Z">Z</a></nav><h2 class="brand-letter" id="letter-A">A</h2>
-<div class="brand-grid"><a class="missing" href="/fault-codes/request/?brand=ACV">ACV</a><a href="/fault-codes/alpha-fault-codes/">Alpha</a><a class="missing" href="/fault-codes/request/?brand=Ambirad">Ambirad</a><a href="/fault-codes/amptec-fault-codes/">Amptec</a><a class="missing" href="/fault-codes/request/?brand=Andrews">Andrews</a><a href="/fault-codes/ariston-fault-codes/">Ariston</a><a href="/fault-codes/atag-fault-codes/">Atag</a><a href="/fault-codes/atmos-fault-codes/">Atmos</a></div>
+<div class="brand-grid"><a class="missing" href="/fault-codes/request/?brand=ACV">ACV</a><a href="/fault-codes/alpha-fault-codes/">Alpha</a><a href="/fault-codes/ambirad-fault-codes/">Ambirad</a><a href="/fault-codes/amptec-fault-codes/">Amptec</a><a class="missing" href="/fault-codes/request/?brand=Andrews">Andrews</a><a href="/fault-codes/ariston-fault-codes/">Ariston</a><a href="/fault-codes/atag-fault-codes/">Atag</a><a href="/fault-codes/atmos-fault-codes/">Atmos</a></div>
 <h2 class="brand-letter" id="letter-B">B</h2>
 <div class="brand-grid"><a href="/fault-codes/baxi-fault-codes/">Baxi</a><a class="missing" href="/fault-codes/request/?brand=Baxi Commercial">Baxi Commercial</a><a href="/fault-codes/biasi-fault-codes/">Biasi</a><a class="missing" href="/fault-codes/request/?brand=British Gas">British Gas</a><a class="missing" href="/fault-codes/request/?brand=Broag">Broag</a><a class="missing" href="/fault-codes/request/?brand=Buderus &amp; Camray">Buderus &amp; Camray</a></div>
 <h2 class="brand-letter" id="letter-C">C</h2>
@@ -101,11 +119,13 @@
 <h2 class="brand-letter" id="letter-W">W</h2>
 <div class="brand-grid"><a class="missing" href="/fault-codes/request/?brand=Warmflow">Warmflow</a><a class="missing" href="/fault-codes/request/?brand=Warmhaus">Warmhaus</a><a class="missing" href="/fault-codes/request/?brand=Wickes">Wickes</a><a href="/fault-codes/worcester-bosch-fault-codes/">Worcester Bosch</a></div>
 <h2 class="brand-letter" id="letter-Z">Z</h2>
-<div class="brand-grid"><a href="/fault-codes/zanussi-fault-codes/">Zanussi</a></div><p>Brands in the full colour are tables or PDFs we have on this hub. Grey names open a request — the old Hub had the same placeholder.</p>
+<div class="brand-grid"><a href="/fault-codes/zanussi-fault-codes/">Zanussi</a></div>
+<p>Full-colour names open tables or PDFs we host on MyBoiler.com. Grey names open a request form.</p>
         </article>
     </div>
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/fault-codes.js" data-cfasync="false"></script>
 </body>
 </html>

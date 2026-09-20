@@ -2,7 +2,8 @@
   "name": "myboiler-com",
   "private": true,
   "scripts": {
-    "serve": "live-server . --port=8000 --entry-file=index.html"
+    "serve": "live-server . --port=8000 --entry-file=index.html",
+    "build:fault-codes": "node scripts/build-fault-code-index.js"
   },
   "devDependencies": {
     "live-server": "^1.2.2"

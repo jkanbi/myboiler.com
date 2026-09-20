@@ -54,6 +54,7 @@
         '<div class="mega-menu">' +
         '<div class="mega-menu-column">' +
         '<h4>Vaillant</h4>' +
+        '<a href="/fault-codes/">Search Fault Codes</a>' +
         '<a href="/vaillant/vaillant-p-test-program-mode/">P Test Instructions</a>' +
         '<a href="/vaillant/vaillant-ecotec-emissions-table/">Emissions Table</a>' +
         '<a href="/how-to/vaillant-ecotec-boiler-service/">Ecotec Service How-To</a>' +
@@ -69,7 +70,7 @@
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Other Brands</h4>' +
-        '<a href="/fault-codes/">Fault Codes (A–Z)</a>' +
+        '<a href="/fault-codes/">Search Fault Codes</a>' +
         '<a href="/intergas-fga-tool/">Intergas FGA Tool</a>' +
         '<a href="/how-to/service-an-intergas-boiler/">Intergas Service How-To</a>' +
         '<a href="/fault-codes/intergas-fault-codes/">Intergas Fault Codes</a>' +

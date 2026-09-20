@@ -39,7 +39,8 @@ Internal aliases that rename pages are unchanged except for the prefix, e.g. `/a
 ├── assets/              # Homepage media
 ├── pages/               # Markdown pages
 ├── calculators/         # Calculator pages (real content at root)
-├── fault-codes/         # Fault-code pages
+├── fault-codes/         # Fault-code pages + generated search index
+├── scripts/             # Static generators (fault-code index)
 ├── advice/, toolbox/, … # Other migrated content
 ├── chat/, quote/, decide/, heat-pump-checker/  # Apps
 ├── hub/                 # Redirect stubs only (/hub/… → /…)
@@ -49,6 +50,23 @@ Internal aliases that rename pages are unchanged except for the prefix, e.g. `/a
 ├── favicon.ico
 └── CNAME
 ```
+
+## Fault-code search index
+
+`/fault-codes/` is a client-side search hub. The index is generated from **this repo’s** HTML tables and Vaillant code pages — not from boilermanuals.com.
+
+```
+npm run build:fault-codes
+```
+
+That runs `scripts/build-fault-code-index.js` and writes `fault-codes/fault-codes-index.json`. Commit the JSON with any table edits so GitHub Pages stays in sync. Search and in-page table filters live in `js/fault-codes.js` and `css/fault-codes.css`.
+
+Recovered WordPress pages from hub.myboiler.com live under `/fault-codes/`:
+- Ambirad table, Potterton E133, faults-and-fixes, extra Vaillant codes from the later “new” table
+- Worcester individual codes A1/A7/A8/b1/C6/E2/E9/EA/F0/F7/FA/Fd plus the siphon-fill (`-¦¦-` / XX) page
+- Baxi Duo-tec / Platinum / Megaflo and Baxi EcoBlue Heat Only tables (were A–Z request placeholders)
+
+Legacy slugs redirect to the clean paths: `/4155-2/` → A8, `/worcester-bosch-%c2%a6%c2%a6-code/` → siphon fill, and the old root Baxi URLs (`/baxi-ecoblue-heat-only/`, `/baxi-solo-heat-only/`, `/baxi-600-combi/`, `/baxi-baxi-200-400/`). The public hub HTML for Worcester Fd 404s; the page was rebuilt from the WordPress REST payload. Remaining A–Z grey brands (Ideal, Ferroli, Viessmann, and the leftover Baxi ranges) were request placeholders on WordPress too — there is no table to migrate.
 
 ## Deployment
 

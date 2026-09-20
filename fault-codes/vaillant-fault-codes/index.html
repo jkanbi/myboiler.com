@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vaillant Fault Codes - MyBoiler Hub</title>
+    <title>Vaillant Fault Codes - MyBoiler.com</title>
     <meta name="description" content="Vaillant boiler fault codes with meanings, causes, and repair guides for ecotec and other digital Vaillant models.">
     <link rel="canonical" href="/fault-codes/vaillant-fault-codes/">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/fault-codes.css">
     <style>
         .article-page {
             min-height: 100vh;
@@ -104,6 +105,7 @@
 
         </header>
         <article class="article-content">
+<p class="article-back"><a href="/fault-codes/">Back to fault codes</a></p>
 <h3>Brand Specific Information</h3>
 <p>Fault codes take priority over all other display functions in the event of a system fault occurring. If multiple faults occur, the corresponding fault codes are displayed alternately for about two seconds each. Shown below is the procedure to access fault code history for most digital Vaillant boilers.</p>
 
@@ -294,6 +296,27 @@ turi blocked (do not use lubricant on O-ring in venturi.). Gas family check <br/
 prematurely terminated.</td>
 </tr>
 <tr>
+<td>F.55</td><td></td><td>All-gas / CO sensor defective or short-circuited</td><td>Check plug, cable harness, sensor, and PCB. Recovered from the later Vaillant table on hub.myboiler.com.</td>
+</tr>
+<tr>
+<td>F.80</td><td></td><td>actoSTOR inlet sensor defective or not connected</td><td>Only in combination with F.91: check NTC, plug, cable harness, PCB.</td>
+</tr>
+<tr>
+<td>F.81</td><td></td><td>Cylinder charging pump — cylinder not fully charged in time</td><td>Only in combination with F.91: check sensors, impeller, diverter valve, pump, secondary heat exchanger.</td>
+</tr>
+<tr>
+<td>F.82</td><td></td><td>External current anode defective or not connected</td><td>Check cable harness and anode. If no anode is fitted, fit the X43 bridge on the PCB.</td>
+</tr>
+<tr>
+<td>F.90</td><td></td><td>Communication with actoSTOR interrupted</td><td>Check eBUS cable to the actoSTOR module. If running without actoSTOR, set D.092=0.</td>
+</tr>
+<tr>
+<td>F.91</td><td></td><td>actoSTOR sensor fault</td><td>Check plug, cable harness, and sensor.</td>
+</tr>
+<tr>
+<td>F.94</td><td></td><td>Vortex and differential pressure sensors implausible</td><td>Check cable harness, plug, and sensors.</td>
+</tr>
+<tr>
 <td>Com</td><td><a href="/fault-codes/vaillant-com-fault-code/">Link</a></td><td>Communication Fault;<br/>
 No communication with PCB</td><td></td>
 </tr>
@@ -306,6 +329,7 @@ No communication with PCB</td><td></td>
     </div>
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/fault-codes.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>
