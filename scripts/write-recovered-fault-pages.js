@@ -418,6 +418,15 @@ function main() {
     writeRedirect("hub/fault-codes/baxi-fault-codes/baxi-duo-tec-platinum-and-megaflo", "/fault-codes/baxi-fault-codes/baxi-duo-tec-platinum-and-megaflo/", "Baxi Duo-tec Platinum & Megaflo Fault Codes");
     writeRedirect("hub/fault-codes/baxi-fault-codes/baxi-ecoblue-heat-only", "/fault-codes/baxi-fault-codes/baxi-ecoblue-heat-only/", "Baxi EcoBlue Heat Only Fault Codes");
     writeRedirect("hub/baxi-ecoblue-heat-only", "/fault-codes/baxi-fault-codes/baxi-ecoblue-heat-only/", "Baxi EcoBlue Heat Only Fault Codes");
+    writeRedirect("faults-and-fixes", "/fault-codes/faults-and-fixes/", "Boiler Faults and Fixes");
+    writeRedirect("hub/faults-and-fixes", "/fault-codes/faults-and-fixes/", "Boiler Faults and Fixes");
+    writeRedirect("vaillant/vaillant-fault-codes-new", "/fault-codes/vaillant-fault-codes/", "Vaillant Fault Codes");
+    writeRedirect("hub/vaillant/vaillant-fault-codes-new", "/fault-codes/vaillant-fault-codes/", "Vaillant Fault Codes");
+    writeRedirect("vaillant-ecotec-fault-code-overview", "/fault-codes/vaillant-fault-codes/", "Vaillant Fault Codes");
+    writeRedirect("hub/vaillant-ecotec-fault-code-overview", "/fault-codes/vaillant-fault-codes/", "Vaillant Fault Codes");
+    writeRedirect("worcester-bosch-fault-codes/worcester-bosch-fault-code-e2", "/fault-codes/worcester-bosch-fault-code-e2/", "Worcester Bosch E2 Fault Code");
+    writeRedirect("hub/worcester-bosch-fault-codes/worcester-bosch-fault-code-e2", "/fault-codes/worcester-bosch-fault-code-e2/", "Worcester Bosch E2 Fault Code");
+    writeRedirect("hub/4155-2", "/fault-codes/worcester-bosch-fault-code-a8/", "Worcester Bosch A8 Fault Code");
 
     writePage(
         "fault-codes/faults-and-fixes",
