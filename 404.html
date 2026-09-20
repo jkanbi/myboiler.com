@@ -51,7 +51,8 @@
         }
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
-    <script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+    <script type="text/javascript" data-cfasync="false">
         // GitHub Pages 404 redirect script
         (function() {
             'use strict';
@@ -84,16 +85,6 @@
                 if (!content) return;
                 document.title = 'Page not found - MyBoiler.com';
                 content.classList.add('error-page');
-                content.innerHTML =
-                    '<h1>404</h1>' +
-                    '<p>The requested page could not be found.</p>' +
-                    '<p class="error-links"><a href="/">Home</a><a href="/hub/">Hub</a></p>';
-                if (typeof window.installSiteFooter === 'function') {
-                    window.installSiteFooter();
-                }
-                if (typeof window.installSiteNav === 'function') {
-                    window.installSiteNav();
-                }
             }
 
             if (document.readyState === 'loading') {
@@ -130,7 +121,5 @@
     </div>
 
     <div id="site-footer"></div>
-    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
-    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>
