@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boiler Pressure Guide - MyBoiler Hub</title>
+    <meta name="description" content="Complete guide to boiler system pressure including correct settings, troubleshooting low and high pressure, and how to fill your system.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+.article-header {
+            margin-bottom: 2rem;
+        }
+
+        .article-title {
+            font-size: clamp(1.85rem, 5vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 0.75rem;
+            line-height: 1.3;
+        }
+
+        .article-content p {
+            margin: 0 0 1rem;
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 0 0 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .article-content {
+                padding: 1.5rem;
+            }
+        }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .pressure-photos {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            align-items: start;
+            margin: 0 0 1.5rem;
+        }
+
+        .pressure-photos figure {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pressure-photos img {
+            width: 100%;
+            max-width: none;
+            max-height: 11rem;
+            height: 11rem;
+            object-fit: contain;
+            margin: 0;
+            background: var(--bg);
+        }
+
+        .pressure-photos figcaption {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <!-- Header -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <div class="article-container">
+<header class="article-header">
+            <h1 class="article-title">Boiler Pressure</h1>
+        </header>
+
+        <article class="article-content">
+            <div class="pressure-photos">
+                <figure>
+                    <img src="/boiler-pressure/images/gauge-icon.svg" alt="Boiler pressure gauge icon" loading="lazy">
+                </figure>
+                <figure>
+                    <img src="/boiler-pressure/images/vaillant-pressure-digital-copy.jpeg" alt="Vaillant digital boiler pressure display reading 1.2 bar" loading="lazy">
+                    <figcaption>Vaillant digital gauge</figcaption>
+                </figure>
+                <figure>
+                    <img src="/boiler-pressure/images/vaillant-pressure-guage-e1538416144578.jpg" alt="Vaillant analogue boiler pressure gauge" loading="lazy">
+                    <figcaption>Vaillant analogue gauge</figcaption>
+                </figure>
+            </div>
+
+            <p>On sealed systems such as combination boilers or ones where the system has an expansion vessel( usually red or grey, if you have a system boiler there will be one inside your boiler. You may also have one externally in addition to the boiler if your system is large enough) guage and filling loop, making sure the boiler pressure / system pressure is set correctly and remains stable during normal operation will prolong the life of the system and keep it working efficiently. Following are the guidelines for typical houses or flats.</p>
+
+            <p>Initial boiler pressure is ideally set at 1.2 bar. Routinely many engineers set at between 1 and 2 bar. The exact pressure is dependent on the design of the system and how low/high the boiler is positioned in the house and how many floors their are. As stated for the average house 1.2 bar is recommended.</p>
+
+            <p>During operation of boiler, ie when heating comes on and off, the maximum recommended pressure rise should be 0.5 bar. For example if you fill to 1 bar, then the max it should rise to is 1.5 as long as the expansion vessel is correctly sized and all other components are working correctly.</p>
+
+            <h3>Signs of Problems:</h3>
+            <ol>
+                <li>If the pressure rises during operation higher than 0.5 bar from initial fill pressure(ie the pressure when the system is cold), this could be signs of incorrect expansion vessel sizing, or if it continues rising past 2.5 bar,the expansion vessel may need to be refilled (0.75 bar on average,different pressure for bigger properties or where expansion vessel is located at the top of the house) or replaced.</li>
+                <li>If the pressure keeps dropping, either the pressure relief valve has debris stuck on the washer, allowing water to escape or you have a leak on the heating system.</li>
+            </ol>
+
+            <h3>Low pressure</h3>
+            <p>This is when your boiler pressure is below the manufacturers stated level, at which point the boiler stops working as it would be dangerous for an appliance to potentially start without any water in the system. It is the water that absorbs the heat from the heat exchanger, otherwise the heat exchanger would melt. Most systems shut down between 0.5 bar and 0.8 bar.</p>
+
+            <p>Low pressure is caused by water escaping from the system either with high frequency or gradually. Most domestic systems will lose pressure over time due to microscopic leaks from valves and system components. A system should have to be topped up at most once a year.</p>
+
+            <p><strong>Solution(s):</strong></p>
+            <ul>
+                <li>Top up the pressure.</li>
+                <li>Locate any possible signs of leaks ie water marks / debris seen near valves and get an engineer or plumber to tighten any lose joints.</li>
+                <li>Inject a leak sealer into the system, noting that it works on slow leaks not rapid pressure losses.</li>
+            </ul>
+
+            <h3>High pressure</h3>
+            <p>This is when the pressure is above 2.5 bar into the red. If it hits 3 bar, the safety valve will start to expel this water out of the system. If you are exceeding 3 bar and still rising then you may have a dangerous situation in which the safety valve is jammed and not operating. This can lead to serious problems within the boiler and the rest of the system.</p>
+
+            <p>High pressure can be caused by a faulty filling loop that is allowing water to enter the heating system loop or if someone has accidentally left the valves in the open position. The max a heating system will tolerate is 2.5 – 3 bar before water starts escaping from the pressure relief valve.</p>
+
+            <p><strong>Solution(s):</strong></p>
+            <ul>
+                <li>Decrease pressure through an air-vent on a radiator.</li>
+                <li>Decrease pressure through a draining valve.</li>
+                <li>Decrease pressure through purpose made draining valve on boilers (an engineer may be required to do this). Replace faulty filling loops.</li>
+            </ul>
+
+            <h3>Fluctuating pressure</h3>
+            <p>If the pressure is in the green zone or between 1 and 2 bar when cold, but increase by more than 0.5 bar into the red, just like describe further up, you may have a problem with your expansion vessel.</p>
+
+            <p><strong>Solution(s):</strong></p>
+            <ul>
+                <li>Get an engineer to repressurise the expansion vessel, usually using a foot pump on the expansion vessel whilst the system is depressurised. Recommended fill level for expansion vessel is 0.75 bar.</li>
+                <li>Check if there are blockages in the system</li>
+            </ul>
+
+            <h2>Long Term Problems:</h2>
+            <ol>
+                <li>Continual topping up of the system will cause corrosion by means of inhibitor being diluted or new minerals being introduced to the system. Better to fix the small problem before a bigger problem occurs.</li>
+            </ol>
+
+            <h3>How to fill or increase boiler pressure</h3>
+            <p>If you would like to know how to fill your specific system, you will need to first find out what type of system you have and locate the filling valves. We will soon create videos on how to do this. In the mean time, please feel free to get in touch and we can try to provide information. Please note, this is no substitute for a heating engineer to carry these tasks out.</p>
+        </article>
+    </div>
+
+    
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>

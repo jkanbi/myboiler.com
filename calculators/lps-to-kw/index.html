@@ -3,50 +3,499 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting to LPS to KW Calculator...</title>
-    <link rel="canonical" href="https://myboiler.com/hub/calculators/lps-to-kw/" />
-    <meta http-equiv="refresh" content="0; url=/hub/calculators/lps-to-kw/" />
-    <script type="text/javascript" data-cfasync="false">
-        // Immediate JavaScript redirect as backup
-        window.location.replace('/hub/calculators/lps-to-kw/');
-    </script>
+    <title>LPS to KW Calculator - MyBoiler.com</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* Calculator page specific styles */
+        .calculator-page {
             min-height: 100vh;
-            margin: 0;
-            background: #f5f5f5;
-            color: #333;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
         }
-        .redirect-message {
+
+        .calculator-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .calculator-header {
             text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .calculator-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .calculator-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 60ch;
+        }
+
+        .calculator-card {
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
             padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
         }
-        .redirect-message h1 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+
+        .input-group {
+            margin-bottom: 2rem;
         }
-        .redirect-message p {
-            margin-bottom: 1rem;
+
+        .input-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.75rem;
         }
-        .redirect-message a {
-            color: #1863DC;
-            text-decoration: none;
+
+        .input-value {
+            font-size: 1.25rem;
+            color: var(--accent);
             font-weight: 600;
         }
-        .redirect-message a:hover {
-            text-decoration: underline;
+
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            font-weight: 500;
+            transition: border-color 0.2s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .input-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to right, var(--accent) 0%, var(--accent) 0%, var(--border) 0%);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .input-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(24, 99, 220, 0.3);
+            transition: transform 0.1s ease;
+            margin-top: -8px;
+        }
+
+        .input-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .input-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            background: var(--accent);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(24, 99, 220, 0.3);
+            transition: transform 0.1s ease;
+        }
+
+        .input-slider::-moz-range-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .input-slider::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: transparent;
+            border-radius: 4px;
+        }
+
+        .input-slider::-moz-range-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: transparent;
+            border-radius: 4px;
+        }
+
+        .result-section {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .result-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .result-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .result-unit {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .formula-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .formula-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .formula-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin: 0.5rem 0;
+            font-family: 'Courier New', monospace;
+            background: var(--bg);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+        }
+
+        .formula-legend {
+            font-size: 0.9375rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .formula-legend strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .calculator-disclaimer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 70ch;
+            margin: 1rem auto;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .calculator-disclaimer strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-container {
+                padding: clamp(1.5rem, 4vw, 2.5rem) clamp(16px, 4vw, 24px);
+            }
+
+            .calculator-header {
+                margin-bottom: 1.5rem;
+            }
+
+            .calculator-card {
+                padding: 1.25rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .input-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .result-section {
+                padding: 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            .result-value {
+                font-size: 2.25rem;
+            }
+
+            .formula-section {
+                margin-top: 1.5rem;
+                padding-top: 1.5rem;
+            }
+
+            .calculator-disclaimer {
+                margin: 0.75rem auto;
+                padding: 0.875rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calculator-container {
+                padding: 1.25rem 12px;
+            }
+
+            .calculator-header {
+                margin-bottom: 1.25rem;
+            }
+
+            .calculator-card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .input-group {
+                margin-bottom: 1.25rem;
+            }
+
+            .input-label {
+                margin-bottom: 0.5rem;
+            }
+
+            .result-section {
+                padding: 1.25rem;
+                margin-top: 1.25rem;
+            }
+
+            .result-label {
+                font-size: 0.8125rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .result-value {
+                font-size: 2rem;
+            }
+
+            .result-unit {
+                font-size: 1rem;
+                margin-top: 0.375rem;
+            }
+
+            .formula-section {
+                margin-top: 1.25rem;
+                padding-top: 1.25rem;
+            }
+
+            .formula-title {
+                font-size: 1rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .formula-text {
+                font-size: 0.875rem;
+                padding: 0.625rem 0.875rem;
+            }
+
+            .formula-legend {
+                font-size: 0.875rem;
+                line-height: 1.6;
+            }
+
+            .calculator-disclaimer {
+                margin: 0.5rem auto;
+                padding: 0.75rem;
+                font-size: 0.8125rem;
+            }
         }
     </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
 </head>
-<body>
-    <div class="redirect-message">
-        <h1>Page Moved</h1>
-        <p>The LPS to KW Calculator has moved to a new location.</p>
-        <p>If you are not redirected automatically, <a href="/hub/calculators/lps-to-kw/">click here</a>.</p>
+<body class="calculator-page">
+    <!-- Header with full navigation -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <!-- Calculator Content -->
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h1 class="calculator-headline">LPS to KW Calculator</h1>
+            <p class="calculator-connector">
+                Calculate kilowatts (KW) from flow rate in litres per second, temperature difference, and specific heat capacity.
+            </p>
+        </div>
+
+        <!-- Calculator Card -->
+        <div class="calculator-card">
+            <!-- Inputs -->
+            <div class="input-group">
+                <div class="input-label">
+                    <span>Flow Rate (F) Litres/Sec</span>
+                    <span class="input-value" id="flow-value">1.000</span>
+                </div>
+                <input type="number" id="flow-input" class="input-field" step="0.001" value="1" min="0">
+            </div>
+
+            <div class="input-group">
+                <div class="input-label">
+                    <span>Temperature Difference (Dt °C)</span>
+                    <span class="input-value" id="dt-value">20</span>
+                </div>
+                <input type="range" id="dt-slider" class="input-slider" min="0" max="100" step="1" value="20">
+            </div>
+
+            <div class="input-group">
+                <div class="input-label">
+                    <span>Specific Heat Capacity (SHC)</span>
+                    <span class="input-value" id="shc-value">4.186</span>
+                </div>
+                <input type="number" id="shc-input" class="input-field" step="0.001" value="4.186" min="0">
+            </div>
+
+            <!-- Result -->
+            <div class="result-section">
+                <div class="result-label">Power Output</div>
+                <div class="result-value" id="kw-result">83.72</div>
+                <div class="result-unit">Kilowatts (KW)</div>
+            </div>
+
+            <!-- Formula -->
+            <div class="formula-section">
+                <h3 class="formula-title">Formula</h3>
+                <div class="formula-text">KW = F × (Dt × SHC)</div>
+                <p class="formula-legend">
+                    <strong>KW</strong> = Kilowatts (power output)<br>
+                    <strong>F</strong> = Flow rate (litres per second)<br>
+                    <strong>Dt</strong> = Temperature difference (°C)<br>
+                    <strong>SHC</strong> = Specific heat capacity (kJ/kg·K)
+                </p>
+            </div>
+        </div>
+
+        <div class="calculator-disclaimer">
+            <strong>Important:</strong> This calculator provides theoretical power calculations. Always consult with a qualified heating engineer for your specific system requirements.
+        </div>
     </div>
+
+    <script type="text/javascript" data-cfasync="false">
+        document.addEventListener('DOMContentLoaded', function() {
+            /**
+             * LPS to KW Calculator
+             * Formula: KW = F * (Dt * SHC)
+             */
+
+            const flowInput = document.getElementById('flow-input');
+            const dtSlider = document.getElementById('dt-slider');
+            const shcInput = document.getElementById('shc-input');
+
+            const flowValue = document.getElementById('flow-value');
+            const dtValue = document.getElementById('dt-value');
+            const shcValue = document.getElementById('shc-value');
+
+            const kwResult = document.getElementById('kw-result');
+
+            function formatResult(value) {
+                if (value>= 1000) {
+                    return value.toFixed(2);
+                } else if (value>= 100) {
+                    return value.toFixed(3);
+                } else if (value>= 10) {
+                    return value.toFixed(3);
+                } else {
+                    return value.toFixed(4);
+                }
+            }
+
+            function calculate() {
+                const F = parseFloat(flowInput.value) || 0;
+                const Dt = parseFloat(dtSlider.value) || 0;
+                const SHC = parseFloat(shcInput.value) || 0;
+
+                flowValue.textContent = F.toFixed(3);
+                dtValue.textContent = Dt;
+                shcValue.textContent = SHC.toFixed(3);
+
+                if (F < 0 || Dt < 0 || SHC < 0) {
+                    kwResult.textContent = '—';
+                    return;
+                }
+
+                const KW = F * (Dt * SHC);
+                kwResult.textContent = formatResult(KW);
+
+                updateSliderFill(dtSlider);
+            }
+
+            function updateSliderFill(slider) {
+                const value = parseFloat(slider.value);
+                const min = parseFloat(slider.min);
+                const max = parseFloat(slider.max);
+                const percentage = ((value - min) / (max - min)) * 100;
+                slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percentage}%, var(--border) ${percentage}%)`;
+            }
+
+            flowInput.addEventListener('input', calculate);
+            dtSlider.addEventListener('input', calculate);
+            shcInput.addEventListener('input', calculate);
+
+            calculate();
+        });
+    </script>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>

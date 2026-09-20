@@ -181,10 +181,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function mobileDropdownHref(el) {
         const text = (el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-        if (text.indexOf('advice') === 0) return '/hub/advice/';
-        if (text.indexOf('toolbox') === 0) return '/hub/toolbox/';
-        if (text.indexOf('calculator') === 0) return '/hub/calculators/';
-        return '/hub/';
+        if (text.indexOf('advice') === 0) return '/advice/';
+        if (text.indexOf('toolbox') === 0) return '/toolbox/';
+        if (text.indexOf('calculator') === 0) return '/calculators/';
+        return '/';
     }
 
     document.querySelectorAll('.nav-dropdown-label').forEach((label) => {

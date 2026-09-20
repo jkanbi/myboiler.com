@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boiler Repairs - MyBoiler Hub</title>
+    <meta name="description" content="UK boiler repair guide: what to check, when it is a gas emergency, and how Emergency Hero arranges a same-day Gas Safe engineer.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p,
+        .article-content li {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .article-content p {
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+        }
+
+        .article-content .article-title + h2 {
+            margin-top: 0.25rem;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-callout {
+            background: var(--bg);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 0 0 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .article-callout p {
+            margin: 0;
+        }
+
+        .partner-card {
+            margin: 1.5rem 0 0;
+            padding: 1.5rem 1.5rem 1.35rem;
+            background: var(--bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+        }
+
+        .partner-card h2 {
+            margin-top: 0;
+        }
+
+        .partner-card__cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.25rem 0 0.75rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 999px;
+            background: var(--accent);
+            color: #fff !important;
+            text-decoration: none !important;
+            font-weight: 600;
+            font-size: 0.9375rem;
+        }
+
+        .partner-card__cta:hover,
+        .partner-card__cta:focus {
+            background: var(--accent-dark);
+            color: #fff !important;
+        }
+
+        .partner-card__note {
+            margin: 0;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .partner-disclaimer {
+            margin: 2rem 0 0;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .partner-disclaimer p {
+            margin: 0;
+            font-size: inherit;
+            line-height: inherit;
+            color: inherit;
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <article class="article-content">
+            <h1 class="article-title">Boiler Repairs</h1>
+            <p>A boiler repair is work to get heat or hot water back after a fault — not the same as an annual service. Any work on a gas appliance in the UK must be done by a <a href="https://www.gassaferegister.co.uk/find-an-engineer/">Gas Safe registered</a> engineer. If you can smell gas, hear a leak, or a carbon monoxide alarm is sounding, leave the property and call the National Gas Emergency Service on <a href="tel:0800111999">0800 111 999</a>.</p>
+
+            <h2>What you can check first</h2>
+            <p>These checks do not involve opening the gas appliance. If any of them restore heat, you may not need a call-out.</p>
+            <ul>
+                <li>Confirm the programmer or thermostat is calling for heat, and that TRVs on radiators are open.</li>
+                <li>Look at the boiler display. A lockout or fault code is useful for the engineer — see our <a href="/fault-codes/">fault codes A–Z</a>.</li>
+                <li>Check system pressure on a sealed system. Many combis want about 1–1.5 bar when cold. Filling loops are usually on the underside of the boiler; if you are not sure, leave it. Guide: <a href="/boiler-pressure/">boiler pressure</a>.</li>
+                <li>Use the manufacturer reset only as the instructions describe. Repeated resets without a repair can mask a real fault.</li>
+                <li>Frozen condensate pipes are common in cold weather. Thawing from the outside with warm water is a homeowner job; do not use boiling water on plastic pipe.</li>
+            </ul>
+
+            <h2>When to call an engineer</h2>
+            <p>Call a Gas Safe engineer if there is no heat or hot water after those checks, a persistent fault code, a leak from the boiler, ignition failure, or you are not confident topping up pressure. Same-day attendance matters most in winter, for vulnerable occupants, or where a leak is causing damage.</p>
+            <div class="article-callout">
+                <p>A repair is not a substitute for a service. A well installed, set-up, and serviced boiler fails less often. If the appliance is old, beyond economical repair, or still under manufacturer warranty, say so when you book — warranty work often has to go through the maker, not a third-party call-out.</p>
+            </div>
+
+            <div class="partner-card" hidden>
+                <h2>Emergency Hero</h2>
+                <p>Emergency Hero is a UK 24/7 call-out service based in Manchester. They match you to a local tradesperson from a national network for heating and gas, plumbing, electrics, and drainage — including no heat, no hot water, leaks, and blocked drains. They say 87% of emergency call-outs are attended within 90 minutes, and the rest the same day unless you agree otherwise.</p>
+                <p>A booking agent agrees the price before anyone is sent. That fee covers attendance and the first hour of labour; extra time or parts are quoted separately. Ask for a Gas Safe registration number for heating work, and keep the written quote they text you.</p>
+                <p><a class="partner-card__cta" href="https://www.emergencyhero.co.uk/emergency-gas-engineer" rel="sponsored noopener noreferrer" target="_blank">Book with Emergency Hero</a></p>
+                <p class="partner-card__note">Affiliate link — we may earn a commission if you book. You pay Emergency Hero their price; read their terms before you confirm.</p>
+            </div>
+            <div class="partner-disclaimer" hidden>
+                <p>Providers listed on this page have been chosen because they have strong brand reputations. MyBoiler.com is not responsible for, and accepts no liability for, their products, services, workmanship, or any loss or damage arising from your dealings with them. You contract with the provider under their own terms. <a href="/affilate-activity-disclosure/">Affiliate disclosure</a>.</p>
+            </div>
+        </article>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>

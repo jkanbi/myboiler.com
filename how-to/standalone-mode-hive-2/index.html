@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How To Setup Hive 2 Standalone Mode - MyBoiler Hub</title>
+    <meta name="description" content="Step-by-step guide to place your Hive 2 Thermostat and Receiver into standalone mode without using the Hive App and Hub.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+.article-header {
+            margin-bottom: 2rem;
+        }
+
+        .article-title {
+            font-size: clamp(1.85rem, 5vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 0.75rem;
+            line-height: 1.3;
+        }
+
+        .article-content p {
+            margin: 0 0 1rem;
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 0 0 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .article-content {
+                padding: 1.5rem;
+            }
+        }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <!-- Header -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <div class="article-container">
+<header class="article-header">
+            <h1 class="article-title">How To – Standalone Mode Hive 2</h1>
+        </header>
+
+        <article class="article-content">
+            <img src="/how-to/standalone-mode-hive-2/images/hive-single-channel-receiver.jpg" alt="Hive Single Channel Receiver" loading="lazy">
+
+            <img src="/how-to/standalone-mode-hive-2/images/hive.png" alt="Hive" loading="lazy">
+
+            <p>Following is the sequence to place the Hive Thermostat and Receiver into standalone mode should you decide that you do not wish to use the Hive App and the Hive Hub or in the event the homeowner is not available.</p>
+
+            <h3>Instructions</h3>
+            <ol>
+                <li>Go to your boiler and locate the following – (a) The boiler's isolation switch: This is just a switch near the boiler that allows you to shut down the boiler. (b) The Hive Receiver: This should be mounted on the wall close to the boiler.</li>
+                <li>Turn the boiler / heating systems isolation switch off for a few seconds then switch back on</li>
+                <li>Press AND HOLD the Central Heating button until the STATUS light flashes pink</li>
+                <li>Go to the hub and unplug it from the mains and from your broadband router (ignore this step if there is no hub)</li>
+                <li>Go to the thermostat and press AND HOLD the menu (middle/ 'button 7') and back (left / 'button 8') buttons. Keep pressing these until the countdown finishes and you see the word "searching" appear on the display.</li>
+            </ol>
+                    <h2>Video</h2>
+            <div class="article-video">
+                <iframe
+                    src="https://www.youtube.com/embed/IkrFVTKTtkw"
+                    title="YouTube video IkrFVTKTtkw"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+></iframe>
+            </div>
+</article>
+    </div>
+
+    
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Change Rates (ACH) - MyBoiler Hub</title>
+    <meta name="description" content="RoomCategory ACategory BCategory CNotes Lounge/sitting room1.5t1.0*0.5 Living room1.5t1.0*0.5 Breakfast room1.510.5 Dining room1.510.5 Kitchen2.0*1.5*0.5* Family/breakfast room2.0*1.5*0.5 Hall210.5…">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+.article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 1rem;
+        }
+
+        .article-content h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.75rem;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9375rem;
+        }
+
+        .article-content th,
+        .article-content td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+            vertical-align: top;
+        }
+
+        .article-content th {
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin: 0 0 0.4rem;
+            line-height: 1.6;
+        }
+
+        .article-content iframe {
+            max-width: 100%;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <!-- Header with full navigation -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+        <div class="article-container">
+        <header class="article-header">
+            <h1 class="article-title">Air Change Rates (ACH)</h1>
+            <p class="article-intro">
+                RoomCategory ACategory BCategory CNotes Lounge/sitting room1.5t1.0*0.5 Living room1.5t1.0*0.5 Breakfast room1.510.5 Dining room1.510.5 Kitchen2.0*1.5*0.5* Family/breakfast room2.0*1.5*0.5 Hall210.5…
+            </p>
+        </header>
+
+        <article class="article-content">
+<div class="mb-table-wrap">
+<table class="mb-table">
+<thead>
+<tr>
+<th>Room</th>
+<th>Category A</th>
+<th>Category B</th>
+<th>Category C</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lounge/sitting room</td>
+<td>1.5t</td>
+<td>1.0*</td>
+<td>0.5</td>
+<td></td>
+</tr>
+<tr>
+<td>Living room</td>
+<td>1.5t</td>
+<td>1.0*</td>
+<td>0.5</td>
+<td></td>
+</tr>
+<tr>
+<td>Breakfast room</td>
+<td>1.5</td>
+<td>1</td>
+<td>0.5</td>
+<td></td>
+</tr>
+<tr>
+<td>Dining room</td>
+<td>1.5</td>
+<td>1</td>
+<td>0.5</td>
+<td></td>
+</tr>
+<tr>
+<td>Kitchen</td>
+<td>2.0*</td>
+<td>1.5*</td>
+<td>0.5*</td>
+<td></td>
+</tr>
+<tr>
+<td>Family/breakfast room</td>
+<td>2.0*</td>
+<td>1.5*</td>
+<td>0.5</td>
+<td></td>
+</tr>
+<tr>
+<td>Hall</td>
+<td>2</td>
+<td>1</td>
+<td>0.5</td>
+<td></td>
+</tr>
+<tr>
+<td>Cloakroom/WC</td>
+<td>2.0*</td>
+<td>1.5*</td>
+<td>1.5*</td>
+<td></td>
+</tr>
+<tr>
+<td>Toilet</td>
+<td>3.0*</td>
+<td>1.5*</td>
+<td>1.5*</td>
+<td></td>
+</tr>
+<tr>
+<td>Utility room</td>
+<td>3.0*</td>
+<td>2.0*</td>
+<td>0.5*</td>
+<td></td>
+</tr>
+<tr>
+<td>Study</td>
+<td>1.5</td>
+<td>1.5</td>
+<td>0.5</td>
+<td></td>
+</tr>
+<tr>
+<td>Games room</td>
+<td>1.5</td>
+<td>1</td>
+<td>0.5</td>
+<td></td>
+</tr>
+<tr>
+<td>Bedroom</td>
+<td>1</td>
+<td>1</td>
+<td>0.5</td>
+<td></td>
+</tr>
+<tr>
+<td>Bedsitting room</td>
+<td>1.5</td>
+<td>1</td>
+<td>0.5</td>
+<td></td>
+</tr>
+<tr>
+<td>Bedroom, including en suite bathroom</td>
+<td>2</td>
+<td>1.5</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>Internal room or corridor</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>Bedroom/study</td>
+<td>1.5</td>
+<td>1.5</td>
+<td>0.5</td>
+<td></td>
+</tr>
+<tr>
+<td>Landing</td>
+<td>2</td>
+<td>1</td>
+<td>0.5</td>
+<td></td>
+</tr>
+<tr>
+<td>Bathroom</td>
+<td>3.0*</td>
+<td>1.5*</td>
+<td>0.5*</td>
+<td></td>
+</tr>
+<tr>
+<td>Shower room</td>
+<td>3.0*</td>
+<td>1.5*</td>
+<td>0.5*</td>
+<td></td>
+</tr>
+<tr>
+<td>Dressing room</td>
+<td>1.5</td>
+<td>1</td>
+<td>0.5</td>
+<td></td>
+</tr>
+<tr>
+<td>Store room</td>
+<td>1</td>
+<td>0.5</td>
+<td>0.5</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="apanel">
+<p>Note:<br>
+Category A: Air change rates for older existing buildings (pre-2000). Those with several chimneys and/or subject to preservation orders may require greater infiltration allowance than shown above.<br>
+Category B: Air change rates for modern buildings (2000 or later) with double glazing and regulatory minimum insulation.<br>
+Category C: New (or existing) buildings constructed after 2006 and complying with all current building regulations.</p>
+<p>*Where mechanical extract ventilation is to be installed in a room and the extract volume exceeds the natural infiltration, it is advisable to make due allowance for the air extracted from any connecting room or corridor.</p>
+<p>*Where a room contains an open fire or chimney, due ventilation allowance must be made. See section 3.5.4.4.</p>
+</div>
+<p>Additional Research</p>
+<ul>
+<li>ACH 0.5 for everything</li>
+<li>BSEN 12831 , Estonian Government Rate</li>
+<li>0.6-0.75 for all properties</li>
+<li>Blower Door Test 0.3 – 0.4 (average on evidence) – 0.6 max</li>
+<li>Single Glazing 0.5</li>
+</ul>
+        </article>
+    </div>
+
+    
+
+    
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
