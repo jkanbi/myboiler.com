@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intergas A Plan - MyBoiler Hub</title>
+    <meta name="description" content="Intergas A Plan: PIN 5 training variant that uses automation to switch an Intergas boiler between combi and system modes, PDHW, OpenTherm, weather compensation, and solar prefeed.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 1rem;
+        }
+
+        .article-content a { color: var(--accent); }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-content img.article-photo-portrait {
+            max-height: min(80vh, 820px);
+            width: auto;
+            max-width: 100%;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin: 0 0 0.4rem;
+            line-height: 1.6;
+        }
+
+        .article-meta {
+            margin-top: 2rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-size: 0.9375rem;
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <header class="article-header">
+            <h1 class="article-title">Intergas A Plan</h1>
+            <p class="article-intro">
+                A PIN 5 training variant that uses automation to switch an Intergas boiler between combi and system modes, PDHW, OpenTherm, weather compensation, and solar prefeed.
+            </p>
+        </header>
+
+        <article class="article-content">
+            <img
+                class="article-photo-portrait"
+                src="/intergas-a-plan/images/IMG_9706.jpg"
+                alt="Intergas combi in a cupboard with home-automation relays, Wi-Fi valves, and copper pipework below the case"
+                width="1512"
+                height="2016"
+                loading="lazy"
+            >
+
+            <h2>What is the ‘A Plan’ and what purpose will it serve?</h2>
+            <p>The ‘A Plan’ is a variant derived from Intergas PIN 5 training that takes existing plans and applies automation triggers that allow to repurpose a boiler remotely for multiple uses. There are a few modes of operation to choose between to suit your home and lifestyle:</p>
+            <ul>
+                <li>Combi Boiler or System Boiler. (With or without <a href="/priority-domestic-hot-water/">PDHW</a>)</li>
+                <li><a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm</a> and Weather Compensation</li>
+                <li><a href="/solar-thermal/">Solar hot water</a> prefeed to Combi or direct to taps without using an automatic diversion / blending valve.</li>
+            </ul>
+            <p>These modes allow you to achieve a point on the spectrum between Maximum Efficiency and Maximum Performance.</p>
+
+            <h2>Combi Boiler or System Boiler with PDHW External Hot water selection</h2>
+            <p>Imagine if a house only has 2 occupants, you may only want to use Combi mode with pre-fed water from the HW cylinder so you are maximising your solar gain and topping up what is needed. In this mode of maximum efficiency the boiler pump is not used therefore saves on some electrical power and also allows condensing on Hot Water.</p>
+            <p>Now if your home has higher number of occupants, permanently or for short periods, and you are serving more than 1 bathroom at a time. You may want to switch to Maximum Performance mode. In this mode PDHW is used to rapidly heat up the cylinder so there is sufficient hot water to serve a few outlets at once. So in this mode you want to bypass the Combi boiler and send hot water to the taps directly without incurring resistance as you would going through the 10mm reduced bore pipework within the Intergas DHW circuit.</p>
+
+            <h2>Weather Compensation and OpenTherm Selection</h2>
+            <p>Additionally if your occupancy of the home is very random, ie you are not at home regularly, you may want to use OpenTherm rather than Weather Compensation. This allows boosting the home by setting the thermostat high for short periods. If however you are at home most of the time then weather compensation will lead to more stable home temperatures.</p>
+
+            <h2>Summary and possibilities</h2>
+            <p>The “A Plan” simply allows you to reconfigure the sensor circuits and plumbing pathways remotely using the Intergas Service App and your Home Automation app that is able to trigger the various relays and wifi valves. Also with a few home automation routines and programming, you can automate testing of your system. A bonus benefit is that you can also shut off hot water remotely if needed. Also all the components we have used allow the ability to manually override them. We also welcome any interested engineers to improve this plan or add suggestions for simplification or even question any part of this plan.</p>
+
+            <h2>Related</h2>
+            <ul>
+                <li><a href="/priority-domestic-hot-water/">Priority Domestic Hot Water (PDHW)</a></li>
+                <li><a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm and modulating boilers</a></li>
+                <li><a href="/solar-thermal/">Solar thermal</a></li>
+                <li><a href="/s-plan/">S Plan and S Plan Plus</a></li>
+                <li><a href="/how-to/service-an-intergas-boiler/">Intergas boiler service — how to</a></li>
+                <li><a href="/intergas/">Intergas</a></li>
+            </ul>
+
+            <p class="article-meta"><strong>Credits:</strong> To follow<br>
+            <strong>Author:</strong> Jayesh Kanbi</p>
+        </article>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>

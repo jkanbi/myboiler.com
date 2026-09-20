@@ -78,6 +78,7 @@
         '<a href="/heating-expansion-vessel-calculator/">Heating expansion vessel calculator</a>' +
         '<a href="/inhibitor-dosing/">Inhibitor Dosing</a>' +
         '<a href="/boiler-maximum-and-minimum-output-mode-videos/">Max/Min Output Mode Videos</a>' +
+        '<a href="/intergas-a-plan/">Intergas A Plan</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Heating Design</h4>' +
