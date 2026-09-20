@@ -251,7 +251,7 @@ const worcester = [
         slug: "worcester-bosch-fault-code-fd",
         code: "Fd",
         title: "Worcester Bosch Fd Fault Code",
-        meaning: "Fd, the reset button, and the fault indicator LED are flashing. The reset button was pressed by mistake. Recovered from the WordPress page that 404s on the public hub URL.",
+        meaning: "Fd, the reset button, and the fault indicator LED are flashing. The reset button was pressed by mistake.",
         rows: [
             { step: "1", check: "Reset button flashing?", yes: "Press reset for 3 seconds and release. The appliance restarts. If Fd remains, go to step 2.", no: "Go to step 2." },
             { step: "2", check: "PCB damaged", yes: "Note service settings, switch off, isolate power, replace the PCB, restore settings.", no: "" },
@@ -340,7 +340,7 @@ function main() {
             canonical: "/fault-codes/worcester-bosch-siphon-fill-code/",
             crumb: worcesterCrumb,
             h1: "Worcester Bosch Siphon Fill Code",
-            intro: "Display alternates between a temperature (for example 40) and the -¦¦- or XX symbol. Recovered from the WordPress slug /fault-codes/worcester-bosch-%c2%a6%c2%a6-code/.",
+            intro: "Display alternates between a temperature (for example 40) and the -¦¦- or XX symbol.",
             body: `<h3>Meaning</h3>
 <p>Siphon fill mode. The boiler runs at a low burn for about 15 minutes to fill the condensate trap. This happens after the boiler has been turned off, if it has not been used for a day or so, or if the control knob has been turned down and back up.</p>
 <p>This is a normal safety feature. After about 15 minutes the boiler should return to normal. If it continues for more than half an hour, call a heating engineer or Worcester on 0330 123 9559.</p>`,
