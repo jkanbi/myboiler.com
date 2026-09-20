@@ -15,7 +15,7 @@
         '<h4>Boilers</h4>' +
         '<a href="/hub/money-and-energy-saving/">Money and Energy Saving</a>' +
         '<a href="/hub/boiler-pressure/">Boiler Pressure</a>' +
-        '<a href="/hub/boiler-service/">Boiler Service</a>' +
+        '<a href="https://boilerservice.com">Boiler Service</a>' +
         '<a href="/hub/boiler-types/">Boiler Types</a>' +
         '<a href="/hub/what-size-boiler/">What Size Boiler?</a>' +
         '<a href="/hub/what-is-a-gc-number/">What is a GC Number?</a>' +
@@ -45,7 +45,6 @@
         '<a href="/hub/solar-thermal/">Solar Thermal Servicing</a>' +
         '<a href="/hub/s-plan/">S Plan Heating Systems</a>' +
         '<a href="/hub/priority-domestic-hot-water/">Priority Domestic Hot Water</a>' +
-        '<a href="/hub/radiators/">Radiators</a>' +
         '<a href="/quote/">Get a Quote</a>' +
         '</div>' +
         '</div>' +
