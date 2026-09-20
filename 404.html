@@ -53,30 +53,32 @@
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
     <script type="text/javascript" data-cfasync="false">
-        // GitHub Pages 404 redirect script
+        // GitHub Pages 404: strip legacy /hub prefix; otherwise show not-found.
         (function() {
             'use strict';
 
-            // Define static asset folders that should be served from myboiler.com
-            const STATIC_FOLDERS = ['css', 'js', 'img', 'pages', 'hub', 'calculators', 'chat', 'decide', 'quote', 'heat-pump-checker'];
-
-            // Define root files that should be served from myboiler.com
+            // Served as-is from the site root. Content pages also live at root
+            // paths. Apps keep /chat/, /quote/, /decide/, /heat-pump-checker/.
+            const STATIC_FOLDERS = [
+                'css', 'js', 'img', 'pages', 'assets',
+                'calculators', 'chat', 'decide', 'quote', 'heat-pump-checker'
+            ];
             const ROOT_FILES = ['favicon.ico', 'CNAME', 'robots.txt', '404.html', ''];
 
-            // Get the current path
             const path = window.location.pathname;
-            const pathSegments = path.split('/').filter(segment => segment);
-
-            // Check if this is a static asset or root file
+            const pathSegments = path.split('/').filter(function(segment) { return segment; });
             const isStaticAsset = pathSegments.length > 0 && STATIC_FOLDERS.includes(pathSegments[0]);
             const isRootFile = ROOT_FILES.includes(pathSegments[0] || '') || path === '/';
 
-            // Legacy WP-style paths (no /hub prefix) stay on this site under /hub/...
-            if (!isStaticAsset && !isRootFile) {
-                const hubPath = path === '/hub' || path.indexOf('/hub/') === 0 ? path : '/hub' + path;
-                const redirectUrl = window.location.origin + hubPath + window.location.search;
-                console.log(`404 redirecting to: ${redirectUrl}`);
-                window.location.href = redirectUrl;
+            // Legacy /hub/... URLs redirect to the same path without /hub.
+            // Do not prefix unknown paths with /hub.
+            if (path === '/hub' || path.indexOf('/hub/') === 0) {
+                const stripped = (path === '/hub' || path === '/hub/') ? '/' : path.replace(/^\/hub/, '');
+                window.location.replace(window.location.origin + stripped + window.location.search);
+                return;
+            }
+
+            if (isStaticAsset || isRootFile) {
                 return;
             }
 
@@ -110,14 +112,14 @@
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
             </button>
-            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/hub/advice/">Advice</a></li><li class="nav-item"><a href="/hub/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/hub/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
         </div>
     </header>
 
     <div id="page-content" class="error-page">
         <h1>404</h1>
         <p>The requested page could not be found.</p>
-        <p class="error-links"><a href="/">Home</a><a href="/hub/">Hub</a></p>
+        <p class="error-links"><a href="/">Home</a><a href="/toolbox/">Toolbox</a></p>
     </div>
 
     <div id="site-footer"></div>

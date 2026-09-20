@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worcester Bosch and OpenTherm - MyBoiler Hub</title>
+    <meta name="description" content="How to use OpenTherm with Worcester Bosch boilers using the Nefit EMS-OT converter adaptor. Complete guide to OpenTherm compatibility with Worcester Bosch EMS protocol.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+.article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 1rem;
+        }
+
+        .article-content h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.75rem;
+        }
+
+        .article-content ul {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .product-specs {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .product-specs p {
+            margin: 0.25rem 0;
+            font-size: 0.9375rem;
+        }
+
+        @media (max-width: 768px) {
+            .article-content {
+                padding: 1.5rem;
+            }
+        }
+    
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .article-resource {
+            display: block;
+            margin: 0.75rem 0 1.25rem;
+        }
+
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <!-- Header with full navigation -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <div class="article-container">
+<header class="article-header">
+            <h1 class="article-title">Worcester Bosch and OpenTherm</h1>
+            <p class="article-intro">
+                Worcester Bosch boilers can work with OpenTherm using a specialized adaptor. This guide explains how to enable OpenTherm control 
+                for Worcester Bosch boilers that use the EMS protocol system.
+            </p>
+        </header>
+
+        <article class="article-content">
+            <p>
+                Worcester Bosch OpenTherm has eluded us here at MyBoiler.com for a while. New information has surfaced showing that it is indeed possible 
+                to use OpenTherm with a range of Worcester Bosch boilers using an adaptor. The boilers that operate using the modern EMS protocol system 
+                can be used with this adaptor to allow OpenTherm Thermostats to control Worcester Bosch boilers and other EMS protocol based boilers, 
+                although in the UK only Worcester Bosch is known to use some form of EMS.
+            </p>
+
+            <p>
+                If you have arrived directly at this page, you are able to see our main page on 
+                <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm Capable Boilers and Controls</a>.
+            </p>
+
+            <h2>Nefit EMS-OT OpenTherm Converter</h2>
+            
+            <p>
+                <strong>Description:</strong> This adaptor will take an OpenTherm capable thermostat and translate to the proprietery Worcester Bosch bus interface. 
+                It translates from OpenTherm to EMS.
+            </p>
+
+            <div class="product-specs">
+                <p><strong>Manufacturer part no:</strong> 7 746 901 847</p>
+                <p><strong>EAN:</strong> 4051516774516</p>
+            </div>
+
+            <p><strong>Where to buy:</strong></p>
+            <p><a href="https://wifithermostaten.nl/nefit-opentherm-converter.html" target="_blank" rel="noopener">https://wifithermostaten.nl/nefit-opentherm-converter.html</a></p>
+
+            <h3>Nefit Moduline Easy Connect Adapter for OpenTherm Devices</h3>
+            
+            <p>
+                <strong>Description:</strong> This adaptor allows the Worcester Wave or Nefit equivalent to connect to an OpenTherm interface. 
+                CV-Ketel is dutch for Boiler. This adaptor has now been superceded by the Nefit EasyControl adapter shown below.
+            </p>
+
+            <div class="product-specs">
+                <p><strong>Manufacturer part no:</strong> 7 746 901 787</p>
+            </div>
+
+            <h3>Bosch / Nefit EasyControl Adapter for On-Off, OpenTherm and iRT</h3>
+            
+            <p>
+                <strong>Description:</strong> This adaptor allows a Nefit or Worcester Wave thermostat to communicate to other boilers with On-Off, 
+                OpenTherm and iRT interfaces. Please note this adaptor only takes an EMS signal and outputs to On-Off, OT (OpenTherm) and iRT, 
+                not the other way round. It is not capable of allowing an OpenTherm thermostat to work with an EMS based boiler such Worcester Bosch.
+            </p>
+
+            <div class="product-specs">
+                <p><strong>Manufacturer part no:</strong> 7 736 701 346 EU, 7 736 701 560 UK</p>
+                <p><strong>EAN:</strong> 4057749327925</p>
+            </div>
+
+            <h2>Functions and Features According to Opentherm.eu</h2>
+
+            <ul>
+                <li><strong>ID0:HB0:</strong> Master status: CH enable</li>
+                <li><strong>ID0:HB1:</strong> Master status: DHW enable</li>
+                <li><strong>ID0:LB0:</strong> Slave Status: Fault indication</li>
+                <li><strong>ID0:LB1:</strong> Slave Status: CH mode</li>
+                <li><strong>ID0:LB2:</strong> Slave Status: DHW mode</li>
+                <li><strong>ID0:LB3:</strong> Slave Status: Flame status</li>
+                <li><strong>ID0:LB6:</strong> Slave Status: Diagnostic/service indication</li>
+                <li><strong>ID1:</strong> Control Setpoint i.e. CH water temperature Setpoint (°C)</li>
+                <li><strong>ID3:HB0:</strong> Slave configuration: DHW present</li>
+                <li><strong>ID3:HB1:</strong> Slave configuration: Control type</li>
+                <li><strong>ID3:HB3:</strong> Slave configuration: DHW configuration</li>
+                <li><strong>ID3:LB:</strong> Slave MemberID Code</li>
+                <li><strong>ID5:HB0:</strong> Service request</li>
+                <li><strong>ID5:HB2:</strong> Low water pressure</li>
+                <li><strong>ID5:HB3:</strong> Gas/flame fault</li>
+                <li><strong>ID5:HB5:</strong> Water over-temperature</li>
+                <li><strong>ID15:</strong> Maximum boiler capacity (kW) / Minimum boiler modulation level(%)</li>
+                <li><strong>ID17:</strong> Relative Modulation Level (%)</li>
+                <li><strong>ID18:</strong> Water pressure in CH circuit (bar)</li>
+                <li><strong>ID19:</strong> Water flow rate in DHW circuit. (litres/minute)</li>
+                <li><strong>ID25:</strong> Boiler flow water temperature (°C)</li>
+                <li><strong>ID26:</strong> DHW temperature (°C)</li>
+                <li><strong>ID27:</strong> Outside temperature (°C)</li>
+                <li><strong>ID28:</strong> Return water temperature (°C)</li>
+                <li><strong>ID35:</strong> Boiler fan speed Setpoint and actual value</li>
+                <li><strong>ID36:</strong> Electrical current through burner flame [µA]</li>
+                <li><strong>ID48:</strong> DHW Setpoint upper & lower bounds for adjustment (°C)</li>
+                <li><strong>ID49:</strong> Max CH water Setpoint upper & lower bounds for adjustment (°C)</li>
+                <li><strong>ID56:</strong> DHW Setpoint (°C) (Remote parameter 1)</li>
+                <li><strong>ID57:</strong> Max CH water Setpoint (°C) (Remote parameters 2)</li>
+                <li><strong>ID115:</strong> OEM-specific diagnostic/service code</li>
+                <li><strong>ID116:</strong> Number of succesful starts burner</li>
+                <li><strong>ID119:</strong> Number of starts burner during DHW mode</li>
+                <li><strong>ID120:</strong> Number of hours that burner is in operation (i.e. flame on)</li>
+                <li><strong>ID123:</strong> Number of hours that burner is in operation during DHW mode</li>
+            </ul>
+                    <img src="/opentherm/worcester-bosch-opentherm/images/2030201_nefit_opentherm_converter.png" alt="2030201 Nefit Opentherm Converter" loading="lazy">
+
+            <img src="/opentherm/worcester-bosch-opentherm/images/slide1-1.jpg" alt="Slide1 1" loading="lazy">
+
+            <img src="/opentherm/worcester-bosch-opentherm/images/1_m_nefit_11853025_jpg_zoom-1.jpg" alt="1 M Nefit 11853025 Jpg Zoom 1" loading="lazy">
+
+            <img src="/opentherm/worcester-bosch-opentherm/images/nefit-easycontrol-adapter-voor-aan-uit-opentherm-e.jpg" alt="Nefit Easycontrol Adapter Voor Aan Uit Opentherm E" loading="lazy">
+
+            <img src="/opentherm/worcester-bosch-opentherm/images/slide2.png" alt="Slide2" loading="lazy">
+
+            <p class="article-resource"><a href="/opentherm/worcester-bosch-opentherm/resources/easycontrol_adapter_manual_new.pdf" target="_blank" rel="noopener">Download: easycontrol adapter manual new</a></p>
+        </article>
+    </div>
+
+    
+
+    
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>

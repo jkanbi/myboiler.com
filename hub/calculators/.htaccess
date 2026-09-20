@@ -1,2 +1,0 @@
-# Redirect boiler-consumption-calculator to boiler-usage-cost
-RedirectMatch 301 ^/hub/calculators/boiler-consumption-calculator/?$ /hub/calculators/boiler-usage-cost/

@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Pair/Re-pair Hive 2 Heating Devices - MyBoiler Hub</title>
+    <meta name="description" content="Step-by-step guide to pairing and re-pairing Hive 2 heating devices. Learn what the receiver lights and hub lights mean during the pairing process.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+.article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 1rem;
+        }
+
+        .article-content h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.75rem;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 1rem 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .article-content table th,
+        .article-content table td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+
+        .article-content table th {
+            background: var(--bg-subtle);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content table tr:nth-child(even) {
+            background: var(--bg-subtle);
+        }
+
+        .article-content img {
+            display: block;
+            max-width: min(100%, 420px);
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .hive-receiver-pair {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.25rem 1.75rem;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .hive-receiver-pair figure {
+            margin: 0;
+            text-align: center;
+            max-width: 215px;
+        }
+
+        .hive-receiver-pair img {
+            margin: 0 auto 0.5rem;
+            max-width: 100%;
+            width: 215px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .hive-receiver-pair figcaption {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.35;
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+
+        .hive-light {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+        }
+
+        .hive-light__item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .hive-light__label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            line-height: 1.1;
+            white-space: nowrap;
+        }
+
+        .hive-light__led {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            box-shadow: inset 0 -1px 2px rgba(0, 0, 0, 0.25), 0 0 10px currentColor;
+            background: currentColor;
+        }
+
+        .hive-light__led--green { color: #22c55e; }
+        .hive-light__led--amber { color: #f59e0b; }
+        .hive-light__led--red { color: #ef4444; }
+        .hive-light__led--blue { color: #3b82f6; }
+        .hive-light__led--pink { color: #ec4899; }
+        .hive-light__led--white {
+            color: #f3f4f6;
+            box-shadow: inset 0 -1px 2px rgba(0, 0, 0, 0.15), 0 0 8px rgba(255, 255, 255, 0.8);
+            border: 1px solid #d1d5db;
+        }
+        .hive-light__led--off {
+            color: transparent;
+            background: #d1d5db;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+            border: 1px solid #9ca3af;
+        }
+
+        .hive-light__led--flash {
+            animation: hive-light-flash 1s ease-in-out infinite;
+        }
+
+        .hive-light__led--flash-fast {
+            animation: hive-light-flash 0.45s ease-in-out infinite;
+        }
+
+        .hive-light__led--flash-double {
+            animation: hive-light-flash-double 1.2s ease-in-out infinite;
+        }
+
+        @keyframes hive-light-flash {
+            0%, 100% { opacity: 1; filter: brightness(1.15); }
+            50% { opacity: 0.2; filter: brightness(0.6); }
+        }
+
+        @keyframes hive-light-flash-double {
+            0%, 15% { opacity: 1; filter: brightness(1.15); }
+            20%, 35% { opacity: 0.15; filter: brightness(0.5); }
+            40%, 55% { opacity: 1; filter: brightness(1.15); }
+            60%, 100% { opacity: 0.15; filter: brightness(0.5); }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <!-- Header with full navigation -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <div class="article-container">
+<header class="article-header">
+            <h1 class="article-title">How to Pair/Re-pair Hive 2 Heating Devices</h1>
+            <p class="article-intro">
+                Step-by-step guide to pairing and re-pairing your Hive 2 heating devices. Understand what the receiver and hub lights mean during the pairing process.
+            </p>
+        </header>
+
+        <article class="article-content">
+            <h2>Before You Start</h2>
+            <p>Pairing your Hive 2 devices connects the receiver to your Hive Hub, allowing you to control your heating remotely. You may need to pair or re-pair your devices if you've replaced a component, reset your system, or if your devices have lost connection.</p>
+            <p>Prefer standalone mode without the app? See <a href="/how-to/standalone-mode-hive-2/">Hive standalone mode</a>.</p>
+
+            <div class="article-video">
+                <iframe
+                    src="https://www.youtube.com/embed/VgFfjRUQ24o"
+                    title="How to pair Hive 2 heating devices"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+></iframe>
+            </div>
+
+            <h2>What You'll Need</h2>
+            <ul>
+                <li>Hive Hub (plugged in and connected to your router)</li>
+                <li>Hive Receiver (installed and powered)</li>
+                <li>Access to the Hive app on your smartphone</li>
+            </ul>
+
+            <div class="hive-receiver-pair">
+                <figure>
+                    <img src="/how-to/pair-up-the-devices-hive-2/images/hive-single-channel-receiver.png" alt="Hive single channel receiver" width="215" height="215" loading="lazy">
+                    <figcaption>Single channel — Status + Central heating (combi)</figcaption>
+                </figure>
+                <figure>
+                    <img src="/how-to/pair-up-the-devices-hive-2/images/hive-dual-channel-receiver.png" alt="Hive dual channel receiver" width="215" height="215" loading="lazy">
+                    <figcaption>Dual channel — adds Hot water (conventional)</figcaption>
+                </figure>
+            </div>
+
+            <h2>Pairing Process</h2>
+
+            <h3>Step 1: Put the Receiver into Pairing Mode</h3>
+            <ol>
+                <li>Remove one battery from the thermostat (take thermostat and battery with you)</li>
+                <li>Turn off the boiler/heating isolation switch that powers the Hive Receiver, wait a few seconds, then switch it back on</li>
+                <li>Press and hold the <strong>Central Heating</strong> button on the Receiver until the Status light flashes <strong>pink / white</strong></li>
+                <li>Release, then press and hold again until the Status light <strong>double-flashes amber</strong> (hub/app pairing mode — not stand-alone)</li>
+            </ol>
+
+            <img src="/how-to/pair-up-the-devices-hive-2/images/hive.png" alt="Hive 2 thermostat" width="361" height="340" loading="lazy">
+
+            <h3>Step 2: Pair via the Hive App</h3>
+            <ol>
+                <li>Open the Hive app on your smartphone</li>
+                <li>Go to Menu → Install & Manage Devices → Install a Device</li>
+                <li>Select "Heating" then follow the on-screen instructions</li>
+                <li>The app will search for your receiver and complete the pairing process</li>
+            </ol>
+
+            <h3>Step 3: Verify Connection</h3>
+            <p>Once paired successfully, both the receiver and hub lights should show solid green. You should now be able to control your heating through the Hive app.</p>
+
+            <h2>Hive Receiver Light Indicators</h2>
+            <p>The receiver has lights on its front panel to show what it’s doing. A <strong>single channel</strong> receiver has two lights — <strong>Status</strong> and <strong>Central heating</strong>. A <strong>dual channel</strong> receiver has an additional <strong>Hot water</strong> light.</p>
+
+            <h3>Central heating &amp; Hot water lights</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Light</th>
+                        <th>Indicator</th>
+                        <th>Pattern</th>
+                        <th>Colour</th>
+                        <th>Meaning</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Central heating<br><small>Single &amp; dual channel</small></td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--green" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Heating</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Solid</td>
+                        <td>Green</td>
+                        <td>Heating is on.</td>
+                    </tr>
+                    <tr>
+                        <td>Central heating<br><small>Single &amp; dual channel</small></td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--green hive-light__led--flash" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Heating</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Flashing</td>
+                        <td>Green</td>
+                        <td>Commands queued. The receiver has received 2 or more commands to switch the boiler on or off within 1 minute, or Heating Boost mode with target temperature lower than room temperature. Once switched, it will not change state again for 1 minute as a protective measure.</td>
+                    </tr>
+                    <tr>
+                        <td>Hot water<br><small>Dual channel only</small></td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--off" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Heating</span>
+                                </div>
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--green" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Hot water</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Solid</td>
+                        <td>Green</td>
+                        <td>Hot water is on. This light is only present on dual channel receivers.</td>
+                    </tr>
+                    <tr>
+                        <td>Hot water<br><small>Dual channel only</small></td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--off" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Heating</span>
+                                </div>
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--green hive-light__led--flash" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Hot water</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Flashing</td>
+                        <td>Green</td>
+                        <td>Commands queued. The receiver has received 2 or more commands to switch the boiler on or off within 1 minute. Same 1-minute protection as Central heating.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Status light</h3>
+            <p>Both single and dual channel receivers have a Status light:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Light</th>
+                        <th>Indicator</th>
+                        <th>Pattern</th>
+                        <th>Colour</th>
+                        <th>Meaning</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--green" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Status</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Solid</td>
+                        <td>Green</td>
+                        <td>Normal operation. The receiver is connected to the rest of the Hive system and operating normally.</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--blue" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Status</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Solid</td>
+                        <td>Blue</td>
+                        <td>The system is in gravity-fed mode and is connected to the rest of the Hive system.</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--amber hive-light__led--flash-double" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Status</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Double flashing</td>
+                        <td>Amber</td>
+                        <td>Installation / hub pairing. The receiver is searching for your Hive Hub (app-connected mode). Hold the Central Heating button until you reach this state — not pink/white. Searches for about 40 minutes at a time.</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--amber hive-light__led--flash" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Status</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Flashing</td>
+                        <td>Amber</td>
+                        <td>The receiver has found the hub and is ready to pair with the thermostat (single amber flash after double-flash pairing).</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--pink hive-light__led--flash" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Status</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Flashing</td>
+                        <td>Pink / White</td>
+                        <td>Stand-alone mode. The receiver is seeking a thermostat only (no app/hub). If you want hub/app pairing instead, release and hold the Central Heating button again until it double-flashes amber. Searches for about 40 minutes, then may go solid white.</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--amber" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Status</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Solid</td>
+                        <td>Amber, White or Pink</td>
+                        <td>Installation paused — the receiver has stopped searching. Turn the receiver off and on to restart (flashing amber for hub mode, or pink/white for stand-alone).</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--red" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Status</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Solid</td>
+                        <td>Red</td>
+                        <td>Error. The receiver has lost its wireless connection to the thermostat. Heating and hot water default to off, but can be switched on manually using the receiver buttons (hot water only on dual channel).</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Hive Hub Light Indicators</h2>
+            <p>The Hive Hub has a single status light. Here’s what the colours and patterns mean:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Light</th>
+                        <th>Indicator</th>
+                        <th>Pattern</th>
+                        <th>Colour</th>
+                        <th>Meaning</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hub</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--green hive-light__led--flash" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Hub</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Flashing</td>
+                        <td>Green</td>
+                        <td>Installation and start-up. The hub is attempting to connect to the Hive servers and update itself. Do not disconnect. If flashing continues after 15 minutes, contact Hive Technical Support.</td>
+                    </tr>
+                    <tr>
+                        <td>Hub</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--amber hive-light__led--flash" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Hub</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Flashing</td>
+                        <td>Amber</td>
+                        <td>Installation. The hub is actively seeking to connect to the receiver and thermostat. It searches for up to 2 hours, then pauses to solid amber.</td>
+                    </tr>
+                    <tr>
+                        <td>Hub</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--amber" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Hub</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Solid</td>
+                        <td>Amber</td>
+                        <td>Installation. The hub has paused its search for other devices. Turn the hub off then on to restart searching.</td>
+                    </tr>
+                    <tr>
+                        <td>Hub</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--green" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Hub</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Solid</td>
+                        <td>Green</td>
+                        <td>Normal operation. The hub is connected — hub, receiver and thermostat are installed and synchronised.</td>
+                    </tr>
+                    <tr>
+                        <td>Hub</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--red hive-light__led--flash" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Hub</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Solid or Flashing</td>
+                        <td>Red</td>
+                        <td>Error. The hub has failed to connect to the Hive servers. Check power and broadband. If the problem persists, call Technical Support.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Troubleshooting Pairing Issues</h2>
+
+            <h3>Devices Won't Pair</h3>
+            <ul>
+                <li><strong>Check distances:</strong> Ensure the Hub and Receiver are within 30 metres of each other with minimal obstructions</li>
+                <li><strong>Remove interference:</strong> Keep devices away from other wireless equipment, microwaves, or thick walls</li>
+                <li><strong>Restart both devices:</strong> Power cycle both the Hub and Receiver</li>
+                <li><strong>Check app version:</strong> Ensure you're using the latest version of the Hive app</li>
+            </ul>
+
+            <h3>Connection Keeps Dropping</h3>
+            <ul>
+                <li><strong>Signal strength:</strong> Move the Hub closer to the Receiver or use a Hive Signal Booster</li>
+                <li><strong>Hub location:</strong> Place the Hub in a central location away from electronic interference</li>
+                <li><strong>Check for updates:</strong> Ensure all Hive devices have the latest firmware</li>
+            </ul>
+
+            <h3>Reset to Factory Settings</h3>
+            <p>If all else fails, you can reset your receiver to factory settings:</p>
+            <ol>
+                <li>Press and hold the pairing button on the receiver for 20 seconds</li>
+                <li>All lights will flash simultaneously</li>
+                <li>Release the button - the receiver is now reset</li>
+                <li>Follow the pairing process from the beginning</li>
+            </ol>
+
+            <h2>Additional Tips</h2>
+            <ul>
+                <li>Always ensure your Hub has a stable internet connection before pairing</li>
+                <li>Keep your Hive app updated to the latest version</li>
+                <li>If you have multiple Hive devices, pair them one at a time</li>
+                <li>Write down your Hive account details for future reference</li>
+            </ul>
+
+            <h2>Still Having Issues?</h2>
+            <p>If you're still experiencing problems after following this guide, contact Hive support directly through the app or visit their support website. They can provide specific troubleshooting for your setup and remotely diagnose connection issues.</p>
+                    <p class="article-resource"><a href="/how-to/pair-up-the-devices-hive-2/resources/hive-thermostat-mini-slt6-ig.pdf" target="_blank" rel="noopener">Download: Hive Thermostat Mini installation guide</a></p>
+</article>
+    </div>
+
+    
+
+    
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Size Boiler Do I Need? - MyBoiler Hub</title>
+    <meta name="description" content="UK boiler size guide in kW from radiator count, bathrooms, and boiler type. A starting point for a Gas Safe survey, not a heat-loss calculation.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .calculator-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .calculator-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .calculator-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .calculator-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 60ch;
+        }
+
+        .calculator-card {
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-heading {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.2rem 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .input-label {
+            margin: 0;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .input-hint {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .choice-toggle {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .choice-button {
+            flex: 1;
+            min-width: 6.5rem;
+            padding: 0.75rem 1rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .choice-button.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .slider-value-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.75rem;
+        }
+
+        .slider-value {
+            font-size: 1.25rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .input-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--border);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .input-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            background: var(--accent);
+            cursor: pointer;
+            margin-top: -8px;
+        }
+
+        .input-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            background: var(--accent);
+            cursor: pointer;
+            border: none;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .result-item {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .result-item.highlight {
+            border: 1px solid var(--accent);
+        }
+
+        .result-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .result-note {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            color: var(--text);
+            margin: 1.25rem 0 0;
+        }
+
+        .result-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+
+        .result-actions a {
+            display: inline-block;
+            padding: 0.7rem 1.1rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .result-actions a.primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .result-actions a.secondary {
+            border: 2px solid var(--border);
+            color: var(--text);
+        }
+
+        .calculator-disclaimer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 70ch;
+            margin: 0 auto 1rem;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        @media (max-width: 640px) {
+            .calculator-card { padding: 1.25rem; }
+            .results-grid { grid-template-columns: 1fr; }
+            .result-value { font-size: 1.85rem; }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="calculator-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"></nav>
+        </div>
+    </header>
+
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h1 class="calculator-headline">What Size Boiler Do I Need?</h1>
+            <p class="calculator-connector">
+                A UK starting size in kW from radiator count, bathrooms, and boiler type. A Gas Safe engineer should confirm this with a heat-loss calculation before you buy.
+            </p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="input-group">
+                <div class="input-heading">
+                    <p class="input-label" id="type-label">Boiler type</p>
+                    <span class="input-hint">Combi kW is driven by hot water as well as heating</span>
+                </div>
+                <div class="choice-toggle" role="group" aria-labelledby="type-label">
+                    <button type="button" class="choice-button active" data-type="combi">Combi</button>
+                    <button type="button" class="choice-button" data-type="system">System</button>
+                    <button type="button" class="choice-button" data-type="heat-only">Heat only</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="slider-value-display">
+                    <label class="input-label" for="bedrooms">Bedrooms</label>
+                    <span class="slider-value" id="bedrooms-value">3</span>
+                </div>
+                <input type="range" id="bedrooms" class="input-slider" min="1" max="7" step="1" value="3">
+            </div>
+
+            <div class="input-group">
+                <div class="slider-value-display">
+                    <label class="input-label" for="radiators">Radiators</label>
+                    <span class="slider-value" id="radiators-value">10</span>
+                </div>
+                <input type="range" id="radiators" class="input-slider" min="4" max="24" step="1" value="10">
+            </div>
+
+            <div class="input-group">
+                <div class="slider-value-display">
+                    <label class="input-label" for="baths">Baths and showers</label>
+                    <span class="slider-value" id="baths-value">1</span>
+                </div>
+                <input type="range" id="baths" class="input-slider" min="1" max="5" step="1" value="1">
+            </div>
+
+            <div class="results-grid">
+                <div class="result-item highlight">
+                    <div class="result-label">Suggested size</div>
+                    <div class="result-value" id="kw-result">25 kW</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Typical band</div>
+                    <div class="result-value" id="range-result">24–28 kW</div>
+                </div>
+            </div>
+            <p class="result-note" id="explain-result"></p>
+            <div class="result-actions">
+                <a class="primary" href="/quote/?need=new-boiler">Get a boiler quote</a>
+                <a class="secondary" href="/boiler-types/">Boiler types</a>
+            </div>
+        </div>
+
+        <div class="calculator-disclaimer">
+            <strong>This is not a heat-loss calculation.</strong> UK bands like these are used for a first look only. Insulation, ceiling height, water pressure, and how many outlets run at once all change the right kW. Oversizing a combi for DHW is common; heating-only and system boilers are usually smaller for the same house because hot water comes from a cylinder.
+        </div>
+    </div>
+
+    <script type="text/javascript" data-cfasync="false">
+        document.addEventListener('DOMContentLoaded', function () {
+            var type = 'combi';
+            var typeButtons = document.querySelectorAll('.choice-button[data-type]');
+            var bedrooms = document.getElementById('bedrooms');
+            var radiators = document.getElementById('radiators');
+            var baths = document.getElementById('baths');
+
+            function fillSlider(slider) {
+                var value = parseFloat(slider.value);
+                var min = parseFloat(slider.min);
+                var max = parseFloat(slider.max);
+                var pct = ((value - min) / (max - min)) * 100;
+                slider.style.background = 'linear-gradient(to right, var(--accent) 0%, var(--accent) ' + pct + '%, var(--border) ' + pct + '%)';
+            }
+
+            function sizeFor(kind, rads, outlets) {
+                if (kind === 'combi') {
+                    if (outlets >= 3) {
+                        if (rads <= 10) return { rec: 30, range: '28–32 kW' };
+                        if (rads <= 15) return { rec: 35, range: '32–37 kW' };
+                        return { rec: 40, range: '35–42 kW' };
+                    }
+                    if (rads <= 10) return { rec: 25, range: '24–28 kW' };
+                    if (rads <= 15) return { rec: 30, range: '28–34 kW' };
+                    return { rec: 35, range: '32–40 kW' };
+                }
+                if (rads <= 10) return { rec: 15, range: '12–18 kW' };
+                if (rads <= 15) return { rec: 18, range: '18–24 kW' };
+                return { rec: 24, range: '24–30 kW' };
+            }
+
+            function calculate() {
+                var beds = parseInt(bedrooms.value, 10);
+                var rads = parseInt(radiators.value, 10);
+                var outlets = parseInt(baths.value, 10);
+                document.getElementById('bedrooms-value').textContent = beds === 7 ? '7+' : String(beds);
+                document.getElementById('radiators-value').textContent = String(rads);
+                document.getElementById('baths-value').textContent = String(outlets);
+                fillSlider(bedrooms);
+                fillSlider(radiators);
+                fillSlider(baths);
+
+                var sized = sizeFor(type, rads, outlets);
+                document.getElementById('kw-result').textContent = sized.rec + ' kW';
+                document.getElementById('range-result').textContent = sized.range;
+
+                var label = type === 'heat-only' ? 'heat-only' : type;
+                var extra = '';
+                if (type === 'combi' && outlets >= 3) {
+                    extra = ' Extra baths and showers push a combi up even if the heating load is modest.';
+                } else if (type !== 'combi') {
+                    extra = ' Hot water is from a cylinder, so kW here is mainly for the radiators.';
+                }
+                if (beds >= 5 && rads <= 10) {
+                    extra += ' Bedroom count looks high for this many radiators — count emitters again.';
+                }
+                document.getElementById('explain-result').textContent =
+                    'About ' + sized.rec + ' kW is a typical ' + label + ' size for ' + rads +
+                    ' radiators and ' + outlets + ' bath or shower.' + extra;
+            }
+
+            typeButtons.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    type = btn.getAttribute('data-type');
+                    typeButtons.forEach(function (b) { b.classList.toggle('active', b === btn); });
+                    calculate();
+                });
+            });
+
+            bedrooms.addEventListener('input', calculate);
+            radiators.addEventListener('input', calculate);
+            baths.addEventListener('input', calculate);
+            calculate();
+        });
+    </script>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>

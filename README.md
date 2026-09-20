@@ -1,57 +1,64 @@
 # MyBoiler.com
-MyBoiler.com Root - GitHub Pages Implementation
+MyBoiler.com — GitHub Pages site
 
-## Routing Logic
+## URL model
 
-This project implements routing logic for GitHub Pages where:
-- Requests for `css/`, `js/`, `img/`, and `pages/` folders are served from myboiler.com
-- All other requests are redirected to hub.myboiler.com using client-side JavaScript
+Content pages live at the **site root** (for example `/calculators/gas-rate-calculator/`, `/fault-codes/`, `/advice/`). There is no `/hub/` content tree.
 
-## How It Works
+Apps keep their existing paths:
+- `/chat/` — Ask AI / Boiler Help AI (ElevenLabs widget)
+- `/quote/` — Get a quote
+- `/decide/` — Replace / repair / heat-pump decision
+- `/heat-pump-checker/` — Heat pump suitability
 
-### Static Assets
-Files in the following folders are served directly from myboiler.com:
-- `css/` - Stylesheets
-- `js/` - JavaScript files  
-- `img/` - Images
-- `pages/` - Page content
+Static assets stay at `/css/`, `/js/`, `/img/`, `/assets/`, and `/pages/`.
 
-### Redirects
-All other requests are redirected to hub.myboiler.com using:
-1. **`redirect.js`** - Client-side redirect script included in `index.html`
-2. **`404.html`** - GitHub Pages 404 page that handles redirects for non-existent routes
+## Legacy `/hub/` URLs
 
-## File Structure
+`/hub/` was migration scaffolding from hub.myboiler.com. Every former `/hub/...` path is a thin HTML stub (meta-refresh + canonical) that sends visitors to the same path without `/hub`.
+
+`redirect.js` and `404.html` also strip a leading `/hub` from the request path. They do **not** prefix unknown paths with `/hub`. A missing root URL shows the 404 page.
+
+Internal aliases that rename pages are unchanged except for the prefix, e.g. `/advice-and-info/` still redirects to `/advice/`.
+
+## How routing works
+
+1. **Existing files** are served directly (content at root, apps, assets).
+2. **`hub/.../index.html` stubs** redirect `/hub/some/path/` → `/some/path/`.
+3. **`404.html`** — if the path starts with `/hub`, strip it and redirect; otherwise show “Page not found”.
+4. **`redirect.js`** — same `/hub` strip, included from the homepage as a fallback (e.g. local `live-server`).
+
+`STATIC_FOLDERS` / `ROOT_FILES` in `redirect.js` and `404.html` document the asset and app folders that are served as-is. They are not used to add a `/hub` prefix.
+
+## File structure
 
 ```
-├── css/           # Stylesheets (served from myboiler.com)
-├── js/            # JavaScript files (served from myboiler.com)
-├── img/           # Images (served from myboiler.com)
-├── pages/         # Page content (served from myboiler.com)
-├── index.html     # Main page with redirect script
-├── 404.html       # 404 page with redirect logic
-├── redirect.js    # Client-side redirect script
-├── favicon.ico    # Favicon (served from myboiler.com)
-└── CNAME          # Domain configuration (served from myboiler.com)
+├── css/                 # Stylesheets
+├── js/                  # JavaScript (including site-nav.js)
+├── img/                 # Images
+├── assets/              # Homepage media
+├── pages/               # Markdown pages
+├── calculators/         # Calculator pages (real content at root)
+├── fault-codes/         # Fault-code pages
+├── advice/, toolbox/, … # Other migrated content
+├── chat/, quote/, decide/, heat-pump-checker/  # Apps
+├── hub/                 # Redirect stubs only (/hub/… → /…)
+├── index.html           # Homepage
+├── 404.html             # Not-found + /hub strip
+├── redirect.js          # Homepage /hub strip fallback
+├── favicon.ico
+└── CNAME
 ```
 
 ## Deployment
 
-Simply push your changes to the GitHub repository and GitHub Pages will automatically deploy them.
+Push to GitHub and GitHub Pages deploys automatically.
 
-## Chat
+## Example requests
 
-Ask AI / Boiler Help AI lives at `/chat/` on this site. The page embeds an ElevenLabs Conversational AI widget; there is no separate `chat.myboiler.com` subdomain.
-
-## Example Requests
-
-- `myboiler.com/css/styles.css` → Served from myboiler.com
-- `myboiler.com/js/menu.js` → Served from myboiler.com  
-- `myboiler.com/img/myboiler-logo-light.svg` → Served from myboiler.com
-- `myboiler.com/pages/about-us.md` → Served from myboiler.com
-- `myboiler.com/boiler-service/` → Redirected to `hub.myboiler.com/boiler-service/`
-- `myboiler.com/heat-pumps/` → Redirected to `hub.myboiler.com/heat-pumps/`
-
-## Configuration
-
-The routing logic can be customized by modifying the `STATIC_FOLDERS` and `ROOT_FILES` arrays in both `redirect.js` and `404.html`.
+- `myboiler.com/css/styles.css` → served
+- `myboiler.com/calculators/gas-rate-calculator/` → served (content at root)
+- `myboiler.com/hub/calculators/gas-rate-calculator/` → redirect stub → `/calculators/gas-rate-calculator/`
+- `myboiler.com/advice-and-info/` → alias redirect → `/advice/`
+- `myboiler.com/chat/` → Ask AI app
+- `myboiler.com/no-such-page/` → 404 page (not rewritten to `/hub/...`)

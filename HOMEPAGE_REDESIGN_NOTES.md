@@ -108,7 +108,7 @@ Redesigned the homepage to achieve Apple-simple clarity with clear intent and ob
 - `redirect.js` for GitHub Pages routing
 - Markdown footer page system
 - CNAME and GitHub Pages compatibility
-- Deep links to hub.myboiler.com subpages
+- Deep links to site pages at root paths (no `/hub/` prefix)
 - Sister sites footer section
 - Newsletter signup form
 - Social media links

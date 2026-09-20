@@ -6,45 +6,45 @@
 
     window.SITE_NAV_HTML =
         '<ul class="nav-list">' +
-        '<li class="nav-item"><a href="/hub/repairs/"><span>Repairs</span></a></li>' +
-        '<li class="nav-item"><a href="/hub/boiler-cover/"><span>Boiler Cover</span></a></li>' +
+        '<li class="nav-item"><a href="/repairs/"><span>Repairs</span></a></li>' +
+        '<li class="nav-item"><a href="/boiler-cover/"><span>Boiler Cover</span></a></li>' +
         '<li class="nav-item nav-item-has-dropdown">' +
         '<span class="nav-dropdown-label"><span>Advice</span>' + chevron + '</span>' +
         '<div class="mega-menu">' +
         '<div class="mega-menu-column">' +
         '<h4>Boilers</h4>' +
-        '<a href="/hub/money-and-energy-saving/">Money and Energy Saving</a>' +
-        '<a href="/hub/boiler-pressure/">Boiler Pressure</a>' +
+        '<a href="/money-and-energy-saving/">Money and Energy Saving</a>' +
+        '<a href="/boiler-pressure/">Boiler Pressure</a>' +
         '<a href="https://boilerservice.com">Boiler Service</a>' +
-        '<a href="/hub/boiler-types/">Boiler Types</a>' +
-        '<a href="/hub/what-size-boiler/">What Size Boiler?</a>' +
-        '<a href="/hub/what-is-a-gc-number/">What is a GC Number?</a>' +
-        '<a href="/hub/boiler-energy-efficiency/">Boiler Energy Efficiency</a>' +
-        '<a href="/hub/repairs/">Boiler Repairs</a>' +
-        '<a href="/hub/boiler-cover/">Boiler Cover</a>' +
+        '<a href="/boiler-types/">Boiler Types</a>' +
+        '<a href="/what-size-boiler/">What Size Boiler?</a>' +
+        '<a href="/what-is-a-gc-number/">What is a GC Number?</a>' +
+        '<a href="/boiler-energy-efficiency/">Boiler Energy Efficiency</a>' +
+        '<a href="/repairs/">Boiler Repairs</a>' +
+        '<a href="/boiler-cover/">Boiler Cover</a>' +
         '<h4>OpenTherm &amp; Modulating Boilers</h4>' +
-        '<a href="/hub/opentherm/opentherm-boilers-and-controls/">OpenTherm &amp; Modulating Overview</a>' +
-        '<a href="/hub/opentherm/opentherm-boilers-and-controls/">OpenTherm Capable Boilers</a>' +
-        '<a href="/hub/opentherm/opentherm-boilers-and-controls/">OpenTherm Controls</a>' +
-        '<a href="/hub/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">Modulating Boilers &amp; Smart Controls</a>' +
-        '<a href="/hub/opentherm/vaillant-opentherm/">Vaillant OpenTherm Guide</a>' +
-        '<a href="/hub/opentherm/worcester-bosch-opentherm/">Worcester OpenTherm Guide</a>' +
+        '<a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm &amp; Modulating Overview</a>' +
+        '<a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm Capable Boilers</a>' +
+        '<a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm Controls</a>' +
+        '<a href="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">Modulating Boilers &amp; Smart Controls</a>' +
+        '<a href="/opentherm/vaillant-opentherm/">Vaillant OpenTherm Guide</a>' +
+        '<a href="/opentherm/worcester-bosch-opentherm/">Worcester OpenTherm Guide</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Heat Pumps</h4>' +
-        '<a href="/hub/heat-pumps/">Heat Pumps Overview</a>' +
-        '<a href="/hub/heat-pumps/retrofit-an-existing-hot-water-cylinder-with-a-plate-heat-exchanger-for-use-with-a-heat-pump/">Heat Pump Cylinder Retrofit</a>' +
-        '<a href="/hub/heat-pumps/air-source-heat-pumps/">Air Source Heat Pump</a>' +
-        '<a href="/hub/heat-pumps/hybrid-heat-pumps/">Hybrid Heat Pumps</a>' +
-        '<a href="/hub/why-heat-pumps-work-well-with-underfloor-heating/">Underfloor Heating</a>' +
+        '<a href="/heat-pumps/">Heat Pumps Overview</a>' +
+        '<a href="/heat-pumps/retrofit-an-existing-hot-water-cylinder-with-a-plate-heat-exchanger-for-use-with-a-heat-pump/">Heat Pump Cylinder Retrofit</a>' +
+        '<a href="/heat-pumps/air-source-heat-pumps/">Air Source Heat Pump</a>' +
+        '<a href="/heat-pumps/hybrid-heat-pumps/">Hybrid Heat Pumps</a>' +
+        '<a href="/why-heat-pumps-work-well-with-underfloor-heating/">Underfloor Heating</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Miscellaneous</h4>' +
-        '<a href="/hub/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-post-2012-models/">Flow Temperature &amp; Power</a>' +
-        '<a href="/hub/solar-thermal/">Solar Thermal Heating</a>' +
-        '<a href="/hub/solar-thermal/">Solar Thermal Servicing</a>' +
-        '<a href="/hub/s-plan/">S Plan Heating Systems</a>' +
-        '<a href="/hub/priority-domestic-hot-water/">Priority Domestic Hot Water</a>' +
+        '<a href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-post-2012-models/">Flow Temperature &amp; Power</a>' +
+        '<a href="/solar-thermal/">Solar Thermal Heating</a>' +
+        '<a href="/solar-thermal/">Solar Thermal Servicing</a>' +
+        '<a href="/s-plan/">S Plan Heating Systems</a>' +
+        '<a href="/priority-domestic-hot-water/">Priority Domestic Hot Water</a>' +
         '<a href="/quote/">Get a Quote</a>' +
         '</div>' +
         '</div>' +
@@ -54,56 +54,56 @@
         '<div class="mega-menu">' +
         '<div class="mega-menu-column">' +
         '<h4>Vaillant</h4>' +
-        '<a href="/hub/vaillant/vaillant-p-test-program-mode/">P Test Instructions</a>' +
-        '<a href="/hub/vaillant/vaillant-ecotec-emissions-table/">Emissions Table</a>' +
-        '<a href="/hub/how-to/vaillant-ecotec-boiler-service/">Ecotec Service How-To</a>' +
-        '<a href="/hub/vaillant/vaillant-diagnostic-s-and-d-codes/">Diagnostic S &amp; D Codes</a>' +
-        '<a href="/hub/vaillant/vaillant-fga-tool/">FGA Tool</a>' +
-        '<a href="/hub/vaillant/vaillant-vr33-module-installation/">Vaillant VR33 Module Installation</a>' +
-        '<a href="/hub/fault-codes/vaillant-fault-codes/">Vaillant Fault Codes</a>' +
+        '<a href="/vaillant/vaillant-p-test-program-mode/">P Test Instructions</a>' +
+        '<a href="/vaillant/vaillant-ecotec-emissions-table/">Emissions Table</a>' +
+        '<a href="/how-to/vaillant-ecotec-boiler-service/">Ecotec Service How-To</a>' +
+        '<a href="/vaillant/vaillant-diagnostic-s-and-d-codes/">Diagnostic S &amp; D Codes</a>' +
+        '<a href="/vaillant/vaillant-fga-tool/">FGA Tool</a>' +
+        '<a href="/vaillant/vaillant-vr33-module-installation/">Vaillant VR33 Module Installation</a>' +
+        '<a href="/fault-codes/vaillant-fault-codes/">Vaillant Fault Codes</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Worcester Bosch</h4>' +
-        '<a href="/hub/worcester-bosch-fga-tool/">FGA Tool</a>' +
-        '<a href="/hub/fault-codes/worcester-bosch-fault-codes/">Worcester Bosch Fault Codes</a>' +
+        '<a href="/worcester-bosch-fga-tool/">FGA Tool</a>' +
+        '<a href="/fault-codes/worcester-bosch-fault-codes/">Worcester Bosch Fault Codes</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Other Brands</h4>' +
-        '<a href="/hub/fault-codes/">Fault Codes (A–Z)</a>' +
-        '<a href="/hub/intergas-fga-tool/">Intergas FGA Tool</a>' +
-        '<a href="/hub/how-to/service-an-intergas-boiler/">Intergas Service How-To</a>' +
-        '<a href="/hub/fault-codes/intergas-fault-codes/">Intergas Fault Codes</a>' +
+        '<a href="/fault-codes/">Fault Codes (A–Z)</a>' +
+        '<a href="/intergas-fga-tool/">Intergas FGA Tool</a>' +
+        '<a href="/how-to/service-an-intergas-boiler/">Intergas Service How-To</a>' +
+        '<a href="/fault-codes/intergas-fault-codes/">Intergas Fault Codes</a>' +
         '<h4>Miscellaneous</h4>' +
-        '<a href="/hub/heating-expansion-vessel-calculator/">Heating expansion vessel calculator</a>' +
-        '<a href="/hub/inhibitor-dosing/">Inhibitor Dosing</a>' +
-        '<a href="/hub/boiler-maximum-and-minimum-output-mode-videos/">Max/Min Output Mode Videos</a>' +
+        '<a href="/heating-expansion-vessel-calculator/">Heating expansion vessel calculator</a>' +
+        '<a href="/inhibitor-dosing/">Inhibitor Dosing</a>' +
+        '<a href="/boiler-maximum-and-minimum-output-mode-videos/">Max/Min Output Mode Videos</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Heating Design</h4>' +
-        '<a href="/hub/air-change-rates-ach/">Air Change Calculator (ACH)</a>' +
-        '<a href="/hub/calculators/boiler-usage-cost/">Boiler Consumption</a>' +
-        '<a href="/hub/calculators/heating-system-output-calculator/">Heat Source/System Design</a>' +
-        '<a href="/hub/calculators/heating-system-water-content-calculator/">Water Content</a>' +
-        '<a href="/hub/calculators/hot-water-recovery-time-calculator/">Hot Water Recovery</a>' +
-        '<a href="/hub/calculators/pipe-size-calculator/">Pipe Size Calculator</a>' +
-        '<a href="/hub/calculators/radiator-correction-factor-tool/">Radiator Correction Factor</a>' +
-        '<a href="/hub/calculators/volume-flow-rate-q-calculator/">Volume Flow Rate Q</a>' +
+        '<a href="/air-change-rates-ach/">Air Change Calculator (ACH)</a>' +
+        '<a href="/calculators/boiler-usage-cost/">Boiler Consumption</a>' +
+        '<a href="/calculators/heating-system-output-calculator/">Heat Source/System Design</a>' +
+        '<a href="/calculators/heating-system-water-content-calculator/">Water Content</a>' +
+        '<a href="/calculators/hot-water-recovery-time-calculator/">Hot Water Recovery</a>' +
+        '<a href="/calculators/pipe-size-calculator/">Pipe Size Calculator</a>' +
+        '<a href="/calculators/radiator-correction-factor-tool/">Radiator Correction Factor</a>' +
+        '<a href="/calculators/volume-flow-rate-q-calculator/">Volume Flow Rate Q</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Conversion Calculators</h4>' +
-        '<a href="/hub/calculators/kw-to-flow-rate/">KW to Flow Rate &amp; Flow to KW</a>' +
-        '<a href="/hub/calculators/lps-to-kw/">LPS to KW</a>' +
-        '<a href="/hub/calculators/flow-rate-lpm-to-energy-used-kwh/">LPM to kWh</a>' +
-        '<a href="/hub/calculators/btu-to-kw/">BTU to Watts</a>' +
-        '<a href="/hub/radiator-new-output/">Radiator New Output</a>' +
+        '<a href="/calculators/kw-to-flow-rate/">KW to Flow Rate &amp; Flow to KW</a>' +
+        '<a href="/calculators/lps-to-kw/">LPS to KW</a>' +
+        '<a href="/calculators/flow-rate-lpm-to-energy-used-kwh/">LPM to kWh</a>' +
+        '<a href="/calculators/btu-to-kw/">BTU to Watts</a>' +
+        '<a href="/radiator-new-output/">Radiator New Output</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Gas Calculators</h4>' +
-        '<a href="/hub/calculators/combustion-performance-gas-ratio-calculator/">Combustion Ratio</a>' +
-        '<a href="/hub/calculators/gas-rate-calculator/">Gas Rate</a>' +
-        '<a href="/hub/calculators/gas-volume-m3-to-kwh/">m³ to kWh</a>' +
+        '<a href="/calculators/combustion-performance-gas-ratio-calculator/">Combustion Ratio</a>' +
+        '<a href="/calculators/gas-rate-calculator/">Gas Rate</a>' +
+        '<a href="/calculators/gas-volume-m3-to-kwh/">m³ to kWh</a>' +
         '<h4>Buffers</h4>' +
-        '<a href="/hub/calculators/buffer-minimum-volume-calculation/">Buffer Minimum Volume</a>' +
+        '<a href="/calculators/buffer-minimum-volume-calculation/">Buffer Minimum Volume</a>' +
         '</div>' +
         '</div>' +
         '</li>' +
@@ -113,7 +113,7 @@
         '<div class="mega-menu-column">' +
         '<h4>Calculators</h4>' +
         '<p class="mega-menu-moved-note">Calculators have moved to Toolbox.</p>' +
-        '<a href="/hub/toolbox/#calculators">Open Toolbox</a>' +
+        '<a href="/toolbox/#calculators">Open Toolbox</a>' +
         '</div>' +
         '</div>' +
         '</li>' +
@@ -137,10 +137,10 @@
         '<footer class="footer">' +
         '<div class="footer-column"><h3>About Us</h3><ul>' +
         '<li><a href="/pages/about-us.md">Company</a></li>' +
-        '<li><a href="/hub/carbon-emissions/">Carbon Emissions</a></li>' +
-        '<li><a href="/hub/mission/">Our Mission</a></li>' +
-        '<li><a href="/hub/privacy-policy/">Privacy Policy</a></li>' +
-        '<li><a href="/hub/affilate-activity-disclosure/">Affiliates Disclosure</a></li>' +
+        '<li><a href="/carbon-emissions/">Carbon Emissions</a></li>' +
+        '<li><a href="/mission/">Our Mission</a></li>' +
+        '<li><a href="/privacy-policy/">Privacy Policy</a></li>' +
+        '<li><a href="/affilate-activity-disclosure/">Affiliates Disclosure</a></li>' +
         '</ul></div>' +
         '<div class="footer-column"><h3>Contact Us</h3><ul>' +
         '<li>A Rated House,</li><li>11 Sunnymead Road,</li><li>London,</li><li>NW9 8BT</li>' +

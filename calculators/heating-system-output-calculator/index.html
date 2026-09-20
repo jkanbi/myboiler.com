@@ -3,49 +3,422 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting to Heating System Output Calculator...</title>
-    <link rel="canonical" href="https://myboiler.com/hub/calculators/heating-system-output-calculator/" />
-    <meta http-equiv="refresh" content="0; url=/hub/calculators/heating-system-output-calculator/" />
-    <script type="text/javascript" data-cfasync="false">
-        window.location.replace('/hub/calculators/heating-system-output-calculator/');
-    </script>
+    <title>Heating System Output Calculator - MyBoiler.com</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* Calculator page specific styles */
+        .calculator-page {
             min-height: 100vh;
-            margin: 0;
-            background: #f5f5f5;
-            color: #333;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
         }
-        .redirect-message {
+
+        .calculator-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .calculator-header {
             text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .calculator-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .calculator-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 60ch;
+        }
+
+        .calculator-card {
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
             padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
         }
-        .redirect-message h1 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .redirect-message p {
-            margin-bottom: 1rem;
-        }
-        .redirect-message a {
-            color: #1863DC;
-            text-decoration: none;
+
+        .section-title {
+            font-size: 1.25rem;
             font-weight: 600;
+            color: var(--text);
+            margin: 0 0 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--accent);
         }
-        .redirect-message a:hover {
-            text-decoration: underline;
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .input-field, .input-select {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            font-weight: 500;
+            transition: border-color 0.2s ease;
+        }
+
+        .input-field:focus, .input-select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .result-section {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .result-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .result-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .result-unit {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .radiator-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .radiator-input-small {
+            width: 100%;
+            padding: 0.625rem;
+            font-size: 0.9375rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            text-align: center;
+        }
+
+        .radiator-input-small:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .section-spacer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .formula-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .formula-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .formula-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin: 0.5rem 0;
+            font-family: 'Courier New', monospace;
+            background: var(--bg);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+        }
+
+        .calculator-disclaimer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 70ch;
+            margin: 1rem auto;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        @media (max-width: 768px) {
+            .calculator-container {
+                padding: clamp(1.5rem, 4vw, 2.5rem) clamp(16px, 4vw, 24px);
+            }
+
+            .radiator-inputs {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                gap: 0.75rem;
+            }
+
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+
+            .result-value {
+                font-size: 2.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calculator-card {
+                padding: 1rem;
+            }
+
+            .radiator-inputs {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .result-value {
+                font-size: 2rem;
+            }
         }
     </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
 </head>
-<body>
-    <div class="redirect-message">
-        <h1>Page Moved</h1>
-        <p>The Heating System Output Calculator has moved to a new location.</p>
-        <p>If you are not redirected automatically, <a href="/hub/calculators/heating-system-output-calculator/">click here</a>.</p>
+<body class="calculator-page">
+    <!-- Header with full navigation -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <!-- Calculator Content -->
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h1 class="calculator-headline">Heating System Output Calculator</h1>
+            <p class="calculator-connector">
+                Calculate radiator output and total heating system power for boiler range rating and system design.
+            </p>
+        </div>
+
+        <!-- Radiator Output Calculator Card -->
+        <div class="calculator-card">
+            <h2 class="section-title">Radiator Output Calculator</h2>
+            
+            <div class="input-group">
+                <label class="input-label" for="delta-t-select">Delta T Correction Factor</label>
+                <select id="delta-t-select" class="input-select">
+                    <option value="1">Default Delta 50°C</option>
+                    <option value="0.05">5°C</option>
+                    <option value="0.123">10°C</option>
+                    <option value="0.209">15°C</option>
+                    <option value="0.257">17.5°C (F40R20)</option>
+                    <option value="0.304">20°C</option>
+                    <option value="0.355">22.5°C (F45R20)</option>
+                    <option value="0.406">25°C</option>
+                    <option value="0.461">27.5°C (F50R20)</option>
+                    <option value="0.515">30°C</option>
+                    <option value="0.572">32.5°C (F55R20)</option>
+                    <option value="0.629">35°C</option>
+                    <option value="0.689">37.5°C</option>
+                    <option value="0.748">40°C</option>
+                    <option value="0.810">42.5°C</option>
+                    <option value="0.872">45°C</option>
+                    <option value="0.936">47.5°C</option>
+                    <option value="1.132">55°C</option>
+                    <option value="1.267">60°C</option>
+                    <option value="1.406">65°C</option>
+                    <option value="1.549">70°C</option>
+                    <option value="1.694">75°C</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="panel-type-select">Panel Type</label>
+                <select id="panel-type-select" class="input-select">
+                    <option value="0.0017">Single (11)</option>
+                    <option value="0.0023">P+ (21)</option>
+                    <option value="0.0032">Double (22)</option>
+                    <option value="0.0045">Triple (33)</option>
+                </select>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label class="input-label" for="height-input">Height (cm)</label>
+                    <input type="number" id="height-input" class="input-field" min="20" max="100" step="1" value="60">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="length-input">Length (cm)</label>
+                    <input type="number" id="length-input" class="input-field" min="20" max="300" step="1" value="100">
+                </div>
+            </div>
+
+            <div class="result-section">
+                <div class="result-label">Radiator Output</div>
+                <div class="result-value" id="radiator-output">0</div>
+                <div class="result-unit">Watts</div>
+            </div>
+
+            <div class="formula-section">
+                <h3 class="formula-title">Formula</h3>
+                <div class="formula-text">Watts = Delta T Factor × Panel Type Factor × (Height cm × 10) × (Length cm × 10)</div>
+            </div>
+        </div>
+
+        <!-- Total System Output Calculator Card -->
+        <div class="calculator-card section-spacer">
+            <h2 class="section-title">Total Heating System Output</h2>
+            <p class="calculator-connector" style="text-align: left; margin-bottom: 1.5rem;">
+                Enter the wattage for each radiator or circuit to calculate the total system output. Leave unused fields at 0.
+            </p>
+
+            <div class="radiator-inputs">
+                <input type="number" class="radiator-input-small" placeholder="Rad 1" min="0" step="1" value="0" data-rad="1">
+                <input type="number" class="radiator-input-small" placeholder="Rad 2" min="0" step="1" value="0" data-rad="2">
+                <input type="number" class="radiator-input-small" placeholder="Rad 3" min="0" step="1" value="0" data-rad="3">
+                <input type="number" class="radiator-input-small" placeholder="Rad 4" min="0" step="1" value="0" data-rad="4">
+                <input type="number" class="radiator-input-small" placeholder="Rad 5" min="0" step="1" value="0" data-rad="5">
+                <input type="number" class="radiator-input-small" placeholder="Rad 6" min="0" step="1" value="0" data-rad="6">
+                <input type="number" class="radiator-input-small" placeholder="Rad 7" min="0" step="1" value="0" data-rad="7">
+                <input type="number" class="radiator-input-small" placeholder="Rad 8" min="0" step="1" value="0" data-rad="8">
+                <input type="number" class="radiator-input-small" placeholder="Rad 9" min="0" step="1" value="0" data-rad="9">
+                <input type="number" class="radiator-input-small" placeholder="Rad 10" min="0" step="1" value="0" data-rad="10">
+                <input type="number" class="radiator-input-small" placeholder="Rad 11" min="0" step="1" value="0" data-rad="11">
+                <input type="number" class="radiator-input-small" placeholder="Rad 12" min="0" step="1" value="0" data-rad="12">
+            </div>
+
+            <div class="result-section">
+                <div class="result-label">Total System Output</div>
+                <div class="result-value" id="total-watts">0</div>
+                <div class="result-unit">Watts</div>
+                
+                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle);">
+                    <div class="result-label">Total System Output</div>
+                    <div class="result-value" id="total-kw" style="font-size: 2rem;">0.00</div>
+                    <div class="result-unit">kW</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculator-disclaimer">
+            <strong>Important:</strong> This calculator provides approximate radiator output at default Delta T of 50°C (typically 80°C flow, 60°C return, 20°C room temp or 75°C flow, 65°C return, 20°C room temp). Use the calculated kW value for boiler range rating. Always consult with a qualified heating engineer.
+        </div>
     </div>
+
+    <script type="text/javascript" data-cfasync="false">
+        document.addEventListener('DOMContentLoaded', function() {
+            const deltaTSelect = document.getElementById('delta-t-select');
+            const panelTypeSelect = document.getElementById('panel-type-select');
+            const heightInput = document.getElementById('height-input');
+            const lengthInput = document.getElementById('length-input');
+            const radiatorOutput = document.getElementById('radiator-output');
+
+            const radiatorInputs = document.querySelectorAll('.radiator-input-small');
+            const totalWatts = document.getElementById('total-watts');
+            const totalKw = document.getElementById('total-kw');
+
+            function calculateRadiatorOutput() {
+                const deltaT = parseFloat(deltaTSelect.value);
+                const panelType = parseFloat(panelTypeSelect.value);
+                const height = parseFloat(heightInput.value) || 0;
+                const length = parseFloat(lengthInput.value) || 0;
+
+                const watts = deltaT * panelType * (height * 10) * (length * 10);
+                radiatorOutput.textContent = Math.round(watts);
+            }
+
+            function calculateTotalOutput() {
+                let total = 0;
+                radiatorInputs.forEach(input => {
+                    const value = parseFloat(input.value) || 0;
+                    total += value;
+                });
+
+                totalWatts.textContent = Math.round(total);
+                totalKw.textContent = (total / 1000).toFixed(2);
+            }
+
+            deltaTSelect.addEventListener('change', calculateRadiatorOutput);
+            panelTypeSelect.addEventListener('change', calculateRadiatorOutput);
+            heightInput.addEventListener('input', calculateRadiatorOutput);
+            lengthInput.addEventListener('input', calculateRadiatorOutput);
+
+            radiatorInputs.forEach(input => {
+                input.addEventListener('input', calculateTotalOutput);
+            });
+
+            calculateRadiatorOutput();
+            calculateTotalOutput();
+        });
+    </script>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>

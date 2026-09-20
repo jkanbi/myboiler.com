@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaillant F28 Fault Code Repair - MyBoiler Hub</title>
+    <meta name="description" content="Vaillant F28 Fault Code Repair">
+    <link rel="canonical" href="/fault-codes/vaillant-f28-fault-code-repair/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .article-header { margin-bottom: 2.5rem; }
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+        }
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+        .article-content p { font-size: 1rem; line-height: 1.7; color: var(--text); margin: 0 0 1.25rem; }
+        .article-content h2 { font-size: 1.5rem; font-weight: 700; color: var(--text); margin: 2rem 0 1rem; }
+        .article-content h3 { font-size: 1.25rem; font-weight: 600; color: var(--text); margin: 1.5rem 0 1rem; }
+        .article-content h4 { font-size: 1.125rem; font-weight: 600; color: var(--text); margin: 1.25rem 0 0.75rem; }
+        .article-content ul, .article-content ol { margin: 1rem 0 1.25rem; padding-left: 1.5rem; }
+        .article-content li { font-size: 1rem; line-height: 1.7; color: var(--text); margin-bottom: 0.5rem; }
+        .article-content strong { font-weight: 600; color: var(--text); }
+        .table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+        .article-content table { width: 100%; border-collapse: collapse; margin: 0; font-size: 0.875rem; }
+        .article-content table th, .article-content table td {
+            padding: 0.75rem; text-align: left; border: 1px solid var(--border); vertical-align: top;
+        }
+        .article-content table th { background: var(--bg-subtle); font-weight: 600; color: var(--text); }
+        .article-content table tr:nth-child(even) { background: var(--bg-subtle); }
+        .article-content img {
+            display: block; max-width: min(100%, 720px); height: auto;
+            margin: 1rem auto 1.5rem; border-radius: var(--radius);
+        }
+        .article-content figure { margin: 1rem 0 1.5rem; }
+        .article-content figcaption {
+            text-align: center; font-size: 0.875rem; color: var(--text-muted); margin-top: -0.75rem;
+        }
+        .article-video {
+            width: 100%; margin: 1.25rem 0 1.75rem; border-radius: var(--radius-lg);
+            overflow: hidden; background: var(--surface); box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe { display: block; width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; }
+        .article-back { margin: 0 0 1.25rem; }
+        .article-content .photo-row {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 1rem 0 1.5rem;
+        }
+        .article-content .photo-row img {
+            width: auto;
+            max-width: 14rem;
+            max-height: 14rem;
+            height: 14rem;
+            object-fit: contain;
+            margin: 0;
+        }
+        .article-content .photo-row figure {
+            margin: 0;
+            flex: 1 1 12rem;
+            max-width: 18rem;
+            text-align: center;
+        }
+        .article-content .photo-row figcaption {
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 768px) { .article-content { padding: 1.5rem; } }
+
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+    <div class="article-container">
+        <header class="article-header">
+            <h1 class="article-title">Vaillant F28 Fault Code Repair</h1>
+            
+        </header>
+        <article class="article-content">
+<p><img alt="" loading="lazy" src="/fault-codes/vaillant-f28-fault-code-repair/images/Vaillant-F28.png"/></p>
+<h3>Models applicable to:</h3>
+<p>Ecotec Pro/Plus, Turbomax</p>
+<h3>F.28 Meaning</h3>
+<p>Failure during start-up: ignition unsuccessful</p>
+<h3>Causes</h3>
+<ul>
+<li class="">Gas meter defective or gas pressure regulator has triggered,</li>
+<li class="">air in gas,</li>
+<li class="">gas flow pressure too low,</li>
+<li class="">thermal isolator device (TAE) has triggered,</li>
+<li class="">condensate duct blocked,</li>
+<li class="">incorrect gas restrictor,</li>
+<li class="">incorrect ET gas valve,</li>
+<li class="">fault on the gas valve,</li>
+<li class="">multiple plug on PCB incorrectly plugged in,</li>
+<li class="">break in cable harness,</li>
+<li class="">ignition system (ignition transformer, ignition cable, ignition plug, ignition electrode) defective,</li>
+</ul>
+<p><img alt="vaillant electrode 0020133816" loading="lazy" src="/fault-codes/vaillant-f28-fault-code-repair/images/vaillant-electrode-0020133816.jpg"/></p>
+<p>vaillant electrode 0020133816</p>
+<ul>
+<li class="">ionisation current interrupted (cable, electrode),</li>
+<li class="">incorrect earthing of boiler,</li>
+<li class="">electronics defective</li>
+</ul>
+
+<h3>Solutions</h3>
+<p>1 . Check the gas meter has not been turned of accidentally or run out of credit if a prepayment meter. The number of times the gas lever has been found accidentally in the off or partially off position is surprising to clients.</p>
+<div class="photo-row">
+    <img alt="E6 Gas Meter" loading="lazy" src="/fault-codes/vaillant-f28-fault-code-repair/images/e6.jpg">
+    <img alt="U6 gas Meter" loading="lazy" src="/fault-codes/vaillant-f28-fault-code-repair/images/gas-meter.jpg">
+</div>
+
+
+
+
+
+
+<p>2. You may need to press the <strong>reset button a few times</strong> just in case it is a one off occurrence or for the gas supply to re-establish. Make sure to keep an eye on future occurrences as this may show that are more deeper issues with the boiler that may require a heating professional to have a look at the boiler.</p>
+<div class="photo-row">
+<figure><img alt="Ecotec Old F28 Reset Image" loading="lazy" src="/fault-codes/vaillant-f28-fault-code-repair/images/Ecotec-Old-F28-Reset.png"><figcaption>Vaillant F28. No 3 Reset Button</figcaption></figure>
+<figure><img alt="Vaillant Ecotec New Display F28 Reset Button" loading="lazy" src="/fault-codes/vaillant-f28-fault-code-repair/images/Ecotec-New-F28-Reset.png"><figcaption>Vaillant Ecotec New F28, No 3 Reset Button.</figcaption></figure>
+</div>
+<div><div class="article-video"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" loading="lazy" src="https://www.youtube.com/embed/ETnMxIJPXls" title="Video"></iframe></div></div>
+<p>3. If the weather is extremely cold make sure your condensate pipe has not frozen or got blocked. When weather is normally, blocked condensate pipework can be cause by debris or blocked pathways further down the line</p>
+<span><div class="article-video"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" loading="lazy" src="https://www.youtube.com/embed/FDJ1lhTvEgU" title="Video"></iframe></div></span>
+<p><em>Disclaimer: Above video is by Worcester Bosch and some parts may not be applicable to your boiler.</em></p>
+
+<p>4. Another common problem is the gas valve sticking due to the internal lubrication / seals hardening in cold weather, giving a the gas valve a gentle tap with a rubber object may allow it to free up.This technique can be improved by tapping while the boiler is in the process of ignition.Please note, this solution can only be carried out by a gas engineer as it requires the boiler case being removed in order to access the gas valve. Secondly as this is a gas appliance, it should only be done by a gas heating engineer.</p>
+<p><div><div class="article-video"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" loading="lazy" src="https://www.youtube.com/embed/uVNS767MAzU" title="Video"></iframe></div></div><br/>
+5. Get a qualified gas engineer to check internal wiring and state of boiler</p>
+
+
+
+<h3>Statistical Chances of Faults:</h3>
+<p>Following are the likely chances of certain faults from high to low.</p>
+<p>~<strong>39%</strong> chance of the gas valve being at fault.<br/>
+~<strong>32%</strong> chance of the gas supply being at fault<br/>
+~<strong>28%</strong> chance of other reasons causing the fault</p>
+<h3>Preventing frozen condensate pipework</h3>
+<p>A blocked or frozen condensate pipe is a common F.28. Prefer an internal discharge where the layout allows it.</p>
+<ul>
+<li>The boiler condensate connection is often 19 mm. Internal plastic waste is commonly 21.5 mm.</li>
+<li>If the pipe must run outside, 32 mm is the usual frost-risk size. Insulate it with exterior-grade insulation, keep the run short, and give it a continuous fall.</li>
+<li>40 mm is optional extra capacity, not a Vaillant-only rule.</li>
+<li>Trace heating can be used on exposed pipe if it is fitted to the trace-heating maker’s instructions.</li>
+</ul>
+<h3>Other</h3>
+<p>Do not confuse F.28 with <a href="/fault-codes/vaillant-f27-fault-code/">F.27</a> or <a href="/fault-codes/vaillant-f29-fault-code-repair/">F.29</a>.</p>
+<ul>
+<li><strong>F.27</strong> is flame simulation: the PCB sees a flame signal when the gas valve should be closed.</li>
+<li><strong>F.28</strong> is ignition unsuccessful at start-up: no flame is proved when the boiler first tries to light.</li>
+<li><strong>F.29</strong> is flame lost while running: ignition was OK, then the flame went out and re-ignition failed.</li>
+</ul>
+<h3>Part numbers</h3>
+<p>Confirm every spare against the boiler <strong>GC number</strong> and the current parts list. Numbers below are common examples, not a complete catalogue. Older valves and PCBs are range-specific and are often superseded.</p>
+<p><strong>Electrode</strong> — 0020133816 is a later ecoTEC ignition / ionisation electrode. Older ranges may use a different assembly (for example 090709). Always match the electrode and gasket to the burner door.</p>
+<p><strong>Gas valve 0020148381</strong> — common later ecoTEC Plus gas section (many VU xxx/5-5 and related Plus appliances). Use this in preference to guessing from an old list.</p>
+<p><strong>Older gas valves (often superseded)</strong></p>
+<ul>
+<li>053210 — TurboMAX / ThermoCompact VU and VUW 182–282 E (and similar).</li>
+<li>114189 — TurboMAX Plus / Pro and ThermoCompact 615–637.</li>
+<li>0020110996 — older ecoTEC Plus 624 / 831 and ecoMAX 828 type.</li>
+<li>0020110997 — older ecoTEC Plus 612 / 615 type.</li>
+</ul>
+<p><strong>Older PCBs (confirm year and GC; many later boards differ)</strong></p>
+<ul>
+<li>0020132764 — ecoTEC Pro 24/28 and Plus 824/831/837/937 up to about 2012.</li>
+<li>0020034604 — TurboMAX Plus / Pro 24E–837 type.</li>
+<li>0020036861 — ecoTEC Plus 415 / 418 / 428 / 438 type.</li>
+</ul>
+<p>A new PCB on later ecoTEC appliances usually needs the DSN set — see <a href="/fault-codes/vaillant-ecotec-f70-repair/">F.70</a>.</p>
+<p>F.28 work on the gas route, flue, or internals must be done by a Gas Safe registered engineer. Homeowners can check that the gas is on, that a prepayment meter has credit, and that the condensate pipe is not frozen, then reset the boiler.</p>
+        </article>
+    </div>
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>

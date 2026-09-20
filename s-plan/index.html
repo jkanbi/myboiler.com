@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S Plan & S Plan Plus - MyBoiler Hub</title>
+    <meta name="description" content="Complete guide to S Plan and S Plan Plus heating systems. Learn how zone valves, programmers, and thermostats work together for independent heating and hot water control.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+.article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 1rem;
+        }
+
+        .article-content h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.75rem;
+        }
+
+        .article-content ul {
+            margin: 1rem 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 1rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-video {
+            width: 100%;
+            margin: 1.25rem 0 1.75rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .article-video iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 0;
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <!-- Header with full navigation -->
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <div class="article-container">
+<header class="article-header">
+            <h1 class="article-title">S Plan & S Plan Plus</h1>
+            <p class="article-intro">
+                An S Plan heating system uses zone valves to provide independent time and temperature control for heating and hot water in a fully pumped system.
+            </p>
+        </header>
+
+        <article class="article-content">
+            <img src="/s-plan/images/s-plan-system.jpg" alt="S Plan heating system diagram" width="1431" height="805" loading="lazy">
+
+            <p>An S Plan heating system uses zone valves. Usually this system uses 2 of these together. It is designed to provide independent time and temperature control for both heating and hot water in a fully pumped system.</p>
+
+            <p>The following devices are commonly found in this system on the electrical side:</p>
+
+            <ul>
+                <li>Dual channel programmer (heating and hot water timing)</li>
+                <li>2 Port Zone valves Qty 2</li>
+                <li>Room thermostat</li>
+                <li>Cylinder Thermostat</li>
+            </ul>
+
+            <h2>How it works</h2>
+
+            <h3>Heating</h3>
+            <p>Your programmer is scheduled to switch on. When it actually switches on, it sends a voltage to the room thermostat. If the room thermostat says the zone/home is colder than the target temperature (i.e. room thermostat says 21 degrees, but the zone/home says it is 16 degrees inside) then it sends a signal to the zone valve to open up the water pathway so the boiler can switch on and start sending heated water by the pump to the heating system/radiators. This then starts warming up the home.</p>
+
+            <h3>Hot Water</h3>
+            <p>Your programmer is scheduled to switch on. When it actually switches on, it sends a voltage to the cylinder thermostat. If the cylinder thermostat says the cylinder is colder than the target temperature (i.e. thermostat says 60 degrees, but the water is at 40 degrees) then it sends a signal to the zone valve to open up the water pathway so the boiler can switch on and start sending heated water by the pump to the hot water cylinder coil. This then warms up the hot water indirectly.</p>
+
+            <p>Please note in both cases it takes approximately 10 seconds from once the voltage is sent to the zone valve, for it to then send a signal for the boiler to actually fire up and switch on.</p>
+
+            <img src="/s-plan/images/s-plan-plus-system.jpg" alt="S Plan Plus heating system diagram" width="1431" height="805" loading="lazy">
+
+            <h2>S Plan Plus</h2>
+            <p>S Plan Plus is simply an additional or 3rd zone valve added to control another heating circuit. For example, a zone valve for downstairs, a zone valve for upstairs and a zone valve for the hot water. You could equally have a zone valve for underfloor heating, and one for radiators etc. Simply put, it's 2 heating zones and a hot water zone.</p>
+
+            <h2>Common fault finding videos</h2>
+            <div class="article-video">
+                <iframe
+                    src="https://www.youtube.com/embed/2jZ33ZCmoyE"
+                    title="How to check a 2 port zone (Honeywell type) valve is working"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+></iframe>
+            </div>
+            <div class="article-video">
+                <iframe
+                    src="https://www.youtube.com/embed/Cck7wmOHB7M"
+                    title="How to manually open a 2 Port Honeywell or equivalent zone valve"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+></iframe>
+            </div>
+        </article>
+    </div>
+
+    
+
+    
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaillant Fault Codes - MyBoiler Hub</title>
+    <meta name="description" content="Vaillant boiler fault codes with meanings, causes, and repair guides for ecotec and other digital Vaillant models.">
+    <link rel="canonical" href="/fault-codes/vaillant-fault-codes/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .article-header { margin-bottom: 2.5rem; }
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+        }
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+        .article-content p { font-size: 1rem; line-height: 1.7; color: var(--text); margin: 0 0 1.25rem; }
+        .article-content h2 { font-size: 1.5rem; font-weight: 700; color: var(--text); margin: 2rem 0 1rem; }
+        .article-content h3 { font-size: 1.25rem; font-weight: 600; color: var(--text); margin: 1.5rem 0 1rem; }
+        .article-content h4 { font-size: 1.125rem; font-weight: 600; color: var(--text); margin: 1.25rem 0 0.75rem; }
+        .article-content ul, .article-content ol { margin: 1rem 0 1.25rem; padding-left: 1.5rem; }
+        .article-content li { font-size: 1rem; line-height: 1.7; color: var(--text); margin-bottom: 0.5rem; }
+        .article-content strong { font-weight: 600; color: var(--text); }
+        .table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+        .article-content table { width: 100%; border-collapse: collapse; margin: 0; font-size: 0.875rem; }
+        .article-content table th, .article-content table td {
+            padding: 0.75rem; text-align: left; border: 1px solid var(--border); vertical-align: top;
+        }
+        .article-content table th { background: var(--bg-subtle); font-weight: 600; color: var(--text); }
+        .article-content table tr:nth-child(even) { background: var(--bg-subtle); }
+        .article-content img {
+            display: block; max-width: min(100%, 720px); height: auto;
+            margin: 1rem auto 1.5rem; border-radius: var(--radius);
+        }
+        .article-content figure { margin: 1rem 0 1.5rem; }
+        .article-content figcaption {
+            text-align: center; font-size: 0.875rem; color: var(--text-muted); margin-top: -0.75rem;
+        }
+        .article-video {
+            width: 100%; margin: 1.25rem 0 1.75rem; border-radius: var(--radius-lg);
+            overflow: hidden; background: var(--surface); box-shadow: var(--shadow-sm);
+        }
+        .article-video iframe { display: block; width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; }
+        .article-back { margin: 0 0 1.25rem; }
+        @media (max-width: 768px) { .article-content { padding: 1.5rem; } }
+
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+    <div class="article-container">
+        <header class="article-header">
+            <h1 class="article-title">Vaillant Fault Codes</h1>
+            <p class="article-intro">
+                Fault codes, meanings, and causes for Vaillant boilers, with repair guides where we have them.
+            </p>
+
+        </header>
+        <article class="article-content">
+<h3>Brand Specific Information</h3>
+<p>Fault codes take priority over all other display functions in the event of a system fault occurring. If multiple faults occur, the corresponding fault codes are displayed alternately for about two seconds each. Shown below is the procedure to access fault code history for most digital Vaillant boilers.</p>
+
+
+<h3>Fault Memory</h3>
+<p><strong><em>Older Ecotecs</em></strong><br/>
+8.1.4 Fault memory</p>
+<p>The fault memory stores details of the ten most recent faults.</p>
+<p>• Press the ”i” and ”–” buttons simultaneously.</p>
+<p>• Use the ”+” button to scroll back through the list of memorised errors. To cancel fault error memory display mode, proceed as follows:</p>
+<p>• Press the ”i” button below the display or</p>
+<p>• Do not touch any key for about four minutes. The display will now revert back to showing the current flow temperature.</p>
+<p><em><strong>New Ecotecs</strong></em></p>
+<ul>
+<li>Access through the digital menu</li>
+</ul>
+
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Code</th><th>Repair</th><th>Meaning</th><th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F.00</td><td><a href="/fault-codes/vaillant-f00-fault-code/">Link</a></td><td>Flow temperature sensor interruption</td><td>NTC plug not plugged in or has come loose, multiple plug on the PCB not plugged in correctly, interruption in cable harness, NTC defective</td>
+</tr>
+<tr>
+<td>F.01</td><td><a href="/fault-codes/vaillant-f01-fault-code/">Link</a></td><td>Return temperature sensor interruption</td><td>NTC plug not plugged in or has come loose, multiple plug on the PCB not plugged in correctly, interruption in cable harness, NTC defective</td>
+</tr>
+<tr>
+<td>F.02</td><td><a href="/fault-codes/vaillant-f02-fault-code/">Link</a></td><td>Interruption cylinder charging sensor actoSTOR (NTC) only in combination with F.91</td><td>NTC defective, NTC cable defective, defective plug connection on NTC, defective plug connection on actoSTOR electronics</td>
+</tr>
+<tr>
+<td>F.03</td><td><a href="/fault-codes/vaillant-f03-fault-code/">Link</a></td><td>Interruption cylinder sensor actoSTOR (NTC) only in combination with F.91</td><td>NTC defective, NTC cable defective, defective plug connection on NTC, defective plug connection on actoSTOR electronics</td>
+</tr>
+<tr>
+<td>F.10</td><td><a href="/fault-codes/vaillant-f10-fault-code/">Link</a></td><td>Flow NTC short circuit</td><td>NTC defective, short circuit in cable harness, cable/casing</td>
+</tr>
+<tr>
+<td>F.11</td><td><a href="/fault-codes/vaillant-f11-fault-code/">Link</a></td><td>Return NTC short circuit</td><td>NTC defective, short circuit in cable harness, cable/casing</td>
+</tr>
+<tr>
+<td>F.12</td><td><a href="/fault-codes/vaillant-f12-fault-code/">Link</a></td><td>Short circuit at cylinder charging sensor (NTC) only in combination with F.91</td><td>NTC defective, short circuit in cable harness, cable/casing</td>
+</tr>
+<tr>
+<td>F.13</td><td><a href="/fault-codes/vaillant-f13-fault-code/">Link</a></td><td> VU-/VUW boiler: Short circuit warm start sensor/<br/>
+cylinder sensor<br/>
+VUW boiler with actoSTOR: Short circuit cylinder<br/>
+sensor (NTC) only in combination with F.91</td><td>NTC defective, short circuit in cable harness, cable/casing</td>
+</tr>
+<tr>
+<td>F.20</td><td><a href="/fault-codes/vaillant-f20-fault-code/">Link</a></td><td>Safety switch-off: temperature limiter</td><td>Incorrect earth connection between cable harness and boiler, flow or<br/>
+return NTC defective (loose connection), black discharge via ignition<br/>
+cable, ignition plug or ignition electrode</td>
+</tr>
+<tr>
+<td>F.22</td><td><a href="/fault-codes/vaillant-f22-fault-code-repair/">Link</a></td><td>Safety switch-off: low water pressure</td><td>No or to low water pressure in the boiler, water pressure sensor defective, cable to pump or water pressure sensor loose/not connected/defective</td>
+</tr>
+<tr>
+<td>F.23</td><td><a href="/fault-codes/vaillant-f23-fault-code/">Link</a></td><td>Safety switch-off: Temperature difference too great</td><td>Pump blocked, insufficient pump output, air in boiler, flow and return NTC interchanged</td>
+</tr>
+<tr>
+<td>F.24</td><td><a href="/fault-codes/vaillant-f24-fault-code/">Link</a></td><td>Safety switch-off: Temperature rise too fast</td><td>Pump blocked, poor pump performance, air in boiler, system pressure too low, non-return valve blocks/incorrectly installed</td>
+</tr>
+<tr>
+<td>F.25</td><td><a href="/fault-codes/vaillant-f25-fault-code/">Link</a></td><td>Safety switch-off: Flue gas temperature too high</td><td>Break in plug connection for optional flue gas safety thermostat (STB), break in cable harness</td>
+</tr>
+<tr>
+<td>F.26</td><td><a href="/fault-codes/vaillant-f26-fault-code/">Link</a></td><td>Fault: Gas valve without function</td><td>Gas valve stepper motor not connected, multiple plug on the PCB not plugged in correctly, interruption in cable harness, gas valve stepper motor defective, electronics defective</td>
+</tr>
+<tr>
+<td>F.27</td><td><a href="/fault-codes/vaillant-f27-fault-code/">Link</a></td><td>Safety switch-off: Flame simulation</td><td>Moisture on the electronics, electronics (flame monitor) defective, gas solenoid valve leaking</td>
+</tr>
+<tr>
+<td>F.28</td><td><a href="/fault-codes/vaillant-f28-fault-code-repair/">Link</a></td><td>Failure during start-up: ignition unsuccessful</td><td>Gas meter defective or gas pressure regulator has triggered, air in gas,<br/>
+gas flow pressure too low, thermal isolator device (TAE) has triggered,<br/>
+condensate duct blocked, incorrect gas restrictor, incorrect ET gas valve,<br/>
+fault on the gas valve, multiple plug on PCB incorrectly plugged in, break<br/>
+ in cable harness, ignition system (ignition transformer, ignition cable,<br/>
+ ignition plug, ignition electrode) defective, ionisation current interrupted<br/>
+ (cable, electrode), incorrect earthing of boiler, electronics defective</td>
+</tr>
+<tr>
+<td>F.29</td><td><a href="/fault-codes/vaillant-f29-fault-code-repair/">Link</a></td><td>Failure during operation: Re-ignition unsuccessful</td><td>Gas supply temporarily stopped, flue gas recirculation, condensate duct<br/>
+blocked, faulty earthing of boiler, ignition transformer has spark failure</td>
+</tr>
+<tr>
+<td>F.32</td><td><a href="/fault-codes/vaillant-f32-fault-code/">Link</a></td><td>Fan Fault</td><td>Plug at fan not correctly plugged in, multiple plug on PCB not correctly plugged in, break in cable harness, fan blocked, Hall sensor defective, electronics defective</td>
+</tr>
+<tr>
+<td>F.35</td><td><a href="/fault-codes/vaillant-f35-fault-code/">Link</a></td><td>Air/flue gas duct fault</td><td>Air/flue gas duct blocked</td>
+</tr>
+<tr>
+<td>F.42</td><td><a href="/fault-codes/vaillant-f42-fault-code/">Link</a></td><td>Coding resistor fault (possible in combination with F.70)</td><td>Short circuit/interruption in coding resistor output range (in cable harness<br/>
+at heat exchanger) or gas group resistor (on PCB)</td>
+</tr>
+<tr>
+<td>F.49</td><td><a href="/fault-codes/vaillant-f49-fault-code/">Link</a></td><td>eBUS fault</td><td>Short circuit on the eBUS, eBUS overload or two power supplies with different polarities on the eBUS</td>
+</tr>
+<tr>
+<td>F.52</td><td><a href="/fault-codes/vaillant-f52-and-f53-fault-code/">Link</a></td><td>Mass flow sensor connection fault</td><td>Mass flow sensor not connected/disconnected, plug not connected or incorrectly connected</td>
+</tr>
+<tr>
+<td>F.53</td><td><a href="/fault-codes/vaillant-f52-and-f53-fault-code/">Link</a></td><td>Mass flow sensor fault</td><td>Mass flow sensor faulty, filter below venturi filter cap wet or blocked, gas flow pressure too low</td>
+</tr>
+<tr>
+<td>F.54</td><td><a href="/fault-codes/vaillant-f54-fault-code/">Link</a></td><td>Gas pressure fault (in combination with F.28/F.29)</td><td>No or too little gas supply pressure, gas valve closed</td>
+</tr>
+<tr>
+<td>F.56</td><td><a href="/fault-codes/vaillant-f56-fault-code/">Link</a></td><td>Fault: Mass flow sensor regulation</td><td>Gas valve defective, cable harness to gas valve defective</td>
+</tr>
+<tr>
+<td>F.57</td><td><a href="/fault-codes/vaillant-f57-fault-code/">Link</a></td><td>Fault during comfort safety mode</td><td>Ignition electrode highly corroded</td>
+</tr>
+<tr>
+<td>F.61</td><td><a href="/fault-codes/vaillant-f61-fault-code-repair/">Link</a></td><td>Fault: Gas valve regulation</td><td>Short circuit/short to earth in cable harness for the gas valve Gas valve defective (coils shorted to earth) Electronic defective</td>
+</tr>
+<tr>
+<td>F.62</td><td><a href="/fault-codes/vaillant-f62-fault-code-repair/">Link</a></td><td>Fault: Gas valve switch-off delay</td><td>Delayed shutdown of gas valve Delayed extinguishing of flame signal Gas valve leaking Electronics defective</td>
+</tr>
+<tr>
+<td>F.63</td><td><a href="/fault-codes/vaillant-f63-fault-code/">Link</a></td><td>EEPROM error</td><td>Electronics defective</td>
+</tr>
+<tr>
+<td>F.64</td><td><a href="/fault-codes/vaillant-f64-fault-code/">Link</a></td><td>Electronics/NTC fault</td><td>Supply or return NTC short circuited, electronics defective</td>
+</tr>
+<tr>
+<td>F.65</td><td><a href="/fault-codes/vaillant-f65-fault-code/">Link</a></td><td>Electronic temperature fault</td><td>Electronics overheating due to external influences, electronics defective</td>
+</tr>
+<tr>
+<td>F.67</td><td><a href="/fault-codes/vaillant-f67-fault-code/">Link</a></td><td>Electronics/flame fault</td><td>Implausible flame signal, electronics defective</td>
+</tr>
+<tr>
+<td>F.68</td><td><a href="/fault-codes/vaillant-f68-fault-code/">Link</a></td><td>Unstable flame signal fault</td><td>Air in gas, gas flow pressure too low, wrong air ratio, condensate route blocked, wrong gas restrictor, ionisation flow interruption (cables, electrodes), flue gas recirculation, condensate route</td>
+</tr>
+<tr>
+<td>F.70</td><td><a href="/fault-codes/vaillant-ecotec-f70-repair/">Link</a></td><td>Invalid device specific number (DSN)</td><td>Spare part case: Display and PCB replaced at same time and DSN not set, wrong or missing output range coding resistor</td>
+</tr>
+<tr>
+<td>F.71</td><td><a href="/fault-codes/vaillant-f71-fault-code/">Link</a></td><td>Flow NTC fault</td><td>Flow temperature sensor signalling constant value:<br/>
+-Flow temperature sensor incorrectly positioned at supply pipe <br/>
+-Flow temperature sensor defective</td>
+</tr>
+<tr>
+<td>F.72</td><td><a href="/fault-codes/vaillant-f72-fault-code/">Link</a></td><td>Flow/return NTC fault</td><td>Flow/return NTC temperature difference too great ÌÎå«_ÌÎÌ__ÌÎÌ_Ì´Ìö flow and/or return temperature sensor defective</td>
+</tr>
+<tr>
+<td>F.73</td><td><a href="/fault-codes/vaillant-f73-fault-code/">Link</a></td><td>Water pressure sensor signal in the wrong range (too low)</td><td>Interruption/short circuit of water pressure sensor, interruption/short circuit to GND in supply line to water pressure sensor or water pressure sensor defective</td>
+</tr>
+<tr>
+<td>F.74</td><td><a href="/fault-codes/vaillant-f74-fault-code/">Link</a></td><td>Water pressure sensor signal outside correct range (too low)</td><td>Cable to water pressure sensor has short-circuitedd at 5V/24 V or internal fault in water pressure sensor</td>
+</tr>
+<tr>
+<td>F.75</td><td><a href="/fault-codes/vaillant-f75-fault-code-repair/">Link</a></td><td>Fault, no pressure change detection when starting pump</td><td>Water pressure sensor and/or pump defective, air in heating installation,<br/>
+too low water pressure in boiler; check adjustable bypass, connect external<br/>
+expansion vessel to return</td>
+</tr>
+<tr>
+<td>F.76</td><td><a href="/fault-codes/vaillant-f76-fault-code/">Link</a></td><td>Overheating protection on primary heat exchanger has responded</td><td>Cable or cable connections for safety fuse in primary heat exchanger or primary heat exchanger defective</td>
+</tr>
+<tr>
+<td>F.77</td><td><a href="/fault-codes/vaillant-f77-fault-code/">Link</a></td><td>Flue non-return flap/condensate pump fault</td><td>No response from flue non-return flap or condensate pump defective</td>
+</tr>
+<tr>
+<td>F.78</td><td><a href="/fault-codes/vaillant-f78-fault-code/">Link</a></td><td>Interruption to DHW outlet sensor at external controller</td><td>UK link box is connected, but hot water NTC not bridged</td>
+</tr>
+<tr>
+<td>F.83</td><td><a href="/fault-codes/vaillant-f83-fault-code/">Link</a></td><td>Flow and/or return temperature sesnsor temperature change fault</td><td>When the burner starts, the temperature change registered at flow and/or return temperature sensor is non-existant or too small. Not enough water in the boiler Flow and/or return temperature sensor not in correct position at pipe</td>
+</tr>
+<tr>
+<td>F.84</td><td><a href="/fault-codes/vaillant-f84-fault-code/">Link</a></td><td>Fault: Flow/return temperature sensor difference implausible</td><td>Flow and return temperature sensors return implausible values<br/>
+- Flow and return temperature sensors have been inverted <br/>
+- Flow and return temperature sensors have not been correctly fitted</td>
+</tr>
+<tr>
+<td>F.85</td><td><a href="/fault-codes/vaillant-f85-fault-code/">Link</a></td><td>Fault: Flow and return temperature sensors incorrectly fitted</td><td>Flow and/or return temperature sensors <br/>
+have been fitted to the same pipe/wrong pipe</td>
+</tr>
+<tr>
+<td>F.92</td><td><a href="/fault-codes/vaillant-f92-fault-code/">Link</a></td><td>Coding resistor fault</td><td>The coding resistor on the PCB does not match the entered gas family. <br/>
+Check the resistor, repeat the gas family check and enter the correct gas family.</td>
+</tr>
+<tr>
+<td>F.93</td><td><a href="/fault-codes/vaillant-f93-fault-code/">Link</a></td><td>Gas group fault</td><td>Combustion quality outside the permitted range: Wrong gas restrictor,<br/>
+recirculation, wrong gas family, internal pressure measuring point in ven-<br/>
+turi blocked (do not use lubricant on O-ring in venturi.). Gas family check <br/>
+prematurely terminated.</td>
+</tr>
+<tr>
+<td>Com</td><td><a href="/fault-codes/vaillant-com-fault-code/">Link</a></td><td>Communication Fault;<br/>
+No communication with PCB</td><td></td>
+</tr>
+</tbody>
+</table></div>
+
+
+<div><div class="article-video"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" loading="lazy" src="https://www.youtube.com/embed/8hslEHQjJ08" title="YouTube player"></iframe></div></div>
+        </article>
+    </div>
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>

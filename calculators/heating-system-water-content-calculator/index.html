@@ -3,49 +3,822 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting to Heating System Water Content Calculator...</title>
-    <link rel="canonical" href="https://myboiler.com/hub/calculators/heating-system-water-content-calculator/" />
-    <meta http-equiv="refresh" content="0; url=/hub/calculators/heating-system-water-content-calculator/" />
-    <script type="text/javascript" data-cfasync="false">
-        window.location.replace('/hub/calculators/heating-system-water-content-calculator/');
-    </script>
+    <title>Heating System Water Content Calculator - MyBoiler.com</title>
+    <meta name="description" content="Approximate heating-system water content from Wolseley CenterRad and Ultraheat Compact 4 panels plus copper Table X pipework, for vessel sizing and inhibitor dosing.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .calculator-page {
             min-height: 100vh;
-            margin: 0;
-            background: #f5f5f5;
-            color: #333;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
         }
-        .redirect-message {
+
+        .calculator-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .calculator-header {
             text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .calculator-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .calculator-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0 auto;
+            max-width: 62ch;
+        }
+
+        .calculator-card {
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
             padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 1.5rem;
         }
-        .redirect-message h1 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 0.5rem;
         }
-        .redirect-message p {
-            margin-bottom: 1rem;
+
+        .section-note {
+            font-size: 0.9375rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0 0 1.25rem;
         }
-        .redirect-message a {
-            color: #1863DC;
-            text-decoration: none;
+
+        .calc-figure {
+            display: block;
+            max-width: min(100%, 280px);
+            height: auto;
+            margin: 0 auto 1.5rem;
+            border-radius: var(--radius);
+            background: var(--bg);
+        }
+
+        .calc-figure--pipe {
+            max-width: min(100%, 220px);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+
+        .input-select,
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            font-weight: 500;
+            box-sizing: border-box;
+        }
+
+        .input-select:focus,
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .input-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to right, var(--accent) 0%, var(--accent) 0%, var(--border) 0%);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .input-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(24, 99, 220, 0.3);
+            margin-top: -8px;
+        }
+
+        .input-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            background: var(--accent);
+            cursor: pointer;
+            border: none;
+        }
+
+        .input-slider::-webkit-slider-runnable-track,
+        .input-slider::-moz-range-track {
+            width: 100%;
+            height: 8px;
+            background: transparent;
+            border-radius: 4px;
+        }
+
+        .slider-value-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.75rem;
+        }
+
+        .slider-value {
+            font-size: 1.25rem;
+            color: var(--accent);
             font-weight: 600;
         }
-        .redirect-message a:hover {
-            text-decoration: underline;
+
+        .result-row {
+            display: flex;
+            align-items: stretch;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .result-section {
+            flex: 1;
+            background: #e8f8e8;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .add-to-totals {
+            flex: 0 0 auto;
+            align-self: center;
+            padding: 0.9rem 1.15rem;
+            border: none;
+            border-radius: var(--radius);
+            background: var(--accent);
+            color: #fff;
+            font: inherit;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .add-to-totals:hover,
+        .add-to-totals:focus {
+            filter: brightness(1.05);
+            outline: none;
+        }
+
+        .add-to-totals:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            filter: none;
+        }
+
+        .add-to-totals.is-added {
+            background: #2f8f46;
+        }
+
+        .add-to-totals--compact {
+            padding: 0.55rem 0.9rem;
+            font-size: 0.8125rem;
+        }
+
+        .pipe-add-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-top: 0.75rem;
+        }
+
+        .pipe-litres {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .result-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .result-unit {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+        }
+
+        .sum-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .sum-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            min-width: 0;
+        }
+
+        .sum-name {
+            width: 100%;
+            padding: 0.15rem 0.35rem;
+            font: inherit;
+            font-size: 0.75rem;
+            font-weight: 500;
+            line-height: 1.3;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background: transparent;
+            color: var(--text);
+            box-sizing: border-box;
+        }
+
+        .sum-name::placeholder {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .sum-name:hover,
+        .sum-name:focus {
+            border-color: var(--border);
+            background: var(--bg);
+            outline: none;
+        }
+
+        .sum-input-row {
+            display: flex;
+            align-items: stretch;
+            gap: 0.35rem;
+        }
+
+        .sum-input-row .input-field {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .sum-clear {
+            flex: 0 0 2.35rem;
+            width: 2.35rem;
+            padding: 0;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text-muted);
+            font: inherit;
+            font-size: 1.15rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .sum-clear:hover,
+        .sum-clear:focus {
+            border-color: #c0392b;
+            color: #c0392b;
+            outline: none;
+        }
+
+        .more-fields {
+            display: none;
+            margin: 0 0 1rem;
+        }
+
+        .more-fields.is-open {
+            display: grid;
+        }
+
+        .text-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0 1rem;
+            padding: 0.6rem 1.1rem;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: var(--surface);
+            color: var(--text);
+            font: inherit;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            cursor: pointer;
+        }
+
+        .text-button:hover,
+        .text-button:focus {
+            border-color: var(--accent);
+        }
+
+        .calculator-disclaimer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 70ch;
+            margin: 0.5rem auto 1rem;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        @media (max-width: 700px) {
+            .sum-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calculator-container {
+                padding: 1.25rem 12px;
+            }
+
+            .calculator-card {
+                padding: 1.15rem;
+            }
+
+            .result-value {
+                font-size: 2rem;
+            }
+
+            .sum-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .result-row {
+                flex-direction: column;
+            }
+
+            .add-to-totals {
+                width: 100%;
+            }
         }
     </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
 </head>
-<body>
-    <div class="redirect-message">
-        <h1>Page Moved</h1>
-        <p>The Heating System Water Content Calculator has moved to a new location.</p>
-        <p>If you are not redirected automatically, <a href="/hub/calculators/heating-system-water-content-calculator/">click here</a>.</p>
+<body class="calculator-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h1 class="calculator-headline">Heating System Water Content Calculator</h1>
+            <p class="calculator-connector">
+                Approximate litres in steel panels and copper Table X pipe. Use Add to totals to send each answer into the sum at the bottom, then use that figure for expansion-vessel size and inhibitor dose.
+            </p>
+        </div>
+
+        <div class="calculator-card">
+            <h2 class="section-title">Center radiators</h2>
+            <p class="section-note">Wolseley CenterRad style compact panels. Select type and height, then length, for litres in one radiator.</p>
+            <img class="calc-figure" src="images/wolseley-centerrad-image.png" width="274" height="244" alt="Wolseley CenterRad compact panel radiator">
+
+            <div class="input-group">
+                <label class="input-label" for="center-type">Type and Height (mm)</label>
+                <select id="center-type" class="input-select">
+                    <option value="2.8">Type 11 - 300mm</option>
+                    <option value="3.4">Type 11 - 450mm</option>
+                    <option value="4.1">Type 11 - 600mm</option>
+                    <option value="4.9">Type 11 - 700mm</option>
+                    <option value="5.7">Type 21/22 - 300mm</option>
+                    <option value="6.7">Type 21/22 - 450mm</option>
+                    <option value="8.3">Type 21/22 - 600mm</option>
+                    <option value="9.9">Type 21/22 - 700mm</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <div class="slider-value-display">
+                    <label class="input-label" for="center-length" style="margin-bottom: 0;">Length (mm)</label>
+                    <span class="slider-value" id="center-length-value">300</span>
+                </div>
+                <input type="range" id="center-length" class="input-slider" min="300" max="2000" step="100" value="300">
+            </div>
+
+            <div class="result-row">
+                <div class="result-section">
+                    <div class="result-label">Water Content</div>
+                    <div class="result-value" id="center-result">0.84</div>
+                    <div class="result-unit">Litres (L)</div>
+                </div>
+                <button type="button" class="add-to-totals" data-result="center-result">Add to totals</button>
+            </div>
+        </div>
+
+        <div class="calculator-card">
+            <h2 class="section-title">Ultraheat Compact 4</h2>
+            <p class="section-note">Select type and height, then length, for approximate litres in one Ultraheat Compact 4 panel.</p>
+            <img class="calc-figure" src="images/Compact-4-range-ultraheat-white-panal-1.jpg" width="900" height="900" alt="Ultraheat Compact 4 white panel radiator range">
+
+            <div class="input-group">
+                <label class="input-label" for="ultra-type">Type and Height (mm)</label>
+                <select id="ultra-type" class="input-select">
+                    <optgroup label="Single Type 11">
+                        <option value="2.6">Single Type 11 - 300mm</option>
+                        <option value="2.73">Single Type 11 - 400mm</option>
+                        <option value="2.87">Single Type 11 - 500mm</option>
+                        <option value="3.00">Single Type 11 - 600mm</option>
+                        <option value="3.30">Single Type 11 - 700mm</option>
+                        <option value="3.9">Single Type 11 - 900mm</option>
+                    </optgroup>
+                    <optgroup label="P+ / Double Type 21/22">
+                        <option value="3.5">P+/Double Type 21/22 - 300mm</option>
+                        <option value="4.27">P+/Double Type 21/22 - 400mm</option>
+                        <option value="5.03">P+/Double Type 21/22 - 500mm</option>
+                        <option value="5.80">P+/Double Type 21/22 - 600mm</option>
+                        <option value="6.43">P+/Double Type 21/22 - 700mm</option>
+                        <option value="7.70">P+/Double Type 21/22 - 900mm</option>
+                    </optgroup>
+                    <optgroup label="Double Type 22">
+                        <option value="2.72">Double Type 22 - 200mm</option>
+                    </optgroup>
+                    <optgroup label="Triple Type 33">
+                        <option value="4.05">Triple Type 33 - 200mm</option>
+                        <option value="5.20">Triple Type 33 - 300mm</option>
+                        <option value="6.36">Triple Type 33 - 400mm</option>
+                        <option value="7.59">Triple Type 33 - 500mm</option>
+                        <option value="8.78">Triple Type 33 - 600mm</option>
+                        <option value="9.69">Triple Type 33 - 700mm</option>
+                        <option value="11.50">Triple Type 33 - 900mm</option>
+                    </optgroup>
+                    <optgroup label="Quadruple Type 44">
+                        <option value="5.4">Quadruple Type 44 - 200mm</option>
+                        <option value="8.10">Quadruple Type 44 - 300mm</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <div class="slider-value-display">
+                    <label class="input-label" for="ultra-length" style="margin-bottom: 0;">Length (mm)</label>
+                    <span class="slider-value" id="ultra-length-value">200</span>
+                </div>
+                <input type="range" id="ultra-length" class="input-slider" min="200" max="3000" step="100" value="200">
+            </div>
+
+            <div class="result-row">
+                <div class="result-section">
+                    <div class="result-label">Water Content</div>
+                    <div class="result-value" id="ultra-result">0.52</div>
+                    <div class="result-unit">Litres (L)</div>
+                </div>
+                <button type="button" class="add-to-totals" data-result="ultra-result">Add to totals</button>
+            </div>
+        </div>
+
+        <div class="calculator-card">
+            <h2 class="section-title">Pipework</h2>
+            <p class="section-note">Copper tube (Table X) water content. Enter metres of 15 mm, 22 mm and 28 mm, then add each size — or the pipework total — into the sum.</p>
+            <img class="calc-figure calc-figure--pipe" src="images/copper-pipework.jpg" width="1000" height="869" alt="Copper heating pipework">
+
+            <div class="input-group">
+                <div class="slider-value-display">
+                    <label class="input-label" for="pipe-15" style="margin-bottom: 0;">15 mm copper tube (m)</label>
+                    <span class="slider-value" id="pipe-15-value">0.0</span>
+                </div>
+                <input type="range" id="pipe-15" class="input-slider" min="0" max="100" step="0.1" value="0">
+                <div class="pipe-add-row">
+                    <span class="pipe-litres"><span id="pipe-15-litres">0.00</span> L</span>
+                    <button type="button" class="add-to-totals add-to-totals--compact" data-result="pipe-15-litres" disabled>Add to totals</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="slider-value-display">
+                    <label class="input-label" for="pipe-22" style="margin-bottom: 0;">22 mm copper tube (m)</label>
+                    <span class="slider-value" id="pipe-22-value">0.0</span>
+                </div>
+                <input type="range" id="pipe-22" class="input-slider" min="0" max="100" step="0.1" value="0">
+                <div class="pipe-add-row">
+                    <span class="pipe-litres"><span id="pipe-22-litres">0.00</span> L</span>
+                    <button type="button" class="add-to-totals add-to-totals--compact" data-result="pipe-22-litres" disabled>Add to totals</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="slider-value-display">
+                    <label class="input-label" for="pipe-28" style="margin-bottom: 0;">28 mm copper tube (m)</label>
+                    <span class="slider-value" id="pipe-28-value">0.0</span>
+                </div>
+                <input type="range" id="pipe-28" class="input-slider" min="0" max="100" step="0.1" value="0">
+                <div class="pipe-add-row">
+                    <span class="pipe-litres"><span id="pipe-28-litres">0.00</span> L</span>
+                    <button type="button" class="add-to-totals add-to-totals--compact" data-result="pipe-28-litres" disabled>Add to totals</button>
+                </div>
+            </div>
+
+            <div class="result-row">
+                <div class="result-section">
+                    <div class="result-label">Pipework Total</div>
+                    <div class="result-value" id="pipe-result">0.00</div>
+                    <div class="result-unit">Litres (L)</div>
+                </div>
+                <button type="button" class="add-to-totals" data-result="pipe-result" disabled>Add to totals</button>
+            </div>
+        </div>
+
+        <div class="calculator-card">
+            <h2 class="section-title">Sum totals</h2>
+            <p class="section-note">Each Add to totals click fills the next empty slot and a small name. Edit the name if you like, or type one yourself. Use the × to drop a line from the sum. Use the total for buffers, <a href="/heating-expansion-vessel-calculator/">expansion vessel sizing</a>, and <a href="/inhibitor-dosing/">inhibitor dosing</a>.</p>
+
+            <div class="sum-grid" id="sum-main"></div>
+            <button type="button" class="text-button" id="sum-more-btn">Add more fields</button>
+            <div class="sum-grid more-fields" id="sum-more"></div>
+
+            <div class="result-section">
+                <div class="result-label">Answer: Water Content</div>
+                <div class="result-value" id="sum-result">0.00</div>
+                <div class="result-unit">Litres (L)</div>
+            </div>
+        </div>
+
+        <div class="calculator-disclaimer">
+            <strong>Important:</strong> Panel figures are approximate litres per metre of that type and height, taken from the original Hub calculator (CenterRad and Ultraheat Compact 4). Pipe figures are copper Table X: 0.1416 L/m (15 mm), 0.3140 L/m (22 mm), 0.5308 L/m (28 mm). Manufacturer data can differ. Always check the radiator schedule and a Gas Safe engineer’s survey before dosing or sizing a vessel.
+        </div>
     </div>
+
+    <script type="text/javascript" data-cfasync="false">
+        document.addEventListener('DOMContentLoaded', function() {
+            const PIPE = { 15: 0.1416, 22: 0.3140, 28: 0.5308 };
+
+            function prec(value, decimals) {
+                const factor = Math.pow(10, decimals);
+                return Math.round(value * factor) / factor;
+            }
+
+            function fillSlider(slider) {
+                const value = parseFloat(slider.value);
+                const min = parseFloat(slider.min);
+                const max = parseFloat(slider.max);
+                const percentage = max === min ? 0 : ((value - min) / (max - min)) * 100;
+                slider.style.background = 'linear-gradient(to right, var(--accent) 0%, var(--accent) ' + percentage + '%, var(--border) ' + percentage + '%)';
+            }
+
+            function bindRad(prefix, lengthId) {
+                const typeEl = document.getElementById(prefix + '-type');
+                const lengthEl = document.getElementById(lengthId);
+                const lengthVal = document.getElementById(prefix + '-length-value');
+                const resultEl = document.getElementById(prefix + '-result');
+
+                function calculate() {
+                    const factor = parseFloat(typeEl.value);
+                    const lengthMm = parseFloat(lengthEl.value);
+                    lengthVal.textContent = String(lengthMm);
+                    resultEl.textContent = prec((lengthMm / 1000) * factor, 2).toFixed(2);
+                    fillSlider(lengthEl);
+                    syncAddButton(prefix + '-result');
+                }
+
+                typeEl.addEventListener('change', calculate);
+                lengthEl.addEventListener('input', calculate);
+                calculate();
+            }
+
+            bindRad('center', 'center-length');
+            bindRad('ultra', 'ultra-length');
+
+            const pipeIds = ['pipe-15', 'pipe-22', 'pipe-28'];
+            const pipeResult = document.getElementById('pipe-result');
+
+            function calculatePipe() {
+                let total = 0;
+                pipeIds.forEach(function(id) {
+                    const slider = document.getElementById(id);
+                    const metres = parseFloat(slider.value) || 0;
+                    const size = id.split('-')[1];
+                    const litres = prec(metres * PIPE[size], 2);
+                    document.getElementById(id + '-value').textContent = metres.toFixed(1);
+                    document.getElementById(id + '-litres').textContent = litres.toFixed(2);
+                    total += metres * PIPE[size];
+                    fillSlider(slider);
+                    syncAddButton(id + '-litres');
+                });
+                pipeResult.textContent = prec(total, 2).toFixed(2);
+                syncAddButton('pipe-result');
+            }
+
+            pipeIds.forEach(function(id) {
+                document.getElementById(id).addEventListener('input', calculatePipe);
+            });
+            calculatePipe();
+
+            const sumMain = document.getElementById('sum-main');
+            const sumMore = document.getElementById('sum-more');
+            const sumResult = document.getElementById('sum-result');
+            const sumMoreBtn = document.getElementById('sum-more-btn');
+            let nextSumIndex = 1;
+
+            function getSumInputs() {
+                return Array.prototype.slice.call(document.querySelectorAll('#sum-main input.input-field, #sum-more input.input-field'));
+            }
+
+            function openExtraFields() {
+                sumMore.classList.add('is-open');
+                sumMoreBtn.textContent = 'Hide extra fields';
+            }
+
+            function nameForResult(resultId) {
+                if (resultId === 'center-result' || resultId === 'ultra-result') {
+                    const prefix = resultId === 'center-result' ? 'center' : 'ultra';
+                    const typeEl = document.getElementById(prefix + '-type');
+                    const length = document.getElementById(prefix + '-length').value;
+                    return typeEl.options[typeEl.selectedIndex].text + ' · ' + length + 'mm';
+                }
+                if (resultId === 'pipe-15-litres') {
+                    return '15 mm copper · ' + document.getElementById('pipe-15-value').textContent + ' m';
+                }
+                if (resultId === 'pipe-22-litres') {
+                    return '22 mm copper · ' + document.getElementById('pipe-22-value').textContent + ' m';
+                }
+                if (resultId === 'pipe-28-litres') {
+                    return '28 mm copper · ' + document.getElementById('pipe-28-value').textContent + ' m';
+                }
+                if (resultId === 'pipe-result') {
+                    return 'Pipework total';
+                }
+                return '';
+            }
+
+            function makeSumField(n, host) {
+                const item = document.createElement('div');
+                item.className = 'sum-item';
+                const name = document.createElement('input');
+                name.type = 'text';
+                name.className = 'sum-name';
+                name.placeholder = 'Name';
+                name.maxLength = 48;
+                name.autocomplete = 'off';
+                name.spellcheck = false;
+                name.setAttribute('aria-label', 'Name for entry ' + n);
+                const row = document.createElement('span');
+                row.className = 'sum-input-row';
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.className = 'input-field';
+                input.min = '0';
+                input.step = '0.01';
+                input.inputMode = 'decimal';
+                input.setAttribute('aria-label', 'Water content entry ' + n);
+                input.addEventListener('input', calculateSum);
+                const clear = document.createElement('button');
+                clear.type = 'button';
+                clear.className = 'sum-clear';
+                clear.setAttribute('aria-label', 'Remove entry ' + n + ' from total');
+                clear.textContent = '×';
+                clear.addEventListener('click', function() {
+                    input.value = '';
+                    name.value = '';
+                    calculateSum();
+                });
+                row.appendChild(input);
+                row.appendChild(clear);
+                item.appendChild(name);
+                item.appendChild(row);
+                host.appendChild(item);
+            }
+
+            for (let i = 1; i <= 12; i += 1) makeSumField(i, sumMain);
+            for (let i = 13; i <= 20; i += 1) makeSumField(i, sumMore);
+            nextSumIndex = 21;
+
+            function calculateSum() {
+                const inputs = getSumInputs();
+                let total = 0;
+                inputs.forEach(function(input) {
+                    total += parseFloat(input.value) || 0;
+                });
+                sumResult.textContent = prec(total, 2).toFixed(2);
+            }
+
+            function addToTotals(resultId, button) {
+                const value = parseFloat(document.getElementById(resultId).textContent);
+                if (!(value > 0)) return;
+                let inputs = getSumInputs();
+                let slot = inputs.find(function(input) { return input.value === ''; });
+                if (!slot) {
+                    openExtraFields();
+                    inputs = getSumInputs();
+                    slot = inputs.find(function(input) { return input.value === ''; });
+                }
+                if (!slot) {
+                    makeSumField(nextSumIndex, sumMore);
+                    nextSumIndex += 1;
+                    openExtraFields();
+                    slot = getSumInputs().pop();
+                }
+                slot.value = value.toFixed(2);
+                const nameField = slot.closest('.sum-item').querySelector('.sum-name');
+                if (nameField && !nameField.value) {
+                    nameField.value = nameForResult(resultId);
+                }
+                calculateSum();
+                if (button) {
+                    const original = button.textContent;
+                    button.classList.add('is-added');
+                    button.textContent = 'Added';
+                    window.setTimeout(function() {
+                        button.classList.remove('is-added');
+                        button.textContent = original;
+                    }, 900);
+                }
+            }
+
+            function syncAddButton(resultId) {
+                const button = document.querySelector('.add-to-totals[data-result="' + resultId + '"]');
+                if (!button) return;
+                const value = parseFloat(document.getElementById(resultId).textContent);
+                button.disabled = !(value > 0);
+            }
+
+            document.querySelectorAll('.add-to-totals').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    addToTotals(button.getAttribute('data-result'), button);
+                });
+            });
+
+            sumMoreBtn.addEventListener('click', function() {
+                const open = sumMore.classList.toggle('is-open');
+                sumMoreBtn.textContent = open ? 'Hide extra fields' : 'Add more fields';
+            });
+
+            calculateSum();
+            syncAddButton('center-result');
+            syncAddButton('ultra-result');
+            syncAddButton('pipe-result');
+            syncAddButton('pipe-15-litres');
+            syncAddButton('pipe-22-litres');
+            syncAddButton('pipe-28-litres');
+        });
+    </script>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>
