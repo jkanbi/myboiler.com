@@ -85,6 +85,7 @@
         '<a href="/air-change-rates-ach/">Air Change Calculator (ACH)</a>' +
         '<a href="/calculators/boiler-usage-cost/">Boiler Consumption</a>' +
         '<a href="/calculators/heating-system-output-calculator/">Heat Source/System Design</a>' +
+        '<a href="/cop-breakeven-calculator/">COP Breakeven</a>' +
         '<a href="/calculators/heating-system-water-content-calculator/">Water Content</a>' +
         '<a href="/calculators/hot-water-recovery-time-calculator/">Hot Water Recovery</a>' +
         '<a href="/calculators/pipe-size-calculator/">Pipe Size Calculator</a>' +

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COP Breakeven Calculator - MyBoiler.com</title>
+    <meta name="description" content="Find the heat-pump COP that matches a gas boiler on running cost, then see the percentage saving or extra cost at a chosen COP.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .calculator-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .calculator-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .calculator-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .calculator-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 60ch;
+        }
+
+        .calculator-card {
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 2rem;
+        }
+
+        .input-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+
+        .input-hint {
+            font-weight: 500;
+            color: var(--text-muted);
+            font-size: 0.8125rem;
+        }
+
+        .input-value {
+            font-size: 1.25rem;
+            color: var(--accent);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            font-weight: 500;
+            transition: border-color 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .input-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to right, var(--accent) 0%, var(--accent) 0%, var(--border) 0%);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .input-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(24, 99, 220, 0.3);
+            transition: transform 0.1s ease;
+            margin-top: -8px;
+        }
+
+        .input-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .input-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            background: var(--accent);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(24, 99, 220, 0.3);
+        }
+
+        .input-slider::-webkit-slider-runnable-track,
+        .input-slider::-moz-range-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: transparent;
+            border-radius: 4px;
+        }
+
+        .section-break {
+            border: 0;
+            border-top: 1px solid var(--border-subtle);
+            margin: 0 0 2rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .result-section {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1.5rem 1rem;
+            text-align: center;
+        }
+
+        .result-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .result-value {
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .result-value.is-saving {
+            color: #0d9f58;
+        }
+
+        .result-value.is-costlier {
+            color: #c0392b;
+        }
+
+        .result-unit {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+        }
+
+        .formula-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .formula-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .formula-text {
+            font-size: 0.9375rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin: 0.5rem 0;
+            font-family: 'Courier New', monospace;
+            background: var(--bg);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+        }
+
+        .formula-legend {
+            font-size: 0.9375rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .formula-legend strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .calculator-disclaimer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 70ch;
+            margin: 1rem auto;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .calculator-disclaimer strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-container {
+                padding: clamp(1.5rem, 4vw, 2.5rem) clamp(16px, 4vw, 24px);
+            }
+
+            .calculator-card {
+                padding: 1.25rem;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="calculator-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h1 class="calculator-headline">COP Breakeven Calculator</h1>
+            <p class="calculator-connector">
+                Boiler vs heat-pump running cost: the COP a heat pump needs to match a gas boiler, then the saving (or extra cost) at a chosen COP.
+            </p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="input-group">
+                <div class="input-label">
+                    <span>Electricity Price <span class="input-hint">£/kWh</span></span>
+                    <span class="input-value" id="elec-value">0.27</span>
+                </div>
+                <input type="number" id="elec-input" class="input-field" step="0.0001" min="0" value="0.27" inputmode="decimal">
+            </div>
+
+            <div class="input-group">
+                <div class="input-label">
+                    <span>Gas Price <span class="input-hint">£/kWh</span></span>
+                    <span class="input-value" id="gas-value">0.0678</span>
+                </div>
+                <input type="number" id="gas-input" class="input-field" step="0.0001" min="0" value="0.0678" inputmode="decimal">
+            </div>
+
+            <div class="input-group">
+                <div class="input-label">
+                    <span>Boiler Efficiency</span>
+                    <span class="input-value" id="eff-value">0.90</span>
+                </div>
+                <input type="range" id="eff-slider" class="input-slider" min="0" max="1" step="0.01" value="0.9">
+            </div>
+
+            <hr class="section-break">
+
+            <div class="input-group">
+                <div class="input-label">
+                    <span>Heat Pump COP</span>
+                    <span class="input-value" id="cop-value">2.8</span>
+                </div>
+                <input type="range" id="cop-slider" class="input-slider" min="2" max="6" step="0.1" value="2.8">
+            </div>
+
+            <div class="results-grid">
+                <div class="result-section">
+                    <div class="result-label">Electric / Gas Ratio</div>
+                    <div class="result-value" id="ratio-result">—</div>
+                </div>
+                <div class="result-section">
+                    <div class="result-label">Breakeven COP</div>
+                    <div class="result-value" id="breakeven-result">—</div>
+                </div>
+                <div class="result-section">
+                    <div class="result-label">Heat pump vs boiler</div>
+                    <div class="result-value" id="savings-result">—</div>
+                    <div class="result-unit">Positive = cheaper; negative = more costly</div>
+                </div>
+            </div>
+
+            <div class="formula-section">
+                <h3 class="formula-title">Formula</h3>
+                <div class="formula-text">Ratio = Electricity ÷ Gas</div>
+                <div class="formula-text">Breakeven COP = Ratio × Boiler efficiency</div>
+                <div class="formula-text">Saving % = ((Heat-pump COP − Breakeven COP) ÷ Breakeven COP) × 100</div>
+                <p class="formula-legend">
+                    Unit rates must be the same basis (usually £/kWh). Boiler efficiency is a fraction (0.9 = 90%).
+                    A heat pump cheaper than gas needs a seasonal COP above the breakeven figure.
+                </p>
+            </div>
+        </div>
+
+        <div class="calculator-disclaimer">
+            <strong>Important:</strong> This is a unit-rate comparison only. It does not include standing charges, heat-loss, emitter temperature, or installation cost. Information is guidance; gas work needs a Gas Safe engineer.
+        </div>
+    </div>
+
+    <script type="text/javascript" data-cfasync="false">
+        document.addEventListener('DOMContentLoaded', function() {
+            var elecInput = document.getElementById('elec-input');
+            var gasInput = document.getElementById('gas-input');
+            var effSlider = document.getElementById('eff-slider');
+            var copSlider = document.getElementById('cop-slider');
+
+            var elecValue = document.getElementById('elec-value');
+            var gasValue = document.getElementById('gas-value');
+            var effValue = document.getElementById('eff-value');
+            var copValue = document.getElementById('cop-value');
+
+            var ratioResult = document.getElementById('ratio-result');
+            var breakevenResult = document.getElementById('breakeven-result');
+            var savingsResult = document.getElementById('savings-result');
+
+            function formatRate(value) {
+                if (!isFinite(value)) return '—';
+                return value.toFixed(4).replace(/0+$/, '').replace(/\.$/, '');
+            }
+
+            function updateSliderFill(slider) {
+                var value = parseFloat(slider.value);
+                var min = parseFloat(slider.min);
+                var max = parseFloat(slider.max);
+                var percentage = ((value - min) / (max - min)) * 100;
+                slider.style.background = 'linear-gradient(to right, var(--accent) 0%, var(--accent) ' + percentage + '%, var(--border) ' + percentage + '%)';
+            }
+
+            function calculate() {
+                var elec = parseFloat(elecInput.value);
+                var gas = parseFloat(gasInput.value);
+                var eff = parseFloat(effSlider.value);
+                var cop = parseFloat(copSlider.value);
+
+                if (!isFinite(elec) || elec < 0) elec = 0;
+                if (!isFinite(gas) || gas < 0) gas = 0;
+                if (!isFinite(eff)) eff = 0;
+                if (!isFinite(cop)) cop = 0;
+
+                elecValue.textContent = formatRate(elec);
+                gasValue.textContent = formatRate(gas);
+                effValue.textContent = eff.toFixed(2);
+                copValue.textContent = cop.toFixed(1);
+
+                updateSliderFill(effSlider);
+                updateSliderFill(copSlider);
+
+                savingsResult.classList.remove('is-saving', 'is-costlier');
+
+                if (gas === 0) {
+                    ratioResult.textContent = '—';
+                    breakevenResult.textContent = '—';
+                    savingsResult.textContent = '—';
+                    return;
+                }
+
+                var ratio = elec / gas;
+                var breakeven = ratio * eff;
+                ratioResult.textContent = ratio.toFixed(2);
+                breakevenResult.textContent = breakeven.toFixed(2);
+
+                if (breakeven === 0) {
+                    savingsResult.textContent = '—';
+                    return;
+                }
+
+                var savings = ((cop - breakeven) / breakeven) * 100;
+                var rounded = Math.round(savings * 100) / 100;
+                savingsResult.textContent = (rounded > 0 ? '+' : '') + rounded.toFixed(2) + '%';
+                if (rounded > 0) savingsResult.classList.add('is-saving');
+                if (rounded < 0) savingsResult.classList.add('is-costlier');
+            }
+
+            elecInput.addEventListener('input', calculate);
+            gasInput.addEventListener('input', calculate);
+            effSlider.addEventListener('input', calculate);
+            copSlider.addEventListener('input', calculate);
+
+            calculate();
+        });
+    </script>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
