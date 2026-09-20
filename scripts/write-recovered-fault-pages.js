@@ -247,7 +247,35 @@ const worcester = [
             { step: "5", check: "20-pin connector lead damaged?", yes: "Replace the harness, then reset.", no: "Replace the PCB last, restoring service settings." },
         ],
     },
+    {
+        slug: "worcester-bosch-fault-code-fd",
+        code: "Fd",
+        title: "Worcester Bosch Fd Fault Code",
+        meaning: "Fd, the reset button, and the fault indicator LED are flashing. The reset button was pressed by mistake. Recovered from the WordPress page that 404s on the public hub URL.",
+        rows: [
+            { step: "1", check: "Reset button flashing?", yes: "Press reset for 3 seconds and release. The appliance restarts. If Fd remains, go to step 2.", no: "Go to step 2." },
+            { step: "2", check: "PCB damaged", yes: "Note service settings, switch off, isolate power, replace the PCB, restore settings.", no: "" },
+        ],
+    },
 ];
+
+function writeRedirect(relDir, href, label) {
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0; url=${href}">
+    <link rel="canonical" href="${href}">
+    <title>Redirecting...</title>
+</head>
+<body>
+    <p>Redirecting to <a href="${href}">${label}</a>...</p>
+    <script data-cfasync="false">window.location.href = ${JSON.stringify(href)};</script>
+</body>
+</html>
+`;
+    writePage(relDir, html);
+}
 
 function main() {
     writePage(
@@ -303,6 +331,93 @@ function main() {
 <p>Have the ignition electrodes checked. The gas valve or PCB can also fail on this code and may need testing or replacement.</p>`,
         })
     );
+
+    writePage(
+        "fault-codes/worcester-bosch-siphon-fill-code",
+        page({
+            title: "Worcester Bosch Siphon Fill Code",
+            description: "Worcester Bosch -¦¦- / XX siphon fill mode. The boiler runs at a low burn for about 15 minutes to fill the condensate trap.",
+            canonical: "/fault-codes/worcester-bosch-siphon-fill-code/",
+            crumb: worcesterCrumb,
+            h1: "Worcester Bosch Siphon Fill Code",
+            intro: "Display alternates between a temperature (for example 40) and the -¦¦- or XX symbol. Recovered from the WordPress slug /fault-codes/worcester-bosch-%c2%a6%c2%a6-code/.",
+            body: `<h3>Meaning</h3>
+<p>Siphon fill mode. The boiler runs at a low burn for about 15 minutes to fill the condensate trap. This happens after the boiler has been turned off, if it has not been used for a day or so, or if the control knob has been turned down and back up.</p>
+<p>This is a normal safety feature. After about 15 minutes the boiler should return to normal. If it continues for more than half an hour, call a heating engineer or Worcester on 0330 123 9559.</p>`,
+        })
+    );
+
+    writePage(
+        "fault-codes/baxi-fault-codes/baxi-duo-tec-platinum-and-megaflo",
+        page({
+            title: "Baxi Duo-tec Platinum &amp; Megaflo Fault Codes",
+            description: "Baxi Duo-tec, Platinum and Megaflo display codes recovered from hub.myboiler.com.",
+            canonical: "/fault-codes/baxi-fault-codes/baxi-duo-tec-platinum-and-megaflo/",
+            crumb: '<p class="article-back"><a href="/fault-codes/">Fault codes</a> / <a href="/fault-codes/baxi-fault-codes/">Baxi</a></p>',
+            h1: "Baxi Duo-tec, Platinum &amp; Megaflo Fault Codes",
+            intro: "Range-specific Baxi display codes. Recovered from the original hub.myboiler.com table.",
+            body: `<div class="table-wrap"><table><thead><tr><th>Error code</th><th>Possible fault</th><th>Installer action</th></tr></thead><tbody>
+<tr><td>E10</td><td>Outdoor Sensor Error</td><td>Outdoor sensor fault. Check the sensor and that the IP menu outdoor-sensor value reads correctly.</td></tr>
+<tr><td>E20</td><td>Central Heating Thermistor Sensor Fault</td><td>Check resistance across the sensor is about 12&nbsp;kΩ at 25&nbsp;°C. If not, suspect the sensor.</td></tr>
+<tr><td>E28</td><td>Flue Thermistor Fault</td><td>Check the flue sensor value. Check for a blocked flue.</td></tr>
+<tr><td>E110</td><td>Boiler Overheat Tripped</td><td>Check boiler temperature is not over 110&nbsp;°C; continuity across the overheat stat; pump circulation; clear air from the system.</td></tr>
+<tr><td>E119</td><td>System Pressure Low (&lt; 0.5 Bar)</td><td>Check for leaks; check expansion-vessel charge; add water via the filling loop. Restoring pressure resets the error.</td></tr>
+<tr><td>E125</td><td>Primary Water Circulation Fault</td><td>Check the pump; system full of water; clear air; check for blockages; check thermistors are located correctly.</td></tr>
+<tr><td>E131</td><td>Flue Overheat Lockout</td><td>May follow a power cut — try reset. Flue NTC exceeded 130&nbsp;°C; check resistance. Possible blocked heat-exchanger waterways.</td></tr>
+<tr><td>E133</td><td>Ignition Fault</td><td>Check wiring, supply pressure, purge air, spark at electrode, electrode condition, gas valve opening, condensate drain.</td></tr>
+<tr><td>E160</td><td>Fan Fault</td><td>Check the fan and cable. Probable fan failure.</td></tr>
+<tr><td>E161</td><td>Fan Fault</td><td>Check the fan and cable. Probable fan failure.</td></tr>
+<tr><td>E164</td><td>Heating Flow Switch Error (Ireland) / Pressure Sensor Error (UK)</td><td>HEa Irish system boilers have flow switches — check switch operation. UK boilers: fit the correct PCB.</td></tr>
+<tr><td>E167</td><td>PCB Fault</td><td></td></tr>
+<tr><td>E168</td><td>PCB Lock Out</td><td>May follow a power-supply problem. Try reset.</td></tr>
+<tr><td>E193</td><td>Circulation Fault</td><td>If it persists, E125 usually follows.</td></tr>
+</tbody></table></div>`,
+        })
+    );
+
+    writePage(
+        "fault-codes/baxi-fault-codes/baxi-ecoblue-heat-only",
+        page({
+            title: "Baxi EcoBlue Heat Only Fault Codes",
+            description: "Baxi EcoBlue heat-only flash codes recovered from hub.myboiler.com.",
+            canonical: "/fault-codes/baxi-fault-codes/baxi-ecoblue-heat-only/",
+            crumb: '<p class="article-back"><a href="/fault-codes/">Fault codes</a> / <a href="/fault-codes/baxi-fault-codes/">Baxi</a></p>',
+            h1: "Baxi EcoBlue Heat Only Fault Codes",
+            intro: "LED flash codes for EcoBlue heat-only. Recovered from the original hub.myboiler.com table.",
+            body: `<div class="table-wrap"><table><thead><tr><th>Error code</th><th>Possible fault</th><th>Installer action</th></tr></thead><tbody>
+<tr><td>FLASHED Green 1 TIME</td><td>Boiler temp reached</td><td></td></tr>
+<tr><td>3 GREEN FLASHES</td><td>Temporary Flame Loss (No Reset Required)</td><td>Temporary error, self-reset. If it continues it goes to 3 red flashes (lockout).</td></tr>
+<tr><td>4 GREEN FLASHES</td><td>Communication Fault Between PCB And Control</td><td>Temporary error, self-reset.</td></tr>
+<tr><td>5 GREEN FLASHES</td><td>Parameter Error On PSU/PCB</td><td>Temporary error, self-reset.</td></tr>
+<tr><td>6 GREEN FLASHES</td><td>Miscellaneous Error</td><td>Temporary error, self-reset.</td></tr>
+<tr><td>ONE RED FLASH</td><td>Sensor Error: Sensor Fault, Temperature Fault Or Flow Fault</td><td>Check wiring; sensors about 12&nbsp;kΩ at 25&nbsp;°C; sensor in the pocket; AAV open; system full and vented; pump running; flow/return orientation; blockages.</td></tr>
+<tr><td>2 RED FLASHES</td><td>Boiler Overheat Tripped</td><td>Vent the system; check water pressure; continuity across the overheat stat and APS if fitted; circulation direction, pump, valves; wiring; not air-locked.</td></tr>
+<tr><td>3 RED FLASHES</td><td>Ignition Fault. Boiler Has Failed To Light After 5 Attempts</td><td>Check wiring, supply pressure, purge air, spark, electrode condition, gas valve opening, condensate drain.</td></tr>
+<tr><td>4 RED FLASHES</td><td>Fan Fault</td><td>If the fan is not running, check power to the gas-air unit. If it is running, check APS (if fitted). Check the flue for blockages.</td></tr>
+<tr><td>5 RED FLASHES</td><td>Parameter Or PSU Error</td><td>Check PCB and loom; replace PSU and recommission; check wiring.</td></tr>
+<tr><td>FLASHES RED 6 TIMES</td><td>Miscellaneous</td><td>Check wiring connections. If needed replace the PU and/or control/fan assembly.</td></tr>
+</tbody></table></div>`,
+        })
+    );
+
+    const siphonHref = "/fault-codes/worcester-bosch-siphon-fill-code/";
+    const siphonLabel = "Worcester Bosch Siphon Fill Code";
+    const fdHref = "/fault-codes/worcester-bosch-fault-code-fd/";
+    writeRedirect("fault-codes/worcester-bosch-%c2%a6%c2%a6-code", siphonHref, siphonLabel);
+    writeRedirect("fault-codes/worcester-bosch-\u00a6\u00a6-code", siphonHref, siphonLabel);
+    writeRedirect("worcester-bosch-%c2%a6%c2%a6-code", siphonHref, siphonLabel);
+    writeRedirect("worcester-bosch-\u00a6\u00a6-code", siphonHref, siphonLabel);
+    writeRedirect("hub/fault-codes/worcester-bosch-siphon-fill-code", siphonHref, siphonLabel);
+    writeRedirect("hub/fault-codes/worcester-bosch-%c2%a6%c2%a6-code", siphonHref, siphonLabel);
+    writeRedirect("hub/worcester-bosch-%c2%a6%c2%a6-code", siphonHref, siphonLabel);
+    writeRedirect("hub/fault-codes/worcester-bosch-fault-code-fd", fdHref, "Worcester Bosch Fd Fault Code");
+    writeRedirect("baxi-ecoblue-heat-only", "/fault-codes/baxi-fault-codes/baxi-ecoblue-heat-only/", "Baxi EcoBlue Heat Only Fault Codes");
+    writeRedirect("baxi-solo-heat-only", "/fault-codes/baxi-fault-codes/baxi-solo-heat-only/", "Baxi Solo Heat Only Fault Codes");
+    writeRedirect("baxi-600-combi", "/fault-codes/baxi-fault-codes/baxi-600-combi/", "Baxi 600 Combi Fault Codes");
+    writeRedirect("baxi-baxi-200-400", "/fault-codes/baxi-fault-codes/baxi-200-400/", "Baxi 200 & 400 Fault Codes");
+    writeRedirect("hub/fault-codes/baxi-fault-codes/baxi-duo-tec-platinum-and-megaflo", "/fault-codes/baxi-fault-codes/baxi-duo-tec-platinum-and-megaflo/", "Baxi Duo-tec Platinum & Megaflo Fault Codes");
+    writeRedirect("hub/fault-codes/baxi-fault-codes/baxi-ecoblue-heat-only", "/fault-codes/baxi-fault-codes/baxi-ecoblue-heat-only/", "Baxi EcoBlue Heat Only Fault Codes");
+    writeRedirect("hub/baxi-ecoblue-heat-only", "/fault-codes/baxi-fault-codes/baxi-ecoblue-heat-only/", "Baxi EcoBlue Heat Only Fault Codes");
 
     writePage(
         "fault-codes/faults-and-fixes",

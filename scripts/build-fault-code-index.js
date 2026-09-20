@@ -148,9 +148,11 @@ function firstHref(html) {
 }
 
 function normalizeCode(value) {
-  return String(value || "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, "");
+  const raw = String(value || "").toLowerCase();
+  const alnum = raw.replace(/[^a-z0-9]/g, "");
+  if (alnum) return alnum;
+  if (/[¦|]/.test(raw) || /siphon/.test(raw)) return "xx";
+  return "";
 }
 
 function publicUrl(filePath) {
@@ -273,6 +275,8 @@ function looksLikeFaultCode(code) {
   }
   if (/^(ecotec|greenstar|worcester|vaillant|alpha|baxi)\b/i.test(t)) return false;
   if (/^#/.test(t)) return true;
+  if (/[¦|]/.test(t) || /^xx$/i.test(t) || /siphon fill/i.test(t)) return true;
+  if (/flash/i.test(t)) return true;
   if (/^[A-Za-z]{0,3}[.\- ]?\d{1,4}([.\- ]?\d{0,3})?$/i.test(t)) return true;
   if (/^\d{1,3}[A-Za-z]\d{0,3}$/i.test(t)) return true;
   if (/^0[A-Za-z]\d+/i.test(t)) return true;
@@ -395,7 +399,8 @@ function collectFromArticle(filePath, html, entries) {
   const codeMatch =
     heading.match(/\bfault code\s+([A-Za-z]\.?\d{0,3})\b/i) ||
     heading.match(/\b([A-Z]\.?\d{1,3}(?:\s*and\s*[A-Z]\.?\d{1,3})?)\b/i) ||
-    heading.match(/\b(Com|EA|FA|Fd)\b/i);
+    heading.match(/\b(Com|EA|FA|Fd|XX)\b/i) ||
+    heading.match(/\b(siphon fill)\b/i);
   if (!codeMatch) return;
   const already = entries.some(
     (e) => e.deep && e.url.replace(/\/$/, "") === page.replace(/\/$/, "")

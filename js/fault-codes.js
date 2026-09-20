@@ -9,9 +9,11 @@
     }
 
     function normalizeCode(value) {
-        return String(value || "")
-            .toLowerCase()
-            .replace(/[^a-z0-9]/g, "");
+        var raw = String(value || "").toLowerCase();
+        var alnum = raw.replace(/[^a-z0-9]/g, "");
+        if (alnum) return alnum;
+        if (/[¦|]/.test(raw) || raw.indexOf("siphon") !== -1) return "xx";
+        return "";
     }
 
     function normalizeQuery(value) {
@@ -101,7 +103,7 @@
         var n = normalizeCode(value);
         if (!n) return false;
         if (/[0-9]/.test(n)) return true;
-        return /^(ea|fd|fa|com|sr|err|er)$/i.test(n);
+        return /^(ea|fd|fa|com|sr|err|er|xx)$/i.test(n);
     }
 
     function searchCodes(raw) {
