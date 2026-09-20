@@ -4,155 +4,283 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vaillant FGA Tool - MyBoiler Hub</title>
-    <meta name="description" content="Please enter the security code 3 + 6 =">
+    <meta name="description" content="Check Vaillant flue-gas analyser CO2 at maximum rate for natural gas or propane, with the front case closed or removed, plus Ecofit Pure O2.">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <style>
-        .article-page {
+        .calculator-page {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             background: var(--bg);
         }
 
-        .article-container {
+        .calculator-container {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
             width: 100%;
             box-sizing: border-box;
         }
 
-.article-header {
+        .calculator-header {
+            text-align: center;
             margin-bottom: 2.5rem;
         }
 
-        .article-title {
-            font-size: clamp(2rem, 5vw, 3rem);
+        .calculator-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
             font-weight: 700;
             line-height: 1.1;
             color: var(--text);
-            margin: 0 0 1rem;
+            margin: 0 0 0.75rem;
             letter-spacing: -0.02em;
         }
 
-        .article-intro {
-            font-size: 1.125rem;
-            line-height: 1.6;
+        .calculator-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
             color: var(--text-muted);
-            margin: 0 0 2rem;
+            margin: 0 auto;
+            max-width: 62ch;
         }
 
-        .article-content {
+        .calculator-card {
+            width: 100%;
             background: var(--surface);
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            padding: clamp(1.5rem, 4vw, 3rem);
-            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 1.5rem;
         }
 
-        .article-content p {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--text);
-            margin: 0 0 1.25rem;
+        .choice-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
-        .article-content h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text);
-            margin: 2rem 0 1rem;
-        }
-
-        .article-content h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text);
-            margin: 1.5rem 0 1rem;
-        }
-
-        .article-content h4 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--text);
-            margin: 1.25rem 0 0.75rem;
-        }
-
-        .article-content strong {
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .article-content img {
-            display: block;
-            max-width: min(100%, 720px);
-            height: auto;
-            margin: 1rem auto 1.5rem;
-            border-radius: var(--radius);
-        }
-
-        .article-video {
-            width: 100%;
-            margin: 1.25rem 0 1.75rem;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            background: var(--surface);
-            box-shadow: var(--shadow-sm);
-        }
-        .article-video iframe {
-            display: block;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            height: auto;
+        .choice-group {
+            margin: 0;
+            padding: 0;
             border: 0;
+            min-width: 0;
         }
 
-        .article-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
+        .choice-group legend {
+            padding: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .mode-button {
+            position: relative;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            margin: 0;
+            padding: 0.7rem 0.75rem;
             font-size: 0.9375rem;
-        }
-
-        .article-content th,
-        .article-content td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border-subtle);
-            vertical-align: top;
-        }
-
-        .article-content th {
             font-weight: 600;
-            border-bottom: 2px solid var(--border);
+            font-family: inherit;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text-muted);
+            cursor: pointer;
+            text-align: center;
         }
 
-        .article-content ul,
-        .article-content ol {
-            margin: 0 0 1.25rem;
-            padding-left: 1.5rem;
+        .mode-button:hover {
+            border-color: var(--accent);
+            color: var(--text);
         }
 
-        .article-content li {
-            margin: 0 0 0.4rem;
+        .mode-button:has(input:checked) {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .mode-button input {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            pointer-events: none;
+        }
+
+        .fga-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .fga-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            min-width: 0;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .input-hint {
+            font-size: 0.8125rem;
+            line-height: 1.4;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            font-weight: 500;
+            box-sizing: border-box;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .result-item {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1rem 0.75rem;
+            text-align: center;
+        }
+
+        .result-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+
+        .result-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            line-height: 1.2;
+        }
+
+        .result-value.pass {
+            color: #10b981;
+        }
+
+        .result-value.fail {
+            color: #ef4444;
+        }
+
+        .related-links {
+            margin: 0;
+            padding-left: 1.25rem;
+            color: var(--text);
             line-height: 1.6;
         }
 
-        .article-content iframe {
-            max-width: 100%;
+        .related-links a {
+            color: var(--accent);
         }
 
-        .article-resource {
+        .formula-section {
+            margin-top: 1.75rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .formula-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+        }
+
+        .formula-legend {
+            font-size: 0.9375rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .spec-figure {
+            margin: 0;
+            text-align: center;
+        }
+
+        .spec-figure img {
             display: block;
-            margin: 0.75rem 0 1.25rem;
+            width: 100%;
+            max-width: 989px;
+            height: auto;
+            margin: 0 auto;
+            border-radius: var(--radius);
+            background: var(--bg);
         }
 
+        .spec-figure figcaption {
+            margin-top: 0.65rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .calculator-disclaimer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 70ch;
+            margin: 0.5rem auto 1rem;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        @media (max-width: 700px) {
+            .choice-grid,
+            .fga-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calculator-container {
+                padding: 1.25rem 12px;
+            }
+
+            .calculator-card {
+                padding: 1.15rem;
+            }
+        }
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
 </head>
-<body class="article-page">
-    <!-- Header with full navigation -->
+<body class="calculator-page">
     <div class="menu-overlay"></div>
     <div class="nav-mega-backdrop" aria-hidden="true"></div>
     <header class="header">
@@ -167,57 +295,180 @@
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
             </button>
-            
             <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item"><a href="/calculators/">Calculators</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
         </div>
     </header>
 
-    <!-- Article Content -->
-        <div class="article-container">
-        <header class="article-header">
-            <h1 class="article-title">Vaillant FGA Tool</h1>
-            <p class="article-intro">
-                Please enter the security code 3 + 6 =
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h1 class="calculator-headline">Vaillant FGA Tool</h1>
+            <p class="calculator-connector">
+                Enter analyser readings at maximum rate (H). CO<sub>2</sub> pass/fail follows the ecoTEC table for the gas and whether the front is on. Ecofit Pure O<sub>2</sub> uses the original Hub open-casing check.
             </p>
-        </header>
+        </div>
 
-        <article class="article-content">
-<div class="apanel">
-<p><span class="cff-form-name-shortcode"><form action="/vaillant/vaillant-fga-tool/" class="cff-form no-prefetch cff-form-38 cp_cff_11" data-cf-modified-46fdc4d74aff9d1cc72faf23-="" data-nonce="9c9d0b0d96" enctype="multipart/form-data" id="cp_calculatedfieldsf_pform_1" method="post" name="cp_calculatedfieldsf_pform_1" onsubmit="if (!window.__cfRLUnblockHandlers) return false; return fbuilderjQuery.fbuilder.doValidate(this);">
-<input name="cp_calculatedfieldsf_pform_psequence" type="hidden" value="_1"/>
-<input name="cp_calculatedfieldsf_id" type="hidden" value="38"/>
-<input name="cp_ref_page" type="hidden" value="https://myboiler.com/"/>
-<pre style="display:none !important;"></pre>
-<div id="fbuilder">
-<div id="fbuilder_1">
-<div id="formheader_1"></div>
-<div id="fieldlist_1"></div>
-<div class="clearer"></div>
-</div>
-<div class="cpcaptchalayer" id="cpcaptchalayer_1" style="display:none;">
-<div class="fields">
-<label>Please enter the security code</label>
-<div class="dfield">
-<span class="cff-captcha-math-label" id="cff_captcha_math_1">3 + 6 = </span>
-<input autocomplete="off" id="hdcaptcha_cp_calculated_fields_form_post_1" name="hdcaptcha_cp_calculated_fields_form_post" size="8" type="text" value=""/>
-<div class="error message" id="hdcaptcha_error_1" style="display:none;"></div>
-</div>
-<div class="clearer"></div>
-</div>
-</div>
-</div>
-<div class="cp_subbtn" id="cp_subbtn_1" style="display:none;"></div><div class="clearer"></div>
-<input id="_cpcff_public_nonce" name="_cpcff_public_nonce" type="hidden" value="6342069f4c"/><input name="_wp_http_referer" type="hidden" value="/vaillant/vaillant-fga-tool/"/></form>
-</span></p>
+        <div class="calculator-card">
+            <div class="choice-grid">
+                <fieldset class="choice-group">
+                    <legend class="input-label">Gas type</legend>
+                    <div class="mode-toggle">
+                        <label class="mode-button">
+                            <input type="radio" name="gas-type" value="ng" checked>
+                            Natural Gas
+                        </label>
+                        <label class="mode-button">
+                            <input type="radio" name="gas-type" value="lpg">
+                            Propane
+                        </label>
+                    </div>
+                </fieldset>
+                <fieldset class="choice-group">
+                    <legend class="input-label">Front case</legend>
+                    <div class="mode-toggle">
+                        <label class="mode-button">
+                            <input type="radio" name="case-state" value="closed" checked>
+                            Closed
+                        </label>
+                        <label class="mode-button">
+                            <input type="radio" name="case-state" value="removed">
+                            Removed
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
 
-</div>
-<p><img alt="" class="aligncenter size-full wp-image-14679" data-attachment-id="14679" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="" data-large-file="/hub-wp-content/uploads/2021/02/httpswww.freeboilermanuals.comassetspdfvaillantecotec-installation-and-servicing1.pdf.png" data-orig-file="/hub-wp-content/uploads/2021/02/httpswww.freeboilermanuals.comassetspdfvaillantecotec-installation-and-servicing1.pdf.png" data-orig-size="989,475" data-permalink="/vaillant/vaillant-fga-tool/attachment/httpswww-freeboilermanuals-comassetspdfvaillantecotec-installation-and-servicing1-pdf/" decoding="async" fetchpriority="high" height="475" loading="lazy" src="/vaillant/vaillant-fga-tool/images/httpswww.freeboilermanuals.comassetspdfvaillantecotec-installation-and-servicing1.pdf.png" width="989"/></p>
-        </article>
+            <div class="fga-grid">
+                <div class="fga-cell">
+                    <label class="input-label" for="co2-h">CO<sub>2</sub> (H) %</label>
+                    <p class="input-hint" id="co2-h-hint">Max power. Pass 8.2–10.2%</p>
+                    <input type="number" id="co2-h" class="input-field" inputmode="decimal" step="0.01" min="0" max="20" placeholder="CO2 (H)">
+                    <div class="result-item">
+                        <div class="result-label">Result CO<sub>2</sub> (H)</div>
+                        <div class="result-value" id="co2-h-result">—</div>
+                    </div>
+                </div>
+
+                <div class="fga-cell">
+                    <label class="input-label" for="o2-h">O<sub>2</sub> (H) % — Ecofit Pure</label>
+                    <p class="input-hint">Max power, case open. Pass 2.7–6.3%</p>
+                    <input type="number" id="o2-h" class="input-field" inputmode="decimal" step="0.01" min="0" max="21" placeholder="O2 (H) Ecofit Pure">
+                    <div class="result-item">
+                        <div class="result-label">Result O<sub>2</sub> (H)</div>
+                        <div class="result-value" id="o2-h-result">—</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="formula-section">
+                <h2 class="formula-title">Limits</h2>
+                <p class="formula-legend" id="limits-legend"></p>
+            </div>
+        </div>
+
+        <div class="calculator-card">
+            <h2 class="formula-title">Manufacturer CO<sub>2</sub> table</h2>
+            <figure class="spec-figure">
+                <img
+                    src="/vaillant/vaillant-fga-tool/images/httpswww.freeboilermanuals.comassetspdfvaillantecotec-installation-and-servicing1.pdf.png"
+                    alt="Vaillant ecoTEC CO2 settings table for natural gas and propane, case on and case off"
+                    width="989"
+                    height="475"
+                >
+                <figcaption>ecoTEC natural gas and propane CO<sub>2</sub> (case on / case off)</figcaption>
+            </figure>
+        </div>
+
+        <div class="calculator-card">
+            <h2 class="formula-title">Related</h2>
+            <ul class="related-links">
+                <li><a href="/vaillant/vaillant-ecotec-emissions-table/">ecoTEC emissions table</a></li>
+                <li><a href="/vaillant/vaillant-p-test-program-mode/">P Test — maximum and minimum output</a></li>
+                <li><a href="/how-to/vaillant-ecotec-boiler-service/">ecoTEC boiler service — how to</a></li>
+                <li><a href="/boiler-maximum-and-minimum-output-mode-videos/">Maximum and minimum output mode videos</a></li>
+            </ul>
+        </div>
+
+        <div class="calculator-disclaimer">
+            <strong>Important:</strong> CO<sub>2</sub> pass/fail uses the ecoTEC table for the gas and case you select. Ecofit Pure O<sub>2</sub> is the original Hub open-casing check. Always confirm the appliance instruction for that model. A failed reading means do not leave the boiler in service. Gas Safe registered work only.
+        </div>
     </div>
 
-    
+    <script type="text/javascript" data-cfasync="false">
+        document.addEventListener('DOMContentLoaded', function() {
+            var co2hEl = document.getElementById('co2-h');
+            var o2hEl = document.getElementById('o2-h');
+            var co2Hint = document.getElementById('co2-h-hint');
+            var limitsLegend = document.getElementById('limits-legend');
 
-    
+            var LIMITS = {
+                ng: {
+                    closed: { min: 8.2, max: 10.2, target: '9.2 ± 1.0' },
+                    removed: { min: 8.0, max: 10.0, target: '9.0 ± 1.0' }
+                },
+                lpg: {
+                    closed: { min: 9.7, max: 10.7, target: '10.2 ± 0.5' },
+                    removed: { min: 9.5, max: 10.5, target: '10.0 ± 0.5' }
+                }
+            };
+
+            function selectedValue(name) {
+                var el = document.querySelector('input[name="' + name + '"]:checked');
+                return el ? el.value : null;
+            }
+
+            function currentCo2Limits() {
+                var gas = selectedValue('gas-type') || 'ng';
+                var casing = selectedValue('case-state') || 'closed';
+                return LIMITS[gas][casing];
+            }
+
+            function formatRange(limits) {
+                return limits.min.toFixed(1) + '–' + limits.max.toFixed(1) + '%';
+            }
+
+            function readNumber(el) {
+                var raw = el.value.trim();
+                if (raw === '') return null;
+                var value = parseFloat(raw);
+                return isNaN(value) ? null : value;
+            }
+
+            function setResult(id, state) {
+                var el = document.getElementById(id);
+                el.classList.remove('pass', 'fail');
+                if (state === 'PASS') {
+                    el.textContent = 'PASS';
+                    el.classList.add('pass');
+                } else if (state === 'FAIL') {
+                    el.textContent = 'FAIL';
+                    el.classList.add('fail');
+                } else {
+                    el.textContent = '—';
+                }
+            }
+
+            function calculate() {
+                var limits = currentCo2Limits();
+                var caseLabel = selectedValue('case-state') === 'removed' ? 'front removed' : 'front closed';
+                co2Hint.textContent = 'Max power, ' + caseLabel + '. Pass ' + formatRange(limits) + ' (' + limits.target + ')';
+                limitsLegend.innerHTML =
+                    '<strong>CO<sub>2</sub> (H)</strong> PASS if ' + limits.min.toFixed(1) + '% ≤ CO<sub>2</sub> (H) ≤ ' + limits.max.toFixed(1) + '% (' + limits.target + ' vol-%)<br>' +
+                    '<strong>O<sub>2</sub> (H) Ecofit Pure</strong> PASS if 2.7% ≤ O<sub>2</sub> (H) ≤ 6.3%';
+
+                var co2h = readNumber(co2hEl);
+                var o2h = readNumber(o2hEl);
+                setResult('co2-h-result', co2h === null ? null : (co2h >= limits.min && co2h <= limits.max ? 'PASS' : 'FAIL'));
+                setResult('o2-h-result', o2h === null ? null : (o2h >= 2.7 && o2h <= 6.3 ? 'PASS' : 'FAIL'));
+            }
+
+            co2hEl.addEventListener('input', calculate);
+            o2hEl.addEventListener('input', calculate);
+            document.querySelectorAll('input[name="gas-type"], input[name="case-state"]').forEach(function(el) {
+                el.addEventListener('change', calculate);
+            });
+            calculate();
+        });
+    </script>
 
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
