@@ -39,7 +39,8 @@ Internal aliases that rename pages are unchanged except for the prefix, e.g. `/a
 ├── assets/              # Homepage media
 ├── pages/               # Markdown pages
 ├── calculators/         # Calculator pages (real content at root)
-├── fault-codes/         # Fault-code pages
+├── fault-codes/         # Fault-code pages + generated search index
+├── scripts/             # Static generators (fault-code index)
 ├── advice/, toolbox/, … # Other migrated content
 ├── chat/, quote/, decide/, heat-pump-checker/  # Apps
 ├── hub/                 # Redirect stubs only (/hub/… → /…)
@@ -49,6 +50,16 @@ Internal aliases that rename pages are unchanged except for the prefix, e.g. `/a
 ├── favicon.ico
 └── CNAME
 ```
+
+## Fault-code search index
+
+`/fault-codes/` is a client-side search hub. The index is generated from **this repo’s** HTML tables and Vaillant code pages — not from boilermanuals.com.
+
+```
+npm run build:fault-codes
+```
+
+That runs `scripts/build-fault-code-index.js` and writes `fault-codes/fault-codes-index.json`. Commit the JSON with any table edits so GitHub Pages stays in sync. Search and in-page table filters live in `js/fault-codes.js` and `css/fault-codes.css`.
 
 ## Deployment
 
