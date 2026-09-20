@@ -61,6 +61,8 @@ npm run build:fault-codes
 
 That runs `scripts/build-fault-code-index.js` and writes `fault-codes/fault-codes-index.json`. Commit the JSON with any table edits so GitHub Pages stays in sync. Search and in-page table filters live in `js/fault-codes.js` and `css/fault-codes.css`.
 
+Recovered WordPress pages from hub.myboiler.com (Ambirad table, Worcester individual codes, Potterton E133, plus extra Vaillant codes) live under `/fault-codes/`. The old A8 slug `/4155-2/` redirects to `/fault-codes/worcester-bosch-fault-code-a8/`. Worcester FD was listed on WordPress but the hub URL 404s, so it is still brand-table only.
+
 ## Deployment
 
 Push to GitHub and GitHub Pages deploys automatically.

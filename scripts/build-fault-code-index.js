@@ -20,7 +20,7 @@ const ROOT = path.resolve(__dirname, "..");
 const FAULT_DIR = path.join(ROOT, "fault-codes");
 const OUT_FILE = path.join(FAULT_DIR, "fault-codes-index.json");
 
-const SKIP_DIRS = new Set(["request"]);
+const SKIP_DIRS = new Set(["request", "faults-and-fixes"]);
 const SKIP_FILES = new Set([
   path.join(FAULT_DIR, "index.html"),
   path.join(FAULT_DIR, "fault-codes-index.json"),
@@ -28,6 +28,7 @@ const SKIP_FILES = new Set([
 
 const BRAND_FROM_SLUG = {
   "alpha-fault-codes": "Alpha",
+  "ambirad-fault-codes": "Ambirad",
   "amptec-fault-codes": "Amptec",
   "ariston-fault-codes": "Ariston",
   "atag-fault-codes": "Atag",
@@ -162,6 +163,8 @@ function brandFromFile(filePath) {
   const top = rel[0];
   if (BRAND_FROM_SLUG[top]) return BRAND_FROM_SLUG[top];
   if (/^vaillant-/i.test(top)) return "Vaillant";
+  if (/^worcester-/i.test(top)) return "Worcester Bosch";
+  if (/^potterton-/i.test(top)) return "Potterton";
   if (/^baxi-/i.test(top)) return "Baxi";
   return top
     .replace(/-fault-codes$/i, "")
@@ -174,9 +177,8 @@ function pageKind(filePath, html) {
   const top = rel[0];
   if (BRAND_FROM_SLUG[top] && rel.length === 1) return "brand";
   if (BRAND_FROM_SLUG[top] && rel.length > 1) return "range";
-  if (/^vaillant-/i.test(top) && top !== "vaillant-fault-codes") return "article";
-  if (/<table/i.test(html)) return "table";
-  return "page";
+  if (/-fault-codes$/i.test(top)) return /<table/i.test(html) ? "table" : "page";
+  return "article";
 }
 
 function rangeLabel(filePath, html) {
@@ -270,6 +272,7 @@ function looksLikeFaultCode(code) {
     return false;
   }
   if (/^(ecotec|greenstar|worcester|vaillant|alpha|baxi)\b/i.test(t)) return false;
+  if (/^#/.test(t)) return true;
   if (/^[A-Za-z]{0,3}[.\- ]?\d{1,4}([.\- ]?\d{0,3})?$/i.test(t)) return true;
   if (/^\d{1,3}[A-Za-z]\d{0,3}$/i.test(t)) return true;
   if (/^0[A-Za-z]\d+/i.test(t)) return true;
@@ -374,14 +377,25 @@ function collectFromTables(filePath, html, entries) {
   }
 }
 
+function entryPageForArticle(filePath) {
+  const brand = brandFromFile(filePath);
+  const slug = {
+    Vaillant: "/fault-codes/vaillant-fault-codes/",
+    "Worcester Bosch": "/fault-codes/worcester-bosch-fault-codes/",
+    Potterton: "/fault-codes/potterton-fault-codes/",
+  };
+  return slug[brand] || publicUrl(filePath);
+}
+
 function collectFromArticle(filePath, html, entries) {
   const brand = brandFromFile(filePath);
   const page = publicUrl(filePath);
   const h1 = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
   const heading = h1 ? stripTags(h1[1]) : "";
   const codeMatch =
+    heading.match(/\bfault code\s+([A-Za-z]\.?\d{0,3})\b/i) ||
     heading.match(/\b([A-Z]\.?\d{1,3}(?:\s*and\s*[A-Z]\.?\d{1,3})?)\b/i) ||
-    heading.match(/\b(Com)\b/i);
+    heading.match(/\b(Com|EA|FA|Fd)\b/i);
   if (!codeMatch) return;
   const already = entries.some(
     (e) => e.deep && e.url.replace(/\/$/, "") === page.replace(/\/$/, "")
@@ -402,7 +416,7 @@ function collectFromArticle(filePath, html, entries) {
       detail: "",
       model: "",
       url: page,
-      page: "/fault-codes/vaillant-fault-codes/",
+      page: entryPageForArticle(filePath),
       deep: true,
     });
   }
@@ -454,7 +468,7 @@ function main() {
 
   for (const filePath of files) {
     const html = htmlByFile.get(filePath);
-    if (/<table/i.test(html)) {
+    if (/<table/i.test(html) && pageKind(filePath, html) !== "article") {
       collectFromTables(filePath, html, entries);
     }
   }
