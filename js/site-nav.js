@@ -56,6 +56,7 @@
         '<h4>Vaillant</h4>' +
         '<a href="/fault-codes/">Search Fault Codes</a>' +
         '<a href="/vaillant/vaillant-p-test-program-mode/">P Test Instructions</a>' +
+        '<a href="/how-to-adjust-the-power-level-on-vaillant-ecotec-post-2012-models/">Ecotec Power Level (Post 2012)</a>' +
         '<a href="/vaillant/vaillant-ecotec-emissions-table/">Emissions Table</a>' +
         '<a href="/how-to/vaillant-ecotec-boiler-service/">Ecotec Service How-To</a>' +
         '<a href="/vaillant/vaillant-diagnostic-s-and-d-codes/">Diagnostic S &amp; D Codes</a>' +
