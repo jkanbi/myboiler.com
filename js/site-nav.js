@@ -78,6 +78,7 @@
         '<h4>Miscellaneous</h4>' +
         '<a href="/heating-expansion-vessel-calculator/">Heating expansion vessel calculator</a>' +
         '<a href="/inhibitor-dosing/">Inhibitor Dosing</a>' +
+        '<a href="/how-to/repair-a-thermostatic-radiator-valve-trv-not-working-with-trv-pin-stuck/">TRV pin stuck</a>' +
         '<a href="/boiler-maximum-and-minimum-output-mode-videos/">Max/Min Output Mode Videos</a>' +
         '<a href="/intergas-a-plan/">Intergas A Plan</a>' +
         '</div>' +
