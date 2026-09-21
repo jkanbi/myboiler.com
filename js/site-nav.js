@@ -37,6 +37,7 @@
         '<a href="/heat-pumps/air-source-heat-pumps/">Air Source Heat Pump</a>' +
         '<a href="/heat-pumps/hybrid-heat-pumps/">Hybrid Heat Pumps</a>' +
         '<a href="/why-heat-pumps-work-well-with-underfloor-heating/">Underfloor Heating</a>' +
+        '<a href="/underfloor-heating-vs-radiators/">UFH vs Radiators</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Miscellaneous</h4>' +
