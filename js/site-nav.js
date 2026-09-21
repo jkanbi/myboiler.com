@@ -113,16 +113,6 @@
         '</div>' +
         '</div>' +
         '</li>' +
-        '<li class="nav-item nav-item-has-dropdown">' +
-        '<span class="nav-dropdown-label"><span>Calculators</span>' + chevron + '</span>' +
-        '<div class="mega-menu mega-menu--moved">' +
-        '<div class="mega-menu-column">' +
-        '<h4>Calculators</h4>' +
-        '<p class="mega-menu-moved-note">Calculators have moved to Toolbox.</p>' +
-        '<a href="/toolbox/#calculators">Open Toolbox</a>' +
-        '</div>' +
-        '</div>' +
-        '</li>' +
         '<li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li>' +
         '</ul>';
 

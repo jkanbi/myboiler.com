@@ -183,7 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const text = (el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
         if (text.indexOf('advice') === 0) return '/advice/';
         if (text.indexOf('toolbox') === 0) return '/toolbox/';
-        if (text.indexOf('calculator') === 0) return '/calculators/';
         return '/';
     }
 
@@ -265,28 +264,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return pointerInMegaCorridor(pointerX, pointerY);
     }
 
-    function alignMovedMega(item) {
-        const mega = item && item.querySelector('.mega-menu--moved');
-        if (!mega) return;
-        if (!item.classList.contains('is-open') && !item.classList.contains('active')) {
-            mega.style.left = '';
-            mega.style.transform = '';
-            return;
-        }
-        const trigger = item.getBoundingClientRect();
-        const width = Math.min(360, window.innerWidth - 32);
-        let left = trigger.right - width;
-        left = Math.max(16, Math.min(left, window.innerWidth - width - 16));
-        mega.style.left = `${Math.round(left)}px`;
-        mega.style.transform = 'none';
-    }
-
     function openDesktopMega(item) {
         if (!isDesktopNav()) return;
         clearMegaCloseTimer();
         document.querySelectorAll('.nav-item-has-dropdown').forEach((other) => {
             setDropdownOpen(other, other === item);
-            if (other === item) alignMovedMega(other);
         });
     }
 
@@ -347,8 +329,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', () => {
         if (document.body.classList.contains('nav-mega-open')) {
             insetBackdropBelowHeader();
-            const open = document.querySelector('.nav-item-has-dropdown.is-open');
-            if (open) alignMovedMega(open);
         }
     });
 

@@ -369,20 +369,6 @@
 				pointer-events: auto;
 			}
 
-			.nav-item-has-dropdown.is-open .mega-menu--moved,
-			.nav-item-has-dropdown.active .mega-menu--moved {
-				grid-template-columns: 1fr;
-				width: min(360px, calc(100vw - 2rem));
-				max-width: 360px;
-			}
-
-			.mega-menu-moved-note {
-				margin: 0 0 0.5rem;
-				font-size: 0.9375rem;
-				line-height: 1.5;
-				color: #1b1b1b;
-			}
-
 			.mega-menu-column {
 				min-width: 0;
 			}
@@ -1130,8 +1116,7 @@
         text-decoration: underline;
     }
 
-    .mega-menu-column .calculators-hub-note,
-    .mega-menu-column .mega-menu-moved-note {
+    .mega-menu-column .calculators-hub-note {
         margin: 0 20px 8px;
         color: #fff;
         font-size: 0.85rem;
