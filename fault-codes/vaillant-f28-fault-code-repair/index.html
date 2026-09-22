@@ -98,13 +98,32 @@
         .article-content .photo-row figcaption {
             margin-top: 0.5rem;
         }
-        .article-content .amazon-part {
-            display: block;
-            margin-top: 0.35rem;
+        .article-content .amazon-inline {
+            white-space: nowrap;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+        .article-content .amazon-inline svg {
+            display: inline-block;
+            width: 0.85em;
+            height: 0.85em;
+            vertical-align: -0.08em;
+            margin-right: 0.2em;
+        }
+        .article-content .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
         .article-content .amazon-affiliate-note {
-            font-size: 0.875rem;
-            color: var(--text-muted);
+            font-size: 0.9375rem;
+            color: var(--text);
         }
         @media (max-width: 768px) { .article-content { padding: 1.5rem; } }
 
@@ -212,12 +231,16 @@
 <li><strong>F.29</strong> is flame lost while running: ignition was OK, then the flame went out and re-ignition failed.</li>
 </ul>
 <h3>Part numbers</h3>
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="amazon-smile" viewBox="0 0 16 16">
+        <path fill="currentColor" d="M3.2 10.6c2.2 1 4.7 1.6 7.4 1.6 1.5 0 3-.2 4.4-.7.3-.1.5.2.2.4-1.9 1.1-4.2 1.7-6.7 1.7-2.4 0-4.6-.5-6.6-1.5-.3-.15-.1-.45.3-.5.3 0 .7.1 1 .15z"/>
+        <path fill="currentColor" d="M13.1 10.1c-.15-.2-1.15-.1-1.6-.05-.15 0-.15-.15 0-.22.8-.55 2.15-.4 2.3-.18.16.22-.08 1.55-.85 2.2-.12.1-.22.05-.18-.1.22-.45.48-1.4.33-1.65z"/>
+    </symbol>
+</svg>
 <p>Confirm every spare against the boiler <strong>GC number</strong> and the current parts list. Numbers below are common examples, not a complete catalogue. Older valves and PCBs are range-specific and are often superseded.</p>
-<p><strong>Electrode</strong> — 0020133816 is a later ecoTEC ignition / ionisation electrode. Older ranges may use a different assembly (for example 090709). Always match the electrode and gasket to the burner door.
-<a class="amazon-part" href="https://www.amazon.co.uk/dp/B0DQ93BD4Y?tag=myboiler-com-21" target="_blank" rel="sponsored noopener noreferrer">Buy electrode 0020133816 on Amazon</a>
-<a class="amazon-part" href="https://www.amazon.co.uk/dp/B07T83HB2H?tag=myboiler-com-21" target="_blank" rel="sponsored noopener noreferrer">Buy electrode 090709 on Amazon</a></p>
-<p><strong>Gas valve 0020148381</strong> — common later ecoTEC Plus gas section (many VU xxx/5-5 and related Plus appliances). Use this in preference to guessing from an old list.
-<a class="amazon-part" href="https://www.amazon.co.uk/dp/B07J2LH2BK?tag=myboiler-com-21" target="_blank" rel="sponsored noopener noreferrer">Buy gas valve 0020148381 on Amazon</a></p>
+<p class="amazon-affiliate-note">Part numbers must be confirmed by a Gas Safe registered professional against the boiler GC number / current parts list before ordering or fitting. Affiliate links are for convenience only and help support this site.</p>
+<p><strong>Electrode</strong> — 0020133816 <a class="amazon-inline" href="https://www.amazon.co.uk/dp/B0DQ93BD4Y?tag=myboiler-com-21" target="_blank" rel="sponsored noopener noreferrer"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><use href="#amazon-smile"></use></svg>Buy on Amazon<span class="visually-hidden"> (electrode 0020133816)</span></a> is a later ecoTEC ignition / ionisation electrode. Older ranges may use a different assembly (for example 090709 <a class="amazon-inline" href="https://www.amazon.co.uk/dp/B07T83HB2H?tag=myboiler-com-21" target="_blank" rel="sponsored noopener noreferrer"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><use href="#amazon-smile"></use></svg>Buy on Amazon<span class="visually-hidden"> (electrode 090709)</span></a>). Always match the electrode and gasket to the burner door.</p>
+<p><strong>Gas valve 0020148381</strong> <a class="amazon-inline" href="https://www.amazon.co.uk/dp/B07J2LH2BK?tag=myboiler-com-21" target="_blank" rel="sponsored noopener noreferrer"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><use href="#amazon-smile"></use></svg>Buy on Amazon<span class="visually-hidden"> (gas valve 0020148381)</span></a> — common later ecoTEC Plus gas section (many VU xxx/5-5 and related Plus appliances). Use this in preference to guessing from an old list.</p>
 <p><strong>Older gas valves (often superseded)</strong></p>
 <ul>
 <li>053210 — TurboMAX / ThermoCompact VU and VUW 182–282 E (and similar).</li>
@@ -227,13 +250,11 @@
 </ul>
 <p><strong>Older PCBs (confirm year and GC; many later boards differ)</strong></p>
 <ul>
-<li>0020132764 — ecoTEC Pro 24/28 and Plus 824/831/837/937 up to about 2012.
-<a class="amazon-part" href="https://www.amazon.co.uk/dp/B08SQWQLTT?tag=myboiler-com-21" target="_blank" rel="sponsored noopener noreferrer">Buy PCB 0020132764 on Amazon</a></li>
+<li>0020132764 <a class="amazon-inline" href="https://www.amazon.co.uk/dp/B08SQWQLTT?tag=myboiler-com-21" target="_blank" rel="sponsored noopener noreferrer"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><use href="#amazon-smile"></use></svg>Buy on Amazon<span class="visually-hidden"> (PCB 0020132764)</span></a> — ecoTEC Pro 24/28 and Plus 824/831/837/937 up to about 2012.</li>
 <li>0020034604 — TurboMAX Plus / Pro 24E–837 type.</li>
 <li>0020036861 — ecoTEC Plus 415 / 418 / 428 / 438 type.</li>
 </ul>
 <p>A new PCB on later ecoTEC appliances usually needs the DSN set — see <a href="/fault-codes/vaillant-ecotec-f70-repair/">F.70</a>.</p>
-<p class="amazon-affiliate-note">Amazon links are affiliate links and help support this site.</p>
 <p>F.28 work on the gas route, flue, or internals must be done by a Gas Safe registered engineer. Homeowners can check that the gas is on, that a prepayment meter has credit, and that the condensate pipe is not frozen, then reset the boiler.</p>
         </article>
     </div>
