@@ -73,6 +73,33 @@
         }
         .article-video iframe { display: block; width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; }
         .article-back { margin: 0 0 1.25rem; }
+        .amazon-buy {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3em;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            white-space: nowrap;
+        }
+        .amazon-buy__icon {
+            width: 15px;
+            height: 15px;
+            color: #ff9900;
+            flex: 0 0 auto;
+        }
+        .part-check {
+            font-size: 0.9375rem;
+            line-height: 1.65;
+            color: var(--text);
+            border-left: 3px solid var(--border);
+            padding: 0.15rem 0 0.15rem 0.9rem;
+            margin: 1.25rem 0 1rem;
+        }
+        .affiliate-note {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
         @media (max-width: 768px) { .article-content { padding: 1.5rem; } }
 
     </style>
@@ -114,6 +141,13 @@
 <h3><strong>F52 and F53 Fault Code Repair and Solutions</strong></h3>
 <p>In order to repair this fault, you may need to check first the sensor is connected correctly. Simply remove it and plug it back in. This will most likely address and F52 fault code. In order to fix and F53 fault code you may have to electrically test the functioning of the sensor and it’s output values, using readings available from Vaillant technical.  An engineer can check it electrically, and if necessary replace this part. If the part is functioning properly, there may be a possibility that either the gas supply is too low or the PCB is at fault. Gas supply pressure can be checked by a gas heating engineer using gas testing equipment. Gas appliance repairs should be carried out by Gas Safe Register listed professionals.</p>
 <h3><strong>Where to buy the involved parts</strong></h3>
+<p>The F.52 / F.53 spare is the OEM <strong>Venturi / mass-flow sensor</strong> behind the gas valve (the assembly shown above). It is not a DHW or aqua flow sensor. The manufacturer part number is model-dependent and must match the exact boiler:</p>
+<ul>
+<li><strong>0020135122</strong> — ecoTEC Plus 612 / 615 / 618 / 824 class. <a class="amazon-buy" href="https://www.amazon.co.uk/dp/B07TJWG6HJ?tag=myboiler-com-21" target="_blank" rel="noopener sponsored noreferrer">Buy on Amazon <svg class="amazon-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M15.93 17.09c-2.17 1.6-5.32 2.45-8.03 2.45-3.8 0-7.22-1.4-9.81-3.74-.2-.19 0-.44.23-.3 2.56 1.49 5.73 2.39 9.01 2.39 2.21 0 4.64-.46 6.88-1.41.34-.14.62.22.32.61z"/><path fill="currentColor" d="M16.72 16.19c-.28-.35-1.83-.17-2.53-.08-.21.03-.24-.16-.05-.29.99-.7 2.61-.5 2.8-.26.19.23.05 1.85-.46 2.62-.08.12-.16.06-.12-.1.1-.41.32-1.34.36-1.89z"/></svg></a></li>
+<li><strong>0020135123</strong> — ecoTEC Plus 624 / 831 and related. Confirm this OEM number with a Vaillant stockist; marketplace listings for this MPN have been mixed with unrelated parts.</li>
+</ul>
+<p class="part-check">A Gas Safe registered professional must confirm the Venturi part number against the boiler’s GC number and the current Vaillant parts list before ordering or fitting. The wrong Venturi will not clear F.52 / F.53 and must not be fitted.</p>
+<p class="affiliate-note">Amazon links are affiliate links and may earn a commission that helps support this site.</p>
         </article>
     </div>
     <div id="site-footer"></div>
