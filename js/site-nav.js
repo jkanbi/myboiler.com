@@ -36,8 +36,9 @@
         '<a href="/heat-pumps/retrofit-an-existing-hot-water-cylinder-with-a-plate-heat-exchanger-for-use-with-a-heat-pump/">Heat Pump Cylinder Retrofit</a>' +
         '<a href="/heat-pumps/air-source-heat-pumps/">Air Source Heat Pump</a>' +
         '<a href="/heat-pumps/hybrid-heat-pumps/">Hybrid Heat Pumps</a>' +
-        '<a href="/why-heat-pumps-work-well-with-underfloor-heating/">Underfloor Heating</a>' +
+        '<a href="/why-heat-pumps-work-well-with-underfloor-heating/">Heat Pumps and Underfloor Heating</a>' +
         '<a href="/underfloor-heating-vs-radiators/">UFH vs Radiators</a>' +
+        '<a href="/heat-meter/">Heat Meters</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Miscellaneous</h4>' +
@@ -94,6 +95,7 @@
         '<a href="/calculators/pipe-size-calculator/">Pipe Size Calculator</a>' +
         '<a href="/calculators/radiator-correction-factor-tool/">Radiator Correction Factor</a>' +
         '<a href="/calculators/volume-flow-rate-q-calculator/">Volume Flow Rate Q</a>' +
+        '<a href="/heat-meter/">Heat Meters</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Conversion Calculators</h4>' +

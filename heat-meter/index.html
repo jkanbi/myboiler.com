@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heat meters — how they work and the types - MyBoiler Hub</title>
+    <meta name="description" content="How a heat meter measures kWh from flow rate and ΔT, the installer formula with units, and the main types: ultrasonic, mechanical, and electromagnetic.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 1.5rem;
+            max-width: 62ch;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+        }
+
+        .article-content:last-child {
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content .article-intro {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 0 0 1rem;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        .article-content h3:first-of-type {
+            margin-top: 0.25rem;
+        }
+
+        .article-content > :last-child {
+            margin-bottom: 0;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content img {
+            display: block;
+            max-width: min(100%, 720px);
+            height: auto;
+            margin: 1rem auto 0.5rem;
+            border-radius: var(--radius);
+        }
+
+        .article-content figure {
+            margin: 0 0 1.75rem;
+        }
+
+        .type-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin: 0 0 0.35rem;
+            text-align: center;
+        }
+
+        .article-content figcaption {
+            font-size: 0.875rem;
+            line-height: 1.45;
+            color: var(--text-muted);
+            text-align: center;
+            margin: 0.5rem 0 0;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin: 0 0 0.4rem;
+            line-height: 1.6;
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0 1.75rem;
+            font-size: 0.9375rem;
+        }
+
+        .article-content th,
+        .article-content td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+            vertical-align: top;
+        }
+
+        .article-content th {
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .formula {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1rem 1.25rem;
+            margin: 0 0 1.25rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .formula code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.95em;
+        }
+
+        .photo-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 1rem;
+            margin: 0 0 1.75rem;
+        }
+
+        .photo-row figure {
+            margin: 0;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .photo-row img {
+            margin: 0 auto 0.5rem;
+            max-width: 100%;
+            max-height: 280px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .photo-row.types-compare img {
+            width: 100%;
+            height: auto;
+            max-height: none;
+        }
+
+        .photo-row.types-compare figure:last-child img {
+            aspect-ratio: 1400 / 875;
+            object-fit: contain;
+        }
+
+        @media (max-width: 640px) {
+            .photo-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating &amp; Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <article>
+        <section class="article-content">
+            <h1 class="article-title">Heat meters</h1>
+            <p class="article-intro">A heat meter records the kWh a wet heating circuit actually delivers, from flow rate and the temperature drop between flow and return.</p>
+        </section>
+
+        <section class="article-content">
+            <h2>How a heat meter works</h2>
+            <p>Every heat meter has three parts:</p>
+            <ol>
+                <li><strong>Flow sensor</strong> — measures how much water is moving through the pipe (volume or mass flow).</li>
+                <li><strong>Matched temperature sensors</strong> — usually a Pt500 pair, one in the flow pipe and one in the return.</li>
+                <li><strong>Calculator</strong> — multiplies flow × specific heat × ΔT and adds that up over time to give kWh (or MWh / GJ).</li>
+            </ol>
+            <p>It is not measuring “how hot the boiler is”. It is measuring how much energy left the water. If the pump is running and ΔT is near zero, the meter correctly records almost no heat.</p>
+            <p>On the Qalcosonic E4 the calculator usually sits on the flow body. You can also split it: unclip the electronic block and mount it on the wall, with the ultrasonic tube left in the pipe. One temperature sensor is often in a pocket on the meter; the other goes in a pocket on the opposite pipe.</p>
+
+            <div class="photo-row">
+                <figure>
+                    <img src="/heat-meter/images/axioma-qalcosonic-e4-angle.jpg" alt="Axioma Qalcosonic E4 three-quarter view showing the threaded flow connections" width="723" height="567">
+                    <figcaption>Threaded flow connections on the compact body.</figcaption>
+                </figure>
+                <figure>
+                    <img src="/heat-meter/images/axioma-qalcosonic-e4-flow-body.jpg" alt="Rear of the Axioma Qalcosonic E4 showing the composite ultrasonic flow sensor" width="684" height="503">
+                    <figcaption>Ultrasonic flow tube on the back — no impeller.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section class="article-content">
+            <h2>The installer formula</h2>
+            <p class="formula"><code>kW = (flow in m³/h × ΔT) / 0.86</code></p>
+            <p>Flow must be in m³/h (1 m³/h = 16.7 L/min). Example: 8 kW at ΔT 5 °C needs about 23 L/min; 24 kW at ΔT 20 °C needs about 17 L/min.</p>
+            <figure>
+                <img src="/heat-meter/images/kw-dt-flow-rate-triangle.jpeg" alt="Triangle relating kW, flow rate and delta T" width="400" height="400">
+                <figcaption>Cover one to find the other. Use the <a href="/calculators/kw-to-flow-rate/">kW to flow rate calculator</a> if you want litres per second or per minute.</figcaption>
+            </figure>
+        </section>
+
+        <section class="article-content">
+            <h2>Types of heat meter</h2>
+            <div class="photo-row types-compare">
+                <figure>
+                    <span class="type-label">Ultrasonic</span>
+                    <img src="/heat-meter/images/axioma-qalcosonic-e4.jpg" alt="Ultrasonic heat meter: Axioma Qalcosonic E4" width="1400" height="875">
+                    <figcaption>Qalcosonic E4 — no moving parts, composite flow tube.</figcaption>
+                </figure>
+                <figure>
+                    <span class="type-label">Mechanical impeller</span>
+                    <img src="/heat-meter/images/mechanical-impeller-wfm21.jpg" alt="Mechanical impeller heat meter: Wasser-Geräte Volu Mess 2 WFM21 brass flow body" width="792" height="1000">
+                    <figcaption>Volu Mess 2 / WFM21 — brass body with an impeller in the flow. Photo: MakeMagazinDE, <a href="https://commons.wikimedia.org/wiki/File:Waermezaehler_wfm21.jpg">CC BY-SA 4.0</a>.</figcaption>
+                </figure>
+            </div>
+
+            <h3>Ultrasonic</h3>
+            <p>No moving parts. Transit-time transducers measure flow through the water. This is the usual choice for heat pumps, heat networks, and MID billing. The Qalcosonic E4 is an ultrasonic meter that can stay compact or be split: MID Class 2, DN15–DN40, qp 0.6–10 m³/h, Pt500 sensors, water as the heat carrier, any orientation, and no straight pipe lengths required. Communications typically M-Bus, wireless M-Bus, Modbus, LoRa, or BACnet.</p>
+
+            <h3>Mechanical (turbine / impeller)</h3>
+            <p>A spinner in the brass flow body turns with the water. The calculator still uses paired temperature sensors and ΔT, same as an ultrasonic — only the flow measurement is different. Needs a strainer, wears, and is more sensitive to debris and air. Still seen on older district-heating flats. Less common for new heat-pump work.</p>
+
+            <h3>Electromagnetic (magflow)</h3>
+            <p>Measures velocity in conductive water. No moving parts, good on larger plant-room sizes. Overkill for a single dwelling.</p>
+
+            <h3>Compact vs split</h3>
+            <p><strong>Compact</strong> — calculator clipped onto the flow sensor (as in the E4 photos above). <strong>Split</strong> — the same calculator taken off the tube and mounted on the wall, with the flow sensor left in the pipe. The E4 does both: compact is quicker on a domestic return; split keeps the display readable in a plant room or a tight cupboard.</p>
+            <p>Clamp-on ultrasonics are useful for commissioning checks. They are not usually a MID billing meter.</p>
+
+            <h3>What is not a heat meter</h3>
+            <p>Radiator heat-cost allocators (the small devices clipped to a panel) apportion a building’s heat. They do not measure kWh. A heat pump’s own estimated energy display is also not a billing meter.</p>
+        </section>
+
+        <section class="article-content">
+            <h2>Fitting notes</h2>
+            <ul>
+                <li>Most compact meters can go in flow or return — set that on the calculator at commissioning (the E4 does).</li>
+                <li>Follow the flow arrow. Isolation valves either side, and a strainer upstream on mechanical meters.</li>
+                <li>Temperature sensors must stay a matched pair, same immersion depth, conductive paste in the pockets.</li>
+                <li>Programmed for <strong>water</strong> unless the meter supports a glycol medium. Antifreeze changes cp and density; an uncorrected meter will read wrong. Many domestic ultrasonics, including the E4, are specified for water.</li>
+                <li>Billing meters in the UK are typically MID Class 2 to BS EN 1434. Heat networks may need them under the Heat Network (Metering and Billing) Regulations. The Boiler Upgrade Scheme does not require a heat meter.</li>
+            </ul>
+
+            <p>See also <a href="/calculators/kw-to-flow-rate/">kW to flow rate</a> · <a href="/calculators/flow-rate-lpm-to-energy-used-kwh/">LPM to kWh</a> · <a href="/heat-pumps/">Heat pumps</a>.</p>
+        </section>
+        </article>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
