@@ -73,6 +73,36 @@
         }
         .article-video iframe { display: block; width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; }
         .article-back { margin: 0 0 1.25rem; }
+        .amazon-buy,
+        .ebay-buy {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3em;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            white-space: nowrap;
+        }
+        .amazon-buy__icon,
+        .ebay-buy__icon {
+            width: 15px;
+            height: 15px;
+            flex: 0 0 auto;
+        }
+        .amazon-buy__icon { color: #ff9900; }
+        .ebay-buy__icon { color: #e53238; }
+        .part-check {
+            font-size: 0.9375rem;
+            line-height: 1.65;
+            color: var(--text);
+            border-left: 3px solid var(--border);
+            padding: 0.15rem 0 0.15rem 0.9rem;
+            margin: 1.25rem 0 1rem;
+        }
+        .affiliate-note {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
         @media (max-width: 768px) { .article-content { padding: 1.5rem; } }
 
     </style>
@@ -113,9 +143,11 @@
 <h2>Possible solutions</h2>
 <ol><li>Check working inlet gas pressure. Low supply also shows as F.54 / F.28.</li><li>Prove the gas-valve plug (often X25 on ecoTEC) and loom continuity. See <a href="/fault-codes/vaillant-f26-fault-code/">F.26</a>.</li><li>Inspect the Venturi filter cap for wetness or blockage — same checks as <a href="/fault-codes/vaillant-f52-and-f53-fault-code/">F.52 / F.53</a>.</li><li>Replace the gas valve as a complete assembly if the electrical drive is good and regulation still fails. Combustion must be set after replacement.</li></ol>
 <h2>Possible parts needed</h2>
-<ul><li>Gas valve / gas section (e.g. 0020148381 on many later ecoTEC Plus VU ranges — confirm GC)</li><li>Gas valve harness</li><li>Mass-flow sensor / Venturi parts if F.52 or F.53 is also present</li><li>PCB</li></ul>
+<ul><li>Gas valve / gas section (e.g. 0020148381 on many later ecoTEC Plus VU ranges — confirm GC) <a class="amazon-buy" href="https://www.amazon.co.uk/dp/B07J2LH2BK?tag=myboiler-com-21" target="_blank" rel="noopener sponsored noreferrer">Buy on Amazon <svg class="amazon-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M15.93 17.09c-2.17 1.6-5.32 2.45-8.03 2.45-3.8 0-7.22-1.4-9.81-3.74-.2-.19 0-.44.23-.3 2.56 1.49 5.73 2.39 9.01 2.39 2.21 0 4.64-.46 6.88-1.41.34-.14.62.22.32.61z"/><path fill="currentColor" d="M16.72 16.19c-.28-.35-1.83-.17-2.53-.08-.21.03-.24-.16-.05-.29.99-.7 2.61-.5 2.8-.26.19.23.05 1.85-.46 2.62-.08.12-.16.06-.12-.1.1-.41.32-1.34.36-1.89z"/></svg></a> <a class="ebay-buy" href="https://www.ebay.co.uk/itm/167890145532?mkcid=1&amp;mkrid=710-53481-19255-0&amp;siteid=3&amp;campid=5339210679&amp;customid=vaillant-f56&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener sponsored noreferrer">Buy on eBay <svg class="ebay-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3.2 8.1h4.1l2.1 7.8 2.1-7.8h4.1l-3.6 11.8H7.8L3.2 8.1zm14.2 4.3c.1-1.3 1.2-2 2.6-2 1 0 1.8.4 2.3 1.1l-1.4 1.2c-.3-.4-.7-.6-1.1-.6-.5 0-.8.3-.8.7 0 1.2 3.8.4 3.8 2.9 0 1.5-1.2 2.3-2.8 2.3-1.2 0-2.1-.5-2.7-1.3l1.5-1.1c.3.5.8.8 1.3.8.5 0 .9-.2.9-.7 0-1.3-3.6-.3-3.6-3.3z"/></svg></a></li><li>Gas valve harness</li><li>Mass-flow sensor / Venturi parts if F.52 or F.53 is also present</li><li>PCB</li></ul>
 <figure><img alt="Vaillant gas valve" loading="lazy" src="/fault-codes/vaillant-f26-fault-code/images/0020148381.jpg"><figcaption>Typical ecoTEC gas valve with stepper motor</figcaption></figure>
-        </article>
+        <p class="part-check">A Gas Safe professional must confirm the part number against the boiler GC number before ordering or fitting.</p>
+<p class="affiliate-note">Shopping links are affiliate links — see <a href="/affilate-activity-disclosure/">Affiliate activity disclosure</a>.</p>
+</article>
     </div>
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>

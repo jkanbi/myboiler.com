@@ -73,6 +73,36 @@
         }
         .article-video iframe { display: block; width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; }
         .article-back { margin: 0 0 1.25rem; }
+        .amazon-buy,
+        .ebay-buy {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3em;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            white-space: nowrap;
+        }
+        .amazon-buy__icon,
+        .ebay-buy__icon {
+            width: 15px;
+            height: 15px;
+            flex: 0 0 auto;
+        }
+        .amazon-buy__icon { color: #ff9900; }
+        .ebay-buy__icon { color: #e53238; }
+        .part-check {
+            font-size: 0.9375rem;
+            line-height: 1.65;
+            color: var(--text);
+            border-left: 3px solid var(--border);
+            padding: 0.15rem 0 0.15rem 0.9rem;
+            margin: 1.25rem 0 1rem;
+        }
+        .affiliate-note {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
 
         .article-content .ntc-photos {
             display: flex;
@@ -130,9 +160,11 @@
 <h2>Possible solutions</h2>
 <ol><li>Refit: one NTC on flow, one on return, as labelled in the manual.</li><li>Reset and run a demand. Flow should rise first.</li></ol>
 <h2>Possible parts needed</h2>
-<ul><li>Usually no new parts — refit the existing NTCs</li><li>NTC 193592 or 0020068120 if a clip or sensor was broken</li></ul>
+<ul><li>Usually no new parts — refit the existing NTCs</li><li>NTC 193592 or 0020068120 if a clip or sensor was broken <a class="amazon-buy" href="https://www.amazon.co.uk/dp/B01LYU50BE?tag=myboiler-com-21" target="_blank" rel="noopener sponsored noreferrer">Buy on Amazon <svg class="amazon-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M15.93 17.09c-2.17 1.6-5.32 2.45-8.03 2.45-3.8 0-7.22-1.4-9.81-3.74-.2-.19 0-.44.23-.3 2.56 1.49 5.73 2.39 9.01 2.39 2.21 0 4.64-.46 6.88-1.41.34-.14.62.22.32.61z"/><path fill="currentColor" d="M16.72 16.19c-.28-.35-1.83-.17-2.53-.08-.21.03-.24-.16-.05-.29.99-.7 2.61-.5 2.8-.26.19.23.05 1.85-.46 2.62-.08.12-.16.06-.12-.1.1-.41.32-1.34.36-1.89z"/></svg></a></li></ul>
 <div class="ntc-photos"><img alt="Vaillant NTC Sensor" loading="lazy" src="/fault-codes/vaillant-f00-fault-code/images/1_M_Vaillant_0020068120_jpg_zoom.jpg"/><img alt="Vaillant Flow / Return NTC 193592" loading="lazy" src="/fault-codes/vaillant-f00-fault-code/images/193592.jpg"/></div>
 <figure><img alt="Vaillant PCB X20 Connector" loading="lazy" src="/fault-codes/vaillant-f00-fault-code/images/Vaillant-PCB-X20-Connector.jpg"/><figcaption>Vaillant PCB X20 connector (typical NTC loom)</figcaption></figure>
+<p class="part-check">A Gas Safe professional must confirm the part number against the boiler GC number before ordering or fitting.</p>
+<p class="affiliate-note">Shopping links are affiliate links — see <a href="/affilate-activity-disclosure/">Affiliate activity disclosure</a>.</p>
 </article>
 </div>
 <div id="site-footer"></div>
