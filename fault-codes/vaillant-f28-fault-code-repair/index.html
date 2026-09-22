@@ -98,6 +98,36 @@
         .article-content .photo-row figcaption {
             margin-top: 0.5rem;
         }
+        .amazon-buy,
+        .ebay-buy {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3em;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            white-space: nowrap;
+        }
+        .amazon-buy__icon,
+        .ebay-buy__icon {
+            width: 15px;
+            height: 15px;
+            flex: 0 0 auto;
+        }
+        .amazon-buy__icon { color: #ff9900; }
+        .ebay-buy__icon { color: #e53238; }
+        .part-check {
+            font-size: 0.9375rem;
+            line-height: 1.65;
+            color: var(--text);
+            border-left: 3px solid var(--border);
+            padding: 0.15rem 0 0.15rem 0.9rem;
+            margin: 1.25rem 0 1rem;
+        }
+        .affiliate-note {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
         @media (max-width: 768px) { .article-content { padding: 1.5rem; } }
 
     </style>
@@ -204,9 +234,9 @@
 <li><strong>F.29</strong> is flame lost while running: ignition was OK, then the flame went out and re-ignition failed.</li>
 </ul>
 <h3>Part numbers</h3>
-<p>Confirm every spare against the boiler <strong>GC number</strong> and the current parts list. Numbers below are common examples, not a complete catalogue. Older valves and PCBs are range-specific and are often superseded.</p>
-<p><strong>Electrode</strong> — 0020133816 is a later ecoTEC ignition / ionisation electrode. Older ranges may use a different assembly (for example 090709). Always match the electrode and gasket to the burner door.</p>
-<p><strong>Gas valve 0020148381</strong> — common later ecoTEC Plus gas section (many VU xxx/5-5 and related Plus appliances). Use this in preference to guessing from an old list.</p>
+<p>Numbers below are common examples, not a complete catalogue. Older valves and PCBs are range-specific and are often superseded.</p>
+<p><strong>Electrode</strong> — 0020133816 <a class="amazon-buy" href="https://www.amazon.co.uk/dp/B0DQ93BD4Y?tag=myboiler-com-21" target="_blank" rel="noopener sponsored noreferrer">Buy on Amazon <svg class="amazon-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M15.93 17.09c-2.17 1.6-5.32 2.45-8.03 2.45-3.8 0-7.22-1.4-9.81-3.74-.2-.19 0-.44.23-.3 2.56 1.49 5.73 2.39 9.01 2.39 2.21 0 4.64-.46 6.88-1.41.34-.14.62.22.32.61z"/><path fill="currentColor" d="M16.72 16.19c-.28-.35-1.83-.17-2.53-.08-.21.03-.24-.16-.05-.29.99-.7 2.61-.5 2.8-.26.19.23.05 1.85-.46 2.62-.08.12-.16.06-.12-.1.1-.41.32-1.34.36-1.89z"/></svg></a> <a class="ebay-buy" href="https://www.ebay.co.uk/itm/402581937641?mkcid=1&amp;mkrid=710-53481-19255-0&amp;siteid=3&amp;campid=5339210679&amp;customid=vaillant-f28&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener sponsored noreferrer">Buy on eBay <svg class="ebay-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3.2 8.1h4.1l2.1 7.8 2.1-7.8h4.1l-3.6 11.8H7.8L3.2 8.1zm14.2 4.3c.1-1.3 1.2-2 2.6-2 1 0 1.8.4 2.3 1.1l-1.4 1.2c-.3-.4-.7-.6-1.1-.6-.5 0-.8.3-.8.7 0 1.2 3.8.4 3.8 2.9 0 1.5-1.2 2.3-2.8 2.3-1.2 0-2.1-.5-2.7-1.3l1.5-1.1c.3.5.8.8 1.3.8.5 0 .9-.2.9-.7 0-1.3-3.6-.3-3.6-3.3z"/></svg></a> is a later ecoTEC ignition / ionisation electrode. Older ranges may use a different assembly (for example 090709 <a class="amazon-buy" href="https://www.amazon.co.uk/dp/B07T83HB2H?tag=myboiler-com-21" target="_blank" rel="noopener sponsored noreferrer">Buy on Amazon <svg class="amazon-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M15.93 17.09c-2.17 1.6-5.32 2.45-8.03 2.45-3.8 0-7.22-1.4-9.81-3.74-.2-.19 0-.44.23-.3 2.56 1.49 5.73 2.39 9.01 2.39 2.21 0 4.64-.46 6.88-1.41.34-.14.62.22.32.61z"/><path fill="currentColor" d="M16.72 16.19c-.28-.35-1.83-.17-2.53-.08-.21.03-.24-.16-.05-.29.99-.7 2.61-.5 2.8-.26.19.23.05 1.85-.46 2.62-.08.12-.16.06-.12-.1.1-.41.32-1.34.36-1.89z"/></svg></a>). Always match the electrode and gasket to the burner door.</p>
+<p><strong>Gas valve 0020148381</strong> <a class="amazon-buy" href="https://www.amazon.co.uk/dp/B07J2LH2BK?tag=myboiler-com-21" target="_blank" rel="noopener sponsored noreferrer">Buy on Amazon <svg class="amazon-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M15.93 17.09c-2.17 1.6-5.32 2.45-8.03 2.45-3.8 0-7.22-1.4-9.81-3.74-.2-.19 0-.44.23-.3 2.56 1.49 5.73 2.39 9.01 2.39 2.21 0 4.64-.46 6.88-1.41.34-.14.62.22.32.61z"/><path fill="currentColor" d="M16.72 16.19c-.28-.35-1.83-.17-2.53-.08-.21.03-.24-.16-.05-.29.99-.7 2.61-.5 2.8-.26.19.23.05 1.85-.46 2.62-.08.12-.16.06-.12-.1.1-.41.32-1.34.36-1.89z"/></svg></a> <a class="ebay-buy" href="https://www.ebay.co.uk/itm/167890145532?mkcid=1&amp;mkrid=710-53481-19255-0&amp;siteid=3&amp;campid=5339210679&amp;customid=vaillant-f28&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener sponsored noreferrer">Buy on eBay <svg class="ebay-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3.2 8.1h4.1l2.1 7.8 2.1-7.8h4.1l-3.6 11.8H7.8L3.2 8.1zm14.2 4.3c.1-1.3 1.2-2 2.6-2 1 0 1.8.4 2.3 1.1l-1.4 1.2c-.3-.4-.7-.6-1.1-.6-.5 0-.8.3-.8.7 0 1.2 3.8.4 3.8 2.9 0 1.5-1.2 2.3-2.8 2.3-1.2 0-2.1-.5-2.7-1.3l1.5-1.1c.3.5.8.8 1.3.8.5 0 .9-.2.9-.7 0-1.3-3.6-.3-3.6-3.3z"/></svg></a> (Honeywell genuine) — common later ecoTEC Plus gas section (many VU xxx/5-5 and related Plus appliances). Use this in preference to guessing from an old list.</p>
 <p><strong>Older gas valves (often superseded)</strong></p>
 <ul>
 <li>053210 — TurboMAX / ThermoCompact VU and VUW 182–282 E (and similar).</li>
@@ -216,11 +246,13 @@
 </ul>
 <p><strong>Older PCBs (confirm year and GC; many later boards differ)</strong></p>
 <ul>
-<li>0020132764 — ecoTEC Pro 24/28 and Plus 824/831/837/937 up to about 2012.</li>
+<li>0020132764 <a class="amazon-buy" href="https://www.amazon.co.uk/dp/B08SQWQLTT?tag=myboiler-com-21" target="_blank" rel="noopener sponsored noreferrer">Buy on Amazon <svg class="amazon-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M15.93 17.09c-2.17 1.6-5.32 2.45-8.03 2.45-3.8 0-7.22-1.4-9.81-3.74-.2-.19 0-.44.23-.3 2.56 1.49 5.73 2.39 9.01 2.39 2.21 0 4.64-.46 6.88-1.41.34-.14.62.22.32.61z"/><path fill="currentColor" d="M16.72 16.19c-.28-.35-1.83-.17-2.53-.08-.21.03-.24-.16-.05-.29.99-.7 2.61-.5 2.8-.26.19.23.05 1.85-.46 2.62-.08.12-.16.06-.12-.1.1-.41.32-1.34.36-1.89z"/></svg></a> — ecoTEC Pro 24/28 and Plus 824/831/837/937 up to about 2012.</li>
 <li>0020034604 — TurboMAX Plus / Pro 24E–837 type.</li>
 <li>0020036861 — ecoTEC Plus 415 / 418 / 428 / 438 type.</li>
 </ul>
 <p>A new PCB on later ecoTEC appliances usually needs the DSN set — see <a href="/fault-codes/vaillant-ecotec-f70-repair/">F.70</a>.</p>
+<p class="part-check">Part numbers must be confirmed by a Gas Safe professional against the boiler GC number before ordering or fitting.</p>
+<p class="affiliate-note">Shopping links are affiliate links — see <a href="/affilate-activity-disclosure/">Affiliate activity disclosure</a>.</p>
 <p>F.28 work on the gas route, flue, or internals must be done by a Gas Safe registered engineer. Homeowners can check that the gas is on, that a prepayment meter has credit, and that the condensate pipe is not frozen, then reset the boiler.</p>
         </article>
     </div>
