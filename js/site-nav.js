@@ -45,6 +45,7 @@
         '<a href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-post-2012-models/">Flow Temperature &amp; Power</a>' +
         '<a href="/solar-thermal/">Solar Thermal Heating</a>' +
         '<a href="/solar-thermal/">Solar Thermal Servicing</a>' +
+        '<a href="/intasol-combi-diverter-valve/">Intasol Combi Diverter Valve</a>' +
         '<a href="/s-plan/">S Plan Heating Systems</a>' +
         '<a href="/priority-domestic-hot-water/">Priority Domestic Hot Water</a>' +
         '<a href="/quote/">Get a Quote</a>' +
