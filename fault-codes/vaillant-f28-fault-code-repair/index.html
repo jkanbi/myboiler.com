@@ -101,6 +101,17 @@
         .article-content .amazon-inline {
             white-space: nowrap;
         }
+        .article-content .amazon-inline::before {
+            content: "";
+            display: inline-block;
+            width: 1.05em;
+            height: 1.05em;
+            margin-right: 0.28em;
+            vertical-align: -0.18em;
+            background-color: currentColor;
+            -webkit-mask: url("/img/amazon.svg") center / contain no-repeat;
+            mask: url("/img/amazon.svg") center / contain no-repeat;
+        }
         .article-content .visually-hidden {
             position: absolute;
             width: 1px;
