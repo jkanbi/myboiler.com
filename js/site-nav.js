@@ -72,6 +72,9 @@
         '<a href="/fault-codes/worcester-bosch-fault-codes/">Worcester Bosch Fault Codes</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
+        '<h4>Baxi / Main</h4>' +
+        '<a href="/baxi-fga-tool/">FGA Tool</a>' +
+        '<a href="/fault-codes/baxi-fault-codes/">Baxi Fault Codes</a>' +
         '<h4>Other Brands</h4>' +
         '<a href="/fault-codes/">Search Fault Codes</a>' +
         '<a href="/intergas-fga-tool/">Intergas FGA Tool</a>' +

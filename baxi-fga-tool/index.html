@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baxi / Main FGA Tool - MyBoiler Hub</title>
+    <meta name="description" content="Check Baxi and Main flue-gas analyser CO2 at maximum and minimum rate against the installation-manual band for that range.">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .calculator-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .calculator-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 960px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .calculator-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .calculator-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0 auto;
+            max-width: 62ch;
+        }
+
+        .calculator-card {
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 1.5rem;
+        }
+
+        .range-field {
+            margin-bottom: 1.25rem;
+        }
+
+        .choice-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .choice-grid[hidden],
+        #gap-wrap[hidden] {
+            display: none;
+        }
+
+        .choice-group {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            min-width: 0;
+        }
+
+        .choice-group legend {
+            padding: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .mode-button {
+            position: relative;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            margin: 0;
+            padding: 0.7rem 0.75rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            font-family: inherit;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text-muted);
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .mode-button:hover {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+
+        .mode-button:has(input:checked) {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .mode-button input {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            pointer-events: none;
+        }
+
+        .fga-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .fga-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            min-width: 0;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .input-hint {
+            font-size: 0.8125rem;
+            line-height: 1.4;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            font-weight: 500;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .result-item {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1rem 0.75rem;
+            text-align: center;
+        }
+
+        #gap-wrap {
+            margin-top: 1rem;
+        }
+
+        .result-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+
+        .result-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            line-height: 1.2;
+        }
+
+        .result-value.pass {
+            color: #10b981;
+        }
+
+        .result-value.fail {
+            color: #ef4444;
+        }
+
+        .related-links {
+            margin: 0;
+            padding-left: 1.25rem;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .related-links a {
+            color: var(--accent);
+        }
+
+        .formula-section {
+            margin-top: 1.75rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .formula-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+        }
+
+        .formula-legend {
+            font-size: 0.9375rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .calculator-disclaimer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 70ch;
+            margin: 0.5rem auto 1rem;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        @media (max-width: 700px) {
+            .choice-grid,
+            .fga-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calculator-container {
+                padding: 1.25rem 12px;
+            }
+
+            .calculator-card {
+                padding: 1.15rem;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="calculator-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h1 class="calculator-headline">Baxi / Main FGA Tool</h1>
+            <p class="calculator-connector">
+                Enter analyser CO<sub>2</sub> at maximum rate (H) and minimum rate (L). Pass/fail uses the installation-manual band for the range you select.
+            </p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="range-field">
+                <label class="input-label" for="range">Range</label>
+                <p class="input-hint" id="range-note">Case and gas follow the manual for this range.</p>
+                <select id="range" class="input-field">
+                    <option value="600-2">Baxi 600 Combi 2</option>
+                    <option value="600-compact">Baxi 600 (624 / 630) and Main Eco Compact</option>
+                    <option value="ecoblue">Baxi EcoBlue</option>
+                    <option value="duotec">Baxi Duo-tec, Platinum and Megaflo</option>
+                    <option value="main-eco">Main Eco Combi and System (earlier)</option>
+                </select>
+            </div>
+
+            <div class="choice-grid" id="gas-wrap" hidden>
+                <fieldset class="choice-group">
+                    <legend class="input-label">Gas type</legend>
+                    <div class="mode-toggle">
+                        <label class="mode-button">
+                            <input type="radio" name="gas-type" value="ng" checked>
+                            Natural gas
+                        </label>
+                        <label class="mode-button">
+                            <input type="radio" name="gas-type" value="lpg">
+                            Propane
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="fga-grid">
+                <div class="fga-cell">
+                    <label class="input-label" for="co2-h">CO<sub>2</sub> (H) %</label>
+                    <p class="input-hint" id="co2-h-hint">Max power.</p>
+                    <input type="number" id="co2-h" class="input-field" inputmode="decimal" step="0.01" min="0" max="20" placeholder="CO2 (H)">
+                    <div class="result-item">
+                        <div class="result-label">Result CO<sub>2</sub> (H)</div>
+                        <div class="result-value" id="co2-h-result">—</div>
+                    </div>
+                </div>
+
+                <div class="fga-cell">
+                    <label class="input-label" for="co2-l">CO<sub>2</sub> (L) %</label>
+                    <p class="input-hint" id="co2-l-hint">Min power.</p>
+                    <input type="number" id="co2-l" class="input-field" inputmode="decimal" step="0.01" min="0" max="20" placeholder="CO2 (L)">
+                    <div class="result-item">
+                        <div class="result-label">Result CO<sub>2</sub> (L)</div>
+                        <div class="result-value" id="co2-l-result">—</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-item" id="gap-wrap" hidden>
+                <div class="result-label">Full load above part load</div>
+                <div class="result-value" id="gap-result">—</div>
+            </div>
+
+            <div class="formula-section">
+                <h2 class="formula-title">Limits</h2>
+                <p class="formula-legend" id="limits-legend"></p>
+            </div>
+        </div>
+
+        <div class="calculator-card">
+            <h2 class="formula-title">Minimum and maximum rate</h2>
+            <ul class="related-links">
+                <li><a href="/boiler-maximum-and-minimum-output-mode-videos/">Maximum and minimum output mode videos</a>, including Main Combi Eco</li>
+                <li><a href="/fault-codes/baxi-fault-codes/">Baxi fault codes</a></li>
+                <li><a href="/calculators/combustion-performance-gas-ratio-calculator/">Combustion ratio calculator</a></li>
+            </ul>
+        </div>
+
+        <div class="calculator-disclaimer">
+            <strong>Important:</strong> Bands are taken from the installation and service manual for the range selected. Always confirm the instruction on that appliance. A failed reading means do not leave the boiler in service. Gas Safe registered work only.
+        </div>
+    </div>
+
+    <script type="text/javascript" data-cfasync="false">
+        document.addEventListener('DOMContentLoaded', function() {
+            var rangeEl = document.getElementById('range');
+            var gasWrap = document.getElementById('gas-wrap');
+            var rangeNote = document.getElementById('range-note');
+            var co2hEl = document.getElementById('co2-h');
+            var co2lEl = document.getElementById('co2-l');
+            var co2hHint = document.getElementById('co2-h-hint');
+            var co2lHint = document.getElementById('co2-l-hint');
+            var gapWrap = document.getElementById('gap-wrap');
+            var limitsLegend = document.getElementById('limits-legend');
+            var ratioNote = 'These manuals also require CO below 350 ppm and a CO/CO<sub>2</sub> ratio below 0.004 at both rates, and an air-inlet sample of O<sub>2</sub> at least 20.6% with CO<sub>2</sub> below 0.2%.';
+
+            var RANGES = {
+                '600-2': {
+                    note: 'Door removed to measure. Natural gas (G20). G20 with up to 20% hydrogen is set on O2, not this CO2 band.',
+                    source: 'Baxi 600 Combi 2 installation and service manual, section 7.4.5.',
+                    co2h: { min: 8.8, max: 9.4, text: '8.8–9.4%' },
+                    co2l: { min: 8.1, max: 8.6, text: '8.1–8.6%' },
+                    speeds: '',
+                    extra: ratioNote
+                },
+                '600-compact': {
+                    note: 'Case front fitted. Natural gas. Baxi Combi 624 / 630 and Main Eco Compact Combi 25 / 30.',
+                    source: 'Baxi Combi 624 / 630 and Main Eco Compact installation manuals, combustion table.',
+                    co2h: { min: 8.8, max: 9.3, text: '8.8–9.3% (9.0 +0.3/−0.2)' },
+                    co2l: { min: 8.1, max: 8.6, text: '8.1–8.6% (8.5 +0.1/−0.4)' },
+                    speeds: '',
+                    extra: ratioNote
+                },
+                ecoblue: {
+                    note: 'Case front fitted. Natural gas. EcoBlue Combi, Advance and Plus.',
+                    source: 'EcoBlue installation and service manual, section 10.3.25.',
+                    co2h: { min: 8.5, max: 8.9, text: '8.5–8.9% (8.7 ± 0.2)' },
+                    co2l: { min: 8.2, max: 8.6, text: '8.2–8.6% (8.4 ± 0.2)' },
+                    speeds: '',
+                    extra: ratioNote
+                },
+                duotec: {
+                    note: 'Case front fitted. The same band applies at maximum (100), ignition speed and minimum (00).',
+                    source: 'Duo-tec GA installation instructions, combustion check.',
+                    gases: {
+                        ng: {
+                            co2h: { min: 8.3, max: 9.7, text: '8.3–9.7% (9.0 ± 0.7)' },
+                            co2l: { min: 8.3, max: 9.7, text: '8.3–9.7% (9.0 ± 0.7)' }
+                        },
+                        lpg: {
+                            co2h: { min: 9.5, max: 11.5, text: '9.5–11.5% (10.5 ± 1.0)' },
+                            co2l: { min: 9.5, max: 11.5, text: '9.5–11.5% (10.5 ± 1.0)' }
+                        }
+                    },
+                    speeds: ' Same band at ignition speed.',
+                    extra: ratioNote
+                },
+                'main-eco': {
+                    note: 'Front panel removed. Earlier Main Eco Combi and System.',
+                    source: 'Main Eco Combi and System installation and service manual, checking combustion.',
+                    co2h: { min: 9.15, max: 9.5, text: '9.15–9.50%' },
+                    co2l: { min: 8.7, max: 9.05, text: '8.70–9.05%' },
+                    speeds: '',
+                    gap: 0.4,
+                    extra: 'Full load must be at least 0.4% higher than part load.'
+                }
+            };
+
+            function selectedGas() {
+                var el = document.querySelector('input[name="gas-type"]:checked');
+                return el ? el.value : 'ng';
+            }
+
+            function currentBands() {
+                var range = RANGES[rangeEl.value] || RANGES['600-2'];
+                if (range.gases) return range.gases[selectedGas()] || range.gases.ng;
+                return range;
+            }
+
+            function readNumber(el) {
+                var raw = el.value.trim();
+                if (raw === '') return null;
+                var value = parseFloat(raw);
+                return isNaN(value) ? null : value;
+            }
+
+            function setResult(id, state) {
+                var el = document.getElementById(id);
+                el.classList.remove('pass', 'fail');
+                if (state === 'PASS') {
+                    el.textContent = 'PASS';
+                    el.classList.add('pass');
+                } else if (state === 'FAIL') {
+                    el.textContent = 'FAIL';
+                    el.classList.add('fail');
+                } else {
+                    el.textContent = '—';
+                }
+            }
+
+            function inBand(value, band) {
+                return value >= band.min - 0.0001 && value <= band.max + 0.0001;
+            }
+
+            function calculate() {
+                var range = RANGES[rangeEl.value] || RANGES['600-2'];
+                var bands = currentBands();
+                gasWrap.hidden = !range.gases;
+                rangeNote.textContent = range.note;
+                co2hHint.textContent = 'Max power. Pass ' + bands.co2h.text;
+                co2lHint.textContent = 'Min power. Pass ' + bands.co2l.text;
+                limitsLegend.innerHTML =
+                    '<strong>CO<sub>2</sub> (H)</strong> PASS if ' + bands.co2h.text + '<br>' +
+                    '<strong>CO<sub>2</sub> (L)</strong> PASS if ' + bands.co2l.text + range.speeds + '<br>' +
+                    range.extra + '<br>' +
+                    range.source;
+
+                var co2h = readNumber(co2hEl);
+                var co2l = readNumber(co2lEl);
+                setResult('co2-h-result', co2h === null ? null : (inBand(co2h, bands.co2h) ? 'PASS' : 'FAIL'));
+                setResult('co2-l-result', co2l === null ? null : (inBand(co2l, bands.co2l) ? 'PASS' : 'FAIL'));
+
+                if (range.gap) {
+                    gapWrap.hidden = false;
+                    var gapOk = co2h !== null && co2l !== null && (co2h - co2l) >= range.gap - 0.0001;
+                    setResult('gap-result', (co2h === null || co2l === null) ? null : (gapOk ? 'PASS' : 'FAIL'));
+                } else {
+                    gapWrap.hidden = true;
+                    setResult('gap-result', null);
+                }
+            }
+
+            rangeEl.addEventListener('change', calculate);
+            co2hEl.addEventListener('input', calculate);
+            co2lEl.addEventListener('input', calculate);
+            document.querySelectorAll('input[name="gas-type"]').forEach(function(el) {
+                el.addEventListener('change', calculate);
+            });
+            calculate();
+        });
+    </script>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
