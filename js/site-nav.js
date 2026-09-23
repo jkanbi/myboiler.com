@@ -219,3 +219,105 @@
         installSiteChrome();
     }
 })();
+
+// Cookieless Amazon/eBay Buy-link click beacon. Same-origin, fire-and-forget.
+// No cookies, no localStorage, no user id. Guard: site-nav.js is included twice
+// on some pages.
+(function () {
+    if (window.__mbAffClickBound) return;
+    window.__mbAffClickBound = true;
+
+    var ENDPOINT = '/api/aff-click';
+    var MAX_BYTES = 1800;
+    var BUY_SEL = 'a.amazon-buy, a.ebay-buy';
+
+    function closestBuy(el) {
+        return el && el.closest ? el.closest(BUY_SEL) : null;
+    }
+
+    function networkOf(anchor) {
+        if (anchor.classList.contains('amazon-buy')) return 'amazon';
+        if (anchor.classList.contains('ebay-buy')) return 'ebay';
+        return '';
+    }
+
+    function destHref(href) {
+        try {
+            var u = new URL(href, location.href);
+            var host = u.hostname.toLowerCase();
+            if (!/(^|\.)amazon\./.test(host) && !/(^|\.)ebay\./.test(host)) return '';
+            return (host + u.pathname).replace(/\/+$/, '');
+        } catch (err) {
+            return '';
+        }
+    }
+
+    function nearbyPart(anchor) {
+        var scope = anchor.closest('li') || anchor.parentElement;
+        if (!scope) return '';
+        var nodes = scope.querySelectorAll('strong');
+        var i;
+        var text;
+        for (i = 0; i < nodes.length; i++) {
+            text = (nodes[i].textContent || '').replace(/\s+/g, ' ').trim();
+            if (/^\d{5,12}$/.test(text)) return text;
+        }
+        var prev = anchor.previousElementSibling;
+        while (prev) {
+            if (prev.tagName === 'STRONG') {
+                text = (prev.textContent || '').replace(/\s+/g, ' ').trim();
+                if (/^\d{5,12}$/.test(text)) return text;
+            }
+            prev = prev.previousElementSibling;
+        }
+        return '';
+    }
+
+    function send(payload) {
+        var body;
+        try {
+            body = JSON.stringify(payload);
+        } catch (err) {
+            return;
+        }
+        if (body.length > MAX_BYTES) return;
+        try {
+            if (navigator.sendBeacon) {
+                var blob = new Blob([body], { type: 'text/plain;charset=UTF-8' });
+                if (navigator.sendBeacon(ENDPOINT, blob)) return;
+            }
+        } catch (err) {}
+        try {
+            fetch(ENDPOINT, {
+                method: 'POST',
+                body: body,
+                headers: { 'Content-Type': 'text/plain' },
+                keepalive: true,
+                credentials: 'omit',
+                mode: 'same-origin',
+                cache: 'no-store'
+            }).catch(function () {});
+        } catch (err) {}
+    }
+
+    function onBuyClick(event) {
+        if (event.type === 'auxclick' && event.button !== 1) return;
+        var anchor = closestBuy(event.target);
+        if (!anchor) return;
+        var net = networkOf(anchor);
+        if (!net) return;
+        var href = destHref(anchor.href || '');
+        var part = nearbyPart(anchor);
+        var payload = {
+            t: Date.now(),
+            net: net,
+            path: location.pathname || '/',
+            href: href
+        };
+        if (part) payload.part = part;
+        send(payload);
+    }
+
+    document.addEventListener('click', onBuyClick, true);
+    document.addEventListener('auxclick', onBuyClick, true);
+})();

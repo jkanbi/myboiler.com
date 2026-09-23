@@ -41,6 +41,7 @@ Internal aliases that rename pages are unchanged except for the prefix, e.g. `/a
 ├── calculators/         # Calculator pages (real content at root)
 ├── fault-codes/         # Fault-code pages + generated search index
 ├── scripts/             # Static generators (fault-code index)
+├── workers/affiliate-click/  # Cloudflare Worker: cookieless Buy-link click beacons
 ├── advice/, toolbox/, … # Other migrated content
 ├── chat/, quote/, decide/, heat-pump-checker/  # Apps
 ├── hub/                 # Redirect stubs only (/hub/… → /…)
@@ -71,6 +72,8 @@ Legacy slugs redirect to the clean paths: `/4155-2/` → A8, `/worcester-bosch-%
 ## Deployment
 
 Push to GitHub and GitHub Pages deploys automatically.
+
+Affiliate Buy-link click collection is a separate Cloudflare Worker (not GitHub Pages). Deploy and query steps: [`workers/affiliate-click/README.md`](workers/affiliate-click/README.md).
 
 ## Example requests
 
