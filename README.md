@@ -73,7 +73,7 @@ Legacy slugs redirect to the clean paths: `/4155-2/` → A8, `/worcester-bosch-%
 
 Push to GitHub and GitHub Pages deploys automatically.
 
-Affiliate Buy-link click collection is a separate Cloudflare Worker (not GitHub Pages). Deploy and query steps: [`workers/affiliate-click/README.md`](workers/affiliate-click/README.md).
+Affiliate Buy-link click collection is a separate Cloudflare Worker (not GitHub Pages). Clicks are stored in Workers KV (not Analytics Engine). Deploy, tail, and query steps: [`workers/affiliate-click/README.md`](workers/affiliate-click/README.md).
 
 ## Example requests
 

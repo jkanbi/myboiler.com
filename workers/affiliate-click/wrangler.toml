@@ -2,19 +2,37 @@ name = "affiliate-click"
 main = "src/index.js"
 compatibility_date = "2026-09-01"
 
-# Bind this Worker to the static site so the browser can POST same-origin.
+# Production routes on zone myboiler.com (also attached in the dashboard):
+#   myboiler.com/api/aff-click*
+#   www.myboiler.com/api/aff-click*
+#   myboiler.com/api/aff-clicks*
+#   www.myboiler.com/api/aff-clicks*
+#
+# `aff-click*` already matches `aff-clicks`. Both pairs are documented so a
+# dashboard audit matches what is live.
+#
 # Uncomment after the zone exists in the same Cloudflare account, or attach
-# the equivalent route in the dashboard:
+# the equivalent routes in the dashboard:
 #
 # routes = [
 #   { pattern = "myboiler.com/api/aff-click*", zone_name = "myboiler.com" },
-#   { pattern = "www.myboiler.com/api/aff-click*", zone_name = "myboiler.com" }
+#   { pattern = "www.myboiler.com/api/aff-click*", zone_name = "myboiler.com" },
+#   { pattern = "myboiler.com/api/aff-clicks*", zone_name = "myboiler.com" },
+#   { pattern = "www.myboiler.com/api/aff-clicks*", zone_name = "myboiler.com" }
 # ]
 
-# Dataset is created automatically on first write. No secrets required.
-[[analytics_engine_datasets]]
-binding = "AFFILIATE_CLICKS"
-dataset = "affiliate_clicks"
+# Workers KV — existing namespace (dashboard title may still show `kv-todo`;
+# it is the affiliate-click store). Reuse this id; do not create a second
+# namespace. Equivalent CLI:
+#   npx wrangler kv namespace list
+[[kv_namespaces]]
+binding = "CLICKS"
+id = "ad9fa2773ca549479e432b257fad3c48"
+
+# Secret (not in this file — never commit it):
+#   npx wrangler secret put LIST_SECRET
+# Used as: Authorization: Bearer <LIST_SECRET> on GET /api/aff-clicks
+# Local: put LIST_SECRET=... in `.dev.vars` (gitignored).
 
 [observability]
 enabled = true

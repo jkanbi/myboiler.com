@@ -2,9 +2,21 @@
 
 Cookieless, near-realtime record of Amazon / eBay **Buy** link clicks on the static GitHub Pages site.
 
-The browser fires `navigator.sendBeacon` (or `fetch` + `keepalive`) to **same-origin** `/api/aff-click`. This Worker validates a tiny JSON body and writes one [Workers Analytics Engine](https://developers.cloudflare.com/analytics/analytics-engine/) data point. Cloudflare Web Analytics is unchanged and is not used for these events (it has no custom events).
+The browser fires `navigator.sendBeacon` (or `fetch` + `keepalive`) to **same-origin** `/api/aff-click`. This Worker validates a tiny JSON body and appends one event to [Workers KV](https://developers.cloudflare.com/kv/). Cloudflare Web Analytics is unchanged and is not used for these events (it has no custom events).
+
+**Workers Analytics Engine is not used.** This account does not have Account Analytics Engine (AE SQL) permission, so clicks are stored in KV instead. You do not need the AE permission to deploy or query this Worker.
 
 No cookies, no `localStorage`, no user id, no IP / UA stored.
+
+## Endpoints
+
+| Method | Path | Auth | Result |
+| --- | --- | --- | --- |
+| `POST` | `/api/aff-click` | none (same-origin beacon) | validate, append to KV, `204` |
+| `GET` / `HEAD` / `OPTIONS` | `/api/aff-click` | none | empty `204` (CORS / health) |
+| `GET` | `/api/aff-clicks?day=YYYY-MM-DD` | `Authorization: Bearer $LIST_SECRET` | `{ day, count, clicks }` |
+
+`day` is the Europe/London calendar date. If omitted, today (London) is used.
 
 ## Payload
 
@@ -26,38 +38,43 @@ No cookies, no `localStorage`, no user id, no IP / UA stored.
 | `href` | no | Host + pathname; query string stripped (ASIN / eBay item id stay in the path) |
 | `part` | no | Nearby part number from adjacent `<strong>` text |
 
-Analytics Engine mapping (positional — keep this order):
+The Worker stores `{ t, net, path, href, part, dest }` where `dest` is the ASIN or eBay item id derived from `href`.
 
-| AE field | Meaning |
+KV mapping:
+
+| Item | Value |
 | --- | --- |
-| `index1` | network (`amazon` / `ebay`) |
-| `blob1` | network |
-| `blob2` | page path |
-| `blob3` | part number (empty string if unknown) |
-| `blob4` | destination id (ASIN or eBay item id) |
-| `blob5` | destination host + pathname |
-| `double1` | client timestamp (unix ms) |
-| `timestamp` | Worker receive time (added by AE) |
+| Key | `clicks:YYYY-MM-DD` (Europe/London date of receive time) |
+| Value | JSON array of events for that day |
+| Daily cap | ~2000 events (further POSTs still return `204` and log, but are not stored) |
+| TTL | ~40 days (`expirationTtl`) |
 
 ## Deploy checklist
 
-Nothing in this folder is a secret. Bindings and the dataset name live in `wrangler.toml`.
+The KV namespace id lives in `wrangler.toml`. `LIST_SECRET` is a **wrangler secret**, not a file.
 
-1. **Cloudflare account** — Workers + Analytics Engine enabled (AE is created on first write; you do not pre-create the table in the dashboard).
+1. **Cloudflare account** — Workers + Workers KV. Analytics Engine is **not** required.
 2. **Auth** — `npx wrangler login` locally, or set `CLOUDFLARE_API_TOKEN` in CI. Do not commit tokens.
 3. From this directory:
 
    ```bash
    npm install
+   npx wrangler secret put LIST_SECRET
    npx wrangler deploy
    ```
 
-4. **Attach a route** so GitHub Pages is not asked for `/api/aff-click` (Pages would 404). Either uncomment `routes` in `wrangler.toml` and redeploy, or in the dashboard:
+   The `CLICKS` binding already points at namespace `ad9fa2773ca549479e432b257fad3c48` (dashboard title may still be `kv-todo`). Reuse it:
 
-   - Worker `affiliate-click`
-   - Route: `myboiler.com/api/aff-click*`
-   - Optional: `www.myboiler.com/api/aff-click*`
-   - Zone: `myboiler.com`
+   ```bash
+   npx wrangler kv namespace list
+   ```
+
+4. **Attach routes** so GitHub Pages is not asked for `/api/aff-click*` (Pages would 404). Either uncomment `routes` in `wrangler.toml` and redeploy, or in the dashboard on Worker `affiliate-click`, zone `myboiler.com`:
+
+   - `myboiler.com/api/aff-click*`
+   - `www.myboiler.com/api/aff-click*`
+   - `myboiler.com/api/aff-clicks*`
+   - `www.myboiler.com/api/aff-clicks*`
 
 5. Confirm the Worker answers (empty 204, not a GitHub Pages 404):
 
@@ -67,7 +84,7 @@ Nothing in this folder is a secret. Bindings and the dataset name live in `wrang
 
 6. Click a Buy link on a fault-code page (or POST a sample body) and watch the tail (below).
 
-Site JS is already in `/js/site-nav.js` (loaded sitewide). It does not wait for this Worker: a missing route only drops the beacon.
+Site JS is already in `/js/site-nav.js` (loaded sitewide). It does not wait for this Worker: a missing route only drops the beacon. Do not change Buy-link HTML or affiliate URLs when updating this Worker.
 
 ## How to see clicks near-realtime
 
@@ -85,82 +102,60 @@ npx wrangler tail affiliate-click
 
 Each Buy click is a POST that should return `204` within about a second. The Worker also `console.log`s `{ net, path, part, dest }` (no IP, UA, or cookies) so the tail is a readable live stream, not just status codes. The HTTP response body stays empty.
 
-### 2. Analytics Engine SQL (recent clicks by path / network / part)
+### 2. Query KV via `/api/aff-clicks` (Bearer secret)
 
-Create an API token with **Account Analytics: Read**. Then:
+This replaces Analytics Engine SQL. No Account Analytics Engine permission is needed.
 
 ```bash
-# Recent individual clicks (last hour)
-curl -sS "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/analytics_engine/sql" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --data "SELECT
-    timestamp,
-    blob1 AS net,
-    blob2 AS path,
-    blob3 AS part,
-    blob4 AS dest,
-    blob5 AS href,
-    double1 AS client_ms
-  FROM affiliate_clicks
-  WHERE timestamp > NOW() - INTERVAL '1' HOUR
-  ORDER BY timestamp DESC
-  LIMIT 50"
+# Today (Europe/London)
+curl -sS "https://myboiler.com/api/aff-clicks" \
+  -H "Authorization: Bearer $LIST_SECRET"
 
-# Counts by page + network
-curl -sS "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/analytics_engine/sql" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --data "SELECT
-    blob2 AS path,
-    blob1 AS net,
-    blob3 AS part,
-    SUM(_sample_interval) AS clicks
-  FROM affiliate_clicks
-  WHERE timestamp > NOW() - INTERVAL '1' DAY
-  GROUP BY path, net, part
-  ORDER BY clicks DESC
-  LIMIT 50"
+# A specific London calendar day
+curl -sS "https://myboiler.com/api/aff-clicks?day=2026-09-23" \
+  -H "Authorization: Bearer $LIST_SECRET"
 ```
 
-AE ingest is typically seconds, not hours. Use `SUM(_sample_interval)` for counts so sampling (if it ever kicks in) is accounted for.
+Response shape:
 
-### 3. GraphQL (dashboard API)
-
-Same data, aggregated. Example:
-
-```graphql
-query AffiliateClicks($accountTag: string!, $since: Time!) {
-  viewer {
-    accounts(filter: { accountTag: $accountTag }) {
-      workersAnalyticsEngineAdaptiveGroups(
-        limit: 50
-        filter: { datetime_geq: $since, dataset: "affiliate_clicks" }
-        orderBy: [datetime_DESC]
-      ) {
-        count
-        dimensions {
-          datetime
-          blob1
-          blob2
-          blob3
-          blob4
-        }
-      }
+```json
+{
+  "day": "2026-09-23",
+  "count": 1,
+  "clicks": [
+    {
+      "t": 1727100000000,
+      "net": "amazon",
+      "path": "/fault-codes/vaillant-f71-fault-code/",
+      "href": "www.amazon.co.uk/dp/B01LYU50BE",
+      "part": "193592",
+      "dest": "B01LYU50BE"
     }
-  }
+  ]
 }
 ```
 
-POST to `https://api.cloudflare.com/client/v4/graphql` with a Bearer token. Prefer the SQL API for a raw click list.
+Missing / wrong `Authorization` → `401` `{"error":"unauthorized"}`. Do not commit `LIST_SECRET`.
+
+Optional raw KV dump (same namespace, same key):
+
+```bash
+npx wrangler kv key get "clicks:2026-09-23" --binding CLICKS
+```
 
 ## Local test
 
 ```bash
 npm test
+# LIST_SECRET=dev-secret in .dev.vars (gitignored)
 npx wrangler dev
 # in another shell:
 curl -i http://127.0.0.1:8787/api/aff-click \
   -H 'Content-Type: text/plain' \
   --data '{"t":1727100000000,"net":"amazon","path":"/fault-codes/vaillant-f71-fault-code/","href":"www.amazon.co.uk/dp/B01LYU50BE","part":"193592"}'
+
+curl -sS "http://127.0.0.1:8787/api/aff-clicks?day=$(date +%F)" \
+  -H "Authorization: Bearer dev-secret"
 ```
 
 ## Privacy
@@ -168,3 +163,4 @@ curl -i http://127.0.0.1:8787/api/aff-click \
 - Beacon body is only network, page path, optional part number, and destination host/path.
 - `credentials: 'omit'` on the fallback `fetch`; `sendBeacon` does not attach cookies we set (we set none).
 - Worker does not read `CF-Connecting-IP`, `User-Agent`, or write `Set-Cookie`.
+- Daily KV values expire after ~40 days.
