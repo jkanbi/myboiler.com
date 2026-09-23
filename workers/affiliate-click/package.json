@@ -1,0 +1,14 @@
+{
+  "name": "affiliate-click",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "tail": "wrangler tail",
+    "test": "node --test test/parse-click.test.js"
+  },
+  "devDependencies": {
+    "wrangler": "^4.40.0"
+  }
+}
