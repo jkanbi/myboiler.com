@@ -83,7 +83,7 @@ CLI:
 npx wrangler tail affiliate-click
 ```
 
-Each Buy click is a POST that should return `204` within about a second. Tail shows the request as it arrives. The Worker does not echo the payload in the response (no PII, keep it fast).
+Each Buy click is a POST that should return `204` within about a second. The Worker also `console.log`s `{ net, path, part, dest }` (no IP, UA, or cookies) so the tail is a readable live stream, not just status codes. The HTTP response body stays empty.
 
 ### 2. Analytics Engine SQL (recent clicks by path / network / part)
 

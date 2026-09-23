@@ -151,6 +151,15 @@ export function writeClick(event, env) {
     blobs: [event.net, event.path, event.part, event.dest, event.href],
     doubles: [event.t],
   });
+  // Non-PII fields only — makes `wrangler tail` a readable live click stream.
+  console.log(
+    JSON.stringify({
+      net: event.net,
+      path: event.path,
+      part: event.part,
+      dest: event.dest,
+    })
+  );
 }
 
 export default {
