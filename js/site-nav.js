@@ -107,7 +107,6 @@
         '<a href="/calculators/lps-to-kw/">LPS to KW</a>' +
         '<a href="/calculators/flow-rate-lpm-to-energy-used-kwh/">LPM to kWh</a>' +
         '<a href="/calculators/btu-to-kw/">BTU to Watts</a>' +
-        '<a href="/radiator-new-output/">Radiator New Output</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Gas Calculators</h4>' +
