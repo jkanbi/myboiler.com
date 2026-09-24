@@ -20,6 +20,7 @@
             max-width: 800px;
             margin: 0 auto;
             width: 100%;
+            min-width: 0;
             box-sizing: border-box;
         }
 
@@ -99,10 +100,8 @@
         .article-content table {
             width: 100%;
             border-collapse: collapse;
-            margin: 1.5rem 0;
+            margin: 0;
             font-size: 0.9375rem;
-            overflow-x: auto;
-            display: block;
         }
 
         .article-content table th,
@@ -125,7 +124,7 @@
     
         .article-content img {
             display: block;
-            max-width: min(100%, 720px);
+            max-width: 100%;
             height: auto;
             margin: 1rem auto 1.5rem;
             border-radius: var(--radius);
@@ -133,6 +132,8 @@
 
         .article-content figure {
             margin: 1rem 0 1.5rem;
+            max-width: 100%;
+            min-width: 0;
         }
 
         .article-content figcaption {
@@ -316,6 +317,7 @@
             <h2>Conclusion</h2>
             <p>There may be several ways to save money on your energy bills. Some are possible without needing a professional to come over ie boiler settings can be done by the home occupier using the guides above with videos. Other measures will require an installer to come and install energy saving controls. There are also some indirect benefits of some of these measures that will prevent premature boiler breakdown, and in these cases it is not possible to determine the amount of savings that are possible due to this measures as they are future savings. Following is a table showing some of the measures with their savings and benefits.</p>
 
+            <div class="article-table-wrap">
             <table>
                 <tr>
                     <th>Link</th>
@@ -358,6 +360,7 @@
                     <td>Increased comfort levels, slight reduction in energy usage.</td>
                 </tr>
             </table>
+            </div>
 
             <p>Sources: [1] <a href="https://www.gov.uk/government/statistics/united-kingdom-housing-energy-fact-file-2013">https://www.gov.uk/government/statistics/united-kingdom-housing-energy-fact-file-2013</a></p>
         </article>
