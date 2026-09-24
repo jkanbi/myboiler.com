@@ -1446,11 +1446,13 @@
     box-sizing: border-box;
 }
 
-/* Article / markdown media: keep large intrinsic images, embeds, and
-   tables inside the content column on tablet (iPad ~768–1024px).
+/* Article / markdown media: only constrain oversized content photos so
+   they cannot expand the page on tablet (iPad ~768–1024px).
    Article pages are column flex; items default to min-width:auto, so a
    2000px image (or max-width: min(100%, 720px) when 100% is cyclic)
-   can expand past the ~640px content box and cause horizontal scroll. */
+   can expand past the ~640px content box. max-width:100% does not
+   shrink images that are already smaller than the column. Card thumbs
+   and other nested images are left to their own rules. */
 .article-page,
 .article-container,
 .article-content,
@@ -1467,9 +1469,10 @@
     word-wrap: break-word;
 }
 
-.article-content img,
+.article-content > img,
+.article-content figure img,
+.article-content p img,
 .article-content video,
-.article-content canvas,
 .markdown-content img,
 .markdown-content video {
     max-width: 100%;

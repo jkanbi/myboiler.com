@@ -124,10 +124,15 @@
     
         .article-content img {
             display: block;
-            max-width: 100%;
             height: auto;
             margin: 1rem auto 1.5rem;
             border-radius: var(--radius);
+        }
+
+        /* Only the two wide photos overflow on iPad (2580px chart, 1920px
+           thermal). The 600px efficiency graph and 180px cards already fit. */
+        .article-content img.article-photo-full {
+            max-width: 100%;
         }
 
         .article-content figure {
@@ -230,7 +235,7 @@
             <p>Heating and hot water account for up to an astonishing 80 percent [1] of your energy bill. Approx 60 percent is for heating and approx 20 percent for hot water with the rest accounted for by lighting, cooking, electronics, appliances etc.</p>
 
             <figure>
-                <img src="/money-and-energy-saving/images/household-energy-breakdown-1.jpg" alt="Household energy breakdown" loading="lazy">
+                <img class="article-photo-full" src="/money-and-energy-saving/images/household-energy-breakdown-1.jpg" alt="Household energy breakdown" loading="lazy">
                 <figcaption>Estimates are based on the <a href="https://www.gov.uk/government/statistics/united-kingdom-housing-energy-fact-file-2013">UK Energy Housing Energy Factfile 2013</a> (data based on 2011 year).</figcaption>
             </figure>
 
@@ -259,7 +264,7 @@
                 <li>Thermal imaging can be used to identify cold spots. For this you may need to warm the home up first and then after a short while the blue spots show colder areas where it is being cooled down rapidly, usually indicating poor insulation or a draught.</li>
             </ol>
 
-            <img src="/money-and-energy-saving/images/thermal-image-front-home.jpg" alt="Thermal image of the front of a home" loading="lazy">
+            <img class="article-photo-full" src="/money-and-energy-saving/images/thermal-image-front-home.jpg" alt="Thermal image of the front of a home" loading="lazy">
 
             <h2>2. Adjust your boiler settings</h2>
             <p>Adjusting your flow temperature for a condensing boiler, to make sure the return temperature stays below 54 degrees (due point) can lead to increased condensing which releases additional latent heat, allowing for more stable room temperatures and energy savings. Setting the flow temparature to 55 degrees almost guarantees condensing efficiency. Only systems where the radiators are oversized or the home is well insulated will allow this. The key is getting as low as possible will increase the goal towards full condensing efficiency, ie the lower the flow temp, the higher the efficiency obtained.</p>
