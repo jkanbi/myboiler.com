@@ -1446,6 +1446,57 @@
     box-sizing: border-box;
 }
 
+/* Article / markdown media: only constrain oversized content photos so
+   they cannot expand the page on tablet (iPad ~768–1024px).
+   Article pages are column flex; items default to min-width:auto, so a
+   2000px image (or max-width: min(100%, 720px) when 100% is cyclic)
+   can expand past the ~640px content box. max-width:100% does not
+   shrink images that are already smaller than the column. Card thumbs
+   and other nested images are left to their own rules. */
+.article-page,
+.article-container,
+.article-content,
+.article-content figure,
+.markdown-content,
+#content-container,
+#page-content {
+    min-width: 0;
+}
+
+.article-content,
+.markdown-content {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.article-content > img,
+.article-content figure img,
+.article-content p img,
+.article-content video,
+.markdown-content img,
+.markdown-content video {
+    max-width: 100%;
+    height: auto;
+}
+
+.article-content iframe,
+.markdown-content iframe {
+    max-width: 100%;
+}
+
+.article-content table,
+.markdown-content table {
+    max-width: 100%;
+}
+
+.article-table-wrap {
+    width: 100%;
+    max-width: 100%;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 /* Error page styling */
 .error-page {
     text-align: center;
