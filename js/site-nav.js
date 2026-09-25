@@ -99,6 +99,7 @@
         '<a href="/calculators/pipe-size-calculator/">Pipe Size Calculator</a>' +
         '<a href="/calculators/radiator-correction-factor-tool/">Radiator Correction Factor</a>' +
         '<a href="/calculators/volume-flow-rate-q-calculator/">Volume Flow Rate Q</a>' +
+        '<a href="/kv-and-kvs/">Kv and Kvs values</a>' +
         '<a href="/heat-meter/">Heat Meters</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +

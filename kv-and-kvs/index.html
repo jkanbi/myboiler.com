@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kv and Kvs values - MyBoiler Hub</title>
+    <meta name="description" content="What Kv and Kvs mean on a heating valve, the formula with units, and a worked radiator example so you can see why the number matters for flow, authority and balancing.">
+    <link rel="canonical" href="https://myboiler.com/kv-and-kvs/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+            max-width: 62ch;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 0.75rem;
+            line-height: 1.3;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin: 0 0 0.4rem;
+            line-height: 1.6;
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0 1.75rem;
+            font-size: 0.9375rem;
+        }
+
+        .article-content th,
+        .article-content td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+            vertical-align: top;
+        }
+
+        .article-content th {
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .article-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .formula {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1rem 1.25rem;
+            margin: 0 0 1.25rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .formula code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.95em;
+        }
+
+        .formula-list {
+            margin: 0;
+        }
+
+        .formula-list p {
+            margin: 0 0 0.5rem;
+        }
+
+        .formula-list p:last-child {
+            margin-bottom: 0;
+        }
+
+        .kv-calc {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin: 0 0 1.5rem;
+        }
+
+        .kv-calc-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 0.7fr);
+            gap: 0.75rem 1rem;
+            align-items: end;
+        }
+
+        .kv-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            min-width: 0;
+        }
+
+        .kv-field label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .kv-field input,
+        .kv-field select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0.65rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .kv-result {
+            margin: 1rem 0 0;
+            font-size: 1.0625rem;
+        }
+
+        .kv-result strong {
+            color: var(--accent);
+        }
+
+        .kv-hint {
+            margin: 0.5rem 0 0;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .article-note {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 720px) {
+            .kv-calc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating &amp; Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <header class="article-header">
+            <h1 class="article-title">Kv and Kvs values</h1>
+            <p class="article-intro">Kv tells you how much water a valve will pass at a given opening. Kvs is the same number with the valve fully open. Both are measured at 1&nbsp;bar pressure drop.</p>
+        </header>
+
+        <article class="article-content">
+            <h2>The plain-English difference</h2>
+            <p><strong>Kv</strong> is the flow through a regulating valve at a stated opening, when the pressure drop across that valve is 1&nbsp;bar. Change the opening (a lockshield turn, a TRV pin position, a control-valve stroke) and Kv changes with it.</p>
+            <p><strong>Kvs</strong> is the special case: the valve is fully open, and the pressure drop is still 1&nbsp;bar. It is the manufacturer’s capacity figure — the most the valve body can pass in that test. Every Kvs is a Kv; not every Kv is a Kvs.</p>
+
+            <div class="article-table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Kv</th>
+                            <th>Kvs</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Valve position</td>
+                            <td>A stated opening (partly open or a preset)</td>
+                            <td>Fully open</td>
+                        </tr>
+                        <tr>
+                            <td>Test pressure drop</td>
+                            <td>1 bar</td>
+                            <td>1 bar</td>
+                        </tr>
+                        <tr>
+                            <td>What it answers</td>
+                            <td>How much flow at this setting?</td>
+                            <td>What is the valve’s maximum capacity?</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>Datasheets sometimes print a small Kv table against turns, percentage open, or a preset number. The last row of that table is Kvs.</p>
+
+            <h2>The formula and units</h2>
+            <p>For water, with consistent trade units:</p>
+            <p class="formula"><code>Kv = Q / √ΔP</code></p>
+            <p>The same form is used for Kvs when the valve is fully open:</p>
+            <p class="formula"><code>Kvs = Q / √ΔP</code></p>
+            <ul>
+                <li><strong>Kv</strong> or <strong>Kvs</strong> — flow capacity, in m³/h</li>
+                <li><strong>Q</strong> — volume flow, in m³/h</li>
+                <li><strong>ΔP</strong> — pressure drop across the valve, in bar</li>
+            </ul>
+            <p>Rearranged when you already have two of the three:</p>
+            <div class="formula formula-list">
+                <p><code>Q = Kv × √ΔP</code></p>
+                <p><code>ΔP = (Q / Kv)²</code></p>
+            </div>
+            <p>Keep the units as written. If the drop is in kPa, divide by 100 to get bar (100&nbsp;kPa = 1&nbsp;bar). If the flow is in litres per minute, multiply by 0.06 to get m³/h (1&nbsp;m³/h = 16.7&nbsp;L/min). US catalogues sometimes quote <strong>Cv</strong> in gpm at 1&nbsp;psi; a common conversion is <code>Kv ≈ 0.865 × Cv</code>.</p>
+
+            <h2>Try the numbers</h2>
+            <p>Enter any two values. The third is calculated from the formula above.</p>
+            <form class="kv-calc" id="kv-calc" novalidate>
+                <div class="kv-calc-grid">
+                    <div class="kv-field">
+                        <label for="kv-find">Find</label>
+                        <select id="kv-find">
+                            <option value="kv">Kv (or Kvs)</option>
+                            <option value="q">Flow Q</option>
+                            <option value="dp">Pressure drop ΔP</option>
+                        </select>
+                    </div>
+                    <div class="kv-field">
+                        <label for="kv-q">Flow Q</label>
+                        <input id="kv-q" type="number" inputmode="decimal" min="0" step="any" value="0.0516">
+                    </div>
+                    <div class="kv-field">
+                        <label for="kv-q-unit">Q unit</label>
+                        <select id="kv-q-unit">
+                            <option value="m3h" selected>m³/h</option>
+                            <option value="lpm">L/min</option>
+                        </select>
+                    </div>
+                    <div class="kv-field">
+                        <label for="kv-dp">Pressure drop ΔP</label>
+                        <input id="kv-dp" type="number" inputmode="decimal" min="0" step="any" value="0.1">
+                    </div>
+                    <div class="kv-field">
+                        <label for="kv-dp-unit">ΔP unit</label>
+                        <select id="kv-dp-unit">
+                            <option value="bar" selected>bar</option>
+                            <option value="kpa">kPa</option>
+                        </select>
+                    </div>
+                    <div class="kv-field">
+                        <label for="kv-kv">Kv / Kvs</label>
+                        <input id="kv-kv" type="number" inputmode="decimal" min="0" step="any" value="0.163">
+                    </div>
+                </div>
+                <p class="kv-result" id="kv-result" aria-live="polite"></p>
+                <p class="kv-hint">Defaults match the 1.2&nbsp;kW radiator example below (0.0516&nbsp;m³/h at 0.1&nbsp;bar).</p>
+            </form>
+
+            <h2>A worked radiator example</h2>
+            <p>Take a 1.2&nbsp;kW radiator on a traditional 20&nbsp;K drop (about 70/50 or 75/55). The site heat formula is the same one used on the <a href="/calculators/kw-to-flow-rate/">kW to flow rate calculator</a>:</p>
+            <p class="formula"><code>kW = (flow in m³/h × ΔT) / 0.86</code></p>
+            <p>So the radiator needs:</p>
+            <p class="formula"><code>Q = 1.2 × 0.86 / 20 = 0.0516 m³/h</code> (about 0.86&nbsp;L/min)</p>
+            <p>If the pressure available across the valve at that flow is 0.1&nbsp;bar (10&nbsp;kPa):</p>
+            <p class="formula"><code>Kv = 0.0516 / √0.1 = 0.16</code></p>
+            <p>That is the opening the valve must provide. A compact 15&nbsp;mm TRV body is often listed around Kvs 0.5–0.8 when fully open — plenty of capacity for this radiator. The lockshield or preset is there so the valve does <em>not</em> run wide open and steal flow from the rest of the circuit.</p>
+            <p>Drop the same radiator to a 10&nbsp;K ΔT (a heat-pump-style 50/40 circuit) and the flow doubles:</p>
+            <p class="formula"><code>Q = 1.2 × 0.86 / 10 = 0.103 m³/h</code> → <code>Kv = 0.33</code> at the same 0.1&nbsp;bar</p>
+            <p>Lower mean water temperature means more water through the same emitter. The valve still has to be able to pass that higher Kv, which is why a body that was fine on a hot boiler circuit can look tight on a low-ΔT design. Check the manufacturer’s chart rather than assuming the old setting still works.</p>
+            <p>Turn the formula the other way. A valve with Kvs 0.60, fully open, at 0.1&nbsp;bar passes:</p>
+            <p class="formula"><code>Q = 0.60 × √0.1 = 0.19 m³/h</code> (about 3.2&nbsp;L/min)</p>
+            <p>At 20&nbsp;K that is roughly 4.4&nbsp;kW — more than a typical domestic panel needs. Capacity is rarely the problem on a single radiator. Getting the <em>right</em> flow on every radiator is.</p>
+
+            <h2>Why installers care</h2>
+            <p>Kv and Kvs are design numbers, not a DIY setting on the boiler. They show up when you size or commission a circuit:</p>
+            <ul>
+                <li><strong>Capacity</strong> — will the fully-open valve (Kvs) pass the design flow at the pressure the pump can spare? If not, the radiator never reaches output, however open the head is.</li>
+                <li><strong>Balancing</strong> — lockshields and presettable TRV bodies are set to a lower Kv so each radiator takes its share. The worked example above is that calculation: design Q, available ΔP, required Kv.</li>
+                <li><strong>Authority</strong> — a control valve only changes flow usefully if a fair slice of the circuit’s pressure drop sits across that valve. A common target is about 0.3–0.5 (valve ΔP divided by the drop around that circuit). An oversized body (Kvs far above the needed Kv) drops very little pressure until it is almost shut, so the TRV or actuator hunts. An undersized body cannot hit design flow even wide open.</li>
+            </ul>
+            <p>Pump head, pipe size and radiator output all sit in the same sum. Use the manufacturer’s Kv chart for the actual valve, and the <a href="/calculators/volume-flow-rate-q-calculator/">volume flow rate</a> and <a href="/calculators/pipe-size-calculator/">pipe size</a> tools for the rest of the circuit. This page is a reference, not a commissioning procedure.</p>
+
+            <h2>Sources and related pages</h2>
+            <p>Definitions and the formula above follow <a href="https://www.grundfos.com/uk/learn/research-and-insights/kv-and-kvs-values" rel="noopener noreferrer">Grundfos — Kv and Kvs values</a>.</p>
+            <p>The old hub page pointed at a Drayton TRV4 user and installer guide. The current public copy is the <a href="https://www.draytoncontrols.co.uk/sites/default/files/legacy/TRV4%20%28U.%26I.%20Guide%29_1.pdf" rel="noopener noreferrer">Drayton TRV4 Installation &amp; User Guide (PDF)</a>, also listed on the <a href="https://www.draytoncontrols.co.uk/product/trv4-classic" rel="noopener noreferrer">TRV4 Classic product page</a>. Use the manufacturer’s flow-capacity sheet for Kv figures, not the fitting guide.</p>
+            <p>See also <a href="/calculators/kw-to-flow-rate/">kW to flow rate</a> · <a href="/calculators/volume-flow-rate-q-calculator/">Volume flow rate Q</a> · <a href="/calculators/radiator-correction-factor-tool/">Radiator correction factor</a> · <a href="/heat-meter/">Heat meters</a> · <a href="/how-to/repair-a-thermostatic-radiator-valve-trv-not-working-with-trv-pin-stuck/">TRV pin stuck</a>.</p>
+            <p class="article-note">Guidance only. Valve selection, balancing and heating work need a competent person; gas work in the UK needs a Gas Safe registered engineer. Always use the current manufacturer data for the valve in front of you.</p>
+        </article>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+    <script>
+        (function () {
+            var findEl = document.getElementById('kv-find');
+            var qEl = document.getElementById('kv-q');
+            var qUnitEl = document.getElementById('kv-q-unit');
+            var dpEl = document.getElementById('kv-dp');
+            var dpUnitEl = document.getElementById('kv-dp-unit');
+            var kvEl = document.getElementById('kv-kv');
+            var resultEl = document.getElementById('kv-result');
+            var updating = false;
+
+            function toM3h(value, unit) {
+                return unit === 'lpm' ? value * 0.06 : value;
+            }
+
+            function fromM3h(value, unit) {
+                return unit === 'lpm' ? value / 0.06 : value;
+            }
+
+            function toBar(value, unit) {
+                return unit === 'kpa' ? value / 100 : value;
+            }
+
+            function fromBar(value, unit) {
+                return unit === 'kpa' ? value * 100 : value;
+            }
+
+            function formatNumber(value) {
+                if (!isFinite(value)) return '—';
+                var abs = Math.abs(value);
+                var digits = abs >= 100 ? 1 : abs >= 10 ? 2 : abs >= 1 ? 3 : 4;
+                return value.toFixed(digits).replace(/\.?0+$/, '');
+            }
+
+            function setDisabled() {
+                var find = findEl.value;
+                qEl.disabled = find === 'q';
+                dpEl.disabled = find === 'dp';
+                kvEl.disabled = find === 'kv';
+            }
+
+            function readPositive(el) {
+                var value = parseFloat(el.value);
+                return isFinite(value) && value > 0 ? value : null;
+            }
+
+            function calculate() {
+                if (updating) return;
+                var find = findEl.value;
+                var q = readPositive(qEl);
+                var dp = readPositive(dpEl);
+                var kv = readPositive(kvEl);
+                var qM3h = q == null ? null : toM3h(q, qUnitEl.value);
+                var dpBar = dp == null ? null : toBar(dp, dpUnitEl.value);
+                var message = 'Enter the two known values.';
+
+                if (find === 'kv' && qM3h && dpBar) {
+                    var kvOut = qM3h / Math.sqrt(dpBar);
+                    updating = true;
+                    kvEl.value = formatNumber(kvOut);
+                    updating = false;
+                    message = 'Kv = ' + formatNumber(kvOut) + ' m³/h at this opening.';
+                } else if (find === 'q' && kv && dpBar) {
+                    var qOut = kv * Math.sqrt(dpBar);
+                    updating = true;
+                    qEl.value = formatNumber(fromM3h(qOut, qUnitEl.value));
+                    updating = false;
+                    var qLabel = qUnitEl.value === 'lpm' ? 'L/min' : 'm³/h';
+                    message = 'Q = ' + formatNumber(fromM3h(qOut, qUnitEl.value)) + ' ' + qLabel + '.';
+                } else if (find === 'dp' && qM3h && kv) {
+                    var dpOut = Math.pow(qM3h / kv, 2);
+                    updating = true;
+                    dpEl.value = formatNumber(fromBar(dpOut, dpUnitEl.value));
+                    updating = false;
+                    var dpLabel = dpUnitEl.value === 'kpa' ? 'kPa' : 'bar';
+                    message = 'ΔP = ' + formatNumber(fromBar(dpOut, dpUnitEl.value)) + ' ' + dpLabel + '.';
+                }
+
+                resultEl.innerHTML = '<strong>' + message + '</strong>';
+            }
+
+            ['input', 'change'].forEach(function (eventName) {
+                findEl.addEventListener(eventName, function () {
+                    setDisabled();
+                    calculate();
+                });
+                qEl.addEventListener(eventName, calculate);
+                qUnitEl.addEventListener(eventName, calculate);
+                dpEl.addEventListener(eventName, calculate);
+                dpUnitEl.addEventListener(eventName, calculate);
+                kvEl.addEventListener(eventName, calculate);
+            });
+
+            setDisabled();
+            calculate();
+        })();
+    </script>
+</body>
+</html>
