@@ -73,6 +73,14 @@
             color: var(--text);
         }
 
+        .card-title {
+            margin: 0 0 1.25rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            line-height: 1.35;
+            color: var(--text);
+        }
+
         .input-hint {
             font-size: 0.8125rem;
             font-weight: 500;
@@ -218,15 +226,51 @@
         .other-note[hidden],
         #tool-fields[hidden],
         #tool-results[hidden],
+        #power-card[hidden],
         #model-card[hidden],
         #model-steps[hidden],
         #vaillant-models[hidden],
+        #intergas-models[hidden],
+        #intergas-steps[hidden],
+        #intergas-figure[hidden],
+        #worcester-models[hidden],
+        #worcester-steps[hidden],
         #brand-note[hidden] {
             display: none;
         }
 
-        #vaillant-models {
+        #vaillant-models,
+        #intergas-models,
+        #worcester-models {
             margin-top: 1.25rem;
+        }
+
+        #intergas-steps,
+        #worcester-steps {
+            margin: 0.85rem 0 0;
+            line-height: 1.6;
+        }
+
+        #intergas-steps a,
+        #worcester-steps a {
+            color: var(--accent);
+        }
+
+        .intergas-figure {
+            margin: 0.85rem 0 0;
+        }
+
+        .intergas-figure a {
+            display: block;
+        }
+
+        .intergas-figure img {
+            display: block;
+            width: 100%;
+            max-width: 36rem;
+            height: auto;
+            border-radius: var(--radius);
+            background: #fff;
         }
 
         #brand-note {
@@ -339,6 +383,22 @@
         .band-amber::before { background: #e6a817; }
         .band-red::before { background: #d64545; }
 
+        .calculated-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--border-subtle);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--accent);
+            font-weight: 700;
+            box-sizing: border-box;
+        }
+
+        .bill-results {
+            margin-bottom: 0;
+        }
+
         .hint-green { color: #2f9e44; }
         .hint-amber { color: #b58100; }
         .hint-red { color: #d64545; }
@@ -436,13 +496,13 @@
                 column-gap: 0.5rem;
             }
 
-            .model-figure {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+            .system-figure[data-system="combi"] .system-thumb,
+            .model-figure[data-model="new"] .model-thumb {
+                grid-column: 2;
             }
 
-            .system-figure[data-system="combi"] .system-thumb,
-            .model-figure[data-model="new"] .system-thumb {
-                grid-column: 2;
+            .model-figure[data-model="latest"] .model-thumb {
+                grid-column: 3;
             }
 
             .system-figure[data-system="combi-cylinder"] .system-thumb {
@@ -452,6 +512,21 @@
             .system-thumb {
                 width: 100%;
             }
+        }
+
+        .model-figure .model-thumb {
+            width: 8.5rem;
+            height: 8.5rem;
+            max-width: 100%;
+            aspect-ratio: 1;
+            justify-self: start;
+            cursor: pointer;
+        }
+
+        .model-figure .model-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
@@ -516,6 +591,40 @@
             <div id="tool-fields">
             <div class="input-group">
                 <div class="input-heading">
+                    <label class="input-label" for="annual-kwh">Annual gas usage</label>
+                    <span class="input-hint">From your gas bill, in kilowatt hours (kWh)</span>
+                </div>
+                <input type="number" id="annual-kwh" class="input-field" inputmode="decimal" min="0" step="1" placeholder="e.g. 12000" value="12000">
+            </div>
+
+            <div class="input-group">
+                <div class="input-heading">
+                    <div class="input-label" id="gas-cooking-label">Do you use gas for cooking?</div>
+                </div>
+                <div class="choice-toggle" role="group" aria-labelledby="gas-cooking-label">
+                    <button type="button" class="choice-button active" data-gas-cooking="yes" aria-pressed="true">Yes</button>
+                    <button type="button" class="choice-button" data-gas-cooking="no" aria-pressed="false">No</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-heading">
+                    <div class="input-label" id="space-heating-label">Estimated space heating usage</div>
+                    <span class="input-hint" id="space-heating-hint">Bill kWh minus typical gas cooking (3% of annual use)</span>
+                </div>
+                <div class="calculated-field" id="space-heating-kwh" aria-labelledby="space-heating-label">—</div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-heading">
+                    <label class="input-label" for="unit-rate">Unit rate per kWh</label>
+                    <span class="input-hint">Gas unit rate in pence per kWh, not including standing charge</span>
+                </div>
+                <input type="number" id="unit-rate" class="input-field" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 6.33" value="6.33">
+            </div>
+
+            <div class="input-group">
+                <div class="input-heading">
                     <label class="input-label" for="flow-temp">Flow temperature now</label>
                     <span class="input-hint" id="flow-hint">75°C flow, about 55°C return</span>
                 </div>
@@ -527,6 +636,28 @@
                 </div>
             </div>
 
+            <div class="result-grid bill-results">
+                <div class="result-item">
+                    <div class="result-label">Space heating cost</div>
+                    <div class="result-value" id="heating-cost">—</div>
+                    <div class="result-unit">excluding standing charge</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Graph efficiency</div>
+                    <div class="result-value" id="graph-efficiency">—</div>
+                    <div class="result-unit" id="graph-efficiency-unit">from return temperature</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Condensing-mode saving</div>
+                    <div class="result-value" id="condensing-saving">—</div>
+                    <div class="result-unit" id="condensing-saving-unit">versus a 75°C flow</div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="calculator-card" id="power-card">
+            <h2 class="card-title">Power level</h2>
             <div class="input-group">
                 <div class="input-heading">
                     <label class="input-label" for="boiler-kw">Boiler heating output</label>
@@ -545,20 +676,21 @@
                 </div>
                 <input type="number" id="heat-loss" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 8">
             </div>
-            </div>
         </div>
 
         <div class="calculator-card" id="model-card">
+            <h2 class="card-title">How to set the flow temperature and power on a particular boiler</h2>
             <div class="input-group">
                 <div class="input-heading">
-                    <div class="input-label" id="brand-label">Which brand</div>
+                    <label class="input-label" for="brand">Which brand</label>
                 </div>
-                <div class="choice-toggle" role="group" aria-labelledby="brand-label">
-                    <button type="button" class="choice-button" data-brand="vaillant" aria-pressed="false">Vaillant</button>
-                    <button type="button" class="choice-button" data-brand="worcester" aria-pressed="false">Worcester Bosch</button>
-                    <button type="button" class="choice-button" data-brand="baxi" aria-pressed="false">Baxi / Main</button>
-                    <button type="button" class="choice-button" data-brand="intergas" aria-pressed="false">Intergas</button>
-                </div>
+                <select id="brand" class="input-field">
+                    <option value="">Choose a brand</option>
+                    <option value="vaillant">Vaillant</option>
+                    <option value="worcester">Worcester Bosch</option>
+                    <option value="baxi">Baxi / Main</option>
+                    <option value="intergas">Intergas</option>
+                </select>
                 <p id="brand-note" hidden>Button steps for this brand are not here yet.</p>
                 <div id="vaillant-models" hidden>
                     <div class="input-heading">
@@ -568,13 +700,38 @@
                     <div class="choice-toggle" role="group" aria-labelledby="model-label">
                         <button type="button" class="choice-button" data-model="old" aria-pressed="false">ecoTEC before 2012</button>
                         <button type="button" class="choice-button" data-model="new" aria-pressed="false">ecoTEC from 2012</button>
+                        <button type="button" class="choice-button" data-model="latest" aria-pressed="false">ecoTEC New Type</button>
                     </div>
                     <figure class="model-figure" id="model-figure" hidden>
-                        <button type="button" class="system-thumb" id="model-thumb" aria-label="Enlarge boiler">
+                        <a class="system-thumb model-thumb" id="model-thumb" href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-pre-2012-models/">
                             <img src="/boiler-optimiser/images/ecotec-old-type.png" alt="Older Vaillant ecoTEC, with two temperature dials and four round buttons." width="186" height="318">
-                        </button>
+                        </a>
                     </figure>
                     <p id="model-steps" hidden></p>
+                </div>
+                <div id="intergas-models" hidden>
+                    <div class="input-heading">
+                        <div class="input-label" id="intergas-label">Which Intergas</div>
+                    </div>
+                    <div class="choice-toggle" role="group" aria-labelledby="intergas-label">
+                        <button type="button" class="choice-button" data-model="intergas" aria-pressed="false">Rapid, HRE and ECO RF</button>
+                        <button type="button" class="choice-button" data-model="xclusive" aria-pressed="false">Xclusive and Xtreme</button>
+                    </div>
+                    <figure class="intergas-figure" id="intergas-figure" hidden>
+                        <a href="/intergas/how-to-adjust-the-flow-temperature-on-intergas-rapid-hre-and-eco-rf/">
+                            <img src="/how-to/service-an-intergas-boiler/images/intergas-eco-rf-buttons.png" width="1024" height="280" alt="Intergas Rapid, HRE and ECO RF control panel. The radiator light is the heating flow temperature.">
+                        </a>
+                    </figure>
+                    <p id="intergas-steps" hidden></p>
+                </div>
+                <div id="worcester-models" hidden>
+                    <div class="input-heading">
+                        <div class="input-label" id="worcester-label">Which Worcester Bosch</div>
+                    </div>
+                    <div class="choice-toggle" role="group" aria-labelledby="worcester-label">
+                        <button type="button" class="choice-button" data-model="greenstar-i" aria-pressed="false">Greenstar i</button>
+                    </div>
+                    <p id="worcester-steps" hidden></p>
                 </div>
             </div>
         </div>
@@ -609,6 +766,7 @@
     <script>
         (function () {
             var FACTORY_FLOW = 75;
+            var COOKING_SHARE = 0.03;
             var DELTA = 20;
             var ROOM = 20;
             var DEW_RETURN = 54;
@@ -656,15 +814,31 @@
             var modelImages = {
                 old: {
                     src: '/boiler-optimiser/images/ecotec-old-type.png',
-                    alt: 'Older Vaillant ecoTEC, with two temperature dials and four round buttons.'
+                    alt: 'Older Vaillant ecoTEC, with two temperature dials and four round buttons.',
+                    href: '/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-pre-2012-models/',
+                    width: 186,
+                    height: 318
                 },
                 new: {
                     src: '/boiler-optimiser/images/ecotec-new-type.png',
-                    alt: 'Newer Vaillant ecoTEC, with four rectangular buttons and no dials.'
+                    alt: 'Vaillant ecoTEC from 2012, with four rectangular buttons and no dials.',
+                    href: '/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-post-2012-models/',
+                    width: 275,
+                    height: 445
+                },
+                latest: {
+                    src: '/combi-boiler/combi-boiler-cost/images/vaillant-ecotec-plus.png',
+                    alt: 'Current Vaillant ecoTEC plus, with a black display and a silver panel underneath.',
+                    href: '/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-new-type/',
+                    width: 825,
+                    height: 819
                 }
             };
             var flowInput = document.getElementById('flow-temp');
             var flowHint = document.getElementById('flow-hint');
+            var annualInput = document.getElementById('annual-kwh');
+            var rateInput = document.getElementById('unit-rate');
+            var usesGasCooking = true;
             var heatLossInput = document.getElementById('heat-loss');
             var boilerInput = document.getElementById('boiler-kw');
             var outputAutoButton = document.getElementById('output-auto');
@@ -672,7 +846,7 @@
             var plan = document.getElementById('plan');
             var systemButtons = document.querySelectorAll('[data-system]');
             var boilerButtons = document.querySelectorAll('[data-boiler]');
-            var brandButtons = document.querySelectorAll('[data-brand]');
+            var brandSelect = document.getElementById('brand');
             var modelButtons = document.querySelectorAll('[data-model]');
 
             function interpolate(t) {
@@ -724,6 +898,23 @@
                 return value > 0 ? value : null;
             }
 
+            function nonNegativeOrNull(input) {
+                if (input.value.trim() === '') return null;
+                var value = Number(input.value);
+                return isFinite(value) && value >= 0 ? value : null;
+            }
+
+            function formatGBP(amount) {
+                return '£' + amount.toLocaleString('en-GB', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+            }
+
+            function formatKwh(amount) {
+                return Math.round(amount).toLocaleString('en-GB') + ' kWh';
+            }
+
             function item(title, content) {
                 var li = document.createElement('li');
                 var strong = document.createElement('strong');
@@ -765,8 +956,41 @@
 
             function fillModelSteps(target, heatLoss, boilerKw) {
                 var steps = document.getElementById('model-steps');
+                var intergasSteps = document.getElementById('intergas-steps');
+                var worcesterSteps = document.getElementById('worcester-steps');
                 steps.textContent = '';
+                intergasSteps.textContent = '';
+                worcesterSteps.textContent = '';
                 steps.hidden = brand !== 'vaillant' || !boilerModel;
+                intergasSteps.hidden = brand !== 'intergas' || !boilerModel;
+                worcesterSteps.hidden = brand !== 'worcester' || !boilerModel;
+                if (brand === 'worcester' && boilerModel) {
+                    function addWorcester(text) {
+                        worcesterSteps.appendChild(document.createTextNode(text));
+                    }
+                    addWorcester('Set the heating flow to ' + target + '°C on the display. The video takes a Greenstar i from 82°C down to 55°C. ');
+                    worcesterSteps.appendChild(linkEl('/flow-temp-worcester-bosch-greenstar-i-reduce-flow-temperature-82-to-55-degrees/', 'Show me on this boiler'));
+                    addWorcester('. ' + (outputCap(heatLoss, boilerKw)
+                        ? 'Ask a Gas Safe engineer to set the heating output to about ' + outputCap(heatLoss, boilerKw) + ' kW. '
+                        : 'The heating output is a separate setting. Ask a Gas Safe engineer to change that. '));
+                    return;
+                }
+                if (brand === 'intergas' && boilerModel) {
+                    function addIntergas(text) {
+                        intergasSteps.appendChild(document.createTextNode(text));
+                    }
+                    var intergasOutput = outputCap(heatLoss, boilerKw)
+                        ? 'Ask a Gas Safe engineer to set the heating output to about ' + outputCap(heatLoss, boilerKw) + ' kW. '
+                        : 'The heating output is a separate setting. Ask a Gas Safe engineer to change that. ';
+                    if (boilerModel === 'intergas') {
+                        addIntergas('Hold the tap and radiator button for 2 seconds until the radiator light flashes. Set ' + target + '°C with + and −, then press Reset. ');
+                        intergasSteps.appendChild(linkEl('/intergas/how-to-adjust-the-flow-temperature-on-intergas-rapid-hre-and-eco-rf/', 'Show me on this boiler'));
+                        addIntergas('. ' + intergasOutput);
+                    } else {
+                        addIntergas('Button steps for this boiler are not here yet. ' + intergasOutput);
+                    }
+                    return;
+                }
                 if (brand !== 'vaillant' || !boilerModel) return;
                 function add(text) {
                     steps.appendChild(document.createTextNode(text));
@@ -783,12 +1007,19 @@
                     add('Press the button under the radiator symbol. Set ' + target + '°C with + and −, then press OK. ');
                     steps.appendChild(linkEl('/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-post-2012-models/', 'Show me on this boiler'));
                     add('. ' + outputSentence);
+                } else if (boilerModel === 'latest') {
+                    add('From the basic display, press the heating control. Set ' + target + '°C with the scrollbar, then confirm. ');
+                    steps.appendChild(linkEl('/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-new-type/', 'Show me on this boiler'));
+                    add('. ' + outputSentence);
                 }
             }
 
             function update() {
                 document.getElementById('vaillant-models').hidden = brand !== 'vaillant';
-                document.getElementById('brand-note').hidden = !brand || brand === 'vaillant';
+                document.getElementById('intergas-models').hidden = brand !== 'intergas';
+                document.getElementById('intergas-figure').hidden = brand !== 'intergas' || boilerModel !== 'intergas';
+                document.getElementById('worcester-models').hidden = brand !== 'worcester';
+                document.getElementById('brand-note').hidden = !brand || brand === 'vaillant' || brand === 'intergas' || brand === 'worcester';
                 var modelFigureEl = document.getElementById('model-figure');
                 var modelPhoto = brand === 'vaillant' ? modelImages[boilerModel] : null;
                 var modelImage = modelFigureEl.querySelector('img');
@@ -797,14 +1028,22 @@
                 if (modelPhoto && modelImage.getAttribute('src') !== modelPhoto.src) {
                     modelImage.src = modelPhoto.src;
                     modelImage.alt = modelPhoto.alt;
-                    modelImage.width = boilerModel === 'old' ? 186 : 275;
-                    modelImage.height = boilerModel === 'old' ? 318 : 445;
+                    modelImage.width = modelPhoto.width;
+                    modelImage.height = modelPhoto.height;
                 }
-                document.getElementById('model-thumb').setAttribute('aria-label', modelPhoto ? 'Enlarge boiler. ' + modelPhoto.alt : 'Enlarge boiler');
+                var modelThumb = document.getElementById('model-thumb');
+                if (modelPhoto && modelPhoto.href) {
+                    modelThumb.href = modelPhoto.href;
+                    modelThumb.setAttribute('aria-label', 'Open the guide. ' + modelPhoto.alt);
+                } else {
+                    modelThumb.removeAttribute('href');
+                    modelThumb.setAttribute('aria-label', modelPhoto ? modelPhoto.alt : 'Boiler');
+                }
                 var otherType = system === 'combi-cylinder';
                 var condensingSystem = boilerType === 'condensing' && system === 'system';
                 document.getElementById('other-note').hidden = !otherType;
                 document.getElementById('tool-fields').hidden = otherType;
+                document.getElementById('power-card').hidden = otherType;
                 document.getElementById('tool-results').hidden = otherType;
                 document.getElementById('model-card').hidden = otherType;
                 var systemFigureEl = document.getElementById('system-figure');
@@ -860,6 +1099,30 @@
                 } else if (!condensingBoiler) {
                     flowInput.removeAttribute('aria-describedby');
                 }
+                var annual = nonNegativeOrNull(annualInput);
+                var pence = nonNegativeOrNull(rateInput);
+                var spaceKwh = annual === null ? null : (usesGasCooking ? annual * (1 - COOKING_SHARE) : annual);
+                var spaceHint = document.getElementById('space-heating-hint');
+                spaceHint.textContent = usesGasCooking
+                    ? 'Bill kWh minus typical gas cooking (3% of annual use)'
+                    : 'Same as annual gas usage (no cooking deducted)';
+                document.getElementById('space-heating-kwh').textContent = spaceKwh === null ? '—' : formatKwh(spaceKwh);
+                document.getElementById('heating-cost').textContent = spaceKwh === null || pence === null
+                    ? '—'
+                    : formatGBP(spaceKwh * (pence / 100));
+                var fraction = condensingBoiler ? saving(FACTORY_FLOW, flow) : 0;
+                document.getElementById('graph-efficiency').textContent = condensingBoiler
+                    ? efficiency(flow).toFixed(1) + '%'
+                    : '—';
+                document.getElementById('graph-efficiency-unit').textContent = condensingBoiler
+                    ? 'at ' + ret + '°C return'
+                    : 'not a condensing boiler';
+                document.getElementById('condensing-saving').textContent = spaceKwh === null || pence === null
+                    ? '—'
+                    : formatGBP(spaceKwh * (pence / 100) * fraction);
+                document.getElementById('condensing-saving-unit').textContent = condensingBoiler
+                    ? percent(fraction) + ' versus a 75°C flow'
+                    : 'no condensing gain on this boiler';
                 document.getElementById('target-flow').textContent = target + '°C';
                 document.getElementById('target-return').textContent = condensingBoiler
                     ? 'about ' + targetReturn + '°C return, ' + targetBand.name
@@ -954,8 +1217,14 @@
             bindChoice(boilerButtons, function (button) {
                 boilerType = button.getAttribute('data-boiler');
             });
-            bindChoice(brandButtons, function (button) {
-                brand = button.getAttribute('data-brand');
+            brandSelect.addEventListener('change', function () {
+                brand = brandSelect.value;
+                boilerModel = '';
+                document.querySelectorAll('[data-model]').forEach(function (other) {
+                    other.classList.remove('active');
+                    other.setAttribute('aria-pressed', 'false');
+                });
+                update();
             });
             bindChoice(modelButtons, function (button) {
                 boilerModel = button.getAttribute('data-model');
@@ -973,9 +1242,6 @@
             systemThumb.addEventListener('click', function () {
                 openLightbox(systemThumb);
             });
-            document.getElementById('model-thumb').addEventListener('click', function () {
-                openLightbox(document.getElementById('model-thumb'));
-            });
             document.getElementById('system-lightbox-close').addEventListener('click', function () {
                 systemLightbox.close();
             });
@@ -983,7 +1249,21 @@
                 if (event.target === systemLightbox) systemLightbox.close();
             });
 
+            document.querySelectorAll('[data-gas-cooking]').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    usesGasCooking = button.getAttribute('data-gas-cooking') === 'yes';
+                    document.querySelectorAll('[data-gas-cooking]').forEach(function (other) {
+                        var on = other === button;
+                        other.classList.toggle('active', on);
+                        other.setAttribute('aria-pressed', on ? 'true' : 'false');
+                    });
+                    update();
+                });
+            });
+
             flowInput.addEventListener('input', update);
+            annualInput.addEventListener('input', update);
+            rateInput.addEventListener('input', update);
             heatLossInput.addEventListener('input', update);
             boilerInput.addEventListener('input', update);
             function setOutputAuto(on) {

@@ -62,6 +62,7 @@
         '<a href="/fault-codes/">Search Fault Codes</a>' +
         '<a href="/vaillant/vaillant-p-test-program-mode/">P Test Instructions</a>' +
         '<a href="/how-to-adjust-the-power-level-on-vaillant-ecotec-post-2012-models/">Ecotec Power Level (Post 2012)</a>' +
+        '<a href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-new-type/">Ecotec Flow and Power (New Type)</a>' +
         '<a href="/vaillant/vaillant-ecotec-emissions-table/">Emissions Table</a>' +
         '<a href="/how-to/vaillant-ecotec-boiler-service/">Ecotec Service How-To</a>' +
         '<a href="/vaillant/vaillant-diagnostic-s-and-d-codes/">Diagnostic S &amp; D Codes</a>' +
@@ -73,6 +74,7 @@
         '<h4>Worcester Bosch</h4>' +
         '<a href="/worcester-bosch-fga-tool/">FGA Tool</a>' +
         '<a href="/fault-codes/worcester-bosch-fault-codes/">Worcester Bosch Fault Codes</a>' +
+        '<a href="/flow-temp-worcester-bosch-greenstar-i-reduce-flow-temperature-82-to-55-degrees/">Greenstar i Flow Temperature</a>' +
         '</div>' +
         '<div class="mega-menu-column">' +
         '<h4>Baxi / Main</h4>' +
@@ -83,6 +85,7 @@
         '<a href="/intergas-fga-tool/">Intergas FGA Tool</a>' +
         '<a href="/how-to/service-an-intergas-boiler/">Intergas Service How-To</a>' +
         '<a href="/fault-codes/intergas-fault-codes/">Intergas Fault Codes</a>' +
+        '<a href="/intergas/how-to-adjust-the-flow-temperature-on-intergas-rapid-hre-and-eco-rf/">Intergas Flow Temperature</a>' +
         '<h4>Miscellaneous</h4>' +
         '<a href="/heating-expansion-vessel-calculator/">Heating expansion vessel calculator</a>' +
         '<a href="/inhibitor-dosing/">Inhibitor Dosing</a>' +
