@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boiler Optimisation Tool - MyBoiler Hub</title>
+    <meta name="description" content="Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow. A cylinder still needs 60°C stored water.">
+    <link rel="canonical" href="https://myboiler.com/boiler-optimisation/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-title {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            font-weight: 700;
+            line-height: 1.15;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.0625rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .calculator-card {
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .input-heading {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.2rem 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .input-label {
+            margin: 0;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .input-hint {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            font-weight: 500;
+            box-sizing: border-box;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .input-field.is-auto {
+            opacity: 0.55;
+        }
+
+        .output-row {
+            display: flex;
+            gap: 0.5rem;
+            align-items: stretch;
+        }
+
+        .output-row .input-field {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .auto-button {
+            flex: 0 0 auto;
+            min-width: 5.5rem;
+        }
+
+        .choice-toggle {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .choice-button {
+            flex: 1 1 11rem;
+            padding: 0.75rem 1rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .choice-button.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .system-figure,
+        .model-figure {
+            margin: 0.85rem 0 0;
+        }
+
+        .system-figure[hidden],
+        .model-figure[hidden] {
+            display: none;
+        }
+
+        .system-thumb {
+            display: block;
+            width: calc((100% - 1rem) / 3);
+            aspect-ratio: 1;
+            padding: 0.35rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: #e8e8e8;
+            cursor: zoom-in;
+            overflow: hidden;
+        }
+
+        .system-thumb img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .system-lightbox {
+            width: min(56rem, calc(100vw - 2rem));
+            max-height: calc(100vh - 2rem);
+            padding: 1rem;
+            border: none;
+            border-radius: var(--radius-lg);
+            background: var(--surface);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .system-lightbox::backdrop {
+            background: rgba(16, 18, 22, 0.62);
+        }
+
+        .system-lightbox img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: calc(100vh - 6rem);
+            object-fit: contain;
+            background: #e8e8e8;
+            border-radius: var(--radius);
+        }
+
+        .lightbox-close {
+            display: block;
+            margin: 0 0 0.75rem auto;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .other-note {
+            margin: 0.85rem 0 0;
+            line-height: 1.6;
+        }
+
+        .other-note a {
+            color: var(--accent);
+        }
+
+        .other-note[hidden],
+        #tool-fields[hidden],
+        #tool-results[hidden],
+        #model-card[hidden],
+        #model-steps[hidden],
+        #vaillant-models[hidden],
+        #brand-note[hidden] {
+            display: none;
+        }
+
+        #vaillant-models {
+            margin-top: 1.25rem;
+        }
+
+        #brand-note {
+            margin: 0.85rem 0 0;
+            line-height: 1.6;
+        }
+
+        .tool-version {
+            margin: 0.5rem 0 0;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        #model-steps {
+            margin: 0.85rem 0 0;
+            line-height: 1.6;
+        }
+
+        #model-steps a {
+            color: var(--accent);
+        }
+
+        .input-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: 999px;
+            background: linear-gradient(to right,
+                #2f9e44 0 42.86%,
+                #e6a817 42.86% 82.86%,
+                #d64545 82.86% 100%);
+            outline: none;
+        }
+
+        .input-slider::-webkit-slider-runnable-track {
+            height: 10px;
+            border-radius: 999px;
+            background: linear-gradient(to right,
+                #2f9e44 0 42.86%,
+                #e6a817 42.86% 82.86%,
+                #d64545 82.86% 100%);
+        }
+
+        .input-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            margin-top: -6px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #1b1b1b;
+            cursor: pointer;
+        }
+
+        .input-slider::-moz-range-track {
+            height: 10px;
+            border-radius: 999px;
+            background: transparent;
+        }
+
+        .input-slider::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #1b1b1b;
+            cursor: pointer;
+        }
+
+        .input-slider.is-plain,
+        .input-slider.is-plain::-webkit-slider-runnable-track {
+            background: var(--border);
+        }
+
+        .input-slider.has-floor,
+        .input-slider.has-floor::-webkit-slider-runnable-track {
+            background: linear-gradient(to right,
+                #9a3412 0 42.86%,
+                #e6a817 42.86% 82.86%,
+                #d64545 82.86% 100%);
+        }
+
+        .band-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem 1rem;
+            margin-top: 0.65rem;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+
+        .band-legend[hidden] {
+            display: none;
+        }
+
+        .band-legend span::before {
+            content: "";
+            display: inline-block;
+            width: 0.7rem;
+            height: 0.7rem;
+            margin-right: 0.35rem;
+            border-radius: 2px;
+            vertical-align: -1px;
+        }
+
+        .band-green::before { background: #2f9e44; }
+        .band-floor::before { background: #9a3412; }
+        .band-amber::before { background: #e6a817; }
+        .band-red::before { background: #d64545; }
+
+        .hint-green { color: #2f9e44; }
+        .hint-amber { color: #b58100; }
+        .hint-red { color: #d64545; }
+        .hint-warn { color: #9a3412; }
+
+        .plan-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .plan-list li {
+            margin: 0 0 1.25rem;
+            line-height: 1.6;
+        }
+
+        .plan-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .plan-list strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .plan-list a {
+            color: var(--accent);
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+
+        .result-item {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 0.85rem 1rem;
+        }
+
+        .result-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .result-value {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-top: 0.2rem;
+        }
+
+        .result-unit {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+
+        .calculator-note {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 1rem 0 0;
+        }
+
+        .calculator-note a {
+            color: var(--accent);
+        }
+
+        @media (max-width: 700px) {
+            .calculator-card {
+                padding: 1.25rem;
+            }
+
+            .choice-toggle,
+            .result-grid {
+                grid-template-columns: 1fr;
+                display: grid;
+            }
+
+            .system-thumb {
+                width: 100%;
+            }
+        }
+
+        @media (min-width: 701px) {
+            .system-figure,
+            .model-figure {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                column-gap: 0.5rem;
+            }
+
+            .model-figure {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .system-figure[data-system="combi"] .system-thumb,
+            .model-figure[data-model="new"] .system-thumb {
+                grid-column: 2;
+            }
+
+            .system-figure[data-system="combi-cylinder"] .system-thumb {
+                grid-column: 3;
+            }
+
+            .system-thumb {
+                width: 100%;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <div class="calculator-card">
+            <h1 class="article-title">Boiler Optimisation Tool</h1>
+            <p class="article-intro">Two settings do most of the work: the highest heating output the boiler is allowed to fire at, and the heating flow temperature. Hot water on a combi stays at its own higher output.</p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="input-group">
+                <div class="input-heading">
+                    <div class="input-label" id="boiler-type-label">Boiler</div>
+                </div>
+                <div class="choice-toggle" role="group" aria-labelledby="boiler-type-label">
+                    <button type="button" class="choice-button active" data-boiler="condensing" aria-pressed="true">Condensing</button>
+                    <button type="button" class="choice-button" data-boiler="standard" aria-pressed="false">Non-condensing</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-heading">
+                    <div class="input-label" id="system-label">System</div>
+                </div>
+                <div class="choice-toggle" role="group" aria-labelledby="system-label">
+                    <button type="button" class="choice-button" data-system="system" aria-pressed="false">System/vented with stored hot water</button>
+                    <button type="button" class="choice-button active" data-system="combi" aria-pressed="true">Combi boiler</button>
+                    <button type="button" class="choice-button" data-system="combi-cylinder" aria-pressed="false">Other type</button>
+                </div>
+                <figure class="system-figure" id="system-figure">
+                    <button type="button" class="system-thumb" id="system-thumb" aria-label="Enlarge diagram">
+                        <img src="/combi-boiler/images/combi-boiler-diagram.jpg" alt="A combi boiler heats the taps and the radiators directly. There is no hot water cylinder." width="1431" height="805">
+                    </button>
+                </figure>
+                <dialog class="system-lightbox" id="system-lightbox">
+                    <button type="button" class="lightbox-close" id="system-lightbox-close">Close</button>
+                    <img id="system-lightbox-img" alt="">
+                </dialog>
+                <p class="other-note" id="other-note" hidden>This setup needs a closer look. <a href="/quote/">Get in touch</a> and we can advise on the right settings.</p>
+            </div>
+
+            <div id="tool-fields">
+            <div class="input-group">
+                <div class="input-heading">
+                    <label class="input-label" for="flow-temp">Flow temperature now</label>
+                    <span class="input-hint" id="flow-hint">75°C flow, about 55°C return</span>
+                </div>
+                <input type="range" id="flow-temp" class="input-slider" min="45" max="80" step="1" value="75" aria-describedby="band-legend">
+                <div class="band-legend" id="band-legend">
+                    <span class="band-green" id="band-full">Fully condensing, up to 60°C</span>
+                    <span class="band-amber">Partially condensing, 61–73°C</span>
+                    <span class="band-red">Non-condensing, 74°C and above</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-heading">
+                    <label class="input-label" for="boiler-kw">Boiler heating output</label>
+                    <span class="input-hint">The central-heating kW, or Auto if the maximum is not capped.</span>
+                </div>
+                <div class="output-row">
+                    <input type="number" id="boiler-kw" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 24">
+                    <button type="button" class="choice-button auto-button" id="output-auto" aria-pressed="false">Auto</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-heading">
+                    <label class="input-label" for="heat-loss">House heat loss</label>
+                    <span class="input-hint">kW, if you know it. Leave blank to skip the output cap.</span>
+                </div>
+                <input type="number" id="heat-loss" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 8">
+            </div>
+            </div>
+        </div>
+
+        <div class="calculator-card" id="model-card">
+            <div class="input-group">
+                <div class="input-heading">
+                    <div class="input-label" id="brand-label">Which brand</div>
+                </div>
+                <div class="choice-toggle" role="group" aria-labelledby="brand-label">
+                    <button type="button" class="choice-button" data-brand="vaillant" aria-pressed="false">Vaillant</button>
+                    <button type="button" class="choice-button" data-brand="worcester" aria-pressed="false">Worcester Bosch</button>
+                    <button type="button" class="choice-button" data-brand="baxi" aria-pressed="false">Baxi / Main</button>
+                    <button type="button" class="choice-button" data-brand="intergas" aria-pressed="false">Intergas</button>
+                </div>
+                <p id="brand-note" hidden>Button steps for this brand are not here yet.</p>
+                <div id="vaillant-models" hidden>
+                    <div class="input-heading">
+                        <div class="input-label" id="model-label">Which ecoTEC</div>
+                        <span class="input-hint">Match the picture to the front of the boiler.</span>
+                    </div>
+                    <div class="choice-toggle" role="group" aria-labelledby="model-label">
+                        <button type="button" class="choice-button" data-model="old" aria-pressed="false">ecoTEC before 2012</button>
+                        <button type="button" class="choice-button" data-model="new" aria-pressed="false">ecoTEC from 2012</button>
+                    </div>
+                    <figure class="model-figure" id="model-figure" hidden>
+                        <button type="button" class="system-thumb" id="model-thumb" aria-label="Enlarge boiler">
+                            <img src="/boiler-optimisation/images/ecotec-old-type.png" alt="Older Vaillant ecoTEC, with two temperature dials and four round buttons." width="186" height="318">
+                        </button>
+                    </figure>
+                    <p id="model-steps" hidden></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculator-card" id="tool-results">
+            <ol class="plan-list" id="plan"></ol>
+            <div class="result-grid">
+                <div class="result-item">
+                    <div class="result-label">Set flow to</div>
+                    <div class="result-value" id="target-flow">—</div>
+                    <div class="result-unit" id="target-return">—</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Radiator output</div>
+                    <div class="result-value" id="rad-factor">—</div>
+                    <div class="result-unit">of the ΔT 50 catalogue figure</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label" id="gas-saving-label">Gas saving</div>
+                    <div class="result-value" id="gas-saving">—</div>
+                    <div class="result-unit" id="gas-saving-unit">versus a 75°C flow, heating only</div>
+                </div>
+            </div>
+            <p class="calculator-note">Return is taken as flow minus 20°C. Condensing starts once return is below about 54°C. Radiator output uses the EN 442 exponent 1.3 against a 20°C room. The saving uses the same efficiency curve as the <a href="/energy-saving/combi-boiler-condensing-mode-savings/">condensing-mode calculator</a>. Standing charge is not included. Changing boiler parameters is normally an engineer’s job. See <a href="/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/">how to lower flow temperature</a>, <a href="/boiler-maximum-and-minimum-output-mode-videos/">maximum output mode</a>, and <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm controls</a>.</p>
+        </div>
+        <p class="tool-version">Version 1</p>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+    <script>
+        (function () {
+            var FACTORY_FLOW = 75;
+            var DELTA = 20;
+            var ROOM = 20;
+            var DEW_RETURN = 54;
+            var COMBI_FLOW = 55;
+            var CYLINDER_FLOW = 70;
+            var SYSTEM_CONDENSING_FLOW = 60;
+            var EFFICIENCY_CURVE = [
+                [10, 99.7],
+                [20, 98.3],
+                [30, 96.0],
+                [40, 92.4],
+                [50, 88.7],
+                [54, 87.0],
+                [100, 82.0]
+            ];
+            var FULL_FLOW = 60;
+            var PARTIAL_FLOW = 73;
+            var RELIABILITY_FLOW = 65;
+            var system = 'combi';
+            var systemImages = {
+                system: {
+                    src: '/system-boiler/images/system-or-regular-boiler-diagram.jpg',
+                    alt: 'A system boiler heats a hot water cylinder. The cylinder supplies the taps, and the radiators are on a separate heating circuit.'
+                },
+                combi: {
+                    src: '/combi-boiler/images/combi-boiler-diagram.jpg',
+                    alt: 'A combi boiler heats the taps and the radiators directly. There is no hot water cylinder.'
+                },
+                'combi-cylinder': {
+                    src: '/boiler-optimisation/images/other-system.svg',
+                    alt: 'Placeholder for another heating system.'
+                }
+            };
+
+            function storesHotWater() {
+                return system !== 'combi';
+            }
+
+            function isCombi() {
+                return system === 'combi' || system === 'combi-cylinder';
+            }
+            var boilerType = 'condensing';
+            var brand = '';
+            var boilerModel = '';
+            var modelImages = {
+                old: {
+                    src: '/boiler-optimisation/images/ecotec-old-type.png',
+                    alt: 'Older Vaillant ecoTEC, with two temperature dials and four round buttons.'
+                },
+                new: {
+                    src: '/boiler-optimisation/images/ecotec-new-type.png',
+                    alt: 'Newer Vaillant ecoTEC, with four rectangular buttons and no dials.'
+                }
+            };
+            var flowInput = document.getElementById('flow-temp');
+            var flowHint = document.getElementById('flow-hint');
+            var heatLossInput = document.getElementById('heat-loss');
+            var boilerInput = document.getElementById('boiler-kw');
+            var outputAutoButton = document.getElementById('output-auto');
+            var outputAuto = false;
+            var plan = document.getElementById('plan');
+            var systemButtons = document.querySelectorAll('[data-system]');
+            var boilerButtons = document.querySelectorAll('[data-boiler]');
+            var brandButtons = document.querySelectorAll('[data-brand]');
+            var modelButtons = document.querySelectorAll('[data-model]');
+
+            function interpolate(t) {
+                var points = EFFICIENCY_CURVE;
+                if (t <= points[0][0]) return points[0][1];
+                if (t >= points[points.length - 1][0]) return points[points.length - 1][1];
+                for (var i = 1; i < points.length; i++) {
+                    var prev = points[i - 1];
+                    var next = points[i];
+                    if (t <= next[0]) {
+                        var u = (t - prev[0]) / (next[0] - prev[0]);
+                        return prev[1] + u * (next[1] - prev[1]);
+                    }
+                }
+                return points[points.length - 1][1];
+            }
+
+            function efficiency(flow) {
+                return interpolate(flow - DELTA);
+            }
+
+            function saving(fromFlow, toFlow) {
+                var etaNew = efficiency(toFlow);
+                var etaOld = efficiency(fromFlow);
+                if (!(etaNew > etaOld)) return 0;
+                return 1 - etaOld / etaNew;
+            }
+
+            function radiatorFactor(flow) {
+                var deltaT = ((flow + (flow - DELTA)) / 2) - ROOM;
+                if (deltaT <= 0) return 0;
+                return Math.pow(deltaT / 50, 1.3);
+            }
+
+            function percent(fraction) {
+                var value = Math.round(fraction * 1000) / 10;
+                return (value % 1 === 0 ? String(value) : value.toFixed(1)) + '%';
+            }
+
+            function band(flow) {
+                if (flow <= FULL_FLOW) return { key: 'green', name: 'fully condensing' };
+                if (flow <= PARTIAL_FLOW) return { key: 'amber', name: 'partially condensing' };
+                return { key: 'red', name: 'non-condensing' };
+            }
+
+            function numberOrNull(input) {
+                if (input.value.trim() === '') return null;
+                var value = Number(input.value);
+                return value > 0 ? value : null;
+            }
+
+            function item(title, content) {
+                var li = document.createElement('li');
+                var strong = document.createElement('strong');
+                strong.textContent = title;
+                li.appendChild(strong);
+                if (typeof content === 'string') {
+                    li.appendChild(document.createTextNode(content));
+                } else {
+                    li.appendChild(content);
+                }
+                return li;
+            }
+
+            function condensateNote() {
+                var note = document.createDocumentFragment();
+                note.appendChild(document.createTextNode('A white plastic pipe comes out underneath the boiler. That is the condensate pipe. '));
+                var link = document.createElement('a');
+                link.href = 'https://www.youtube.com/watch?v=1kSWx4ygM8Y';
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.textContent = 'This video shows how to identify it';
+                note.appendChild(link);
+                note.appendChild(document.createTextNode('.'));
+                return note;
+            }
+
+            function linkEl(href, text) {
+                var link = document.createElement('a');
+                link.href = href;
+                link.textContent = text;
+                return link;
+            }
+
+            function outputCap(heatLoss, boilerKw) {
+                if (outputAuto && heatLoss) return heatLoss;
+                if (!outputAuto && heatLoss && boilerKw && boilerKw > heatLoss + 0.5) return heatLoss;
+                return null;
+            }
+
+            function fillModelSteps(target, heatLoss, boilerKw) {
+                var steps = document.getElementById('model-steps');
+                steps.textContent = '';
+                steps.hidden = brand !== 'vaillant' || !boilerModel;
+                if (brand !== 'vaillant' || !boilerModel) return;
+                function add(text) {
+                    steps.appendChild(document.createTextNode(text));
+                }
+                var cap = outputCap(heatLoss, boilerKw);
+                var outputSentence = cap
+                    ? 'Ask a Gas Safe engineer to set the heating output to about ' + cap + ' kW. '
+                    : 'The heating output is a separate setting. Ask a Gas Safe engineer to change that. ';
+                if (boilerModel === 'old') {
+                    add('Turn the heating dial to ' + target + '°C. ');
+                    steps.appendChild(linkEl('/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-pre-2012-models/', 'Show me on this boiler'));
+                    add('. ' + outputSentence);
+                } else if (boilerModel === 'new') {
+                    add('Press the button under the radiator symbol. Set ' + target + '°C with + and −, then press OK. ');
+                    steps.appendChild(linkEl('/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-post-2012-models/', 'Show me on this boiler'));
+                    add('. ' + outputSentence);
+                }
+            }
+
+            function update() {
+                document.getElementById('vaillant-models').hidden = brand !== 'vaillant';
+                document.getElementById('brand-note').hidden = !brand || brand === 'vaillant';
+                var modelFigureEl = document.getElementById('model-figure');
+                var modelPhoto = brand === 'vaillant' ? modelImages[boilerModel] : null;
+                var modelImage = modelFigureEl.querySelector('img');
+                modelFigureEl.hidden = !modelPhoto;
+                modelFigureEl.setAttribute('data-model', boilerModel);
+                if (modelPhoto && modelImage.getAttribute('src') !== modelPhoto.src) {
+                    modelImage.src = modelPhoto.src;
+                    modelImage.alt = modelPhoto.alt;
+                    modelImage.width = boilerModel === 'old' ? 186 : 275;
+                    modelImage.height = boilerModel === 'old' ? 318 : 445;
+                }
+                document.getElementById('model-thumb').setAttribute('aria-label', modelPhoto ? 'Enlarge boiler. ' + modelPhoto.alt : 'Enlarge boiler');
+                var otherType = system === 'combi-cylinder';
+                var condensingSystem = boilerType === 'condensing' && system === 'system';
+                document.getElementById('other-note').hidden = !otherType;
+                document.getElementById('tool-fields').hidden = otherType;
+                document.getElementById('tool-results').hidden = otherType;
+                document.getElementById('model-card').hidden = otherType;
+                var systemFigureEl = document.getElementById('system-figure');
+                var diagram = systemImages[system];
+                var systemImage = systemFigureEl.querySelector('img');
+                systemFigureEl.hidden = !diagram;
+                systemFigureEl.setAttribute('data-system', system);
+                if (diagram && systemImage.getAttribute('src') !== diagram.src) {
+                    systemImage.src = diagram.src;
+                    systemImage.alt = diagram.alt;
+                }
+                document.getElementById('system-thumb').setAttribute('aria-label', diagram ? 'Enlarge diagram. ' + diagram.alt : 'Enlarge diagram');
+                if (otherType) return;
+                var flow = Number(flowInput.value);
+                var ret = flow - DELTA;
+                var currentBand = band(flow);
+                var condensingBoiler = boilerType === 'condensing';
+                var target = condensingSystem
+                    ? SYSTEM_CONDENSING_FLOW
+                    : (storesHotWater()
+                        ? CYLINDER_FLOW
+                        : (condensingBoiler ? COMBI_FLOW : RELIABILITY_FLOW));
+                if (!condensingSystem && flow < target) target = flow;
+                var targetReturn = target - DELTA;
+                var targetBand = band(target);
+                var heatLoss = numberOrNull(heatLossInput);
+                var boilerKw = numberOrNull(boilerInput);
+                var legend = document.getElementById('band-legend');
+
+                var bandFull = document.getElementById('band-full');
+                var belowStoreFloor = system === 'system' && flow < SYSTEM_CONDENSING_FLOW;
+                flowInput.classList.toggle('is-plain', !condensingBoiler);
+                flowInput.classList.toggle('has-floor', condensingSystem);
+                legend.hidden = !condensingBoiler;
+                bandFull.textContent = condensingSystem
+                    ? 'Not recommended below 60°C'
+                    : 'Fully condensing, up to 60°C';
+                bandFull.className = condensingSystem ? 'band-floor' : 'band-green';
+                if (belowStoreFloor) {
+                    flowHint.className = 'input-hint hint-warn';
+                    flowHint.textContent = flow + '°C is below 60°C. Not recommended: stored hot water may not get hot enough, which can cause hot water problems and a legionella risk.';
+                } else if (condensingBoiler) {
+                    flowInput.setAttribute('aria-describedby', 'band-legend');
+                    flowHint.className = 'input-hint hint-' + currentBand.key;
+                    flowHint.textContent = flow + '°C flow, about ' + ret + '°C return — ' + currentBand.name;
+                } else {
+                    flowInput.removeAttribute('aria-describedby');
+                    flowHint.className = 'input-hint';
+                    flowHint.textContent = flow + '°C flow';
+                }
+                if (condensingBoiler && !belowStoreFloor) {
+                    flowInput.setAttribute('aria-describedby', 'band-legend');
+                } else if (!condensingBoiler) {
+                    flowInput.removeAttribute('aria-describedby');
+                }
+                document.getElementById('target-flow').textContent = target + '°C';
+                document.getElementById('target-return').textContent = condensingBoiler
+                    ? 'about ' + targetReturn + '°C return, ' + targetBand.name
+                    : 'a reasonably low heating flow';
+                document.getElementById('rad-factor').textContent = percent(radiatorFactor(target));
+                document.getElementById('gas-saving').textContent = condensingBoiler ? percent(saving(FACTORY_FLOW, target)) : '—';
+                document.getElementById('gas-saving-unit').textContent = condensingBoiler
+                    ? 'versus a 75°C flow, heating only'
+                    : 'no condensing gain on this boiler';
+
+                plan.textContent = '';
+                var step = 1;
+                function stepTitle(name) {
+                    return (step++) + '. ' + name;
+                }
+                if (condensingBoiler) {
+                    plan.appendChild(item(stepTitle('Condensate pipe'), condensateNote()));
+                }
+                if (!condensingBoiler) {
+                    plan.appendChild(item(
+                        stepTitle('Flow temperature'),
+                        target === flow
+                            ? 'Leave the heating flow at ' + flow + '°C. That is already a reasonably low setting. If a room is short of heat, raise it by 5°C.'
+                            : 'Set the heating flow to about ' + target + '°C. That is a reasonably low setting, well under a factory 75–80°C. If a room does not reach temperature, raise the flow by 5°C.'
+                            + (storesHotWater() ? ' Keep it high enough for stored hot water at about 60°C.' : '')
+                    ));
+                } else if (!storesHotWater()) {
+                    plan.appendChild(item(
+                        stepTitle('Flow temperature'),
+                        target === flow
+                            ? 'Leave the heating flow at ' + flow + '°C. The return is already ' + currentBand.name + '. If a room is short of heat, raise the flow by 5°C and try again for a few cold days.'
+                            : 'Set the heating flow to ' + target + '°C, in the green band. Factory settings are often 75–80°C, in the red, so the return stays above dew point and the boiler does not condense. If a room does not reach temperature, raise the flow by 5°C rather than jumping straight back to 75°C.'
+                    ));
+                } else {
+                    plan.appendChild(item(
+                        stepTitle('Flow temperature'),
+                        'Set the heating flow to 60°C, in the green band. The return is about 40°C, so the boiler can fully condense while it heats the cylinder.'
+                    ));
+                }
+
+                var powerText;
+                if (condensingSystem) {
+                    powerText = (outputAuto ? 'The heating output is on Auto. ' : (boilerKw ? 'The heating output is ' + boilerKw + ' kW. ' : ''))
+                        + 'Set it to the rating of the cylinder coil. That is the heat the coil can pass into the stored water.';
+                } else if (outputAuto && heatLoss) {
+                    powerText = 'The heating output is on Auto, so the boiler can fire at its full rating. Cap the central-heating maximum at about ' + heatLoss + ' kW.'
+                        + (isCombi() ? ' Leave the hot-water output at the higher rating.' : '');
+                } else if (outputAuto) {
+                    powerText = 'The heating output is on Auto, so the boiler can fire at its full rating. Cap that to the house heat loss once you know it.'
+                        + (isCombi() ? ' Do not turn down the hot-water output to chase a heating saving.' : '');
+                } else if (heatLoss && boilerKw && boilerKw > heatLoss + 0.5) {
+                    powerText = 'Cap the central-heating maximum at about ' + heatLoss + ' kW. The boiler can fire up to ' + boilerKw + ' kW, which is more than this house loses, so it short-cycles.'
+                        + (isCombi() ? ' Leave the hot-water output at the higher rating.' : '');
+                } else if (heatLoss && boilerKw) {
+                    powerText = 'The heating output (' + boilerKw + ' kW) is already close to the house heat loss (' + heatLoss + ' kW). Leave the heating maximum where it is unless the boiler’s own minimum is higher than the heat loss, in which case it will still cycle in mild weather.';
+                } else if (boilerKw) {
+                    powerText = 'The heating side is set up to ' + boilerKw + ' kW. Cap that to the house heat loss once you know it.'
+                        + (isCombi() ? ' Do not turn down the hot-water output to chase a heating saving.' : '');
+                } else {
+                    powerText = 'Enter the house heat loss and the boiler’s heating kilowatts to see whether the maximum output should come down.'
+                        + (isCombi() ? ' The hot-water rating is a separate number and stays as it is.' : '');
+                }
+                plan.appendChild(item(stepTitle('Heating output'), powerText));
+                fillModelSteps(target, heatLoss, boilerKw);
+                plan.appendChild(item(
+                    stepTitle('Controls'),
+                    !condensingBoiler
+                        ? 'A room thermostat is enough. Set the flow reasonably low and let the thermostat stop the boiler when the room is warm.'
+                        : (!storesHotWater()
+                            ? 'A fixed 55°C flow is the manual version. OpenTherm or another modulating control lets the boiler choose a lower flow as the room approaches setpoint, and it turns the burner down with it.'
+                            : 'The control has to know the cylinder temperature. Otherwise a low heating flow never gets the stored water to about 60°C. That applies to a system or vented boiler with stored hot water, and to other types that store hot water.')
+                ));
+            }
+
+            function bindChoice(nodeList, assign) {
+                nodeList.forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        assign(button);
+                        nodeList.forEach(function (other) {
+                            var on = other === button;
+                            other.classList.toggle('active', on);
+                            other.setAttribute('aria-pressed', on ? 'true' : 'false');
+                        });
+                        update();
+                    });
+                });
+            }
+
+            bindChoice(systemButtons, function (button) {
+                system = button.getAttribute('data-system');
+            });
+            bindChoice(boilerButtons, function (button) {
+                boilerType = button.getAttribute('data-boiler');
+            });
+            bindChoice(brandButtons, function (button) {
+                brand = button.getAttribute('data-brand');
+            });
+            bindChoice(modelButtons, function (button) {
+                boilerModel = button.getAttribute('data-model');
+            });
+
+            var systemThumb = document.getElementById('system-thumb');
+            var systemLightbox = document.getElementById('system-lightbox');
+            var systemLightboxImg = document.getElementById('system-lightbox-img');
+            function openLightbox(thumb) {
+                var thumbImage = thumb.querySelector('img');
+                systemLightboxImg.src = thumbImage.src;
+                systemLightboxImg.alt = thumbImage.alt;
+                systemLightbox.showModal();
+            }
+            systemThumb.addEventListener('click', function () {
+                openLightbox(systemThumb);
+            });
+            document.getElementById('model-thumb').addEventListener('click', function () {
+                openLightbox(document.getElementById('model-thumb'));
+            });
+            document.getElementById('system-lightbox-close').addEventListener('click', function () {
+                systemLightbox.close();
+            });
+            systemLightbox.addEventListener('click', function (event) {
+                if (event.target === systemLightbox) systemLightbox.close();
+            });
+
+            flowInput.addEventListener('input', update);
+            heatLossInput.addEventListener('input', update);
+            boilerInput.addEventListener('input', update);
+            function setOutputAuto(on) {
+                outputAuto = on;
+                outputAutoButton.classList.toggle('active', on);
+                outputAutoButton.setAttribute('aria-pressed', on ? 'true' : 'false');
+                boilerInput.classList.toggle('is-auto', on);
+            }
+
+            outputAutoButton.addEventListener('click', function () {
+                setOutputAuto(!outputAuto);
+                update();
+            });
+            function clearAutoFromInput() {
+                if (!outputAuto) return;
+                setOutputAuto(false);
+                update();
+            }
+            boilerInput.addEventListener('pointerdown', clearAutoFromInput);
+            boilerInput.addEventListener('click', clearAutoFromInput);
+            update();
+        })();
+    </script>
+</body>
+</html>

@@ -20,6 +20,7 @@
         '<a href="/what-size-boiler/">What Size Boiler?</a>' +
         '<a href="/what-is-a-gc-number/">What is a GC Number?</a>' +
         '<a href="/boiler-energy-efficiency/">Boiler Energy Efficiency</a>' +
+        '<a href="/boiler-optimisation/">Boiler Optimisation Tool</a>' +
         '<a href="/repairs/">Boiler Repairs</a>' +
         '<a href="/boiler-cover/">Boiler Cover</a>' +
         '<h4>OpenTherm &amp; Modulating Boilers</h4>' +
@@ -101,6 +102,7 @@
         '<a href="/calculators/radiator-correction-factor-tool/">Radiator Correction Factor</a>' +
         '<a href="/towel-radiators/">Towel Radiators</a>' +
         '<a href="/calculators/volume-flow-rate-q-calculator/">Volume Flow Rate Q</a>' +
+        '<a href="/boiler-optimisation/">Boiler Optimisation Tool</a>' +
         '<a href="/kv-and-kvs/">Kv and Kvs values</a>' +
         '<a href="/heat-meter/">Heat Meters</a>' +
         '</div>' +
