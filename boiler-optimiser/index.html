@@ -142,7 +142,7 @@
             min-width: 0;
         }
 
-        .auto-button {
+        .output-row > .auto-button {
             flex: 0 0 auto;
             min-width: 5.5rem;
         }
@@ -447,6 +447,10 @@
             box-sizing: border-box;
         }
 
+        .heat-loss-known {
+            margin-top: 0.65rem;
+        }
+
         .bill-results {
             margin-bottom: 0;
         }
@@ -670,9 +674,13 @@
             <div class="input-group">
                 <div class="input-heading">
                     <label class="input-label" for="heat-loss">Estimated house heat loss</label>
-                    <span class="input-hint">kW. A cautious estimate from the space heating usage, for a colder day than the bill year. Change it if you know the heat loss.</span>
+                    <span class="input-hint">The low end is a milder year and the high end a colder day, from the space heating usage. Enter a figure if you know the heat loss.</span>
                 </div>
-                <input type="number" id="heat-loss" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 8">
+                <div class="calculated-field" id="heat-loss-range" aria-live="polite">—</div>
+                <div class="output-row heat-loss-known">
+                    <input type="number" id="heat-loss" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="Known heat loss">
+                    <button type="button" class="choice-button auto-button" id="heat-loss-reset">Reset</button>
+                </div>
                 <p class="power-recommendation" id="power-recommendation"></p>
             </div>
 
@@ -819,7 +827,7 @@
             </div>
             <p class="calculator-note">Return is taken as flow minus 20°C. Condensing starts once return is below about 54°C. Radiator output uses the EN 442 exponent 1.3 against a 20°C room. The saving uses the same efficiency curve as the <a href="/energy-saving/combi-boiler-condensing-mode-savings/">condensing-mode calculator</a>. Standing charge is not included. Changing boiler parameters is normally an engineer’s job. See <a href="/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/">how to lower flow temperature</a>, <a href="/boiler-maximum-and-minimum-output-mode-videos/">maximum output mode</a>, and <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm controls</a>.</p>
         </div>
-        <p class="tool-version">Version 1</p>
+        <p class="tool-version">Version 2</p>
     </div>
 
     <div id="site-footer"></div>
@@ -829,7 +837,8 @@
         (function () {
             var FACTORY_FLOW = 75;
             var COOKING_SHARE = 0.03;
-            var FULL_LOAD_HOURS = 1700;
+            var MILD_FULL_LOAD_HOURS = 2200;
+            var COLD_FULL_LOAD_HOURS = 1700;
             var DELTA = 20;
             var ROOM = 20;
             var DEW_RETURN = 54;
@@ -932,10 +941,25 @@
                 return interpolate(flow - DELTA);
             }
 
-            function estimatedHeatLoss(spaceKwh, flow, condensing) {
+            function formatKw(kw) {
+                var rounded = Math.round(kw * 10) / 10;
+                return rounded % 1 === 0 ? String(rounded) : rounded.toFixed(1);
+            }
+
+            function formatHeatLossRange(low, high) {
+                if (Math.abs(low - high) < 0.05) return formatKw(low) + ' kW';
+                return formatKw(low) + '–' + formatKw(high) + ' kW';
+            }
+
+            function heatLossAtHours(spaceKwh, flow, condensing, hours) {
                 var delivered = spaceKwh * (condensing ? efficiency(flow) / 100 : 0.75);
-                var kw = delivered / FULL_LOAD_HOURS;
-                return Math.ceil(kw * 10 - 1e-9) / 10;
+                return Math.ceil(delivered / hours * 10 - 1e-9) / 10;
+            }
+
+            function estimatedHeatLossRange(spaceKwh, flow, condensing) {
+                var low = heatLossAtHours(spaceKwh, flow, condensing, MILD_FULL_LOAD_HOURS);
+                var high = heatLossAtHours(spaceKwh, flow, condensing, COLD_FULL_LOAD_HOURS);
+                return low <= high ? { low: low, high: high } : { low: high, high: low };
             }
 
             function saving(fromFlow, toFlow) {
@@ -1142,16 +1166,20 @@
                 var targetBand = band(target);
                 var annual = nonNegativeOrNull(annualInput);
                 var spaceKwh = annual === null ? null : (usesGasCooking ? annual * (1 - COOKING_SHARE) : annual);
-                if (!heatLossManual) {
-                    heatLossInput.value = spaceKwh === null ? '' : String(estimatedHeatLoss(spaceKwh, flow, condensingBoiler));
-                }
-                var heatLoss = numberOrNull(heatLossInput);
+                var estimate = spaceKwh === null ? null : estimatedHeatLossRange(spaceKwh, flow, condensingBoiler);
+                var heatLossRange = document.getElementById('heat-loss-range');
+                heatLossRange.hidden = heatLossManual;
+                heatLossRange.textContent = estimate ? formatHeatLossRange(estimate.low, estimate.high) : '—';
+                var knownHeatLoss = numberOrNull(heatLossInput);
+                var heatLoss = heatLossManual ? knownHeatLoss : (estimate ? estimate.high : null);
                 var boilerKw = numberOrNull(boilerInput);
                 var powerRecommendation = document.getElementById('power-recommendation');
                 if (system === 'system') {
                     powerRecommendation.textContent = 'Set the heating output to the hot water coil load.';
-                } else if (heatLoss) {
-                    powerRecommendation.textContent = 'Set the heating output to ' + (Math.round(heatLoss * 10) / 10) + ' kW, the house heat loss.';
+                } else if (heatLossManual && heatLoss) {
+                    powerRecommendation.textContent = 'Set the heating output to ' + formatKw(heatLoss) + ' kW, the house heat loss.';
+                } else if (estimate) {
+                    powerRecommendation.textContent = 'Set the heating output to about ' + formatKw(estimate.high) + ' kW, the top of the estimated range.';
                 } else {
                     powerRecommendation.textContent = 'Set the heating output to the house heat loss.';
                 }
@@ -1195,15 +1223,21 @@
                     pumpSize.textContent = 'Estimated heat pump size: enter the annual gas usage.';
                     checkerLink.href = '/heat-pump-checker/';
                 } else {
-                    var pumpKw = Math.round(estimatedHeatLoss(spaceKwh, flow, condensingBoiler));
-                    pumpSize.textContent = pumpKw < 1
-                        ? 'Estimated heat pump size: under 1 kW, from ' + formatKwh(spaceKwh) + ' of space heating.'
-                        : 'Estimated heat pump size: about ' + pumpKw + ' kW, from ' + formatKwh(spaceKwh) + ' of space heating.';
+                    var lowPump = Math.round(estimate.low);
+                    var highPump = Math.round(estimate.high);
+                    var pumpLabel = estimate.high < 1
+                        ? 'under 1 kW'
+                        : ('about ' + (lowPump === highPump ? String(highPump) : lowPump + '–' + highPump) + ' kW');
+                    pumpSize.textContent = 'Estimated heat pump size: ' + pumpLabel + ', from ' + formatKwh(spaceKwh) + ' of space heating.';
                     var checkerParams = new URLSearchParams();
                     checkerParams.set('heating-kwh', String(Math.round(spaceKwh)));
                     checkerParams.set('flow', String(flow));
                     checkerParams.set('condensing', condensingBoiler ? '1' : '0');
-                    if (heatLoss) checkerParams.set('heat-loss', String(Math.round(heatLoss * 10) / 10));
+                    if (heatLossManual && knownHeatLoss) {
+                        checkerParams.set('heat-loss', formatKw(knownHeatLoss));
+                    } else if (estimate) {
+                        checkerParams.set('heat-loss', formatKw(estimate.low) + '-' + formatKw(estimate.high));
+                    }
                     checkerLink.href = '/heat-pump-checker/?' + checkerParams.toString();
                 }
                 document.getElementById('heating-cost').textContent = spaceKwh === null || pence === null
@@ -1365,6 +1399,11 @@
             rateInput.addEventListener('input', update);
             heatLossInput.addEventListener('input', function () {
                 heatLossManual = heatLossInput.value.trim() !== '';
+                update();
+            });
+            document.getElementById('heat-loss-reset').addEventListener('click', function () {
+                heatLossManual = false;
+                heatLossInput.value = '';
                 update();
             });
             boilerInput.addEventListener('input', update);

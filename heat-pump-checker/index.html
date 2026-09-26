@@ -529,7 +529,8 @@
             document.getElementById('heating-kwh').value = passedHeatingKwh;
         }
 
-        var FULL_LOAD_HOURS = 1700;
+        var MILD_FULL_LOAD_HOURS = 2200;
+        var COLD_FULL_LOAD_HOURS = 1700;
         var EFFICIENCY_CURVE = [[10, 99.7], [20, 98.3], [30, 96.0], [40, 92.4], [50, 88.7], [54, 87.0], [100, 82.0]];
 
         function curveEfficiency(flow) {
@@ -548,10 +549,35 @@
             return points[points.length - 1][1];
         }
 
-        function heatLossFromHeatingKwh(spaceKwh, flow, condensing) {
+        function formatKw(kw) {
+            var rounded = Math.round(Number(kw) * 10) / 10;
+            return rounded % 1 === 0 ? String(rounded) : rounded.toFixed(1);
+        }
+
+        function formatHeatLossRange(low, high) {
+            if (Math.abs(low - high) < 0.05) return formatKw(low) + ' kW';
+            return formatKw(low) + '–' + formatKw(high) + ' kW';
+        }
+
+        function heatLossAtHours(spaceKwh, flow, condensing, hours) {
             var delivered = spaceKwh * (condensing ? curveEfficiency(flow) / 100 : 0.75);
-            var kw = delivered / FULL_LOAD_HOURS;
-            return Math.ceil(kw * 10 - 1e-9) / 10;
+            return Math.ceil(delivered / hours * 10 - 1e-9) / 10;
+        }
+
+        function heatLossRangeFromHeatingKwh(spaceKwh, flow, condensing) {
+            var low = heatLossAtHours(spaceKwh, flow, condensing, MILD_FULL_LOAD_HOURS);
+            var high = heatLossAtHours(spaceKwh, flow, condensing, COLD_FULL_LOAD_HOURS);
+            return low <= high ? { low: low, high: high } : { low: high, high: low };
+        }
+
+        function passedHeatLossRange(value) {
+            if (!value) return null;
+            var parts = String(value).split('-');
+            if (parts.length === 2 && Number(parts[0]) > 0 && Number(parts[1]) > 0) {
+                return { low: Number(parts[0]), high: Number(parts[1]), known: false };
+            }
+            if (Number(value) > 0) return { low: Number(value), high: Number(value), known: true };
+            return null;
         }
 
         document.getElementById('checker-form').addEventListener('submit', function(e) {
@@ -641,15 +667,23 @@
             let heatPumpSize = Math.round(heatLoss * 1.15);
             let heatLossText = 'Approximately ' + heatLoss + ' kW';
             let heatPumpText = heatPumpSize + ' kW heat pump (typical)';
+            let quoteHeatLoss = heatLoss ? String(heatLoss) + ' kW' : '';
             const flowForSize = isFinite(passedFlow) && passedFlow > 0 ? passedFlow : 75;
+            const knownLoss = passedHeatLossRange(passedHeatLoss);
             if (isFinite(heatingKwh) && heatingKwh > 0) {
-                const fromBill = heatLossFromHeatingKwh(heatingKwh, flowForSize, passedCondensing);
-                heatLoss = fromBill;
-                heatPumpSize = Math.max(1, Math.round(fromBill));
+                const fromBill = heatLossRangeFromHeatingKwh(heatingKwh, flowForSize, passedCondensing);
+                const shown = knownLoss && knownLoss.known ? knownLoss : fromBill;
+                heatLoss = shown.high;
+                const lowPump = Math.max(1, Math.round(fromBill.low));
+                const highPump = Math.max(1, Math.round(fromBill.high));
+                heatPumpSize = highPump;
                 const kwhLabel = Math.round(heatingKwh).toLocaleString('en-GB');
-                const lossLabel = Number.isInteger(fromBill) ? String(fromBill) : fromBill.toFixed(1);
-                heatLossText = lossLabel + ' kW, from ' + kwhLabel + ' kWh of annual space heating';
-                heatPumpText = 'About ' + heatPumpSize + ' kW, from that annual heating use';
+                heatLossText = formatHeatLossRange(shown.low, shown.high) + ', from ' + kwhLabel + ' kWh of annual space heating';
+                heatPumpText = 'About ' + (lowPump === highPump ? String(highPump) : lowPump + '–' + highPump) + ' kW, from that annual heating use';
+                quoteHeatLoss = formatHeatLossRange(shown.low, shown.high);
+            } else if (knownLoss) {
+                heatLossText = formatHeatLossRange(knownLoss.low, knownLoss.high);
+                quoteHeatLoss = heatLossText;
             }
             
             // Heat distribution assessment
@@ -703,8 +737,7 @@
             if (isFinite(heatingKwh) && heatingKwh > 0) {
                 quoteLines.push('Annual space heating: ' + Math.round(heatingKwh).toLocaleString('en-GB') + ' kWh');
             }
-            var heatLossKw = passedHeatLoss || (heatLoss ? String(heatLoss) : '');
-            if (heatLossKw) quoteLines.push('Heat loss: ' + heatLossKw + ' kW');
+            if (quoteHeatLoss) quoteLines.push('Heat loss: ' + quoteHeatLoss);
             quoteLines.push('Likely heat pump size: ' + heatPumpText);
             quoteLines.push('Heat distribution: ' + checkedLabel('radiators'));
             quoteLines.push('Outdoor space: ' + checkedLabel('outdoor-space'));
