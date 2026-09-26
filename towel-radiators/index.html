@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Towel Radiators - MyBoiler Hub</title>
+    <meta name="description" content="Search and filter towel radiators by brand, size, colour and output. 60 rails from the original hub catalogue, with height, width, watts, BTU and pipe centres.">
+    <link rel="canonical" href="https://myboiler.com/towel-radiators/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(16px, 4vw, 32px);
+            max-width: 1180px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 68ch;
+        }
+
+        .tr-panel {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.25rem, 3vw, 2rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .tr-filters {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+            gap: 0.75rem 1rem;
+            align-items: end;
+        }
+
+        .tr-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            min-width: 0;
+        }
+
+        .tr-field label {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .tr-field input,
+        .tr-field select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0.7rem 0.85rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .tr-field input:focus,
+        .tr-field select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(24, 99, 220, 0.15);
+        }
+
+        .tr-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .tr-count {
+            margin: 0;
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+        }
+
+        .tr-reset {
+            padding: 0.55rem 0.9rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            font-family: inherit;
+            color: var(--accent);
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+        }
+
+        .tr-reset:hover {
+            border-color: var(--accent);
+        }
+
+        .tr-table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #tr-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9375rem;
+        }
+
+        #tr-table th,
+        #tr-table td {
+            padding: 0.7rem 0.65rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+            vertical-align: top;
+            white-space: nowrap;
+        }
+
+        #tr-table th {
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+            background: var(--surface);
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        #tr-table th[data-sort] {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #tr-table th[data-sort]:hover {
+            color: var(--accent);
+        }
+
+        #tr-table th[aria-sort="ascending"]::after {
+            content: " ↑";
+            color: var(--accent);
+        }
+
+        #tr-table th[aria-sort="descending"]::after {
+            content: " ↓";
+            color: var(--accent);
+        }
+
+        #tr-table tbody tr:hover td {
+            background: var(--bg);
+        }
+
+        .tr-empty td {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 2rem 1rem;
+            white-space: normal;
+        }
+
+        .tr-note {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .tr-note a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .tr-note a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            .tr-filters {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .tr-filters {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating &amp; Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <header class="article-header">
+            <h1 class="article-title">Towel radiators</h1>
+            <p class="article-intro">Search the catalogue by brand, size, colour or output. Filter to a height and width that fit the space, then sort by watts if you need a rail that also heats the room.</p>
+        </header>
+
+        <section class="tr-panel" aria-label="Towel radiator filters">
+            <div class="tr-filters">
+                <div class="tr-field">
+                    <label for="tr-search">Search</label>
+                    <input id="tr-search" type="search" placeholder="Brand, code, colour, 1200 × 500…" autocomplete="off">
+                </div>
+                <div class="tr-field">
+                    <label for="tr-brand">Brand</label>
+                    <select id="tr-brand"><option value="">All brands</option></select>
+                </div>
+                <div class="tr-field">
+                    <label for="tr-colour">Colour</label>
+                    <select id="tr-colour"><option value="">All colours</option></select>
+                </div>
+                <div class="tr-field">
+                    <label for="tr-style">Style</label>
+                    <select id="tr-style"><option value="">All styles</option></select>
+                </div>
+                <div class="tr-field">
+                    <label for="tr-height">Height (mm)</label>
+                    <select id="tr-height"><option value="">Any height</option></select>
+                </div>
+                <div class="tr-field">
+                    <label for="tr-width">Width (mm)</label>
+                    <select id="tr-width"><option value="">Any width</option></select>
+                </div>
+                <div class="tr-field">
+                    <label for="tr-min-watts">Minimum watts</label>
+                    <input id="tr-min-watts" type="number" inputmode="numeric" min="0" step="10" placeholder="e.g. 400">
+                </div>
+            </div>
+            <div class="tr-toolbar">
+                <p class="tr-count" id="tr-count">Loading catalogue…</p>
+                <button type="button" class="tr-reset" id="tr-reset">Clear filters</button>
+            </div>
+        </section>
+
+        <section class="tr-panel">
+            <div class="tr-table-wrap">
+                <table id="tr-table">
+                    <thead>
+                        <tr>
+                            <th data-sort="brand" aria-sort="none">Brand</th>
+                            <th data-sort="code" aria-sort="none">Code</th>
+                            <th data-sort="height" aria-sort="ascending">H × W (mm)</th>
+                            <th data-sort="depth" aria-sort="none">Depth</th>
+                            <th data-sort="watts" aria-sort="none">Watts</th>
+                            <th data-sort="btu" aria-sort="none">BTU</th>
+                            <th data-sort="colour" aria-sort="none">Colour</th>
+                            <th data-sort="pipeCentres" aria-sort="none">Pipe centres</th>
+                            <th data-sort="wattsPerM2" aria-sort="none">W/m²</th>
+                            <th data-sort="price" aria-sort="none">Price</th>
+                            <th data-sort="description" aria-sort="none">Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tr-body">
+                        <tr class="tr-empty"><td colspan="11">Loading catalogue…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="tr-panel">
+            <p class="tr-note">Figures are from the original hub catalogue (Screwfix, Pisa, DuraTherm, Elegant). Watts and BTU are as listed there — confirm the ΔT and current sizes with the manufacturer before you specify. Pisa prices look like an old trade list and may be out of date. Empty cells were empty on the source table. See also <a href="/calculators/radiator-correction-factor-tool/">radiator correction factor</a> · <a href="/calculators/btu-to-kw/">BTU to watts</a> · <a href="/underfloor-heating-vs-radiators/">UFH vs radiators</a>.</p>
+        </section>
+    </div>
+
+    <script type="application/json" id="tr-data">[
+  {
+    "id": 1,
+    "brand": "Unlisted",
+    "supplier": null,
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 500,
+    "width": 550,
+    "depth": null,
+    "watts": 176,
+    "btu": 600,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": "10",
+    "wattsPerM2": 640.0,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 2,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 700,
+    "width": 400,
+    "depth": null,
+    "watts": 165,
+    "btu": 563,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 589.3,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 3,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 700,
+    "width": 600,
+    "depth": null,
+    "watts": 252,
+    "btu": 859,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 600.0,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 4,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 800,
+    "width": 400,
+    "depth": null,
+    "watts": 215,
+    "btu": 675,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 671.9,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 5,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 800,
+    "width": 500,
+    "depth": null,
+    "watts": 271,
+    "btu": 925,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 677.5,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 6,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Tradition Towel",
+    "height": 952,
+    "width": 659,
+    "depth": null,
+    "watts": 498,
+    "btu": 1698,
+    "colour": "chrome / white",
+    "colourKey": "chrome / white",
+    "bars": null,
+    "wattsPerM2": 793.8,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 7,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1000,
+    "width": 400,
+    "depth": null,
+    "watts": 237,
+    "btu": 808,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 592.5,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 8,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1000,
+    "width": 500,
+    "depth": null,
+    "watts": 299,
+    "btu": 1020,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 598.0,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 9,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1000,
+    "width": 600,
+    "depth": null,
+    "watts": 394,
+    "btu": 1190,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 656.7,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 10,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1100,
+    "width": 450,
+    "depth": null,
+    "watts": 304,
+    "btu": 1037,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 614.1,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 11,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1200,
+    "width": 400,
+    "depth": null,
+    "watts": 306,
+    "btu": 1044,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 637.5,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 12,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1200,
+    "width": 500,
+    "depth": null,
+    "watts": 360,
+    "btu": 1228,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 600.0,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 13,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1200,
+    "width": 500,
+    "depth": null,
+    "watts": 532,
+    "btu": 1815,
+    "colour": "black",
+    "colourKey": "black",
+    "bars": null,
+    "wattsPerM2": 886.7,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 14,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1200,
+    "width": 600,
+    "depth": null,
+    "watts": 415,
+    "btu": 1415,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 576.4,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 15,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1200,
+    "width": 600,
+    "depth": null,
+    "watts": 616,
+    "btu": 2101,
+    "colour": "black",
+    "colourKey": "black",
+    "bars": null,
+    "wattsPerM2": 855.6,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 16,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1600,
+    "width": 400,
+    "depth": null,
+    "watts": 414,
+    "btu": 1412,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 646.9,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 17,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1600,
+    "width": 500,
+    "depth": null,
+    "watts": 484,
+    "btu": 1651,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 605.0,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 18,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1600,
+    "width": 500,
+    "depth": null,
+    "watts": 706,
+    "btu": 2409,
+    "colour": "black",
+    "colourKey": "black",
+    "bars": null,
+    "wattsPerM2": 882.5,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 19,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1800,
+    "width": 500,
+    "depth": null,
+    "watts": 513,
+    "btu": 1750,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 570.0,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 20,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1600,
+    "width": 600,
+    "depth": null,
+    "watts": 554,
+    "btu": 1889,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 577.1,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 21,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1600,
+    "width": 600,
+    "depth": null,
+    "watts": 816,
+    "btu": 2783,
+    "colour": "matt black",
+    "colourKey": "matt black",
+    "bars": null,
+    "wattsPerM2": 850.0,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 22,
+    "brand": "Screwfix",
+    "supplier": "Screwfix",
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 1800,
+    "width": 600,
+    "depth": null,
+    "watts": 578,
+    "btu": 1972,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 535.2,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 23,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140001",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 600,
+    "width": 400,
+    "depth": "85-100",
+    "watts": 158,
+    "btu": 539,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 658.3,
+    "pipeCentres": 355,
+    "price": 174.03
+  },
+  {
+    "id": 24,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140002",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 600,
+    "width": 450,
+    "depth": "85-100",
+    "watts": 175,
+    "btu": 597,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 648.1,
+    "pipeCentres": 405,
+    "price": 179.74
+  },
+  {
+    "id": 25,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140003",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 600,
+    "width": 500,
+    "depth": "85-100",
+    "watts": 193,
+    "btu": 659,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 643.3,
+    "pipeCentres": 455,
+    "price": 182.59
+  },
+  {
+    "id": 26,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140004",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 600,
+    "width": 600,
+    "depth": "85-100",
+    "watts": 228,
+    "btu": 778,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 633.3,
+    "pipeCentres": 555,
+    "price": 188.3
+  },
+  {
+    "id": 27,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140005",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 800,
+    "width": 300,
+    "depth": "85-100",
+    "watts": 161,
+    "btu": 549,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 670.8,
+    "pipeCentres": 255,
+    "price": 213.97
+  },
+  {
+    "id": 28,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140006",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 800,
+    "width": 400,
+    "depth": "85-100",
+    "watts": 207,
+    "btu": 706,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 646.9,
+    "pipeCentres": 355,
+    "price": 216.83
+  },
+  {
+    "id": 29,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140007",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 800,
+    "width": 450,
+    "depth": "85-100",
+    "watts": 230,
+    "btu": 785,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 638.9,
+    "pipeCentres": 405,
+    "price": 219.68
+  },
+  {
+    "id": 30,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140008",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 800,
+    "width": 500,
+    "depth": "85-100",
+    "watts": 253,
+    "btu": 863,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 632.5,
+    "pipeCentres": 455,
+    "price": 222.53
+  },
+  {
+    "id": 31,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140009",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 800,
+    "width": 600,
+    "depth": "85-100",
+    "watts": 298,
+    "btu": 1017,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 620.8,
+    "pipeCentres": 555,
+    "price": 225.39
+  },
+  {
+    "id": 32,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140010",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 800,
+    "width": 750,
+    "depth": "85-100",
+    "watts": 367,
+    "btu": 1252,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 611.7,
+    "pipeCentres": 705,
+    "price": 233.94
+  },
+  {
+    "id": 33,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140011",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1000,
+    "width": 400,
+    "depth": "85-100",
+    "watts": 257,
+    "btu": 877,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 642.5,
+    "pipeCentres": 355,
+    "price": 236.8
+  },
+  {
+    "id": 34,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140012",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1000,
+    "width": 500,
+    "depth": "85-100",
+    "watts": 313,
+    "btu": 1068,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 626.0,
+    "pipeCentres": 455,
+    "price": 239.65
+  },
+  {
+    "id": 35,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140013",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1000,
+    "width": 600,
+    "depth": "85-100",
+    "watts": 370,
+    "btu": 1262,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 616.7,
+    "pipeCentres": 555,
+    "price": 245.36
+  },
+  {
+    "id": 36,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140014",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1200,
+    "width": 300,
+    "depth": "85-100",
+    "watts": 240,
+    "btu": 819,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 666.7,
+    "pipeCentres": 255,
+    "price": 279.59
+  },
+  {
+    "id": 37,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140015",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1200,
+    "width": 400,
+    "depth": "85-100",
+    "watts": 308,
+    "btu": 1051,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 641.7,
+    "pipeCentres": 355,
+    "price": 282.44
+  },
+  {
+    "id": 38,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140016",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1200,
+    "width": 450,
+    "depth": "85-100",
+    "watts": 342,
+    "btu": 1167,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 633.3,
+    "pipeCentres": 405,
+    "price": 285.3
+  },
+  {
+    "id": 39,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140017",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1200,
+    "width": 500,
+    "depth": "85-100",
+    "watts": 375,
+    "btu": 1280,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 625.0,
+    "pipeCentres": 455,
+    "price": 288.15
+  },
+  {
+    "id": 40,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140018",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1200,
+    "width": 600,
+    "depth": "85-100",
+    "watts": 442,
+    "btu": 1508,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 613.9,
+    "pipeCentres": 550,
+    "price": 296.71
+  },
+  {
+    "id": 41,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140019",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1200,
+    "width": 750,
+    "depth": "85-100",
+    "watts": 543,
+    "btu": 1853,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 603.3,
+    "pipeCentres": 705,
+    "price": 320.96
+  },
+  {
+    "id": 42,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140020",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1400,
+    "width": 400,
+    "depth": "85-100",
+    "watts": 361,
+    "btu": 1232,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 644.6,
+    "pipeCentres": 355,
+    "price": 339.5
+  },
+  {
+    "id": 43,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140021",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1400,
+    "width": 450,
+    "depth": "85-100",
+    "watts": 400,
+    "btu": 1365,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 634.9,
+    "pipeCentres": 405,
+    "price": 348.06
+  },
+  {
+    "id": 44,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140022",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1400,
+    "width": 500,
+    "depth": "85-100",
+    "watts": 439,
+    "btu": 1498,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 627.1,
+    "pipeCentres": 455,
+    "price": 350.92
+  },
+  {
+    "id": 45,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140023",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1400,
+    "width": 600,
+    "depth": "85-100",
+    "watts": 517,
+    "btu": 1764,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 615.5,
+    "pipeCentres": 555,
+    "price": 356.62
+  },
+  {
+    "id": 46,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140024",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1400,
+    "width": 750,
+    "depth": "85-100",
+    "watts": 635,
+    "btu": 2167,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 604.8,
+    "pipeCentres": 705,
+    "price": 368.03
+  },
+  {
+    "id": 47,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140025",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1600,
+    "width": 300,
+    "depth": "85-100",
+    "watts": 326,
+    "btu": 1112,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 679.2,
+    "pipeCentres": 255,
+    "price": 382.3
+  },
+  {
+    "id": 48,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140026",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1600,
+    "width": 400,
+    "depth": "85-100",
+    "watts": 415,
+    "btu": 1416,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 648.4,
+    "pipeCentres": 355,
+    "price": 385.15
+  },
+  {
+    "id": 49,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140027",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1600,
+    "width": 450,
+    "depth": "85-100",
+    "watts": 460,
+    "btu": 1570,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 638.9,
+    "pipeCentres": 405,
+    "price": 388.01
+  },
+  {
+    "id": 50,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140028",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1600,
+    "width": 500,
+    "depth": "85-100",
+    "watts": 505,
+    "btu": 1723,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 631.2,
+    "pipeCentres": 455,
+    "price": 390.86
+  },
+  {
+    "id": 51,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140029",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1600,
+    "width": 600,
+    "depth": "85-100",
+    "watts": 594,
+    "btu": 2027,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 618.8,
+    "pipeCentres": 555,
+    "price": 399.42
+  },
+  {
+    "id": 52,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140030",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1800,
+    "width": 300,
+    "depth": "85-100",
+    "watts": 371,
+    "btu": 1266,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 687.0,
+    "pipeCentres": 255,
+    "price": 453.62
+  },
+  {
+    "id": 53,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140031",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1800,
+    "width": 400,
+    "depth": "85-100",
+    "watts": 472,
+    "btu": 1610,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 655.6,
+    "pipeCentres": 355,
+    "price": 456.48
+  },
+  {
+    "id": 54,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140032",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1800,
+    "width": 450,
+    "depth": "85-100",
+    "watts": 522,
+    "btu": 1781,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 644.4,
+    "pipeCentres": 405,
+    "price": 465.04
+  },
+  {
+    "id": 55,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140033",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1800,
+    "width": 500,
+    "depth": "85-100",
+    "watts": 572,
+    "btu": 1952,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 635.6,
+    "pipeCentres": 455,
+    "price": 470.74
+  },
+  {
+    "id": 56,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140034",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1800,
+    "width": 600,
+    "depth": "85-100",
+    "watts": 673,
+    "btu": 2296,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 623.1,
+    "pipeCentres": 555,
+    "price": 485.01
+  },
+  {
+    "id": 57,
+    "brand": "Pisa",
+    "supplier": null,
+    "code": "140035",
+    "description": "Straight",
+    "style": "Towel",
+    "height": 1800,
+    "width": 750,
+    "depth": "85-100",
+    "watts": 824,
+    "btu": 2811,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 610.4,
+    "pipeCentres": 705,
+    "price": 522.1
+  },
+  {
+    "id": 58,
+    "brand": "DuraTherm",
+    "supplier": null,
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 750,
+    "width": 450,
+    "depth": null,
+    "watts": 184,
+    "btu": 627,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 545.2,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 59,
+    "brand": "DuraTherm",
+    "supplier": null,
+    "code": null,
+    "description": null,
+    "style": "Towel",
+    "height": 750,
+    "width": 600,
+    "depth": null,
+    "watts": 229,
+    "btu": 780,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": null,
+    "wattsPerM2": 508.9,
+    "pipeCentres": null,
+    "price": null
+  },
+  {
+    "id": 60,
+    "brand": "Elegant",
+    "supplier": "Elegant",
+    "code": "FC-55-140",
+    "description": "Straight chrome",
+    "style": "Towel",
+    "height": 1400,
+    "width": 550,
+    "depth": null,
+    "watts": 538,
+    "btu": 1829,
+    "colour": "chrome",
+    "colourKey": "chrome",
+    "bars": "4+5+6+10=25",
+    "wattsPerM2": 698.7,
+    "pipeCentres": null,
+    "price": null
+  }
+]</script>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/towel-radiators.js" data-cfasync="false"></script>
+</body>
+</html>
