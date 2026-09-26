@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boiler Optimisation Tool - MyBoiler Hub</title>
+    <title>Boiler Optimiser - MyBoiler Hub</title>
     <meta name="description" content="Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow. A cylinder still needs 60°C stored water.">
     <link rel="canonical" href="https://myboiler.com/boiler-optimiser/">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
@@ -78,6 +78,29 @@
             font-size: 1.125rem;
             font-weight: 700;
             line-height: 1.35;
+            color: var(--text);
+        }
+
+        .card-lead {
+            margin: -0.5rem 0 1.25rem;
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .card-lead p {
+            margin: 0 0 0.75rem;
+        }
+
+        .card-lead p:last-child {
+            margin-bottom: 0;
+        }
+
+        .power-recommendation {
+            margin: 0.65rem 0 0;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            line-height: 1.5;
             color: var(--text);
         }
 
@@ -223,6 +246,35 @@
             color: var(--accent);
         }
 
+        .heat-pump-cta {
+            margin-top: 0.85rem;
+            padding: 0.9rem 1rem;
+            border: 2px solid var(--accent);
+            border-radius: var(--radius);
+            background: var(--bg);
+        }
+
+        .heat-pump-cta p {
+            margin: 0 0 0.75rem;
+            line-height: 1.55;
+        }
+
+        #heat-pump-size {
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .heat-pump-cta a {
+            display: inline-block;
+            padding: 0.65rem 1rem;
+            font-weight: 600;
+            color: #fff;
+            background: var(--accent);
+            border-radius: var(--radius);
+            text-decoration: none;
+        }
+
+        .heat-pump-cta[hidden],
         .other-note[hidden],
         #tool-fields[hidden],
         #tool-results[hidden],
@@ -552,7 +604,7 @@
 
     <div class="article-container">
         <div class="calculator-card">
-            <h1 class="article-title">Boiler Optimisation Tool</h1>
+            <h1 class="article-title">Boiler Optimiser</h1>
             <p class="article-intro">Two settings do most of the work: the highest heating output the boiler is allowed to fire at, and the heating flow temperature. Hot water on a combi stays at its own higher output.</p>
         </div>
 
@@ -617,6 +669,15 @@
 
             <div class="input-group">
                 <div class="input-heading">
+                    <label class="input-label" for="heat-loss">Estimated house heat loss</label>
+                    <span class="input-hint">kW. A cautious estimate from the space heating usage, for a colder day than the bill year. Change it if you know the heat loss.</span>
+                </div>
+                <input type="number" id="heat-loss" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 8">
+                <p class="power-recommendation" id="power-recommendation"></p>
+            </div>
+
+            <div class="input-group">
+                <div class="input-heading">
                     <label class="input-label" for="unit-rate">Unit rate per kWh</label>
                     <span class="input-hint">Gas unit rate in pence per kWh, not including standing charge</span>
                 </div>
@@ -653,28 +714,11 @@
                     <div class="result-unit" id="condensing-saving-unit">versus a 75°C flow</div>
                 </div>
             </div>
+            <div class="heat-pump-cta" id="heat-pump-cta" hidden>
+                <p>If this flow is keeping the house warm in peak winter, a heat pump may suit this system without many changes.</p>
+                <p id="heat-pump-size"></p>
+                <a id="heat-pump-checker-link" href="/heat-pump-checker/">Check heat pump suitability</a>
             </div>
-        </div>
-
-        <div class="calculator-card" id="power-card">
-            <h2 class="card-title">Power level</h2>
-            <div class="input-group">
-                <div class="input-heading">
-                    <label class="input-label" for="boiler-kw">Boiler heating output</label>
-                    <span class="input-hint">The central-heating kW, or Auto if the maximum is not capped.</span>
-                </div>
-                <div class="output-row">
-                    <input type="number" id="boiler-kw" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 24">
-                    <button type="button" class="choice-button auto-button" id="output-auto" aria-pressed="false">Auto</button>
-                </div>
-            </div>
-
-            <div class="input-group">
-                <div class="input-heading">
-                    <label class="input-label" for="heat-loss">House heat loss</label>
-                    <span class="input-hint">kW, if you know it. Leave blank to skip the output cap.</span>
-                </div>
-                <input type="number" id="heat-loss" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 8">
             </div>
         </div>
 
@@ -736,6 +780,24 @@
             </div>
         </div>
 
+        <div class="calculator-card" id="power-card">
+            <h2 class="card-title">Power level</h2>
+            <div class="card-lead">
+                <p>A boiler left on its full heating rating often puts out more heat than the house can lose. It reaches temperature, shuts off, then starts again. Those short runs use more gas on each ignition, make more noise, and wear the boiler.</p>
+                <p>A lower central-heating maximum keeps the burner on longer at a lower rate. That is steadier heat, and on a condensing boiler it spends more time with a cool enough return to condense. On a combi, leave the hot-water output at its higher rating so the taps stay hot. A Gas Safe engineer sets this.</p>
+            </div>
+            <div class="input-group">
+                <div class="input-heading">
+                    <label class="input-label" for="boiler-kw">Boiler heating output</label>
+                    <span class="input-hint">The central-heating kW, or Auto if the maximum is not capped.</span>
+                </div>
+                <div class="output-row">
+                    <input type="number" id="boiler-kw" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 24">
+                    <button type="button" class="choice-button auto-button" id="output-auto" aria-pressed="false">Auto</button>
+                </div>
+            </div>
+        </div>
+
         <div class="calculator-card" id="tool-results">
             <ol class="plan-list" id="plan"></ol>
             <div class="result-grid">
@@ -767,6 +829,7 @@
         (function () {
             var FACTORY_FLOW = 75;
             var COOKING_SHARE = 0.03;
+            var FULL_LOAD_HOURS = 1700;
             var DELTA = 20;
             var ROOM = 20;
             var DEW_RETURN = 54;
@@ -840,6 +903,7 @@
             var rateInput = document.getElementById('unit-rate');
             var usesGasCooking = true;
             var heatLossInput = document.getElementById('heat-loss');
+            var heatLossManual = false;
             var boilerInput = document.getElementById('boiler-kw');
             var outputAutoButton = document.getElementById('output-auto');
             var outputAuto = false;
@@ -866,6 +930,12 @@
 
             function efficiency(flow) {
                 return interpolate(flow - DELTA);
+            }
+
+            function estimatedHeatLoss(spaceKwh, flow, condensing) {
+                var delivered = spaceKwh * (condensing ? efficiency(flow) / 100 : 0.75);
+                var kw = delivered / FULL_LOAD_HOURS;
+                return Math.ceil(kw * 10 - 1e-9) / 10;
             }
 
             function saving(fromFlow, toFlow) {
@@ -1058,6 +1128,7 @@
                 document.getElementById('system-thumb').setAttribute('aria-label', diagram ? 'Enlarge diagram. ' + diagram.alt : 'Enlarge diagram');
                 if (otherType) return;
                 var flow = Number(flowInput.value);
+                document.getElementById('heat-pump-cta').hidden = flow > 50;
                 var ret = flow - DELTA;
                 var currentBand = band(flow);
                 var condensingBoiler = boilerType === 'condensing';
@@ -1069,8 +1140,21 @@
                 if (!condensingSystem && flow < target) target = flow;
                 var targetReturn = target - DELTA;
                 var targetBand = band(target);
+                var annual = nonNegativeOrNull(annualInput);
+                var spaceKwh = annual === null ? null : (usesGasCooking ? annual * (1 - COOKING_SHARE) : annual);
+                if (!heatLossManual) {
+                    heatLossInput.value = spaceKwh === null ? '' : String(estimatedHeatLoss(spaceKwh, flow, condensingBoiler));
+                }
                 var heatLoss = numberOrNull(heatLossInput);
                 var boilerKw = numberOrNull(boilerInput);
+                var powerRecommendation = document.getElementById('power-recommendation');
+                if (system === 'system') {
+                    powerRecommendation.textContent = 'Set the heating output to the hot water coil load.';
+                } else if (heatLoss) {
+                    powerRecommendation.textContent = 'Set the heating output to ' + (Math.round(heatLoss * 10) / 10) + ' kW, the house heat loss.';
+                } else {
+                    powerRecommendation.textContent = 'Set the heating output to the house heat loss.';
+                }
                 var legend = document.getElementById('band-legend');
 
                 var bandFull = document.getElementById('band-full');
@@ -1099,14 +1183,29 @@
                 } else if (!condensingBoiler) {
                     flowInput.removeAttribute('aria-describedby');
                 }
-                var annual = nonNegativeOrNull(annualInput);
                 var pence = nonNegativeOrNull(rateInput);
-                var spaceKwh = annual === null ? null : (usesGasCooking ? annual * (1 - COOKING_SHARE) : annual);
                 var spaceHint = document.getElementById('space-heating-hint');
                 spaceHint.textContent = usesGasCooking
                     ? 'Bill kWh minus typical gas cooking (3% of annual use)'
                     : 'Same as annual gas usage (no cooking deducted)';
                 document.getElementById('space-heating-kwh').textContent = spaceKwh === null ? '—' : formatKwh(spaceKwh);
+                var pumpSize = document.getElementById('heat-pump-size');
+                var checkerLink = document.getElementById('heat-pump-checker-link');
+                if (spaceKwh === null) {
+                    pumpSize.textContent = 'Estimated heat pump size: enter the annual gas usage.';
+                    checkerLink.href = '/heat-pump-checker/';
+                } else {
+                    var pumpKw = Math.round(estimatedHeatLoss(spaceKwh, flow, condensingBoiler));
+                    pumpSize.textContent = pumpKw < 1
+                        ? 'Estimated heat pump size: under 1 kW, from ' + formatKwh(spaceKwh) + ' of space heating.'
+                        : 'Estimated heat pump size: about ' + pumpKw + ' kW, from ' + formatKwh(spaceKwh) + ' of space heating.';
+                    var checkerParams = new URLSearchParams();
+                    checkerParams.set('heating-kwh', String(Math.round(spaceKwh)));
+                    checkerParams.set('flow', String(flow));
+                    checkerParams.set('condensing', condensingBoiler ? '1' : '0');
+                    if (heatLoss) checkerParams.set('heat-loss', String(Math.round(heatLoss * 10) / 10));
+                    checkerLink.href = '/heat-pump-checker/?' + checkerParams.toString();
+                }
                 document.getElementById('heating-cost').textContent = spaceKwh === null || pence === null
                     ? '—'
                     : formatGBP(spaceKwh * (pence / 100));
@@ -1264,7 +1363,10 @@
             flowInput.addEventListener('input', update);
             annualInput.addEventListener('input', update);
             rateInput.addEventListener('input', update);
-            heatLossInput.addEventListener('input', update);
+            heatLossInput.addEventListener('input', function () {
+                heatLossManual = heatLossInput.value.trim() !== '';
+                update();
+            });
             boilerInput.addEventListener('input', update);
             function setOutputAuto(on) {
                 outputAuto = on;

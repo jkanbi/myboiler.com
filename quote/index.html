@@ -330,6 +330,25 @@
             });
             observer.observe(frame, { attributes: true, attributeFilter: ['style'] });
             setTimeout(markReady, 8000);
+
+            var quoteSearch = new URLSearchParams(window.location.search);
+            var quoteMessage = quoteSearch.get('message');
+            var quoteZip = quoteSearch.get('zip');
+            var quoteFormId = '1666a82a-a502-4902-9f6e-c34405b00cf2';
+            function applyQuoteFields(event) {
+                var detail = event.detail || {};
+                if (detail.formId && detail.formId !== quoteFormId) return;
+                if (!window.HubSpotFormsV4 || !HubSpotFormsV4.getFormFromEvent) return;
+                var form = HubSpotFormsV4.getFormFromEvent(event);
+                if (!form) return;
+                if (quoteZip) form.setFieldValue('0-1/zip', quoteZip);
+                if (quoteMessage) form.setFieldValue('0-1/message', quoteMessage);
+            }
+            if (quoteMessage || quoteZip) {
+                window.addEventListener('hs-form-event:on-ready', applyQuoteFields);
+                window.addEventListener('hs-form-event:on-interaction:navigate', applyQuoteFields);
+                window.addEventListener('hs-form-event:on-interaction:navigate:next', applyQuoteFields);
+            }
         })();
     </script>
     <!-- HubSpot form script - data-cfasync prevents Cloudflare Rocket Loader interference -->
