@@ -1,23 +1,37 @@
 User-agent: *
 Allow: /
+Disallow: /mastererp/
+Disallow: /bom/
 
 # Answer engines may read the pages and cite them.
 User-agent: GPTBot
 Allow: /
+Disallow: /mastererp/
+Disallow: /bom/
 
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /mastererp/
+Disallow: /bom/
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /mastererp/
+Disallow: /bom/
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /mastererp/
+Disallow: /bom/
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /mastererp/
+Disallow: /bom/
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /mastererp/
+Disallow: /bom/
 
 Sitemap: https://myboiler.com/sitemap.xml
