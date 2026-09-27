@@ -13,6 +13,7 @@ Pages are static HTML. Each content page has a title, a description, a canonical
 - [Boiler pressure](https://myboiler.com/boiler-pressure/): About 1.2 bar when cold, in the 1 to 2 bar band.
 - [Combi boiler problems](https://myboiler.com/combi-boiler-problems/): Low pressure, no hot water, cold radiators, condensate, kettling.
 - [OpenTherm boilers and controls](https://myboiler.com/opentherm/opentherm-boilers-and-controls/): Brands and models with OpenTherm support.
+- [Flue gas analysis](https://myboiler.com/fga/): Reference readings for Intergas ECO, Vaillant ecoTEC Plus, and Worcester Bosch Greenstar i.
 - [Calculators](https://myboiler.com/calculators/): Flow rate, gas rate, heat output, and system sizing.
 - [Quote](https://myboiler.com/quote/): Ask a Gas Safe registered engineer for a quote.
 - [Ask AI](https://myboiler.com/chat/): Boiler Help, for heating and hot water questions.
