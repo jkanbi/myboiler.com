@@ -20,7 +20,7 @@
         '<a href="/what-size-boiler/">What Size Boiler?</a>' +
         '<a href="/what-is-a-gc-number/">What is a GC Number?</a>' +
         '<a href="/boiler-energy-efficiency/">Boiler Energy Efficiency</a>' +
-        '<a href="/boiler-optimiser/">Boiler Optimisation Tool</a>' +
+        '<a href="/boiler-optimiser/">Boiler Optimiser</a>' +
         '<a href="/repairs/">Boiler Repairs</a>' +
         '<a href="/boiler-cover/">Boiler Cover</a>' +
         '<h4>OpenTherm &amp; Modulating Boilers</h4>' +
