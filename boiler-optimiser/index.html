@@ -274,7 +274,55 @@
             text-decoration: none;
         }
 
+        .choice-button:disabled {
+            cursor: not-allowed;
+        }
+
+        .is-disabled {
+            opacity: 0.45;
+        }
+
+        .standard-note {
+            margin-top: 1rem;
+            padding: 0.9rem 1rem;
+            border: 2px solid var(--accent);
+            border-radius: var(--radius);
+            background: var(--bg);
+        }
+
+        .standard-note p,
+        .standard-note li {
+            margin: 0 0 0.75rem;
+            line-height: 1.55;
+        }
+
+        .standard-note ul {
+            margin: 0 0 0.75rem;
+            padding-left: 1.2rem;
+        }
+
+        .standard-note li:last-child {
+            margin-bottom: 0.75rem;
+        }
+
+        .standard-note-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .standard-note a {
+            display: inline-block;
+            padding: 0.65rem 1rem;
+            font-weight: 600;
+            color: #fff;
+            background: var(--accent);
+            border-radius: var(--radius);
+            text-decoration: none;
+        }
+
         .heat-pump-cta[hidden],
+        .standard-note[hidden],
         .other-note[hidden],
         #tool-fields[hidden],
         #tool-results[hidden],
@@ -621,9 +669,27 @@
                     <button type="button" class="choice-button active" data-boiler="condensing" aria-pressed="true">Condensing</button>
                     <button type="button" class="choice-button" data-boiler="standard" aria-pressed="false">Non-condensing</button>
                 </div>
+                <div class="standard-note" id="standard-note" hidden>
+                    <p>A non-condensing boiler cannot be optimised in the same way as a condensing boiler. Any saving from a lower flow temperature is much smaller than on a modern condensing boiler.</p>
+                    <ul>
+                        <li>Dropping the flow from about 80°C to 70°C may save a little.</li>
+                        <li>Taking it toward 60°C or below can become risky, depending on the boiler and the system.</li>
+                    </ul>
+                    <p>What still helps:</p>
+                    <ul>
+                        <li>A room thermostat and a timer, so the boiler is off when the house does not need heat.</li>
+                        <li>Lagging on the pipes, and on the hot water cylinder if you have one.</li>
+                        <li>Bleeding and balancing the radiators, so heat reaches every room.</li>
+                    </ul>
+                    <p>Replacing it is the larger step. A condensing boiler is the usual swap. A heat pump can take its place where the radiators and the house are suitable.</p>
+                    <div class="standard-note-actions">
+                        <a href="/quote/?need=boiler-replacement&amp;message=Non-condensing%20boiler.%20Asking%20about%20a%20condensing%20boiler%20replacement.">Get a boiler replacement quote</a>
+                        <a href="/quote/?need=heat-pump&amp;message=Non-condensing%20boiler.%20Asking%20about%20a%20heat%20pump%20conversion.">Get a heat pump quote</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="input-group">
+            <div class="input-group" id="system-group">
                 <div class="input-heading">
                     <div class="input-label" id="system-label">System</div>
                 </div>
@@ -1134,12 +1200,22 @@
                     modelThumb.setAttribute('aria-label', modelPhoto ? modelPhoto.alt : 'Boiler');
                 }
                 var otherType = system === 'combi-cylinder';
+                var standardBoiler = boilerType !== 'condensing';
                 var condensingSystem = boilerType === 'condensing' && system === 'system';
-                document.getElementById('other-note').hidden = !otherType;
-                document.getElementById('tool-fields').hidden = otherType;
-                document.getElementById('power-card').hidden = otherType;
-                document.getElementById('tool-results').hidden = otherType;
-                document.getElementById('model-card').hidden = otherType;
+                var blocked = otherType || standardBoiler;
+                document.getElementById('standard-note').hidden = !standardBoiler;
+                var systemGroup = document.getElementById('system-group');
+                systemGroup.classList.toggle('is-disabled', standardBoiler);
+                systemGroup.setAttribute('aria-disabled', standardBoiler ? 'true' : 'false');
+                systemButtons.forEach(function (button) {
+                    button.disabled = standardBoiler;
+                });
+                document.getElementById('system-thumb').disabled = standardBoiler;
+                document.getElementById('other-note').hidden = standardBoiler || !otherType;
+                document.getElementById('tool-fields').hidden = blocked;
+                document.getElementById('power-card').hidden = blocked;
+                document.getElementById('tool-results').hidden = blocked;
+                document.getElementById('model-card').hidden = blocked;
                 var systemFigureEl = document.getElementById('system-figure');
                 var diagram = systemImages[system];
                 var systemImage = systemFigureEl.querySelector('img');
@@ -1150,7 +1226,7 @@
                     systemImage.alt = diagram.alt;
                 }
                 document.getElementById('system-thumb').setAttribute('aria-label', diagram ? 'Enlarge diagram. ' + diagram.alt : 'Enlarge diagram');
-                if (otherType) return;
+                if (blocked) return;
                 var flow = Number(flowInput.value);
                 document.getElementById('heat-pump-cta').hidden = flow > 50;
                 var ret = flow - DELTA;
