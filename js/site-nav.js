@@ -17,6 +17,7 @@
         '<a href="/boiler-pressure/">Boiler Pressure</a>' +
         '<a href="https://boilerservice.com">Boiler Service</a>' +
         '<a href="/boiler-types/">Boiler Types</a>' +
+        '<a href="/combi-boiler-problems/">Combi Boiler Problems</a>' +
         '<a href="/what-size-boiler/">What Size Boiler?</a>' +
         '<a href="/what-is-a-gc-number/">What is a GC Number?</a>' +
         '<a href="/boiler-energy-efficiency/">Boiler Energy Efficiency</a>' +

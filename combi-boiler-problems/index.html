@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combi Boiler Problems - MyBoiler Hub</title>
+    <meta name="description" content="Common combi boiler problems: low pressure, no hot water, cold radiators, a frozen condensate pipe, kettling, and hot water that runs hot then cold.">
+    <link rel="canonical" href="https://myboiler.com/combi-boiler-problems/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-header {
+            margin-bottom: 2rem;
+        }
+
+        .article-title {
+            font-size: clamp(1.85rem, 5vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content p {
+            margin: 0 0 1rem;
+        }
+
+        .article-content ul {
+            margin: 0 0 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-content img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0.5rem auto 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        @media (max-width: 768px) {
+            .article-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <header class="article-header">
+            <h1 class="article-title">Combi Boiler Problems</h1>
+        </header>
+
+        <article class="article-content">
+            <p>A combi heats the rooms and makes hot water when a tap is opened. There is usually no hot water cylinder. That saves space. It also adds parts that a heat-only boiler does not have, and those parts are where most combi faults show up.</p>
+
+            <img src="/combi-boiler-problems/images/combi-boiler-diagram.jpg" alt="Diagram of a combi boiler feeding a basin, a kitchen sink, and two radiators" width="1431" height="805">
+
+            <p>Newer combis leave some of these parts out. On a typical combi you will still find:</p>
+            <ul>
+                <li><strong>Diverter valve.</strong> Sends the boiler’s heat to the radiators or to the hot water.</li>
+                <li><strong>Plate heat exchanger.</strong> Heats the tap water from the heating water. The two do not mix.</li>
+                <li><strong>Central heating pump.</strong> Moves water around the radiators.</li>
+                <li><strong>Automatic bypass.</strong> Keeps a route for water if the radiator valves are all shut.</li>
+                <li><strong>Expansion vessel.</strong> Takes up the extra volume as the water heats.</li>
+                <li><strong>Pressure gauge and sensors.</strong> Show whether the sealed system has enough water.</li>
+                <li><strong>Air pressure switch.</strong> Checks the fan is clearing the flue before the burner fires.</li>
+            </ul>
+
+            <h2>Low water pressure</h2>
+            <p>A combi stops if the pressure falls too low. Set the gauge to about <strong>1.2 bar when the system is cold</strong>. It should stay in the 1 to 2 bar band, and rise by about 0.5 bar when the heating is on. The full guide is on the <a href="/boiler-pressure/">boiler pressure</a> page.</p>
+            <p>If you keep topping it up, water is leaving the system. A radiator valve, a joint, or the relief pipe outside is the usual place. Each top-up also dilutes the inhibitor. Find the leak rather than keep filling. That is a Gas Safe job if you cannot see an obvious weep.</p>
+
+            <h2>Radiators hot, taps running cold</h2>
+            <p>The boiler can heat the radiators, so the burner is working. The hot water path is not. The usual causes are a diverter valve that is not moving over to hot water, or a flow sensor that does not see the tap open. A Gas Safe engineer needs to test those. Do not open the boiler case to try it.</p>
+
+            <h2>Hot water works, radiators stay cold</h2>
+            <p>Hot water at the tap means the burner can fire. The heat is not reaching the radiators. The diverter may be stuck on hot water, the room thermostat or programmer may not be calling for heat, or the heating pipes may be blocked.</p>
+            <p>A blockage on the heating side can leave the taps working. Tap water takes a separate path through the plate heat exchanger, so a heating-only blockage does not always show up at the sink.</p>
+
+            <h2>Condensate pipe blocked or frozen</h2>
+            <p>A combi makes condensate, the water from the flue gases. If that pipe blocks, or freezes outside in cold weather, the boiler stops.</p>
+            <p>Look at the plastic pipe that leaves the boiler and runs outside. In a cold snap, a warm hot-water bottle on the outside length is the usual first check. Boiling water can split the pipe. If it freezes again, the pipe needs a better route: a fall to the drain, and insulation on the outside run. Clearing the trap inside the boiler is an engineer’s job.</p>
+
+            <h2>Kettling</h2>
+            <p>A kettle noise, sometimes with a light bang, usually means sludge or limescale on the heat exchanger. The water is boiling in a narrow passage instead of flowing through. A chemical clean or a power flush, often with a flushing machine, is how that is cleared. That is an engineer’s job.</p>
+
+            <h2>Hot water that runs hot, then cold, then hot</h2>
+            <p>Water that swings from hot to cold and back is usually limescale in the plate heat exchanger. The exchanger is replaced, or descaled if that model allows it. Hard-water areas see this more often. A Gas Safe engineer should do the work.</p>
+
+            <p>A code on the display is a better clue than the symptom alone. Look it up in <a href="/fault-codes/">fault codes</a>. For a repair visit, <a href="/quote/?need=boiler-repair&amp;message=Combi%20boiler%20problem.%20Asking%20about%20a%20repair.">get a quote</a>.</p>
+        </article>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
