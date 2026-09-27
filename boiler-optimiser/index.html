@@ -274,14 +274,6 @@
             text-decoration: none;
         }
 
-        .choice-button:disabled {
-            cursor: not-allowed;
-        }
-
-        .is-disabled {
-            opacity: 0.45;
-        }
-
         .standard-note {
             margin-top: 1rem;
             padding: 0.9rem 1rem;
@@ -323,6 +315,7 @@
 
         .heat-pump-cta[hidden],
         .standard-note[hidden],
+        #system-group[hidden],
         .other-note[hidden],
         #tool-fields[hidden],
         #tool-results[hidden],
@@ -1204,13 +1197,7 @@
                 var condensingSystem = boilerType === 'condensing' && system === 'system';
                 var blocked = otherType || standardBoiler;
                 document.getElementById('standard-note').hidden = !standardBoiler;
-                var systemGroup = document.getElementById('system-group');
-                systemGroup.classList.toggle('is-disabled', standardBoiler);
-                systemGroup.setAttribute('aria-disabled', standardBoiler ? 'true' : 'false');
-                systemButtons.forEach(function (button) {
-                    button.disabled = standardBoiler;
-                });
-                document.getElementById('system-thumb').disabled = standardBoiler;
+                document.getElementById('system-group').hidden = standardBoiler;
                 document.getElementById('other-note').hidden = standardBoiler || !otherType;
                 document.getElementById('tool-fields').hidden = blocked;
                 document.getElementById('power-card').hidden = blocked;
