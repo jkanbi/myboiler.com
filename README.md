@@ -15,18 +15,15 @@ Static assets stay at `/css/`, `/js/`, `/img/`, `/assets/`, and `/pages/`.
 
 ## Legacy `/hub/` URLs
 
-`/hub/` was migration scaffolding from hub.myboiler.com. Every former `/hub/...` path is a thin HTML stub (meta-refresh + canonical) that sends visitors to the same path without `/hub`.
+`/hub/` was a short-lived copy of the WordPress paths. Those stub files are gone. hub.myboiler.com should redirect straight to the same path on myboiler.com, without `/hub/`.
 
-`redirect.js` and `404.html` also strip a leading `/hub` from the request path. They do **not** prefix unknown paths with `/hub`. A missing root URL shows the 404 page.
-
-Internal aliases that rename pages are unchanged except for the prefix, e.g. `/advice-and-info/` still redirects to `/advice/`.
+If a request still arrives at `myboiler.com/hub/...`, `404.html` and `redirect.js` strip the `/hub` prefix and send the visitor to the real page. They do not prefix unknown paths with `/hub`.
 
 ## How routing works
 
 1. **Existing files** are served directly (content at root, apps, assets).
-2. **`hub/.../index.html` stubs** redirect `/hub/some/path/` → `/some/path/`.
-3. **`404.html`** — if the path starts with `/hub`, strip it and redirect; otherwise show “Page not found”.
-4. **`redirect.js`** — same `/hub` strip, included from the homepage as a fallback (e.g. local `live-server`).
+2. **`404.html`** — if the path starts with `/hub`, strip it and redirect; otherwise show “Page not found”.
+3. **`redirect.js`** — same `/hub` strip, included from the homepage as a fallback (e.g. local `live-server`).
 
 `STATIC_FOLDERS` / `ROOT_FILES` in `redirect.js` and `404.html` document the asset and app folders that are served as-is. They are not used to add a `/hub` prefix.
 
@@ -44,10 +41,12 @@ Internal aliases that rename pages are unchanged except for the prefix, e.g. `/a
 ├── workers/affiliate-click/  # Cloudflare Worker: cookieless Buy-link click beacons
 ├── advice/, toolbox/, … # Other migrated content
 ├── chat/, quote/, decide/, heat-pump-checker/  # Apps
-├── hub/                 # Redirect stubs only (/hub/… → /…)
 ├── index.html           # Homepage
 ├── 404.html             # Not-found + /hub strip
 ├── redirect.js          # Homepage /hub strip fallback
+├── robots.txt           # Crawler rules, including answer engines
+├── sitemap.xml          # Content page URLs
+├── llms.txt             # Short map of the site for answer engines
 ├── favicon.ico
 └── CNAME
 ```
