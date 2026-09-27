@@ -184,9 +184,7 @@
 
         .article-content table tr[hidden],
         .brand-section[hidden],
-        .ot-unofficial-lead[hidden],
-        .ot-controls-lead[hidden],
-        #ot-controls[hidden] {
+        .ot-unofficial-lead[hidden] {
             display: none;
         }
 
@@ -1200,8 +1198,14 @@
                 <p><em>Note: Worcester Bosch OpenTherm information is limited. Please accept this list as capable but not yet fully confirmed. There is no confirmation of hot water working with OpenTherm. Last Updated: 24/11/2018</em></p>
             </div>
 
-            <h2 class="ot-controls-lead">OpenTherm Compatible Controls</h2>
-            <p class="ot-controls-lead">The following are OpenTherm compatible heating controls and smart thermostats. These controls are compatible with OpenTherm capable boilers shown above. For homeowners wondering what OpenTherm means, see the <a href="https://www.opentherm.eu/" target="_blank" rel="noopener">OpenTherm Association</a> fact sheet.</p>
+            <h2>OpenTherm Compatible Controls</h2>
+            <p>The following are OpenTherm compatible heating controls and smart thermostats. These controls are compatible with OpenTherm capable boilers shown above. For homeowners wondering what OpenTherm means, see the <a href="https://www.opentherm.eu/" target="_blank" rel="noopener">OpenTherm Association</a> fact sheet.</p>
+
+            <div class="ot-search">
+                <label for="ot-controls-filter">Search controls</label>
+                <input type="search" id="ot-controls-filter" placeholder="e.g. Nest, Tado, Evohome" autocomplete="off">
+                <p class="ot-search-status" id="ot-controls-status" hidden></p>
+            </div>
 
             <table id="ot-controls">
                 <thead>
@@ -1578,7 +1582,7 @@
                     </tr>
                 </tbody>
             </table>
-            <p class="ot-controls-lead"><em>Last Updated: 25/09/2022</em></p>
+            <p><em>Last Updated: 25/09/2022</em></p>
 
             <h2>Summary</h2>
             <p>This comprehensive list covers the majority of OpenTherm compatible boilers and controls available in the UK market. OpenTherm provides significant benefits in terms of efficiency and comfort when properly implemented.</p>
@@ -1603,9 +1607,10 @@
         (function () {
             var input = document.getElementById('ot-filter');
             var status = document.getElementById('ot-filter-status');
+            var controlsInput = document.getElementById('ot-controls-filter');
+            var controlsStatus = document.getElementById('ot-controls-status');
             var sections = document.querySelectorAll('.brand-section');
             var unofficialLead = document.querySelectorAll('.ot-unofficial-lead');
-            var controlsLead = document.querySelectorAll('.ot-controls-lead');
             var controlsTable = document.getElementById('ot-controls');
 
             function rowMatches(row, query, headingMatch) {
@@ -1624,7 +1629,7 @@
                 return shown;
             }
 
-            function applyFilter() {
+            function applyBoilerFilter() {
                 var query = input.value.trim().toLowerCase();
                 var total = 0;
                 var unofficialShown = false;
@@ -1639,13 +1644,6 @@
                 unofficialLead.forEach(function (el) {
                     el.hidden = query.length > 0 && !unofficialShown;
                 });
-                var controlRows = filterRows(controlsTable.querySelectorAll('tbody tr'), query, false);
-                var controlsHidden = query.length > 0 && controlRows === 0;
-                controlsTable.hidden = controlsHidden;
-                controlsLead.forEach(function (el) {
-                    el.hidden = controlsHidden;
-                });
-                total += controlRows;
                 if (!query) {
                     status.hidden = true;
                     status.textContent = '';
@@ -1657,7 +1655,22 @@
                     : total + (total === 1 ? ' model' : ' models');
             }
 
-            input.addEventListener('input', applyFilter);
+            function applyControlsFilter() {
+                var query = controlsInput.value.trim().toLowerCase();
+                var shown = filterRows(controlsTable.querySelectorAll('tbody tr'), query, false);
+                if (!query) {
+                    controlsStatus.hidden = true;
+                    controlsStatus.textContent = '';
+                    return;
+                }
+                controlsStatus.hidden = false;
+                controlsStatus.textContent = shown === 0
+                    ? 'No matching controls.'
+                    : shown + (shown === 1 ? ' control' : ' controls');
+            }
+
+            input.addEventListener('input', applyBoilerFilter);
+            controlsInput.addEventListener('input', applyControlsFilter);
         })();
     </script>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
