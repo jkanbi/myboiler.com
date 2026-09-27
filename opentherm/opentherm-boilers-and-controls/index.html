@@ -17,7 +17,7 @@
         .article-container {
             flex: 1;
             padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
-            max-width: 1200px;
+            max-width: 1080px;
             margin: 0 auto;
             width: 100%;
             box-sizing: border-box;
@@ -154,6 +154,42 @@
             margin: 2rem 0;
         }
 
+        .ot-search {
+            margin: 1.25rem 0 0.25rem;
+        }
+
+        .ot-search label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+        }
+
+        .ot-search input {
+            width: 100%;
+            max-width: 28rem;
+            box-sizing: border-box;
+            padding: 0.75rem 0.9rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .ot-search-status {
+            margin: 0.6rem 0 0;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .article-content table tr[hidden],
+        .brand-section[hidden],
+        .ot-unofficial-lead[hidden],
+        .ot-controls-lead[hidden],
+        #ot-controls[hidden] {
+            display: none;
+        }
+
         .ot-logo {
             max-width: 200px;
             margin: 1rem 0;
@@ -224,6 +260,12 @@
 
             <h2>OpenTherm Compatible Boilers</h2>
             <p>The following boilers have native OpenTherm support. Some Vaillant Ecotec 4XX series models require additional configuration steps - see <a href="/opentherm/vaillant-opentherm/">Vaillant OpenTherm Guide</a> for details.</p>
+
+            <div class="ot-search">
+                <label for="ot-filter">Search brands and models</label>
+                <input type="search" id="ot-filter" placeholder="e.g. Vaillant, ecoTEC, Wiser" autocomplete="off">
+                <p class="ot-search-status" id="ot-filter-status" hidden></p>
+            </div>
 
             <div class="brand-section">
                 <h3>Alpha Heating Innovation</h3>
@@ -996,10 +1038,10 @@
                 <p><em>Last Updated: 26/09/2022</em></p>
             </div>
 
-            <h2>Unofficially OpenTherm Compatible Boilers</h2>
-            <p>The following boiler models are capable of OpenTherm using unofficial adaptors. These are mostly Vaillant and Worcester Bosch models. Using the mentioned adaptors may invalidate your warranty on new boilers, but for boilers that are out of warranty there are no known problems. These adaptors are purpose-made by the manufacturers for some European countries where governments have made OpenTherm compulsory.</p>
+            <h2 class="ot-unofficial-lead">Unofficially OpenTherm Compatible Boilers</h2>
+            <p class="ot-unofficial-lead">The following boiler models are capable of OpenTherm using unofficial adaptors. These are mostly Vaillant and Worcester Bosch models. Using the mentioned adaptors may invalidate your warranty on new boilers, but for boilers that are out of warranty there are no known problems. These adaptors are purpose-made by the manufacturers for some European countries where governments have made OpenTherm compulsory.</p>
 
-            <div class="brand-section">
+            <div class="brand-section is-unofficial">
                 <h3>Vaillant (Unofficial)</h3>
                 <p><a href="https://www.vaillant.co.uk" target="_blank" rel="noopener">vaillant.co.uk</a></p>
                 <table>
@@ -1035,7 +1077,7 @@
                 </table>
             </div>
 
-            <div class="brand-section">
+            <div class="brand-section is-unofficial">
                 <h3>Glow-Worm (Unofficial)</h3>
                 <p><a href="https://www.glow-worm.co.uk" target="_blank" rel="noopener">glow-worm.co.uk</a></p>
                 <table>
@@ -1091,7 +1133,7 @@
                 </table>
             </div>
 
-            <div class="brand-section">
+            <div class="brand-section is-unofficial">
                 <h3>Worcester Bosch (Unofficial)</h3>
                 <p>See <a href="/opentherm/worcester-bosch-opentherm/">Worcester Bosch OpenTherm Guide</a> for details</p>
                 <table>
@@ -1158,10 +1200,10 @@
                 <p><em>Note: Worcester Bosch OpenTherm information is limited. Please accept this list as capable but not yet fully confirmed. There is no confirmation of hot water working with OpenTherm. Last Updated: 24/11/2018</em></p>
             </div>
 
-            <h2>OpenTherm Compatible Controls</h2>
-            <p>The following are OpenTherm compatible heating controls and smart thermostats. These controls are compatible with OpenTherm capable boilers shown above. For homeowners wondering what OpenTherm means, see the <a href="https://www.opentherm.eu/" target="_blank" rel="noopener">OpenTherm Association</a> fact sheet.</p>
+            <h2 class="ot-controls-lead">OpenTherm Compatible Controls</h2>
+            <p class="ot-controls-lead">The following are OpenTherm compatible heating controls and smart thermostats. These controls are compatible with OpenTherm capable boilers shown above. For homeowners wondering what OpenTherm means, see the <a href="https://www.opentherm.eu/" target="_blank" rel="noopener">OpenTherm Association</a> fact sheet.</p>
 
-            <table>
+            <table id="ot-controls">
                 <thead>
                     <tr>
                         <th>Brand</th>
@@ -1536,7 +1578,7 @@
                     </tr>
                 </tbody>
             </table>
-            <p><em>Last Updated: 25/09/2022</em></p>
+            <p class="ot-controls-lead"><em>Last Updated: 25/09/2022</em></p>
 
             <h2>Summary</h2>
             <p>This comprehensive list covers the majority of OpenTherm compatible boilers and controls available in the UK market. OpenTherm provides significant benefits in terms of efficiency and comfort when properly implemented.</p>
@@ -1557,7 +1599,67 @@
 
     
 
-    <div id="site-footer"></div>
+    <script>
+        (function () {
+            var input = document.getElementById('ot-filter');
+            var status = document.getElementById('ot-filter-status');
+            var sections = document.querySelectorAll('.brand-section');
+            var unofficialLead = document.querySelectorAll('.ot-unofficial-lead');
+            var controlsLead = document.querySelectorAll('.ot-controls-lead');
+            var controlsTable = document.getElementById('ot-controls');
+
+            function rowMatches(row, query, headingMatch) {
+                if (!query) return true;
+                if (headingMatch) return true;
+                return row.textContent.toLowerCase().indexOf(query) !== -1;
+            }
+
+            function filterRows(rows, query, headingMatch) {
+                var shown = 0;
+                rows.forEach(function (row) {
+                    var match = rowMatches(row, query, headingMatch);
+                    row.hidden = !match;
+                    if (match) shown += 1;
+                });
+                return shown;
+            }
+
+            function applyFilter() {
+                var query = input.value.trim().toLowerCase();
+                var total = 0;
+                var unofficialShown = false;
+                sections.forEach(function (section) {
+                    var heading = section.querySelector('h3');
+                    var headingMatch = query && heading && heading.textContent.toLowerCase().indexOf(query) !== -1;
+                    var shown = filterRows(section.querySelectorAll('tbody tr'), query, headingMatch);
+                    section.hidden = query.length > 0 && shown === 0;
+                    if (shown > 0 && section.classList.contains('is-unofficial')) unofficialShown = true;
+                    total += shown;
+                });
+                unofficialLead.forEach(function (el) {
+                    el.hidden = query.length > 0 && !unofficialShown;
+                });
+                var controlRows = filterRows(controlsTable.querySelectorAll('tbody tr'), query, false);
+                var controlsHidden = query.length > 0 && controlRows === 0;
+                controlsTable.hidden = controlsHidden;
+                controlsLead.forEach(function (el) {
+                    el.hidden = controlsHidden;
+                });
+                total += controlRows;
+                if (!query) {
+                    status.hidden = true;
+                    status.textContent = '';
+                    return;
+                }
+                status.hidden = false;
+                status.textContent = total === 0
+                    ? 'No matching brands or models.'
+                    : total + (total === 1 ? ' model' : ' models');
+            }
+
+            input.addEventListener('input', applyFilter);
+        })();
+    </script>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
