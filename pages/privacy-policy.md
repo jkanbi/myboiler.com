@@ -1,76 +1,39 @@
-# Privacy Policy
+# Privacy policy
 
-## Introduction
+This policy explains what happens to information when you use MyBoiler.com. It applies from 27 September 2026. We may update this page when the site changes.
 
-At MyBoiler.com, we take your privacy seriously. This policy explains how we collect, use, and protect your personal information.
+## Browsing the site
 
-## Information We Collect
+The pages are served through Cloudflare. Reading a page does not identify you. We do not ask for your name, email address, or any other personal detail just to view the site.
 
-### Personal Information
-- Name and contact details
-- Email address
-- IP address
-- Browser information
-- Usage data
+We do not set cookies, and the site does not store anything in your browser. Because of that, we do not show a cookie consent banner, and you do not need to accept cookies to use the pages.
 
-### How We Collect Information
-- Direct input from users
-- Website analytics
-- Cookies and similar technologies
-- Newsletter subscriptions
+We do not use advertising cookies, including Google advertising cookies, and we do not build a profile of you from your visits.
 
-## How We Use Your Information
+## Measuring visits
 
-We use your information to:
+A normal page view is not tied to you. Our code does not record your IP address and does not give you an identifier.
 
-1. Provide our services
-2. Improve our website
-3. Send newsletters (with consent)
-4. Analyze website usage
-5. Respond to inquiries
+If you click an Amazon or eBay buy link, the page sends a short note of that click to a Cloudflare service we run. The note has the shop, the page you were on, the time, and the product path. It does not include your name, email address, IP address, or a user id, and it does not use a cookie.
 
-## Data Protection
+## Information you choose to send
 
-We implement appropriate security measures to protect your data:
+We only receive personal information when you send it:
 
-- Encryption of sensitive data
-- Regular security assessments
-- Limited access to personal information
-- Secure data storage
-- Regular backups
+- The newsletter box sends the email address you type to Mailchimp, so we can send the newsletter. You do not have to subscribe.
+- The quote form is provided by HubSpot. It receives the details you type, such as your postcode and your message.
+- Ask AI is a chat provided by ElevenLabs. It only runs if you open that page and use the chat.
 
-## Your Rights
+We use those details to reply, to send a newsletter you asked for, or to pass on a quote request. We do not sell your personal information. You can unsubscribe from the newsletter in those emails.
 
-You have the right to:
+## Security
 
-- Access your personal data
-- Correct inaccurate data
-- Request data deletion
-- Opt-out of marketing
-- Data portability
+We keep the information you send to us so that it is not left open to unauthorised access or disclosure.
 
-## Cookies
+## Links to other websites
 
-We use cookies to:
+The site links to other websites, including Amazon, eBay, and our social pages. Once you leave MyBoiler.com, those sites set their own rules and may use their own cookies. This policy does not cover them.
 
-- Improve website functionality
-- Analyze website usage
-- Remember user preferences
-- Provide personalized content
+## Your information
 
-## Third-Party Services
-
-We may use third-party services that collect data:
-
-- Analytics providers
-- Newsletter services
-- Social media platforms
-- Payment processors
-
-## Contact Us
-
-For privacy-related inquiries, contact us at:
-
-- Email: privacy@myboiler.com
-- Address: A Rated House, 11 Sunnymead Road, London, NW9 8BT
-- Phone: +44 020 8123 4411 
+You can ask for a copy of the personal information we hold about you, and you can ask us to correct it. Contact us using the contact details below.
