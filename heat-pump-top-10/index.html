@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heat Pump Top 10 - MyBoiler Hub</title>
+    <meta name="description" content="UK heat pump brands ranked on quality, from a homeowner vote and live monitored systems. Vaillant leads, then Mitsubishi Electric, Grant, NIBE, and Daikin.">
+    <link rel="canonical" href="https://myboiler.com/heat-pump-top-10/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-header {
+            margin-bottom: 2rem;
+        }
+
+        .article-title {
+            font-size: clamp(1.85rem, 5vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content p {
+            margin: 0 0 1rem;
+        }
+
+        .article-content ol {
+            margin: 0 0 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+            font-size: 0.9375rem;
+        }
+
+        .article-content th,
+        .article-content td {
+            padding: 0.7rem 0.65rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        .article-content th {
+            font-weight: 600;
+            color: var(--text);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .article-content tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rank-table {
+            min-width: 36rem;
+        }
+
+        .rank-table th:not(:nth-child(2)),
+        .rank-table td:not(:nth-child(2)) {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+
+        .rank-table th:first-child,
+        .rank-table td:first-child {
+            width: 3.25rem;
+        }
+
+        .rank-table td:nth-child(2) {
+            font-weight: 600;
+        }
+
+        .label-short {
+            display: none;
+        }
+
+        .article-content .article-table-wrap {
+            overflow: visible;
+        }
+
+        .col-tip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            border-bottom: 1px dotted var(--text-muted);
+            outline: none;
+        }
+
+        .col-tip:focus-visible {
+            border-bottom-color: var(--accent);
+        }
+
+        .col-tip-bubble {
+            display: none;
+            position: absolute;
+            z-index: 20;
+            top: calc(100% + 0.15rem);
+            left: 0;
+            width: max-content;
+            max-width: min(16rem, calc(100vw - 2.5rem));
+            padding: 0.55rem 0.7rem;
+            background: var(--text);
+            color: var(--surface);
+            font-size: 0.8125rem;
+            font-weight: 400;
+            font-variant-numeric: normal;
+            line-height: 1.45;
+            text-align: left;
+            white-space: normal;
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .col-tip-end .col-tip-bubble {
+            left: auto;
+            right: 0;
+        }
+
+        .col-tip:hover .col-tip-bubble,
+        .col-tip:focus .col-tip-bubble {
+            display: block;
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .article-content {
+                padding: 1rem;
+            }
+
+            .article-container {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .rank-table {
+                min-width: 0;
+                width: 100%;
+                font-size: 0.75rem;
+            }
+
+            .rank-table th,
+            .rank-table td {
+                padding: 0.45rem 0.15rem;
+            }
+
+            .brand-line {
+                display: block;
+            }
+
+            .rank-table th {
+                white-space: nowrap;
+                line-height: 1.15;
+            }
+
+            .col-tip-bubble {
+                max-width: 12rem;
+            }
+
+            .label-long {
+                display: none;
+            }
+
+            .label-short {
+                display: inline;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Heat Pump Top 10",
+  "url": "https://myboiler.com/heat-pump-top-10/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MyBoiler.com",
+    "url": "https://myboiler.com/"
+  },
+  "description": "UK heat pump brands ranked on quality, from a homeowner vote and live monitored systems. Vaillant leads, then Mitsubishi Electric, Grant, NIBE, and Daikin."
+}
+    </script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <header class="article-header">
+            <h1 class="article-title">Heat pump top 10</h1>
+        </header>
+
+        <article class="article-content">
+            <p>UK heat pump brands, ranked on overall quality.</p>
+            <div class="article-table-wrap">
+                <table class="rank-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Rank</th>
+                            <th scope="col">Brand</th>
+                            <th scope="col"><span class="col-tip" tabindex="0" aria-describedby="tip-survey">Survey<br>share<span id="tip-survey" class="col-tip-bubble" role="tooltip">Homeowner vote share. Renewable Heating Hub collected more than 5,700 votes from October to December 2024.</span></span></th>
+                            <th scope="col"><span class="col-tip col-tip-end" tabindex="0" aria-describedby="tip-monitored">Monitored<br>share<span id="tip-monitored" class="col-tip-bubble" role="tooltip">Share of 810 Heat Pump Monitor systems on 28 September 2026. These systems are usually fitted by installers who publish how the heat pump runs.</span></span></th>
+                            <th scope="col"><span class="col-tip col-tip-end" tabindex="0" aria-describedby="tip-combined"><span class="label-long">Combined</span><span class="label-short">Score</span><span id="tip-combined" class="col-tip-bubble" role="tooltip">Survey share and monitored share added together. The larger sample weighs more, so the vote is about 88% and the monitored systems about 12%.</span></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Vaillant</td>
+                            <td>8.09%</td>
+                            <td>39.0%</td>
+                            <td>11.9%</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><span class="brand-line">Mitsubishi</span> <span class="brand-line">Electric</span></td>
+                            <td>10.36%</td>
+                            <td>6.5%</td>
+                            <td>9.9%</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Grant</td>
+                            <td>8.51%</td>
+                            <td>6.5%</td>
+                            <td>8.3%</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>NIBE</td>
+                            <td>8.88%</td>
+                            <td>3.1%</td>
+                            <td>8.2%</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Daikin</td>
+                            <td>6.76%</td>
+                            <td>15.3%</td>
+                            <td>7.8%</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Viessmann</td>
+                            <td>6.21%</td>
+                            <td>9.3%</td>
+                            <td>6.6%</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Panasonic</td>
+                            <td>6.23%</td>
+                            <td>2.6%</td>
+                            <td>5.8%</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>Samsung</td>
+                            <td>5.97%</td>
+                            <td>4.3%</td>
+                            <td>5.8%</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>LG</td>
+                            <td>5.23%</td>
+                            <td>1.0%</td>
+                            <td>4.7%</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td><span class="brand-line">Worcester</span> <span class="brand-line">Bosch</span></td>
+                            <td>4.95%</td>
+                            <td>0.0%</td>
+                            <td>4.3%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>How this ranking was made</h2>
+            <p>This list ranks heat pump brands on overall quality. It blends two UK signals, and the larger sample weighs more. <a href="https://renewableheatinghub.co.uk/best-heat-pump-brand-2025/">Renewable Heating Hub</a> collected more than 5,700 homeowner votes from October to December 2024. <a href="https://heatpumpmonitor.org/">Heat Pump Monitor</a> had 810 systems sharing live data on 28 September 2026.</p>
+            <p>Those monitored systems are usually fitted by installers who publish how the heat pump runs. That is a quality signal. Across the wider market, price also decides which brand gets fitted, so the monitored set is the brands those installers chose, and this list uses it that way. Counted as 5,700 votes against 810 systems, the vote is about 88% of the weight and the monitored systems about 12%.</p>
+            <p>A brand’s place is its share of the votes and its share of those monitored systems, added in that proportion. Survey share is the homeowner vote. Monitored share is each brand’s share of the 810 live systems. The last column is the combined score.</p>
+            <ol>
+                <li>Vaillant is first because 316 of the 810 monitored systems are Vaillant, alongside 8.09% of the homeowner vote. About 40% of the monitored systems are Heat Geek installs, and Heat Geek fits Vaillant.</li>
+                <li>Mitsubishi Electric is second because it has the largest homeowner vote, 10.36%, with 53 monitored systems.</li>
+                <li>Grant is third because it has 8.51% of the vote and 53 monitored systems.</li>
+                <li>NIBE is fourth because it has 8.88% of the vote and 25 monitored systems.</li>
+                <li>Daikin is fifth because it has 6.76% of the vote and 124 monitored systems, the second largest monitored share.</li>
+                <li>Viessmann is sixth because it has 6.21% of the vote and 75 monitored systems.</li>
+                <li>Panasonic is seventh because it has 6.23% of the vote and 21 monitored systems.</li>
+                <li>Samsung is eighth because it has 5.97% of the vote and 35 monitored systems.</li>
+                <li>LG is ninth because it has 5.23% of the vote and 8 monitored systems.</li>
+                <li>Worcester Bosch is tenth because it has 4.95% of the vote, and the public monitor lists no Worcester Bosch systems.</li>
+            </ol>
+
+            <h2>Boiler Upgrade Scheme installs</h2>
+            <p>The <a href="https://www.gov.uk/government/statistics/boiler-upgrade-scheme-statistics-august-2026">Boiler Upgrade Scheme statistics</a> cover England and Wales. A grant needs an MCS-certified product and an MCS-certified installer. To the end of August 2026, Ofgem had paid 93,364 grants. 91,320 of those were air-to-water heat pumps. Ground-source grants were 1,586.</p>
+            <p>Those tables count the technology, the region, and the fuel the heat pump replaced. They do not name the manufacturer. How many of each brand were installed also follows price. This list ranks the quality of the brand, so grant volume stays out of the order.</p>
+            <h2>Other public counts</h2>
+            <p><a href="https://mcscertified.com/the-2026-low-carbon-landscape/">MCS</a> recorded more than 60,000 certified heat pump installations in 2025, the highest year so far. The Boiler Upgrade Scheme funded nearly half of them. MCS publishes that total by nation and property type. It does not publish it by brand. The MCS data dashboard, which holds the certificate records, is behind a login.</p>
+            <p>A <a href="https://renewableheatinghub.co.uk/popular-heat-pumps-uk/">2024 scan of the Renewable Heating Hub community</a> put Mitsubishi at about 20% of the homes discussed, Daikin, Samsung, and Vaillant at about 15% each, and Grant at about 12%. That is forum traffic. Euromonitor’s 2025 UK sales estimate put Daikin at 20% and Mitsubishi Electric at 18%. The rest of that ranking is not public. Sales follow price as well as the product, so they are a separate count from this quality order.</p>
+
+            <h2>What UK engineers say</h2>
+            <p>Engineers have not published this same 1 to 10. A survey of 300 UK air-source installers, run from May 2025 to February 2026, put <a href="https://www.installeronline.co.uk/eco/independent-research-claims-mitsubishi-electric-heat-pumps-are-most-trusted-by-installers/">Mitsubishi Electric first</a> for trust, reliability, and the brand they fit most often. That survey did not publish the rest of the ranking. <a href="https://go.heatgeek.com/help-centre/what-brand-of-heat-pump-do-you-install-and-why">Heat Geek</a>, a UK installer network, fits Vaillant, and treats Daikin, Mitsubishi, and Samsung as reputable brands it does not specialise in.</p>
+            <p>The homeowner poll was open to anyone on that site. Brands with more installations had more possible voters, and the vote is not a count of systems sold. Most owners have only lived with one heat pump. The design and the setup still decide how well it runs in a given house.</p>
+            <p>Start with the <a href="/heat-pump-checker/">heat pump checker</a> and the <a href="/heat-pumps/">heat pumps guide</a>. Installing one is a qualified installer’s job.</p>
+        </article>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
