@@ -197,11 +197,22 @@
             border-top: 1px solid var(--border-subtle);
         }
 
+        .formula-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin: 0 0 0.5rem;
+            font-family: 'Courier New', monospace;
+            background: var(--bg);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+        }
+
         .formula-title {
             font-size: 1.125rem;
             font-weight: 600;
             color: var(--text);
-            margin-bottom: 1rem;
+            margin: 1rem 0 1rem;
         }
 
         .formula-legend {
@@ -332,6 +343,11 @@
                 padding-top: 1.25rem;
             }
 
+            .formula-text {
+                font-size: 0.875rem;
+                padding: 0.625rem 0.875rem;
+            }
+
             .formula-title {
                 font-size: 1rem;
                 margin-bottom: 0.75rem;
@@ -448,6 +464,9 @@
 
             <!-- Formula Legend -->
             <div class="formula-section">
+                <div class="formula-text">LPS = KW / (SHC × ΔT)</div>
+                <div class="formula-text">LPM = LPS × 60</div>
+                <div class="formula-text">d = 2 × √(((1000 / 3.14) / v) × LPS)</div>
                 <h3 class="formula-title">Formula Reference</h3>
                 <p class="formula-legend">
                     <strong>d</strong> = internal diameter (mm)<br>
