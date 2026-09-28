@@ -36,7 +36,7 @@
         '<h4>Heat Pumps</h4>' +
         '<a href="/heat-pumps/">Heat Pumps Overview</a>' +
         '<a href="/heat-pump-top-10/">Heat Pump Top 10</a>' +
-        '<a href="/heat-pump-cop-breakeven-calculator/">Heat Pump COP Breakeven</a>' +
+        '<a href="/calculators/heat-pump-cop-breakeven-calculator/">Heat Pump COP Breakeven</a>' +
         '<a href="/heat-pumps/retrofit-an-existing-hot-water-cylinder-with-a-plate-heat-exchanger-for-use-with-a-heat-pump/">Heat Pump Cylinder Retrofit</a>' +
         '<a href="/heat-pumps/air-source-heat-pumps/">Air Source Heat Pump</a>' +
         '<a href="/heat-pumps/hybrid-heat-pumps/">Hybrid Heat Pumps</a>' +
@@ -94,6 +94,7 @@
         '<a href="/inhibitor-dosing/">Inhibitor Dosing</a>' +
         '<a href="/how-to/repair-a-thermostatic-radiator-valve-trv-not-working-with-trv-pin-stuck/">TRV pin stuck</a>' +
         '<a href="/fga/">Flue Gas Analysis</a>' +
+        '<a href="/shortcuts/">Shortcuts</a>' +
         '<a href="/boiler-maximum-and-minimum-output-mode-videos/">Max/Min Output Mode Videos</a>' +
         '<a href="/intergas-a-plan/">Intergas A Plan</a>' +
         '</div>' +
@@ -102,7 +103,7 @@
         '<a href="/air-change-rates-ach/">Air Change Calculator (ACH)</a>' +
         '<a href="/calculators/boiler-usage-cost/">Boiler Consumption</a>' +
         '<a href="/calculators/heating-system-output-calculator/">Heat Source/System Design</a>' +
-        '<a href="/heat-pump-cop-breakeven-calculator/">Heat Pump COP Breakeven</a>' +
+        '<a href="/calculators/heat-pump-cop-breakeven-calculator/">Heat Pump COP Breakeven</a>' +
         '<a href="/calculators/heating-system-water-content-calculator/">Water Content</a>' +
         '<a href="/calculators/hot-water-recovery-time-calculator/">Hot Water Recovery</a>' +
         '<a href="/calculators/pipe-size-calculator/">Pipe Size Calculator</a>' +
