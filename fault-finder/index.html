@@ -45,16 +45,25 @@
 
         .system-types {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
             margin: 2rem 0;
+        }
+
+        .system-types.is-chosen {
+            grid-template-columns: minmax(0, 320px);
+            justify-content: center;
+        }
+
+        .system-card.is-selected .button {
+            display: none;
         }
 
         .system-card {
             background: var(--surface);
             border: 2px solid var(--border-subtle);
             border-radius: var(--radius);
-            padding: 1.5rem;
+            padding: 1rem 0.75rem;
             text-align: center;
             transition: all 0.2s ease;
         }
@@ -83,30 +92,38 @@
         }
 
         .issue-list {
-            display: grid;
+            display: flex;
+            flex-wrap: wrap;
             gap: 0.75rem;
         }
 
         .finder[hidden],
         .finder-set[hidden],
+        .step[hidden],
         .issue-list[hidden],
         .issue-answer[hidden],
         .finder h2[hidden],
         .sequence-note[hidden],
-        #finder-back[hidden] {
+        #finder-back[hidden],
+        #change-system[hidden] {
             display: none !important;
         }
 
         .issue-list a {
-            display: block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            padding: 0.55rem 1rem;
             background: var(--surface);
-            border: 2px solid var(--border-subtle);
-            border-radius: var(--radius);
-            padding: 0.9rem 1.1rem;
+            border: 1px solid var(--border);
+            border-radius: 999px;
             color: var(--text);
             text-decoration: none;
+            text-align: center;
+            font-size: 0.9375rem;
             font-weight: 600;
-            line-height: 1.4;
+            line-height: 1.3;
         }
 
         .issue-list a:hover {
@@ -164,8 +181,24 @@
             margin-top: 1rem;
         }
 
-        .finder-actions .back-to-hub {
-            margin-top: 0;
+        .change-system {
+            display: flex;
+            width: fit-content;
+            margin: 0.85rem auto 0;
+            padding: 0.55rem 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .change-system:hover {
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         .finder-note {
@@ -247,7 +280,8 @@
         }
 
         @media (max-width: 768px) {
-            .system-types {
+            .system-types,
+            .system-types.is-chosen {
                 grid-template-columns: 1fr;
             }
         }
@@ -322,7 +356,7 @@
         </header>
 
         <div class="info-box" id="finder-intro">
-            <p>Choose the system that matches the house, then the problem. If there is already a code on the display, <a href="/fault-codes/">search fault codes</a>.</p>
+            <p>Choose the system that matches the house, then answer one question at a time. If there is already a code on the display, <a href="/fault-codes/">search fault codes</a>.</p>
         </div>
 
         <div class="system-types">
@@ -348,162 +382,251 @@
             </div>
         </div>
 
+        <a href="/fault-finder/" class="change-system" id="change-system" hidden>Change system</a>
+
         <section class="finder" id="finder" hidden>
             <div class="finder-set" data-system="combi" hidden>
-                <h2>Combi boiler: what is happening?</h2>
-                <p class="sequence-note">A combi only lights after a short chain. The pressure has to be up, then something has to call for heat or a hot tap. The pump runs, then the fan, then it ignites. If a step fails, it does not move on.</p>
-                <div class="issue-list">
-                    <a href="#combi/no-light">It does not light</a>
-                    <a href="#combi/pressure">The pressure is low, or the boiler has stopped</a>
-                    <a href="#combi/taps-cold">Radiators heat, but the taps stay cold</a>
-                    <a href="#combi/radiators-cold">The taps are hot, but the radiators stay cold</a>
-                    <a href="#combi/hot-cold">Hot water runs hot, then cold, then hot</a>
-                    <a href="#combi/kettling">The boiler kettles or bangs</a>
-                    <a href="#combi/frozen">It stops in cold weather</a>
-                    <a href="#combi/code">There is a code on the display</a>
+                <div class="step" data-path="">
+                    <h2>What has stopped working?</h2>
+                    <div class="issue-list">
+                        <a href="#combi/hot-water">Hot water</a>
+                        <a href="#combi/heating">Heating</a>
+                        <a href="#combi/both">Both</a>
+                    </div>
                 </div>
-                <article class="issue-answer" id="combi-no-light" hidden>
-                    <h3>It does not light</h3>
-                    <p>Work down the chain. The boiler will not move past a failed step. The same order is on <a href="/combi-boiler/combi-boiler-fault-finding/">combi boiler fault finding</a>.</p>
-                    <ol>
-                        <li><strong>Pressure.</strong> Cold pressure for a typical house is about 1.2 bar, in the 1 to 2 bar band. Most boilers stop between about 0.5 and 0.8 bar. See <a href="/boiler-pressure/">boiler pressure</a>.</li>
-                        <li><strong>A demand.</strong> Heating needs the programmer and the room thermostat calling. Hot water needs a tap open, so the boiler can see the flow.</li>
-                        <li><strong>The pump.</strong> You should hear it start once there is a demand. If it does not, the sequence stops there.</li>
-                        <li><strong>The fan.</strong> After the pump, the fan has to run and prove it is clearing the flue. If the fan does not start, it will not ignite.</li>
-                        <li><strong>Ignition.</strong> It should light and stay lit. A click and no flame, or a flame that drops straight out, is inside the case. That is a Gas Safe registered engineer’s job. Do not open the boiler case.</li>
-                    </ol>
-                </article>
-                <article class="issue-answer" id="combi-pressure" hidden>
-                    <h3>The pressure is low, or the boiler has stopped</h3>
-                    <p>A combi stops if the pressure falls too low. For a typical house, set the gauge to about 1.2 bar when the system is cold. It should stay in the 1 to 2 bar band. If you keep topping it up, water is leaving the system.</p>
-                    <p>The full reading is on the <a href="/boiler-pressure/">boiler pressure</a> page, and this fault is also covered under <a href="/combi-boiler-problems/">combi boiler problems</a>.</p>
-                </article>
-                <article class="issue-answer" id="combi-taps-cold" hidden>
-                    <h3>Radiators heat, but the taps stay cold</h3>
-                    <p>The radiators heating means the chain already got through: a heating demand, the pump, the fan, and ignition. Hot water uses that same chain, but only after a tap opens and the diverter moves off heating. The usual stop is that the boiler does not see the tap, or the diverter stays on heating.</p>
+                <div class="step" data-path="hot-water">
+                    <h2>What are the taps doing?</h2>
+                    <div class="issue-list">
+                        <a href="#combi/hot-water/cold">They stay cold</a>
+                        <a href="#combi/hot-water/swings">They run hot, then cold, then hot</a>
+                    </div>
+                </div>
+                <article class="step issue-answer" data-path="hot-water/cold">
+                    <h3>The taps stay cold</h3>
+                    <p>The radiators heating means the boiler can already light. Hot water uses that same boiler, but only after a tap opens and the diverter moves off heating. The usual stop is that the boiler does not see the tap, or the diverter stays on heating.</p>
                     <p>A Gas Safe registered engineer needs to test those. Do not open the boiler case. More on this is in <a href="/combi-boiler-problems/">combi boiler problems</a>.</p>
                 </article>
-                <article class="issue-answer" id="combi-radiators-cold" hidden>
-                    <h3>The taps are hot, but the radiators stay cold</h3>
-                    <p>Hot water means the chain already got through for a tap: the boiler saw the flow, the diverter moved to hot water, and the pump, fan, and ignition ran. Heating needs its own demand from the programmer and the room thermostat, and the diverter back on heating when no tap is running. The heating pipes may also be blocked.</p>
-                    <p>Tap water takes a separate path, so a heating-only blockage does not always show up at the sink. One cold radiator on its own is often a <a href="/how-to/repair-a-thermostatic-radiator-valve-trv-not-working-with-trv-pin-stuck/">stuck TRV pin</a>. See <a href="/combi-boiler-problems/">combi boiler problems</a>.</p>
-                </article>
-                <article class="issue-answer" id="combi-hot-cold" hidden>
-                    <h3>Hot water runs hot, then cold, then hot</h3>
-                    <p>Water that swings from hot to cold and back is usually limescale in the plate heat exchanger. Hard-water areas see this more often. The exchanger is replaced, or descaled if that model allows it. A Gas Safe registered engineer should do the work.</p>
+                <article class="step issue-answer" data-path="hot-water/swings">
+                    <h3>Hot, then cold, then hot</h3>
+                    <p>Water that swings from hot to cold and back is usually limescale in the plate heat exchanger. Hard-water areas see this more often. A Gas Safe registered engineer should do the work.</p>
                     <p>See <a href="/combi-boiler-problems/">combi boiler problems</a>.</p>
                 </article>
-                <article class="issue-answer" id="combi-kettling" hidden>
-                    <h3>The boiler kettles or bangs</h3>
-                    <p>A kettle noise, sometimes with a light bang, usually means sludge or limescale on the heat exchanger. The water is boiling in a narrow passage instead of flowing through. Clearing that is an engineer’s job.</p>
+                <div class="step" data-path="heating">
+                    <h2>Is it every radiator, or just one?</h2>
+                    <div class="issue-list">
+                        <a href="#combi/heating/all">Every radiator</a>
+                        <a href="#combi/heating/one">Just one</a>
+                    </div>
+                </div>
+                <article class="step issue-answer" data-path="heating/all">
+                    <h3>Every radiator stays cold</h3>
+                    <p>Hot water means the boiler can light for a tap. Heating needs its own demand from the programmer and the room thermostat, and the diverter back on heating when no tap is running. The heating pipes may also be blocked.</p>
                     <p>See <a href="/combi-boiler-problems/">combi boiler problems</a>.</p>
                 </article>
-                <article class="issue-answer" id="combi-frozen" hidden>
+                <article class="step issue-answer" data-path="heating/one">
+                    <h3>Just one radiator</h3>
+                    <p>One radiator cold while the others heat is often a stuck pin in that radiator’s valve. The boiler and the hot water are working. See <a href="/how-to/repair-a-thermostatic-radiator-valve-trv-not-working-with-trv-pin-stuck/">TRV pin stuck</a>.</p>
+                </article>
+                <div class="step" data-path="both">
+                    <h2>Is there a code on the display?</h2>
+                    <div class="issue-list">
+                        <a href="#combi/both/code">Yes</a>
+                        <a href="#combi/both/no-code">No</a>
+                    </div>
+                </div>
+                <article class="step issue-answer" data-path="both/code">
+                    <h3>There is a code on the display</h3>
+                    <p>A code is a better clue than the symptom alone. Look it up in <a href="/fault-codes/">fault codes</a>.</p>
+                </article>
+                <div class="step" data-path="both/no-code">
+                    <h2>Is the pressure low?</h2>
+                    <div class="issue-list">
+                        <a href="#combi/both/pressure">Yes, the gauge is low</a>
+                        <a href="#combi/both/pressure-ok">No, it looks normal</a>
+                    </div>
+                </div>
+                <article class="step issue-answer" data-path="both/pressure">
+                    <h3>The pressure is low</h3>
+                    <p>A combi stops if the pressure falls too low. For a typical house, set the gauge to about 1.2 bar when the system is cold. It should stay in the 1 to 2 bar band. If you keep topping it up, water is leaving the system.</p>
+                    <p>See <a href="/boiler-pressure/">boiler pressure</a> and <a href="/combi-boiler-problems/">combi boiler problems</a>.</p>
+                </article>
+                <div class="step" data-path="both/pressure-ok">
+                    <h2>Does the boiler try to light?</h2>
+                    <div class="issue-list">
+                        <a href="#combi/both/no-light">No</a>
+                        <a href="#combi/both/lights">It lights, then stops</a>
+                    </div>
+                </div>
+                <div class="step" data-path="both/no-light">
+                    <h2>What can you hear?</h2>
+                    <div class="issue-list">
+                        <a href="#combi/both/no-light/pump">Nothing, not even the pump</a>
+                        <a href="#combi/both/no-light/fan">The pump, but not the fan</a>
+                        <a href="#combi/both/no-light/flame">The fan, then a click, and the flame does not stay on</a>
+                    </div>
+                </div>
+                <article class="step issue-answer" data-path="both/no-light/pump">
+                    <h3>No pump sound</h3>
+                    <p>Heating needs the programmer and the room thermostat calling. Hot water needs a tap open. If something is calling and you still cannot hear the pump, the sequence stops there. The fan and the burner never get their turn.</p>
+                    <p>Do not open the boiler case. The order is on <a href="/combi-boiler/combi-boiler-fault-finding/">combi boiler fault finding</a>.</p>
+                </article>
+                <article class="step issue-answer" data-path="both/no-light/fan">
+                    <h3>Pump, but no fan</h3>
+                    <p>The pump is running, so there is a demand. The fan has to run next and prove it is clearing the flue. If you cannot hear the fan, it will not ignite. That check is inside the case.</p>
+                </article>
+                <article class="step issue-answer" data-path="both/no-light/flame">
+                    <h3>It clicks, but the flame does not stay on</h3>
+                    <p>The fan has run, so the boiler tried to light. A click and no flame, or a flame that drops straight out, is an ignition fault inside the case. A Gas Safe registered engineer needs to see it. Do not open the boiler case.</p>
+                </article>
+                <div class="step" data-path="both/lights">
+                    <h2>What happens after it lights?</h2>
+                    <div class="issue-list">
+                        <a href="#combi/both/lights/cold">It stops in cold weather</a>
+                        <a href="#combi/both/lights/noise">It kettles or bangs</a>
+                    </div>
+                </div>
+                <article class="step issue-answer" data-path="both/lights/cold">
                     <h3>It stops in cold weather</h3>
                     <p>A combi makes condensate. If that pipe blocks, or freezes outside, the boiler stops. Look at the plastic pipe that leaves the boiler and runs outside. In a cold snap, a warm hot-water bottle on the outside length is the usual first check. Boiling water can split the pipe.</p>
                     <p>If it freezes again, the pipe needs a better route. Clearing the trap inside the boiler is an engineer’s job. See <a href="/combi-boiler-problems/">combi boiler problems</a>.</p>
                 </article>
-                <article class="issue-answer" id="combi-code" hidden>
-                    <h3>There is a code on the display</h3>
-                    <p>A code is a better clue than the symptom alone. Look it up in <a href="/fault-codes/">fault codes</a>.</p>
+                <article class="step issue-answer" data-path="both/lights/noise">
+                    <h3>It kettles or bangs</h3>
+                    <p>A kettle noise, sometimes with a light bang, usually means sludge or limescale on the heat exchanger. Clearing that is an engineer’s job. See <a href="/combi-boiler-problems/">combi boiler problems</a>.</p>
                 </article>
             </div>
 
             <div class="finder-set" data-system="system" hidden>
-                <h2>System boiler: what is happening?</h2>
-                <p class="sequence-note">Once the controls call, the boiler follows the same chain as a combi: pump, then fan, then ignition. The call comes from the programmer, a thermostat, and a zone valve, not from a hot tap.</p>
-                <div class="issue-list">
-                    <a href="#system/no-light">It does not light at all</a>
-                    <a href="#system/no-hot-water">The heating works, but there is no hot water</a>
-                    <a href="#system/no-heating">The hot water works, but the radiators stay cold</a>
-                    <a href="#system/pressure">The gauge is low, or it will not stay up</a>
-                    <a href="#system/pressure-rises">The gauge climbs when the heating is on</a>
-                    <a href="#system/code">There is a code on the display</a>
+                <div class="step" data-path="">
+                    <h2>What has stopped working?</h2>
+                    <div class="issue-list">
+                        <a href="#system/hot-water">Hot water</a>
+                        <a href="#system/heating">Heating</a>
+                        <a href="#system/both">Both</a>
+                    </div>
                 </div>
-                <article class="issue-answer" id="system-no-light" hidden>
-                    <h3>It does not light at all</h3>
-                    <p>If neither the radiators nor the cylinder heat, the boiler is not getting through the chain. If one of them works, the chain is fine and the fault is the channel that is not calling.</p>
-                    <ol>
-                        <li><strong>Pressure.</strong> A system boiler is sealed. Cold pressure for a typical house is about 1.2 bar, in the 1 to 2 bar band. Most boilers stop between about 0.5 and 0.8 bar. See <a href="/boiler-pressure/">boiler pressure</a>.</li>
-                        <li><strong>A demand.</strong> The programmer channel has to be on, the room or cylinder thermostat has to be calling, and the zone valve has to open. That opening is what asks the boiler to fire. See <a href="/s-plan/">S Plan</a>.</li>
-                        <li><strong>The pump, then the fan, then ignition.</strong> You should hear the pump, then the fan. It should light and stay lit. A stop after the pump, or a flame that drops straight out, is inside the case. Do not open it. The order is on <a href="/combi-boiler/combi-boiler-fault-finding/">combi boiler fault finding</a>.</li>
-                    </ol>
+                <article class="step issue-answer" data-path="hot-water">
+                    <h3>No hot water</h3>
+                    <p>A system boiler heats a separate cylinder. Hot water runs when that channel is on, the cylinder thermostat is calling, and the hot water zone valve has opened. The cylinder thermostat is normally about 60°C, and the boiler flow has to sit above that.</p>
+                    <p>See <a href="/s-plan/">S Plan</a> and <a href="/energy-saving/adjust-your-system-regular-boiler-flow-temperature-for-increased-efficiency/">system and regular boiler flow temperature</a>. If both are calling and the cylinder stays cold, an engineer needs to see it. Do not open the boiler case.</p>
                 </article>
-                <article class="issue-answer" id="system-no-hot-water" hidden>
-                    <h3>The heating works, but there is no hot water</h3>
-                    <p>A system boiler heats a separate cylinder. Hot water and heating are usually on separate channels. Hot water runs when that channel is on, the cylinder thermostat is calling, and the hot water zone valve has opened. Some system boilers have the diverter inside the case instead.</p>
-                    <p>The cylinder thermostat is normally about 60°C. The boiler flow has to sit above that, or the cylinder never reaches it. How an <a href="/s-plan/">S Plan</a> does this is set out on that page. The flow-temperature note is in <a href="/energy-saving/adjust-your-system-regular-boiler-flow-temperature-for-increased-efficiency/">system and regular boiler flow temperature</a>.</p>
-                    <p>If the programmer and the cylinder thermostat are both calling and the cylinder stays cold, an engineer needs to see it. Do not open the boiler case.</p>
+                <div class="step" data-path="heating">
+                    <h2>Is it every radiator, or just one?</h2>
+                    <div class="issue-list">
+                        <a href="#system/heating/all">Every radiator</a>
+                        <a href="#system/heating/one">Just one</a>
+                    </div>
+                </div>
+                <article class="step issue-answer" data-path="heating/all">
+                    <h3>Every radiator stays cold</h3>
+                    <p>The cylinder is heating, so the boiler can fire. Check the heating channel on the programmer and the room thermostat. On an S Plan the heating zone valve has to open before the radiators warm. See <a href="/s-plan/">S Plan</a>.</p>
                 </article>
-                <article class="issue-answer" id="system-no-heating" hidden>
-                    <h3>The hot water works, but the radiators stay cold</h3>
-                    <p>The boiler can fire, because the cylinder is heating. The heating side is not getting that heat. Check the heating channel on the programmer and the room thermostat. On an S Plan the heating zone valve has to open before the radiators warm.</p>
-                    <p>One radiator that stays cold on its own is often a <a href="/how-to/repair-a-thermostatic-radiator-valve-trv-not-working-with-trv-pin-stuck/">stuck TRV pin</a>. The valve layout is on the <a href="/s-plan/">S Plan</a> page.</p>
+                <article class="step issue-answer" data-path="heating/one">
+                    <h3>Just one radiator</h3>
+                    <p>One radiator cold while the others heat is often a stuck pin in that radiator’s valve. See <a href="/how-to/repair-a-thermostatic-radiator-valve-trv-not-working-with-trv-pin-stuck/">TRV pin stuck</a>.</p>
                 </article>
-                <article class="issue-answer" id="system-pressure" hidden>
-                    <h3>The gauge is low, or it will not stay up</h3>
-                    <p>A system boiler is sealed, the same as a combi. There is a gauge, and no loft tank doing this job. For a typical house, cold pressure is about 1.2 bar, in the 1 to 2 bar band. If you keep topping it up, water is leaving the system.</p>
-                    <p>See <a href="/boiler-pressure/">boiler pressure</a>.</p>
-                </article>
-                <article class="issue-answer" id="system-pressure-rises" hidden>
-                    <h3>The gauge climbs when the heating is on</h3>
-                    <p>Pressure should rise by about 0.5 bar from the cold fill, then fall back as the system cools. A rise of more than that, or a climb past 2.5 bar into the red, means the expansion vessel is short of air, undersized, or failed. That is an engineer’s job.</p>
-                    <p>See <a href="/boiler-pressure/">boiler pressure</a>.</p>
-                </article>
-                <article class="issue-answer" id="system-code" hidden>
+                <div class="step" data-path="both">
+                    <h2>Is there a code on the display?</h2>
+                    <div class="issue-list">
+                        <a href="#system/both/code">Yes</a>
+                        <a href="#system/both/no-code">No</a>
+                    </div>
+                </div>
+                <article class="step issue-answer" data-path="both/code">
                     <h3>There is a code on the display</h3>
                     <p>A code is a better clue than the symptom alone. Look it up in <a href="/fault-codes/">fault codes</a>.</p>
+                </article>
+                <div class="step" data-path="both/no-code">
+                    <h2>What is the gauge doing?</h2>
+                    <div class="issue-list">
+                        <a href="#system/both/pressure">It is low</a>
+                        <a href="#system/both/rises">It climbs when the heating is on</a>
+                        <a href="#system/both/normal">It looks normal, but nothing heats</a>
+                    </div>
+                </div>
+                <article class="step issue-answer" data-path="both/pressure">
+                    <h3>The gauge is low</h3>
+                    <p>A system boiler is sealed. Cold pressure for a typical house is about 1.2 bar, in the 1 to 2 bar band. If you keep topping it up, water is leaving the system. See <a href="/boiler-pressure/">boiler pressure</a>.</p>
+                </article>
+                <article class="step issue-answer" data-path="both/rises">
+                    <h3>The gauge climbs</h3>
+                    <p>Pressure should rise by about 0.5 bar from the cold fill, then fall back as the system cools. A bigger rise, or a climb past 2.5 bar, points at the expansion vessel. That is an engineer’s job. See <a href="/boiler-pressure/">boiler pressure</a>.</p>
+                </article>
+                <article class="step issue-answer" data-path="both/normal">
+                    <h3>The gauge is normal, but nothing heats</h3>
+                    <p>The programmer has to be on, a thermostat has to be calling, and a zone valve has to open before the boiler is asked to fire. After that you should hear the pump, then the fan, and it should stay lit. See <a href="/s-plan/">S Plan</a>. Do not open the boiler case.</p>
                 </article>
             </div>
 
             <div class="finder-set" data-system="regular" hidden>
-                <h2>Regular boiler: what is happening?</h2>
-                <p class="sequence-note">Once the controls call, the boiler follows the same chain: pump, then fan, then ignition. An open-vent system has a tank in the loft instead of a pressure gauge. The pump is often outside the case.</p>
-                <div class="issue-list">
-                    <a href="#regular/no-light">It does not light at all</a>
-                    <a href="#regular/no-hot-water">The heating works, but the cylinder stays cold</a>
-                    <a href="#regular/no-heating">The hot water works, but the radiators stay cold</a>
-                    <a href="#regular/loft-tank">The tank in the loft is overflowing, or it is empty</a>
-                    <a href="#regular/sludge">Radiators are cold at the bottom, or the system is noisy</a>
-                    <a href="#regular/code">There is a code on the display</a>
+                <div class="step" data-path="">
+                    <h2>What has stopped working?</h2>
+                    <div class="issue-list">
+                        <a href="#regular/hot-water">Hot water</a>
+                        <a href="#regular/heating">Heating</a>
+                        <a href="#regular/both">Both</a>
+                    </div>
                 </div>
-                <article class="issue-answer" id="regular-no-light" hidden>
-                    <h3>It does not light at all</h3>
-                    <p>If neither the radiators nor the cylinder heat, the boiler is not getting through the chain. If one of them works, the chain is fine and the fault is the channel that is not calling.</p>
-                    <ol>
-                        <li><strong>Water in the system.</strong> There is usually no pressure gauge. The feed tank in the loft has to hold a level. An empty tank starves the boiler. See <a href="/boiler-pressure/">boiler pressure</a> for why these systems have no gauge.</li>
-                        <li><strong>A demand.</strong> The programmer channel has to be on, the room or cylinder thermostat has to be calling, and the zone valve has to open. See <a href="/s-plan/">S Plan</a>.</li>
-                        <li><strong>The pump, then the fan, then ignition.</strong> On a regular boiler the pump is often outside the case. You should hear it, then the fan. It should light and stay lit. A stop after that, or a flame that drops straight out, is a Gas Safe registered engineer’s job. Do not open the boiler case. The order is on <a href="/combi-boiler/combi-boiler-fault-finding/">combi boiler fault finding</a>.</li>
-                    </ol>
+                <article class="step issue-answer" data-path="hot-water">
+                    <h3>The cylinder stays cold</h3>
+                    <p>Hot water runs when the programmer’s hot water channel is on, the cylinder thermostat is calling, and the hot water zone valve has opened. The cylinder thermostat is normally about 60°C, and the boiler flow has to sit above that.</p>
+                    <p>See <a href="/s-plan/">S Plan</a>. An empty tank in the loft can also starve the cylinder of water.</p>
                 </article>
-                <article class="issue-answer" id="regular-no-hot-water" hidden>
-                    <h3>The heating works, but the cylinder stays cold</h3>
-                    <p>A regular boiler heats a separate cylinder, the same idea as a system boiler. Hot water runs when the programmer’s hot water channel is on, the cylinder thermostat is calling, and the hot water zone valve has opened.</p>
-                    <p>The cylinder thermostat is normally about 60°C, and the boiler flow has to sit above that. See <a href="/s-plan/">S Plan</a> and <a href="/energy-saving/adjust-your-system-regular-boiler-flow-temperature-for-increased-efficiency/">system and regular boiler flow temperature</a>. An open-vent system also has a tank in the loft. If that tank is empty, the boiler and the cylinder can be starved of water.</p>
+                <div class="step" data-path="heating">
+                    <h2>Is it every radiator, or just one?</h2>
+                    <div class="issue-list">
+                        <a href="#regular/heating/all">Every radiator</a>
+                        <a href="#regular/heating/one">Just one</a>
+                    </div>
+                </div>
+                <article class="step issue-answer" data-path="heating/all">
+                    <h3>Every radiator stays cold</h3>
+                    <p>The cylinder is heating, so the boiler can fire. Check the heating channel and the room thermostat. On an S Plan the heating zone valve has to open. On a regular boiler the pump is often outside the case. See <a href="/s-plan/">S Plan</a>.</p>
                 </article>
-                <article class="issue-answer" id="regular-no-heating" hidden>
-                    <h3>The hot water works, but the radiators stay cold</h3>
-                    <p>The cylinder is heating, so the boiler can fire. Check the heating channel on the programmer and the room thermostat. On an S Plan the heating zone valve has to open. On a regular boiler the pump is often outside the case, so that is part of the same check rather than a fault inside the boiler.</p>
-                    <p>One cold radiator is often a <a href="/how-to/repair-a-thermostatic-radiator-valve-trv-not-working-with-trv-pin-stuck/">stuck TRV pin</a>. The valve layout is on the <a href="/s-plan/">S Plan</a> page.</p>
+                <article class="step issue-answer" data-path="heating/one">
+                    <h3>Just one radiator</h3>
+                    <p>One radiator cold while the others heat is often a stuck pin in that radiator’s valve. See <a href="/how-to/repair-a-thermostatic-radiator-valve-trv-not-working-with-trv-pin-stuck/">TRV pin stuck</a>.</p>
                 </article>
-                <article class="issue-answer" id="regular-loft-tank" hidden>
-                    <h3>The tank in the loft is overflowing, or it is empty</h3>
-                    <p>An open-vent system has a feed and expansion tank in the loft, and usually no pressure gauge. The tank should hold a level. It should not run dry, and it should not pour out of the overflow while the heating is on.</p>
-                    <p>Water pushed up into that tank when the heating runs is a known fault on these systems. Tracing it is an engineer’s job. Why these systems have no gauge is on the <a href="/boiler-pressure/">boiler pressure</a> page. The layout is under <a href="/boiler-types/">boiler types</a>.</p>
-                </article>
-                <article class="issue-answer" id="regular-sludge" hidden>
-                    <h3>Radiators are cold at the bottom, or the system is noisy</h3>
-                    <p>Open-vent systems corrode more than sealed ones. Sludge from that settles in radiators, so they stay cold along the bottom, and the boiler can kettle. A badly sludged system needs a proper clean. That is an engineer’s job.</p>
-                    <p>See <a href="/boiler-types/">boiler types</a>.</p>
-                </article>
-                <article class="issue-answer" id="regular-code" hidden>
+                <div class="step" data-path="both">
+                    <h2>Is there a code on the display?</h2>
+                    <div class="issue-list">
+                        <a href="#regular/both/code">Yes</a>
+                        <a href="#regular/both/no-code">No</a>
+                    </div>
+                </div>
+                <article class="step issue-answer" data-path="both/code">
                     <h3>There is a code on the display</h3>
                     <p>A code is a better clue than the symptom alone. Look it up in <a href="/fault-codes/">fault codes</a>.</p>
                 </article>
+                <div class="step" data-path="both/no-code">
+                    <h2>What is the tank in the loft doing?</h2>
+                    <div class="issue-list">
+                        <a href="#regular/both/tank">It is overflowing, or it is empty</a>
+                        <a href="#regular/both/tank-ok">It has water in it</a>
+                    </div>
+                </div>
+                <article class="step issue-answer" data-path="both/tank">
+                    <h3>The loft tank is overflowing, or empty</h3>
+                    <p>An open-vent system usually has no pressure gauge. The tank should hold a level. It should not run dry, and it should not pour out of the overflow while the heating is on. Water pushed up into that tank when the heating runs is a known fault. Tracing it is an engineer’s job. See <a href="/boiler-pressure/">boiler pressure</a>.</p>
+                </article>
+                <div class="step" data-path="both/tank-ok">
+                    <h2>What else do you notice?</h2>
+                    <div class="issue-list">
+                        <a href="#regular/both/no-light">It does not light</a>
+                        <a href="#regular/both/sludge">Radiators are cold at the bottom, or it is noisy</a>
+                    </div>
+                </div>
+                <article class="step issue-answer" data-path="both/no-light">
+                    <h3>It does not light</h3>
+                    <p>The programmer has to be on, a thermostat has to be calling, and a zone valve has to open. Then you should hear the pump, often outside the case, then the fan, and it should stay lit. See <a href="/s-plan/">S Plan</a>. Do not open the boiler case.</p>
+                </article>
+                <article class="step issue-answer" data-path="both/sludge">
+                    <h3>Cold at the bottom, or noisy</h3>
+                    <p>Open-vent systems corrode more than sealed ones. Sludge settles in radiators, so they stay cold along the bottom, and the boiler can kettle. A badly sludged system needs a proper clean. That is an engineer’s job. See <a href="/boiler-types/">boiler types</a>.</p>
+                </article>
             </div>
-
             <div class="finder-actions">
-                <a href="#finder-issues" class="back-to-hub" id="finder-back" hidden>Other issues</a>
+                <a href="#combi" class="back-to-hub" id="finder-back" hidden>Back</a>
             </div>
             <p class="finder-note">Guidance only. Gas work stays with a Gas Safe registered engineer. For a repair visit, <a href="/quote/?need=boiler-repair&amp;message=Fault%20finder.%20Asking%20about%20a%20repair.">get a quote</a>.</p>
         </section>
@@ -524,16 +647,21 @@
             var finder = document.getElementById('finder');
             var subtitle = document.getElementById('finder-subtitle');
             var back = document.getElementById('finder-back');
+            var changeSystem = document.getElementById('change-system');
+            var types = document.querySelector('.system-types');
             var cards = document.querySelectorAll('.system-card');
 
             function render() {
                 var parts = (location.hash || '').replace(/^#/, '').split('/');
                 var system = titles[parts[0]] ? parts[0] : '';
-                var issue = parts[1] || '';
 
+                types.classList.toggle('is-chosen', !!system);
                 cards.forEach(function (card) {
-                    card.classList.toggle('is-selected', card.getAttribute('data-system') === system);
+                    var chosen = card.getAttribute('data-system') === system;
+                    card.classList.toggle('is-selected', chosen);
+                    card.hidden = !!system && !chosen;
                 });
+                changeSystem.hidden = !system;
 
                 finder.hidden = !system;
                 subtitle.textContent = system
@@ -544,19 +672,23 @@
                     var on = set.getAttribute('data-system') === system;
                     set.hidden = !on;
                     if (!on) return;
-                    var list = set.querySelector('.issue-list');
-                    var match = false;
-                    set.querySelectorAll('.issue-answer').forEach(function (answer) {
-                        var show = answer.id === system + '-' + issue;
-                        answer.hidden = !show;
-                        if (show) match = true;
+                    var path = parts.slice(1).join('/');
+                    var matched = false;
+                    set.querySelectorAll('.step').forEach(function (step) {
+                        var show = step.getAttribute('data-path') === path;
+                        step.hidden = !show;
+                        if (show) matched = true;
                     });
-                    list.hidden = match;
-                    set.querySelector('h2').hidden = match;
-                    var note = set.querySelector('.sequence-note');
-                    if (note) note.hidden = match;
-                    back.hidden = !match;
-                    back.setAttribute('href', '#' + system);
+                    if (!matched) {
+                        path = '';
+                        set.querySelectorAll('.step').forEach(function (step) {
+                            step.hidden = step.getAttribute('data-path') !== '';
+                        });
+                    }
+                    var parent = path ? path.split('/') : [];
+                    parent.pop();
+                    back.hidden = !path;
+                    back.setAttribute('href', '#' + system + (parent.length ? '/' + parent.join('/') : ''));
                 });
             }
 
