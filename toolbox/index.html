@@ -41,8 +41,37 @@
             font-size: 1.125rem;
             line-height: 1.6;
             color: var(--text-muted);
-            margin: 0;
+            margin: 0 0 0.7rem;
             max-width: 60ch;
+        }
+
+        .toolbox-search {
+            margin: 0;
+            max-width: 26rem;
+        }
+
+        .toolbox-search input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0.5rem 0.85rem;
+            font: inherit;
+            font-size: 0.95rem;
+            color: var(--text);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+        }
+
+        .toolbox-search input:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 1px;
+            border-color: var(--accent);
+        }
+
+        .toolbox-search__empty {
+            margin: 0.65rem 0 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
 
         .toolbox-sections {
@@ -81,7 +110,7 @@
 
         .toolbox-section__list a {
             display: block;
-            padding: 0.05rem 0;
+            padding: 0.35rem 0;
             color: var(--accent);
             text-decoration: none;
             font-weight: 500;
@@ -125,12 +154,12 @@
             }
 
             .toolbox-section__list a {
-                padding: 0.28rem 0;
+                padding: 0.45rem 0;
                 line-height: 1.3;
             }
 
             .toolbox-section__list li:last-child a {
-                padding-bottom: 0.28rem;
+                padding-bottom: 0.45rem;
             }
         }
     </style>
@@ -178,6 +207,10 @@
             <p class="article-intro">
                 Service tools, FGA guides, diagnostics, fault codes, and heating calculators grouped by brand and task.
             </p>
+            <form class="toolbox-search" role="search" onsubmit="return false;">
+                <input type="search" id="toolbox-search" placeholder="Search tools" aria-label="Search tools" autocomplete="off">
+            </form>
+            <p class="toolbox-search__empty" id="toolbox-empty" hidden>No tools match that search.</p>
         </header>
 
         <div class="toolbox-sections">
@@ -289,6 +322,34 @@
     
 
     <div id="site-footer"></div>
+    <script>
+        (function () {
+            var input = document.getElementById('toolbox-search');
+            var empty = document.getElementById('toolbox-empty');
+            var sections = document.querySelectorAll('.toolbox-section');
+            if (!input || !sections.length) return;
+
+            function applyFilter() {
+                var query = input.value.trim().toLowerCase();
+                var any = false;
+                sections.forEach(function (section) {
+                    var title = section.querySelector('h2');
+                    var titleMatch = query && title && title.textContent.toLowerCase().indexOf(query) !== -1;
+                    var visible = 0;
+                    section.querySelectorAll('li').forEach(function (item) {
+                        var match = !query || titleMatch || item.textContent.toLowerCase().indexOf(query) !== -1;
+                        item.hidden = !match;
+                        if (match) visible += 1;
+                    });
+                    section.hidden = visible === 0;
+                    if (visible) any = true;
+                });
+                if (empty) empty.hidden = any;
+            }
+
+            input.addEventListener('input', applyFilter);
+        })();
+    </script>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
