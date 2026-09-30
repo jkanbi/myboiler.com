@@ -47,11 +47,11 @@
             box-shadow: var(--shadow-lg);
             padding: 2rem;
             box-sizing: border-box;
-            margin-bottom: 1.25rem;
+            margin-bottom: 2rem;
         }
 
         .input-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2.25rem;
         }
 
         .input-group:last-child {
@@ -64,6 +64,50 @@
             flex-wrap: wrap;
             gap: 0.2rem 0.75rem;
             margin-bottom: 0.75rem;
+        }
+
+        .flow-readout {
+            margin: 0;
+        }
+
+        .flow-slider {
+            position: relative;
+            --track-size: 2rem;
+            --thumb-size: 2.75rem;
+            --red-stop: calc(var(--thumb-size) / 2 + (30 / 35) * (100% - var(--thumb-size)));
+        }
+
+        .flow-slider .input-slider {
+            height: var(--track-size);
+        }
+
+        .flow-slider .input-slider::-webkit-slider-runnable-track {
+            height: var(--track-size);
+        }
+
+        .flow-slider .input-slider::-moz-range-track {
+            height: var(--track-size);
+        }
+
+        .flow-slider .flow-readout {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: var(--track-size);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem 0.75rem;
+            padding: 0 calc(var(--thumb-size) + 0.35rem);
+            pointer-events: none;
+            text-align: center;
+        }
+
+        .flow-slider .flow-readout .input-hint {
+            color: #fff;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
         }
 
         .input-label {
@@ -94,14 +138,6 @@
 
         .card-lead p:last-child {
             margin-bottom: 0;
-        }
-
-        .power-recommendation {
-            margin: 0.65rem 0 0;
-            font-size: 0.9375rem;
-            font-weight: 600;
-            line-height: 1.5;
-            color: var(--text);
         }
 
         .input-hint {
@@ -145,6 +181,24 @@
         .output-row > .auto-button {
             flex: 0 0 auto;
             min-width: 5.5rem;
+        }
+
+        .unit-rate-field {
+            position: relative;
+        }
+
+        .unit-rate-field .input-field {
+            padding-right: 15.5rem;
+        }
+
+        .unit-rate-field .input-label {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-weight: 500;
+            pointer-events: none;
         }
 
         .choice-toggle {
@@ -191,6 +245,13 @@
             background: #e8e8e8;
             cursor: zoom-in;
             overflow: hidden;
+        }
+
+        .system-figure .system-thumb {
+            width: 100%;
+            min-width: 0;
+            height: auto;
+            aspect-ratio: 1431 / 805;
         }
 
         .system-thumb img {
@@ -244,14 +305,6 @@
 
         .other-note a {
             color: var(--accent);
-        }
-
-        .heat-pump-cta {
-            margin-top: 0.85rem;
-            padding: 0.9rem 1rem;
-            border: 2px solid var(--accent);
-            border-radius: var(--radius);
-            background: var(--bg);
         }
 
         .heat-pump-cta p {
@@ -396,8 +449,8 @@
             background: linear-gradient(to right,
                 #111 0 30%,
                 #2f9e44 30% 57.14%,
-                #e6a817 57.14% 82.86%,
-                #d64545 82.86% 100%);
+                #e6a817 57.14% var(--red-stop),
+                #d64545 var(--red-stop) 100%);
             outline: none;
         }
 
@@ -407,8 +460,8 @@
             background: linear-gradient(to right,
                 #111 0 30%,
                 #2f9e44 30% 57.14%,
-                #e6a817 57.14% 82.86%,
-                #d64545 82.86% 100%);
+                #e6a817 57.14% var(--red-stop),
+                #d64545 var(--red-stop) 100%);
         }
 
         .input-slider::-webkit-slider-thumb {
@@ -437,6 +490,27 @@
             cursor: pointer;
         }
 
+        .flow-slider .input-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 2.75rem !important;
+            height: 2.75rem !important;
+            margin-top: -0.375rem !important;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #1b1b1b;
+            cursor: pointer;
+        }
+
+        .flow-slider .input-slider::-moz-range-thumb {
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #1b1b1b;
+            cursor: pointer;
+        }
+
         .input-slider.is-plain,
         .input-slider.is-plain::-webkit-slider-runnable-track {
             background: var(--border);
@@ -451,6 +525,33 @@
             color: var(--text-muted);
         }
 
+        #flow-state[hidden],
+        #cylinder-hint[hidden] {
+            display: none;
+        }
+
+        #flow-state {
+            font-size: 0.8125rem;
+            font-weight: 700;
+        }
+
+        .return-note {
+            margin: 0.65rem 0 0;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--text);
+        }
+
+        #notes-card .return-note {
+            margin-top: 0;
+        }
+
+        #notes-card .return-note + .return-note {
+            margin-top: 0.65rem;
+        }
+
+        .return-note[hidden],
         .band-legend[hidden] {
             display: none;
         }
@@ -470,19 +571,28 @@
         .band-amber::before { background: #e6a817; }
         .band-red::before { background: #d64545; }
 
-        .legionella-label {
+        .legionella-label,
+        .inhibit-label {
             display: block;
             margin: 0.65rem 0 0;
             padding: 0.45rem 0.6rem;
             border-radius: 4px;
-            background: #d64545;
             color: #fff;
             font-size: 0.8125rem;
             font-weight: 700;
             line-height: 1.4;
         }
 
+        .legionella-label {
+            background: #d64545;
+        }
+
+        .inhibit-label {
+            background: #b58100;
+        }
+
         .legionella-label[hidden],
+        .inhibit-label[hidden],
         .band-legend span[hidden] {
             display: none;
         }
@@ -491,16 +601,17 @@
         .input-slider.flow-combi::-webkit-slider-runnable-track {
             background: linear-gradient(to right,
                 #2f9e44 0 57.14%,
-                #e6a817 57.14% 82.86%,
-                #d64545 82.86% 100%);
+                #e6a817 57.14% var(--red-stop),
+                #d64545 var(--red-stop) 100%);
         }
 
         .input-slider.flow-cylinder,
         .input-slider.flow-cylinder::-webkit-slider-runnable-track {
             background: linear-gradient(to right,
-                #111 0 57.14%,
-                #2f9e44 57.14% 82.86%,
-                #d64545 82.86% 100%);
+                #111 0 27.14%,
+                #e6a817 27.14% 44.29%,
+                #2f9e44 44.29% var(--red-stop),
+                #d64545 var(--red-stop) 100%);
         }
 
         .calculated-field {
@@ -557,13 +668,19 @@
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 0.75rem;
-            margin-top: 1.25rem;
+            margin-top: 1.75rem;
         }
 
         .result-item {
             background: var(--bg);
             border-radius: var(--radius);
             padding: 0.85rem 1rem;
+        }
+
+        .result-item.is-key {
+            border: 2px solid #2f9e44;
+            box-shadow: 0 6px 18px rgba(47, 158, 68, 0.28);
+            text-align: center;
         }
 
         .result-label {
@@ -614,15 +731,22 @@
         }
 
         @media (min-width: 701px) {
+            #system-group > .choice-toggle {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 0.5rem;
+            }
+
             .system-figure,
             .model-figure {
                 display: grid;
                 grid-template-columns: repeat(3, minmax(0, 1fr));
                 column-gap: 0.5rem;
+                align-items: start;
             }
 
-            .system-figure[data-system="combi"] .system-thumb,
-            .model-figure[data-model="new"] .model-thumb {
+            .model-figure[data-model="new"] .model-thumb,
+            .system-figure[data-system="system"] .system-thumb {
                 grid-column: 2;
             }
 
@@ -729,8 +853,8 @@
                     <div class="input-label" id="system-label">System</div>
                 </div>
                 <div class="choice-toggle" role="group" aria-labelledby="system-label">
-                    <button type="button" class="choice-button" data-system="system" aria-pressed="false">System/vented with stored hot water</button>
                     <button type="button" class="choice-button active" data-system="combi" aria-pressed="true">Combi boiler</button>
+                    <button type="button" class="choice-button" data-system="system" aria-pressed="false">System/vented with stored hot water</button>
                     <button type="button" class="choice-button" data-system="combi-cylinder" aria-pressed="false">Other type</button>
                 </div>
                 <figure class="system-figure" id="system-figure">
@@ -782,30 +906,30 @@
                     <input type="number" id="heat-loss" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="Known heat loss">
                     <button type="button" class="choice-button auto-button" id="heat-loss-reset">Reset</button>
                 </div>
-                <p class="power-recommendation" id="power-recommendation"></p>
             </div>
 
             <div class="input-group">
-                <div class="input-heading">
-                    <label class="input-label" for="unit-rate">Unit rate per kWh</label>
-                    <span class="input-hint">Gas unit rate in pence per kWh, not including standing charge</span>
+                <div class="unit-rate-field">
+                    <input type="number" id="unit-rate" class="input-field" inputmode="decimal" min="0" step="0.01" value="6.33">
+                    <label class="input-label" for="unit-rate">Gas unit rate in pence per kWh</label>
                 </div>
-                <input type="number" id="unit-rate" class="input-field" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 6.33" value="6.33">
             </div>
 
             <div class="input-group">
                 <div class="input-heading">
                     <label class="input-label" for="flow-temp">Flow temperature now</label>
-                    <span class="input-hint" id="flow-hint">75°C flow, about 55°C return</span>
+                    <span id="flow-state">Partially condensing</span>
+                    <span class="input-hint" id="cylinder-hint" hidden>Cylinder about 70°C</span>
                 </div>
-                <input type="range" id="flow-temp" class="input-slider" min="45" max="80" step="1" value="75" aria-describedby="band-legend legionella-warning">
-                <p class="legionella-label" id="legionella-warning" hidden>This is the boiler flow, not the cylinder. Stored water is usually about 10°C cooler, so legionella is possible until the flow is above 65°C.</p>
-                <div class="band-legend" id="band-legend">
-                    <span class="band-black" id="band-black" hidden>65°C flow and below</span>
-                    <span class="band-green" id="band-full">Fully condensing, up to 65°C</span>
-                    <span class="band-amber" id="band-amber">Partially condensing, 66–73°C</span>
-                    <span class="band-red" id="band-red">Non-condensing, 74°C and above</span>
+                <div class="flow-slider">
+                    <input type="range" id="flow-temp" class="input-slider" min="45" max="80" step="1" value="75" aria-describedby="band-legend legionella-warning">
+                    <div class="input-heading flow-readout">
+                        <span class="input-hint" id="flow-hint">75°C flow, about 55°C return</span>
+                    </div>
                 </div>
+                <p class="return-note" id="combi-tap-note">On a combi, this is the radiator flow. Tap and shower temperature stays as it is.</p>
+                <p class="legionella-label" id="legionella-warning" hidden>The cylinder is about 5°C below the flow. Legionella is possible once stored water drops below 50°C.</p>
+                <p class="inhibit-label" id="inhibit-notice" hidden>Bacteria start dying. The cylinder is about 50–55°C, where growth is inhibited and the bacteria die off as the stored water rises.</p>
             </div>
 
             <div class="result-grid bill-results">
@@ -814,22 +938,34 @@
                     <div class="result-value" id="heating-cost">—</div>
                     <div class="result-unit">excluding standing charge</div>
                 </div>
+                <div class="result-item is-key">
+                    <div class="result-label">Condensing-mode saving</div>
+                    <div class="result-value" id="condensing-saving">—</div>
+                    <div class="result-unit" id="condensing-saving-unit">versus a 75°C flow</div>
+                </div>
                 <div class="result-item">
                     <div class="result-label">Graph efficiency</div>
                     <div class="result-value" id="graph-efficiency">—</div>
                     <div class="result-unit" id="graph-efficiency-unit">from return temperature</div>
                 </div>
-                <div class="result-item">
-                    <div class="result-label">Condensing-mode saving</div>
-                    <div class="result-value" id="condensing-saving">—</div>
-                    <div class="result-unit" id="condensing-saving-unit">versus a 75°C flow</div>
-                </div>
             </div>
-            <div class="heat-pump-cta" id="heat-pump-cta" hidden>
-                <p>If this flow is keeping the house warm in peak winter, a heat pump may suit this system without many changes.</p>
-                <p id="heat-pump-size"></p>
-                <a id="heat-pump-checker-link" href="/heat-pump-checker/">Check heat pump suitability</a>
             </div>
+        </div>
+
+        <div class="calculator-card" id="notes-card">
+            <h2 class="card-title">Notes and keys</h2>
+            <p class="return-note" id="return-note">Condensing is a return of 55°C and below. The return sits about 20°C under the flow.</p>
+            <p class="return-note" id="cylinder-delta-note" hidden>The cylinder is assumed to sit 5°C below the flow. The gap can be higher than that.</p>
+            <p class="return-note" id="stored-campaign-note" hidden>Public campaigns usually cover combi boilers only, because stored hot water has to stay hot enough.</p>
+            <p class="return-note">Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days before raising the flow by 5°C. It can be turned back at once.</p>
+            <p class="return-note">If anyone is vulnerable to a cool room, keep the flow a little higher, and make sure someone can turn it back up.</p>
+            <p class="return-note">A draughty or poorly insulated house may not hold the temperature. Raise the flow by 5°C and leave it for a few days.</p>
+            <p class="return-note">In spring and autumn the flow can sit lower. Raise it in the coldest weather.</p>
+            <div class="band-legend" id="band-legend">
+                <span class="band-black" id="band-black" hidden>Cylinder below 50°C</span>
+                <span class="band-green" id="band-full">Fully condensing, return up to 45°C</span>
+                <span class="band-amber" id="band-amber">Partially condensing, return 46–55°C</span>
+                <span class="band-red" id="band-red">Non-condensing, return above 55°C</span>
             </div>
         </div>
 
@@ -928,7 +1064,11 @@
                     <div class="result-unit" id="gas-saving-unit">versus a 75°C flow, heating only</div>
                 </div>
             </div>
-            <p class="calculator-note">Return is taken as flow minus 20°C. Condensing starts once return is below about 54°C. Radiator output uses the EN 442 exponent 1.3 against a 20°C room. The saving uses the same efficiency curve as the <a href="/energy-saving/combi-boiler-condensing-mode-savings/">condensing-mode calculator</a>. Standing charge is not included. Changing boiler parameters is normally an engineer’s job. See <a href="/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/">how to lower flow temperature</a>, <a href="/boiler-maximum-and-minimum-output-mode-videos/">maximum output mode</a>, and <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm controls</a>.</p>
+            <p class="calculator-note">Return is taken as flow minus 20°C. Condensing is a return of 55°C and below. Radiator output uses the EN 442 exponent 1.3 against a 20°C room. The saving uses the same efficiency curve as the <a href="/energy-saving/combi-boiler-condensing-mode-savings/">condensing-mode calculator</a>. Standing charge is not included. Changing boiler parameters is normally an engineer’s job. See <a href="/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/">how to lower flow temperature</a>, <a href="/boiler-maximum-and-minimum-output-mode-videos/">maximum output mode</a>, and <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm controls</a>.</p>
+        </div>
+        <div class="calculator-card heat-pump-cta" id="heat-pump-cta" hidden>
+            <p>If this flow is keeping the house warm in peak winter, a heat pump may suit this system without many changes. <span id="heat-pump-size"></span></p>
+            <a id="heat-pump-checker-link" href="/heat-pump-checker/">Check heat pump suitability</a>
         </div>
         <p class="tool-version">2026-09-27 08:34 · 3</p>
     </div>
@@ -944,12 +1084,13 @@
             var COLD_FULL_LOAD_HOURS = 1700;
             var DELTA = 20;
             var ROOM = 20;
-            var DEW_RETURN = 54;
-            var COMBI_FLOW = 56;
+            var CONDENSING_RETURN_MAX = 55;
+            var COMBI_FLOW = 55;
             var CYLINDER_FLOW = 70;
             var SYSTEM_CONDENSING_FLOW = 70;
-            var LEGIONELLA_STORE = 55;
-            var CYLINDER_BELOW_FLOW = 10;
+            var LEGIONELLA_STORE = 50;
+            var CYLINDER_BELOW_FLOW = 5;
+            var INHIBIT_FLOW_MAX = 60;
             var EFFICIENCY_CURVE = [
                 [10, 99.7],
                 [20, 98.3],
@@ -960,7 +1101,7 @@
                 [100, 82.0]
             ];
             var GREEN_MAX = 65;
-            var PARTIAL_FLOW = 73;
+            var PARTIAL_FLOW = CONDENSING_RETURN_MAX + DELTA;
             var RELIABILITY_FLOW = 65;
             var system = 'combi';
             var systemImages = {
@@ -1085,13 +1226,18 @@
                 return (value % 1 === 0 ? String(value) : value.toFixed(1)) + '%';
             }
 
+            function cylinderTemp(flow) {
+                return flow - CYLINDER_BELOW_FLOW;
+            }
+
             function legionellaFlowLimit() {
-                return LEGIONELLA_STORE + CYLINDER_BELOW_FLOW;
+                return LEGIONELLA_STORE + CYLINDER_BELOW_FLOW - 1;
             }
 
             function band(flow) {
                 if (storesHotWater()) {
-                    if (flow <= legionellaFlowLimit()) return { key: 'low', name: 'cylinder usually ' + LEGIONELLA_STORE + '°C or below' };
+                    if (cylinderTemp(flow) < LEGIONELLA_STORE) return { key: 'low', name: 'cylinder below ' + LEGIONELLA_STORE + '°C' };
+                    if (flow <= INHIBIT_FLOW_MAX) return { key: 'amber', name: 'condensing' };
                     if (flow <= PARTIAL_FLOW) return { key: 'green', name: 'condensing' };
                     return { key: 'red', name: 'non-condensing' };
                 }
@@ -1258,6 +1404,8 @@
                 document.getElementById('power-card').hidden = blocked;
                 document.getElementById('tool-results').hidden = blocked;
                 document.getElementById('model-card').hidden = blocked;
+                document.getElementById('notes-card').hidden = blocked;
+                document.getElementById('heat-pump-cta').hidden = blocked;
                 var systemFigureEl = document.getElementById('system-figure');
                 var diagram = systemImages[system];
                 var systemImage = systemFigureEl.querySelector('img');
@@ -1270,7 +1418,7 @@
                 document.getElementById('system-thumb').setAttribute('aria-label', diagram ? 'Enlarge diagram. ' + diagram.alt : 'Enlarge diagram');
                 if (blocked) return;
                 var flow = Number(flowInput.value);
-                document.getElementById('heat-pump-cta').hidden = flow > 50;
+                document.getElementById('heat-pump-cta').hidden = flow > 50 || storesHotWater();
                 var ret = flow - DELTA;
                 var currentBand = band(flow);
                 var condensingBoiler = boilerType === 'condensing';
@@ -1291,16 +1439,6 @@
                 var knownHeatLoss = numberOrNull(heatLossInput);
                 var heatLoss = heatLossManual ? knownHeatLoss : (estimate ? estimate.high : null);
                 var boilerKw = numberOrNull(boilerInput);
-                var powerRecommendation = document.getElementById('power-recommendation');
-                if (system === 'system') {
-                    powerRecommendation.textContent = 'Set the heating output to the hot water coil load.';
-                } else if (heatLossManual && heatLoss) {
-                    powerRecommendation.textContent = 'Set the heating output to ' + formatKw(heatLoss) + ' kW, the house heat loss.';
-                } else if (estimate) {
-                    powerRecommendation.textContent = 'Set the heating output to about ' + formatKw(estimate.high) + ' kW, the top of the estimated range.';
-                } else {
-                    powerRecommendation.textContent = 'Set the heating output to the house heat loss.';
-                }
                 var legend = document.getElementById('band-legend');
 
                 var bandFull = document.getElementById('band-full');
@@ -1308,36 +1446,81 @@
                 var bandAmber = document.getElementById('band-amber');
                 var stored = storesHotWater();
                 var flowLimit = legionellaFlowLimit();
-                var legionellaRisk = condensingBoiler && stored && flow <= flowLimit;
+                var cylinder = cylinderTemp(flow);
+                var legionellaRisk = condensingBoiler && stored && cylinder < LEGIONELLA_STORE;
                 var legionellaWarning = document.getElementById('legionella-warning');
+                var inhibitNotice = document.getElementById('inhibit-notice');
+                var cylinderHint = document.getElementById('cylinder-hint');
+                var returnNote = document.getElementById('return-note');
+                var cylinderDeltaNote = document.getElementById('cylinder-delta-note');
+                var storedCampaignNote = document.getElementById('stored-campaign-note');
+                var combiTapNote = document.getElementById('combi-tap-note');
                 flowInput.classList.toggle('is-plain', !condensingBoiler);
                 flowInput.classList.toggle('flow-cylinder', condensingBoiler && stored);
                 flowInput.classList.toggle('flow-combi', condensingBoiler && !stored);
                 legend.hidden = !condensingBoiler;
+                returnNote.hidden = !condensingBoiler;
+                cylinderDeltaNote.hidden = !(condensingBoiler && stored);
+                storedCampaignNote.hidden = !(condensingBoiler && stored);
+                combiTapNote.hidden = stored;
+                if (condensingBoiler && stored) {
+                    cylinderDeltaNote.textContent = 'The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow. The gap can be higher than that.';
+                }
+                var bacteriaDying = condensingBoiler && stored && currentBand.key === 'amber';
                 legionellaWarning.hidden = !legionellaRisk;
+                inhibitNotice.hidden = !bacteriaDying;
                 if (legionellaRisk) {
-                    legionellaWarning.textContent = 'This is the boiler flow, not the cylinder. Stored water is usually about ' + CYLINDER_BELOW_FLOW + '°C cooler, so at ' + flow + '°C flow the cylinder is about ' + (flow - CYLINDER_BELOW_FLOW) + '°C. Legionella is possible at ' + LEGIONELLA_STORE + '°C in the cylinder and below. Keep the flow above ' + flowLimit + '°C.';
+                    legionellaWarning.textContent = 'The cylinder is about ' + cylinder + '°C, ' + CYLINDER_BELOW_FLOW + '°C below the flow. Legionella is possible once stored water drops below ' + LEGIONELLA_STORE + '°C.';
+                }
+                if (bacteriaDying) {
+                    inhibitNotice.textContent = 'Bacteria start dying. The cylinder is about ' + cylinder + '°C, ' + CYLINDER_BELOW_FLOW + '°C below the flow. Growth is inhibited from ' + LEGIONELLA_STORE + '°C, and the bacteria die off as the stored water rises.';
                 }
                 bandBlack.hidden = !(condensingBoiler && stored);
-                bandAmber.hidden = !condensingBoiler || stored;
+                bandAmber.hidden = !condensingBoiler;
+                var fullReturnMax = GREEN_MAX - DELTA;
+                var partialReturnMin = fullReturnMax + 1;
+                var bandRed = document.getElementById('band-red');
+                bandRed.textContent = 'Non-condensing, return above ' + CONDENSING_RETURN_MAX + '°C';
                 if (stored) {
-                    bandBlack.textContent = flowLimit + '°C flow and below';
-                    bandFull.textContent = (flowLimit + 1) + '–' + PARTIAL_FLOW + '°C';
+                    var inhibitMin = LEGIONELLA_STORE + CYLINDER_BELOW_FLOW;
+                    legend.insertBefore(bandAmber, bandFull);
+                    bandBlack.textContent = 'Cylinder below ' + LEGIONELLA_STORE + '°C';
+                    bandAmber.textContent = inhibitMin + '–' + INHIBIT_FLOW_MAX + '°C flow, cylinder ' + LEGIONELLA_STORE + '–' + (INHIBIT_FLOW_MAX - CYLINDER_BELOW_FLOW) + '°C';
+                    bandFull.textContent = 'Condensing, return ' + ((INHIBIT_FLOW_MAX + 1) - DELTA) + '–' + CONDENSING_RETURN_MAX + '°C';
                 } else {
-                    bandFull.textContent = 'Fully condensing, up to ' + GREEN_MAX + '°C';
+                    legend.insertBefore(bandAmber, bandRed);
+                    bandAmber.textContent = 'Partially condensing, return ' + partialReturnMin + '–' + CONDENSING_RETURN_MAX + '°C';
+                    bandFull.textContent = 'Fully condensing, return up to ' + fullReturnMax + '°C';
                 }
+                var flowState = document.getElementById('flow-state');
                 bandFull.className = 'band-green';
+                var stateName = currentBand.key === 'low'
+                    ? (flow <= PARTIAL_FLOW ? 'condensing' : 'non-condensing')
+                    : currentBand.name;
+                flowState.hidden = !condensingBoiler;
+                var stateClass = legionellaRisk || currentBand.key === 'low' ? 'warn' : currentBand.key;
+                if (stateName === 'condensing') stateClass = 'green';
+                if (stateName === 'non-condensing') stateClass = 'red';
+                flowState.className = 'hint-' + stateClass;
+                flowState.textContent = stateName.charAt(0).toUpperCase() + stateName.slice(1);
+                cylinderHint.hidden = !(condensingBoiler && stored);
+                if (condensingBoiler && stored) {
+                    cylinderHint.className = 'input-hint' + (legionellaRisk ? ' hint-warn' : (currentBand.key === 'amber' ? ' hint-amber' : ''));
+                    cylinderHint.textContent = 'Cylinder about ' + cylinder + '°C';
+                }
                 if (condensingBoiler) {
-                    flowInput.setAttribute('aria-describedby', 'band-legend');
-                    flowHint.className = 'input-hint hint-' + (legionellaRisk ? 'warn' : currentBand.key);
-                    flowHint.textContent = flow + '°C flow, about ' + ret + '°C return — ' + currentBand.name;
+                    var describedBy = ['flow-state', 'return-note', 'band-legend'];
+                    if (!stored) describedBy.push('combi-tap-note');
+                    if (stored) describedBy.splice(2, 0, 'cylinder-delta-note');
+                    if (legionellaRisk) describedBy.push('legionella-warning');
+                    if (bacteriaDying) describedBy.push('inhibit-notice');
+                    flowInput.setAttribute('aria-describedby', describedBy.join(' '));
+                    flowHint.className = 'input-hint';
+                    flowHint.textContent = flow + '°C flow, about ' + ret + '°C return';
                 } else {
                     flowInput.removeAttribute('aria-describedby');
                     flowHint.className = 'input-hint';
                     flowHint.textContent = flow + '°C flow';
-                }
-                if (condensingBoiler) {
-                    flowInput.setAttribute('aria-describedby', legionellaRisk ? 'band-legend legionella-warning' : 'band-legend');
                 }
                 var pence = nonNegativeOrNull(rateInput);
                 var spaceHint = document.getElementById('space-heating-hint');
@@ -1415,7 +1598,7 @@
                         stepTitle('Flow temperature'),
                         target === flow
                             ? 'Leave the heating flow at ' + flow + '°C. The return is already ' + currentBand.name + '. If a room is short of heat, raise the flow by 5°C and try again for a few cold days.'
-                            : 'Set the heating flow to ' + target + '°C, in the green band. Factory settings are often 75–80°C, in the red, so the return stays above dew point and the boiler does not condense. If a room does not reach temperature, raise the flow by 5°C rather than jumping straight back to 75°C.'
+                            : 'Set the heating flow to ' + target + '°C, in the green band. Factory settings are often 75–80°C. Condensing is a return of ' + CONDENSING_RETURN_MAX + '°C and below, about 20°C under the flow. If a room does not reach temperature, raise the flow by 5°C rather than jumping straight back to 75°C.'
                     ));
                 } else {
                     plan.appendChild(item(
