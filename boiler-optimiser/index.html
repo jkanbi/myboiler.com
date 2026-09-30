@@ -394,8 +394,9 @@
             height: 10px;
             border-radius: 999px;
             background: linear-gradient(to right,
-                #2f9e44 0 42.86%,
-                #e6a817 42.86% 82.86%,
+                #111 0 30%,
+                #2f9e44 30% 57.14%,
+                #e6a817 57.14% 82.86%,
                 #d64545 82.86% 100%);
             outline: none;
         }
@@ -404,8 +405,9 @@
             height: 10px;
             border-radius: 999px;
             background: linear-gradient(to right,
-                #2f9e44 0 42.86%,
-                #e6a817 42.86% 82.86%,
+                #111 0 30%,
+                #2f9e44 30% 57.14%,
+                #e6a817 57.14% 82.86%,
                 #d64545 82.86% 100%);
         }
 
@@ -440,14 +442,6 @@
             background: var(--border);
         }
 
-        .input-slider.has-floor,
-        .input-slider.has-floor::-webkit-slider-runnable-track {
-            background: linear-gradient(to right,
-                #9a3412 0 42.86%,
-                #e6a817 42.86% 82.86%,
-                #d64545 82.86% 100%);
-        }
-
         .band-legend {
             display: flex;
             flex-wrap: wrap;
@@ -471,10 +465,43 @@
             vertical-align: -1px;
         }
 
+        .band-black::before { background: #111; }
         .band-green::before { background: #2f9e44; }
-        .band-floor::before { background: #9a3412; }
         .band-amber::before { background: #e6a817; }
         .band-red::before { background: #d64545; }
+
+        .legionella-label {
+            display: block;
+            margin: 0.65rem 0 0;
+            padding: 0.45rem 0.6rem;
+            border-radius: 4px;
+            background: #d64545;
+            color: #fff;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .legionella-label[hidden],
+        .band-legend span[hidden] {
+            display: none;
+        }
+
+        .input-slider.flow-combi,
+        .input-slider.flow-combi::-webkit-slider-runnable-track {
+            background: linear-gradient(to right,
+                #2f9e44 0 57.14%,
+                #e6a817 57.14% 82.86%,
+                #d64545 82.86% 100%);
+        }
+
+        .input-slider.flow-cylinder,
+        .input-slider.flow-cylinder::-webkit-slider-runnable-track {
+            background: linear-gradient(to right,
+                #111 0 57.14%,
+                #2f9e44 57.14% 82.86%,
+                #d64545 82.86% 100%);
+        }
 
         .calculated-field {
             width: 100%;
@@ -496,10 +523,11 @@
             margin-bottom: 0;
         }
 
+        .hint-low { color: var(--text-muted); }
         .hint-green { color: #2f9e44; }
         .hint-amber { color: #b58100; }
         .hint-red { color: #d64545; }
-        .hint-warn { color: #9a3412; }
+        .hint-warn { color: #d64545; font-weight: 700; }
 
         .plan-list {
             list-style: none;
@@ -770,11 +798,13 @@
                     <label class="input-label" for="flow-temp">Flow temperature now</label>
                     <span class="input-hint" id="flow-hint">75°C flow, about 55°C return</span>
                 </div>
-                <input type="range" id="flow-temp" class="input-slider" min="45" max="80" step="1" value="75" aria-describedby="band-legend">
+                <input type="range" id="flow-temp" class="input-slider" min="45" max="80" step="1" value="75" aria-describedby="band-legend legionella-warning">
+                <p class="legionella-label" id="legionella-warning" hidden>This is the boiler flow, not the cylinder. Stored water is usually about 10°C cooler, so legionella is possible until the flow is above 65°C.</p>
                 <div class="band-legend" id="band-legend">
-                    <span class="band-green" id="band-full">Fully condensing, up to 60°C</span>
-                    <span class="band-amber">Partially condensing, 61–73°C</span>
-                    <span class="band-red">Non-condensing, 74°C and above</span>
+                    <span class="band-black" id="band-black" hidden>65°C flow and below</span>
+                    <span class="band-green" id="band-full">Fully condensing, up to 65°C</span>
+                    <span class="band-amber" id="band-amber">Partially condensing, 66–73°C</span>
+                    <span class="band-red" id="band-red">Non-condensing, 74°C and above</span>
                 </div>
             </div>
 
@@ -915,9 +945,11 @@
             var DELTA = 20;
             var ROOM = 20;
             var DEW_RETURN = 54;
-            var COMBI_FLOW = 55;
+            var COMBI_FLOW = 56;
             var CYLINDER_FLOW = 70;
-            var SYSTEM_CONDENSING_FLOW = 60;
+            var SYSTEM_CONDENSING_FLOW = 70;
+            var LEGIONELLA_STORE = 55;
+            var CYLINDER_BELOW_FLOW = 10;
             var EFFICIENCY_CURVE = [
                 [10, 99.7],
                 [20, 98.3],
@@ -927,7 +959,7 @@
                 [54, 87.0],
                 [100, 82.0]
             ];
-            var FULL_FLOW = 60;
+            var GREEN_MAX = 65;
             var PARTIAL_FLOW = 73;
             var RELIABILITY_FLOW = 65;
             var system = 'combi';
@@ -1053,8 +1085,17 @@
                 return (value % 1 === 0 ? String(value) : value.toFixed(1)) + '%';
             }
 
+            function legionellaFlowLimit() {
+                return LEGIONELLA_STORE + CYLINDER_BELOW_FLOW;
+            }
+
             function band(flow) {
-                if (flow <= FULL_FLOW) return { key: 'green', name: 'fully condensing' };
+                if (storesHotWater()) {
+                    if (flow <= legionellaFlowLimit()) return { key: 'low', name: 'cylinder usually ' + LEGIONELLA_STORE + '°C or below' };
+                    if (flow <= PARTIAL_FLOW) return { key: 'green', name: 'condensing' };
+                    return { key: 'red', name: 'non-condensing' };
+                }
+                if (flow <= GREEN_MAX) return { key: 'green', name: 'fully condensing' };
                 if (flow <= PARTIAL_FLOW) return { key: 'amber', name: 'partially condensing' };
                 return { key: 'red', name: 'non-condensing' };
             }
@@ -1263,30 +1304,40 @@
                 var legend = document.getElementById('band-legend');
 
                 var bandFull = document.getElementById('band-full');
-                var belowStoreFloor = system === 'system' && flow < SYSTEM_CONDENSING_FLOW;
+                var bandBlack = document.getElementById('band-black');
+                var bandAmber = document.getElementById('band-amber');
+                var stored = storesHotWater();
+                var flowLimit = legionellaFlowLimit();
+                var legionellaRisk = condensingBoiler && stored && flow <= flowLimit;
+                var legionellaWarning = document.getElementById('legionella-warning');
                 flowInput.classList.toggle('is-plain', !condensingBoiler);
-                flowInput.classList.toggle('has-floor', condensingSystem);
+                flowInput.classList.toggle('flow-cylinder', condensingBoiler && stored);
+                flowInput.classList.toggle('flow-combi', condensingBoiler && !stored);
                 legend.hidden = !condensingBoiler;
-                bandFull.textContent = condensingSystem
-                    ? 'Not recommended below 60°C'
-                    : 'Fully condensing, up to 60°C';
-                bandFull.className = condensingSystem ? 'band-floor' : 'band-green';
-                if (belowStoreFloor) {
-                    flowHint.className = 'input-hint hint-warn';
-                    flowHint.textContent = flow + '°C is below 60°C. Not recommended: stored hot water may not get hot enough, which can cause hot water problems and a legionella risk.';
-                } else if (condensingBoiler) {
+                legionellaWarning.hidden = !legionellaRisk;
+                if (legionellaRisk) {
+                    legionellaWarning.textContent = 'This is the boiler flow, not the cylinder. Stored water is usually about ' + CYLINDER_BELOW_FLOW + '°C cooler, so at ' + flow + '°C flow the cylinder is about ' + (flow - CYLINDER_BELOW_FLOW) + '°C. Legionella is possible at ' + LEGIONELLA_STORE + '°C in the cylinder and below. Keep the flow above ' + flowLimit + '°C.';
+                }
+                bandBlack.hidden = !(condensingBoiler && stored);
+                bandAmber.hidden = !condensingBoiler || stored;
+                if (stored) {
+                    bandBlack.textContent = flowLimit + '°C flow and below';
+                    bandFull.textContent = (flowLimit + 1) + '–' + PARTIAL_FLOW + '°C';
+                } else {
+                    bandFull.textContent = 'Fully condensing, up to ' + GREEN_MAX + '°C';
+                }
+                bandFull.className = 'band-green';
+                if (condensingBoiler) {
                     flowInput.setAttribute('aria-describedby', 'band-legend');
-                    flowHint.className = 'input-hint hint-' + currentBand.key;
+                    flowHint.className = 'input-hint hint-' + (legionellaRisk ? 'warn' : currentBand.key);
                     flowHint.textContent = flow + '°C flow, about ' + ret + '°C return — ' + currentBand.name;
                 } else {
                     flowInput.removeAttribute('aria-describedby');
                     flowHint.className = 'input-hint';
                     flowHint.textContent = flow + '°C flow';
                 }
-                if (condensingBoiler && !belowStoreFloor) {
-                    flowInput.setAttribute('aria-describedby', 'band-legend');
-                } else if (!condensingBoiler) {
-                    flowInput.removeAttribute('aria-describedby');
+                if (condensingBoiler) {
+                    flowInput.setAttribute('aria-describedby', legionellaRisk ? 'band-legend legionella-warning' : 'band-legend');
                 }
                 var pence = nonNegativeOrNull(rateInput);
                 var spaceHint = document.getElementById('space-heating-hint');
@@ -1369,7 +1420,7 @@
                 } else {
                     plan.appendChild(item(
                         stepTitle('Flow temperature'),
-                        'Set the heating flow to 60°C, in the green band. The return is about 40°C, so the boiler can fully condense while it heats the cylinder.'
+                        'Set the heating flow to ' + target + '°C, in the green band. The cylinder usually sits about ' + CYLINDER_BELOW_FLOW + '°C below the flow, so the stored water can reach about ' + (target - CYLINDER_BELOW_FLOW) + '°C. The return is about ' + targetReturn + '°C, so the boiler can still condense.'
                     ));
                 }
 
@@ -1402,7 +1453,7 @@
                     !condensingBoiler
                         ? 'A room thermostat is enough. Set the flow reasonably low and let the thermostat stop the boiler when the room is warm.'
                         : (!storesHotWater()
-                            ? 'A fixed 55°C flow is the manual version. OpenTherm or another modulating control lets the boiler choose a lower flow as the room approaches setpoint, and it turns the burner down with it.'
+                            ? 'A fixed ' + COMBI_FLOW + '°C flow is the manual version. OpenTherm or another modulating control lets the boiler choose a lower flow as the room approaches setpoint, and it turns the burner down with it.'
                             : 'The control has to know the cylinder temperature. Otherwise a low heating flow never gets the stored water to about 60°C. That applies to a system or vented boiler with stored hot water, and to other types that store hot water.')
                 ));
             }
