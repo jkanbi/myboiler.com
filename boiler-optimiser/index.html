@@ -125,6 +125,56 @@
             color: var(--text);
         }
 
+        .fold > summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0;
+            cursor: pointer;
+            list-style: none;
+        }
+
+        .fold > summary span {
+            min-width: 0;
+        }
+
+        .fold > summary::-webkit-details-marker,
+        .fold > summary::marker {
+            display: none;
+            content: "";
+        }
+
+        .fold > summary::after {
+            content: "";
+            width: 0.5rem;
+            height: 0.5rem;
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            transform: rotate(45deg) translateY(-0.12rem);
+            flex: 0 0 auto;
+        }
+
+        .fold[open] > summary {
+            margin-bottom: 1.25rem;
+        }
+
+        .fold[open] > summary::after {
+            transform: rotate(-135deg) translateY(-0.05rem);
+        }
+
+        .fold-inline {
+            margin-top: 1.25rem;
+        }
+
+        .fold-inline .calculator-note {
+            margin-top: 0.85rem;
+        }
+
+        #setup-card .input-group {
+            margin-bottom: 1.25rem;
+        }
+
         .card-lead {
             margin: -0.5rem 0 1.25rem;
             font-size: 0.9375rem;
@@ -370,7 +420,10 @@
         .standard-note[hidden],
         #system-group[hidden],
         .other-note[hidden],
-        #tool-fields[hidden],
+        #flow-card[hidden],
+        #bill-card[hidden],
+        #heat-loss-card[hidden],
+        #notes-card[hidden],
         #tool-results[hidden],
         #power-card[hidden],
         #model-card[hidden],
@@ -819,7 +872,7 @@
             <p class="article-intro">Turn the flow temperature down first. That is the simplest way to use less gas.</p>
         </div>
 
-        <div class="calculator-card">
+        <div class="calculator-card" id="setup-card">
             <div class="input-group">
                 <div class="input-heading">
                     <div class="input-label" id="boiler-type-label">Boiler</div>
@@ -868,8 +921,10 @@
                 </dialog>
                 <p class="other-note" id="other-note" hidden>This setup needs a closer look. <a href="/quote/">Get in touch</a> and we can advise on the right settings.</p>
             </div>
+        </div>
 
-            <div id="tool-fields">
+        <details class="calculator-card fold" id="bill-card">
+            <summary class="card-title"><span>Based on 12,000 kWh a year at 6.33p. Enter yours if you know it.</span></summary>
             <div class="input-group">
                 <div class="input-heading">
                     <label class="input-label" for="annual-kwh">Annual gas usage</label>
@@ -897,24 +952,14 @@
             </div>
 
             <div class="input-group">
-                <div class="input-heading">
-                    <label class="input-label" for="heat-loss">Estimated house heat loss</label>
-                    <span class="input-hint">The low end is a milder year and the high end a colder day, from the space heating usage. Enter a figure if you know the heat loss.</span>
-                </div>
-                <div class="calculated-field" id="heat-loss-range" aria-live="polite">—</div>
-                <div class="output-row heat-loss-known">
-                    <input type="number" id="heat-loss" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="Known heat loss">
-                    <button type="button" class="choice-button auto-button" id="heat-loss-reset">Reset</button>
-                </div>
-            </div>
-
-            <div class="input-group">
                 <div class="unit-rate-field">
                     <input type="number" id="unit-rate" class="input-field" inputmode="decimal" min="0" step="0.01" value="6.33">
                     <label class="input-label" for="unit-rate">Gas unit rate in pence per kWh</label>
                 </div>
             </div>
+        </details>
 
+        <div class="calculator-card" id="flow-card">
             <div class="input-group">
                 <div class="input-heading">
                     <label class="input-label" for="flow-temp">Flow temperature now</label>
@@ -949,28 +994,24 @@
                     <div class="result-unit" id="graph-efficiency-unit">from return temperature</div>
                 </div>
             </div>
+        </div>
+
+        <div class="calculator-card" id="heat-loss-card">
+            <div class="input-group">
+                <div class="input-heading">
+                    <label class="input-label" for="heat-loss">Estimated house heat loss</label>
+                    <span class="input-hint">The low end is a milder year and the high end a colder day, from the space heating usage. Enter a figure if you know the heat loss.</span>
+                </div>
+                <div class="calculated-field" id="heat-loss-range" aria-live="polite">—</div>
+                <div class="output-row heat-loss-known">
+                    <input type="number" id="heat-loss" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="Known heat loss">
+                    <button type="button" class="choice-button auto-button" id="heat-loss-reset">Reset</button>
+                </div>
             </div>
         </div>
 
-        <div class="calculator-card" id="notes-card">
-            <h2 class="card-title">Notes and keys</h2>
-            <p class="return-note" id="return-note">Condensing is a return of 55°C and below. The return sits about 20°C under the flow.</p>
-            <p class="return-note" id="cylinder-delta-note" hidden>The cylinder is assumed to sit 5°C below the flow. The gap can be higher than that.</p>
-            <p class="return-note" id="stored-campaign-note" hidden>Public campaigns usually cover combi boilers only, because stored hot water has to stay hot enough.</p>
-            <p class="return-note">Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days before raising the flow by 5°C. It can be turned back at once.</p>
-            <p class="return-note">If anyone is vulnerable to a cool room, keep the flow a little higher, and make sure someone can turn it back up.</p>
-            <p class="return-note">A draughty or poorly insulated house may not hold the temperature. Raise the flow by 5°C and leave it for a few days.</p>
-            <p class="return-note">In spring and autumn the flow can sit lower. Raise it in the coldest weather.</p>
-            <div class="band-legend" id="band-legend">
-                <span class="band-black" id="band-black" hidden>Cylinder below 50°C</span>
-                <span class="band-green" id="band-full">Fully condensing, return up to 45°C</span>
-                <span class="band-amber" id="band-amber">Partially condensing, return 46–55°C</span>
-                <span class="band-red" id="band-red">Non-condensing, return above 55°C</span>
-            </div>
-        </div>
-
-        <div class="calculator-card" id="model-card">
-            <h2 class="card-title">How to set the flow temperature and power on a particular boiler</h2>
+        <details class="calculator-card fold" id="model-card">
+            <summary class="card-title">How to set this on your boiler</summary>
             <div class="input-group">
                 <div class="input-heading">
                     <label class="input-label" for="brand">Which brand</label>
@@ -1025,10 +1066,10 @@
                     <p id="worcester-steps" hidden></p>
                 </div>
             </div>
-        </div>
+        </details>
 
-        <div class="calculator-card" id="power-card">
-            <h2 class="card-title">Power level</h2>
+        <details class="calculator-card fold" id="power-card">
+            <summary class="card-title">Heating output</summary>
             <div class="card-lead">
                 <p>A boiler left on its full heating rating often puts out more heat than the house can lose. It reaches temperature, shuts off, then starts again. Those short runs use more gas on each ignition, make more noise, and wear the boiler.</p>
                 <p>A lower central-heating maximum keeps the burner on longer at a lower rate. That is steadier heat, and on a condensing boiler it spends more time with a cool enough return to condense. On a combi, leave the hot-water output at its higher rating so the taps stay hot. A Gas Safe engineer sets this.</p>
@@ -1043,7 +1084,7 @@
                     <button type="button" class="choice-button auto-button" id="output-auto" aria-pressed="false">Auto</button>
                 </div>
             </div>
-        </div>
+        </details>
 
         <div class="calculator-card" id="tool-results">
             <ol class="plan-list" id="plan"></ol>
@@ -1064,7 +1105,19 @@
                     <div class="result-unit" id="gas-saving-unit">versus a 75°C flow, heating only</div>
                 </div>
             </div>
-            <p class="calculator-note">Return is taken as flow minus 20°C. Condensing is a return of 55°C and below. Radiator output uses the EN 442 exponent 1.3 against a 20°C room. The saving uses the same efficiency curve as the <a href="/energy-saving/combi-boiler-condensing-mode-savings/">condensing-mode calculator</a>. Standing charge is not included. Changing boiler parameters is normally an engineer’s job. See <a href="/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/">how to lower flow temperature</a>, <a href="/boiler-maximum-and-minimum-output-mode-videos/">maximum output mode</a>, and <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm controls</a>.</p>
+            <details class="fold fold-inline" id="notes-card">
+                <summary class="card-title">Notes and keys</summary>
+                <p class="return-note" id="return-note">Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow by 5°C. It can be turned back at once. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow can sit lower.</p>
+                <p class="return-note" id="cylinder-delta-note" hidden>The cylinder is assumed to sit 5°C below the flow. The gap can be higher than that.</p>
+                <p class="return-note" id="stored-campaign-note" hidden>Public campaigns usually cover combi boilers only, because stored hot water has to stay hot enough.</p>
+                <div class="band-legend" id="band-legend">
+                    <span class="band-black" id="band-black" hidden>Cylinder below 50°C</span>
+                    <span class="band-green" id="band-full">Fully condensing, return up to 45°C</span>
+                    <span class="band-amber" id="band-amber">Partially condensing, return 46–55°C</span>
+                    <span class="band-red" id="band-red">Non-condensing, return above 55°C</span>
+                </div>
+                <p class="calculator-note">The return is taken as 20°C under the flow. Radiator output is compared with a standard catalogue radiator in a 20°C room. The saving uses the same efficiency curve as the <a href="/energy-saving/combi-boiler-condensing-mode-savings/">condensing-mode calculator</a>. Standing charge is not included. See <a href="/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/">how to lower flow temperature</a>, <a href="/boiler-maximum-and-minimum-output-mode-videos/">maximum output mode</a>, and <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm controls</a>.</p>
+            </details>
         </div>
         <div class="calculator-card heat-pump-cta" id="heat-pump-cta" hidden>
             <p>If this flow is keeping the house warm in peak winter, a heat pump may suit this system without many changes. <span id="heat-pump-size"></span></p>
@@ -1400,7 +1453,9 @@
                 document.getElementById('standard-note').hidden = !standardBoiler;
                 document.getElementById('system-group').hidden = standardBoiler;
                 document.getElementById('other-note').hidden = standardBoiler || !otherType;
-                document.getElementById('tool-fields').hidden = blocked;
+                document.getElementById('flow-card').hidden = blocked;
+                document.getElementById('bill-card').hidden = blocked;
+                document.getElementById('heat-loss-card').hidden = blocked;
                 document.getElementById('power-card').hidden = blocked;
                 document.getElementById('tool-results').hidden = blocked;
                 document.getElementById('model-card').hidden = blocked;
@@ -1597,13 +1652,13 @@
                     plan.appendChild(item(
                         stepTitle('Flow temperature'),
                         target === flow
-                            ? 'Leave the heating flow at ' + flow + '°C. The return is already ' + currentBand.name + '. If a room is short of heat, raise the flow by 5°C and try again for a few cold days.'
-                            : 'Set the heating flow to ' + target + '°C, in the green band. Factory settings are often 75–80°C. Condensing is a return of ' + CONDENSING_RETURN_MAX + '°C and below, about 20°C under the flow. If a room does not reach temperature, raise the flow by 5°C rather than jumping straight back to 75°C.'
+                            ? 'Leave the heating flow at ' + flow + '°C.'
+                            : 'Set the heating flow to ' + target + '°C.'
                     ));
                 } else {
                     plan.appendChild(item(
                         stepTitle('Flow temperature'),
-                        'Set the heating flow to ' + target + '°C, in the green band. The cylinder usually sits about ' + CYLINDER_BELOW_FLOW + '°C below the flow, so the stored water can reach about ' + (target - CYLINDER_BELOW_FLOW) + '°C. The return is about ' + targetReturn + '°C, so the boiler can still condense.'
+                        'Set the heating flow to ' + target + '°C so the stored water stays hot enough.'
                     ));
                 }
 
