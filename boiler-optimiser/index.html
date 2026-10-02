@@ -139,6 +139,10 @@
             min-width: 0;
         }
 
+        #bill-card > summary span {
+            color: var(--text-muted);
+        }
+
         .fold > summary::-webkit-details-marker,
         .fold > summary::marker {
             display: none;
@@ -924,7 +928,7 @@
         </div>
 
         <details class="calculator-card fold" id="bill-card">
-            <summary class="card-title"><span>Based on 12,000 kWh a year at 6.33p. Enter yours if you know it.</span></summary>
+            <summary class="card-title"><span>Following savings based on 12,000 kWh a year at 6.33p/kWh. Expand to change.</span></summary>
             <div class="input-group">
                 <div class="input-heading">
                     <label class="input-label" for="annual-kwh">Annual gas usage</label>
@@ -1087,6 +1091,7 @@
         </details>
 
         <div class="calculator-card" id="tool-results">
+            <h2 class="card-title">Further notes, keys and appendix</h2>
             <ol class="plan-list" id="plan"></ol>
             <div class="result-grid">
                 <div class="result-item">
