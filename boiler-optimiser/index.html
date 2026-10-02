@@ -8,6 +8,16 @@
     <link rel="canonical" href="https://myboiler.com/boiler-optimiser/">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
         .article-page {
             min-height: 100vh;
             display: flex;
@@ -66,10 +76,6 @@
             margin-bottom: 0.75rem;
         }
 
-        .flow-readout {
-            margin: 0;
-        }
-
         .flow-slider {
             position: relative;
             --track-size: 2rem;
@@ -87,27 +93,6 @@
 
         .flow-slider .input-slider::-moz-range-track {
             height: var(--track-size);
-        }
-
-        .flow-slider .flow-readout {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            height: var(--track-size);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.35rem 0.75rem;
-            padding: 0 calc(var(--thumb-size) + 0.35rem);
-            pointer-events: none;
-            text-align: center;
-        }
-
-        .flow-slider .flow-readout .input-hint {
-            color: #fff;
-            font-weight: 700;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
         }
 
         .input-label {
@@ -167,12 +152,8 @@
             transform: rotate(-135deg) translateY(-0.05rem);
         }
 
-        .fold-inline {
+        #notes-card {
             margin-top: 1.25rem;
-        }
-
-        .fold-inline .calculator-note {
-            margin-top: 0.85rem;
         }
 
         #setup-card .input-group {
@@ -277,6 +258,11 @@
             background: var(--accent);
             color: #fff;
             border-color: var(--accent);
+        }
+
+        .advanced-toggle {
+            width: 100%;
+            margin: 0 0 2rem;
         }
 
         .system-figure,
@@ -425,6 +411,7 @@
         #system-group[hidden],
         .other-note[hidden],
         #flow-card[hidden],
+        #advanced-toggle[hidden],
         #bill-card[hidden],
         #heat-loss-card[hidden],
         #notes-card[hidden],
@@ -573,15 +560,6 @@
             background: var(--border);
         }
 
-        .band-legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.35rem 1rem;
-            margin-top: 0.65rem;
-            font-size: 0.8125rem;
-            color: var(--text-muted);
-        }
-
         #flow-state[hidden],
         #cylinder-hint[hidden] {
             display: none;
@@ -608,25 +586,9 @@
             margin-top: 0.65rem;
         }
 
-        .return-note[hidden],
-        .band-legend[hidden] {
+        .return-note[hidden] {
             display: none;
         }
-
-        .band-legend span::before {
-            content: "";
-            display: inline-block;
-            width: 0.7rem;
-            height: 0.7rem;
-            margin-right: 0.35rem;
-            border-radius: 2px;
-            vertical-align: -1px;
-        }
-
-        .band-black::before { background: #111; }
-        .band-green::before { background: #2f9e44; }
-        .band-amber::before { background: #e6a817; }
-        .band-red::before { background: #d64545; }
 
         .legionella-label,
         .inhibit-label {
@@ -649,8 +611,7 @@
         }
 
         .legionella-label[hidden],
-        .inhibit-label[hidden],
-        .band-legend span[hidden] {
+        .inhibit-label[hidden] {
             display: none;
         }
 
@@ -767,17 +728,6 @@
         .result-unit {
             font-size: 0.8125rem;
             color: var(--text-muted);
-        }
-
-        .calculator-note {
-            font-size: 0.9375rem;
-            line-height: 1.6;
-            color: var(--text-muted);
-            margin: 1rem 0 0;
-        }
-
-        .calculator-note a {
-            color: var(--accent);
         }
 
         @media (max-width: 700px) {
@@ -979,13 +929,11 @@
                 <div class="input-heading">
                     <label class="input-label" for="flow-temp">Flow temperature now</label>
                     <span id="flow-state">Partially condensing</span>
+                    <span class="input-hint" id="flow-hint">75°C flow, about 55°C return</span>
                     <span class="input-hint" id="cylinder-hint" hidden>Cylinder about 70°C</span>
                 </div>
                 <div class="flow-slider">
-                    <input type="range" id="flow-temp" class="input-slider" min="45" max="80" step="1" value="75" aria-describedby="band-legend legionella-warning">
-                    <div class="input-heading flow-readout">
-                        <span class="input-hint" id="flow-hint">75°C flow, about 55°C return</span>
-                    </div>
+                    <input type="range" id="flow-temp" class="input-slider" min="45" max="80" step="1" value="75" aria-describedby="legionella-warning">
                 </div>
                 <p class="return-note" id="combi-tap-note">On a combi, this is the radiator flow. Tap and shower temperature stays as it is.</p>
                 <p class="legionella-label" id="legionella-warning" hidden>The cylinder is about 5°C below the flow. Legionella is possible once stored water drops below 50°C.</p>
@@ -1011,7 +959,9 @@
             </div>
         </div>
 
-        <div class="calculator-card" id="heat-loss-card">
+        <button type="button" class="choice-button advanced-toggle" id="advanced-toggle" aria-pressed="false">Proceed to Advanced Optimisation?</button>
+
+        <div class="calculator-card" id="heat-loss-card" hidden>
             <div class="input-group">
                 <div class="input-heading">
                     <label class="input-label" for="heat-loss">Estimated house heat loss</label>
@@ -1025,7 +975,25 @@
             </div>
         </div>
 
-        <details class="calculator-card fold" id="model-card">
+        <details class="calculator-card fold" id="power-card" hidden>
+            <summary class="card-title">Heating output</summary>
+            <div class="card-lead">
+                <p>A boiler left on its full heating rating often puts out more heat than the house can lose. It reaches temperature, shuts off, then starts again. Those short runs use more gas on each ignition, make more noise, and wear the boiler.</p>
+                <p>A lower central-heating maximum keeps the burner on longer at a lower rate. That is steadier heat, and on a condensing boiler it spends more time with a cool enough return to condense. On a combi, leave the hot-water output at its higher rating so the taps stay hot. A Gas Safe engineer sets this.</p>
+            </div>
+            <div class="input-group">
+                <div class="input-heading">
+                    <label class="input-label" for="boiler-kw">Boiler heating output</label>
+                    <span class="input-hint">The central-heating kW, or Auto if the maximum is not capped.</span>
+                </div>
+                <div class="output-row">
+                    <input type="number" id="boiler-kw" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 24">
+                    <button type="button" class="choice-button auto-button" id="output-auto" aria-pressed="false">Auto</button>
+                </div>
+            </div>
+        </details>
+
+        <details class="calculator-card fold" id="model-card" hidden>
             <summary class="card-title">How to set this on your boiler</summary>
             <div class="input-group">
                 <div class="input-heading">
@@ -1083,58 +1051,14 @@
             </div>
         </details>
 
-        <details class="calculator-card fold" id="power-card">
-            <summary class="card-title">Heating output</summary>
-            <div class="card-lead">
-                <p>A boiler left on its full heating rating often puts out more heat than the house can lose. It reaches temperature, shuts off, then starts again. Those short runs use more gas on each ignition, make more noise, and wear the boiler.</p>
-                <p>A lower central-heating maximum keeps the burner on longer at a lower rate. That is steadier heat, and on a condensing boiler it spends more time with a cool enough return to condense. On a combi, leave the hot-water output at its higher rating so the taps stay hot. A Gas Safe engineer sets this.</p>
-            </div>
-            <div class="input-group">
-                <div class="input-heading">
-                    <label class="input-label" for="boiler-kw">Boiler heating output</label>
-                    <span class="input-hint">The central-heating kW, or Auto if the maximum is not capped.</span>
-                </div>
-                <div class="output-row">
-                    <input type="number" id="boiler-kw" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 24">
-                    <button type="button" class="choice-button auto-button" id="output-auto" aria-pressed="false">Auto</button>
-                </div>
-            </div>
-        </details>
-
-        <div class="calculator-card" id="tool-results">
-            <h2 class="card-title">Further notes, keys and appendix</h2>
+        <details class="calculator-card fold" id="tool-results">
+            <summary class="card-title">Further notes, keys and appendix</summary>
             <ol class="plan-list" id="plan"></ol>
-            <div class="result-grid">
-                <div class="result-item">
-                    <div class="result-label">Set flow to</div>
-                    <div class="result-value" id="target-flow">—</div>
-                    <div class="result-unit" id="target-return">—</div>
-                </div>
-                <div class="result-item">
-                    <div class="result-label">Radiator output</div>
-                    <div class="result-value" id="rad-factor">—</div>
-                    <div class="result-unit">of the ΔT 50 catalogue figure</div>
-                </div>
-                <div class="result-item">
-                    <div class="result-label" id="gas-saving-label">Gas saving</div>
-                    <div class="result-value" id="gas-saving">—</div>
-                    <div class="result-unit" id="gas-saving-unit">versus a 75°C flow, heating only</div>
-                </div>
-            </div>
-            <details class="fold fold-inline" id="notes-card">
-                <summary class="card-title">Notes and keys</summary>
-                <p class="return-note" id="return-note">Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow by 5°C. It can be turned back at once. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow can sit lower.</p>
+            <div id="notes-card">
                 <p class="return-note" id="cylinder-delta-note" hidden>The cylinder is assumed to sit 5°C below the flow. The gap can be higher than that.</p>
                 <p class="return-note" id="stored-campaign-note" hidden>Public campaigns usually cover combi boilers only, because stored hot water has to stay hot enough.</p>
-                <div class="band-legend" id="band-legend">
-                    <span class="band-black" id="band-black" hidden>Cylinder below 50°C</span>
-                    <span class="band-green" id="band-full">Fully condensing, return up to 45°C</span>
-                    <span class="band-amber" id="band-amber">Partially condensing, return 46–55°C</span>
-                    <span class="band-red" id="band-red">Non-condensing, return above 55°C</span>
-                </div>
-                <p class="calculator-note">The return is taken as 20°C under the flow. Radiator output is compared with a standard catalogue radiator in a 20°C room. The saving uses the same efficiency curve as the <a href="/energy-saving/combi-boiler-condensing-mode-savings/">condensing-mode calculator</a>. Standing charge is not included. See <a href="/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/">how to lower flow temperature</a>, <a href="/boiler-maximum-and-minimum-output-mode-videos/">maximum output mode</a>, and <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm controls</a>.</p>
-            </details>
-        </div>
+            </div>
+        </details>
         <div class="calculator-card heat-pump-cta" id="heat-pump-cta" hidden>
             <p>If this flow is keeping the house warm in peak winter, a heat pump may suit this system without many changes. <span id="heat-pump-size"></span></p>
             <a id="heat-pump-checker-link" href="/heat-pump-checker/">Check heat pump suitability</a>
@@ -1152,7 +1076,6 @@
             var MILD_FULL_LOAD_HOURS = 2200;
             var COLD_FULL_LOAD_HOURS = 1700;
             var DELTA = 20;
-            var ROOM = 20;
             var CONDENSING_RETURN_MAX = 55;
             var COMBI_FLOW = 55;
             var CYLINDER_FLOW = 70;
@@ -1231,6 +1154,7 @@
             var boilerInput = document.getElementById('boiler-kw');
             var outputAutoButton = document.getElementById('output-auto');
             var outputAuto = false;
+            var advanced = false;
             var plan = document.getElementById('plan');
             var systemButtons = document.querySelectorAll('[data-system]');
             var boilerButtons = document.querySelectorAll('[data-boiler]');
@@ -1284,12 +1208,6 @@
                 return 1 - etaOld / etaNew;
             }
 
-            function radiatorFactor(flow) {
-                var deltaT = ((flow + (flow - DELTA)) / 2) - ROOM;
-                if (deltaT <= 0) return 0;
-                return Math.pow(deltaT / 50, 1.3);
-            }
-
             function percent(fraction) {
                 var value = Math.round(fraction * 1000) / 10;
                 return (value % 1 === 0 ? String(value) : value.toFixed(1)) + '%';
@@ -1297,10 +1215,6 @@
 
             function cylinderTemp(flow) {
                 return flow - CYLINDER_BELOW_FLOW;
-            }
-
-            function legionellaFlowLimit() {
-                return LEGIONELLA_STORE + CYLINDER_BELOW_FLOW - 1;
             }
 
             function band(flow) {
@@ -1360,6 +1274,32 @@
                 link.rel = 'noopener noreferrer';
                 link.textContent = 'This video shows how to identify it';
                 note.appendChild(link);
+                note.appendChild(document.createTextNode('.'));
+                return note;
+            }
+
+            function methodNote() {
+                var note = document.createDocumentFragment();
+                note.appendChild(document.createTextNode('The return is taken as 20°C under the flow. Radiator output is compared with a standard catalogue radiator in a 20°C room. The saving uses the same efficiency curve as the '));
+                note.appendChild(linkEl('/energy-saving/combi-boiler-condensing-mode-savings/', 'condensing-mode calculator'));
+                note.appendChild(document.createTextNode('. Standing charge is not included. See '));
+                note.appendChild(linkEl('/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/', 'how to lower flow temperature'));
+                note.appendChild(document.createTextNode(', '));
+                note.appendChild(linkEl('/boiler-maximum-and-minimum-output-mode-videos/', 'maximum output mode'));
+                note.appendChild(document.createTextNode(', and '));
+                note.appendChild(linkEl('/opentherm/opentherm-boilers-and-controls/', 'OpenTherm controls'));
+                note.appendChild(document.createTextNode('.'));
+                return note;
+            }
+
+            function controlsNote(stored) {
+                var note = document.createDocumentFragment();
+                note.appendChild(document.createTextNode('A fixed flow temperature is the manual version. Smart thermostats, OpenTherm controls, and a manufacturer’s own modulating control can lower the flow on their own as the room warms up, and turn the burner down with it. '));
+                if (stored) {
+                    note.appendChild(document.createTextNode('With stored hot water, the control also has to know the cylinder temperature, or the store never reaches about 60°C. '));
+                }
+                note.appendChild(document.createTextNode('See '));
+                note.appendChild(linkEl('/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/', 'modulating controls'));
                 note.appendChild(document.createTextNode('.'));
                 return note;
             }
@@ -1470,12 +1410,13 @@
                 document.getElementById('system-group').hidden = standardBoiler;
                 document.getElementById('other-note').hidden = standardBoiler || !otherType;
                 document.getElementById('flow-card').hidden = blocked;
+                document.getElementById('advanced-toggle').hidden = blocked;
                 document.getElementById('bill-card').hidden = blocked;
-                document.getElementById('heat-loss-card').hidden = blocked;
-                document.getElementById('power-card').hidden = blocked;
+                document.getElementById('heat-loss-card').hidden = blocked || !advanced;
+                document.getElementById('power-card').hidden = blocked || !advanced;
                 document.getElementById('tool-results').hidden = blocked;
-                document.getElementById('model-card').hidden = blocked;
-                document.getElementById('notes-card').hidden = blocked;
+                document.getElementById('model-card').hidden = blocked || !advanced;
+                document.getElementById('notes-card').hidden = blocked || !storesHotWater();
                 document.getElementById('heat-pump-cta').hidden = blocked;
                 var systemFigureEl = document.getElementById('system-figure');
                 var diagram = systemImages[system];
@@ -1499,8 +1440,6 @@
                         ? CYLINDER_FLOW
                         : (condensingBoiler ? COMBI_FLOW : RELIABILITY_FLOW));
                 if (!condensingSystem && flow < target) target = flow;
-                var targetReturn = target - DELTA;
-                var targetBand = band(target);
                 var annual = nonNegativeOrNull(annualInput);
                 var spaceKwh = annual === null ? null : (usesGasCooking ? annual * (1 - COOKING_SHARE) : annual);
                 var estimate = spaceKwh === null ? null : estimatedHeatLossRange(spaceKwh, flow, condensingBoiler);
@@ -1510,27 +1449,18 @@
                 var knownHeatLoss = numberOrNull(heatLossInput);
                 var heatLoss = heatLossManual ? knownHeatLoss : (estimate ? estimate.high : null);
                 var boilerKw = numberOrNull(boilerInput);
-                var legend = document.getElementById('band-legend');
-
-                var bandFull = document.getElementById('band-full');
-                var bandBlack = document.getElementById('band-black');
-                var bandAmber = document.getElementById('band-amber');
                 var stored = storesHotWater();
-                var flowLimit = legionellaFlowLimit();
                 var cylinder = cylinderTemp(flow);
                 var legionellaRisk = condensingBoiler && stored && cylinder < LEGIONELLA_STORE;
                 var legionellaWarning = document.getElementById('legionella-warning');
                 var inhibitNotice = document.getElementById('inhibit-notice');
                 var cylinderHint = document.getElementById('cylinder-hint');
-                var returnNote = document.getElementById('return-note');
                 var cylinderDeltaNote = document.getElementById('cylinder-delta-note');
                 var storedCampaignNote = document.getElementById('stored-campaign-note');
                 var combiTapNote = document.getElementById('combi-tap-note');
                 flowInput.classList.toggle('is-plain', !condensingBoiler);
                 flowInput.classList.toggle('flow-cylinder', condensingBoiler && stored);
                 flowInput.classList.toggle('flow-combi', condensingBoiler && !stored);
-                legend.hidden = !condensingBoiler;
-                returnNote.hidden = !condensingBoiler;
                 cylinderDeltaNote.hidden = !(condensingBoiler && stored);
                 storedCampaignNote.hidden = !(condensingBoiler && stored);
                 combiTapNote.hidden = stored;
@@ -1546,25 +1476,7 @@
                 if (bacteriaDying) {
                     inhibitNotice.textContent = 'Bacteria start dying. The cylinder is about ' + cylinder + '°C, ' + CYLINDER_BELOW_FLOW + '°C below the flow. Growth is inhibited from ' + LEGIONELLA_STORE + '°C, and the bacteria die off as the stored water rises.';
                 }
-                bandBlack.hidden = !(condensingBoiler && stored);
-                bandAmber.hidden = !condensingBoiler;
-                var fullReturnMax = GREEN_MAX - DELTA;
-                var partialReturnMin = fullReturnMax + 1;
-                var bandRed = document.getElementById('band-red');
-                bandRed.textContent = 'Non-condensing, return above ' + CONDENSING_RETURN_MAX + '°C';
-                if (stored) {
-                    var inhibitMin = LEGIONELLA_STORE + CYLINDER_BELOW_FLOW;
-                    legend.insertBefore(bandAmber, bandFull);
-                    bandBlack.textContent = 'Cylinder below ' + LEGIONELLA_STORE + '°C';
-                    bandAmber.textContent = inhibitMin + '–' + INHIBIT_FLOW_MAX + '°C flow, cylinder ' + LEGIONELLA_STORE + '–' + (INHIBIT_FLOW_MAX - CYLINDER_BELOW_FLOW) + '°C';
-                    bandFull.textContent = 'Condensing, return ' + ((INHIBIT_FLOW_MAX + 1) - DELTA) + '–' + CONDENSING_RETURN_MAX + '°C';
-                } else {
-                    legend.insertBefore(bandAmber, bandRed);
-                    bandAmber.textContent = 'Partially condensing, return ' + partialReturnMin + '–' + CONDENSING_RETURN_MAX + '°C';
-                    bandFull.textContent = 'Fully condensing, return up to ' + fullReturnMax + '°C';
-                }
                 var flowState = document.getElementById('flow-state');
-                bandFull.className = 'band-green';
                 var stateName = currentBand.key === 'low'
                     ? (flow <= PARTIAL_FLOW ? 'condensing' : 'non-condensing')
                     : currentBand.name;
@@ -1580,9 +1492,9 @@
                     cylinderHint.textContent = 'Cylinder about ' + cylinder + '°C';
                 }
                 if (condensingBoiler) {
-                    var describedBy = ['flow-state', 'return-note', 'band-legend'];
+                    var describedBy = ['flow-state'];
                     if (!stored) describedBy.push('combi-tap-note');
-                    if (stored) describedBy.splice(2, 0, 'cylinder-delta-note');
+                    if (stored) describedBy.splice(1, 0, 'cylinder-delta-note');
                     if (legionellaRisk) describedBy.push('legionella-warning');
                     if (bacteriaDying) describedBy.push('inhibit-notice');
                     flowInput.setAttribute('aria-describedby', describedBy.join(' '));
@@ -1638,15 +1550,6 @@
                 document.getElementById('condensing-saving-unit').textContent = condensingBoiler
                     ? percent(fraction) + ' versus a 75°C flow'
                     : 'no condensing gain on this boiler';
-                document.getElementById('target-flow').textContent = target + '°C';
-                document.getElementById('target-return').textContent = condensingBoiler
-                    ? 'about ' + targetReturn + '°C return, ' + targetBand.name
-                    : 'a reasonably low heating flow';
-                document.getElementById('rad-factor').textContent = percent(radiatorFactor(target));
-                document.getElementById('gas-saving').textContent = condensingBoiler ? percent(saving(FACTORY_FLOW, target)) : '—';
-                document.getElementById('gas-saving-unit').textContent = condensingBoiler
-                    ? 'versus a 75°C flow, heating only'
-                    : 'no condensing gain on this boiler';
 
                 plan.textContent = '';
                 var step = 1;
@@ -1669,49 +1572,21 @@
                 } else if (!storesHotWater()) {
                     plan.appendChild(item(
                         stepTitle('Flow temperature'),
-                        target === flow
+                        (target === flow
                             ? 'Leave the heating flow at ' + flow + '°C.'
-                            : 'Set the heating flow to ' + target + '°C.'
+                            : 'Set the heating flow to ' + target + '°C.')
+                        + ' Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow by 5°C. It can be turned back at once. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow can sit lower.'
                     ));
                 } else {
                     plan.appendChild(item(
                         stepTitle('Flow temperature'),
-                        'Set the heating flow to ' + target + '°C so the stored water stays hot enough.'
+                        'Set the heating flow to ' + target + '°C so the stored water stays hot enough. Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow by 5°C. It can be turned back at once. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow can sit lower.'
                     ));
                 }
 
-                var powerText;
-                if (condensingSystem) {
-                    powerText = (outputAuto ? 'The heating output is on Auto. ' : (boilerKw ? 'The heating output is ' + boilerKw + ' kW. ' : ''))
-                        + 'Set it to the rating of the cylinder coil. That is the heat the coil can pass into the stored water.';
-                } else if (outputAuto && heatLoss) {
-                    powerText = 'The heating output is on Auto, so the boiler can fire at its full rating. Cap the central-heating maximum at about ' + heatLoss + ' kW.'
-                        + (isCombi() ? ' Leave the hot-water output at the higher rating.' : '');
-                } else if (outputAuto) {
-                    powerText = 'The heating output is on Auto, so the boiler can fire at its full rating. Cap that to the house heat loss once you know it.'
-                        + (isCombi() ? ' Do not turn down the hot-water output to chase a heating saving.' : '');
-                } else if (heatLoss && boilerKw && boilerKw > heatLoss + 0.5) {
-                    powerText = 'Cap the central-heating maximum at about ' + heatLoss + ' kW. The boiler can fire up to ' + boilerKw + ' kW, which is more than this house loses, so it short-cycles.'
-                        + (isCombi() ? ' Leave the hot-water output at the higher rating.' : '');
-                } else if (heatLoss && boilerKw) {
-                    powerText = 'The heating output (' + boilerKw + ' kW) is already close to the house heat loss (' + heatLoss + ' kW). Leave the heating maximum where it is unless the boiler’s own minimum is higher than the heat loss, in which case it will still cycle in mild weather.';
-                } else if (boilerKw) {
-                    powerText = 'The heating side is set up to ' + boilerKw + ' kW. Cap that to the house heat loss once you know it.'
-                        + (isCombi() ? ' Do not turn down the hot-water output to chase a heating saving.' : '');
-                } else {
-                    powerText = 'Enter the house heat loss and the boiler’s heating kilowatts to see whether the maximum output should come down.'
-                        + (isCombi() ? ' The hot-water rating is a separate number and stays as it is.' : '');
-                }
-                plan.appendChild(item(stepTitle('Heating output'), powerText));
                 fillModelSteps(target, heatLoss, boilerKw);
-                plan.appendChild(item(
-                    stepTitle('Controls'),
-                    !condensingBoiler
-                        ? 'A room thermostat is enough. Set the flow reasonably low and let the thermostat stop the boiler when the room is warm.'
-                        : (!storesHotWater()
-                            ? 'A fixed ' + COMBI_FLOW + '°C flow is the manual version. OpenTherm or another modulating control lets the boiler choose a lower flow as the room approaches setpoint, and it turns the burner down with it.'
-                            : 'The control has to know the cylinder temperature. Otherwise a low heating flow never gets the stored water to about 60°C. That applies to a system or vented boiler with stored hot water, and to other types that store hot water.')
-                ));
+                plan.appendChild(item(stepTitle('How this is worked out'), methodNote()));
+                plan.appendChild(item(stepTitle('Smart & Modulating Controls'), controlsNote(storesHotWater())));
             }
 
             function bindChoice(nodeList, assign) {
@@ -1745,6 +1620,21 @@
             });
             bindChoice(modelButtons, function (button) {
                 boilerModel = button.getAttribute('data-model');
+            });
+
+            document.querySelector('.label-aside').addEventListener('click', function (event) {
+                var note = document.getElementById('note-1');
+                var results = document.getElementById('tool-results');
+                if (!note || !results) return;
+                event.preventDefault();
+                results.hidden = false;
+                results.open = true;
+                if (location.hash === '#note-1') {
+                    history.replaceState(null, '', location.pathname + location.search);
+                }
+                requestAnimationFrame(function () {
+                    location.hash = 'note-1';
+                });
             });
 
             var systemThumb = document.getElementById('system-thumb');
@@ -1800,6 +1690,13 @@
 
             outputAutoButton.addEventListener('click', function () {
                 setOutputAuto(!outputAuto);
+                update();
+            });
+            var advancedToggle = document.getElementById('advanced-toggle');
+            advancedToggle.addEventListener('click', function () {
+                advanced = !advanced;
+                advancedToggle.classList.toggle('active', advanced);
+                advancedToggle.setAttribute('aria-pressed', advanced ? 'true' : 'false');
                 update();
             });
             function clearAutoFromInput() {
