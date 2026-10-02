@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Breakdown Calculator - MyBoiler.com</title>
+    <meta name="description" content="Split annual gas and electricity into heating, hot water, cooking, and other use. Tick the appliances you have. Defaults use the Ofgem price cap.">
+    <link rel="canonical" href="https://myboiler.com/calculators/energy-breakdown/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .calculator-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .calculator-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 1.5rem clamp(20px, 4vw, 40px) 2.5rem;
+            max-width: 1120px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .calculator-header {
+            text-align: left;
+            margin-bottom: 1.15rem;
+        }
+
+        .calculator-headline {
+            font-size: clamp(1.7rem, 3vw, 2.15rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.4rem;
+            letter-spacing: -0.02em;
+        }
+
+        .calculator-connector {
+            font-size: 0.975rem;
+            line-height: 1.45;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 68ch;
+        }
+
+        .calculator-connector a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .calculator-connector a:hover {
+            text-decoration: underline;
+        }
+
+        .calculator-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.8fr);
+            gap: 1.15rem;
+            align-items: start;
+            width: 100%;
+        }
+
+        .inputs-column,
+        .results-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            min-width: 0;
+        }
+
+        .results-column {
+            position: sticky;
+            top: 5.25rem;
+        }
+
+        .section-group,
+        .total-card,
+        .results-section {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: 0.9rem 1rem 1rem;
+            box-sizing: border-box;
+        }
+
+        .total-card {
+            border: 1px solid rgba(24, 99, 220, 0.22);
+        }
+
+        .section-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 0.7rem;
+        }
+
+        .section-updated {
+            margin: -0.45rem 0 0.7rem;
+            font-size: 0.75rem;
+            line-height: 1.35;
+            color: var(--text-muted);
+        }
+
+        .section-updated a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .section-updated a:hover {
+            text-decoration: underline;
+        }
+
+        .field-grid,
+        .choice-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.55rem 0.7rem;
+        }
+
+        .tariff-choices {
+            margin-bottom: 0.7rem;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            min-width: 0;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0.45rem 0.65rem;
+        }
+
+        .input-group:focus-within {
+            border-color: var(--accent);
+        }
+
+        .input-label {
+            flex: 1;
+            min-width: 0;
+            margin: 0;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            line-height: 1.25;
+            color: var(--text-muted);
+        }
+
+        .input-field {
+            width: 5.25rem;
+            flex: 0 0 auto;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            font-size: 0.975rem;
+            font-weight: 600;
+            text-align: right;
+            color: var(--text);
+            font-variant-numeric: tabular-nums;
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        .input-field:focus {
+            outline: none;
+        }
+
+        .input-field::-webkit-outer-spin-button,
+        .input-field::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .choice {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.55rem;
+            margin: 0;
+            min-width: 0;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0.5rem 0.65rem;
+            cursor: pointer;
+        }
+
+        .choice:has(input:checked) {
+            border-color: var(--accent);
+        }
+
+        .choice input {
+            margin: 0.15rem 0 0;
+            accent-color: var(--accent);
+            flex: 0 0 auto;
+        }
+
+        .choice-copy {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .choice-name {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            line-height: 1.25;
+            color: var(--text);
+        }
+
+        .choice-note {
+            font-size: 0.75rem;
+            line-height: 1.3;
+            color: var(--text-muted);
+        }
+
+        .choice-block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            min-width: 0;
+        }
+
+        .shift-field .input-field {
+            width: 3.25rem;
+        }
+
+        .total-label {
+            display: block;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.2rem;
+        }
+
+        .total-value {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            color: var(--accent);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .results-section {
+            max-height: calc(100vh - 13.5rem);
+            overflow: auto;
+        }
+
+        .result-subsection {
+            margin-bottom: 0.9rem;
+        }
+
+        .result-subsection:last-child {
+            margin-bottom: 0;
+        }
+
+        .subsection-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 0.75rem;
+            padding: 0.35rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .result-label-text {
+            font-size: 0.875rem;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .result-detail {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .result-value-text {
+            font-size: 0.975rem;
+            font-weight: 600;
+            color: var(--accent);
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+            text-align: right;
+        }
+
+        .result-kwh {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .scale-note {
+            margin: 0 0 0.75rem;
+            font-size: 0.75rem;
+            line-height: 1.35;
+            color: var(--text-muted);
+        }
+
+        .calculator-disclaimer {
+            text-align: left;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+            margin: 0.9rem 0 0;
+            max-width: 78ch;
+        }
+
+        @media (max-width: 900px) {
+            .calculator-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .results-column {
+                position: static;
+            }
+
+            .results-section {
+                max-height: none;
+                overflow: visible;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .calculator-container {
+                padding: 1.15rem 16px 1.75rem;
+            }
+
+            .field-grid,
+            .choice-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .total-value {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Energy Breakdown Calculator",
+  "url": "https://myboiler.com/calculators/energy-breakdown/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MyBoiler.com",
+    "url": "https://myboiler.com/"
+  },
+  "description": "Split annual gas and electricity into heating, hot water, cooking, and other use. Tick the appliances you have. Defaults use the Ofgem price cap."
+}
+    </script>
+</head>
+<body class="calculator-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h1 class="calculator-headline">Energy Breakdown</h1>
+            <p class="calculator-connector">
+                Start from the gas and electricity on the bill. Tick what the home has, and the year is split into heating, hot water, and the rest. To go the other way, from boiler power and hours, use the <a href="/calculators/boiler-usage-cost/">boiler usage cost calculator</a>.
+            </p>
+        </div>
+
+        <div class="calculator-layout">
+            <div class="inputs-column">
+                <div class="section-group">
+                    <h2 class="section-title">Annual use</h2>
+                    <p class="section-updated">Defaults are the Ofgem medium typical use: 9,500 kWh of gas and 2,500 kWh of electricity.</p>
+                    <div class="field-grid">
+                        <div class="input-group">
+                            <label class="input-label" for="gas-kwh">Gas (kWh/year)</label>
+                            <input type="number" id="gas-kwh" class="input-field" value="9500" step="1" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label" for="elec-kwh">Electricity (kWh/year)</label>
+                            <input type="number" id="elec-kwh" class="input-field" value="2500" step="1" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-group">
+                    <h2 class="section-title">Tariff</h2>
+                    <div class="choice-grid tariff-choices">
+                        <label class="choice"><input type="radio" name="tariff" value="single" checked><span class="choice-copy"><span class="choice-name">Single rate</span><span class="choice-note">Ofgem price cap</span></span></label>
+                        <label class="choice"><input type="radio" name="tariff" value="ev"><span class="choice-copy"><span class="choice-name">Day and night</span><span class="choice-note">Octopus Intelligent Go</span></span></label>
+                    </div>
+                    <p class="section-updated" id="tariff-note-single">Last updated 1 October 2026. <a href="https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges">Ofgem</a> Direct Debit average.</p>
+                    <p class="section-updated" id="tariff-note-ev" hidden>Off-peak is the advertised <a href="https://octopus.energy/smart/intelligent-octopus-go/">8p/kWh</a> from 1 October 2026. The day rate is an example and changes by region. Set the off-peak share on each appliance. A heat pump runs longer than a battery charge, so the rest is the day rate.</p>
+                    <div class="field-grid">
+                        <div class="input-group" id="gas-rate-field">
+                            <label class="input-label" for="gas-rate">Gas rate (£/kWh)</label>
+                            <input type="number" id="gas-rate" class="input-field" value="0.0797" step="0.0001" min="0">
+                        </div>
+                        <div class="input-group" id="single-rate-field">
+                            <label class="input-label" for="elec-rate">Electric rate (£/kWh)</label>
+                            <input type="number" id="elec-rate" class="input-field" value="0.2632" step="0.0001" min="0">
+                        </div>
+                        <div class="input-group" id="day-rate-field" hidden>
+                            <label class="input-label" for="day-rate">Day rate (£/kWh)</label>
+                            <input type="number" id="day-rate" class="input-field" value="0.32" step="0.0001" min="0">
+                        </div>
+                        <div class="input-group" id="offpeak-rate-field" hidden>
+                            <label class="input-label" for="offpeak-rate">Off-peak (£/kWh)</label>
+                            <input type="number" id="offpeak-rate" class="input-field" value="0.08" step="0.0001" min="0">
+                        </div>
+                        <div class="input-group" id="gas-standing-field">
+                            <label class="input-label" for="gas-standing">Gas standing (£/day)</label>
+                            <input type="number" id="gas-standing" class="input-field" value="0.2968" step="0.0001" min="0">
+                        </div>
+                        <div class="input-group" id="elec-standing-field">
+                            <label class="input-label" for="elec-standing">Electric standing (£/day)</label>
+                            <input type="number" id="elec-standing" class="input-field" value="0.5483" step="0.0001" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-group">
+                    <h2 class="section-title">Renewables on site</h2>
+                    <p class="section-updated">Panels yield about 900 kWh a year per kW. About 35% is used in the home, or about 70% with a battery. On a day and night tariff the battery shifts one charge a night, at 90% round trip. A heat pump runs on about 180 heating days, so a charge only covers part of that day and the rest is the day rate.</p>
+                    <div class="choice-grid">
+                        <label class="choice"><input type="checkbox" id="solar"><span class="choice-copy"><span class="choice-name">Solar panels</span><span class="choice-note">Generation used at home is not imported</span></span></label>
+                        <label class="choice"><input type="checkbox" id="battery"><span class="choice-copy"><span class="choice-name">Battery storage</span><span class="choice-note">Raises solar use and can charge overnight</span></span></label>
+                    </div>
+                    <div class="field-grid" style="margin-top: 0.55rem;">
+                        <div class="input-group" id="solar-size-field" hidden>
+                            <label class="input-label" for="solar-kwp">Solar size (kW)</label>
+                            <input type="number" id="solar-kwp" class="input-field" value="4" step="0.1" min="0">
+                        </div>
+                        <div class="input-group" id="battery-size-field" hidden>
+                            <label class="input-label" for="battery-kwh">Battery capacity (kWh)</label>
+                            <input type="number" id="battery-kwh" class="input-field" value="5" step="0.1" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-group">
+                    <h2 class="section-title">Gas appliances</h2>
+                    <div class="choice-grid">
+                        <label class="choice"><input type="checkbox" id="gas-heating" checked><span class="choice-copy"><span class="choice-name">Central heating</span><span class="choice-note">Most of a gas bill</span></span></label>
+                        <label class="choice"><input type="checkbox" id="gas-hw" checked><span class="choice-copy"><span class="choice-name">Hot water</span><span class="choice-note">Combi or a boiler-fed cylinder</span></span></label>
+                        <label class="choice"><input type="checkbox" id="gas-cook"><span class="choice-copy"><span class="choice-name">Gas cooking</span><span class="choice-note">Hob or oven</span></span></label>
+                        <label class="choice"><input type="checkbox" id="gas-fire"><span class="choice-copy"><span class="choice-name">Gas fire</span><span class="choice-note">A second gas heater</span></span></label>
+                    </div>
+                </div>
+
+                <div class="section-group">
+                    <h2 class="section-title">Electric appliances</h2>
+                    <p class="section-updated" id="elec-shift-note" hidden>On a day and night tariff, set the share of each ticked use that can run off-peak. The car starts at 100%. A heat pump is not given a share: it runs through the day, the battery covers one charge, then it uses the day rate.</p>
+                    <div class="choice-grid">
+                        <div class="choice-block">
+                            <label class="choice"><input type="checkbox" id="boiler-elec" checked><span class="choice-copy"><span class="choice-name">Boiler pump and fan</span><span class="choice-note">About 175 kWh</span></span></label>
+                            <div class="input-group shift-field" id="shift-wrap-boiler-elec" hidden>
+                                <label class="input-label" for="shift-boiler-elec">Off-peak share (%)</label>
+                                <input type="number" id="shift-boiler-elec" class="input-field" value="0" step="1" min="0" max="100">
+                            </div>
+                        </div>
+                        <div class="choice-block">
+                            <label class="choice"><input type="checkbox" id="immersion"><span class="choice-copy"><span class="choice-name">Immersion heater</span><span class="choice-note">About 1,200 kWh</span></span></label>
+                            <div class="input-group shift-field" id="shift-wrap-immersion" hidden>
+                                <label class="input-label" for="shift-immersion">Off-peak share (%)</label>
+                                <input type="number" id="shift-immersion" class="input-field" value="0" step="1" min="0" max="100">
+                            </div>
+                        </div>
+                        <div class="choice-block">
+                            <label class="choice"><input type="checkbox" id="shower"><span class="choice-copy"><span class="choice-name">Electric shower</span><span class="choice-note">About 500 kWh</span></span></label>
+                            <div class="input-group shift-field" id="shift-wrap-shower" hidden>
+                                <label class="input-label" for="shift-shower">Off-peak share (%)</label>
+                                <input type="number" id="shift-shower" class="input-field" value="0" step="1" min="0" max="100">
+                            </div>
+                        </div>
+                        <div class="choice-block">
+                            <label class="choice"><input type="checkbox" id="elec-cook" checked><span class="choice-copy"><span class="choice-name">Electric cooking</span><span class="choice-note">About 400 kWh</span></span></label>
+                            <div class="input-group shift-field" id="shift-wrap-elec-cook" hidden>
+                                <label class="input-label" for="shift-elec-cook">Off-peak share (%)</label>
+                                <input type="number" id="shift-elec-cook" class="input-field" value="0" step="1" min="0" max="100">
+                            </div>
+                        </div>
+                        <div class="choice-block">
+                            <label class="choice"><input type="checkbox" id="heat-pump"><span class="choice-copy"><span class="choice-name">Heat pump</span><span class="choice-note">About 3,500 kWh, then the day rate</span></span></label>
+                            <div class="input-group shift-field" id="shift-wrap-heat-pump" hidden>
+                                <label class="input-label" for="shift-heat-pump">Off-peak share (%)</label>
+                                <input type="number" id="shift-heat-pump" class="input-field" value="0" step="1" min="0" max="100">
+                            </div>
+                        </div>
+                        <div class="choice-block">
+                            <label class="choice"><input type="checkbox" id="ev"><span class="choice-copy"><span class="choice-name">Car charging at home</span><span class="choice-note" id="ev-note">About 2,000 kWh</span></span></label>
+                            <div class="input-group shift-field" id="shift-wrap-ev" hidden>
+                                <label class="input-label" for="shift-ev">Off-peak share (%)</label>
+                                <input type="number" id="shift-ev" class="input-field" value="100" step="1" min="0" max="100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="results-column" aria-label="Results" aria-live="polite">
+                <div class="total-card">
+                    <span class="total-label">Gas, electricity, and standing charges</span>
+                    <span class="total-value" id="total-annual">£0.00</span>
+                </div>
+                <div class="results-section" id="results"></div>
+            </aside>
+        </div>
+
+        <p class="calculator-disclaimer">
+            Estimate only. Gas is shared in typical proportions across the uses you tick. Each electric appliance takes a typical yearly amount, and what is left is other use. On a day and night tariff, the off-peak share of each ticked use is priced at the cheap rate. A battery moves one charge a night onto that rate, at 90% round trip. A heat pump runs on about 180 heating days. The battery covers one charge on those days, then the heat pump uses the day rate. Unused summer charge does not carry into winter. Solar is about 900 kWh a year per kW, with about 35% used in the home, or about 70% with a battery. Exported solar is not paid here. The electricity figure is what the home uses; solar covers some of it so less is imported. Heating hours assume 20 kW, hot water hours assume 36 kW, the same powers as the boiler usage cost calculator.
+        </p>
+    </div>
+
+    <script type="text/javascript" data-cfasync="false">
+        var gasUses = [
+            { id: 'gas-heating', label: 'Central heating', weight: 77, kw: 20 },
+            { id: 'gas-hw', label: 'Hot water', weight: 18, kw: 36 },
+            { id: 'gas-cook', label: 'Gas cooking', weight: 3 },
+            { id: 'gas-fire', label: 'Gas fire', weight: 8 }
+        ];
+
+        var SOLAR_YIELD = 900;
+        var SOLAR_SELF = 0.35;
+        var SOLAR_SELF_BATTERY = 0.7;
+        var BATTERY_CYCLES = 365;
+        var BATTERY_EFF = 0.9;
+        var HEAT_PUMP_DAYS = 180;
+
+        var electricUses = [
+            { id: 'boiler-elec', label: 'Boiler pump and fan', typical: 175 },
+            { id: 'immersion', label: 'Immersion heater', typical: 1200 },
+            { id: 'shower', label: 'Electric shower', typical: 500 },
+            { id: 'elec-cook', label: 'Electric cooking', typical: 400 },
+            { id: 'heat-pump', label: 'Heat pump', typical: 3500, continuous: true },
+            { id: 'ev', label: 'Car charging at home', typical: 2000 }
+        ];
+
+        function dayAndNight() {
+            return document.querySelector('input[name="tariff"]:checked').value === 'ev';
+        }
+
+        function pence(pounds) {
+            return (pounds * 100).toFixed(2).replace(/\.?0+$/, '') + 'p/kWh';
+        }
+
+        function money(value) {
+            var parts = value.toFixed(2).split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            return '£' + parts.join('.');
+        }
+
+        function kwh(value) {
+            return Math.round(value).toLocaleString('en-GB') + ' kWh';
+        }
+
+        function readNumber(id) {
+            return parseFloat(document.getElementById(id).value) || 0;
+        }
+
+        function clampPercent(id) {
+            return Math.min(100, Math.max(0, readNumber(id))) / 100;
+        }
+
+        function syncOptions() {
+            var tou = dayAndNight();
+            document.getElementById('solar-size-field').hidden = !document.getElementById('solar').checked;
+            document.getElementById('battery-size-field').hidden = !document.getElementById('battery').checked;
+            document.getElementById('elec-shift-note').hidden = !tou;
+            electricUses.forEach(function (use) {
+                document.getElementById('shift-wrap-' + use.id).hidden = !!use.continuous || !tou || !document.getElementById(use.id).checked;
+            });
+        }
+
+        function row(label, detail, pounds, units) {
+            var value = pounds === null
+                ? units
+                : money(pounds) + '<span class="result-kwh">' + units + '</span>';
+            return '<div class="result-row">' +
+                '<span class="result-label-text">' + label +
+                    (detail ? '<span class="result-detail">' + detail + '</span>' : '') +
+                '</span>' +
+                '<span class="result-value-text">' + value + '</span></div>';
+        }
+
+        function calculate() {
+            syncOptions();
+            var gasTotal = Math.max(0, readNumber('gas-kwh'));
+            var elecTotal = Math.max(0, readNumber('elec-kwh'));
+            var gasRate = Math.max(0, readNumber('gas-rate'));
+            var tou = dayAndNight();
+            var dayRate = tou ? Math.max(0, readNumber('day-rate')) : Math.max(0, readNumber('elec-rate'));
+            var offPeakRate = tou ? Math.max(0, readNumber('offpeak-rate')) : dayRate;
+            var gasStanding = Math.max(0, readNumber('gas-standing')) * 365;
+            var elecStanding = Math.max(0, readNumber('elec-standing')) * 365;
+            var solarOn = document.getElementById('solar').checked;
+            var batteryOn = document.getElementById('battery').checked;
+            var solarKwp = solarOn ? Math.max(0, readNumber('solar-kwp')) : 0;
+            var batteryKwh = batteryOn ? Math.max(0, readNumber('battery-kwh')) : 0;
+            var generation = solarKwp * SOLAR_YIELD;
+            var batteryBudget = tou && batteryKwh > 0 ? batteryKwh * BATTERY_CYCLES * BATTERY_EFF : 0;
+            var heatPumpBudget = tou && batteryKwh > 0 ? batteryKwh * HEAT_PUMP_DAYS * BATTERY_EFF : 0;
+
+            var chosenGas = gasUses.filter(function (use) {
+                return document.getElementById(use.id).checked;
+            });
+            var gasWeight = chosenGas.reduce(function (sum, use) { return sum + use.weight; }, 0);
+            var gasHtml = '';
+            chosenGas.forEach(function (use) {
+                var units = gasWeight ? gasTotal * use.weight / gasWeight : 0;
+                var detail = '';
+                if (use.kw && units > 0) {
+                    detail = 'About ' + Math.round(units / use.kw).toLocaleString('en-GB') + ' hours at ' + use.kw + ' kW';
+                }
+                var share = gasTotal ? Math.round(units / gasTotal * 100) : 0;
+                gasHtml += row(use.label, detail, units * gasRate, kwh(units) + ' · ' + share + '%');
+            });
+            if (!chosenGas.length && gasTotal > 0) {
+                gasHtml += row('Not assigned', 'Tick the gas appliances in the home', gasTotal * gasRate, kwh(gasTotal));
+            }
+
+            var chosenElec = electricUses.filter(function (use) {
+                return document.getElementById(use.id).checked;
+            });
+            var typicalSum = chosenElec.reduce(function (sum, use) { return sum + use.typical; }, 0);
+            var scale = typicalSum > elecTotal && typicalSum > 0 ? elecTotal / typicalSum : 1;
+            var loads = chosenElec.map(function (use) {
+                var units = use.typical * scale;
+                var shift = tou && !use.continuous ? clampPercent('shift-' + use.id) : 0;
+                return {
+                    label: use.label,
+                    typical: use.typical,
+                    units: units,
+                    directOff: units * shift,
+                    day: units * (1 - shift),
+                    shift: shift,
+                    continuous: !!use.continuous
+                };
+            });
+            var namedUnits = loads.reduce(function (sum, load) { return sum + load.units; }, 0);
+            var otherUnits = Math.max(0, elecTotal - namedUnits);
+            var daySum = loads.reduce(function (sum, load) { return sum + load.day; }, 0) + otherUnits;
+            var selfFrac = batteryKwh > 0 ? SOLAR_SELF_BATTERY : SOLAR_SELF;
+            var solarUsed = Math.min(generation * selfFrac, daySum);
+            function takeSolar(dayUnits) {
+                if (!(daySum > 0) || !(solarUsed > 0)) return 0;
+                return solarUsed * dayUnits / daySum;
+            }
+            var elecHtml = '';
+            var elecUsageCost = 0;
+            var batteryForHeat = 0;
+            var heatPumpPeak = 0;
+            loads.forEach(function (load) {
+                var solarPart = takeSolar(load.day);
+                var dayLeft = load.day - solarPart;
+                var fromBattery = 0;
+                if (load.continuous && heatPumpBudget > 0) {
+                    fromBattery = Math.min(dayLeft, heatPumpBudget);
+                    dayLeft -= fromBattery;
+                    batteryForHeat += fromBattery;
+                }
+                if (load.continuous) heatPumpPeak += dayLeft;
+                var cost = load.directOff * offPeakRate + fromBattery * offPeakRate + dayLeft * dayRate;
+                elecUsageCost += cost;
+                var share = elecTotal ? Math.round(load.units / elecTotal * 100) : 0;
+                var bits = [];
+                if (load.continuous && tou && fromBattery >= 0.5 && dayLeft >= 0.5) {
+                    bits.push(kwh(fromBattery) + ' from the battery, then ' + kwh(dayLeft) + ' at the day rate');
+                } else if (load.continuous && tou && fromBattery >= 0.5) {
+                    bits.push('Covered by the battery at the off-peak rate');
+                } else if (load.continuous && tou && dayLeft >= 0.5) {
+                    bits.push('Runs through the day, so this is the day rate');
+                } else if (tou && load.shift >= 0.999) bits.push('Off-peak at ' + pence(offPeakRate));
+                else if (tou && load.shift > 0) bits.push(Math.round(load.shift * 100) + '% off-peak at ' + pence(offPeakRate));
+                else bits.push('Typical year is ' + load.typical.toLocaleString('en-GB') + ' kWh');
+                if (solarPart >= 0.5) bits.push(kwh(solarPart) + ' from solar');
+                elecHtml += row(load.label, bits.join(' · '), cost, kwh(load.units) + ' · ' + share + '%');
+            });
+            var otherSolar = takeSolar(otherUnits);
+            var otherAfterSolar = otherUnits - otherSolar;
+            var otherBudget = Math.max(0, batteryBudget - batteryForHeat);
+            var batteryMoved = Math.min(otherAfterSolar, otherBudget);
+            var otherDayLeft = otherAfterSolar - batteryMoved;
+            if (otherUnits >= 0.5 || !loads.length) {
+                var otherShare = elecTotal ? Math.round(otherUnits / elecTotal * 100) : 0;
+                var otherCost = batteryMoved * offPeakRate + otherDayLeft * dayRate;
+                elecUsageCost += otherCost;
+                var otherBits = ['What is left after the ticked uses'];
+                if (batteryMoved >= 0.5) otherBits.push(kwh(batteryMoved) + ' shifted off-peak by the battery');
+                if (otherSolar >= 0.5) otherBits.push(kwh(otherSolar) + ' from solar');
+                if (tou && batteryMoved < 0.5 && otherDayLeft >= 0.5) otherBits.unshift('Day rate');
+                elecHtml += row('Lights and other appliances', otherBits.join(' · '), otherCost, kwh(otherUnits) + ' · ' + otherShare + '%');
+            }
+            var importKwh = Math.max(0, elecTotal - solarUsed);
+            var exportKwh = Math.max(0, generation - solarUsed);
+
+            var gasUsageCost = gasTotal * gasRate;
+            var total = gasUsageCost + elecUsageCost + gasStanding + elecStanding;
+            document.getElementById('total-annual').textContent = money(total);
+
+            var note = scale < 1
+                ? '<p class="scale-note">The ticked electric uses would normally take more than this bill, so each one is scaled down to fit.</p>'
+                : '';
+
+            var renewHtml = '';
+            if (solarOn || batteryOn) {
+                if (generation > 0) {
+                    renewHtml += row('Solar generation', 'About ' + SOLAR_YIELD + ' kWh a year per kW', null, kwh(generation));
+                    renewHtml += row('Used at home', batteryKwh > 0 ? 'About 70% with a battery, capped by daytime use' : 'About 35% without a battery, capped by daytime use', null, kwh(solarUsed));
+                    renewHtml += row('Exported', 'Not paid in this estimate', null, kwh(exportKwh));
+                }
+                var batteryUsed = batteryForHeat + batteryMoved;
+                if (tou && batteryKwh > 0 && batteryUsed >= 0.5) {
+                    var batteryDetail = heatPumpPeak >= 0.5
+                        ? 'The heat pump keeps running after the battery is empty, so that part is the day rate'
+                        : (batteryUsed + 0.5 < batteryBudget
+                            ? 'More capacity than the use that can be shifted'
+                            : 'One charge a night, 90% round trip');
+                    renewHtml += row('Shifted off-peak', batteryDetail, null, kwh(batteryUsed) + ' of ' + kwh(batteryBudget));
+                } else if (tou && batteryOn && batteryUsed < 0.5) {
+                    var idleDetail = otherUnits < 0.5
+                        ? 'Nothing left to shift. The ticked uses already fill the bill.'
+                        : 'Nothing left to shift. Solar already covers the other home use.';
+                    renewHtml += row('Battery', idleDetail, null, batteryKwh + ' kWh');
+                } else if (batteryOn && !tou) {
+                    renewHtml += row('Battery', 'Raises the share of solar used at home. Off-peak shifting needs a day and night tariff.', null, batteryKwh + ' kWh');
+                }
+            }
+            var elecDetail = solarUsed >= 0.5
+                ? kwh(solarUsed) + ' covered by solar, from ' + kwh(elecTotal) + ' used'
+                : '';
+
+            document.getElementById('results').innerHTML =
+                note +
+                '<div class="result-subsection"><div class="subsection-title">Gas</div>' + gasHtml +
+                    row('Gas used', '', gasUsageCost, kwh(gasTotal)) +
+                '</div>' +
+                '<div class="result-subsection"><div class="subsection-title">Electricity</div>' + elecHtml +
+                    row(solarUsed >= 0.5 ? 'Electricity imported' : 'Electricity used', elecDetail, elecUsageCost, kwh(solarUsed >= 0.5 ? importKwh : elecTotal)) +
+                '</div>' +
+                (renewHtml ? '<div class="result-subsection"><div class="subsection-title">Renewables on site</div>' + renewHtml + '</div>' : '') +
+                '<div class="result-subsection"><div class="subsection-title">Standing charges</div>' +
+                    row('Gas', '365 days', gasStanding, '£' + readNumber('gas-standing').toFixed(4).replace(/0+$/, '').replace(/\.$/, '') + '/day') +
+                    row('Electric', '365 days', elecStanding, '£' + readNumber('elec-standing').toFixed(4).replace(/0+$/, '').replace(/\.$/, '') + '/day') +
+                '</div>';
+        }
+
+        function applyTariff() {
+            var tou = dayAndNight();
+            document.getElementById('tariff-note-single').hidden = tou;
+            document.getElementById('tariff-note-ev').hidden = !tou;
+            document.getElementById('single-rate-field').hidden = tou;
+            document.getElementById('day-rate-field').hidden = !tou;
+            document.getElementById('offpeak-rate-field').hidden = !tou;
+            document.getElementById('day-rate-field').style.order = tou ? '1' : '';
+            document.getElementById('offpeak-rate-field').style.order = tou ? '2' : '';
+            document.getElementById('gas-rate-field').style.order = tou ? '3' : '';
+            document.getElementById('gas-standing-field').style.order = tou ? '4' : '';
+            document.getElementById('elec-standing-field').style.order = tou ? '5' : '';
+            document.getElementById('ev-note').textContent = tou
+                ? 'About 2,000 kWh, off-peak share below'
+                : 'About 2,000 kWh';
+            calculate();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('input').forEach(function (input) {
+                input.addEventListener('input', calculate);
+                input.addEventListener('change', function () {
+                    if (input.name === 'tariff') applyTariff();
+                    else calculate();
+                });
+            });
+            applyTariff();
+        });
+    </script>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>

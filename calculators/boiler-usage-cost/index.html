@@ -58,12 +58,19 @@
             width: 100%;
         }
 
-        .calculator-card {
-            width: 100%;
+        .inputs-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            min-width: 0;
+        }
+
+        .section-group {
             background: var(--surface);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-sm);
-            padding: 1.15rem 1.25rem 1.25rem;
+            padding: 0.9rem 1rem 1rem;
+            margin: 0;
             box-sizing: border-box;
         }
 
@@ -72,16 +79,22 @@
             font-weight: 600;
             color: var(--text);
             margin: 0 0 0.7rem;
-            padding-bottom: 0.35rem;
-            border-bottom: 1px solid var(--border-subtle);
         }
 
-        .section-group {
-            margin-bottom: 1.15rem;
+        .section-updated {
+            margin: -0.45rem 0 0.7rem;
+            font-size: 0.75rem;
+            line-height: 1.35;
+            color: var(--text-muted);
         }
 
-        .section-group:last-child {
-            margin-bottom: 0;
+        .section-updated a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .section-updated a:hover {
+            text-decoration: underline;
         }
 
         .field-grid {
@@ -251,6 +264,22 @@
             font-weight: 600;
         }
 
+        .calculator-next {
+            margin: 0.75rem 0 0;
+            font-size: 0.9375rem;
+            line-height: 1.4;
+        }
+
+        .calculator-next a {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .calculator-next a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 900px) {
             .calculator-layout {
                 grid-template-columns: 1fr;
@@ -329,17 +358,18 @@
         </div>
 
         <div class="calculator-layout">
-            <div class="calculator-card">
+            <div class="inputs-column">
                 <div class="section-group">
                     <h2 class="section-title">Energy rates</h2>
+                    <p class="section-updated">Last updated 1 October 2026. <a href="https://www.ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges">Ofgem</a> Direct Debit average, including the standing charges.</p>
                     <div class="field-grid">
                         <div class="input-group">
                             <label class="input-label" for="gas-rate">Gas rate (£/kWh)</label>
-                            <input type="number" id="gas-rate" class="input-field" value="0.08" step="0.01" min="0">
+                            <input type="number" id="gas-rate" class="input-field" value="0.0797" step="0.0001" min="0">
                         </div>
                         <div class="input-group">
                             <label class="input-label" for="electric-rate">Electric rate (£/kWh)</label>
-                            <input type="number" id="electric-rate" class="input-field" value="0.30" step="0.01" min="0">
+                            <input type="number" id="electric-rate" class="input-field" value="0.2632" step="0.0001" min="0">
                         </div>
                     </div>
                 </div>
@@ -385,11 +415,11 @@
                     <div class="field-grid">
                         <div class="input-group">
                             <label class="input-label" for="gas-standing">Gas (£/day)</label>
-                            <input type="number" id="gas-standing" class="input-field" value="0.29" step="0.01" min="0">
+                            <input type="number" id="gas-standing" class="input-field" value="0.2968" step="0.0001" min="0">
                         </div>
                         <div class="input-group">
                             <label class="input-label" for="electric-standing">Electric (£/day)</label>
-                            <input type="number" id="electric-standing" class="input-field" value="0.53" step="0.01" min="0">
+                            <input type="number" id="electric-standing" class="input-field" value="0.5483" step="0.0001" min="0">
                         </div>
                     </div>
                 </div>
@@ -470,6 +500,9 @@
 
         <p class="calculator-disclaimer">
             Estimate only. Actual cost depends on how the boiler runs, its efficiency, and the tariff. Use the rate on your bill.
+        </p>
+        <p class="calculator-next">
+            <a href="/calculators/energy-breakdown/">Split a gas and electricity bill into heating, hot water, and other use</a>
         </p>
     </div>
 
