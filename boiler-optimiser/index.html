@@ -721,6 +721,15 @@
             color: var(--accent);
         }
 
+        #note-1 {
+            scroll-margin-top: 5.5rem;
+        }
+
+        .label-aside {
+            font-size: 0.9375rem;
+            font-weight: 500;
+        }
+
         .result-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -881,6 +890,7 @@
             <div class="input-group">
                 <div class="input-heading">
                     <div class="input-label" id="boiler-type-label">Boiler</div>
+                    <a class="label-aside" href="#note-1">(not sure see 1. below)</a>
                 </div>
                 <div class="choice-toggle" role="group" aria-labelledby="boiler-type-label">
                     <button type="button" class="choice-button active" data-boiler="condensing" aria-pressed="true">Condensing</button>
@@ -1644,7 +1654,9 @@
                     return (step++) + '. ' + name;
                 }
                 if (condensingBoiler) {
-                    plan.appendChild(item(stepTitle('Condensate pipe'), condensateNote()));
+                    var condensateItem = item(stepTitle('Condensate pipe'), condensateNote());
+                    condensateItem.id = 'note-1';
+                    plan.appendChild(condensateItem);
                 }
                 if (!condensingBoiler) {
                     plan.appendChild(item(
