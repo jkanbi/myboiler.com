@@ -41,7 +41,7 @@ test("sanitizeField trims and rejects URLs or markup", () => {
   assert.equal(sanitizeField("x".repeat(81), 80), "");
 });
 
-test("parseRequestBody accepts a valid form post and rejects junk", () => {
+test("parseRequestBody accepts a valid beacon and rejects junk", () => {
   const ok = parseRequestBody(
     JSON.stringify({
       t: Date.now(),
@@ -59,11 +59,22 @@ test("parseRequestBody accepts a valid form post and rejects junk", () => {
   assert.equal(noPath.ok, true);
   assert.equal(noPath.event.path, "/fault-codes/request/");
 
+  const brandOnly = parseRequestBody(JSON.stringify({ brand: "Ideal", path: "/fault-codes/request/" }));
+  assert.equal(brandOnly.ok, true);
+  assert.equal(brandOnly.event.brand, "Ideal");
+  assert.equal(brandOnly.event.code, "");
+
+  const codeOnly = parseRequestBody(JSON.stringify({ code: "Z999", path: "/fault-codes/" }));
+  assert.equal(codeOnly.ok, true);
+  assert.equal(codeOnly.event.brand, "");
+  assert.equal(codeOnly.event.code, "Z999");
+
   assert.equal(parseRequestBody("not-json").ok, false);
-  assert.equal(parseRequestBody(JSON.stringify({ brand: "Ideal" })).ok, false);
+  assert.equal(parseRequestBody(JSON.stringify({})).ok, false);
   assert.equal(parseRequestBody(JSON.stringify({ brand: "Ideal", code: "L2", path: "../etc" })).ok, false);
   assert.equal(parseRequestBody(JSON.stringify({ brand: "Ideal", code: "L2", path: "/x?q=1" })).ok, false);
-  assert.equal(parseRequestBody(JSON.stringify({ brand: "https://x", code: "L2" })).ok, false);
+  assert.equal(parseRequestBody(JSON.stringify({ brand: "https://x", code: "L2" })).ok, true);
+  assert.equal(parseRequestBody(JSON.stringify({ brand: "https://x" })).ok, false);
   assert.equal(parseRequestBody("x".repeat(3000)).status, 413);
 });
 
@@ -163,7 +174,7 @@ test("fetch accepts POST submissions and writes KV", async () => {
   const health = await post("/api/fault-code-request", null, "GET");
   assert.equal(health.status, 204);
 
-  const bad = await post("/api/fault-code-request", JSON.stringify({ brand: "Ideal" }));
+  const bad = await post("/api/fault-code-request", JSON.stringify({}));
   assert.equal(bad.status, 400);
   assert.equal(JSON.parse(kv.store.get(requestsKey(day))).length, 1);
 
@@ -232,12 +243,15 @@ test("GET /api/fault-code-requests requires Bearer LIST_SECRET and returns JSON"
   assert.deepEqual(await method.json(), { error: "method" });
 });
 
-test("request page has a brand + code form posting to the collect route", () => {
+test("request page has no form; search JS beacons the collect route", () => {
   const html = readFileSync(join(repoRoot, "fault-codes/request/index.html"), "utf8");
-  assert.match(html, /id="fault-code-request-form"/);
-  assert.match(html, /id="req-brand-input"/);
-  assert.match(html, /id="req-code-input"/);
-  assert.match(html, /\/api\/fault-code-request/);
+  assert.match(html, /We don't have this fault code right now, but we are working on it/);
   assert.match(html, /\/quote\/\?need=repair/);
-  assert.doesNotMatch(html, /HubSpot|hs-form|hubspot/i);
+  assert.doesNotMatch(html, /<form|req-brand-input|req-submit|HubSpot|hs-form|hubspot/i);
+
+  const js = readFileSync(join(repoRoot, "js/fault-codes.js"), "utf8");
+  assert.match(js, /\/api\/fault-code-request/);
+  assert.match(js, /sendBeacon/);
+  assert.match(js, /We don't have this fault code right now, but we are working on it/);
+  assert.doesNotMatch(js, /Request it/);
 });

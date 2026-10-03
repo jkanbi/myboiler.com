@@ -125,7 +125,7 @@ export function parseRequestBody(body) {
 
   const brand = sanitizeField(data.brand, MAX_BRAND);
   const code = sanitizeField(data.code, MAX_CODE);
-  if (!brand || !code) return { ok: false, status: 400 };
+  if (!brand && !code) return { ok: false, status: 400 };
 
   let path = cleanString(data.path, MAX_PATH);
   if (!path) path = "/fault-codes/request/";

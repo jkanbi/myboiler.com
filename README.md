@@ -75,7 +75,7 @@ Push to GitHub and GitHub Pages deploys automatically.
 
 Affiliate Buy-link click collection is a separate Cloudflare Worker (not GitHub Pages). Clicks are stored in Workers KV (not Analytics Engine). Deploy, tail, and query steps: [`workers/affiliate-click/README.md`](workers/affiliate-click/README.md).
 
-Missing fault-code requests from `/fault-codes/request/` use the same pattern (same-origin POST, Workers KV, Bearer list GET). That Worker does not send email — another bot reads `GET /api/fault-code-requests` and either emails the digest or saves a Gmail draft if it cannot send. Deploy and query steps: [`workers/fault-code-request/README.md`](workers/fault-code-request/README.md).
+Missing fault-code requests are recorded automatically when search finds nothing or a visitor opens a grey / missing-brand link. Same pattern as Buy-link clicks (same-origin beacon, Workers KV, Bearer list GET). There is no form. That Worker does not send email — another bot reads `GET /api/fault-code-requests` and either emails the digest or saves a Gmail draft if it cannot send. Deploy and query steps: [`workers/fault-code-request/README.md`](workers/fault-code-request/README.md).
 
 ## Example requests
 

@@ -63,7 +63,7 @@ function polish(filePath) {
     html = html.replace(/MyBoiler Hub/g, "MyBoiler.com");
     html = html.replace(/not on the Hub yet/g, "not listed yet");
     html = html.replace(/this hub/g, "MyBoiler.com");
-    html = html.replace(/the old Hub had the same placeholder\./g, "Grey names open a request form.");
+    html = html.replace(/the old Hub had the same placeholder\./g, "Grey names are not listed yet.");
 
     if (rel !== "index.html") {
         html = insertAfter(

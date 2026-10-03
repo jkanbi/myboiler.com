@@ -1,8 +1,8 @@
 # Fault-code request collector (myboiler.com)
 
-Cookieless record of missing brand / fault-code requests from `/fault-codes/request/`.
+Cookieless record of missing brand / fault-code requests. There is no visitor form.
 
-The browser `fetch`es **same-origin** `POST /api/fault-code-request`. This Worker validates a tiny JSON body and appends one event to [Workers KV](https://developers.cloudflare.com/kv/).
+When search finds nothing, or a grey / missing-brand link opens `/fault-codes/request/`, the page shows a short “we are working on it” message and the browser fires `navigator.sendBeacon` (or `fetch` + `keepalive`) to **same-origin** `POST /api/fault-code-request`. Brand and code come from the search query or the link’s query string. This Worker validates a tiny JSON body and appends one event to [Workers KV](https://developers.cloudflare.com/kv/).
 
 **This Worker does not send email.** A separate bot GETs the authenticated list and either emails the daily digest to info@arated.com or, if it cannot send, saves a Gmail draft. The list payload is the same either way.
 
@@ -12,7 +12,7 @@ No cookies, no `localStorage`, no user id, no IP / UA stored.
 
 | Method | Path | Auth | Result |
 | --- | --- | --- | --- |
-| `POST` | `/api/fault-code-request` | none (same-origin form) | validate, append to KV, `204` |
+| `POST` | `/api/fault-code-request` | none (same-origin beacon) | validate, append to KV, `204` |
 | `GET` / `HEAD` / `OPTIONS` | `/api/fault-code-request` | none | empty `204` (CORS / health) |
 | `GET` | `/api/fault-code-requests?day=YYYY-MM-DD` | `Authorization: Bearer $LIST_SECRET` | `{ day, count, requests }` |
 
@@ -32,8 +32,8 @@ No cookies, no `localStorage`, no user id, no IP / UA stored.
 | Field | Required | Notes |
 | --- | --- | --- |
 | `t` | no | Client unix ms. Out-of-range values are replaced with server time. |
-| `brand` | yes | Trimmed, max 80 chars. URLs / markup rejected. |
-| `code` | yes | Trimmed, max 40 chars. URLs / markup rejected. |
+| `brand` | if no `code` | Trimmed, max 80 chars. URLs / markup rejected. |
+| `code` | if no `brand` | Trimmed, max 40 chars. URLs / markup rejected. At least one of brand or code is required. |
 | `path` | no | `location.pathname` only. Defaults to `/fault-codes/request/`. |
 
 The Worker stores `{ t, brand, code, path }`. Rank frequently requested codes by grouping `brand` + `code` (case-insensitive is fine).
@@ -93,9 +93,9 @@ Same steps as [`../affiliate-click/README.md`](../affiliate-click/README.md). Th
    curl -sI https://myboiler.com/api/fault-code-request
    ```
 
-6. Submit the form on `/fault-codes/request/` (or POST a sample body) and watch the tail (below).
+6. Search for a missing code on `/fault-codes/` or open a grey brand (or POST a sample body) and watch the tail (below).
 
-Site JS on `/fault-codes/request/` posts to this Worker. A missing route shows an error on the form; it does not affect the rest of the site.
+Site JS in `/js/fault-codes.js` posts to this Worker. A missing route only drops the beacon. There is no form and no submit button.
 
 ## How to see requests (for the daily digest)
 
@@ -111,7 +111,7 @@ CLI:
 npx wrangler tail fault-code-request
 ```
 
-Each form submit is a POST that should return `204` within about a second. The Worker also `console.log`s `{ brand, code, path }` (no IP, UA, or cookies).
+Each missed search or missing-brand view is a POST that should return `204` within about a second. The Worker also `console.log`s `{ brand, code, path }` (no IP, UA, or cookies). The HTTP response body stays empty.
 
 ### 2. Query KV via `/api/fault-code-requests` (Bearer secret)
 
