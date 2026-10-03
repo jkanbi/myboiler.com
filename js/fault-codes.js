@@ -327,11 +327,20 @@
 
         if (!result.items.length) {
             var parsedMiss = result.parsed || parseQuery(query);
+            var missBrand = parsedMiss.brand || "";
             var codeVal = parsedMiss.codeQuery || parsedMiss.text || "";
-            if (!codeVal && !parsedMiss.brand) codeVal = query;
+            if (!codeVal && !missBrand) codeVal = query;
+            if (!missBrand && codeVal) {
+                var missParts = String(codeVal).trim().split(/\s+/);
+                var missRest = missParts.slice(1).join(" ");
+                if (missParts.length >= 2 && looksLikeCode(missRest)) {
+                    missBrand = missParts[0];
+                    codeVal = missRest;
+                }
+            }
             box.hidden = false;
             box.innerHTML = '<p class="fc-results__status">' + MISSING_MSG + "</p>";
-            scheduleMissingRequest(parsedMiss.brand, codeVal);
+            scheduleMissingRequest(missBrand, codeVal);
             return;
         }
 
