@@ -1,0 +1,38 @@
+name = "fault-code-request"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+# Production routes on zone myboiler.com (attach in the dashboard):
+#   myboiler.com/api/fault-code-request*
+#   www.myboiler.com/api/fault-code-request*
+#   myboiler.com/api/fault-code-requests*
+#   www.myboiler.com/api/fault-code-requests*
+#
+# `fault-code-request*` already matches `fault-code-requests`. Both pairs are
+# documented so a dashboard audit matches what is live.
+#
+# Uncomment after the zone exists in the same Cloudflare account, or attach
+# the equivalent routes in the dashboard:
+#
+# routes = [
+#   { pattern = "myboiler.com/api/fault-code-request*", zone_name = "myboiler.com" },
+#   { pattern = "www.myboiler.com/api/fault-code-request*", zone_name = "myboiler.com" },
+#   { pattern = "myboiler.com/api/fault-code-requests*", zone_name = "myboiler.com" },
+#   { pattern = "www.myboiler.com/api/fault-code-requests*", zone_name = "myboiler.com" }
+# ]
+
+# Workers KV — reuse the existing namespace used by affiliate-click
+# (dashboard title may still show `kv-todo`). Keys use prefix `requests:`
+# so they do not collide with `clicks:`. Equivalent CLI:
+#   npx wrangler kv namespace list
+[[kv_namespaces]]
+binding = "REQUESTS"
+id = "ad9fa2773ca549479e432b257fad3c48"
+
+# Secret (not in this file — never commit it):
+#   npx wrangler secret put LIST_SECRET
+# Used as: Authorization: Bearer <LIST_SECRET> on GET /api/fault-code-requests
+# Local: put LIST_SECRET=... in `.dev.vars` (gitignored).
+
+[observability]
+enabled = true

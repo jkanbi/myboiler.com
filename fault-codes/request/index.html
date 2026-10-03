@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fault Codes Request - MyBoiler.com</title>
-    <meta name="description" content="We do not have a table for this brand yet. Leave a quote request if you need the codes, or go back to the A–Z list .">
+    <meta name="description" content="We do not have this fault code right now, but we are working on it.">
     <link rel="canonical" href="https://myboiler.com/fault-codes/request/">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <link rel="stylesheet" type="text/css" href="/css/fault-codes.css">
@@ -49,7 +49,7 @@
     "name": "MyBoiler.com",
     "url": "https://myboiler.com/"
   },
-  "description": "We do not have a table for this brand yet. Leave a quote request if you need the codes, or go back to the A–Z list ."
+  "description": "We do not have this fault code right now, but we are working on it."
 }
     </script>
 </head>
@@ -74,29 +74,12 @@
     <div class="article-container">
         <header class="article-header">
             <h1 class="article-title">Fault Codes Request</h1>
-            <p class="article-intro">This brand is not in the library yet.</p>
+            <p class="article-intro">We don't have this fault code right now, but we are working on it.</p>
         </header>
         <article class="article-content">
             <p class="article-back"><a href="/fault-codes/">Back to fault codes</a></p>
-            <p>We do not have a table for <strong id="req-brand">this brand</strong> yet. Leave a quote request if you need the codes, or go back to the <a href="/fault-codes/">A–Z list</a>.</p>
-<p><a href="/quote/?need=repair">Get a quote</a></p>
-<script>
-(function () {
-    var brand = "";
-    var q = location.search.replace(/^\?/, "");
-    if (!q) brand = "";
-    else if (q.indexOf("=") === -1) brand = decodeURIComponent(q.replace(/\+/g, " "));
-    else {
-        var p = new URLSearchParams(location.search);
-        brand = p.get("brand") || p.get("Brand") || "";
-        if (!brand) p.forEach(function (v, k) { if (!brand) brand = v || k; });
-    }
-    brand = (brand || "").replace(/[-_]+/g, " ").trim();
-    var el = document.getElementById("req-brand");
-    if (el && brand) el.textContent = brand;
-    if (brand) document.title = brand + " fault codes request - MyBoiler.com";
-})();
-</script>
+            <p>We do not have a table for <strong id="req-brand">this brand</strong> yet.</p>
+            <p><a href="/quote/?need=repair">Get a quote</a></p>
 
         </article>
     </div>

@@ -1,8 +1,12 @@
 (function () {
     var INDEX_URL = "/fault-codes/fault-codes-index.json";
+    var REQUEST_ENDPOINT = "/api/fault-code-request";
+    var MISSING_MSG = "We don't have this fault code right now, but we are working on it.";
     var index = null;
     var loadState = "pending";
     var knownBrands = [];
+    var lastRecordedKey = "";
+    var recordTimer = null;
 
     function $(id) {
         return document.getElementById(id);
@@ -189,6 +193,78 @@
         return 0;
     }
 
+    function sendMissingRequest(brand, code) {
+        brand = String(brand || "").replace(/\s+/g, " ").trim();
+        code = String(code || "").replace(/\s+/g, " ").trim();
+        if (!brand && !code) return;
+        var key = brand.toLowerCase() + "\t" + code.toLowerCase();
+        if (key === lastRecordedKey) return;
+        lastRecordedKey = key;
+        var body;
+        try {
+            body = JSON.stringify({
+                t: Date.now(),
+                brand: brand,
+                code: code,
+                path: location.pathname
+            });
+        } catch (err) {
+            return;
+        }
+        if (body.length > 1800) return;
+        try {
+            if (navigator.sendBeacon) {
+                var blob = new Blob([body], { type: "text/plain;charset=UTF-8" });
+                if (navigator.sendBeacon(REQUEST_ENDPOINT, blob)) return;
+            }
+        } catch (err) {}
+        try {
+            fetch(REQUEST_ENDPOINT, {
+                method: "POST",
+                body: body,
+                headers: { "Content-Type": "text/plain" },
+                keepalive: true,
+                credentials: "omit",
+                mode: "same-origin",
+                cache: "no-store"
+            }).catch(function () {});
+        } catch (err) {}
+    }
+
+    function scheduleMissingRequest(brand, code) {
+        clearTimeout(recordTimer);
+        recordTimer = setTimeout(function () {
+            sendMissingRequest(brand, code);
+        }, 500);
+    }
+
+    function queryBrandAndCode() {
+        var brand = "";
+        var code = "";
+        var q = location.search.replace(/^\?/, "");
+        if (!q) return { brand: "", code: "" };
+        if (q.indexOf("=") === -1) {
+            try {
+                brand = decodeURIComponent(q.replace(/\+/g, " "));
+            } catch (err) {
+                brand = q;
+            }
+            return { brand: brand, code: "" };
+        }
+        var p = new URLSearchParams(location.search);
+        brand = p.get("brand") || p.get("Brand") || "";
+        code = p.get("code") || p.get("Code") || p.get("q") || "";
+        if (!brand) {
+            p.forEach(function (v, k) {
+                if (brand) return;
+                var key = String(k || "").toLowerCase();
+                if (key === "code" || key === "q") return;
+                brand = v || k;
+            });
+        }
+        return { brand: brand, code: code };
+    }
+
     function renderResults(raw) {
         var box = $("fault-code-results");
         if (!box) return;
@@ -223,10 +299,8 @@
         if (result.kind === "brand") {
             if (!result.items.length) {
                 box.hidden = false;
-                box.innerHTML =
-                    '<p class="fc-results__status">No page found for <strong>' +
-                    escapeHtml(result.brand) +
-                    "</strong>.</p>";
+                box.innerHTML = '<p class="fc-results__status">' + MISSING_MSG + "</p>";
+                scheduleMissingRequest(result.brand, "");
                 return;
             }
             var brandHtml = '<ul class="fc-results__list">';
@@ -252,11 +326,21 @@
         }
 
         if (!result.items.length) {
+            var parsedMiss = result.parsed || parseQuery(query);
+            var missBrand = parsedMiss.brand || "";
+            var codeVal = parsedMiss.codeQuery || parsedMiss.text || "";
+            if (!codeVal && !missBrand) codeVal = query;
+            if (!missBrand && codeVal) {
+                var missParts = String(codeVal).trim().split(/\s+/);
+                var missRest = missParts.slice(1).join(" ");
+                if (missParts.length >= 2 && looksLikeCode(missRest)) {
+                    missBrand = missParts[0];
+                    codeVal = missRest;
+                }
+            }
             box.hidden = false;
-            box.innerHTML =
-                '<p class="fc-results__status">No codes matched <strong>' +
-                escapeHtml(query) +
-                "</strong>. Try <em>Vaillant F28</em>, <em>Alpha 10</em>, or a code on its own. Missing brand? <a href=\"/fault-codes/request/\">Request it</a>.</p>";
+            box.innerHTML = '<p class="fc-results__status">' + MISSING_MSG + "</p>";
+            scheduleMissingRequest(missBrand, codeVal);
             return;
         }
 
@@ -470,9 +554,21 @@
         }
     }
 
+    function initRequestPage() {
+        if (location.pathname.replace(/\/+$/, "") !== "/fault-codes/request") return;
+        var parsed = queryBrandAndCode();
+        var brand = (parsed.brand || "").replace(/[-_]+/g, " ").trim();
+        var code = (parsed.code || "").trim();
+        var el = $("req-brand");
+        if (el && brand) el.textContent = brand;
+        if (brand) document.title = brand + " fault codes request - MyBoiler.com";
+        sendMissingRequest(brand, code);
+    }
+
     function init() {
         initHubSearch();
         initTableFilters();
+        initRequestPage();
     }
 
     if (document.readyState === "loading") {
