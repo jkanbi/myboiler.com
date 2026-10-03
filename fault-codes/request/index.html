@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fault Codes Request - MyBoiler.com</title>
-    <meta name="description" content="We do not have a table for this brand yet. Leave a quote request if you need the codes, or go back to the A–Z list .">
+    <meta name="description" content="Cannot find a boiler fault code? Tell us the brand and code you need, or go back to the A–Z list.">
     <link rel="canonical" href="https://myboiler.com/fault-codes/request/">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <link rel="stylesheet" type="text/css" href="/css/fault-codes.css">
@@ -49,7 +49,7 @@
     "name": "MyBoiler.com",
     "url": "https://myboiler.com/"
   },
-  "description": "We do not have a table for this brand yet. Leave a quote request if you need the codes, or go back to the A–Z list ."
+  "description": "Cannot find a boiler fault code? Tell us the brand and code you need, or go back to the A–Z list."
 }
     </script>
 </head>
@@ -74,27 +74,110 @@
     <div class="article-container">
         <header class="article-header">
             <h1 class="article-title">Fault Codes Request</h1>
-            <p class="article-intro">This brand is not in the library yet.</p>
+            <p class="article-intro">Tell us the brand and code you were looking for.</p>
         </header>
         <article class="article-content">
             <p class="article-back"><a href="/fault-codes/">Back to fault codes</a></p>
-            <p>We do not have a table for <strong id="req-brand">this brand</strong> yet. Leave a quote request if you need the codes, or go back to the <a href="/fault-codes/">A–Z list</a>.</p>
-<p><a href="/quote/?need=repair">Get a quote</a></p>
+            <p>We do not have a table for <strong id="req-brand">this brand</strong> yet. Send the brand and fault code below and we will use it to decide what to add next. Or go back to the <a href="/fault-codes/">A–Z list</a>.</p>
+            <form id="fault-code-request-form" class="fc-request" action="/api/fault-code-request" method="post">
+                <div class="fc-request__field">
+                    <label class="fc-request__label" for="req-brand-input">Brand</label>
+                    <input id="req-brand-input" class="fc-request__input" name="brand" type="text" autocomplete="off" required maxlength="80" placeholder="e.g. Ideal">
+                </div>
+                <div class="fc-request__field">
+                    <label class="fc-request__label" for="req-code-input">Fault code</label>
+                    <input id="req-code-input" class="fc-request__input" name="code" type="text" autocomplete="off" required maxlength="40" placeholder="e.g. F28 or L2">
+                </div>
+                <p class="fc-request__status" id="req-status" role="status" hidden></p>
+                <button type="submit" class="fc-request__button" id="req-submit">Send request</button>
+            </form>
+            <p class="fc-request__done" id="req-done" hidden>Thanks — we have noted that request.</p>
+            <p>Need an engineer in the meantime? <a href="/quote/?need=repair">Get a quote</a>.</p>
 <script>
 (function () {
-    var brand = "";
-    var q = location.search.replace(/^\?/, "");
-    if (!q) brand = "";
-    else if (q.indexOf("=") === -1) brand = decodeURIComponent(q.replace(/\+/g, " "));
-    else {
+    var ENDPOINT = "/api/fault-code-request";
+
+    function queryBrandAndCode() {
+        var brand = "";
+        var code = "";
+        var q = location.search.replace(/^\?/, "");
+        if (!q) return { brand: "", code: "" };
+        if (q.indexOf("=") === -1) {
+            brand = decodeURIComponent(q.replace(/\+/g, " "));
+            return { brand: brand, code: "" };
+        }
         var p = new URLSearchParams(location.search);
         brand = p.get("brand") || p.get("Brand") || "";
-        if (!brand) p.forEach(function (v, k) { if (!brand) brand = v || k; });
+        code = p.get("code") || p.get("Code") || p.get("q") || "";
+        if (!brand) {
+            p.forEach(function (v, k) {
+                if (brand) return;
+                var key = String(k || "").toLowerCase();
+                if (key === "code" || key === "q") return;
+                brand = v || k;
+            });
+        }
+        return { brand: brand, code: code };
     }
-    brand = (brand || "").replace(/[-_]+/g, " ").trim();
+
+    var parsed = queryBrandAndCode();
+    var brand = (parsed.brand || "").replace(/[-_]+/g, " ").trim();
+    var code = (parsed.code || "").trim();
     var el = document.getElementById("req-brand");
     if (el && brand) el.textContent = brand;
     if (brand) document.title = brand + " fault codes request - MyBoiler.com";
+
+    var form = document.getElementById("fault-code-request-form");
+    var brandInput = document.getElementById("req-brand-input");
+    var codeInput = document.getElementById("req-code-input");
+    var statusEl = document.getElementById("req-status");
+    var doneEl = document.getElementById("req-done");
+    var submitBtn = document.getElementById("req-submit");
+    if (brandInput && brand) brandInput.value = brand;
+    if (codeInput && code) codeInput.value = code;
+    if (!form || !brandInput || !codeInput) return;
+
+    function showStatus(message, isError) {
+        if (!statusEl) return;
+        statusEl.hidden = !message;
+        statusEl.textContent = message || "";
+        statusEl.classList.toggle("fc-request__status--error", !!isError);
+    }
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var nextBrand = (brandInput.value || "").replace(/\s+/g, " ").trim();
+        var nextCode = (codeInput.value || "").replace(/\s+/g, " ").trim();
+        if (!nextBrand || !nextCode) {
+            showStatus("Enter a brand and a fault code.", true);
+            return;
+        }
+        if (submitBtn) submitBtn.disabled = true;
+        showStatus("");
+        fetch(ENDPOINT, {
+            method: "POST",
+            body: JSON.stringify({
+                t: Date.now(),
+                brand: nextBrand,
+                code: nextCode,
+                path: location.pathname
+            }),
+            headers: { "Content-Type": "application/json" },
+            credentials: "omit",
+            mode: "same-origin",
+            cache: "no-store"
+        }).then(function (res) {
+            if (!res.ok) throw new Error("status " + res.status);
+            form.hidden = true;
+            if (doneEl) {
+                doneEl.hidden = false;
+                doneEl.textContent = "Thanks — we have noted " + nextBrand + " " + nextCode + ".";
+            }
+        }).catch(function () {
+            showStatus("Could not send that just now. Check the brand and code, then try again.", true);
+            if (submitBtn) submitBtn.disabled = false;
+        });
+    });
 })();
 </script>
 

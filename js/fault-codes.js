@@ -226,7 +226,9 @@
                 box.innerHTML =
                     '<p class="fc-results__status">No page found for <strong>' +
                     escapeHtml(result.brand) +
-                    "</strong>.</p>";
+                    '</strong>. <a href="/fault-codes/request/?brand=' +
+                    encodeURIComponent(result.brand) +
+                    '">Request it</a>.</p>';
                 return;
             }
             var brandHtml = '<ul class="fc-results__list">';
@@ -252,11 +254,22 @@
         }
 
         if (!result.items.length) {
+            var requestUrl = "/fault-codes/request/";
+            var parsedMiss = result.parsed || parseQuery(query);
+            var reqParams = new URLSearchParams();
+            if (parsedMiss.brand) reqParams.set("brand", parsedMiss.brand);
+            var codeVal = parsedMiss.codeQuery || parsedMiss.text || "";
+            if (!codeVal && !parsedMiss.brand) codeVal = query;
+            if (codeVal) reqParams.set("code", codeVal);
+            var reqQs = reqParams.toString();
+            if (reqQs) requestUrl += "?" + reqQs;
             box.hidden = false;
             box.innerHTML =
                 '<p class="fc-results__status">No codes matched <strong>' +
                 escapeHtml(query) +
-                "</strong>. Try <em>Vaillant F28</em>, <em>Alpha 10</em>, or a code on its own. Missing brand? <a href=\"/fault-codes/request/\">Request it</a>.</p>";
+                '</strong>. Try <em>Vaillant F28</em>, <em>Alpha 10</em>, or a code on its own. Missing brand? <a href="' +
+                escapeHtml(requestUrl) +
+                '">Request it</a>.</p>';
             return;
         }
 
