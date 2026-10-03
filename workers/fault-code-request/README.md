@@ -170,6 +170,8 @@ Optional raw KV dump (same namespace, request keys only):
 npx wrangler kv key get "requests:2026-10-03" --binding REQUESTS
 ```
 
+The Worker entry (`src/index.js`) default-exports the handler only. Helpers live in `src/lib.js` so wrangler/workerd does not treat named constants as handlers.
+
 ## Local test
 
 ```bash

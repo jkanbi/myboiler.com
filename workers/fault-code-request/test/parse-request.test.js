@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import worker, {
+import worker from "../src/index.js";
+import {
   MAX_EVENTS_PER_DAY,
   KV_TTL_SECONDS,
   appendRequest,
@@ -13,7 +14,7 @@ import worker, {
   requestsKey,
   sanitizeField,
   timingSafeEqual,
-} from "../src/index.js";
+} from "../src/lib.js";
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "../../..");
 
