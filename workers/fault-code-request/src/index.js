@@ -6,8 +6,8 @@
  * Cookieless: does not set cookies, does not read client identifiers,
  * and does not persist IP / UA / fingerprints.
  *
- * This Worker does not send email. Another bot GETs the list and emails
- * the daily digest.
+ * This Worker does not send email. Another bot GETs the list and either
+ * emails the daily digest or saves a Gmail draft if it cannot send.
  *
  * Entry module exports only the default handler — wrangler/workerd treats
  * other named exports on this file as handlers.

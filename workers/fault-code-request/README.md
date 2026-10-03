@@ -4,7 +4,7 @@ Cookieless record of missing brand / fault-code requests from `/fault-codes/requ
 
 The browser `fetch`es **same-origin** `POST /api/fault-code-request`. This Worker validates a tiny JSON body and appends one event to [Workers KV](https://developers.cloudflare.com/kv/).
 
-**This Worker does not send email.** A separate bot GETs the list endpoint and emails the daily digest to info@arated.com.
+**This Worker does not send email.** A separate bot GETs the authenticated list and either emails the daily digest to info@arated.com or, if it cannot send, saves a Gmail draft. The list payload is the same either way.
 
 No cookies, no `localStorage`, no user id, no IP / UA stored.
 
@@ -99,7 +99,7 @@ Site JS on `/fault-codes/request/` posts to this Worker. A missing route shows a
 
 ## How to see requests (for the daily digest)
 
-The site does not email anyone. Another bot should `GET` the list and mail info@arated.com.
+The site does not email anyone. Another bot `GET`s this list and either sends the digest to info@arated.com or saves a Gmail draft if it cannot send. Do not add mail, SMTP, or Gmail calls to this Worker.
 
 ### 1. Worker Real-time Logs / Tail (live stream)
 
