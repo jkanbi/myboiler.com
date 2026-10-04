@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Worcester Bosch Guarantee Lengths - MyBoiler.com</title>
-    <meta name="description" content="Greenstar gas and oil guarantee lengths you can offer: standard cover, and the extra year when a Greenstar System Filter is fitted.">
+    <meta name="description" content="Current Greenstar gas and oil guarantee lengths: standard cover, the Greenstar System Filter length, and the extended guarantee.">
     <link rel="canonical" href="https://myboiler.com/worcester-bosch/worcester-bosch-guarantee-lengths/">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <style>
@@ -76,6 +76,44 @@
         }
         .guarantee-table td { color: var(--text); }
         .guarantee-table td:first-child { font-weight: 600; }
+        .guarantee-table td:not(:first-child) { white-space: nowrap; }
+        @media (max-width: 720px) {
+            .guarantee-table thead {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+            .guarantee-table,
+            .guarantee-table tbody,
+            .guarantee-table tr,
+            .guarantee-table td { display: block; width: 100%; }
+            .guarantee-table tr {
+                padding: 0.85rem 0;
+                border-bottom: 1px solid var(--border-subtle);
+            }
+            .guarantee-table td {
+                border: 0;
+                padding: 0.15rem 0;
+                white-space: normal;
+            }
+            .guarantee-table td:not(:first-child)::before {
+                content: attr(data-label);
+                display: inline-block;
+                min-width: 11.5rem;
+                margin-right: 0.5rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+                color: var(--text-muted);
+            }
+        }
         .article-content a { color: var(--accent); }
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
@@ -90,7 +128,7 @@
     "name": "MyBoiler.com",
     "url": "https://myboiler.com/"
   },
-  "description": "Greenstar gas and oil guarantee lengths you can offer: standard cover, and the extra year when a Greenstar System Filter is fitted."
+  "description": "Current Greenstar gas and oil guarantee lengths: standard cover, the Greenstar System Filter length, and the extended guarantee."
 }
     </script>
 </head>
@@ -116,7 +154,7 @@
     <div class="article-container">
         <header class="article-header">
             <h1 class="article-title">Worcester Bosch Guarantee Lengths</h1>
-            <p class="article-intro">Guarantee lengths you can offer on Greenstar gas and oil boilers. The longer figure applies when a Greenstar System Filter is fitted.</p>
+            <p class="article-intro">Guarantee lengths you can offer on current Greenstar gas and oil boilers. The middle figure is with a Greenstar System Filter. The longest figure is the extended guarantee.</p>
         </header>
 
         <article class="article-content">
@@ -128,16 +166,20 @@
                             <th scope="col">Range</th>
                             <th scope="col">Standard guarantee</th>
                             <th scope="col">Greenstar System Filter</th>
+                            <th scope="col">Extended</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Greenstar i</td><td>7 years</td><td>8 years</td></tr>
-                        <tr><td>Greenstar Ri</td><td>7 years</td><td>8 years</td></tr>
-                        <tr><td>Greenstar Si</td><td>7 years</td><td>8 years</td></tr>
-                        <tr><td>Greenstar CDi</td><td>7 years</td><td>8 years</td></tr>
-                        <tr><td>Greenstar 8000 Life</td><td>8 years</td><td>10 years</td></tr>
-                        <tr><td>Greenstar 8000 Style</td><td>8 years</td><td>10 years</td></tr>
-                        <tr><td>Worcester 2000</td><td>5 years</td><td>6 years</td></tr>
+                        <tr><td>Greenstar 8000+</td><td data-label="Standard">8 years</td><td data-label="With filter">10 years</td><td data-label="Extended">12 years</td></tr>
+                        <tr><td>Greenstar 8000+ Style</td><td data-label="Standard">8 years</td><td data-label="With filter">10 years</td><td data-label="Extended">12 years</td></tr>
+                        <tr><td>Greenstar 4000</td><td data-label="Standard">7 years</td><td data-label="With filter">8 years</td><td data-label="Extended">10 years</td></tr>
+                        <tr><td>Greenstar CDi Compact</td><td data-label="Standard">7 years</td><td data-label="With filter">8 years</td><td data-label="Extended">10 years</td></tr>
+                        <tr><td>Greenstar i System Compact</td><td data-label="Standard">7 years</td><td data-label="With filter">8 years</td><td data-label="Extended">10 years</td></tr>
+                        <tr><td>Greenstar 8000 F</td><td data-label="Standard">7 years</td><td data-label="With filter">8 years</td><td data-label="Extended">10 years</td></tr>
+                        <tr><td>Greenstar Ri</td><td data-label="Standard">7 years</td><td data-label="With filter">8 years</td><td data-label="Extended">10 years</td></tr>
+                        <tr><td>Greenstar Ri Compact</td><td data-label="Standard">7 years</td><td data-label="With filter">8 years</td><td data-label="Extended">10 years</td></tr>
+                        <tr><td>Greenstar 2000</td><td data-label="Standard">7 years</td><td data-label="With filter">7 years</td><td data-label="Extended">Not offered</td></tr>
+                        <tr><td>Greenstar 1000</td><td data-label="Standard">5 years</td><td data-label="With filter">5 years</td><td data-label="Extended">Not offered</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -150,15 +192,20 @@
                             <th scope="col">Range</th>
                             <th scope="col">Standard guarantee</th>
                             <th scope="col">Greenstar System Filter</th>
+                            <th scope="col">Extended</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Greenstar oil range</td><td>2 years</td><td>5 years</td></tr>
+                        <tr><td>Greenstar Heatslave II</td><td data-label="Standard">2 years</td><td data-label="With filter">5 years</td><td data-label="Extended">7 years</td></tr>
+                        <tr><td>Greenstar Danesmoor</td><td data-label="Standard">2 years</td><td data-label="With filter">5 years</td><td data-label="Extended">7 years</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <p>This is the March 2021 offer. Worcester changes the lengths. Confirm the current guarantee for the boiler you are fitting before you quote it. See also <a href="/worcester-bosch/">Worcester Bosch</a>.</p>
+            <p>The extended length is what a Worcester Bosch Accredited Installer or Accredited Partner can offer when the boiler is fitted with a Greenstar System Filter. In 2026, a loyalty-scheme installer who is not accredited can buy that same length for £40 through their loyalty account.</p>
+            <p>A Bosch System Filter Micro does not add years. On the 8000+ and 8000+ Style the guarantee stays at 8 years. On the 8000 F, Ri and Ri Compact it stays at 7 years.</p>
+            <p>The Greenstar 1000 and 2000 lengths already assume a system filter is fitted. It can be a Worcester Bosch filter or another brand, and those lengths cannot be extended.</p>
+            <p>Worcester changes the lengths. Confirm the current guarantee for the boiler you are fitting before you quote it. See also <a href="/worcester-bosch/">Worcester Bosch</a>.</p>
         </article>
     </div>
 
