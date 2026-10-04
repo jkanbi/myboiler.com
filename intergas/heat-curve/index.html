@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intergas Heat Curve - MyBoiler.com</title>
+    <meta name="description" content="Intergas weather-compensation heat curve: factory settings, and which parameters set Tmax, Tmin, Tmin out and Tmax out on HRE, ECO RF, Xclusive and Xtreme.">
+    <link rel="canonical" href="https://myboiler.com/intergas/heat-curve/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .article-header { margin-bottom: 2.5rem; }
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+        .article-content p,
+        .article-content li {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+        .article-content p { margin: 0 0 1.25rem; }
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+        }
+        .article-content h2:first-child { margin-top: 0; }
+        .article-content ul { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.45rem; }
+        .article-content a { color: var(--accent); }
+        .article-content figure { margin: 0 0 1.5rem; }
+        .article-content figure img {
+            display: block;
+            width: 100%;
+            max-width: 640px;
+            height: auto;
+            margin: 0 auto;
+            border-radius: var(--radius);
+            background: #fff;
+        }
+        .article-content figcaption {
+            margin-top: 0.75rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+            text-align: center;
+        }
+        .article-content strong { font-weight: 600; }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Intergas Heat Curve",
+  "url": "https://myboiler.com/intergas/heat-curve/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MyBoiler.com",
+    "url": "https://myboiler.com/"
+  },
+  "description": "Intergas weather-compensation heat curve: factory settings, and which parameters set Tmax, Tmin, Tmin out and Tmax out on HRE, ECO RF, Xclusive and Xtreme."
+}
+    </script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <header class="article-header">
+            <h1 class="article-title">Intergas Heat Curve</h1>
+            <p class="article-intro">With an outside sensor fitted, the boiler sets the heating flow from the outside temperature. These four points are the curve.</p>
+        </header>
+
+        <article class="article-content">
+            <figure>
+                <img src="/intergas/heat-curve/images/intergas-heating-line-graph.jpg" width="449" height="512" alt="Intergas heating line. X is outside temperature in °C. Y is supply temperature in °C. Line A runs from 80°C at about −7°C outside down to 25°C at about 25°C outside. Line B starts at 60°C.">
+                <figcaption>X is outside temperature, °C. Y is supply (flow) temperature, °C.</figcaption>
+            </figure>
+
+            <ul>
+                <li><strong>A, factory:</strong> Tmax CH 80°C, Tmin CH 25°C, Tmin out −7°C, Tmax out 25°C.</li>
+                <li><strong>B, example:</strong> Tmax CH 60°C, Tmin CH 25°C, Tmin out −7°C, Tmax out 25°C.</li>
+            </ul>
+            <p>Below Tmin out the flow stays at Tmax. Above Tmax out it stays at Tmin. Between those outside temperatures the flow slides down the line. On an HRE or ECO RF, Tmax is the heating value set on the <a href="/intergas/how-to-adjust-the-flow-temperature-on-intergas-rapid-hre-and-eco-rf/">display</a>.</p>
+
+            <h2>HRE and ECO RF</h2>
+            <figure>
+                <img src="/intergas/heat-curve/images/hre-eco-rf-heat-curve.jpeg" width="720" height="405" alt="HRE and ECO RF heat curve. Tmax is set on the main display. Tmin is parameter 5. Tmin out is parameter 6. Tmax out is parameter 7.">
+                <figcaption>HRE and ECO RF. Tmax from the display. Tmin, Tmin out and Tmax out are parameters 5, 6 and 7.</figcaption>
+            </figure>
+            <ul>
+                <li><strong>Tmax CH</strong> — set on the display. Highest heating flow, used at Tmin out and colder.</li>
+                <li><strong>Tmin CH — parameter 5.</strong> Lowest heating flow, used at Tmax out and warmer.</li>
+                <li><strong>Tmin out — parameter 6.</strong> Outside temperature at the left-hand knee, where the flow reaches Tmax.</li>
+                <li><strong>Tmax out — parameter 7.</strong> Outside temperature at the right-hand knee, where the flow falls to Tmin.</li>
+            </ul>
+
+            <h2>Xclusive and Xtreme</h2>
+            <figure>
+                <img src="/intergas/heat-curve/images/intergas-heatcurve-xtreme-xclusive.jpg" width="720" height="405" alt="Xclusive and Xtreme heat curve. Tmax is parameter 50. Tmin is parameter 51. Tmin out is parameter 52. Tmax out is parameter 53.">
+                <figcaption>Xclusive and Xtreme. The same four points, on parameters 50 to 53.</figcaption>
+            </figure>
+            <ul>
+                <li><strong>Tmax CH — parameter 50,</strong> and the display. Highest heating flow, used at Tmin out and colder.</li>
+                <li><strong>Tmin CH — parameter 51.</strong> Lowest heating flow, used at Tmax out and warmer.</li>
+                <li><strong>Tmin out — parameter 52.</strong> Outside temperature where the flow reaches Tmax.</li>
+                <li><strong>Tmax out — parameter 53.</strong> Outside temperature where the flow falls to Tmin.</li>
+            </ul>
+
+            <p>These are installer parameters. Confirm the numbers in the manual for the boiler in front of you before changing them. Gas work stays with a Gas Safe registered engineer.</p>
+        </article>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
