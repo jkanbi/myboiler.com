@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radiator New Output - MyBoiler.com</title>
+    <meta name="description" content="Enter a radiator's Delta T 50 watts, then the new flow, return, and room temperature, to get the output at those conditions.">
+    <link rel="canonical" href="https://myboiler.com/radiator-new-output/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .calculator-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .calculator-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .calculator-breadcrumb {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .calculator-breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .calculator-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .calculator-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .calculator-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0 auto;
+            max-width: 62ch;
+        }
+
+        .calculator-card {
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
+        }
+
+        .calculator-subtitle {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-subtle);
+        }
+
+        .input-group {
+            margin-bottom: 1.75rem;
+        }
+
+        .input-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            font-weight: 500;
+            box-sizing: border-box;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .range-field {
+            width: 100%;
+            margin: 0 0 0.75rem;
+            accent-color: var(--accent);
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .result-section {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1.25rem 1rem;
+            text-align: center;
+        }
+
+        .result-section-primary {
+            grid-column: 1 / -1;
+            padding: 2rem 1rem;
+        }
+
+        .result-label {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .result-section-primary .result-value {
+            font-size: 3rem;
+        }
+
+        .result-unit {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+        }
+
+        .info-text {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 1.5rem 0 0;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: var(--radius);
+            border-left: 3px solid var(--accent);
+        }
+
+        .info-text a {
+            color: var(--accent);
+        }
+
+        .calculator-disclaimer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 70ch;
+            margin: 0 auto 1rem;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        @media (max-width: 768px) {
+            .calculator-container {
+                padding: clamp(1.5rem, 4vw, 2.5rem) clamp(16px, 4vw, 24px);
+            }
+
+            .calculator-card {
+                padding: 1.25rem;
+            }
+
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .result-section-primary .result-value {
+                font-size: 2.25rem;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Radiator New Output",
+  "url": "https://myboiler.com/radiator-new-output/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MyBoiler.com",
+    "url": "https://myboiler.com/"
+  },
+  "description": "Enter a radiator's Delta T 50 watts, then the new flow, return, and room temperature, to get the output at those conditions."
+}
+    </script>
+</head>
+<body class="calculator-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"></nav>
+        </div>
+    </header>
+
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <div class="calculator-breadcrumb">
+                <a href="/calculators/">Calculators</a> / Radiator New Output
+            </div>
+            <h1 class="calculator-headline">Radiator New Output</h1>
+            <p class="calculator-connector">
+                Enter the watts and the new flow, return, and room temperature. The result is the radiator output at those conditions.
+            </p>
+        </div>
+
+        <div class="calculator-card">
+            <h2 class="calculator-subtitle">Catalogue output at ΔT 50</h2>
+
+            <div class="input-group">
+                <label class="input-label" for="watts">Standard output at Delta T 50°C (watts)</label>
+                <input type="range" class="range-field" id="watts-range" min="0" max="10000" step="1" value="1000" aria-label="Standard output slider">
+                <input type="number" id="watts" class="input-field" min="0" max="10000" step="1" value="1000">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="flow">Flow temp °C</label>
+                <input type="range" class="range-field" id="flow-range" min="0" max="100" step="0.1" value="75" aria-label="Flow temperature slider">
+                <input type="number" id="flow" class="input-field" min="0" max="100" step="0.1" value="75">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="return">Return temp °C</label>
+                <input type="range" class="range-field" id="return-range" min="0" max="100" step="0.1" value="65" aria-label="Return temperature slider">
+                <input type="number" id="return" class="input-field" min="0" max="100" step="0.1" value="65">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="room">Actual room temp °C</label>
+                <input type="range" class="range-field" id="room-range" min="0" max="30" step="0.1" value="20" aria-label="Room temperature slider">
+                <input type="number" id="room" class="input-field" min="0" max="30" step="0.1" value="20">
+            </div>
+
+            <div class="result-grid">
+                <div class="result-section result-section-primary">
+                    <div class="result-label">New output</div>
+                    <div class="result-value" id="new-output">1000.00</div>
+                    <div class="result-unit">watts</div>
+                </div>
+                <div class="result-section">
+                    <div class="result-label">LMDT standard</div>
+                    <div class="result-value" id="lmdt-standard">49.83</div>
+                    <div class="result-unit">K</div>
+                </div>
+                <div class="result-section">
+                    <div class="result-label">LMDT actual</div>
+                    <div class="result-value" id="lmdt-actual">49.83</div>
+                    <div class="result-unit">K</div>
+                </div>
+                <div class="result-section">
+                    <div class="result-label">Correction factor</div>
+                    <div class="result-value" id="factor">1.000</div>
+                    <div class="result-unit">n = 1.3</div>
+                </div>
+            </div>
+
+            <p class="info-text">
+                Catalogue watts are the EN 442 figure at ΔT 50 (75°C flow, 65°C return, 20°C room). Output scales by (actual LMTD / that standard LMTD)<sup>1.3</sup>. Flow and return both need to sit above room temperature. See also the <a href="/calculators/radiator-correction-factor-tool/">radiator correction factor</a> table and <a href="/calculators/btu-to-kw/">BTU to watts</a>.
+            </p>
+        </div>
+
+        <div class="calculator-disclaimer">
+            <strong>Guidance only.</strong> The exponent 1.3 is a typical panel-radiator index. Check the manufacturer’s data for the emitter you are sizing, and have a qualified heating engineer confirm the design.
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var LMDT_STANDARD = (75 - 65) / Math.log((75 - 20) / (65 - 20));
+
+            var pairs = [
+                ['watts', 'watts-range'],
+                ['flow', 'flow-range'],
+                ['return', 'return-range'],
+                ['room', 'room-range']
+            ];
+
+            function lmt(flow, ret, room) {
+                if (!(flow > room) || !(ret > room)) return null;
+                if (Math.abs(flow - ret) < 1e-9) return flow - room;
+                var ratio = (flow - room) / (ret - room);
+                if (!(ratio > 0)) return null;
+                var denom = Math.log(ratio);
+                if (!isFinite(denom) || denom === 0) return null;
+                var value = (flow - ret) / denom;
+                return isFinite(value) && value > 0 ? value : null;
+            }
+
+            function read(id) {
+                var n = parseFloat(document.getElementById(id).value);
+                return isFinite(n) ? n : NaN;
+            }
+
+            function show(id, text) {
+                document.getElementById(id).textContent = text;
+            }
+
+            function calculate() {
+                var watts = read('watts');
+                var flow = read('flow');
+                var ret = read('return');
+                var room = read('room');
+                var actual = lmt(flow, ret, room);
+
+                show('lmdt-standard', LMDT_STANDARD.toFixed(2));
+
+                if (!(watts >= 0) || actual === null) {
+                    show('lmdt-actual', '—');
+                    show('factor', '—');
+                    show('new-output', '—');
+                    return;
+                }
+
+                var factor = Math.pow(actual / LMDT_STANDARD, 1.3);
+                var output = Math.round(watts * factor * 100) / 100;
+                show('lmdt-actual', actual.toFixed(2));
+                show('factor', factor.toFixed(3));
+                show('new-output', output.toFixed(2));
+            }
+
+            pairs.forEach(function (pair) {
+                var number = document.getElementById(pair[0]);
+                var range = document.getElementById(pair[1]);
+                number.addEventListener('input', function () {
+                    if (number.value !== '') range.value = number.value;
+                    calculate();
+                });
+                range.addEventListener('input', function () {
+                    number.value = range.value;
+                    calculate();
+                });
+            });
+
+            document.getElementById('lmdt-standard').textContent = LMDT_STANDARD.toFixed(2);
+            calculate();
+        })();
+    </script>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
