@@ -79,6 +79,41 @@
             text-align: center;
         }
         .article-content strong { font-weight: 600; }
+
+        .curve-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem 1.25rem;
+            margin: 0.25rem 0 1.25rem;
+            padding: 0;
+            border-bottom: 1px solid var(--border-subtle);
+            list-style: none;
+        }
+
+        .curve-tabs button {
+            appearance: none;
+            background: transparent;
+            border: 0;
+            border-bottom: 2px solid transparent;
+            margin: 0 0 -1px;
+            padding: 0.7rem 0.1rem;
+            font: inherit;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .curve-tabs button[aria-selected="true"] {
+            color: var(--text);
+            border-bottom-color: var(--accent);
+        }
+
+        .curve-tabs button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .curve-panel h2 { margin-top: 0; }
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="application/ld+json">
@@ -133,33 +168,74 @@
             </ul>
             <p>Below Tmin out the flow stays at Tmax. Above Tmax out it stays at Tmin. Between those outside temperatures the flow slides down the line. On an HRE or ECO RF, Tmax is the heating value set on the <a href="/intergas/how-to-adjust-the-flow-temperature-on-intergas-rapid-hre-and-eco-rf/">display</a>.</p>
 
-            <h2>HRE and ECO RF</h2>
-            <figure>
-                <img src="/intergas/heat-curve/images/hre-eco-rf-heat-curve.jpeg" width="720" height="405" alt="HRE and ECO RF heat curve. Tmax is set on the main display. Tmin is parameter 5. Tmin out is parameter 6. Tmax out is parameter 7.">
-                <figcaption>HRE and ECO RF. Tmax from the display. Tmin, Tmin out and Tmax out are parameters 5, 6 and 7.</figcaption>
-            </figure>
-            <ul>
-                <li><strong>Tmax CH</strong> — set on the display. Highest heating flow, used at Tmin out and colder.</li>
-                <li><strong>Tmin CH — parameter 5.</strong> Lowest heating flow, used at Tmax out and warmer.</li>
-                <li><strong>Tmin out — parameter 6.</strong> Outside temperature at the left-hand knee, where the flow reaches Tmax.</li>
-                <li><strong>Tmax out — parameter 7.</strong> Outside temperature at the right-hand knee, where the flow falls to Tmin.</li>
-            </ul>
+            <div class="curve-tabs" role="tablist" aria-label="Boiler range">
+                <button type="button" role="tab" id="tab-hre" aria-controls="panel-hre" aria-selected="true">HRE and ECO RF</button>
+                <button type="button" role="tab" id="tab-xclusive" aria-controls="panel-xclusive" aria-selected="false" tabindex="-1">Xclusive and Xtreme</button>
+            </div>
 
-            <h2>Xclusive and Xtreme</h2>
-            <figure>
-                <img src="/intergas/heat-curve/images/intergas-heatcurve-xtreme-xclusive.jpg" width="720" height="405" alt="Xclusive and Xtreme heat curve. Tmax is parameter 50. Tmin is parameter 51. Tmin out is parameter 52. Tmax out is parameter 53.">
-                <figcaption>Xclusive and Xtreme. The same four points, on parameters 50 to 53.</figcaption>
-            </figure>
-            <ul>
-                <li><strong>Tmax CH — parameter 50,</strong> and the display. Highest heating flow, used at Tmin out and colder.</li>
-                <li><strong>Tmin CH — parameter 51.</strong> Lowest heating flow, used at Tmax out and warmer.</li>
-                <li><strong>Tmin out — parameter 52.</strong> Outside temperature where the flow reaches Tmax.</li>
-                <li><strong>Tmax out — parameter 53.</strong> Outside temperature where the flow falls to Tmin.</li>
-            </ul>
+            <div class="curve-panel" role="tabpanel" id="panel-hre" aria-labelledby="tab-hre">
+                <h2>HRE and ECO RF</h2>
+                <figure>
+                    <img src="/intergas/heat-curve/images/hre-eco-rf-heat-curve.jpeg" width="720" height="405" alt="HRE and ECO RF heat curve. Tmax is set on the main display. Tmin is parameter 5. Tmin out is parameter 6. Tmax out is parameter 7.">
+                    <figcaption>HRE and ECO RF. Tmax from the display. Tmin, Tmin out and Tmax out are parameters 5, 6 and 7.</figcaption>
+                </figure>
+                <ul>
+                    <li><strong>Tmax CH</strong> — set on the display. Highest heating flow, used at Tmin out and colder.</li>
+                    <li><strong>Tmin CH — parameter 5.</strong> Lowest heating flow, used at Tmax out and warmer.</li>
+                    <li><strong>Tmin out — parameter 6.</strong> Outside temperature at the left-hand knee, where the flow reaches Tmax.</li>
+                    <li><strong>Tmax out — parameter 7.</strong> Outside temperature at the right-hand knee, where the flow falls to Tmin.</li>
+                </ul>
+            </div>
+
+            <div class="curve-panel" role="tabpanel" id="panel-xclusive" aria-labelledby="tab-xclusive" hidden>
+                <h2>Xclusive and Xtreme</h2>
+                <figure>
+                    <img src="/intergas/heat-curve/images/intergas-heatcurve-xtreme-xclusive.jpg" width="720" height="405" alt="Xclusive and Xtreme heat curve. Tmax is parameter 50. Tmin is parameter 51. Tmin out is parameter 52. Tmax out is parameter 53.">
+                    <figcaption>Xclusive and Xtreme. The same four points, on parameters 50 to 53.</figcaption>
+                </figure>
+                <ul>
+                    <li><strong>Tmax CH — parameter 50,</strong> and the display. Highest heating flow, used at Tmin out and colder.</li>
+                    <li><strong>Tmin CH — parameter 51.</strong> Lowest heating flow, used at Tmax out and warmer.</li>
+                    <li><strong>Tmin out — parameter 52.</strong> Outside temperature where the flow reaches Tmax.</li>
+                    <li><strong>Tmax out — parameter 53.</strong> Outside temperature where the flow falls to Tmin.</li>
+                </ul>
+            </div>
 
             <p>These are installer parameters. Confirm the numbers in the manual for the boiler in front of you before changing them. Gas work stays with a Gas Safe registered engineer.</p>
         </article>
     </div>
+
+    <script>
+        (function () {
+            var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+            var panels = {
+                'tab-hre': document.getElementById('panel-hre'),
+                'tab-xclusive': document.getElementById('panel-xclusive')
+            };
+
+            function select(tab) {
+                tabs.forEach(function (item) {
+                    var on = item === tab;
+                    item.setAttribute('aria-selected', on ? 'true' : 'false');
+                    item.tabIndex = on ? 0 : -1;
+                    panels[item.id].hidden = !on;
+                });
+            }
+
+            tabs.forEach(function (tab, index) {
+                tab.addEventListener('click', function () { select(tab); });
+                tab.addEventListener('keydown', function (event) {
+                    var next = null;
+                    if (event.key === 'ArrowRight') next = tabs[(index + 1) % tabs.length];
+                    if (event.key === 'ArrowLeft') next = tabs[(index - 1 + tabs.length) % tabs.length];
+                    if (!next) return;
+                    event.preventDefault();
+                    select(next);
+                    next.focus();
+                });
+            });
+        })();
+    </script>
 
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
