@@ -207,6 +207,28 @@
             font-size: 0.9375rem;
         }
 
+        .finder-diagram {
+            margin: 1.25rem 0 0;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: 1rem 1rem 0.85rem;
+        }
+
+        .finder-diagram img {
+            display: block;
+            width: 100%;
+            height: auto;
+            background: #fff;
+        }
+
+        .finder-diagram figcaption {
+            margin-top: 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.9375rem;
+            line-height: 1.55;
+        }
+
         .system-card img {
             display: block;
             width: 197px;
@@ -499,11 +521,16 @@
             <div class="finder-set" data-system="system" hidden>
                 <div class="step" data-path="">
                     <h2>What has stopped working?</h2>
+                    <p class="sequence-note">If heating and hot water are both off, check gas and power first. A lit hob does not prove the boiler has gas: the meter valve has to be fully open, because the boiler draws more than a hob. Then check power to the boiler and the programmer.</p>
                     <div class="issue-list">
                         <a href="#system/hot-water">Hot water</a>
                         <a href="#system/heating">Heating</a>
                         <a href="#system/both">Both</a>
                     </div>
+                    <figure class="finder-diagram">
+                        <img src="/fault-finder/images/system-boiler-s-plan.jpg" alt="S Plan layout. Red flow leaves the boiler and splits at the hot water and heating zone valves. Blue return runs back through the pump. Dashed lines run from the programmer, room thermostat, and cylinder stat to those valves." width="720" height="540">
+                        <figcaption>Red is the flow from the boiler. It splits at two zone valves: one opens for the cylinder coil, the other for the radiators. Blue is the return, back through the pump in the boiler. The dashed lines are the controls: the programmer, the room thermostat, and the cylinder stat. A valve that stays shut leaves that circuit cold even when the boiler can fire.</figcaption>
+                    </figure>
                 </div>
                 <article class="step issue-answer" data-path="hot-water">
                     <h3>No hot water</h3>
@@ -554,7 +581,8 @@
                 </article>
                 <article class="step issue-answer" data-path="both/normal">
                     <h3>The gauge is normal, but nothing heats</h3>
-                    <p>The programmer has to be on, a thermostat has to be calling, and a zone valve has to open before the boiler is asked to fire. After that you should hear the pump, then the fan, and it should stay lit. See <a href="/s-plan/">S Plan</a>. Do not open the boiler case.</p>
+                    <p>Check gas and power before the controls. A lit hob does not prove the boiler has gas: the meter valve has to be fully open, because the boiler draws more than a hob. Power has to reach the boiler and the programmer.</p>
+                    <p>After that, the programmer has to be on, a thermostat has to be calling, and a zone valve has to open before the boiler is asked to fire. You should then hear the pump, then the fan, and it should stay lit. See <a href="/s-plan/">S Plan</a>. Do not open the boiler case.</p>
                 </article>
             </div>
 
