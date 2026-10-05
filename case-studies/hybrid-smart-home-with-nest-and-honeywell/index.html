@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hybrid smart home with Nest and Honeywell - MyBoiler.com</title>
+    <meta name="description" content="2019 case study: Nest Learning Thermostat as the OpenTherm boiler call, Honeywell Evohome limiting rooms, on an Intergas combi with PDHW and solar thermal.">
+    <link rel="canonical" href="https://myboiler.com/case-studies/hybrid-smart-home-with-nest-and-honeywell/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-header { margin-bottom: 2.5rem; }
+
+        .article-kicker {
+            margin: 0 0 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .article-kicker a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-kicker a:hover { text-decoration: underline; }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 62ch;
+        }
+
+        .article-meta {
+            margin: 0.85rem 0 0;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h2:first-child { margin-top: 0; }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 0.75rem;
+            line-height: 1.3;
+        }
+
+        .article-content strong { font-weight: 600; color: var(--text); }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover { text-decoration: underline; }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin: 0 0 0.4rem;
+            line-height: 1.6;
+        }
+
+        .kit-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.85rem;
+            margin: 0 0 1.5rem;
+        }
+
+        .kit-grid figure {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .kit-grid img {
+            display: block;
+            width: 100%;
+            max-height: 14rem;
+            height: 14rem;
+            object-fit: contain;
+            border-radius: var(--radius);
+            background: #fff;
+        }
+
+        .kit-grid figcaption {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .article-callout {
+            background: var(--bg);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 0 0 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .article-callout p { margin: 0; }
+
+        .article-note {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 640px) {
+            .kit-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Hybrid smart home with Nest and Honeywell",
+  "url": "https://myboiler.com/case-studies/hybrid-smart-home-with-nest-and-honeywell/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MyBoiler.com",
+    "url": "https://myboiler.com/"
+  },
+  "description": "2019 case study: Nest Learning Thermostat as the OpenTherm boiler call, Honeywell Evohome limiting rooms, on an Intergas combi with PDHW and solar thermal."
+}
+    </script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating &amp; Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <header class="article-header">
+            <p class="article-kicker"><a href="/case-studies/">Case studies</a></p>
+            <h1 class="article-title">Hybrid smart home with Nest and Honeywell</h1>
+            <p class="article-intro">A 2019 house setup: Nest as the one control the household would actually use, Evohome as a passive limit on the radiators and a UFH zone, on an Intergas combi with priority hot water and solar thermal.</p>
+            <p class="article-meta">Jayesh Kanbi · 7 March 2019 · updated October 2026 so product names and dead services are not left hanging</p>
+        </header>
+
+        <article class="article-content">
+            <p>One brand rarely covers a whole house well. This note is how we ran our own home after trying Nest, then Honeywell Evohome (now sold under Resideo), then both at once. It is a dated install record, not a 2026 shopping list. Google is no longer launching new Nest thermostats in Europe; Evohome is still a serious zoning system. The wiring idea still holds.</p>
+
+            <h2>What we tried first</h2>
+            <p>Like a lot of UK houses, the first “smart” heating kit that stuck was a Nest Learning Thermostat — 2nd generation, then later the 3rd. Before that, remote access meant port-forwarding a router. Nest removed that friction. We then fitted Evohome because we were installing it for clients and needed a house to learn on: hot-water kit, HR92 radiator heads, and a BDR91 on a single wet <a href="/nest-underfloor-heating/">underfloor</a> zone. Nest Protect and a Nest camera stayed. The 3rd gen Nest came out of the heating loop for a while.</p>
+
+            <div class="kit-grid">
+                <figure>
+                    <img src="/case-studies/hybrid-smart-home-with-nest-and-honeywell/images/nest-learning-thermostat-3rd-gen.jpg" alt="Nest Learning Thermostat 3rd generation showing heating at 20 degrees" width="450" height="450">
+                    <figcaption>Nest Learning Thermostat 3rd gen</figcaption>
+                </figure>
+                <figure>
+                    <img src="/case-studies/hybrid-smart-home-with-nest-and-honeywell/images/honeywell-evohome.png" alt="Honeywell Evohome touchscreen showing room temperatures" width="499" height="399">
+                    <figcaption>Honeywell Evohome controller</figcaption>
+                </figure>
+                <figure>
+                    <img src="/case-studies/hybrid-smart-home-with-nest-and-honeywell/images/honeywell-hr92.jpg" alt="Honeywell HR92 wireless radiator controller on a valve" width="424" height="283">
+                    <figcaption>Honeywell HR92 radiator head</figcaption>
+                </figure>
+            </div>
+
+            <h2>The household problem</h2>
+            <p>Two people in the house needed to change the temperature without a manual. One is a heating engineer used to traditional controls and a little UFH. One had only just started using a smartphone. Both were fine with the Nest ring. Neither wanted to drive Evohome day to day, even though Evohome is the better zoning tool.</p>
+            <p>So we put the <strong>Nest Learning Thermostat 3rd generation back as the only device allowed to call the boiler</strong>, over <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm</a>. Evohome stayed on the radiators and the UFH zone but <strong>cannot start the boiler</strong>. It only opens or limits emitters inside the heat Nest has already asked for. If Nest is satisfied, the boiler stays off even if a bedroom head is wound up.</p>
+
+            <h2>Heat source</h2>
+            <ul>
+                <li><a href="/intergas/">Intergas</a> Combi Compact RF36</li>
+                <li><a href="/priority-domestic-hot-water/">Priority domestic hot water (PDHW)</a></li>
+                <li><a href="/solar-thermal/">Solar thermal</a> into the same hot-water arrangement</li>
+            </ul>
+            <p>OpenTherm from Nest lets the Intergas modulate instead of a plain on/off switched live. PDHW keeps tap priority without a cylinder the way a system boiler would. Solar thermal is why this house is not a textbook “combi only” story — the diverter and store side are house-specific. Do not copy the badge list onto a different property.</p>
+
+            <h2>Doorbell and voice, same hybrid idea</h2>
+            <p>We added a Nest Hello (now the Google Nest wired doorbell) and a Honeywell wired chime, USB-powered, switched through a relay from the Nest Hello chime kit. Nest for the face the household understands; Honeywell for a chime that actually sounds like a doorbell. Google Home Mini speakers and one Amazon Alexa sat on the same Wi-Fi. A TP-Link plug watched the boiler’s electrical use. None of that is required for the heating logic.</p>
+            <div class="kit-grid">
+                <figure>
+                    <img src="/case-studies/hybrid-smart-home-with-nest-and-honeywell/images/nest-hello-doorbell.jpg" alt="White Nest Hello video doorbell" width="1000" height="1000">
+                    <figcaption>Nest Hello doorbell</figcaption>
+                </figure>
+                <figure>
+                    <img src="/case-studies/hybrid-smart-home-with-nest-and-honeywell/images/honeywell-chime.jpg" alt="Honeywell wired doorbell chime" width="650" height="650">
+                    <figcaption>Honeywell wired chime</figcaption>
+                </figure>
+            </div>
+
+            <h2>What we said we would do next — and what died</h2>
+            <p>In 2019 the next step was a single dashboard: Conrad Connect, or a Raspberry Pi on OpenHAB, plus IFTTT-style rules. <strong>Conrad Connect shut down</strong>. We did not ship a published OpenHAB config for this house, so this page does not pretend that layer exists. The useful rule from that paragraph still stands: prefer kit that still heats if the internet is down. Nest and Evohome both keep local schedules when the WAN drops; a cloud-only gadget does not.</p>
+
+            <div class="article-callout">
+                <p>If you are buying in 2026, the <a href="/smart-thermostats/nest-thermostat-e/">Nest Thermostat E</a> is the leftover budget Nest in Europe. It cannot run stored hot water. The 3rd gen Learning Thermostat in this study can. Google is not launching a new UK Nest. Evohome remains the industrial zoning half of the same idea.</p>
+            </div>
+
+            <h2>What we would still do</h2>
+            <ul>
+                <li>One household-facing thermostat that everyone will actually turn.</li>
+                <li>A second system only where you need room limits or UFH, and only if it cannot fight the boiler.</li>
+                <li>OpenTherm (or the maker’s modulating bus) on the boiler call.</li>
+                <li>Voice and cameras as extras, not as the thing that starts the burner.</li>
+            </ul>
+
+            <h2>Related</h2>
+            <ul>
+                <li><a href="/case-studies/">Case studies</a></li>
+                <li><a href="/smart-thermostats/nest-thermostat-e/">Nest Thermostat E</a></li>
+                <li><a href="/smart-thermostats/smart-thermostats/">Smart thermostats</a></li>
+                <li><a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm boilers and controls</a></li>
+                <li><a href="/priority-domestic-hot-water/">Priority domestic hot water</a></li>
+                <li><a href="/solar-thermal/">Solar thermal</a></li>
+                <li><a href="/nest-underfloor-heating/">Nest underfloor heating</a></li>
+                <li><a href="/intergas/">Intergas</a></li>
+            </ul>
+            <p class="article-note">A 2019 first-person install note, lightly updated in October 2026. Not a DIY wiring guide. Gas work in the UK needs a Gas Safe registered engineer. Product names (Nest Hello, Honeywell Evohome, Conrad Connect) are left as they were, with the current name in the text where the old one would mislead.</p>
+        </article>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>

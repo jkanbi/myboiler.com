@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nest Thermostat E - MyBoiler.com</title>
+    <meta name="description" content="Nest Thermostat E for UK heating: Heat Link E wiring, OpenTherm, what it cannot do, and what still works after Google stopped launching new Nest stats in Europe.">
+    <link rel="canonical" href="https://myboiler.com/smart-thermostats/nest-thermostat-e/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-kicker {
+            margin: 0 0 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .article-kicker a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-kicker a:hover {
+            text-decoration: underline;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 62ch;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 0.75rem;
+            line-height: 1.3;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin: 0 0 0.4rem;
+            line-height: 1.6;
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0 1.75rem;
+            font-size: 0.9375rem;
+        }
+
+        .article-content th,
+        .article-content td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+            vertical-align: top;
+        }
+
+        .article-content th {
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .article-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .article-content figure {
+            margin: 0 0 1.5rem;
+        }
+
+        .article-content img {
+            display: block;
+            max-width: min(100%, 520px);
+            height: auto;
+            margin: 0 auto 0.6rem;
+            border-radius: var(--radius);
+            background: var(--bg);
+        }
+
+        .article-content figcaption {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .article-callout {
+            background: var(--bg);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 0 0 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .article-callout p {
+            margin: 0;
+        }
+
+        .article-note {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Nest Thermostat E",
+  "url": "https://myboiler.com/smart-thermostats/nest-thermostat-e/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MyBoiler.com",
+    "url": "https://myboiler.com/"
+  },
+  "description": "Nest Thermostat E for UK heating: Heat Link E wiring, OpenTherm, what it cannot do, and what still works after Google stopped launching new Nest stats in Europe."
+}
+    </script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating &amp; Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <header class="article-header">
+            <p class="article-kicker"><a href="/smart-thermostats/smart-thermostats/">Smart thermostats</a></p>
+            <h1 class="article-title">Nest Thermostat E</h1>
+            <p class="article-intro">The UK/EU budget Nest from 2018. The hub page still read as if it was about to launch. It has been on sale for years, Google is not launching new Nest thermostats in Europe, and this model is the one to understand if you already have it — or are buying leftover stock.</p>
+        </header>
+
+        <article class="article-content">
+            <figure>
+                <img src="/smart-thermostats/nest-thermostat-e/images/nest-thermostat-e.png" alt="White Nest Thermostat E on its built-in stand, showing 20 degrees" width="349" height="403">
+                <figcaption>Nest Thermostat E on the stand it ships with. It does not wall-mount.</figcaption>
+            </figure>
+
+            <p>The <strong>Nest Thermostat E</strong> is the frosted, stand-only sibling of the Nest Learning Thermostat (3rd generation). Google launched it in the UK in 2018 at about £199 — roughly £20 under the Learning model at the time. That launch price is not a 2026 street price. Treat any figure you see as stock-clearance, not a current list.</p>
+            <p>It is not a US-style Nest that sits on 24&nbsp;V HVAC wiring. In the UK the display talks to a <strong>Heat Link E</strong> at the boiler or zone valve. The Heat Link does the switching (and OpenTherm, if the boiler can take it). Wiring that Heat Link onto a gas boiler is work for a <a href="https://www.gassaferegister.co.uk/find-an-engineer/">Gas Safe registered</a> engineer, not a DIY “replace the old room stat” job once you are into the appliance.</p>
+
+            <div class="article-callout">
+                <p>Google has said it will <strong>not launch new Nest thermostats in Europe</strong>. The Thermostat E (2018) and Learning Thermostat 3rd gen (2015) stay on sale while supplies last and still receive security updates. 1st and 2nd generation Learning models lost Nest/Home app control on 25 October 2025. The 4th generation Learning Thermostat is a North American product and is not a UK heating replacement.</p>
+            </div>
+
+            <h2>What it is good at</h2>
+            <ul>
+                <li>App control from the Nest or Google Home app, plus Google Assistant and Alexa.</li>
+                <li>A simple schedule out of the box, rather than a blank clock you have to fill in.</li>
+                <li>Home/Away Assist, energy history, and a leaf when the set point is modest.</li>
+                <li><a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm</a> on the Heat Link E, so a compatible boiler can modulate instead of banging on and off.</li>
+                <li>A display you can put on a shelf if the old thermostat was in a bad place for sensing.</li>
+            </ul>
+            <p>Energy-saving features are real features, not a guaranteed bill cut. Savings depend on the house, the old controls, and whether anyone overrides the schedule. Nest’s own “proven” wording was marketing. A modulating <a href="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">OpenTherm setup</a> on a condensing boiler is the part that usually moves the needle.</p>
+
+            <h2>Where it is thinner than the Learning Thermostat</h2>
+            <ul>
+                <li><strong>No wall mount.</strong> The ring and stand are one piece. You cannot hang it where the old stat was.</li>
+                <li><strong>No hot water control.</strong> The 3rd gen Learning Thermostat can run a stored-hot-water cylinder. The E cannot. On a <a href="/combi-boiler/">combi</a> that often does not matter. On a system or regular boiler it does.</li>
+                <li>Frosted, lower-resolution display. No Farsight, no metal colour rings.</li>
+            </ul>
+
+            <h2>UK models compared</h2>
+            <p>This is the 2018 European lineup the hub table described, with the 2nd gen marked as it now is: app support ended in October 2025.</p>
+            <div class="article-table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Learning 2nd gen (EU)</th>
+                            <th>Learning 3rd gen</th>
+                            <th>Thermostat E</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>App control</td>
+                            <td>Ended 25 Oct 2025</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Home/Away and schedule features</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Yes, with a starter schedule</td>
+                        </tr>
+                        <tr>
+                            <td>Stand</td>
+                            <td>Sold separately</td>
+                            <td>Sold separately</td>
+                            <td>Built in</td>
+                        </tr>
+                        <tr>
+                            <td>Wall mount</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>Frosted display</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Farsight / metal ring colours</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>Hot water (cylinder)</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>OpenTherm</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Heat Link E</h2>
+            <p>The Heat Link E is the boiler-end box. Typical terminals:</p>
+            <ul>
+                <li><strong>COM, NO, NC</strong> — a voltage-free relay for on/off heating. On an <a href="/s-plan/">S Plan</a> that is usually the call for a zone valve, not a live switched from the boiler.</li>
+                <li><strong>OT1 and OT2</strong> — OpenTherm. Use these only on a boiler (or official interface) that actually speaks OpenTherm. Vaillant is often eBUS plus a <a href="/opentherm/vaillant-opentherm/">VR33</a>, not native OT. Worcester is <a href="/opentherm/worcester-bosch-opentherm/">EMS</a> unless you add a converter.</li>
+            </ul>
+            <p>The Heat Link E is designed to work on a two-wire run to the display. It carries its own batteries so the relay can pull in without a separate 230&nbsp;V feed to the Heat Link. That is convenient. It is not a reason to skip a competent wiring check, a fused spur, and the boiler maker’s control instructions.</p>
+            <figure>
+                <img src="/smart-thermostats/nest-thermostat-e/images/nest-heat-link-e.jpg" alt="Rear of a Nest Thermostat E showing the stand clip, two AA cells, and a two-wire connection" width="652" height="403">
+                <figcaption>Rear of the Thermostat E: stand, cells, and the two-wire run toward the Heat Link. The Heat Link’s COM / NO / NC and OT terminals are on the boiler-end unit, not on this face.</figcaption>
+            </figure>
+
+            <h2>What was in the box</h2>
+            <ul>
+                <li>Nest Thermostat E (display and stand)</li>
+                <li>Mains USB adaptor</li>
+                <li>Heat Link E, mounting plate, screws, and terminal blocks</li>
+                <li>Quick start and welcome guides</li>
+            </ul>
+            <p>Google’s published limited warranty on this generation was two years. Confirm whatever remains on a used or leftover unit before you rely on it.</p>
+
+            <h2>Compatibility</h2>
+            <p>Through the Heat Link E, Google listed most UK wet systems: <a href="/combi-boiler/">combi</a> (on/off or OpenTherm), heat-only and system boilers, heating-only heat pumps, zoned systems, district heating with an electrical valve, and hydronic or electric <a href="/nest-underfloor-heating/">underfloor heating</a>. “Most” is not “all”. Check the live <a href="https://support.google.com/googlehome/answer/9248604" rel="noopener noreferrer">Google Nest compatibility</a> page for the model you have, and have the engineer confirm the existing wiring (S Plan, Y Plan, combi switched live, OpenTherm pair).</p>
+            <p>A hybrid house that keeps Nest as the boiler call and another system on the radiators is how we ran the <a href="/case-studies/hybrid-smart-home-with-nest-and-honeywell/">Nest and Honeywell case study</a>.</p>
+
+            <h2>Features and published specs</h2>
+            <p>Auto-Schedule, Home/Away Assist, energy history, Home Report, True Radiant, time-to-temperature, Sunblock, thermostat lock, Wi-Fi software updates, safety temperature alert, and a system test. Those names are Google’s. They only help if the Heat Link is wired so the boiler can actually modulate or time a heat-up.</p>
+            <ul>
+                <li><strong>Display:</strong> 24-bit colour LCD, 320 × 320 at 182&nbsp;ppi, 4.5&nbsp;cm diameter, white only.</li>
+                <li><strong>Sensors:</strong> temperature, humidity, proximity/occupancy, and ambient light on the thermostat; temperature on the Heat Link.</li>
+                <li><strong>Size:</strong> display with stand about 8.16 × 9.44&nbsp;cm, 408&nbsp;g with cable. Heat Link E about 11.7&nbsp;cm across, 147&nbsp;g.</li>
+                <li><strong>Radio:</strong> Wi-Fi 802.11 b/g/n 2.4&nbsp;GHz and 802.11 a/n 5&nbsp;GHz, plus 802.15.4 and Bluetooth Low Energy to the Heat Link.</li>
+                <li><strong>Power:</strong> built-in rechargeable lithium-ion in the display; Google quoted less than 1&nbsp;kWh/month.</li>
+                <li><strong>Languages:</strong> English (US and UK), Dutch, French, Italian, Spanish, German.</li>
+                <li><strong>ErP control class:</strong> Class IV (+2%) on on/off; Class VI (+4%) on OpenTherm. That is the control credit in the ErP package, not a boiler efficiency rating.</li>
+            </ul>
+
+            <h2>Related</h2>
+            <ul>
+                <li><a href="/smart-thermostats/smart-thermostats/">Smart thermostats</a></li>
+                <li><a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm boilers and controls</a></li>
+                <li><a href="/nest-underfloor-heating/">Nest underfloor heating</a></li>
+                <li><a href="/case-studies/hybrid-smart-home-with-nest-and-honeywell/">Hybrid smart home: Nest and Honeywell</a></li>
+                <li><a href="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">Modulating boilers and smart controls</a></li>
+            </ul>
+            <p class="article-note">Guidance only, checked against Google’s public Europe support notes in October 2026. Connecting a Heat Link to a gas boiler in the UK is Gas Safe work. This is not a DIY wiring guide and not a reason to buy a Nest if you need a thermostat that is still being developed for UK systems.</p>
+        </article>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
