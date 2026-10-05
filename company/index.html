@@ -3,50 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Company - MyBoiler Hub</title>
-    <meta name="description" content="MyBoiler connects homeowners with trusted heating professionals for smarter heating and hot water, including renewables and air source heat pumps.">
+    <title>About MyBoiler.com</title>
+    <meta name="description" content="MyBoiler.com is a heating and hot water guidance site founded by Jayesh Kanbi. Advice, tools, fault codes, and a route to a Gas Safe engineer when you need one.">
     <link rel="canonical" href="https://myboiler.com/company/">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <style>
-        .article-page{min-height:100vh;display:flex;flex-direction:column;background:var(--bg)}
-        .article-container{flex:1;padding:clamp(2rem,5vw,4rem) clamp(20px,5vw,40px);max-width:900px;margin:0 auto;width:100%;box-sizing:border-box}
-        .article-header{margin-bottom:1.75rem}
-        .article-title{font-size:clamp(2rem,5vw,3rem);font-weight:700;line-height:1.1;color:var(--text);margin:0 0 0.75rem;letter-spacing:-0.02em}
-        .article-lede{font-size:1.125rem;line-height:1.6;color:var(--text-muted);margin:0;max-width:38rem}
-        .panel{background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:clamp(1.25rem,3vw,2rem);margin-bottom:1.25rem}
-        .founder{display:grid;grid-template-columns:168px 1fr;gap:clamp(1.25rem,3vw,2rem);align-items:start}
-        .founder img{display:block;width:100%;height:auto;border-radius:var(--radius);background:var(--bg)}
-        .founder-name{font-size:1.25rem;font-weight:700;line-height:1.2;margin:0}
-        .founder-role{margin:0.2rem 0 1rem;color:var(--text-muted);font-size:0.95rem}
-        .founder p{margin:0 0 0.9rem;line-height:1.7}
-        .founder p:last-child{margin-bottom:0}
-        .section-title{font-size:1.25rem;font-weight:700;margin:0 0 1rem;letter-spacing:-0.01em}
-        .values{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin:0;padding:0}
-        .values li{background:var(--bg);border-radius:var(--radius);padding:0.9rem 1rem;font-weight:600;line-height:1.3}
-        .contact-grid{display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:end}
-        .contact-intro{margin:0 0 1.25rem;line-height:1.7;color:var(--text-muted)}
-        address{font-style:normal;line-height:1.6;margin:0}
-        .phone{display:inline-block;font-size:1.125rem;font-weight:600;white-space:nowrap}
-        @media (max-width:640px){
-            .founder{grid-template-columns:1fr;gap:1rem}
-            .founder img{width:140px}
-            .values{grid-template-columns:1fr 1fr}
-            .contact-grid{grid-template-columns:1fr;gap:1rem}
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 62ch;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-content h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 0.4rem;
+            line-height: 1.3;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-content ul {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin: 0 0 0.4rem;
+            line-height: 1.6;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.85rem 1rem;
+            margin: 0 0 1.5rem;
+        }
+
+        .value-card {
+            margin: 0;
+            padding: 1rem 1.15rem 0.95rem;
+            background: var(--bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .value-card p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .contact-block {
+            margin: 0 0 1.25rem;
+            padding: 1.1rem 1.2rem;
+            background: var(--bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .contact-block p {
+            margin: 0 0 0.35rem;
+        }
+
+        .contact-block p:last-child {
+            margin-bottom: 0;
+        }
+
+        .article-note {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        .founder {
+            display: grid;
+            grid-template-columns: 132px 1fr;
+            gap: 1.15rem 1.35rem;
+            align-items: start;
+            margin: 0 0 1.25rem;
+        }
+
+        .founder img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius);
+            background: var(--bg);
+        }
+
+        .founder p:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 640px) {
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .founder {
+                grid-template-columns: 108px 1fr;
+                gap: 0.9rem;
+            }
         }
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "AboutPage",
-  "name": "Company",
-  "url": "https://myboiler.com/company/",
-  "isPartOf": {
-    "@type": "WebSite",
-    "name": "MyBoiler.com",
-    "url": "https://myboiler.com/"
-  },
-  "description": "MyBoiler connects homeowners with trusted heating professionals for smarter heating and hot water, including renewables and air source heat pumps."
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "name": "About MyBoiler.com",
+      "url": "https://myboiler.com/company/",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "MyBoiler.com",
+        "url": "https://myboiler.com/"
+      },
+      "description": "MyBoiler.com is a heating and hot water guidance site founded by Jayesh Kanbi. Advice, tools, fault codes, and a route to a Gas Safe engineer when you need one.",
+      "about": {
+        "@id": "https://myboiler.com/#organization"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://myboiler.com/#organization",
+      "name": "MyBoiler.com",
+      "url": "https://myboiler.com/",
+      "logo": "https://myboiler.com/img/myboiler-logo-light.svg",
+      "founder": {
+        "@type": "Person",
+        "name": "Jayesh Kanbi"
+      },
+      "telephone": "+442081234411",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "A Rated House, 11 Sunnymead Road",
+        "addressLocality": "London",
+        "postalCode": "NW9 8BT",
+        "addressCountry": "GB"
+      }
+    }
+  ]
 }
     </script>
 </head>
@@ -58,63 +229,83 @@
             <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
             <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
         </a>
-        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="tagline">Smarter Heating &amp; Hot Water</div>
         <div class="right-header-items">
             <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
             </button>
-            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+            <nav id="nav-menu" class="nav-menu"></nav>
         </div>
     </header>
 
     <div class="article-container">
         <header class="article-header">
-            <h1 class="article-title">Company</h1>
-            <p class="article-lede">MyBoiler Hub connects homeowners with trusted heating professionals focused on smarter heating and hot water solutions.</p>
+            <h1 class="article-title">About MyBoiler.com</h1>
+            <p class="article-intro">A heating and hot water guidance site, founded by Jayesh Kanbi. Clearer advice, tools, fault codes, and a route to a Gas Safe engineer when the job needs one.</p>
         </header>
 
-        <section class="panel founder">
-            <img src="/company/images/jayesh-kanbi.jpg" alt="Jayesh Kanbi" width="298" height="376">
-            <div>
-                <p class="founder-name">Jayesh Kanbi</p>
-                <p class="founder-role">Founder</p>
-                <p>Founded by Jayesh Kanbi, the business is built on experience within the heating and home energy sector, including renewable technologies, energy efficiency improvements, and air source heat pumps.</p>
-                <p>Our aim is to help homeowners make informed decisions and find reliable professionals for modern heating and hot water systems.</p>
+        <article class="article-content">
+            <h2>Who we are</h2>
+            <p>MyBoiler.com helps homeowners and heating engineers make sense of boilers, controls, and hot water. The aim is clearer advice: what a fault code means, how to run a system with less waste, and when the next step is a Gas Safe registered engineer rather than another web search.</p>
+            <div class="founder">
+                <img src="/company/images/jayesh-kanbi.jpg" alt="Jayesh Kanbi" width="298" height="376">
+                <p>Jayesh Kanbi founded the site. The writing comes from work in heating and home energy — including energy-efficiency improvements, renewable kit, and air source heat pumps — and it is meant to be usable by both a householder and an engineer on a job.</p>
             </div>
-        </section>
+            <p>The <a href="/mission/">mission</a> is to help you run heating and hot water with less waste. Most of a home’s energy goes on those two jobs. The first saving is usually the system you already have.</p>
 
-        <section class="panel">
-            <h2 class="section-title">Our values</h2>
-            <ul class="values">
-                <li>Integrity</li>
-                <li>Honesty</li>
-                <li>Respect</li>
-                <li>Accountability</li>
-                <li>Teamwork</li>
-                <li>Adaptability</li>
+            <h2>What you will find here</h2>
+            <ul>
+                <li><a href="/advice/">Advice</a> on boilers, controls, OpenTherm, and heat pumps.</li>
+                <li><a href="/fault-codes/">Fault codes</a>, so a display code has a plain meaning.</li>
+                <li>Tools on the <a href="/toolbox/">toolbox</a>, including the <a href="/boiler-optimiser/">boiler optimiser</a> and the <a href="/heat-pump-checker/">heat pump checker</a>.</li>
+                <li>A <a href="/quote/">quote</a>, <a href="/repairs/">repairs</a>, or <a href="/chat/">Ask AI</a> when you want a next step.</li>
             </ul>
-        </section>
 
-        <section class="panel">
-            <h2 class="section-title">Contact us</h2>
-            <p class="contact-intro">Get in touch by phone, email, or social media.</p>
-            <div class="contact-grid">
-                <address>
-                    A Rated House<br>
-                    11 Sunnymead Road<br>
-                    Kingsbury<br>
-                    London<br>
-                    NW9 8BT
-                </address>
-                <a class="phone" href="tel:+442081234411">+44 020 8123 4411</a>
+            <h2>Our values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <h3>Integrity</h3>
+                    <p>Publish what we can stand behind, and leave the gaps visible.</p>
+                </div>
+                <div class="value-card">
+                    <h3>Honesty</h3>
+                    <p>If a page is guidance, it says so. If a job needs an engineer, we say that too.</p>
+                </div>
+                <div class="value-card">
+                    <h3>Respect</h3>
+                    <p>Write so a homeowner can follow it, and an engineer can use it.</p>
+                </div>
+                <div class="value-card">
+                    <h3>Accountability</h3>
+                    <p>The site is a guide. Installation and repairs stay with a qualified engineer.</p>
+                </div>
+                <div class="value-card">
+                    <h3>Teamwork</h3>
+                    <p>The pages sit with sister sites and the engineers who do the work on site.</p>
+                </div>
+                <div class="value-card">
+                    <h3>Adaptability</h3>
+                    <p>Heating is changing. The advice should keep up.</p>
+                </div>
             </div>
-        </section>
+
+            <h2>What this site does not do</h2>
+            <p>These pages do not install a boiler, a heat pump, or solar panels. Reading a guide is not a substitute for Gas Safe work. Installation and repairs stay with a qualified engineer. The building we work from is described on the <a href="/carbon-emissions/">carbon emissions</a> page.</p>
+
+            <h2>Contact</h2>
+            <p>Use the address and phone already listed across the site. For a heating job, the <a href="/quote/">quote</a> form or <a href="/repairs/">repairs</a> is the usual route. For a quick question, there is also <a href="/chat/">Ask AI</a>.</p>
+            <div class="contact-block">
+                <p><strong>A Rated House</strong></p>
+                <p>11 Sunnymead Road<br>London NW9 8BT</p>
+                <p><a href="tel:+442081234411">+44 020 8123 4411</a></p>
+            </div>
+            <p class="article-note">Guidance only. Gas work in the UK needs a Gas Safe registered engineer.</p>
+        </article>
     </div>
 
     <div id="site-footer"></div>
-    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>

@@ -21,7 +21,7 @@ Pages are static HTML. Each content page has a title, a description, a canonical
 
 ## About the site
 
-- [Company](https://myboiler.com/company/): About MyBoiler, founded by Jayesh Kanbi, and how to get in touch.
+- [Company](https://myboiler.com/company/): About MyBoiler.com, founded by Jayesh Kanbi.
 - [Mission](https://myboiler.com/mission/): The site is a heating guide, not an installer.
 - [Privacy](https://myboiler.com/privacy-policy/): Browsing does not set cookies or identify a visitor.
 - [Affiliate disclosure](https://myboiler.com/affilate-activity-disclosure/): Some shopping and partner links pay a commission.
