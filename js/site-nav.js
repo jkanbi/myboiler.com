@@ -24,7 +24,7 @@
     window.SITE_FOOTER_HTML =
         '<footer class="footer">' +
         '<div class="footer-column"><h3>About Us</h3><ul>' +
-        '<li><a href="/pages/about-us.md">Company</a></li>' +
+        '<li><a href="/company/">Company</a></li>' +
         '<li><a href="/carbon-emissions/">Carbon Emissions</a></li>' +
         '<li><a href="/mission/">Our Mission</a></li>' +
         '<li><a href="/privacy-policy/">Privacy Policy</a></li>' +
