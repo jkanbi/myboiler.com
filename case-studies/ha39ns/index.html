@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HA39NS underfloor heating case study - MyBoiler.com</title>
+    <meta name="description" content="Design note for wet underfloor heating on loft, first, and ground floors in HA39NS, with a Viessmann boiler and cylinder, Heatmiser controls, Wunda boards, and Emmetti manifolds.">
+    <link rel="canonical" href="https://myboiler.com/case-studies/ha39ns/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-kicker {
+            margin: 0 0 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .article-kicker a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-kicker a:hover {
+            text-decoration: underline;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 62ch;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 0.75rem;
+            line-height: 1.3;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin: 0 0 0.4rem;
+            line-height: 1.6;
+        }
+
+        .design-note {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1rem 1.25rem;
+            margin: 0 0 1.25rem;
+        }
+
+        .design-note p:last-child,
+        .design-note ul:last-child {
+            margin-bottom: 0;
+        }
+
+        .article-note {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "HA39NS underfloor heating case study",
+  "url": "https://myboiler.com/case-studies/ha39ns/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MyBoiler.com",
+    "url": "https://myboiler.com/"
+  },
+  "description": "Design note for wet underfloor heating on loft, first, and ground floors in HA39NS, with a Viessmann boiler and cylinder, Heatmiser controls, Wunda boards, and Emmetti manifolds."
+}
+    </script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating &amp; Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <header class="article-header">
+            <p class="article-kicker"><a href="/case-studies/">Case studies</a></p>
+            <h1 class="article-title">HA39NS underfloor heating case study</h1>
+            <p class="article-intro">A project-specific design note for wet underfloor heating on the loft, first floor, and ground floor, with a Viessmann heat source and cylinder, Heatmiser controls, Wunda boards, and Emmetti manifolds.</p>
+        </header>
+
+        <article class="article-content">
+            <p>This is a whole-house <strong>wet</strong> UFH layout: warm water in pipe loops in overlay boards, not electric mats. The same board and pipe pack is specified on every floor — 20&nbsp;mm Wundaboards with 16&nbsp;mm MLCP, 150&nbsp;mm centres, and a 100&nbsp;m maximum loop length. Heatmiser Neo stats run the rooms. Emmetti manifolds sit on the first and ground floors; the loft loops are fed from the first-floor manifold rather than a third manifold in the loft.</p>
+            <p>The heat source on this note is a Viessmann 100-W 19&nbsp;kW four-pipe boiler with weather compensation, plus a high-recovery cylinder. That pairing is a condensing system boiler feeding UFH and stored hot water. Low-temperature floors also suit a <a href="/heat-pumps/">heat pump</a> later if the cylinder coil is sized for it — the cylinder options below include a heat-pump coil — but this note is the boiler-led design as written, not a completed as-built record.</p>
+
+            <h2>Loft</h2>
+            <ul>
+                <li>Wundaboards 20&nbsp;mm with 16&nbsp;mm MLCP, 100&nbsp;m maximum loop length</li>
+                <li>150&nbsp;mm centres</li>
+                <li>UFH pipework from the first-floor manifold (no loft manifold on this note)</li>
+                <li>Heatmiser NeoStat X1</li>
+                <li>Pump and blend set for different floor finishes</li>
+                <li>Cat6 to each room from the manifold, for possible future room sensing and automation</li>
+            </ul>
+
+            <h2>First floor</h2>
+            <ul>
+                <li>Emmetti manifold</li>
+                <li>Wundaboards 20&nbsp;mm with 16&nbsp;mm MLCP, 100&nbsp;m maximum loop length</li>
+                <li>150&nbsp;mm centres</li>
+                <li>Heatmiser NeoStat</li>
+                <li>Heatmiser junction box</li>
+                <li>Pump/mixer set for different floor finishes — leave space for later</li>
+                <li>5-core flex from the manifold to the boiler</li>
+                <li>Cat6 to each room from the manifold, for possible future room sensing and automation</li>
+            </ul>
+
+            <h2>Ground floor</h2>
+            <ul>
+                <li>Emmetti manifold</li>
+                <li>Wundaboards 20&nbsp;mm with 16&nbsp;mm MLCP, 100&nbsp;m maximum loop length, 150&nbsp;mm centres</li>
+                <li>Heatmiser Neo thermostat with a zone valve</li>
+                <li>If the ground floor is multi-zone: add a Heatmiser junction box, stats, and actuators</li>
+                <li>Pump/mixer set for different floor finishes — leave space for later</li>
+                <li>5-core flex from the manifold to the boiler</li>
+                <li>Cat6 to each room from the manifold, for possible future room sensing and automation</li>
+            </ul>
+
+            <h2>Boiler</h2>
+            <ul>
+                <li>Viessmann 100-W 19&nbsp;kW, four-pipe</li>
+                <li>Weather compensation: outdoor sensor and cable to a north-west / north wall</li>
+                <li>De-aerator and dirt filter</li>
+            </ul>
+
+            <h2>Cylinder</h2>
+            <p>The note lists a high-recovery store that will fit the cupboard, not a single locked-in model:</p>
+            <ul>
+                <li>Viessmann 250&nbsp;L high-recovery coil / heat-pump coil 26&nbsp;kW, or twin coil</li>
+                <li>Joule High Gain Indirect, 210/250&nbsp;L, short-stand tall to the compartment size</li>
+            </ul>
+
+            <h2>Design reminders</h2>
+            <div class="design-note">
+                <ul>
+                    <li><strong>Record circuit length per manifold port.</strong> Loop length is how you balance the manifold and stay inside the 100&nbsp;m MLCP limit. Write the metres against each port before the boards go down.</li>
+                    <li><strong>Leave space for a later pump/mixer</strong> on the first-floor and ground-floor manifolds. Different floor finishes need different flow temperatures; the blend set may not go in on day one.</li>
+                    <li><strong>The loft is served from the first-floor manifold.</strong> Size that manifold and the home-run pipework for loft loops as well as the first-floor rooms.</li>
+                </ul>
+            </div>
+
+            <h2>Misc</h2>
+            <p>An alternative overlay pack is noted if a thinner build-up is required:</p>
+            <ul>
+                <li>Wundaboards 16&nbsp;mm with 12&nbsp;mm MLCP, 60&nbsp;m maximum loop length</li>
+            </ul>
+
+            <h2>Related</h2>
+            <ul>
+                <li><a href="/underfloor-heating-vs-radiators/">Underfloor heating vs radiators</a></li>
+                <li><a href="/why-heat-pumps-work-well-with-underfloor-heating/">Why heat pumps work well with underfloor heating</a></li>
+                <li><a href="/nest-underfloor-heating/">Nest underfloor heating</a></li>
+                <li><a href="/heat-pumps/">Heat pumps</a></li>
+            </ul>
+
+            <p class="article-note">This is a project-specific design note and guidance for HA39NS, not a DIY install guide and not an as-built record. Information is for competent heating engineers. Gas work in the UK must be carried out by a Gas Safe registered engineer. Design UFH to BS EN 1264 and the manufacturer’s instructions; treat the system water to BS 7593.</p>
+        </article>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
