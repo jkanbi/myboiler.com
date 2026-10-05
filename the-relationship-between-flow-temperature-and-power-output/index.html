@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow temperature and power output - MyBoiler.com</title>
+    <meta name="description" content="How boiler flow temperature and heat output (kW) actually relate: modulation, ΔT, condensing efficiency, and why they are not the same setting.">
+    <link rel="canonical" href="https://myboiler.com/the-relationship-between-flow-temperature-and-power-output/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 62ch;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 0.75rem;
+            line-height: 1.3;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin: 0 0 0.4rem;
+            line-height: 1.6;
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0 1.75rem;
+            font-size: 0.9375rem;
+        }
+
+        .article-content th,
+        .article-content td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+            vertical-align: top;
+        }
+
+        .article-content th {
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .article-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .formula {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1rem 1.25rem;
+            margin: 0 0 1.25rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .formula code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.95em;
+        }
+
+        .article-note {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Flow temperature and power output",
+  "url": "https://myboiler.com/the-relationship-between-flow-temperature-and-power-output/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MyBoiler.com",
+    "url": "https://myboiler.com/"
+  },
+  "description": "How boiler flow temperature and heat output (kW) actually relate: modulation, ΔT, condensing efficiency, and why they are not the same setting."
+}
+    </script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating &amp; Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <header class="article-header">
+            <h1 class="article-title">Flow temperature and power output</h1>
+            <p class="article-intro">They are two different knobs. Flow temperature is how hot the water leaving the boiler is. Power output is how hard the burner fires to reach and hold that temperature.</p>
+        </header>
+
+        <article class="article-content">
+            <h2>What flow temperature is</h2>
+            <p><strong>Flow temperature</strong> is the temperature of the water leaving the boiler on a heating call. That water then goes through radiators, an underfloor-heating manifold, or the coil of a hot-water cylinder. The heating (CH) setpoint on the boiler, or a weather-compensated / OpenTherm target, is the temperature the boiler is trying to hold.</p>
+            <p>Hotter flow water raises the mean water temperature of the emitters, so they give off more heat and the house warms faster. Cooler flow water does the opposite: lower radiator output, slower heat-up, but usually better condensing efficiency. Manufacturer radiator outputs are quoted at a stated mean water temperature; use a <a href="/calculators/radiator-correction-factor-tool/">correction factor</a> when you change the flow temperature.</p>
+            <p>On a combination boiler the CH flow setting is not the same as the domestic hot-water temperature. Combis also often have a higher maximum output in hot-water mode than they do on heating.</p>
+
+            <h2>What power output is</h2>
+            <p><strong>Power output</strong> is heat output, in kilowatts (kW): how much heat the boiler is putting into the water at that moment. It is not the flow-temperature setting, and it is not the gas meter reading.</p>
+            <p>Energy is power × time. A boiler delivering 24&nbsp;kW of heat for one hour delivers about 24&nbsp;kWh of heat. That is not 24&nbsp;kWh of gas used. Gas used is heat delivered divided by efficiency. A condensing boiler at high efficiency might use roughly 26&nbsp;kWh of gas to deliver 24&nbsp;kWh of heat; at a hotter, non-condensing return it uses more. Seasonal performance is usually lower than the lab figure on the energy label.</p>
+            <p>The heat the circuit actually carries is set by flow rate and the temperature drop across the emitters:</p>
+            <p class="formula"><code>kW = (flow in m³/h × ΔT) / 0.86</code></p>
+            <p>That is the same relationship as the <a href="/calculators/kw-to-flow-rate/">kW to flow rate calculator</a>. ΔT here is the flow–return differential in kelvin (or °C difference), not the return temperature itself.</p>
+
+            <h2>How they relate on a heating call</h2>
+            <p>When the room thermostat (or a smart / OpenTherm control) calls for heat, the pump runs and the burner fires. Typical modern control is:</p>
+            <ul>
+                <li>a <strong>flow-temperature setpoint</strong> (fixed, weather-compensated, or load-compensated)</li>
+                <li><strong>burner modulation</strong> to hold that flow temperature — and, on some brands, a return or ΔT limit as well</li>
+                <li>a <strong>soft start</strong> or ignition rate, then a ramp, rather than an instant jump to the boiler’s maximum kilowatts</li>
+                <li><strong>anti-cycle</strong> and <strong>pump overrun</strong> when the load is smaller than the boiler’s minimum modulation</li>
+            </ul>
+            <p>The flow-temperature knob does not set power. It sets how hot the emitters run. The burner then fires as hard as it needs to, within its modulation range, to get the leaving water to that setpoint and keep it there. If the house (or the cylinder) can absorb heat quickly, the burner stays high. If the radiators are already hot and the rooms are nearly at the thermostat setting, the flow temperature climbs toward the setpoint and the burner turns down.</p>
+            <p>That is not the same as “always ramp to 24&nbsp;kW, then hunt a fixed 20&nbsp;K ΔT.” Some older write-ups described it that way. Plenty of boilers do use a design ΔT of about 20&nbsp;K for pump speed or heat-exchanger protection, but the everyday CH loop on a domestic gas boiler is usually “hold the flow setpoint.” Brand and control type matter: weather compensation and OpenTherm change the target; a variable-speed pump may chase a ΔT; a heat pump is a different machine again.</p>
+
+            <h2>Modulation and ΔT</h2>
+            <p>ΔT (delta-T) is the difference between flow and return. A traditional UK gas-boiler radiator circuit is designed around about 20&nbsp;K — for example 70/50 or 65/45. Heat pumps and other low-flow-temperature designs often use about 5–10&nbsp;K, which means more water has to circulate for the same kilowatts.</p>
+            <div class="article-table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Typical ΔT</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Traditional UK gas boiler (radiators)</td>
+                            <td>~20&nbsp;K</td>
+                            <td>70/50 or 65/45</td>
+                        </tr>
+                        <tr>
+                            <td>Lower-temperature boiler circuit</td>
+                            <td>~20&nbsp;K still common</td>
+                            <td>55/35 or 60/40</td>
+                        </tr>
+                        <tr>
+                            <td>Heat pump / low-ΔT design</td>
+                            <td>~5–10&nbsp;K</td>
+                            <td>45/40 or 35/30</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Return temperature is not ΔT. If the flow is 65&nbsp;°C and the design drop is 20&nbsp;K, the return is about 45&nbsp;°C — not “below 20&nbsp;°C.” A return under 20&nbsp;°C on a radiator circuit would usually mean very little flow, a huge temperature drop, or a different kind of system. When older notes said the return was “becoming less than 20 degrees,” they almost certainly meant the <em>differential</em> was no longer 20&nbsp;K.</p>
+            <p>A <strong>small ΔT</strong> (return close to flow) often means the water is not dropping much heat — high flow, small emitters, or rooms already warm. A <strong>large ΔT</strong> (cool return) means the circuit is taking a lot of heat out of each litre. The boiler may then fire harder to hold the flow setpoint, until it hits its maximum. If even minimum fire is too much, flow overshoots, the burner shuts down, and the pump may overrun until the water has cooled enough to fire again. That on/off behaviour is short-cycling when it happens too often.</p>
+            <p><strong>Modulation ratio</strong> is maximum heat output divided by minimum heat output. A 24&nbsp;kW boiler that can turn down to 3&nbsp;kW is 8:1. A wider ratio helps the boiler match a small heating load without cycling. It is not, by itself, “better efficiency.” What actually moves the gas bill is a low enough return for condensing, plus less cycling, plus controls that lower the flow target as the house warms. See <a href="/vaillant/vaillant-boiler-burner-modulation-rate/">Vaillant burner modulation rate</a> and <a href="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">modulating boilers with smart thermostats</a>.</p>
+
+            <h2>Why lower flow temperatures help efficiency</h2>
+            <p>A condensing boiler recovers extra heat when water vapour in the flue gas condenses. That needs a heat-exchanger surface cooler than the dew point of the flue gas — for natural gas, a return of about 55&nbsp;°C is the usual ballpark, and lower is better. The exact figure is model-dependent.</p>
+            <p>UK guidance has been pushing in that direction: fully replaced wet systems are designed around 55&nbsp;°C flow where practicable, and government product-standard work has proposed a 60&nbsp;°C factory default on combination boilers so more homes actually run in condensing mode. Turn the CH temperature down only if the radiators can still heat the house on a cold day. Use the <a href="/boiler-optimiser/">boiler optimisation tool</a> as a starting point, then:</p>
+            <ul>
+                <li><a href="/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/">Reducing flow temperature on a condensing combi</a></li>
+                <li><a href="/energy-saving/adjust-your-system-regular-boiler-flow-temperature-for-increased-efficiency/">Adjusting flow temperature on a system or regular boiler</a></li>
+                <li><a href="/boiler-energy-efficiency/">Boiler energy efficiency</a></li>
+            </ul>
+            <p>Lower flow temperature reduces radiator output. If rooms will not come up, the emitters may be undersized for that temperature, the system may need balancing or a flush, or the CH maximum output may have been turned down too far. Those are commissioning jobs, not something to force by winding the flow temperature back up to 80&nbsp;°C and leaving it there all winter.</p>
+
+            <h2>When to call a Gas Safe engineer</h2>
+            <p>Homeowners can usually turn the central-heating temperature dial or menu setting. Changing gas rate, maximum CH output in the installer menu, pump settings, or anything on the gas-carrying parts is engineer work.</p>
+            <p>Get a Gas Safe registered engineer if the boiler short-cycles, kettles, shows a fault, cannot heat the house after a sensible flow-temperature drop, or you want the heating output range set to the actual heat loss. Manufacturer instructions beat any general article. Videos of min/max output modes are on the <a href="/boiler-maximum-and-minimum-output-mode-videos/">maximum and minimum output</a> page.</p>
+
+            <h2>Sources and related pages</h2>
+            <p>Condensing and modulation in plain language: <a href="https://hhic.org.uk/press/condensing-boilers-do-they-do-what-it-says-on-the-tin" rel="noopener noreferrer">HHIC — condensing boilers</a>. Government direction on lower defaults: <a href="https://www.gov.uk/government/consultations/raising-product-standards-for-space-heating/raising-product-standards-for-space-heating-updating-ecodesign-and-energy-labelling-for-hydronic-space-and-combination-heaters-html" rel="noopener noreferrer">GOV.UK — raising product standards for space heating</a> (60&nbsp;°C combination-boiler factory default proposal, and the link to condensing efficiency).</p>
+            <p>See also <a href="/calculators/kw-to-flow-rate/">kW to flow rate</a> · <a href="/calculators/radiator-correction-factor-tool/">Radiator correction factor</a> · <a href="/boiler-optimiser/">Boiler optimiser</a> · <a href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-post-2012-models/">Vaillant EcoTec flow temperature (post-2012)</a>.</p>
+            <p class="article-note">Guidance only. Heating design, balancing and gas work need a competent person; gas work in the UK needs a Gas Safe registered engineer. Use the current manufacturer instructions for the boiler in front of you.</p>
+        </article>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
