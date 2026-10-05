@@ -17,7 +17,7 @@
         .article-container {
             flex: 1;
             padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
-            max-width: 800px;
+            max-width: 960px;
             margin: 0 auto;
             width: 100%;
             box-sizing: border-box;
@@ -53,20 +53,91 @@
             line-height: 1.7;
             color: var(--text);
         }
-        .article-content h2 {
-            font-size: 1.25rem;
-            font-weight: 700;
+        .link-search {
+            margin: 0 0 1rem;
+        }
+        .link-search input {
+            width: 100%;
+            max-width: 26rem;
+            box-sizing: border-box;
+            padding: 0.5rem 0.85rem;
+            font: inherit;
+            font-size: 0.95rem;
             color: var(--text);
-            margin: 1.75rem 0 0.75rem;
-            line-height: 1.2;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
         }
-        .article-content h2:first-of-type { margin-top: 0.25rem; }
-        .article-content ul {
-            margin: 0 0 0.5rem;
-            padding-left: 1.25rem;
+        .link-search input:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 1px;
+            border-color: var(--accent);
         }
-        .article-content li { margin-bottom: 0.45rem; }
-        .article-content a { color: var(--accent); }
+        .link-search__empty {
+            margin: 0 0 1rem;
+            color: var(--text-muted);
+        }
+        .link-table-wrap { overflow-x: auto; }
+        .link-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+        .link-table th,
+        .link-table td {
+            text-align: left;
+            vertical-align: top;
+            padding: 0.75rem 0.85rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .link-table th {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .link-table td { color: var(--text); }
+        .link-table td:first-child { font-weight: 600; white-space: nowrap; }
+        .link-table a {
+            color: var(--accent);
+            word-break: break-word;
+        }
+        @media (max-width: 720px) {
+            .link-table thead {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+            .link-table,
+            .link-table tbody,
+            .link-table tr,
+            .link-table td { display: block; width: 100%; }
+            .link-table tr {
+                padding: 0.85rem 0;
+                border-bottom: 1px solid var(--border-subtle);
+            }
+            .link-table td {
+                border: 0;
+                padding: 0.15rem 0;
+                white-space: normal;
+            }
+            .link-table td::before {
+                content: attr(data-label);
+                display: block;
+                font-size: 0.75rem;
+                font-weight: 600;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+                color: var(--text-muted);
+            }
+        }
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="application/ld+json">
@@ -111,27 +182,98 @@
         </header>
 
         <article class="article-content">
-            <h2>Installer</h2>
-            <ul>
-                <li><a href="https://my.daikin.eu/dauk/en_GB/library.html/" rel="noopener" target="_blank">Literature</a></li>
-                <li><a href="http://daikintraining.co.uk/" rel="noopener" target="_blank">Training portal</a></li>
-                <li><a href="https://partner.daikin.co.uk/training-courses" rel="noopener" target="_blank">Training courses</a></li>
-                <li><a href="https://standbyme.daikin.co.uk/en/" rel="noopener" target="_blank">Stand By Me product configurator</a></li>
-                <li><a href="https://professional.standbyme.daikin.eu/login?c=GB&amp;l=en" rel="noopener" target="_blank">Stand By Me configurator login</a></li>
-                <li><a href="https://professional.standbyme.daikin.eu/saml/login?c=GB&amp;l=en" rel="noopener" target="_blank">Product configurator — professional login</a></li>
-                <li><a href="https://daikintechnicaldatahub.eu/en-GB/" rel="noopener" target="_blank">Technical Hub EU</a></li>
-                <li>Heating Solutions Navigator — product sets. The source list had no address for this one.</li>
-            </ul>
-
-            <h2>Everyone</h2>
-            <ul>
-                <li><a href="https://daikinmetroline.eu/en-GB/" rel="noopener" target="_blank">Daikin Metroline</a></li>
-                <li><a href="https://library.daikincity.com" rel="noopener" target="_blank">Daikin Library</a></li>
-            </ul>
+            <form class="link-search" role="search" onsubmit="return false;">
+                <input type="search" id="link-search" placeholder="Search links" aria-label="Search links" autocomplete="off">
+            </form>
+            <p class="link-search__empty" id="link-empty" hidden>No links match that search.</p>
+            <div class="link-table-wrap">
+                <table class="link-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Resource</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Url</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Resource">Heating Solutions Navigator</td>
+                            <td data-label="Description">Product sets</td>
+                            <td data-label="Url">—</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Resource">Installer</td>
+                            <td data-label="Description">Literature</td>
+                            <td data-label="Url"><a href="https://my.daikin.eu/dauk/en_GB/library.html/" rel="noopener" target="_blank">https://my.daikin.eu/dauk/en_GB/library.html/</a></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Resource">Installer</td>
+                            <td data-label="Description">Training Portal</td>
+                            <td data-label="Url"><a href="http://daikintraining.co.uk/" rel="noopener" target="_blank">http://daikintraining.co.uk/</a></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Resource">Installer</td>
+                            <td data-label="Description">Training Courses</td>
+                            <td data-label="Url"><a href="https://partner.daikin.co.uk/training-courses" rel="noopener" target="_blank">https://partner.daikin.co.uk/training-courses</a></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Resource">Installer</td>
+                            <td data-label="Description">Standbyme - Product Configurator</td>
+                            <td data-label="Url"><a href="https://standbyme.daikin.co.uk/en/" rel="noopener" target="_blank">https://standbyme.daikin.co.uk/en/</a></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Resource">Installer</td>
+                            <td data-label="Description">Standbyme - Product Configurator Login</td>
+                            <td data-label="Url"><a href="https://professional.standbyme.daikin.eu/login?c=GB&amp;l=en" rel="noopener" target="_blank">https://professional.standbyme.daikin.eu/login?c=GB&amp;l=en</a></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Resource">Installer</td>
+                            <td data-label="Description">Product Configurator – Professional Login</td>
+                            <td data-label="Url"><a href="https://professional.standbyme.daikin.eu/saml/login?c=GB&amp;l=en" rel="noopener" target="_blank">https://professional.standbyme.daikin.eu/saml/login?c=GB&amp;l=en</a></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Resource">Everyone</td>
+                            <td data-label="Description">Daikin Metroline</td>
+                            <td data-label="Url"><a href="https://daikinmetroline.eu/en-GB/" rel="noopener" target="_blank">https://daikinmetroline.eu/en-GB/</a></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Resource">Installer</td>
+                            <td data-label="Description">Technical Hub EU</td>
+                            <td data-label="Url"><a href="https://daikintechnicaldatahub.eu/en-GB/" rel="noopener" target="_blank">https://daikintechnicaldatahub.eu/en-GB/</a></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Resource">Daikin Library</td>
+                            <td data-label="Description">Library</td>
+                            <td data-label="Url"><a href="https://library.daikincity.com" rel="noopener" target="_blank">https://library.daikincity.com</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </article>
     </div>
 
     <div id="site-footer"></div>
+    <script>
+        (function () {
+            var input = document.getElementById('link-search');
+            var empty = document.getElementById('link-empty');
+            var rows = document.querySelectorAll('.link-table tbody tr');
+            if (!input || !rows.length) return;
+
+            function applyFilter() {
+                var query = input.value.trim().toLowerCase();
+                var any = false;
+                rows.forEach(function (row) {
+                    var match = !query || row.textContent.toLowerCase().indexOf(query) !== -1;
+                    row.hidden = !match;
+                    if (match) any = true;
+                });
+                if (empty) empty.hidden = any;
+            }
+
+            input.addEventListener('input', applyFilter);
+        })();
+    </script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>
