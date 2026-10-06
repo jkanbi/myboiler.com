@@ -12,6 +12,9 @@ Pages are static HTML. Each content page has a title, a description, a canonical
 - [Heat pump checker](https://myboiler.com/heat-pump-checker/): Whether a house is a plausible heat-pump candidate.
 - [Boiler pressure](https://myboiler.com/boiler-pressure/): About 1.2 bar when cold, in the 1 to 2 bar band.
 - [Combi boiler problems](https://myboiler.com/combi-boiler-problems/): Low pressure, no hot water, cold radiators, condensate, kettling.
+- [Boiler repair](https://myboiler.com/boiler-repair/): What a householder can check, Gas Safe limits, manufacturer fixed-price repairs, and when to replace.
+- [Combi boiler installation](https://myboiler.com/combi-boiler/combi-boiler-installation/): Sizing, mains pressure, flues, Boiler Plus, and when a combi is the wrong appliance.
+- [Case studies](https://myboiler.com/case-studies/): Install notes, including HA39NS underfloor heating and a Vaillant ecoTEC exclusive 835 Green iQ combi.
 - [OpenTherm boilers and controls](https://myboiler.com/opentherm/opentherm-boilers-and-controls/): Brands and models with OpenTherm support.
 - [Flue gas analysis](https://myboiler.com/fga/): Reference readings for Intergas ECO, Vaillant ecoTEC Plus, and Worcester Bosch Greenstar i.
 - [Shortcuts](https://myboiler.com/shortcuts/): Working links for boiler dashboards, Enphase, Google, and eBay.
