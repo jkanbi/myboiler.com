@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Radiators Max Power Output Calculator - MyBoiler.com</title>
+    <meta name="description" content="Work out each radiator’s output in watts, then add every radiator to get the maximum heating load in watts and kW.">
+    <link rel="canonical" href="https://myboiler.com/calculators/all-radiators-max-power-output-calculator/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .calculator-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .calculator-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .calculator-headline {
+            font-size: clamp(1.85rem, 5vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .calculator-connector {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 65ch;
+        }
+
+        .calculator-card {
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .section-title--plain {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .guide-image {
+            display: block;
+            width: 100%;
+            max-width: 28rem;
+            height: auto;
+            margin: 0 auto 1.5rem;
+        }
+
+        .guide-image.hidden-panel {
+            display: none;
+        }
+
+        .toggle-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .audience-toggle {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-left: auto;
+        }
+
+        #consumer-mode {
+            border-color: #1b8a3e;
+            color: #1b8a3e;
+        }
+
+        #consumer-mode:hover,
+        #consumer-mode:focus-visible,
+        #consumer-mode[aria-pressed="true"] {
+            background: #1b8a3e;
+            border-color: #1b8a3e;
+            color: #fff;
+        }
+
+        #pro-mode {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        #pro-mode:hover,
+        #pro-mode:focus-visible,
+        #pro-mode[aria-pressed="true"] {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        .toggle-button {
+            appearance: none;
+            border: 2px solid var(--accent);
+            background: transparent;
+            color: var(--accent);
+            font: inherit;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            padding: 0.7rem 1rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+        }
+
+        .toggle-button:hover,
+        .toggle-button:focus-visible {
+            background: var(--accent);
+            color: #fff;
+            outline: none;
+        }
+
+        .toggle-button[aria-pressed="true"] {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .connection-row .input-label {
+            margin-bottom: 0.5rem;
+        }
+
+        .connection-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .connection-choice {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .connection-factor {
+            font-size: 0.75rem;
+            font-weight: 600;
+            line-height: 1;
+            color: var(--text-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .connection-button {
+            appearance: none;
+            border: 2px solid var(--accent);
+            background: transparent;
+            color: var(--accent);
+            font: inherit;
+            font-weight: 600;
+            font-size: 0.875rem;
+            line-height: 1;
+            min-width: 7rem;
+            padding: 0.55rem 1.25rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+        }
+
+        .connection-button:hover,
+        .connection-button:focus-visible,
+        .connection-button[aria-pressed="true"] {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            outline: none;
+        }
+
+        .type-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 0.6rem;
+        }
+
+        .type-tile {
+            appearance: none;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.2rem;
+            padding: 0.45rem 0.25rem 0.4rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: #fff;
+            color: var(--text);
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .type-tile svg {
+            width: 100%;
+            height: 2.35rem;
+        }
+
+        .type-tile-code {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .type-tile-name {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            line-height: 1.1;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .type-tile:hover,
+        .type-tile:focus-visible {
+            border-color: var(--accent);
+            outline: none;
+        }
+
+        .type-tile[aria-pressed="true"] {
+            border-color: var(--accent);
+            background: #e8f0fc;
+        }
+
+        .type-tile[aria-pressed="true"] .type-tile-code,
+        .type-tile[aria-pressed="true"] .type-tile-name {
+            color: var(--accent);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group--flow {
+            margin-bottom: 2.75rem;
+        }
+
+        .input-group--room {
+            margin-top: 1.25rem;
+        }
+
+        .pro-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .pro-split .input-group,
+        .pro-split .input-group--room {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .input-field,
+        .input-select {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            font-weight: 500;
+            box-sizing: border-box;
+        }
+
+        .input-field:focus,
+        .input-select:focus,
+        .range-field:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .radiator-count {
+            max-width: 8rem;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .range-field {
+            width: 100%;
+            accent-color: var(--accent);
+        }
+
+        .range-field--thick {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 28px;
+            margin: 0.35rem 0 0;
+            background: transparent;
+            cursor: pointer;
+            --fill: 85.7%;
+        }
+
+        .range-field--thick:focus {
+            outline: none;
+        }
+
+        .range-field--thick:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+            border-radius: 999px;
+        }
+
+        .range-field--thick::-webkit-slider-runnable-track {
+            height: 10px;
+            border-radius: 999px;
+            background: linear-gradient(to right, var(--accent) var(--fill), #d5dbe3 var(--fill));
+        }
+
+        .range-field--thick::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            margin-top: -7px;
+            border-radius: 50%;
+            background: #fff;
+            border: 6px solid var(--accent);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .range-field--thick::-moz-range-track {
+            height: 10px;
+            border: none;
+            border-radius: 999px;
+            background: #d5dbe3;
+        }
+
+        .range-field--thick::-moz-range-progress {
+            height: 10px;
+            border-radius: 999px;
+            background: var(--accent);
+        }
+
+        .range-field--thick::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fff;
+            border: 6px solid var(--accent);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .range-field--heat {
+            --heat: #d92725;
+        }
+
+        .range-field--heat::-webkit-slider-runnable-track {
+            background:
+                linear-gradient(#d5dbe3, #d5dbe3) right center / calc(100% - var(--fill)) 100% no-repeat,
+                linear-gradient(to right, #f6b2a6 0%, #ef5a42 50%, #d0121a 100%) left center / 100% 100% no-repeat;
+        }
+
+        .range-field--heat::-webkit-slider-thumb {
+            border-color: var(--heat);
+        }
+
+        .range-field--heat::-moz-range-progress {
+            background: linear-gradient(to right, #1863dc, var(--heat));
+        }
+
+        .range-field--heat::-moz-range-thumb {
+            border-color: var(--heat);
+        }
+
+        .range-readout {
+            margin-top: 0.4rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .flow-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+        }
+
+        .range-readout--inline {
+            margin-top: 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .flow-slider-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .flow-slider-row[hidden] {
+            display: none;
+        }
+
+        .flow-slider-row .range-field--thick {
+            flex: 1;
+            width: auto;
+            min-width: 0;
+            margin: 0;
+        }
+
+        .range-field--linked {
+            pointer-events: none;
+            cursor: default;
+        }
+
+        .range-field--linked::-webkit-slider-thumb {
+            width: 0;
+            height: 0;
+            margin-top: 0;
+            border: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        .range-field--linked::-moz-range-thumb {
+            width: 0;
+            height: 0;
+            border: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        .range-end {
+            flex: 0 0 auto;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .hidden-panel {
+            display: none;
+        }
+
+        .output-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 0.25rem 0 1.25rem;
+        }
+
+        .output-figure {
+            display: flex;
+            align-items: baseline;
+            gap: 0.35rem;
+        }
+
+        .output-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .output-row--summary {
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.25rem;
+            padding: 0.75rem 0 0.25rem;
+        }
+
+        .output-row--top {
+            width: auto;
+            margin: 0;
+            padding: 0;
+            justify-content: flex-end;
+            gap: 1.5rem;
+        }
+
+        .output-row--top.hidden-panel {
+            display: none;
+        }
+
+        .add-output {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .add-output:hover,
+        .add-output:focus-visible {
+            background: var(--accent-dark);
+            border-color: var(--accent-dark);
+            color: #fff;
+        }
+
+        .radiator-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .radiator-field {
+            display: grid;
+            grid-template-columns: 2rem minmax(0, 1fr) 7.5rem 2.5rem;
+            gap: 0.6rem;
+            align-items: center;
+        }
+
+        .radiator-index {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .room-name,
+        .radiator-input-small {
+            width: 100%;
+            padding: 0.625rem 0.75rem;
+            font-size: 0.9375rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            box-sizing: border-box;
+        }
+
+        .radiator-input-small {
+            text-align: center;
+        }
+
+        .room-name:focus,
+        .radiator-input-small:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .radiator-remove {
+            appearance: none;
+            border: 0;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            line-height: 1;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+        }
+
+        .radiator-remove:hover,
+        .radiator-remove:focus-visible {
+            color: #b42318;
+            background: var(--bg);
+            outline: none;
+        }
+
+        .section-spacer {
+            margin-top: 0;
+        }
+
+        .formula-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+        }
+
+        .formula-card > summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0;
+            cursor: pointer;
+            list-style: none;
+        }
+
+        .formula-card > summary::-webkit-details-marker,
+        .formula-card > summary::marker {
+            display: none;
+            content: "";
+        }
+
+        .formula-card > summary::after {
+            content: "";
+            width: 0.5rem;
+            height: 0.5rem;
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            transform: rotate(45deg) translateY(-0.12rem);
+            flex: 0 0 auto;
+        }
+
+        .formula-card[open] > summary {
+            margin-bottom: 0.75rem;
+        }
+
+        .formula-card[open] > summary::after {
+            transform: rotate(225deg) translate(-0.05rem, -0.05rem);
+        }
+
+        .formula-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            background: var(--bg);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+        }
+
+        .formula-key {
+            margin: 1rem 0 0;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .formula-key div {
+            display: grid;
+            grid-template-columns: 12.5rem minmax(0, 1fr);
+            gap: 0.75rem;
+            align-items: baseline;
+        }
+
+        .formula-key dt {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .formula-key dd {
+            margin: 0;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        .calculator-disclaimer {
+            text-align: left;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-container {
+                padding: clamp(1.5rem, 4vw, 2.5rem) clamp(16px, 4vw, 24px);
+            }
+
+            .input-row,
+            .pro-split,
+            .formula-key div {
+                grid-template-columns: 1fr;
+            }
+
+            .type-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calculator-card {
+                padding: 1rem;
+            }
+
+            .radiator-field {
+                grid-template-columns: 1.5rem minmax(0, 1fr) 5.25rem 2.25rem;
+                gap: 0.4rem;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "All Radiators Max Power Output Calculator",
+  "url": "https://myboiler.com/calculators/all-radiators-max-power-output-calculator/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MyBoiler.com",
+    "url": "https://myboiler.com/"
+  },
+  "description": "Work out each radiator’s output in watts, then add every radiator to get the maximum heating load in watts and kW."
+}
+    </script>
+</head>
+<body class="calculator-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h1 class="calculator-headline">All Radiators Max Power Output Calculator</h1>
+            <p class="calculator-connector">
+                Use the radiator calculator to work out the power in watts for each radiator, then enter each power output in the total power calculator below. <strong>This tool is most useful for combi boilers.</strong>
+            </p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="toggle-row">
+                <div class="output-row output-row--summary output-row--top hidden-panel" id="top-summary" aria-live="polite">
+                    <div class="output-figure">
+                        <span class="output-value" id="top-total-watts">0</span>
+                        <span class="output-unit">W</span>
+                    </div>
+                    <div class="output-figure">
+                        <span class="output-value" id="top-total-kw">0.00</span>
+                        <span class="output-unit">kW</span>
+                    </div>
+                </div>
+                <div class="audience-toggle" role="group" aria-label="Calculator mode">
+                    <button type="button" class="toggle-button" id="consumer-mode" aria-pressed="true">Consumer</button>
+                    <button type="button" class="toggle-button" id="pro-mode" aria-pressed="false">Pro</button>
+                </div>
+            </div>
+            <h2 class="section-title section-title--plain">How to calculate and adjust the power level</h2>
+
+            <div class="input-group">
+                <label class="input-label" for="radiator-count">How many radiators are there?</label>
+                <input type="number" id="radiator-count" class="input-field radiator-count" min="1" max="40" step="1" inputmode="numeric">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label flow-label" for="flow-temp">Flow temperature <span class="range-readout range-readout--inline" id="flow-readout">80°C</span></label>
+                <div class="flow-slider-row">
+                    <span class="range-end" id="flow-min">20°C</span>
+                    <input type="range" id="flow-temp" class="range-field range-field--thick range-field--heat" min="20" max="90" step="1" value="80" aria-describedby="flow-min flow-max">
+                    <span class="range-end" id="flow-max">90°C</span>
+                </div>
+            </div>
+
+            <div id="pro-panel" class="hidden-panel">
+                <div class="input-group">
+                    <div class="input-label flow-label" id="return-label">Return temperature <span class="range-readout range-readout--inline" id="return-readout">60°C</span></div>
+                    <div class="flow-slider-row">
+                        <span class="range-end">0°C</span>
+                        <input type="range" id="return-temp" class="range-field range-field--thick range-field--heat range-field--linked" min="0" max="90" step="1" value="60" tabindex="-1" aria-disabled="true" aria-labelledby="return-label">
+                        <span class="range-end">90°C</span>
+                    </div>
+                </div>
+
+                <div class="pro-split">
+                    <div class="input-group">
+                        <label class="input-label flow-label" for="return-drop">Flow-to-Return Difference (ΔT) <span class="range-readout range-readout--inline" id="drop-readout">20°</span></label>
+                        <div class="flow-slider-row">
+                            <span class="range-end" id="drop-min">0°</span>
+                            <input type="range" id="return-drop" class="range-field range-field--thick" min="0" max="20" step="1" value="20" aria-describedby="drop-min drop-max" style="--fill: 100%;">
+                            <span class="range-end" id="drop-max">20°</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group input-group--room">
+                        <label class="input-label flow-label" for="room-temp">Room temperature <span class="range-readout range-readout--inline" id="room-readout">20°C</span></label>
+                        <div class="flow-slider-row">
+                            <span class="range-end" id="room-min">0°C</span>
+                            <input type="range" id="room-temp" class="range-field range-field--thick" min="0" max="30" step="1" value="20" aria-describedby="room-min room-max" style="--fill: 66.7%;">
+                            <span class="range-end" id="room-max">30°C</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label flow-label">Mean water temperature <span class="range-readout range-readout--inline" id="mean-readout">70°C</span></div>
+                </div>
+
+                <div class="input-group" id="settings-panel">
+                    <div class="input-label flow-label">Radiator Delta T <span class="range-readout range-readout--inline" id="delta-readout">50</span></div>
+                </div>
+            </div>
+
+            <div class="input-group" id="type-tiles">
+                <div class="input-label" id="type-tiles-label">Choose Radiator Panel Type</div>
+                <div class="type-grid" role="group" aria-labelledby="type-tiles-label">
+                    <button type="button" class="type-tile" data-panel="0.001292" aria-pressed="false" aria-label="Panel no Convector (10)">
+                        <svg viewBox="0 0 72 44" aria-hidden="true"><rect x="8" y="16" width="56" height="12" rx="2" fill="#4c92d6"/></svg>
+                        <span class="type-tile-code">10</span>
+                        <span class="type-tile-name">No fins</span>
+                    </button>
+                    <button type="button" class="type-tile" data-panel="0.0017" aria-pressed="true" aria-label="Single (11)">
+                        <svg viewBox="0 0 72 44" aria-hidden="true"><g fill="#9ec8ee"><rect x="12" y="10" width="3.5" height="8"/><rect x="18" y="10" width="3.5" height="8"/><rect x="24" y="10" width="3.5" height="8"/><rect x="30" y="10" width="3.5" height="8"/><rect x="36" y="10" width="3.5" height="8"/><rect x="42" y="10" width="3.5" height="8"/><rect x="48" y="10" width="3.5" height="8"/><rect x="54" y="10" width="3.5" height="8"/></g><rect x="8" y="18" width="56" height="10" rx="2" fill="#4c92d6"/></svg>
+                        <span class="type-tile-code">11</span>
+                        <span class="type-tile-name">Single</span>
+                    </button>
+                    <button type="button" class="type-tile" data-panel="0.0023" aria-pressed="false" aria-label="P+ (21)">
+                        <svg viewBox="0 0 72 44" aria-hidden="true"><rect x="8" y="6" width="56" height="8" rx="1.5" fill="#4c92d6"/><g fill="#9ec8ee"><rect x="12" y="18" width="3.5" height="8"/><rect x="18" y="18" width="3.5" height="8"/><rect x="24" y="18" width="3.5" height="8"/><rect x="30" y="18" width="3.5" height="8"/><rect x="36" y="18" width="3.5" height="8"/><rect x="42" y="18" width="3.5" height="8"/><rect x="48" y="18" width="3.5" height="8"/><rect x="54" y="18" width="3.5" height="8"/></g><rect x="8" y="26" width="56" height="8" rx="1.5" fill="#4c92d6"/></svg>
+                        <span class="type-tile-code">21</span>
+                        <span class="type-tile-name">P+</span>
+                    </button>
+                    <button type="button" class="type-tile" data-panel="0.0032" aria-pressed="false" aria-label="Double (22)">
+                        <svg viewBox="0 0 72 44" aria-hidden="true"><rect x="8" y="4" width="56" height="7" rx="1.5" fill="#4c92d6"/><g fill="#9ec8ee"><rect x="12" y="12" width="3.5" height="6"/><rect x="18" y="12" width="3.5" height="6"/><rect x="24" y="12" width="3.5" height="6"/><rect x="30" y="12" width="3.5" height="6"/><rect x="36" y="12" width="3.5" height="6"/><rect x="42" y="12" width="3.5" height="6"/><rect x="48" y="12" width="3.5" height="6"/><rect x="54" y="12" width="3.5" height="6"/><rect x="12" y="20" width="3.5" height="6"/><rect x="18" y="20" width="3.5" height="6"/><rect x="24" y="20" width="3.5" height="6"/><rect x="30" y="20" width="3.5" height="6"/><rect x="36" y="20" width="3.5" height="6"/><rect x="42" y="20" width="3.5" height="6"/><rect x="48" y="20" width="3.5" height="6"/><rect x="54" y="20" width="3.5" height="6"/></g><rect x="8" y="27" width="56" height="7" rx="1.5" fill="#4c92d6"/></svg>
+                        <span class="type-tile-code">22</span>
+                        <span class="type-tile-name">Double</span>
+                    </button>
+                    <button type="button" class="type-tile" data-panel="0.0045" aria-pressed="false" aria-label="Triple (33)">
+                        <svg viewBox="0 0 72 44" aria-hidden="true"><rect x="8" y="2" width="56" height="6" rx="1.5" fill="#4c92d6"/><g fill="#9ec8ee"><rect x="12" y="9" width="3.5" height="5"/><rect x="18" y="9" width="3.5" height="5"/><rect x="24" y="9" width="3.5" height="5"/><rect x="30" y="9" width="3.5" height="5"/><rect x="36" y="9" width="3.5" height="5"/><rect x="42" y="9" width="3.5" height="5"/><rect x="48" y="9" width="3.5" height="5"/><rect x="54" y="9" width="3.5" height="5"/><rect x="12" y="22" width="3.5" height="5"/><rect x="18" y="22" width="3.5" height="5"/><rect x="24" y="22" width="3.5" height="5"/><rect x="30" y="22" width="3.5" height="5"/><rect x="36" y="22" width="3.5" height="5"/><rect x="42" y="22" width="3.5" height="5"/><rect x="48" y="22" width="3.5" height="5"/><rect x="54" y="22" width="3.5" height="5"/></g><rect x="8" y="15" width="56" height="6" rx="1.5" fill="#4c92d6"/><rect x="8" y="28" width="56" height="6" rx="1.5" fill="#4c92d6"/></svg>
+                        <span class="type-tile-code">33</span>
+                        <span class="type-tile-name">Triple</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="number-panel" class="hidden-panel">
+                <div class="input-group">
+                    <label class="input-label" for="panel-type-select">Choose Radiator Panel Type</label>
+                    <select id="panel-type-select" class="input-select">
+                        <option value="0.001292">Panel no Convector (10)</option>
+                        <option value="0.0017" selected>Single (11)</option>
+                        <option value="0.0023">P+ (21)</option>
+                        <option value="0.0032">Double (22)</option>
+                        <option value="0.0045">Triple (33)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-group hidden-panel" id="connection-panel">
+                <div class="connection-row">
+                    <span class="input-label" id="connection-label">Connection</span>
+                    <div class="connection-toggle" role="group" aria-labelledby="connection-label">
+                        <div class="connection-choice">
+                            <button type="button" class="connection-button" data-connection="0.91" aria-pressed="true">BBOE</button>
+                            <span class="connection-factor">×0.91</span>
+                        </div>
+                        <div class="connection-choice">
+                            <button type="button" class="connection-button" data-connection="0.95" aria-pressed="false">TBSE</button>
+                            <span class="connection-factor">×0.95</span>
+                        </div>
+                        <div class="connection-choice">
+                            <button type="button" class="connection-button" data-connection="1" aria-pressed="false">TBOE</button>
+                            <span class="connection-factor">×1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <svg class="guide-image" id="guide-image" viewBox="0 0 480 200" role="img" aria-label="A panel radiator with Height marked down the side and Length marked along the top.">
+                <defs>
+                    <marker id="guide-arrow-start" markerWidth="8" markerHeight="8" refX="1" refY="4" orient="auto">
+                        <path d="M8 0 L0 4 L8 8 Z" fill="#8b95a3"/>
+                    </marker>
+                    <marker id="guide-arrow-end" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                        <path d="M0 0 L8 4 L0 8 Z" fill="#8b95a3"/>
+                    </marker>
+                    <clipPath id="guide-radiator-clip">
+                        <rect x="108" y="64" width="324" height="108" rx="6"/>
+                    </clipPath>
+                </defs>
+                <text x="270" y="24" text-anchor="middle" font-family="inherit" font-size="16" font-weight="600" fill="#3d4654">Length</text>
+                <line x1="112" y1="42" x2="428" y2="42" stroke="#8b95a3" stroke-width="2" marker-start="url(#guide-arrow-start)" marker-end="url(#guide-arrow-end)"/>
+                <text x="34" y="124" text-anchor="middle" font-family="inherit" font-size="16" font-weight="600" fill="#3d4654" transform="rotate(-90 34 124)">Height</text>
+                <line x1="72" y1="68" x2="72" y2="168" stroke="#8b95a3" stroke-width="2" marker-start="url(#guide-arrow-start)" marker-end="url(#guide-arrow-end)"/>
+                <rect x="108" y="64" width="324" height="108" rx="6" fill="#4c92d6"/>
+                <g clip-path="url(#guide-radiator-clip)" stroke="#3d7ec4" stroke-width="2">
+                    <line x1="126" y1="64" x2="126" y2="172"/>
+                    <line x1="144" y1="64" x2="144" y2="172"/>
+                    <line x1="162" y1="64" x2="162" y2="172"/>
+                    <line x1="180" y1="64" x2="180" y2="172"/>
+                    <line x1="198" y1="64" x2="198" y2="172"/>
+                    <line x1="216" y1="64" x2="216" y2="172"/>
+                    <line x1="234" y1="64" x2="234" y2="172"/>
+                    <line x1="252" y1="64" x2="252" y2="172"/>
+                    <line x1="270" y1="64" x2="270" y2="172"/>
+                    <line x1="288" y1="64" x2="288" y2="172"/>
+                    <line x1="306" y1="64" x2="306" y2="172"/>
+                    <line x1="324" y1="64" x2="324" y2="172"/>
+                    <line x1="342" y1="64" x2="342" y2="172"/>
+                    <line x1="360" y1="64" x2="360" y2="172"/>
+                    <line x1="378" y1="64" x2="378" y2="172"/>
+                    <line x1="396" y1="64" x2="396" y2="172"/>
+                    <line x1="414" y1="64" x2="414" y2="172"/>
+                </g>
+            </svg>
+            <div id="number-size" class="hidden-panel">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label class="input-label" for="height-input">Enter: Height cm</label>
+                        <input type="number" id="height-input" class="input-field" min="20" max="100" step="1" value="60">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label" for="length-input">Enter: Length cm</label>
+                        <input type="number" id="length-input" class="input-field" min="20" max="300" step="1" value="100">
+                    </div>
+                </div>
+            </div>
+            <div id="slider-size">
+                <div class="input-group">
+                    <label class="input-label" for="height-slider">Enter Height (cm)</label>
+                    <input type="range" id="height-slider" class="range-field range-field--thick" min="20" max="100" step="1" value="60" style="--fill: 50%;">
+                    <div class="range-readout" id="height-readout">60 cm</div>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="length-slider">Enter Length (cm)</label>
+                    <input type="range" id="length-slider" class="range-field range-field--thick" min="20" max="300" step="1" value="100" style="--fill: 28.6%;">
+                    <div class="range-readout" id="length-readout">100 cm</div>
+                </div>
+            </div>
+
+            <div class="output-row">
+                <div class="output-figure">
+                    <span class="output-value" id="radiator-output">0</span>
+                    <span class="output-unit">W</span>
+                </div>
+                <button type="button" class="toggle-button add-output" id="add-output">Add to total</button>
+            </div>
+        </div>
+
+        <div class="calculator-card section-spacer">
+            <h2 class="section-title section-title--plain">Total max power load</h2>
+            <p class="calculator-connector" id="radiator-count-note" style="text-align: left; margin-bottom: 1.5rem;">
+                Name each room and enter its wattage, or add the figure from the calculator above.
+            </p>
+
+            <div class="radiator-inputs" id="primary-rads"></div>
+
+            <div class="output-row output-row--summary">
+                <div class="output-figure">
+                    <span class="output-value" id="total-watts">0</span>
+                    <span class="output-unit">W</span>
+                </div>
+                <div class="output-figure">
+                    <span class="output-value" id="total-kw">0.00</span>
+                    <span class="output-unit">kW</span>
+                </div>
+            </div>
+        </div>
+
+        <details class="calculator-card formula-card">
+            <summary class="formula-title">Formula</summary>
+            <p class="formula-text">Watts = (ΔT / 50)<sup>1.3</sup> × Panel factor × Connection factor × (Height cm × 10) × (Length cm × 10)<br>ΔT = mean water temperature − room temperature</p>
+            <dl class="formula-key">
+                <div>
+                    <dt>ΔT</dt>
+                    <dd>Mean water temperature minus room temperature. Mean water temperature is the average of the flow and return temperatures.</dd>
+                </div>
+                <div>
+                    <dt>(ΔT / 50)<sup>1.3</sup></dt>
+                    <dd>Temperature correction. This equals 1 when ΔT is 50.</dd>
+                </div>
+                <div>
+                    <dt>Panel factor</dt>
+                    <dd>Panel no Convector (10) 0.001292, Single (11) 0.0017, P+ (21) 0.0023, Double (22) 0.0032, Triple (33) 0.0045. Type 10 is 76% of Single (11).</dd>
+                </div>
+                <div>
+                    <dt>Connection factor</dt>
+                    <dd>BBOE ×0.91, TBSE ×0.95, TBOE ×1.</dd>
+                </div>
+                <div>
+                    <dt>Height cm × 10</dt>
+                    <dd>Height converted from centimetres to millimetres.</dd>
+                </div>
+                <div>
+                    <dt>Length cm × 10</dt>
+                    <dd>Length converted from centimetres to millimetres.</dd>
+                </div>
+            </dl>
+        </details>
+
+        <div class="calculator-card">
+            <p class="calculator-disclaimer"><strong>Important:</strong> Output is approximate at the selected Delta T. The default is 50°C. Panel no Convector (10) is assumed at 76% of Single (11). Use the kW total for boiler range rating. Always confirm the figure with a qualified heating engineer.</p>
+        </div>
+    </div>
+
+    <script type="text/javascript" data-cfasync="false">
+        document.addEventListener('DOMContentLoaded', function() {
+            var panelTypeSelect = document.getElementById('panel-type-select');
+            var numberPanel = document.getElementById('number-panel');
+            var typeTiles = document.getElementById('type-tiles');
+            var typeTileButtons = typeTiles.querySelectorAll('.type-tile');
+            var heightInput = document.getElementById('height-input');
+            var lengthInput = document.getElementById('length-input');
+            var heightSlider = document.getElementById('height-slider');
+            var lengthSlider = document.getElementById('length-slider');
+            var heightReadout = document.getElementById('height-readout');
+            var lengthReadout = document.getElementById('length-readout');
+            var radiatorOutput = document.getElementById('radiator-output');
+            var numberSize = document.getElementById('number-size');
+            var sliderSize = document.getElementById('slider-size');
+            var proPanel = document.getElementById('pro-panel');
+            var guideImage = document.getElementById('guide-image');
+            var connectionPanel = document.getElementById('connection-panel');
+            var connectionButtons = connectionPanel.querySelectorAll('.connection-button');
+            var consumerMode = document.getElementById('consumer-mode');
+            var proMode = document.getElementById('pro-mode');
+            var flowSlider = document.getElementById('flow-temp');
+            var flowReadout = document.getElementById('flow-readout');
+            var returnSlider = document.getElementById('return-temp');
+            var returnReadout = document.getElementById('return-readout');
+            var dropSlider = document.getElementById('return-drop');
+            var dropReadout = document.getElementById('drop-readout');
+            var roomSlider = document.getElementById('room-temp');
+            var roomReadout = document.getElementById('room-readout');
+            var meanReadout = document.getElementById('mean-readout');
+            var deltaReadout = document.getElementById('delta-readout');
+            var usingPro = false;
+
+            function clamp(value, min, max) {
+                if (isNaN(value)) return min;
+                return Math.min(max, Math.max(min, value));
+            }
+
+            function activePanelType() {
+                return parseFloat(panelTypeSelect.value);
+            }
+
+            function activeSize() {
+                if (!usingPro) {
+                    return {
+                        height: clamp(parseFloat(heightSlider.value), 20, 100),
+                        length: clamp(parseFloat(lengthSlider.value), 20, 300)
+                    };
+                }
+                return {
+                    height: clamp(parseFloat(heightInput.value), 20, 100),
+                    length: clamp(parseFloat(lengthInput.value), 20, 300)
+                };
+            }
+
+            function mixHex(from, to, amount) {
+                function channel(hex, index) {
+                    return parseInt(hex.slice(1 + index * 2, 3 + index * 2), 16);
+                }
+                function byte(value) {
+                    return Math.round(value).toString(16).padStart(2, '0');
+                }
+                return '#' + [0, 1, 2].map(function(index) {
+                    return byte(channel(from, index) + (channel(to, index) - channel(from, index)) * amount);
+                }).join('');
+            }
+
+            function heatColor(amount) {
+                if (amount <= 0.5) return mixHex('#f6b2a6', '#ef5a42', amount / 0.5);
+                return mixHex('#ef5a42', '#d0121a', (amount - 0.5) / 0.5);
+            }
+
+            function setSliderFill(slider) {
+                var min = parseFloat(slider.min);
+                var max = parseFloat(slider.max);
+                var value = clamp(parseFloat(slider.value), min, max);
+                var span = max - min;
+                var amount = span > 0 ? (value - min) / span : 0;
+                slider.style.setProperty('--fill', (amount * 100) + '%');
+                if (slider.classList.contains('range-field--heat')) {
+                    slider.style.setProperty('--heat', heatColor(amount));
+                }
+            }
+
+            function flowState() {
+                var flow = clamp(parseFloat(flowSlider.value), 20, 90);
+                var drop = clamp(parseFloat(dropSlider.value), 0, 20);
+                var room = clamp(parseFloat(roomSlider.value), 0, 30);
+                var returnTemp = flow - drop;
+                var mean = (flow + returnTemp) / 2;
+                var deltaT = Math.max(mean - room, 0);
+                var factor = deltaT <= 0 ? 0 : Math.pow(deltaT / 50, 1.3);
+                return { flow: flow, drop: drop, room: room, returnTemp: returnTemp, mean: mean, deltaT: deltaT, factor: factor };
+            }
+
+            function activeConnectionFactor() {
+                var pressedConnection = connectionPanel.querySelector('.connection-button[aria-pressed="true"]');
+                var connectionFactor = pressedConnection ? parseFloat(pressedConnection.getAttribute('data-connection')) : 1;
+                return isNaN(connectionFactor) ? 1 : connectionFactor;
+            }
+
+            function calculateRadiatorOutput() {
+                var size = activeSize();
+                var flow = flowState();
+                returnSlider.value = String(flow.returnTemp);
+                var connectionFactor = activeConnectionFactor();
+                var watts = flow.factor * activePanelType() * connectionFactor * (size.height * 10) * (size.length * 10);
+                radiatorOutput.textContent = Math.round(watts);
+                setSliderFill(flowSlider);
+                setSliderFill(dropSlider);
+                setSliderFill(returnSlider);
+                setSliderFill(roomSlider);
+                setSliderFill(heightSlider);
+                setSliderFill(lengthSlider);
+                flowReadout.textContent = Math.round(flow.flow) + '°C';
+                dropReadout.textContent = Math.round(flow.drop) + '°';
+                returnReadout.textContent = Math.round(flow.returnTemp) + '°C';
+                roomReadout.textContent = Math.round(flow.room) + '°C';
+                meanReadout.textContent = Math.round(flow.mean) + '°C';
+                deltaReadout.textContent = String(Math.round(flow.deltaT));
+                heightReadout.textContent = Math.round(parseFloat(heightSlider.value) || 0) + ' cm';
+                lengthReadout.textContent = Math.round(parseFloat(lengthSlider.value) || 0) + ' cm';
+            }
+
+            function syncToSlider() {
+                heightSlider.value = clamp(parseFloat(heightInput.value) || 60, 20, 100);
+                lengthSlider.value = clamp(parseFloat(lengthInput.value) || 100, 20, 300);
+            }
+
+            function syncToNumbers() {
+                heightInput.value = heightSlider.value;
+                lengthInput.value = lengthSlider.value;
+            }
+
+            function setAudience(pro) {
+                if (pro) syncToNumbers();
+                else syncToSlider();
+                usingPro = pro;
+                proPanel.classList.toggle('hidden-panel', !pro);
+                connectionPanel.classList.toggle('hidden-panel', !pro);
+                guideImage.classList.toggle('hidden-panel', pro);
+                numberSize.classList.toggle('hidden-panel', !pro);
+                sliderSize.classList.toggle('hidden-panel', pro);
+                numberPanel.classList.toggle('hidden-panel', !pro);
+                typeTiles.classList.toggle('hidden-panel', pro);
+                consumerMode.setAttribute('aria-pressed', pro ? 'false' : 'true');
+                proMode.setAttribute('aria-pressed', pro ? 'true' : 'false');
+                calculateRadiatorOutput();
+                if (typeof updateTopSummary === 'function') updateTopSummary();
+            }
+
+            consumerMode.addEventListener('click', function() {
+                setAudience(false);
+            });
+            proMode.addEventListener('click', function() {
+                setAudience(true);
+            });
+
+            flowSlider.addEventListener('input', function() {
+                calculateRadiatorOutput();
+                applyFlowToTotals();
+            });
+            dropSlider.addEventListener('input', function() {
+                calculateRadiatorOutput();
+                applyFlowToTotals();
+            });
+            roomSlider.addEventListener('input', function() {
+                calculateRadiatorOutput();
+                applyFlowToTotals();
+            });
+            function syncTypeTiles() {
+                typeTileButtons.forEach(function(button) {
+                    button.setAttribute('aria-pressed', button.getAttribute('data-panel') === panelTypeSelect.value ? 'true' : 'false');
+                });
+            }
+
+            panelTypeSelect.addEventListener('change', function() {
+                syncTypeTiles();
+                calculateRadiatorOutput();
+            });
+            typeTileButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    panelTypeSelect.value = button.getAttribute('data-panel');
+                    syncTypeTiles();
+                    calculateRadiatorOutput();
+                });
+            });
+            connectionButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    connectionButtons.forEach(function(item) {
+                        item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
+                    });
+                    calculateRadiatorOutput();
+                    applyFlowToTotals();
+                });
+            });
+            heightInput.addEventListener('input', calculateRadiatorOutput);
+            lengthInput.addEventListener('input', calculateRadiatorOutput);
+            heightSlider.addEventListener('input', calculateRadiatorOutput);
+            lengthSlider.addEventListener('input', calculateRadiatorOutput);
+
+            var primary = document.getElementById('primary-rads');
+            var radiatorCount = document.getElementById('radiator-count');
+            var totalWatts = document.getElementById('total-watts');
+            var totalKw = document.getElementById('total-kw');
+            var topSummary = document.getElementById('top-summary');
+            var topTotalWatts = document.getElementById('top-total-watts');
+            var topTotalKw = document.getElementById('top-total-kw');
+            var radiatorInputs = [];
+            var maxRadiators = 40;
+
+            function readRows() {
+                return radiatorInputs.map(function(input) {
+                    var room = input.parentElement.querySelector('.room-name');
+                    return {
+                        watts: input.value,
+                        base: input.dataset.base != null ? input.dataset.base : '',
+                        room: room ? room.value : ''
+                    };
+                });
+            }
+
+            function rememberBase(input) {
+                var raw = String(input.value).trim();
+                if (raw === '') {
+                    delete input.dataset.base;
+                    return;
+                }
+                var value = parseFloat(raw);
+                if (isNaN(value)) {
+                    delete input.dataset.base;
+                    return;
+                }
+                var scale = flowState().factor * activeConnectionFactor();
+                input.dataset.base = String(scale > 0 ? value / scale : value);
+            }
+
+            function wattsAtFlow(base) {
+                return String(Math.round(parseFloat(base) * flowState().factor * activeConnectionFactor()));
+            }
+
+            function applyFlowToTotals() {
+                radiatorInputs.forEach(function(input) {
+                    if (input.dataset.base == null || input.dataset.base === '') return;
+                    input.value = wattsAtFlow(input.dataset.base);
+                });
+                calculateTotalOutput();
+            }
+
+            function addRadiatorField(container, number, data) {
+                var field = document.createElement('div');
+                field.className = 'radiator-field';
+
+                var index = document.createElement('span');
+                index.className = 'radiator-index';
+                index.textContent = String(number);
+
+                var room = document.createElement('input');
+                room.type = 'text';
+                room.className = 'room-name';
+                room.placeholder = 'Room name';
+                room.setAttribute('aria-label', 'Radiator ' + number + ' room name');
+                room.value = data && data.room ? data.room : '';
+
+                var input = document.createElement('input');
+                input.type = 'number';
+                input.className = 'radiator-input-small';
+                input.min = '0';
+                input.step = '1';
+                if (data && data.base != null && data.base !== '') {
+                    input.dataset.base = String(data.base);
+                    input.value = wattsAtFlow(data.base);
+                } else if (data && data.watts != null && data.watts !== '') {
+                    input.value = data.watts;
+                    rememberBase(input);
+                }
+                input.setAttribute('aria-label', 'Radiator ' + number + ' watts');
+                input.placeholder = 'W';
+
+                var remove = document.createElement('button');
+                remove.type = 'button';
+                remove.className = 'radiator-remove';
+                remove.setAttribute('aria-label', 'Remove radiator ' + number);
+                remove.textContent = '×';
+                remove.addEventListener('click', function() {
+                    var rows = readRows();
+                    rows.splice(number - 1, 1);
+                    radiatorCount.value = rows.length ? String(rows.length) : '';
+                    renderRadiatorFields(rows);
+                });
+
+                field.appendChild(index);
+                field.appendChild(room);
+                field.appendChild(input);
+                field.appendChild(remove);
+                container.appendChild(field);
+                radiatorInputs.push(input);
+                input.addEventListener('input', function() {
+                    rememberBase(input);
+                    calculateTotalOutput();
+                });
+            }
+
+            function updateTopSummary() {
+                topSummary.classList.toggle('hidden-panel', !(usingPro && radiatorInputs.length >= 1));
+            }
+
+            function calculateTotalOutput() {
+                var total = 0;
+                radiatorInputs.forEach(function(input) {
+                    total += parseFloat(input.value) || 0;
+                });
+                var watts = String(Math.round(total));
+                var kw = (total / 1000).toFixed(2);
+                totalWatts.textContent = watts;
+                totalKw.textContent = kw;
+                topTotalWatts.textContent = watts;
+                topTotalKw.textContent = kw;
+                updateTopSummary();
+            }
+
+            function renderRadiatorFields(preset) {
+                var saved = preset || readRows();
+                var count;
+                if (preset) {
+                    count = Math.min(maxRadiators, preset.length);
+                } else {
+                    var requested = parseInt(radiatorCount.value, 10);
+                    count = isNaN(requested) ? 0 : Math.min(maxRadiators, Math.max(0, requested));
+                    if (!isNaN(requested) && requested > maxRadiators) radiatorCount.value = String(maxRadiators);
+                }
+                primary.innerHTML = '';
+                radiatorInputs = [];
+                for (var n = 1; n <= count; n++) {
+                    addRadiatorField(primary, n, saved[n - 1] || { watts: '', room: '' });
+                }
+                calculateTotalOutput();
+            }
+
+            function addOutputToTotal() {
+                var watts = document.getElementById('radiator-output').textContent;
+                var scale = flowState().factor * activeConnectionFactor();
+                var shown = parseFloat(watts);
+                var base = !isNaN(shown) && scale > 0 ? String(shown / scale) : watts;
+                var rows = readRows();
+                var target = -1;
+                for (var i = 0; i < rows.length; i++) {
+                    if (!rows[i].watts) {
+                        rows[i].watts = watts;
+                        rows[i].base = base;
+                        target = i;
+                        break;
+                    }
+                }
+                if (target === -1) {
+                    if (rows.length >= maxRadiators) return;
+                    rows.push({ watts: watts, base: base, room: '' });
+                    target = rows.length - 1;
+                    radiatorCount.value = String(rows.length);
+                }
+                renderRadiatorFields(rows);
+                var room = primary.querySelectorAll('.room-name')[target];
+                if (room) room.focus();
+            }
+
+            radiatorCount.addEventListener('input', function() {
+                renderRadiatorFields();
+            });
+            document.getElementById('add-output').addEventListener('click', addOutputToTotal);
+
+            calculateRadiatorOutput();
+            renderRadiatorFields();
+        });
+    </script>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
