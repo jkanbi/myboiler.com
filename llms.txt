@@ -21,6 +21,11 @@ Pages are static HTML. Each content page has a title, a description, a canonical
 - [Calculators](https://myboiler.com/calculators/): Flow rate, gas rate, heat output, and system sizing.
 - [Quote](https://myboiler.com/quote/): Ask a Gas Safe registered engineer for a quote.
 - [Ask AI](https://myboiler.com/chat/): Boiler Help, for heating and hot water questions.
+- [Choosing a new combi boiler](https://myboiler.com/combi-boiler/choosing-a-new-combi-boiler/): Size from hot water and mains flow, then pick a brand the local engineer supports.
+- [New combi boiler](https://myboiler.com/combi-boiler/new-combi-boiler/): What a current condensing combi is, and what the install should include.
+- [Air source heat pump installation](https://myboiler.com/heat-pumps/air-source-heat-pump-installation/): Survey, outdoor unit, cylinder, MCS, and the Boiler Upgrade Scheme (RHI is closed).
+- [Nest Thermostat E](https://myboiler.com/smart-thermostats/nest-thermostat-e/): 2018 UK/EU budget Nest, Heat Link E, OpenTherm, and Europe support status.
+- [Hybrid smart home case study](https://myboiler.com/case-studies/hybrid-smart-home-with-nest-and-honeywell/): Nest as the boiler call, Evohome limiting rooms, Intergas combi with PDHW.
 
 ## About the site
 
