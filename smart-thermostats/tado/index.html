@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tado Smart Thermostat - MyBoiler.com</title>
+    <meta name="description" content="UK tado kits for installers: which receiver has OpenTherm, BP02 versus BR02/BU02 buses, manuals, and wiring notes. Not a DIY 230 V guide.">
+    <link rel="canonical" href="https://myboiler.com/smart-thermostats/tado/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-kicker {
+            margin: 0 0 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .article-kicker a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-kicker a:hover {
+            text-decoration: underline;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 62ch;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 0.75rem;
+            line-height: 1.3;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin: 0 0 0.4rem;
+            line-height: 1.6;
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0 1.75rem;
+            font-size: 0.9375rem;
+        }
+
+        .article-content th,
+        .article-content td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+            vertical-align: top;
+        }
+
+        .article-content th {
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .article-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .article-callout {
+            background: var(--bg);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 0 0 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .article-callout p {
+            margin: 0;
+        }
+
+        .article-note {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "tado Smart Thermostat",
+  "url": "https://myboiler.com/smart-thermostats/tado/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MyBoiler.com",
+    "url": "https://myboiler.com/"
+  },
+  "description": "UK tado kits for installers: which receiver has OpenTherm, BP02 versus BR02/BU02 buses, manuals, and wiring notes. Not a DIY 230 V guide."
+}
+    </script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating &amp; Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <header class="article-header">
+            <p class="article-kicker"><a href="/smart-thermostats/smart-thermostats/">Smart thermostats</a></p>
+            <h1 class="article-title">tado Smart Thermostat</h1>
+            <p class="article-intro">A UK installer note for specifying and fitting tado° on wet heating. The important part is which receiver is on the wall — some kits speak OpenTherm and manufacturer buses, and some do not.</p>
+        </header>
+
+        <article class="article-content">
+            <p>tado° is a room-control kit: a thermostat or wireless sensor in the living space, an Internet Bridge on the router, and — on most UK wireless jobs — a receiver or Extension Kit at the boiler or programmer. Smart Radiator Thermostats can then run rooms individually. The display is not the switching device. The box at the appliance is.</p>
+            <p>This page expands the old hub.myboiler.com tado notes: the UK manual titles, the HC / HW / EK abbreviations, and which serial prefixes have OpenTherm or a bus. Live wiring steps live in the tado app and tado’s <a href="https://support.tado.com/en/" rel="noopener noreferrer">V3+ help centre</a>. Confirm the boiler maker’s interface before you promise modulation. Wiring on a gas boiler is <a href="https://www.gassaferegister.co.uk/find-an-engineer/">Gas Safe</a> work, not a DIY swap of the old room stat.</p>
+
+            <div class="article-callout">
+                <p>Read the receiver model and serial before you quote OpenTherm. A wireless kit with a <strong>BP02</strong> receiver (serial <strong>BP*</strong>) has no OpenTherm or bus. <strong>P1</strong> and <strong>P2</strong> on that box are parking terminals only.</p>
+            </div>
+
+            <h2>Which UK kit you are looking at</h2>
+            <p>tado’s own <a href="https://support.tado.com/en/articles/3387312-what-are-the-individual-tado-devices-used-for" rel="noopener noreferrer">device list</a> for V3+ and earlier is the useful map. You only fit <a href="https://support.tado.com/en/articles/3403673-in-which-cases-do-i-need-a-wireless-receiver-or-an-extension-kit" rel="noopener noreferrer">one receiver per home</a> — either a Wireless Receiver or an Extension Kit, not both.</p>
+            <ul>
+                <li><strong>Wired Smart Thermostat</strong> — replaces a hard-wired room or underfloor thermostat. The hub notes say this wired kit has OpenTherm.</li>
+                <li><strong>Wireless Smart Thermostat, including the UK programmer with hot water control</strong> — a wireless sensor or thermostat plus a receiver. The UK receiver can replace a two-channel heating and hot water programmer.</li>
+                <li><strong>Extension Kit (EK)</strong> — the older boiler-end box, now discontinued, used in the same jobs as a Wireless Receiver: no room stat, a wireless stat, or a two-channel programmer. tado still documents it because many houses still have one.</li>
+                <li><strong>Smart Radiator Thermostat</strong> — heads on TRVs, often alongside a Smart Thermostat and receiver, for room-by-room control.</li>
+            </ul>
+            <p>tado X is a later product line with its own help. The serial and terminal notes below are the V3+ / Extension Kit generation the hub page recorded. Use tado’s <a href="https://www.tado.com/en-gb/products/compatibility" rel="noopener noreferrer">compatibility checker</a> for the kit you are about to buy.</p>
+
+            <h2>UK manuals</h2>
+            <p>The hub listed these United Kingdom titles. Direct PDF URLs move; current install steps are in the tado app and the <a href="https://support.tado.com/en/articles/3387234-where-can-i-find-installation-instructions-for-my-tado-heating-devices" rel="noopener noreferrer">installation-instructions article</a>. Professional installers can also use tado’s Manual for Professional Installers from that same help article.</p>
+            <ul>
+                <li>Wired Smart Thermostat Manual</li>
+                <li>Wireless Smart Thermostat Manual (including programmer with hot water control)</li>
+                <li>Extension Kit Manual — 230&nbsp;V relay installations</li>
+                <li>Extension Kit Manual — low-voltage digital installations</li>
+                <li>Smart Radiator Thermostat Manual</li>
+            </ul>
+            <p>The 230&nbsp;V relay booklet is the on/off path. The low-voltage digital booklet is the OpenTherm and bus path. Do not mix them.</p>
+
+            <h2>Abbreviations</h2>
+            <p>These are the installer-menu labels from the hub notes and the older Extension Kit manuals:</p>
+            <ul>
+                <li><strong>HC</strong> — Heating Circuit</li>
+                <li><strong>HW</strong> — Hot water</li>
+                <li><strong>EK</strong> — Extension Kit</li>
+            </ul>
+
+            <h2>OpenTherm and which receiver you have</h2>
+            <p>On/off tado on a boiler that can modulate is a missed trick. <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm</a> is a two-wire digital bus: the control can ask for a flow temperature, not just a call for heat. Manufacturer buses (eBus, EMS, KM-Bus) are not OpenTherm. Treat them as their own interface, and only if that exact receiver supports them.</p>
+            <div class="article-table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kit</th>
+                            <th>How to recognise it</th>
+                            <th>OpenTherm and bus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Wired Smart Thermostat kit</td>
+                            <td>Wired thermostat at the old room-stat position</td>
+                            <td>Has OpenTherm</td>
+                        </tr>
+                        <tr>
+                            <td>Wireless kit with receiver BP02</td>
+                            <td>Receiver serial starting <strong>BP*</strong></td>
+                            <td>No OpenTherm and no bus (EMS, eBus, KM-Bus, and so on). <strong>P1</strong> and <strong>P2</strong> are parking connectors — they hold unused wires and have no function</td>
+                        </tr>
+                        <tr>
+                            <td>Wireless Extension Kit BR02 or BU02</td>
+                            <td>Receiver serial starting <strong>BR*</strong> or <strong>BU*</strong></td>
+                            <td>Analogue/digital interface including OpenTherm, eBus, KM-Bus, and EMS on terminals <strong>A</strong>, <strong>−</strong>, and <strong>+</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>If the job is “tado with OpenTherm”, a BP02 on the wall is the wrong box. Either the wired kit, or a BR02/BU02 Extension Kit that actually has the A / − / + interface, is what the hub notes support. Then confirm the boiler itself has an OpenTherm pair — or a maker-approved OpenTherm module. Vaillant is often eBus plus a <a href="/opentherm/vaillant-opentherm/">VR33</a>, not native OpenTherm. Worcester is usually <a href="/opentherm/worcester-bosch-opentherm/">EMS</a> unless a converter is documented for that model.</p>
+
+            <h2>Buses listed on the Extension Kit</h2>
+            <p>The hub recorded the BR02/BU02 analogue/digital interface as supporting OpenTherm, eBus (Vaillant) RC, KM-Bus (Viessmann), and EMS (Worcester Bosch), shown on terminals A, −, and +. It also listed these additional buses. This is an inventory from those notes, not a promise that every current tado SKU still speaks all of them, and not a wiring method:</p>
+            <ul>
+                <li>BS Bus</li>
+                <li>RC</li>
+                <li>EBUS Ariston Group</li>
+                <li>EBUS Vaillant RC</li>
+                <li>VR81 — EBUS Wolf</li>
+                <li>HT Bus — KM Bus Viessmann RC Vitotrol 200</li>
+                <li>USA Bus</li>
+            </ul>
+            <p>Pick the interface from tado’s installer menu for the boiler in front of you, then test. “The list mentioned eBus” is not the same as “this Vaillant will modulate on this receiver.”</p>
+
+            <h2>Specifying on site</h2>
+            <ol>
+                <li>Identify what you are replacing: a wired room thermostat, a wireless stat plus receiver, or a two-channel heating and hot water programmer.</li>
+                <li>Read the receiver model and serial prefix (BP*, BR*, BU*) before you talk about OpenTherm or a manufacturer bus.</li>
+                <li>Read the boiler terminals from the manufacturer’s diagram: 230&nbsp;V switched live, volt-free, OpenTherm, eBus, EMS, KM-Bus. Do not put 230&nbsp;V on a low-voltage pair.</li>
+                <li>Use the tado app’s system-specific <a href="https://support.tado.com/en/collections/1979438-installing-tado-heating-products" rel="noopener noreferrer">installation instructions</a>, or the professional installer manual, not a generic photo from a previous job.</li>
+                <li>Check the live <a href="https://support.tado.com/en/articles/3387245-is-tado-compatible-with-my-boiler" rel="noopener noreferrer">tado boiler compatibility</a> notes for the model on the data plate.</li>
+            </ol>
+            <p>A modulating <a href="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">OpenTherm or manufacturer-bus setup</a> is the part that usually moves the needle on a condensing boiler. Room-by-room radiator heads help comfort; they do not replace a correctly chosen boiler interface.</p>
+
+            <h2>Related</h2>
+            <ul>
+                <li><a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm boilers and controls</a></li>
+                <li><a href="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">Modulating boilers and smart controls</a></li>
+                <li><a href="/opentherm/vaillant-opentherm/">Vaillant boiler and OpenTherm</a></li>
+                <li><a href="/opentherm/worcester-bosch-opentherm/">Worcester Bosch and OpenTherm</a></li>
+                <li><a href="/smart-thermostats/nest-combi-boiler/">Nest and a combi boiler</a></li>
+                <li><a href="/smart-thermostats/smart-thermostats/">Smart thermostats</a></li>
+            </ul>
+            <p class="article-note">Guidance only, expanded from the hub.myboiler.com tado notes and checked against tado’s public V3+ support articles. Connecting a receiver or Extension Kit to a gas boiler in the UK is Gas Safe work. This is not a DIY wiring guide. Confirm terminals and bus support against the boiler and tado documents for the exact models on site.</p>
+        </article>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
