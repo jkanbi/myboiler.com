@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="guide-svg" viewBox="0 0 240 268" width="100%" height="auto" role="img" aria-labelledby="kw-avg-title">
+  <title id="kw-avg-title">Average house: typical combi domestic hot water 28 to 34 kilowatts; typical system or heat-only heating 18 to 24 kilowatts.</title>
+  <rect x="1" y="1" width="238" height="266" rx="12" fill="var(--bg, #ebeced)" stroke="var(--border, #dfe2e6)"/>
+  <g fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.4">
+    <path d="M42 56 L120 22 L198 56" stroke-linejoin="round"/>
+    <rect x="50" y="56" width="140" height="64" rx="2"/>
+  </g>
+  <line x1="50" y1="86" x2="190" y2="86" stroke="var(--border, #dfe2e6)" stroke-width="1"/>
+  <g fill="var(--bg, #ebeced)" stroke="var(--border, #dfe2e6)" stroke-width="1">
+    <rect x="64" y="64" width="20" height="14" rx="1"/>
+    <rect x="110" y="64" width="20" height="14" rx="1"/>
+    <rect x="156" y="64" width="20" height="14" rx="1"/>
+    <rect x="64" y="94" width="20" height="14" rx="1"/>
+    <rect x="156" y="94" width="20" height="14" rx="1"/>
+    <rect x="112" y="92" width="16" height="28" rx="1"/>
+  </g>
+  <text x="120" y="140" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Average house</text>
+  <text x="120" y="158" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="10">1–2 baths, ~10–15 radiators</text>
+  <text x="120" y="192" text-anchor="middle" fill="var(--accent, #1863dc)" font-family="system-ui, sans-serif" font-size="16" font-weight="700">28–34 kW</text>
+  <text x="120" y="210" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">Combi DHW</text>
+  <text x="120" y="238" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="16" font-weight="700">18–24 kW</text>
+  <text x="120" y="256" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">System / heat-only heating</text>
+</svg>
