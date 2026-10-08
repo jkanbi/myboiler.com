@@ -13,16 +13,16 @@
   <circle cx="99" cy="198" r="5" fill="var(--surface, #fff)" stroke="var(--text-muted, #6b7280)" stroke-width="1.2"/>
   <text x="86" y="222" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Boiler</text>
   <text x="86" y="234" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="8.5">Sealed vessel</text>
-  <rect x="138" y="146" width="38" height="80" rx="4" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.4"/>
-  <path d="M144 176 q15 8 26 0" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.3"/>
-  <path d="M144 186 q15 8 26 0" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.3"/>
-  <rect x="138" y="208" width="38" height="18" fill="var(--accent, #1863dc)" opacity="0.18"/>
-  <text x="157" y="242" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Cylinder</text>
+  <rect x="138" y="146" width="38" height="66" rx="4" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.4"/>
+  <path d="M144 172 q15 8 26 0" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.3"/>
+  <path d="M144 182 q15 8 26 0" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.3"/>
+  <rect x="138" y="194" width="38" height="18" fill="var(--accent, #1863dc)" opacity="0.18"/>
+  <text x="157" y="230" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Cylinder</text>
   <path d="M108 170 H138" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.5"/>
   <path d="M108 186 H138" fill="none" stroke="var(--accent, #1863dc)" stroke-width="1.4"/>
-  <path d="M157 226 V258" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.5"/>
-  <path d="M149 258 h16 v7 h-4 l2 8 h-12 l2-8 h-4z" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.2"/>
-  <text x="157" y="286" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Taps</text>
+  <path d="M176 188 H188 V258" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.5"/>
+  <path d="M180 258 h16 v7 h-4 l2 8 h-12 l2-8 h-4z" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.2"/>
+  <text x="188" y="286" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Taps</text>
   <path d="M86 206 V250" fill="none" stroke="var(--text-muted, #6b7280)" stroke-width="1.5"/>
   <g transform="translate(63 250)" fill="var(--surface, #fff)" stroke="var(--text-muted, #6b7280)" stroke-width="1.15">
     <rect x="0" y="0" width="8" height="28" rx="1"/>
@@ -33,7 +33,7 @@
   </g>
   <text x="86" y="294" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Radiators</text>
   <path d="M32 318 H86 V206" fill="none" stroke="var(--accent, #1863dc)" stroke-width="1.5"/>
-  <path d="M157 226 V318 H32" fill="none" stroke="var(--accent, #1863dc)" stroke-width="1.5" stroke-dasharray="3 2.5"/>
+  <path d="M157 212 V318 H32" fill="none" stroke="var(--accent, #1863dc)" stroke-width="1.5" stroke-dasharray="3 2.5"/>
   <circle cx="32" cy="318" r="3" fill="var(--accent, #1863dc)"/>
   <text x="88" y="334" text-anchor="middle" fill="var(--accent, #1863dc)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Cold mains</text>
   <text x="130" y="368" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">Sealed system, no loft tanks</text>

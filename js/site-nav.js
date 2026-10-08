@@ -3,6 +3,7 @@
         '<ul class="nav-list">' +
         '<li class="nav-item"><a href="/repairs/"><span>Repairs</span></a></li>' +
         '<li class="nav-item"><a href="/boiler-cover/"><span>Boiler Cover</span></a></li>' +
+        '<li class="nav-item"><a href="/choosing-a-new-boiler/"><span>New Boiler</span></a></li>' +
         '<li class="nav-item"><a href="/advice/"><span>Advice</span></a></li>' +
         '<li class="nav-item"><a href="/toolbox/"><span>Toolbox</span></a></li>' +
         '<li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li>' +
