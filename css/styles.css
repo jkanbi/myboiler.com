@@ -985,6 +985,28 @@
     .nav-item-has-dropdown.is-open .mega-menu {
         display: none !important;
     }
+
+    /* Keep the new-boiler guide visible in the hamburger; other mega links stay hidden. */
+    .nav-item-has-dropdown .mega-menu {
+        display: contents !important;
+    }
+    .nav-item-has-dropdown .mega-menu-column {
+        display: contents;
+    }
+    .nav-item-has-dropdown .mega-menu-column h4,
+    .nav-item-has-dropdown .mega-menu-column a {
+        display: none !important;
+    }
+    .nav-item-has-dropdown .mega-menu-column a[href="/choosing-a-new-boiler/"] {
+        display: flex !important;
+        padding: 12px 20px 12px 2rem !important;
+        margin: 0 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: #fff;
+        font-size: 0.95rem;
+        min-height: 44px;
+        align-items: center;
+    }
     .nav-dropdown-label .nav-icon {
         display: none;
     }

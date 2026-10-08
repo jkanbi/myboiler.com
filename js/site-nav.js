@@ -1,10 +1,65 @@
 (function () {
+    var chevron =
+        '<svg class="nav-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">' +
+        '<path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/>' +
+        '</svg>';
+
     window.SITE_NAV_HTML =
         '<ul class="nav-list">' +
         '<li class="nav-item"><a href="/repairs/"><span>Repairs</span></a></li>' +
         '<li class="nav-item"><a href="/boiler-cover/"><span>Boiler Cover</span></a></li>' +
         '<li class="nav-item"><a href="/choosing-a-new-boiler/"><span>New Boiler</span></a></li>' +
-        '<li class="nav-item"><a href="/advice/"><span>Advice</span></a></li>' +
+        '<li class="nav-item nav-item-has-dropdown">' +
+        '<span class="nav-dropdown-label"><span>Advice</span>' + chevron + '</span>' +
+        '<div class="mega-menu">' +
+        '<div class="mega-menu-column">' +
+        '<h4>Boilers</h4>' +
+        '<a href="/money-and-energy-saving/">Money and Energy Saving</a>' +
+        '<a href="/boiler-pressure/">Boiler Pressure</a>' +
+        '<a href="https://boilerservice.com">Boiler Service</a>' +
+        '<a href="/boiler-types/">Boiler Types</a>' +
+        '<a href="/combi-boiler-problems/">Combi Boiler Problems</a>' +
+        '<a href="/what-size-boiler/">What Size Boiler?</a>' +
+        '<a href="/choosing-a-new-boiler/">Choosing a New Boiler</a>' +
+        '<a href="/combi-boiler/choosing-a-new-combi-boiler/">Choosing a New Combi Boiler</a>' +
+        '<a href="/what-is-a-gc-number/">What is a GC Number?</a>' +
+        '<a href="/boiler-energy-efficiency/">Boiler Energy Efficiency</a>' +
+        '<a href="/boiler-optimiser/">Boiler Optimiser</a>' +
+        '<a href="/repairs/">Boiler Repairs</a>' +
+        '<a href="/boiler-cover/">Boiler Cover</a>' +
+        '<h4>OpenTherm &amp; Modulating Boilers</h4>' +
+        '<a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm &amp; Modulating Overview</a>' +
+        '<a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm Capable Boilers</a>' +
+        '<a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm Controls</a>' +
+        '<a href="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">Modulating Boilers &amp; Smart Controls</a>' +
+        '<a href="/opentherm/vaillant-opentherm/">Vaillant OpenTherm Guide</a>' +
+        '<a href="/opentherm/worcester-bosch-opentherm/">Worcester OpenTherm Guide</a>' +
+        '</div>' +
+        '<div class="mega-menu-column">' +
+        '<h4>Heat Pumps</h4>' +
+        '<a href="/heat-pumps/">Heat Pumps Overview</a>' +
+        '<a href="/heat-pump-top-10/">Heat Pump Top 10</a>' +
+        '<a href="/calculators/heat-pump-cop-breakeven-calculator/">Heat Pump COP Breakeven</a>' +
+        '<a href="/heat-pumps/retrofit-an-existing-hot-water-cylinder-with-a-plate-heat-exchanger-for-use-with-a-heat-pump/">Heat Pump Cylinder Retrofit</a>' +
+        '<a href="/heat-pumps/air-source-heat-pumps/">Air Source Heat Pump</a>' +
+        '<a href="/heat-pumps/hybrid-heat-pumps/">Hybrid Heat Pumps</a>' +
+        '<a href="/why-heat-pumps-work-well-with-underfloor-heating/">Heat Pumps and Underfloor Heating</a>' +
+        '<a href="/underfloor-heating-vs-radiators/">UFH vs Radiators</a>' +
+        '<a href="/towel-radiators/">Towel Radiators</a>' +
+        '<a href="/heat-meter/">Heat Meters</a>' +
+        '</div>' +
+        '<div class="mega-menu-column">' +
+        '<h4>Miscellaneous</h4>' +
+        '<a href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-post-2012-models/">Flow Temperature &amp; Power</a>' +
+        '<a href="/solar-thermal/">Solar Thermal Heating</a>' +
+        '<a href="/solar-thermal/">Solar Thermal Servicing</a>' +
+        '<a href="/intasol-combi-diverter-valve/">Intasol Combi Diverter Valve</a>' +
+        '<a href="/s-plan/">S Plan Heating Systems</a>' +
+        '<a href="/priority-domestic-hot-water/">Priority Domestic Hot Water</a>' +
+        '<a href="/quote/">Get a Quote</a>' +
+        '</div>' +
+        '</div>' +
+        '</li>' +
         '<li class="nav-item"><a href="/toolbox/"><span>Toolbox</span></a></li>' +
         '<li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li>' +
         '</ul>';
