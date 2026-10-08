@@ -155,6 +155,57 @@
             font-size: 0.9375rem;
             color: var(--text-muted);
         }
+
+        .guide-figure {
+            margin: 1.25rem 0 1.75rem;
+            max-width: 100%;
+            min-width: 0;
+        }
+
+        .guide-figure figcaption {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin: 0.75rem 0 0;
+            line-height: 1.5;
+        }
+
+        .guide-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+        }
+
+        .guide-grid > * {
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        .guide-svg {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            color: var(--text);
+        }
+
+        .inline-icon {
+            display: inline-block;
+            width: 1.05em;
+            height: 1.05em;
+            vertical-align: -0.15em;
+            margin-right: 0.4em;
+            color: var(--accent);
+        }
+
+        @media (min-width: 800px) {
+            .guide-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="application/ld+json">
@@ -266,6 +317,125 @@
                     </tbody>
                 </table>
             </div>
+            <figure class="guide-figure">
+                <div class="guide-grid">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="guide-svg" viewBox="0 0 260 392" width="100%" height="auto" role="img" aria-labelledby="combi-title">
+  <title id="combi-title">Combi boiler: boiler only, fed from the cold mains. No hot-water cylinder and no loft tanks. The boiler heats the taps and the radiators.</title>
+  <rect x="1" y="1" width="258" height="390" rx="12" fill="var(--bg, #ebeced)" stroke="var(--border, #dfe2e6)"/>
+  <text x="130" y="28" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="15" font-weight="700">Combi</text>
+  <text x="130" y="46" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">Boiler only</text>
+  <path d="M42 92 L130 50 L218 92" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.5" stroke-linejoin="round"/>
+  <rect x="52" y="92" width="156" height="248" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.5"/>
+  <line x1="52" y1="128" x2="208" y2="128" stroke="var(--border, #dfe2e6)" stroke-width="1.25"/>
+  <text x="130" y="115" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="10">Empty loft, no tanks</text>
+  <rect x="68" y="154" width="46" height="60" rx="4" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.4"/>
+  <rect x="72" y="158" width="38" height="10" rx="2" fill="var(--accent, #1863dc)"/>
+  <path d="M91 178c0 0-3.2 4.2-3.2 6.6a3.2 3.2 0 1 0 6.4 0c0-2.4-3.2-6.6-3.2-6.6z" fill="var(--surface, #fff)"/>
+  <text x="91" y="228" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Boiler</text>
+  <path d="M114 184 H168" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.6"/>
+  <path d="M168 184 V198" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.6"/>
+  <path d="M160 198 h16 v8 h-4 l2 8 h-12 l2-8 h-4z" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.2"/>
+  <text x="168" y="226" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Taps</text>
+  <path d="M91 214 V246" fill="none" stroke="var(--text-muted, #6b7280)" stroke-width="1.5"/>
+  <g transform="translate(68 246)" fill="var(--surface, #fff)" stroke="var(--text-muted, #6b7280)" stroke-width="1.15">
+    <rect x="0" y="0" width="8" height="28" rx="1"/>
+    <rect x="10" y="0" width="8" height="28" rx="1"/>
+    <rect x="20" y="0" width="8" height="28" rx="1"/>
+    <rect x="30" y="0" width="8" height="28" rx="1"/>
+    <rect x="40" y="0" width="8" height="28" rx="1"/>
+  </g>
+  <text x="91" y="290" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Radiators</text>
+  <path d="M32 318 H91 V214" fill="none" stroke="var(--accent, #1863dc)" stroke-width="1.7"/>
+  <circle cx="32" cy="318" r="3" fill="var(--accent, #1863dc)"/>
+  <text x="78" y="334" text-anchor="middle" fill="var(--accent, #1863dc)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Cold mains</text>
+  <text x="130" y="368" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">No cylinder or loft tanks</text>
+</svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="guide-svg" viewBox="0 0 260 392" width="100%" height="auto" role="img" aria-labelledby="system-title">
+  <title id="system-title">System boiler: boiler plus a hot-water cylinder on a sealed heating circuit. No loft tanks.</title>
+  <rect x="1" y="1" width="258" height="390" rx="12" fill="var(--bg, #ebeced)" stroke="var(--border, #dfe2e6)"/>
+  <text x="130" y="28" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="15" font-weight="700">System</text>
+  <text x="130" y="46" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">Boiler + cylinder</text>
+  <path d="M42 92 L130 50 L218 92" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.5" stroke-linejoin="round"/>
+  <rect x="52" y="92" width="156" height="248" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.5"/>
+  <line x1="52" y1="128" x2="208" y2="128" stroke="var(--border, #dfe2e6)" stroke-width="1.25"/>
+  <text x="130" y="115" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="10">Empty loft, no tanks</text>
+  <rect x="64" y="148" width="44" height="58" rx="4" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.4"/>
+  <rect x="68" y="152" width="36" height="9" rx="2" fill="var(--accent, #1863dc)"/>
+  <path d="M86 171c0 0-3 4-3 6.2a3 3 0 1 0 6 0c0-2.2-3-6.2-3-6.2z" fill="var(--surface, #fff)"/>
+  <circle cx="99" cy="198" r="5" fill="var(--surface, #fff)" stroke="var(--text-muted, #6b7280)" stroke-width="1.2"/>
+  <text x="86" y="222" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Boiler</text>
+  <text x="86" y="234" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="8.5">Sealed vessel</text>
+  <rect x="138" y="146" width="38" height="66" rx="4" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.4"/>
+  <path d="M144 172 q15 8 26 0" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.3"/>
+  <path d="M144 182 q15 8 26 0" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.3"/>
+  <rect x="138" y="194" width="38" height="18" fill="var(--accent, #1863dc)" opacity="0.18"/>
+  <text x="157" y="230" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Cylinder</text>
+  <path d="M108 170 H138" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.5"/>
+  <path d="M108 186 H138" fill="none" stroke="var(--accent, #1863dc)" stroke-width="1.4"/>
+  <path d="M176 188 H188 V258" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.5"/>
+  <path d="M180 258 h16 v7 h-4 l2 8 h-12 l2-8 h-4z" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.2"/>
+  <text x="188" y="286" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Taps</text>
+  <path d="M86 206 V250" fill="none" stroke="var(--text-muted, #6b7280)" stroke-width="1.5"/>
+  <g transform="translate(63 250)" fill="var(--surface, #fff)" stroke="var(--text-muted, #6b7280)" stroke-width="1.15">
+    <rect x="0" y="0" width="8" height="28" rx="1"/>
+    <rect x="10" y="0" width="8" height="28" rx="1"/>
+    <rect x="20" y="0" width="8" height="28" rx="1"/>
+    <rect x="30" y="0" width="8" height="28" rx="1"/>
+    <rect x="40" y="0" width="8" height="28" rx="1"/>
+  </g>
+  <text x="86" y="294" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Radiators</text>
+  <path d="M32 318 H86 V206" fill="none" stroke="var(--accent, #1863dc)" stroke-width="1.5"/>
+  <path d="M157 212 V318 H32" fill="none" stroke="var(--accent, #1863dc)" stroke-width="1.5" stroke-dasharray="3 2.5"/>
+  <circle cx="32" cy="318" r="3" fill="var(--accent, #1863dc)"/>
+  <text x="88" y="334" text-anchor="middle" fill="var(--accent, #1863dc)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Cold mains</text>
+  <text x="130" y="368" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">Sealed system, no loft tanks</text>
+</svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="guide-svg" viewBox="0 0 260 392" width="100%" height="auto" role="img" aria-labelledby="regular-title">
+  <title id="regular-title">Regular or heat-only boiler: boiler, hot-water cylinder, loft feed-and-expansion tank, and a cold-water storage cistern.</title>
+  <rect x="1" y="1" width="258" height="390" rx="12" fill="var(--bg, #ebeced)" stroke="var(--border, #dfe2e6)"/>
+  <text x="130" y="28" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="15" font-weight="700">Regular</text>
+  <text x="130" y="46" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">Heat-only + loft tanks</text>
+  <path d="M42 92 L130 50 L218 92" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.5" stroke-linejoin="round"/>
+  <rect x="52" y="92" width="156" height="248" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.5"/>
+  <line x1="52" y1="142" x2="208" y2="142" stroke="var(--border, #dfe2e6)" stroke-width="1.25"/>
+  <rect x="62" y="98" width="42" height="24" rx="2" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.2"/>
+  <rect x="62" y="111" width="42" height="11" fill="var(--text-muted, #6b7280)" opacity="0.28"/>
+  <text x="83" y="137" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="8.5" font-weight="600">F&amp;E tank</text>
+  <rect x="122" y="96" width="70" height="28" rx="2" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.2"/>
+  <rect x="122" y="108" width="70" height="16" fill="var(--accent, #1863dc)" opacity="0.3"/>
+  <text x="157" y="137" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="8.5" font-weight="600">Cold cistern</text>
+  <rect x="64" y="160" width="44" height="56" rx="4" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.4"/>
+  <rect x="68" y="164" width="36" height="9" rx="2" fill="var(--accent, #1863dc)"/>
+  <path d="M86 182c0 0-3 4-3 6.2a3 3 0 1 0 6 0c0-2.2-3-6.2-3-6.2z" fill="var(--surface, #fff)"/>
+  <text x="86" y="232" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Boiler</text>
+  <rect x="136" y="156" width="38" height="64" rx="4" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.4"/>
+  <path d="M142 182 q15 8 26 0" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.3"/>
+  <path d="M142 192 q15 8 26 0" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.3"/>
+  <rect x="136" y="202" width="38" height="18" fill="var(--accent, #1863dc)" opacity="0.18"/>
+  <text x="155" y="240" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Cylinder</text>
+  <path d="M78 122 V160" fill="none" stroke="var(--text-muted, #6b7280)" stroke-width="1.4"/>
+  <path d="M90 122 V152 H86" fill="none" stroke="var(--text-muted, #6b7280)" stroke-width="1.2"/>
+  <path d="M157 124 V156" fill="none" stroke="var(--accent, #1863dc)" stroke-width="1.5"/>
+  <path d="M108 178 H136" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.5"/>
+  <path d="M108 194 H136" fill="none" stroke="var(--accent, #1863dc)" stroke-width="1.4"/>
+  <path d="M174 188 H188 V262" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.5"/>
+  <path d="M180 262 h16 v7 h-4 l2 8 h-12 l2-8 h-4z" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.2"/>
+  <text x="188" y="290" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Taps</text>
+  <path d="M86 216 V252" fill="none" stroke="var(--text-muted, #6b7280)" stroke-width="1.5"/>
+  <g transform="translate(63 252)" fill="var(--surface, #fff)" stroke="var(--text-muted, #6b7280)" stroke-width="1.15">
+    <rect x="0" y="0" width="8" height="28" rx="1"/>
+    <rect x="10" y="0" width="8" height="28" rx="1"/>
+    <rect x="20" y="0" width="8" height="28" rx="1"/>
+    <rect x="30" y="0" width="8" height="28" rx="1"/>
+    <rect x="40" y="0" width="8" height="28" rx="1"/>
+  </g>
+  <text x="86" y="296" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Radiators</text>
+  <text x="130" y="328" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="10">Open-vented heating</text>
+  <text x="130" y="368" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">Cylinder + two loft tanks</text>
+</svg>
+                </div>
+                <figcaption>Combi is a boiler only, fed from the cold mains, with no cylinder or tanks. System adds a hot-water cylinder on a sealed circuit and keeps the loft empty. Regular (heat-only) adds a loft feed-and-expansion tank and a cold-water storage cistern.</figcaption>
+            </figure>
             <p>Some makers sell a <strong>combi with a store</strong> — a combination boiler plus a built-in or paired tank. It can give stronger hot water than a plain combi in a smaller footprint than a full cylinder system. The trade-off is a more specific appliance and parts list. Treat it as a specialist quote, not the default.</p>
             <p>System and regular boilers usually run on an <a href="/s-plan/">S Plan or S Plan Plus</a> (or a Y Plan). A combi does not. Changing type is also changing the controls and the pipework, not just the box on the wall.</p>
 
@@ -292,10 +462,10 @@
             <h2>Fuel: gas, LPG, oil, electric</h2>
             <p>Type (combi / system / regular) is independent of fuel. The Energy Saving Trust’s comparison is the conservative starting point: if you have a <strong>mains gas</strong> connection, a modern condensing gas boiler is usually the cheapest of gas, oil, LPG and electricity to run. That is a running-cost observation, not a reason to ignore a heat pump.</p>
             <ul>
-                <li><strong>Natural gas.</strong> The common UK fuel where the grid reaches the property. New gas boilers are condensing. Work must be done by a <a href="https://www.gassaferegister.co.uk/find-an-engineer/">Gas Safe registered</a> engineer. In England a replacement also has to meet <a href="/boiler-plus/">Boiler Plus</a>.</li>
-                <li><strong>LPG.</strong> Off-grid alternative to natural gas. Same three boiler types exist. You need tank or bottle space and a delivery contract. Gas Safe still applies. The Energy Saving Trust describes LPG as the most expensive of gas, oil and LPG to run, with lower CO<sub>2</sub> than oil.</li>
-                <li><strong>Oil (typically kerosene).</strong> Common off-grid, especially in parts of Northern Ireland. Needs a storage tank, bunding where required, and an OFTEC-trained installer rather than Gas Safe. Oil boilers have their own efficiency minimums under Approved Document L (see Boiler Plus). Bio-kerosene blends exist; treat them as a specification question for the installer and the boiler maker.</li>
-                <li><strong>Electric boilers.</strong> Almost all of the electricity they draw becomes heat at the appliance, but a unit of electricity usually costs more than a unit of gas, so running cost is often high for whole-house heating. They can make sense for a small, well-insulated property with no gas, or as a backup. They do not need a flue. An electric boiler is not a heat pump: a heat pump moves heat and can deliver more heat than the electricity it uses.</li>
+                <li><svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M12 21c3.2 0 5.8-2.4 5.8-5.5 0-3.3-3.3-6.2-5.8-10.1-2.5 3.9-5.8 6.8-5.8 10.1C6.2 18.6 8.8 21 12 21z"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M12 17.1c1.1 0 2-.8 2-1.9"/></svg><strong>Natural gas.</strong> The common UK fuel where the grid reaches the property. New gas boilers are condensing. Work must be done by a <a href="https://www.gassaferegister.co.uk/find-an-engineer/">Gas Safe registered</a> engineer. In England a replacement also has to meet <a href="/boiler-plus/">Boiler Plus</a>.</li>
+                <li><svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M9.5 4.5h5V6h1.2A1.8 1.8 0 0 1 17.5 7.8V19a1.8 1.8 0 0 1-1.8 1.8H8.3A1.8 1.8 0 0 1 6.5 19V7.8A1.8 1.8 0 0 1 8.3 6H9.5V4.5z"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M10 4.5h4M12 12.5v3"/></svg><strong>LPG.</strong> Off-grid alternative to natural gas. Same three boiler types exist. You need tank or bottle space and a delivery contract. Gas Safe still applies. The Energy Saving Trust describes LPG as the most expensive of gas, oil and LPG to run, with lower CO<sub>2</sub> than oil.</li>
+                <li><svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="8" width="17" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M7 8V6.5h10V8M7.5 13h9"/></svg><strong>Oil (typically kerosene).</strong> Common off-grid, especially in parts of Northern Ireland. Needs a storage tank, bunding where required, and an OFTEC-trained installer rather than Gas Safe. Oil boilers have their own efficiency minimums under Approved Document L (see Boiler Plus). Bio-kerosene blends exist; treat them as a specification question for the installer and the boiler maker.</li>
+                <li><svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="m13 3-7 10h6l-1 8 7-10h-6l1-8z"/></svg><strong>Electric boilers.</strong> Almost all of the electricity they draw becomes heat at the appliance, but a unit of electricity usually costs more than a unit of gas, so running cost is often high for whole-house heating. They can make sense for a small, well-insulated property with no gas, or as a backup. They do not need a flue. An electric boiler is not a heat pump: a heat pump moves heat and can deliver more heat than the electricity it uses.</li>
             </ul>
             <p>Solid fuel (wood, pellets, coal) is a different appliance class and a different set of regulations. It is not a drop-in gas-boiler replacement.</p>
 
@@ -343,6 +513,86 @@
                     </tbody>
                 </table>
             </div>
+            <figure class="guide-figure">
+                <div class="guide-grid">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="guide-svg" viewBox="0 0 240 268" width="100%" height="auto" role="img" aria-labelledby="kw-small-title">
+  <title id="kw-small-title">Small flat or house: typical combi domestic hot water 24 to 28 kilowatts; typical system or heat-only heating 12 to 18 kilowatts.</title>
+  <rect x="1" y="1" width="238" height="266" rx="12" fill="var(--bg, #ebeced)" stroke="var(--border, #dfe2e6)"/>
+  <g fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.4">
+    <rect x="38" y="36" width="72" height="70" rx="2"/>
+    <rect x="118" y="50" width="78" height="56" rx="2"/>
+    <path d="M114 50 L157 24 L200 50" fill="var(--surface, #fff)" stroke-linejoin="round"/>
+  </g>
+  <g fill="var(--bg, #ebeced)" stroke="var(--border, #dfe2e6)" stroke-width="1">
+    <rect x="48" y="48" width="18" height="14" rx="1"/>
+    <rect x="82" y="48" width="18" height="14" rx="1"/>
+    <rect x="48" y="74" width="18" height="14" rx="1"/>
+    <rect x="82" y="74" width="18" height="14" rx="1"/>
+    <rect x="132" y="62" width="18" height="14" rx="1"/>
+    <rect x="164" y="62" width="18" height="14" rx="1"/>
+    <rect x="148" y="82" width="12" height="24" rx="1"/>
+  </g>
+  <text x="120" y="128" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Small flat / house</text>
+  <text x="120" y="150" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="10">~1 bath, up to 10 radiators</text>
+  <text x="120" y="184" text-anchor="middle" fill="var(--accent, #1863dc)" font-family="system-ui, sans-serif" font-size="16" font-weight="700">24–28 kW</text>
+  <text x="120" y="202" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">Combi DHW</text>
+  <text x="120" y="230" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="16" font-weight="700">12–18 kW</text>
+  <text x="120" y="248" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">System / heat-only heating</text>
+</svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="guide-svg" viewBox="0 0 240 268" width="100%" height="auto" role="img" aria-labelledby="kw-avg-title">
+  <title id="kw-avg-title">Average house: typical combi domestic hot water 28 to 34 kilowatts; typical system or heat-only heating 18 to 24 kilowatts.</title>
+  <rect x="1" y="1" width="238" height="266" rx="12" fill="var(--bg, #ebeced)" stroke="var(--border, #dfe2e6)"/>
+  <g fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.4">
+    <path d="M42 56 L120 22 L198 56" stroke-linejoin="round"/>
+    <rect x="50" y="56" width="140" height="64" rx="2"/>
+  </g>
+  <line x1="50" y1="86" x2="190" y2="86" stroke="var(--border, #dfe2e6)" stroke-width="1"/>
+  <g fill="var(--bg, #ebeced)" stroke="var(--border, #dfe2e6)" stroke-width="1">
+    <rect x="64" y="64" width="20" height="14" rx="1"/>
+    <rect x="110" y="64" width="20" height="14" rx="1"/>
+    <rect x="156" y="64" width="20" height="14" rx="1"/>
+    <rect x="64" y="94" width="20" height="14" rx="1"/>
+    <rect x="156" y="94" width="20" height="14" rx="1"/>
+    <rect x="112" y="92" width="16" height="28" rx="1"/>
+  </g>
+  <text x="120" y="140" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Average house</text>
+  <text x="120" y="158" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="10">1–2 baths, ~10–15 radiators</text>
+  <text x="120" y="192" text-anchor="middle" fill="var(--accent, #1863dc)" font-family="system-ui, sans-serif" font-size="16" font-weight="700">28–34 kW</text>
+  <text x="120" y="210" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">Combi DHW</text>
+  <text x="120" y="238" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="16" font-weight="700">18–24 kW</text>
+  <text x="120" y="256" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">System / heat-only heating</text>
+</svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="guide-svg" viewBox="0 0 240 268" width="100%" height="auto" role="img" aria-labelledby="kw-large-title">
+  <title id="kw-large-title">Larger house: typical combi domestic hot water 32 to 42 kilowatts, still limited by the cold main; typical system or heat-only heating 24 to 30 kilowatts, or more if the heat-loss says so.</title>
+  <rect x="1" y="1" width="238" height="266" rx="12" fill="var(--bg, #ebeced)" stroke="var(--border, #dfe2e6)"/>
+  <g fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.4">
+    <path d="M22 52 L78 20 L134 52" stroke-linejoin="round"/>
+    <rect x="30" y="52" width="96" height="68" rx="2"/>
+    <path d="M126 60 L176 32 L226 60" stroke-linejoin="round"/>
+    <rect x="134" y="60" width="84" height="60" rx="2"/>
+  </g>
+  <g fill="var(--bg, #ebeced)" stroke="var(--border, #dfe2e6)" stroke-width="1">
+    <rect x="42" y="62" width="16" height="12" rx="1"/>
+    <rect x="68" y="62" width="16" height="12" rx="1"/>
+    <rect x="94" y="62" width="16" height="12" rx="1"/>
+    <rect x="42" y="88" width="16" height="12" rx="1"/>
+    <rect x="94" y="88" width="16" height="12" rx="1"/>
+    <rect x="66" y="96" width="12" height="24" rx="1"/>
+    <rect x="148" y="70" width="16" height="12" rx="1"/>
+    <rect x="178" y="70" width="16" height="12" rx="1"/>
+    <rect x="148" y="92" width="16" height="12" rx="1"/>
+    <rect x="178" y="92" width="16" height="12" rx="1"/>
+  </g>
+  <text x="120" y="140" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Larger house</text>
+  <text x="120" y="158" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="10">Several outlets, many radiators</text>
+  <text x="120" y="192" text-anchor="middle" fill="var(--accent, #1863dc)" font-family="system-ui, sans-serif" font-size="16" font-weight="700">32–42 kW</text>
+  <text x="120" y="210" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">Combi DHW</text>
+  <text x="120" y="238" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="16" font-weight="700">24–30 kW</text>
+  <text x="120" y="256" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">System / heat-only heating</text>
+</svg>
+                </div>
+                <figcaption>Rough starting bands only. A heat-loss calculation sets the real size, including if a larger house needs more than 24–30 kW.</figcaption>
+            </figure>
             <p>Oversizing heating makes the boiler cycle and spend less time condensing. Undersizing means the house never catches up on a design-day. Both are why the survey beats the table. Flow temperature versus output is explained in <a href="/the-relationship-between-flow-temperature-and-power-output/">flow temperature and power output</a>.</p>
 
             <h2>Efficiency: condensing and ErP</h2>
@@ -383,12 +633,12 @@
 
             <h2>A practical order of decisions</h2>
             <ol>
-                <li>Is this a repair, a boiler replacement, or a heat-pump / hybrid conversation? (<a href="/decide/">Decide</a>.)</li>
-                <li>What fuel do you actually have — or could you have?</li>
-                <li>Combi, system, or regular, from bathrooms, mains flow, and space for a cylinder or tanks.</li>
-                <li>A heat-loss (and a flow measurement if it is a combi), not a bedroom count.</li>
-                <li>A boiler and control your local Gas Safe (or OFTEC) engineer will support, that meets <a href="/boiler-plus/">Boiler Plus</a> where that applies.</li>
-                <li>Written quote: ErP, range-rating, extras, flushing, filter, guarantee registration, and the compliance certificate.</li>
+                <li><svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M12 8v4M12 16h.01"/></svg>Is this a repair, a boiler replacement, or a heat-pump / hybrid conversation? (<a href="/decide/">Decide</a>.)</li>
+                <li><svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M12 21c3.2 0 5.8-2.4 5.8-5.5 0-3.3-3.3-6.2-5.8-10.1-2.5 3.9-5.8 6.8-5.8 10.1C6.2 18.6 8.8 21 12 21z"/></svg>What fuel do you actually have — or could you have?</li>
+                <li><svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="5" height="14" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="9.5" y="5" width="5" height="14" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="15.5" y="5" width="5" height="14" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Combi, system, or regular, from bathrooms, mains flow, and space for a cylinder or tanks.</li>
+                <li><svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M5 19 19 5M8 19h-3v-3M19 8V5h-3"/></svg>A heat-loss (and a flow measurement if it is a combi), not a bedroom count.</li>
+                <li><svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M12 3.5 4.8 6.8v5.3c0 4.3 3 7.8 7.2 8.9 4.2-1.1 7.2-4.6 7.2-8.9V6.8L12 3.5z"/></svg>A boiler and control your local Gas Safe (or OFTEC) engineer will support, that meets <a href="/boiler-plus/">Boiler Plus</a> where that applies.</li>
+                <li><svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="3.5" width="12" height="17" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M9 8.5h6M9 12h6M9 15.5h4"/></svg>Written quote: ErP, range-rating, extras, flushing, filter, guarantee registration, and the compliance certificate.</li>
             </ol>
 
             <h2>Related</h2>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="guide-svg" viewBox="0 0 260 392" width="100%" height="auto" role="img" aria-labelledby="system-title">
+  <title id="system-title">System boiler: boiler plus a hot-water cylinder on a sealed heating circuit. No loft tanks.</title>
+  <rect x="1" y="1" width="258" height="390" rx="12" fill="var(--bg, #ebeced)" stroke="var(--border, #dfe2e6)"/>
+  <text x="130" y="28" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="15" font-weight="700">System</text>
+  <text x="130" y="46" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">Boiler + cylinder</text>
+  <path d="M42 92 L130 50 L218 92" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.5" stroke-linejoin="round"/>
+  <rect x="52" y="92" width="156" height="248" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.5"/>
+  <line x1="52" y1="128" x2="208" y2="128" stroke="var(--border, #dfe2e6)" stroke-width="1.25"/>
+  <text x="130" y="115" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="10">Empty loft, no tanks</text>
+  <rect x="64" y="148" width="44" height="58" rx="4" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.4"/>
+  <rect x="68" y="152" width="36" height="9" rx="2" fill="var(--accent, #1863dc)"/>
+  <path d="M86 171c0 0-3 4-3 6.2a3 3 0 1 0 6 0c0-2.2-3-6.2-3-6.2z" fill="var(--surface, #fff)"/>
+  <circle cx="99" cy="198" r="5" fill="var(--surface, #fff)" stroke="var(--text-muted, #6b7280)" stroke-width="1.2"/>
+  <text x="86" y="222" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Boiler</text>
+  <text x="86" y="234" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="8.5">Sealed vessel</text>
+  <rect x="138" y="146" width="38" height="66" rx="4" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.4"/>
+  <path d="M144 172 q15 8 26 0" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.3"/>
+  <path d="M144 182 q15 8 26 0" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.3"/>
+  <rect x="138" y="194" width="38" height="18" fill="var(--accent, #1863dc)" opacity="0.18"/>
+  <text x="157" y="230" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Cylinder</text>
+  <path d="M108 170 H138" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.5"/>
+  <path d="M108 186 H138" fill="none" stroke="var(--accent, #1863dc)" stroke-width="1.4"/>
+  <path d="M176 188 H188 V258" fill="none" stroke="var(--accent-dark, #0f4eb5)" stroke-width="1.5"/>
+  <path d="M180 258 h16 v7 h-4 l2 8 h-12 l2-8 h-4z" fill="var(--surface, #fff)" stroke="var(--text, #1b1b1b)" stroke-width="1.2"/>
+  <text x="188" y="286" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Taps</text>
+  <path d="M86 206 V250" fill="none" stroke="var(--text-muted, #6b7280)" stroke-width="1.5"/>
+  <g transform="translate(63 250)" fill="var(--surface, #fff)" stroke="var(--text-muted, #6b7280)" stroke-width="1.15">
+    <rect x="0" y="0" width="8" height="28" rx="1"/>
+    <rect x="10" y="0" width="8" height="28" rx="1"/>
+    <rect x="20" y="0" width="8" height="28" rx="1"/>
+    <rect x="30" y="0" width="8" height="28" rx="1"/>
+    <rect x="40" y="0" width="8" height="28" rx="1"/>
+  </g>
+  <text x="86" y="294" text-anchor="middle" fill="var(--text, #1b1b1b)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Radiators</text>
+  <path d="M32 318 H86 V206" fill="none" stroke="var(--accent, #1863dc)" stroke-width="1.5"/>
+  <path d="M157 212 V318 H32" fill="none" stroke="var(--accent, #1863dc)" stroke-width="1.5" stroke-dasharray="3 2.5"/>
+  <circle cx="32" cy="318" r="3" fill="var(--accent, #1863dc)"/>
+  <text x="88" y="334" text-anchor="middle" fill="var(--accent, #1863dc)" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Cold mains</text>
+  <text x="130" y="368" text-anchor="middle" fill="var(--text-muted, #6b7280)" font-family="system-ui, sans-serif" font-size="11">Sealed system, no loft tanks</text>
+</svg>
