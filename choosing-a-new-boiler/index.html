@@ -156,6 +156,57 @@
             color: var(--text-muted);
         }
 
+        .amazon-buy {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3em;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            white-space: nowrap;
+        }
+        .amazon-buy__icon {
+            width: 15px;
+            height: 15px;
+            flex: 0 0 auto;
+            color: #ff9900;
+        }
+        .affiliate-note {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin: 0 0 1.25rem;
+            line-height: 1.6;
+        }
+
+        .quote-options {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0.9rem 1.1rem;
+            margin: 0 0 1.5rem;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+        .quote-options > p:first-child {
+            margin: 0 0 0.55rem;
+        }
+        .quote-options ul {
+            margin: 0 0 0.7rem;
+        }
+        .quote-options li {
+            overflow-wrap: anywhere;
+        }
+        .quote-options .affiliate-note {
+            margin: 0;
+        }
+        .shop-links {
+            max-width: 100%;
+            min-width: 0;
+        }
+        .shop-links li {
+            overflow-wrap: break-word;
+        }
+
         .guide-figure {
             margin: 1.25rem 0 1.75rem;
             max-width: 100%;
@@ -611,6 +662,14 @@
             <h2>Controls</h2>
             <p>Minimum controls are a legal floor, not a good system. A modulating control (<a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm</a> or the maker’s own bus) lets the boiler match the load instead of banging on and off at full temperature. See <a href="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">modulating boilers and smart controls</a>. Weather or load compensation is one of the Boiler Plus extra options on a gas combi and is worth having on system and regular boilers too.</p>
             <p>Pick the control the boiler actually speaks. A “smart” on/off thermostat is not the same as a modulating one. Brand-specific notes for <a href="/vaillant/">Vaillant</a> and <a href="/worcester-bosch/">Worcester Bosch</a> live with those makers.</p>
+            <p>Smart controls that can help meet Boiler Plus on a gas combi in England (automation and optimisation) still need the installer to confirm the kit against the boiler — a product listing is not a tick-box:</p>
+            <ul class="shop-links" id="controls-amazon">
+                <li>tado° Wireless Smart Thermostat X Starter Kit (includes Bridge X) — combi, system or regular. <a class="amazon-buy" href="https://www.amazon.co.uk/dp/B0D9QBPV51?tag=myboiler-com-21" target="_blank" rel="noopener sponsored noreferrer">Buy on Amazon <svg class="amazon-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M15.93 17.09c-2.17 1.6-5.32 2.45-8.03 2.45-3.8 0-7.22-1.4-9.81-3.74-.2-.19 0-.44.23-.3 2.56 1.49 5.73 2.39 9.01 2.39 2.21 0 4.64-.46 6.88-1.41.34-.14.62.22.32.61z"/><path fill="currentColor" d="M16.72 16.19c-.28-.35-1.83-.17-2.53-.08-.21.03-.24-.16-.05-.29.99-.7 2.61-.5 2.8-.26.19.23.05 1.85-.46 2.62-.08.12-.16.06-.12-.1.1-.41.32-1.34.36-1.89z"/></svg></a></li>
+                <li>Hive Thermostat Mini for a combi, no hub. <a class="amazon-buy" href="https://www.amazon.co.uk/dp/B0DCGMDPB2?tag=myboiler-com-21" target="_blank" rel="noopener sponsored noreferrer">Buy on Amazon <svg class="amazon-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M15.93 17.09c-2.17 1.6-5.32 2.45-8.03 2.45-3.8 0-7.22-1.4-9.81-3.74-.2-.19 0-.44.23-.3 2.56 1.49 5.73 2.39 9.01 2.39 2.21 0 4.64-.46 6.88-1.41.34-.14.62.22.32.61z"/><path fill="currentColor" d="M16.72 16.19c-.28-.35-1.83-.17-2.53-.08-.21.03-.24-.16-.05-.29.99-.7 2.61-.5 2.8-.26.19.23.05 1.85-.46 2.62-.08.12-.16.06-.12-.1.1-.41.32-1.34.36-1.89z"/></svg></a></li>
+                <li>Hive Thermostat Mini for heating and hot water (system or regular), no hub. <a class="amazon-buy" href="https://www.amazon.co.uk/dp/B09VCBHBL2?tag=myboiler-com-21" target="_blank" rel="noopener sponsored noreferrer">Buy on Amazon <svg class="amazon-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M15.93 17.09c-2.17 1.6-5.32 2.45-8.03 2.45-3.8 0-7.22-1.4-9.81-3.74-.2-.19 0-.44.23-.3 2.56 1.49 5.73 2.39 9.01 2.39 2.21 0 4.64-.46 6.88-1.41.34-.14.62.22.32.61z"/><path fill="currentColor" d="M16.72 16.19c-.28-.35-1.83-.17-2.53-.08-.21.03-.24-.16-.05-.29.99-.7 2.61-.5 2.8-.26.19.23.05 1.85-.46 2.62-.08.12-.16.06-.12-.1.1-.41.32-1.34.36-1.89z"/></svg></a></li>
+                <li>tado° Smart Radiator Thermostat X — needs a tado Bridge X, for example from the starter kit above. <a class="amazon-buy" href="https://www.amazon.co.uk/dp/B0CWPGN3YG?tag=myboiler-com-21" target="_blank" rel="noopener sponsored noreferrer">Buy on Amazon <svg class="amazon-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M15.93 17.09c-2.17 1.6-5.32 2.45-8.03 2.45-3.8 0-7.22-1.4-9.81-3.74-.2-.19 0-.44.23-.3 2.56 1.49 5.73 2.39 9.01 2.39 2.21 0 4.64-.46 6.88-1.41.34-.14.62.22.32.61z"/><path fill="currentColor" d="M16.72 16.19c-.28-.35-1.83-.17-2.53-.08-.21.03-.24-.16-.05-.29.99-.7 2.61-.5 2.8-.26.19.23.05 1.85-.46 2.62-.08.12-.16.06-.12-.1.1-.41.32-1.34.36-1.89z"/></svg></a></li>
+            </ul>
+            <p class="affiliate-note">MyBoiler may earn a commission if you follow these links — see <a href="/affilate-activity-disclosure/">Affiliate activity disclosure</a>. Products and part numbers should be checked by a Gas Safe registered engineer against the boiler and system before buying or fitting.</p>
 
             <h2>Warranty</h2>
             <p>UK law gives a statutory minimum. Manufacturer packages are longer if you register the boiler, fit the specified filter, and have it serviced every year on their terms. Lengths differ by brand and by the pack the installer is on — <a href="/worcester-bosch/worcester-bosch-guarantee-lengths/">Worcester Bosch guarantee lengths</a> is an example of how much the small print moves. A long warranty from a brand with no local service is a paper comfort. Parts supply and an engineer who already knows the range usually matter more than the headline years.</p>
@@ -618,6 +677,13 @@
             <h2>Installation</h2>
             <p>Gas and LPG work in the UK must be carried out by a <a href="https://www.gassaferegister.co.uk/find-an-engineer/">Gas Safe registered</a> engineer. Oil is OFTEC (or equivalent competence). In England the gas job is notified through the competent person scheme; keep the Building Regulations Compliance Certificate. The Energy Saving Trust also recommends comparing quotes and looking for <a href="https://www.trustmark.org.uk/">TrustMark</a> registered businesses.</p>
             <p>A proper install is more than hanging the boiler: flue and plume, condensate, gas or oil pipe sizing, water treatment, inhibitor, a magnetic filter where required, balancing, Benchmark (or equivalent), and a handover of the controls. For combis that sequence is on <a href="/combi-boiler/combi-boiler-installation/">combi boiler installation</a> and <a href="/combi-boiler/new-combi-boiler/">new combi boiler</a>. If the existing boiler still has life in it, <a href="/boiler-repair/">boiler repair</a> may be the better spend this winter.</p>
+            <p>Typical inhibitor and magnetic-filter items on a responsible quote. 22&nbsp;mm is a common pipe size, not a universal one:</p>
+            <ul class="shop-links" id="install-amazon">
+                <li>Fernox F1 inhibitor, 500&nbsp;ml. <a class="amazon-buy" href="https://www.amazon.co.uk/dp/B003HQ97E4?tag=myboiler-com-21" target="_blank" rel="noopener sponsored noreferrer">Buy on Amazon <svg class="amazon-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M15.93 17.09c-2.17 1.6-5.32 2.45-8.03 2.45-3.8 0-7.22-1.4-9.81-3.74-.2-.19 0-.44.23-.3 2.56 1.49 5.73 2.39 9.01 2.39 2.21 0 4.64-.46 6.88-1.41.34-.14.62.22.32.61z"/><path fill="currentColor" d="M16.72 16.19c-.28-.35-1.83-.17-2.53-.08-.21.03-.24-.16-.05-.29.99-.7 2.61-.5 2.8-.26.19.23.05 1.85-.46 2.62-.08.12-.16.06-.12-.1.1-.41.32-1.34.36-1.89z"/></svg></a></li>
+                <li>Fernox TF1 Omega 22&nbsp;mm filter. <a class="amazon-buy" href="https://www.amazon.co.uk/dp/B06XXF151C?tag=myboiler-com-21" target="_blank" rel="noopener sponsored noreferrer">Buy on Amazon <svg class="amazon-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M15.93 17.09c-2.17 1.6-5.32 2.45-8.03 2.45-3.8 0-7.22-1.4-9.81-3.74-.2-.19 0-.44.23-.3 2.56 1.49 5.73 2.39 9.01 2.39 2.21 0 4.64-.46 6.88-1.41.34-.14.62.22.32.61z"/><path fill="currentColor" d="M16.72 16.19c-.28-.35-1.83-.17-2.53-.08-.21.03-.24-.16-.05-.29.99-.7 2.61-.5 2.8-.26.19.23.05 1.85-.46 2.62-.08.12-.16.06-.12-.1.1-.41.32-1.34.36-1.89z"/></svg></a></li>
+                <li>Adey MagnaClean Professional 2, 22&nbsp;mm. <a class="amazon-buy" href="https://www.amazon.co.uk/dp/B00GRQXGXE?tag=myboiler-com-21" target="_blank" rel="noopener sponsored noreferrer">Buy on Amazon <svg class="amazon-buy__icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path fill="currentColor" d="M15.93 17.09c-2.17 1.6-5.32 2.45-8.03 2.45-3.8 0-7.22-1.4-9.81-3.74-.2-.19 0-.44.23-.3 2.56 1.49 5.73 2.39 9.01 2.39 2.21 0 4.64-.46 6.88-1.41.34-.14.62.22.32.61z"/><path fill="currentColor" d="M16.72 16.19c-.28-.35-1.83-.17-2.53-.08-.21.03-.24-.16-.05-.29.99-.7 2.61-.5 2.8-.26.19.23.05 1.85-.46 2.62-.08.12-.16.06-.12-.1.1-.41.32-1.34.36-1.89z"/></svg></a></li>
+            </ul>
+            <p class="affiliate-note">MyBoiler may earn a commission if you follow these links — see <a href="/affilate-activity-disclosure/">Affiliate activity disclosure</a>. Products and part numbers should be checked by a Gas Safe registered engineer against the boiler and system before buying or fitting.</p>
 
             <h2>What drives the cost</h2>
             <p>We are not publishing a single “average UK boiler price” here. Fitted cost depends on the job, not the badge. Typical factors:</p>
@@ -630,6 +696,15 @@
                 <li><strong>Access and making good.</strong> Cupboard size, scaffolding, and decorating after a move all sit outside the appliance price.</li>
             </ul>
             <p>For fitted combi bands see <a href="/combi-boiler/combi-boiler-cost/">combi boiler cost</a>. For a site-specific figure, use <a href="/quote/">quote</a>. The Energy Saving Trust suggests getting more than one installer quote.</p>
+            <div class="quote-options" id="fixed-price-quote">
+                <p><strong>Get a fixed-price new boiler quote online</strong></p>
+                <ul>
+                    <li><a href="/quote/?need=new-boiler">MyBoiler quote</a> — a Gas Safe engineer we work with</li>
+                    <li><a href="https://www.awin1.com/cread.php?awinmid=18758&amp;awinaffid=453231&amp;ued=https%3A%2F%2Fheatable.co.uk%2F" target="_blank" rel="sponsored noopener noreferrer">Heatable</a> — rated 4.8 on Trustpilot (Oct 2026)</li>
+                    <li><a href="https://www.awin1.com/cread.php?awinmid=24619&amp;awinaffid=453231&amp;ued=https%3A%2F%2Fwww.iheat.co.uk%2F" target="_blank" rel="sponsored noopener noreferrer">iHeat</a> — rated 4.7 on Trustpilot (Oct 2026)</li>
+                </ul>
+                <p class="affiliate-note">MyBoiler may earn a commission from some of these links — see <a href="/affilate-activity-disclosure/">Affiliate activity disclosure</a>.</p>
+            </div>
 
             <h2>A practical order of decisions</h2>
             <ol>
