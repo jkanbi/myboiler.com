@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronic Relay Types - MyBoiler.com</title>
+    <meta name="description" content="SPST, DPST, SPDT and DPDT relay contacts: normally open, normally closed, and break-before-make. Diagram and animation for heating controls.">
+    <link rel="canonical" href="https://myboiler.com/articles/electronic-relay-types/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-kicker {
+            margin: 0 0 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .article-kicker a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-kicker a:hover {
+            text-decoration: underline;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 62ch;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin: 0 0 0.4rem;
+            line-height: 1.6;
+        }
+
+        .article-content figure {
+            margin: 1rem auto 1.5rem;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+        }
+
+        .article-content img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto;
+            border-radius: var(--radius);
+            background: #fff;
+        }
+
+        .article-diagram--key {
+            max-width: min(100%, 520px);
+            width: 100%;
+        }
+
+        .article-diagram--anim {
+            max-width: min(100%, 480px);
+            width: 100%;
+        }
+
+        .article-content figcaption {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .article-note {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 640px) {
+            .article-container {
+                padding: 1.25rem 16px 1.75rem;
+            }
+
+            .article-content {
+                padding: 1.25rem 1rem;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Electronic Relay Types",
+  "url": "https://myboiler.com/articles/electronic-relay-types/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MyBoiler.com",
+    "url": "https://myboiler.com/"
+  },
+  "description": "SPST, DPST, SPDT and DPDT relay contacts: normally open, normally closed, and break-before-make. Diagram and animation for heating controls."
+}
+    </script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating &amp; Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <header class="article-header">
+            <p class="article-kicker"><a href="/advice/">Advice</a></p>
+            <h1 class="article-title">Electronic relay types</h1>
+            <p class="article-intro">How the contact symbols on a relay or valve end-switch are drawn: poles, throws, normally open, normally closed, and break-before-make changeover. The hub KEY mixed NO and NC — the labels below follow the diagram.</p>
+        </header>
+
+        <article class="article-content">
+            <p>On heating controls you meet these as a boiler or programmer relay, a room-stat changeover, or the end-switch on a motorised 2-port. The coil is drawn separately from the contacts. <strong>Normally</strong> means the contact position with the coil <em>de-energised</em>.</p>
+
+            <h2>Contact arrangements</h2>
+            <figure>
+                <img class="article-diagram--key" src="/articles/electronic-relay-types/images/relay-types.png" alt="Relay coil and contact symbols: SPST normally open, SPST normally closed, DPST normally open, SPDT break-before-make, and DPDT break-before-make" width="347" height="145" decoding="async" fetchpriority="high">
+                <figcaption>Contact symbols from left to right, matching the labels on the drawing.</figcaption>
+            </figure>
+            <ul>
+                <li><strong>SPST (NO)</strong> — single pole, single throw, normally open. One circuit; closed only when the coil is energised.</li>
+                <li><strong>SPST (NC)</strong> — single pole, single throw, normally closed. One circuit; opens when the coil is energised.</li>
+                <li><strong>DPST (NO)</strong> — double pole, single throw, normally open. Two separate circuits switch together.</li>
+                <li><strong>SPDT (B-M)</strong> — single pole, double throw, break-before-make. One common (C) leaves NC before it makes NO. This is a changeover contact.</li>
+                <li><strong>DPDT (B-M)</strong> — double pole, double throw, break-before-make. Two changeovers ganged together.</li>
+            </ul>
+            <p>The hub listed every type as “normally closed” and repeated SPST (NO). That does not match the drawing (NO, NC, DPST (NO), SPDT (B-M), DPDT (B-M)).</p>
+
+            <h2>Normally open versus normally closed in motion</h2>
+            <p>The animation is an SPDT changeover: with the coil off, the pole sits on NC. Energise the coil and it breaks NC, then makes NO.</p>
+            <figure>
+                <img class="article-diagram--anim" src="/articles/electronic-relay-types/images/relays_nc_no.gif" alt="Animation of an SPDT relay: coil off, pole on NC; coil on, pole moves to NO" width="621" height="621" decoding="async" loading="lazy">
+                <figcaption>SPDT relay. Coil off: pole on NC. Coil on: pole moves to NO.</figcaption>
+            </figure>
+            <p>On an <a href="/s-plan/">S Plan</a> 2-port the grey wire is typically the end-switch that closes when the valve is driven open — that switch behaves like an SPST NO contact, even though the actuator is a motor, not a coil relay. Checkout: <a href="/how-to/2-port-valve-checkout-procedure/">2-port valve checkout</a>.</p>
+
+            <h2>Related</h2>
+            <ul>
+                <li><a href="/s-plan/">S Plan and S Plan Plus</a></li>
+                <li><a href="/how-to/2-port-valve-checkout-procedure/">2-port valve checkout procedure</a></li>
+                <li><a href="/priority-domestic-hot-water/">Priority domestic hot water</a></li>
+            </ul>
+            <p class="article-note">Guidance only. Isolate the supply before working on controls. Gas work in the UK stays with a Gas Safe registered engineer.</p>
+        </article>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
