@@ -19,7 +19,7 @@ Pages are static HTML. Each content page has a title, a description, a canonical
 - [Flue gas analysis](https://myboiler.com/fga/): Reference readings for Intergas ECO, Vaillant ecoTEC Plus, and Worcester Bosch Greenstar i.
 - [Shortcuts](https://myboiler.com/shortcuts/): Working links for boiler dashboards, Enphase, Google, and eBay.
 - [Calculators](https://myboiler.com/calculators/): Flow rate, gas rate, heat output, and system sizing.
-- [Quote](https://myboiler.com/quote/): Ask a Gas Safe registered engineer for a quote.
+- [Quote](https://myboiler.com/quote/): Request a quote; MyBoiler connects you with an independent Gas Safe registered engineer.
 - [Ask AI](https://myboiler.com/chat/): Boiler Help, for heating and hot water questions.
 - [Choosing a new combi boiler](https://myboiler.com/combi-boiler/choosing-a-new-combi-boiler/): Size from hot water and mains flow, then pick a brand the local engineer supports.
 - [New combi boiler](https://myboiler.com/combi-boiler/new-combi-boiler/): What a current condensing combi is, and what the install should include.
