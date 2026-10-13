@@ -21,6 +21,7 @@ Pages are static HTML. Each content page has a title, a description, a canonical
 - [Calculators](https://myboiler.com/calculators/): Flow rate, gas rate, heat output, and system sizing.
 - [Quote](https://myboiler.com/quote/): Request a quote; MyBoiler connects you with an independent Gas Safe registered engineer.
 - [Ask AI](https://myboiler.com/chat/): Boiler Help, for heating and hot water questions.
+- [Vaillant guarantee options](https://myboiler.com/vaillant/vaillant-guarantee-options/): Current UK lengths for ecoTEC, ecoFIT and aroTHERM, from Vaillant’s published tables.
 - [Choosing a new combi boiler](https://myboiler.com/combi-boiler/choosing-a-new-combi-boiler/): Size from hot water and mains flow, then pick a brand the local engineer supports.
 - [New combi boiler](https://myboiler.com/combi-boiler/new-combi-boiler/): What a current condensing combi is, and what the install should include.
 - [Air source heat pump installation](https://myboiler.com/heat-pumps/air-source-heat-pump-installation/): Survey, outdoor unit, cylinder, MCS, and the Boiler Upgrade Scheme (RHI is closed).
