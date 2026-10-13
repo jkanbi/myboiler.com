@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heat Pump Terminology - MyBoiler.com</title>
+    <meta name="description" content="COP, SPF, SCOP and system efficiency: what each heat-pump figure is, what it includes, and how the hub mixed the lab rating with a seasonal estimate.">
+    <link rel="canonical" href="https://myboiler.com/heat-pumps/terminology/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-kicker {
+            margin: 0 0 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .article-kicker a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-kicker a:hover {
+            text-decoration: underline;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 62ch;
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin: 0 0 0.4rem;
+            line-height: 1.6;
+        }
+
+        .article-dt {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 1.5rem 0 0.5rem;
+        }
+
+        .article-dt:first-child {
+            margin-top: 0;
+        }
+
+        .article-note {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+        }
+
+        .article-callout {
+            background: var(--bg);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 0 0 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .article-callout p {
+            margin: 0;
+        }
+
+        @media (max-width: 640px) {
+            .article-container {
+                padding: 1.25rem 16px 1.75rem;
+            }
+
+            .article-content {
+                padding: 1.25rem 1rem;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Heat Pump Terminology",
+  "url": "https://myboiler.com/heat-pumps/terminology/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MyBoiler.com",
+    "url": "https://myboiler.com/"
+  },
+  "description": "COP, SPF, SCOP and system efficiency: what each heat-pump figure is, what it includes, and how the hub mixed the lab rating with a seasonal estimate."
+}
+    </script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating &amp; Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <header class="article-header">
+            <p class="article-kicker"><a href="/advice/">Advice</a></p>
+            <h1 class="article-title">Heat pump terminology</h1>
+            <p class="article-intro">Four efficiency words that get used as if they were the same number. They are not. COP is a snapshot. SCOP is a lab seasonal rating. SPF is a seasonal figure for a system — on an MCS quote it is an estimate, in a monitored house it is a measurement.</p>
+        </header>
+
+        <article class="article-content">
+            <div class="article-callout">
+                <p>The hub page treated SPF as “actual, no external pumps” and SCOP as “the same thing plus external pumps, also called SPF (actual)”. That mix is not how MCS or EN 14825 use the words. The four headings below keep the hub’s terms and put the boundaries back.</p>
+            </div>
+
+            <h2>COP — coefficient of performance</h2>
+            <p>COP is heat delivered divided by electrical input at <strong>one test condition</strong>. It is a steady-state rating, not a year. The hub’s example is the usual shape: heat at about 45&nbsp;°C flow with about 7&nbsp;°C outside, divided by the electricity the unit is drawing at that point. Datasheets quote several COPs (A7/W35, A7/W55, and so on). A high COP at 35&nbsp;°C flow says nothing about the same machine at 55&nbsp;°C.</p>
+            <p>For running-cost comparisons you need a seasonal number, not a single COP. The <a href="/calculators/heat-pump-cop-breakeven-calculator/">COP breakeven calculator</a> is the unit-rate test against a gas boiler.</p>
+
+            <h2>SCOP — seasonal coefficient of performance</h2>
+            <p>SCOP is the <strong>calculated</strong> seasonal figure for the heat pump unit under BS EN 14825. MCS 007 (the product standard) defines it as the reference annual heating demand divided by the annual energy consumption for heating, for a designated climate zone — cold, average or warm. UK ErP labels use the average zone. It is a modelled kWh/kWh, not last winter’s meters.</p>
+            <p>The calculation uses part-load tests and includes some of the unit’s own electrical overheads in the standard (standby, crankcase heater, and the fans or pumps that belong to the appliance). It is not a survey of your radiators, your pipework, or your backup immersion. Fuel-driven heat pumps use an equivalent called SPER (seasonal primary energy ratio).</p>
+
+            <h2>SPF — seasonal performance factor</h2>
+            <p>MCS 031 (the pre-sale calculation for a hydronic install) uses SPF for the <strong>system over a season</strong>: heat delivered divided by the electrical energy consumed over that period. A guide figure of SPF 3 means 3&nbsp;kWh of heat per 1&nbsp;kWh of electricity over a standard year. On an MCS quote that SPF is <em>estimated</em> from heat loss and the product SCOP tables — it is not a promise of next year’s bill.</p>
+            <p>When someone has actually metered a house, SPF is also the name for that measured ratio. The SEPEMO paper MCS points at for hot-water products splits system boundaries (H1–H4): whether you count only the compressor and its controls, or also source pumps, backup heaters, and heating-circuit pumps. Always ask which boundary a measured SPF used. The hub’s “controller in, external pumps out” line is one possible boundary, not the definition of SPF.</p>
+
+            <h2>System efficiency</h2>
+            <p>This is the widest of the four. The hub had it as the complete system: the heat pump, ground collectors on a GSHP, fans, emitters, and controls. It is the number that moves when the radiators are too small, the flow temperature is too high, the cylinder coil is undersized, or the backup heater runs. SCOP on the box will not show that. Design and commissioning will.</p>
+
+            <h2>Which figure to read</h2>
+            <ul>
+                <li><strong>Comparing products</strong> — SCOP at the flow temperature you actually intend (MCS 007 lists SCOP at 1&nbsp;°C steps from 35&nbsp;°C to 65&nbsp;°C). Do not shop on a 35&nbsp;°C SCOP for a 55&nbsp;°C radiator job.</li>
+                <li><strong>A quote for this house</strong> — the MCS 031 SPF estimate, with the heat-loss and flow temperature written down.</li>
+                <li><strong>What it did last year</strong> — a measured SPF from a <a href="/heat-meter/">heat meter</a> and an electricity meter, with the boundary stated.</li>
+            </ul>
+
+            <h2>Related</h2>
+            <ul>
+                <li><a href="/heat-pumps/">Heat pumps</a></li>
+                <li><a href="/heat-pumps/air-source-heat-pumps/">Air source heat pumps</a></li>
+                <li><a href="/heat-pumps/air-source-heat-pump-installation/">Air source heat pump installation</a></li>
+                <li><a href="/calculators/heat-pump-cop-breakeven-calculator/">Heat pump COP breakeven calculator</a></li>
+                <li><a href="/heat-meter/">Heat meters</a></li>
+                <li><a href="/bus-grant-scheme-for-installers/">BUS grant scheme for installers</a></li>
+            </ul>
+            <p class="article-note">Guidance only. COP, SCOP and SPF wording checked against public MCS 007 v8 and MCS 031-a (2025) and the scope of BS EN 14825. Product tables and climate bins move — use the live MCS product listing for a certificate figure. This is not a design or a running-cost guarantee.</p>
+        </article>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
