@@ -50,8 +50,6 @@
             box-shadow: var(--shadow-sm);
             padding: clamp(1.5rem, 4vw, 3rem);
             margin-bottom: 2rem;
-            overflow-wrap: anywhere;
-            word-break: break-word;
         }
 
         .article-content p {
@@ -507,7 +505,7 @@
             <h3>Status light</h3>
             <p>Both single and dual channel receivers have a Status light:</p>
             <div class="article-table-wrap">
-            <table>
+            <table class="hive-led-table">
                 <thead>
                     <tr>
                         <th>Light</th>
@@ -519,8 +517,8 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Status</td>
-                        <td>
+                        <td data-label="Light">Status</td>
+                        <td data-label="Indicator">
                             <div class="hive-light">
                                 <div class="hive-light__item">
                                     <span class="hive-light__led hive-light__led--pink hive-light__led--flash" aria-hidden="true"></span>
@@ -528,13 +526,13 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Flashing</td>
-                        <td>Pink / White</td>
-                        <td>Standalone pairing. The receiver is searching for a thermostat only (no app/hub). This is the light you want for this guide.</td>
+                        <td data-label="Pattern">Flashing</td>
+                        <td data-label="Colour">Pink / White</td>
+                        <td data-label="Meaning">Standalone pairing. The receiver is searching for a thermostat only (no app/hub). This is the light you want for this guide.</td>
                     </tr>
                     <tr>
-                        <td>Status</td>
-                        <td>
+                        <td data-label="Light">Status</td>
+                        <td data-label="Indicator">
                             <div class="hive-light">
                                 <div class="hive-light__item">
                                     <span class="hive-light__led hive-light__led--white" aria-hidden="true"></span>
@@ -542,13 +540,13 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Solid</td>
-                        <td>Pink / White</td>
-                        <td>Standalone search has timed out (about 40 minutes). Power-cycle the isolation switch/fuse spur so the light flashes pink/white again.</td>
+                        <td data-label="Pattern">Solid</td>
+                        <td data-label="Colour">Pink / White</td>
+                        <td data-label="Meaning">Standalone search has timed out (about 40 minutes). Power-cycle the isolation switch/fuse spur so the light flashes pink/white again.</td>
                     </tr>
                     <tr>
-                        <td>Status</td>
-                        <td>
+                        <td data-label="Light">Status</td>
+                        <td data-label="Indicator">
                             <div class="hive-light">
                                 <div class="hive-light__item">
                                     <span class="hive-light__led hive-light__led--green" aria-hidden="true"></span>
@@ -556,13 +554,13 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Solid</td>
-                        <td>Green</td>
-                        <td>Paired and operating. After standalone pairing, Hive says this light turns green when ‘Search’ disappears from the thermostat.</td>
+                        <td data-label="Pattern">Solid</td>
+                        <td data-label="Colour">Green</td>
+                        <td data-label="Meaning">Paired and operating. After standalone pairing, Hive says this light turns green when ‘Search’ disappears from the thermostat.</td>
                     </tr>
                     <tr>
-                        <td>Status</td>
-                        <td>
+                        <td data-label="Light">Status</td>
+                        <td data-label="Indicator">
                             <div class="hive-light">
                                 <div class="hive-light__item">
                                     <span class="hive-light__led hive-light__led--blue" aria-hidden="true"></span>
@@ -570,13 +568,13 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Solid</td>
-                        <td>Blue</td>
-                        <td>Gravity-fed mode. Hive says the receiver flashes blue for 3 seconds, then goes solid blue.</td>
+                        <td data-label="Pattern">Solid</td>
+                        <td data-label="Colour">Blue</td>
+                        <td data-label="Meaning">Gravity-fed mode. Hive says the receiver flashes blue for 3 seconds, then goes solid blue.</td>
                     </tr>
                     <tr>
-                        <td>Status</td>
-                        <td>
+                        <td data-label="Light">Status</td>
+                        <td data-label="Indicator">
                             <div class="hive-light">
                                 <div class="hive-light__item">
                                     <span class="hive-light__led hive-light__led--amber hive-light__led--flash-double" aria-hidden="true"></span>
@@ -584,13 +582,13 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Double flashing</td>
-                        <td>Amber</td>
-                        <td>Hub / app pairing — not standalone. Release and hold Central Heating again until the light is a single pink/white flash.</td>
+                        <td data-label="Pattern">Double flashing</td>
+                        <td data-label="Colour">Amber</td>
+                        <td data-label="Meaning">Hub / app pairing — not standalone. Release and hold Central Heating again until the light is a single pink/white flash.</td>
                     </tr>
                     <tr>
-                        <td>Status</td>
-                        <td>
+                        <td data-label="Light">Status</td>
+                        <td data-label="Indicator">
                             <div class="hive-light">
                                 <div class="hive-light__item">
                                     <span class="hive-light__led hive-light__led--amber hive-light__led--flash" aria-hidden="true"></span>
@@ -598,13 +596,13 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Flashing</td>
-                        <td>Amber</td>
-                        <td>The receiver has found the hub and is ready to pair with the thermostat. This is connected (online) mode, not standalone.</td>
+                        <td data-label="Pattern">Flashing</td>
+                        <td data-label="Colour">Amber</td>
+                        <td data-label="Meaning">The receiver has found the hub and is ready to pair with the thermostat. This is connected (online) mode, not standalone.</td>
                     </tr>
                     <tr>
-                        <td>Status</td>
-                        <td>
+                        <td data-label="Light">Status</td>
+                        <td data-label="Indicator">
                             <div class="hive-light">
                                 <div class="hive-light__item">
                                     <span class="hive-light__led hive-light__led--red" aria-hidden="true"></span>
@@ -612,9 +610,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Solid</td>
-                        <td>Red</td>
-                        <td>The receiver has lost its wireless connection to the thermostat. Heating and hot water default to off, but can be switched on with the receiver buttons (hot water only on dual channel).</td>
+                        <td data-label="Pattern">Solid</td>
+                        <td data-label="Colour">Red</td>
+                        <td data-label="Meaning">The receiver has lost its wireless connection to the thermostat. Heating and hot water default to off, but can be switched on with the receiver buttons (hot water only on dual channel).</td>
                     </tr>
                 </tbody>
             </table>
@@ -622,7 +620,7 @@
 
             <h3>Central heating &amp; Hot water lights</h3>
             <div class="article-table-wrap">
-            <table>
+            <table class="hive-led-table">
                 <thead>
                     <tr>
                         <th>Light</th>
@@ -634,8 +632,8 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Central heating<br><small>Single &amp; dual channel</small></td>
-                        <td>
+                        <td data-label="Light">Central heating<br><small>Single &amp; dual channel</small></td>
+                        <td data-label="Indicator">
                             <div class="hive-light">
                                 <div class="hive-light__item">
                                     <span class="hive-light__led hive-light__led--green" aria-hidden="true"></span>
@@ -643,13 +641,13 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Solid</td>
-                        <td>Green</td>
-                        <td>Heating is on. Hive’s test step: this light turns green when the target temperature is above room temperature.</td>
+                        <td data-label="Pattern">Solid</td>
+                        <td data-label="Colour">Green</td>
+                        <td data-label="Meaning">Heating is on. Hive’s test step: this light turns green when the target temperature is above room temperature.</td>
                     </tr>
                     <tr>
-                        <td>Hot water<br><small>Dual channel only</small></td>
-                        <td>
+                        <td data-label="Light">Hot water<br><small>Dual channel only</small></td>
+                        <td data-label="Indicator">
                             <div class="hive-light">
                                 <div class="hive-light__item">
                                     <span class="hive-light__led hive-light__led--off" aria-hidden="true"></span>
@@ -661,9 +659,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Solid</td>
-                        <td>Green</td>
-                        <td>Hot water is on. This light is only present on dual channel receivers.</td>
+                        <td data-label="Pattern">Solid</td>
+                        <td data-label="Colour">Green</td>
+                        <td data-label="Meaning">Hot water is on. This light is only present on dual channel receivers.</td>
                     </tr>
                 </tbody>
             </table>
