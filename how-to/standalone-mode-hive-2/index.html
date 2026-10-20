@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How To Setup Hive 2 Standalone Mode - MyBoiler Hub</title>
-    <meta name="description" content="Step-by-step guide to place your Hive 2 Thermostat and Receiver into standalone mode without using the Hive App and Hub.">
+    <title>How to Set Hive 2 Standalone Mode - MyBoiler Hub</title>
+    <meta name="description" content="Official Hive 2 standalone mode steps: pair the thermostat and receiver without the hub or app. Button, LED and factory-reset wording from Hive support, plus troubleshooting and FAQ.">
     <link rel="canonical" href="https://myboiler.com/how-to/standalone-mode-hive-2/">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <style>
@@ -18,18 +18,18 @@
         .article-container {
             flex: 1;
             padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             width: 100%;
             box-sizing: border-box;
         }
 
-.article-header {
-            margin-bottom: 2rem;
+        .article-header {
+            margin-bottom: 2.5rem;
         }
 
         .article-title {
-            font-size: clamp(1.85rem, 5vw, 2.5rem);
+            font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 700;
             line-height: 1.1;
             color: var(--text);
@@ -37,13 +37,28 @@
             letter-spacing: -0.02em;
         }
 
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+        }
+
         .article-content {
             background: var(--surface);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-sm);
-            padding: clamp(1.5rem, 4vw, 2.5rem);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
+
+        .article-content p {
+            font-size: 1rem;
             line-height: 1.7;
             color: var(--text);
+            margin: 0 0 1.25rem;
         }
 
         .article-content h2 {
@@ -51,27 +66,32 @@
             font-weight: 700;
             color: var(--text);
             margin: 2rem 0 1rem;
-            line-height: 1.2;
         }
 
         .article-content h3 {
             font-size: 1.25rem;
             font-weight: 600;
             color: var(--text);
-            margin: 1.5rem 0 0.75rem;
-            line-height: 1.3;
+            margin: 1.5rem 0 1rem;
         }
 
-        .article-content p {
-            margin: 0 0 1rem;
+        .article-content h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.25rem 0 0.75rem;
         }
 
-        .article-content ul, .article-content ol {
-            margin: 0 0 1rem;
+        .article-content ul,
+        .article-content ol {
+            margin: 1rem 0 1.25rem;
             padding-left: 1.5rem;
         }
 
         .article-content li {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
             margin-bottom: 0.5rem;
         }
 
@@ -89,18 +109,81 @@
             text-decoration: underline;
         }
 
-        @media (max-width: 768px) {
-            .article-content {
-                padding: 1.5rem;
-            }
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+            font-size: 0.9rem;
         }
-    
+
+        .article-content table th,
+        .article-content table td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+
+        .article-content table th {
+            background: var(--bg-subtle);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .article-content table tr:nth-child(even) {
+            background: var(--bg-subtle);
+        }
+
         .article-content img {
             display: block;
-            max-width: min(100%, 720px);
+            max-width: min(100%, 420px);
             height: auto;
             margin: 1rem auto 1.5rem;
             border-radius: var(--radius);
+        }
+
+        .hive-receiver-pair {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.25rem 1.75rem;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .hive-receiver-pair figure {
+            margin: 0;
+            text-align: center;
+            max-width: 215px;
+        }
+
+        .hive-receiver-pair img {
+            margin: 0 auto 0.5rem;
+            max-width: 100%;
+            width: 215px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .hive-receiver-pair figcaption {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.35;
+        }
+
+        .article-content figure {
+            margin: 1rem 0 1.5rem;
+            text-align: center;
+        }
+
+        .article-content figure img {
+            margin: 0 auto 0.5rem;
+        }
+
+        .article-content figcaption {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            max-width: 36rem;
+            margin: 0 auto;
         }
 
         .article-video {
@@ -111,6 +194,7 @@
             background: var(--surface);
             box-shadow: var(--shadow-sm);
         }
+
         .article-video iframe {
             display: block;
             width: 100%;
@@ -119,30 +203,209 @@
             border: 0;
         }
 
-        .article-resource {
-            display: block;
-            margin: 0.75rem 0 1.25rem;
+        .hive-light {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
         }
 
+        .hive-light__item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .hive-light__label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            line-height: 1.1;
+            white-space: nowrap;
+        }
+
+        .hive-light__led {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            box-shadow: inset 0 -1px 2px rgba(0, 0, 0, 0.25), 0 0 10px currentColor;
+            background: currentColor;
+        }
+
+        .hive-light__led--green { color: #22c55e; }
+        .hive-light__led--amber { color: #f59e0b; }
+        .hive-light__led--red { color: #ef4444; }
+        .hive-light__led--blue { color: #3b82f6; }
+        .hive-light__led--pink { color: #ec4899; }
+        .hive-light__led--white {
+            color: #f3f4f6;
+            box-shadow: inset 0 -1px 2px rgba(0, 0, 0, 0.15), 0 0 8px rgba(255, 255, 255, 0.8);
+            border: 1px solid #d1d5db;
+        }
+        .hive-light__led--off {
+            color: transparent;
+            background: #d1d5db;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+            border: 1px solid #9ca3af;
+        }
+
+        .hive-light__led--flash {
+            animation: hive-light-flash 1s ease-in-out infinite;
+        }
+
+        .hive-light__led--flash-double {
+            animation: hive-light-flash-double 1.2s ease-in-out infinite;
+        }
+
+        @keyframes hive-light-flash {
+            0%, 100% { opacity: 1; filter: brightness(1.15); }
+            50% { opacity: 0.2; filter: brightness(0.6); }
+        }
+
+        @keyframes hive-light-flash-double {
+            0%, 15% { opacity: 1; filter: brightness(1.15); }
+            20%, 35% { opacity: 0.15; filter: brightness(0.5); }
+            40%, 55% { opacity: 1; filter: brightness(1.15); }
+            60%, 100% { opacity: 0.15; filter: brightness(0.5); }
+        }
+
+        .article-sources li {
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
+
+        @media (max-width: 768px) {
+            .article-content {
+                padding: 1.5rem;
+            }
+        }
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "How To Setup Hive 2 Standalone Mode",
-  "url": "https://myboiler.com/how-to/standalone-mode-hive-2/",
-  "isPartOf": {
-    "@type": "WebSite",
-    "name": "MyBoiler.com",
-    "url": "https://myboiler.com/"
-  },
-  "description": "Step-by-step guide to place your Hive 2 Thermostat and Receiver into standalone mode without using the Hive App and Hub."
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": "How to Set Hive 2 Standalone Mode",
+      "url": "https://myboiler.com/how-to/standalone-mode-hive-2/",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "MyBoiler.com",
+        "url": "https://myboiler.com/"
+      },
+      "description": "Official Hive 2 standalone mode steps: pair the thermostat and receiver without the hub or app. Button, LED and factory-reset wording from Hive support, plus troubleshooting and FAQ."
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to pair Hive Thermostat 2 and the receiver in standalone mode",
+      "description": "Hive's official Hive Thermostat 2 steps for pairing the thermostat and receiver in standalone mode, without the Hive Hub or app.",
+      "url": "https://myboiler.com/how-to/standalone-mode-hive-2/",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Switch the boiler off at the isolation switch/fuse spur",
+          "text": "Switch the boiler off at the isolation switch/fuse spur (this should be located near your Hive Receiver next to your boiler). All the lights on the receiver will then go out."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Factory reset the thermostat",
+          "text": "Press and hold the back arrow (button 8 on Hive’s diagram) and the menu button (button 7 on Hive’s diagram) on the thermostat at the same time. These are the bottom left backwards-arrow icon and the bottom middle menu button (3 dots and 3 lines). Keep these held down together until the countdown to factory reset finishes and the thermostat display says ‘Welcome to Hive’."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Remove a battery",
+          "text": "Remove a battery from the thermostat."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Switch the boiler back on",
+          "text": "Switch the boiler back on at the isolation switch/fuse spur."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Place the receiver into standalone pairing mode",
+          "text": "Hold the central heating button down on the receiver until the status light is flashing pink/white, then release the button. If the receiver is left searching for 40 minutes or more, the top right light will change to a solid pink/white. Switch the isolation switch/fuse spur off and on again so the status light is flashing pink/white."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 6,
+          "name": "Put the battery back into the thermostat",
+          "text": "Put the battery back in the thermostat. The thermostat should display the ‘Welcome, searching’ message again. When you see the word ‘Search’ disappear from the screen, the receiver status light will turn green. The thermostat will then finish pairing and rest on the inside temperature screen."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 7,
+          "name": "Test and confirm that your boiler fires",
+          "text": "Turn the target temperature on the thermostat above the ambient room temperature. The status and central heating lights on the receiver should turn green, and the boiler should fire and start heating your home."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Hive standalone mode?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standalone mode lets the Hive thermostat and receiver operate independently of the Hive Hub. The thermostat communicates directly with the receiver, so heating can still work if the hub, app or network is unavailable. You control heating from the thermostat only — not from the Hive app."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which buttons do I press on a Hive 2 thermostat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Press and hold the back arrow (button 8 on Hive’s diagram) and the menu button (button 7 on Hive’s diagram) at the same time. Hive’s numbered thermostat diagram labels 8 as the Back button and 7 as the Menu button. Keep them held until the factory-reset countdown finishes and the display says ‘Welcome to Hive’."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to unplug the Hive Hub?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hive’s Hive Thermostat 2 standalone steps do not include unplugging the hub. Standalone pairing is set on the receiver: hold the central heating button until the status light is flashing pink/white. If the light flashes amber or orange (hub/app pairing), release and hold the central heating button again until it is a single pink/white flash."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if the receiver status light goes solid pink/white?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hive says that if the receiver is left searching for 40 minutes or more, the top right status light changes to solid pink/white and has timed out. Switch the isolation switch/fuse spur off and on again and check that the status light is flashing pink/white before pairing the thermostat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why will the boiler not fire with a dual channel receiver?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hive notes that on a dual channel receiver and a conventional, gravity-fed or part-pumped boiler, hot water may need to be on at the same time as heating. Put the receiver into gravity-fed mode: switch the boiler off, wait at least 5 seconds, switch it back on, then press and hold the hot water button for at least 10 seconds until the status light turns blue."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I go back to Hive app and hub control?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standalone mode does not use the Hive app. To pair the receiver with the hub instead, follow the Hive 2 hub/app pairing guide: hold the central heating button until the status light double-flashes amber, then complete pairing in the Hive app."
+          }
+        }
+      ]
+    }
+  ]
 }
     </script>
 </head>
 <body class="article-page">
-    <!-- Header -->
+    <!-- Header with full navigation -->
     <div class="menu-overlay"></div>
     <div class="nav-mega-backdrop" aria-hidden="true"></div>
     <header class="header">
@@ -164,37 +427,334 @@
 
     <!-- Article Content -->
     <div class="article-container">
-<header class="article-header">
-            <h1 class="article-title">How To – Standalone Mode Hive 2</h1>
+        <header class="article-header">
+            <h1 class="article-title">How to Set Hive 2 Standalone Mode</h1>
+            <p class="article-intro">
+                Step-by-step guide to pairing your Hive 2 thermostat and receiver in standalone mode, so you can control heating without the Hive Hub or app. Button names and light colours follow Hive’s official support wording.
+            </p>
         </header>
 
         <article class="article-content">
-            <img src="/how-to/standalone-mode-hive-2/images/hive-single-channel-receiver.jpg" alt="Hive Single Channel Receiver" loading="lazy">
+            <h2>Before You Start</h2>
+            <p>Standalone mode lets the Hive thermostat talk directly to the receiver. Hive’s support pages say this is useful if you have connectivity issues, or if you need to control the heating without relying on the Hub. In this mode the thermostat works on the thermostat only — it will not function via the Hive app.</p>
+            <p>Need the hub and app instead? See <a href="/how-to/pair-up-the-devices-hive-2/">how to pair/re-pair Hive 2 heating devices</a>. Hive 1 uses different thermostat buttons — see <a href="/how-to-pair-up-the-devices-hive-1/">pair up the devices – Hive 1</a>.</p>
+            <p>Hive’s Hive Thermostat 2 standalone steps include a factory reset. That clears the thermostat’s local settings and any schedule stored on it.</p>
 
-            <img src="/how-to/standalone-mode-hive-2/images/hive.png" alt="Hive" loading="lazy">
-
-            <p>Following is the sequence to place the Hive Thermostat and Receiver into standalone mode should you decide that you do not wish to use the Hive App and the Hive Hub or in the event the homeowner is not available.</p>
-
-            <h3>Instructions</h3>
-            <ol>
-                <li>Go to your boiler and locate the following – (a) The boiler's isolation switch: This is just a switch near the boiler that allows you to shut down the boiler. (b) The Hive Receiver: This should be mounted on the wall close to the boiler.</li>
-                <li>Turn the boiler / heating systems isolation switch off for a few seconds then switch back on</li>
-                <li>Press AND HOLD the Central Heating button until the STATUS light flashes pink</li>
-                <li>Go to the hub and unplug it from the mains and from your broadband router (ignore this step if there is no hub)</li>
-                <li>Go to the thermostat and press AND HOLD the menu (middle/ 'button 7') and back (left / 'button 8') buttons. Keep pressing these until the countdown finishes and you see the word "searching" appear on the display.</li>
-            </ol>
-                    <h2>Video</h2>
             <div class="article-video">
                 <iframe
                     src="https://www.youtube.com/embed/IkrFVTKTtkw"
-                    title="YouTube video IkrFVTKTtkw"
+                    title="Hive 2 standalone mode"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
                     loading="lazy"
 ></iframe>
             </div>
-</article>
+
+            <h2>What You'll Need</h2>
+            <ul>
+                <li>Hive 2 thermostat (Hive Thermostat 2)</li>
+                <li>Hive Receiver (installed and powered from the boiler isolation switch / fuse spur)</li>
+                <li>The thermostat batteries, including one you can take out and put back during pairing</li>
+            </ul>
+            <p>You do not need the Hive app or a working hub for standalone mode. Hive’s Hive Thermostat 2 standalone steps do not ask you to unplug the hub. If the receiver status light flashes amber or orange, that is hub/app pairing — hold the Central Heating button again until it flashes pink/white.</p>
+
+            <div class="hive-receiver-pair">
+                <figure>
+                    <img src="/how-to/pair-up-the-devices-hive-2/images/hive-single-channel-receiver.png" alt="Hive single channel receiver" width="215" height="215" loading="lazy">
+                    <figcaption>Single channel — Status + Central heating (combi)</figcaption>
+                </figure>
+                <figure>
+                    <img src="/how-to/pair-up-the-devices-hive-2/images/hive-dual-channel-receiver.png" alt="Hive dual channel receiver" width="215" height="215" loading="lazy">
+                    <figcaption>Dual channel — adds Hot water (conventional)</figcaption>
+                </figure>
+            </div>
+
+            <h2>Standalone pairing process (Hive Thermostat 2)</h2>
+            <p>These seven steps are Hive’s official <a href="https://support.hivehome.com/portal/app/portlets/results/viewsolution.jsp?solutionid=250103102513180" rel="noopener noreferrer" target="_blank">Standalone Mode for Hive Thermostats</a> wording for Hive Thermostat 2. The isolation switch / fuse spur should be near the Hive Receiver, next to the boiler.</p>
+
+            <h3>Step 1: Isolation switch / fuse spur</h3>
+            <p>Switch the boiler off at the isolation switch/fuse spur. All the lights on the receiver will then go out.</p>
+
+            <h3>Step 2: Factory reset the thermostat</h3>
+            <p>Press and hold the <strong>back arrow (button 8 on Hive’s diagram)</strong> and the <strong>menu button (button 7 on Hive’s diagram)</strong> at the same time. On the thermostat those are the bottom-left backwards-arrow icon and the bottom-middle menu button (3 dots &amp; 3 lines). Keep them held down together until the countdown to factory reset finishes and the thermostat display says <strong>‘Welcome to Hive’</strong>.</p>
+
+            <figure>
+                <img src="/how-to/standalone-mode-hive-2/images/hive.png" alt="Hive Thermostat 2 diagram: button 8 is the back arrow (bottom left), button 7 is the menu button (bottom middle)" width="361" height="340" loading="lazy">
+                <figcaption>Hive’s Thermostat 2 diagram: <strong>8</strong> is the Back button (backwards arrow), <strong>7</strong> is the Menu button. Hold 8 and 7 together to factory-reset.</figcaption>
+            </figure>
+
+            <h3>Step 3: Remove battery</h3>
+            <p>Remove a battery from the thermostat.</p>
+
+            <h3>Step 4: Switch the boiler back on</h3>
+            <p>Switch the boiler back on at the isolation switch/fuse spur.</p>
+
+            <h3>Step 5: Place the receiver into standalone pairing mode</h3>
+            <p>Hold the <strong>central heating</strong> button down on the receiver until the status light is <strong>flashing pink/white</strong>, then release the button.</p>
+            <p>If the receiver is left searching for 40 minutes or more, the top right light will change to a <strong>solid pink/white</strong>, which means it has timed out. To get the receiver to search again, switch the isolation switch/fuse spur off and on again and check that the status light on the top right is flashing pink/white.</p>
+            <p>Hive’s reconnect article also says: if the status light flashes orange, release and press again until it changes to a single flashing pink. Amber / orange is hub pairing, not standalone.</p>
+
+            <h3>Step 6: Place the battery back into the thermostat</h3>
+            <p>Put the battery back in the thermostat. The thermostat should display the <strong>‘Welcome, searching’</strong> message again. When you see the word <strong>‘Search’</strong> disappear from the screen, the receiver status light will turn <strong>green</strong>. The thermostat will then finish pairing and rest on the inside temperature screen.</p>
+
+            <h3>Step 7: Test and confirm that your boiler fires</h3>
+            <p>Turn the target temperature on the thermostat above the ambient room temperature. You should then see that the <strong>status</strong> and <strong>central heating</strong> lights on the receiver have turned green. At this point you should also hear the boiler fire up and start heating your home.</p>
+            <p>Hive’s note: if you have a dual channel receiver and a conventional boiler, you may have to put the receiver into <a href="https://support.hivehome.com/portal/app/portlets/results/viewsolution.jsp?solutionid=250320155222590" rel="noopener noreferrer" target="_blank">gravity-fed mode</a> for the heating to come on. On gravity-fed or part-pumped boilers the hot water needs to be on at the same time for the heating to function.</p>
+
+            <h2>Hive Receiver Light Indicators</h2>
+            <p>The receiver has lights on its front panel to show what it’s doing. A <strong>single channel</strong> receiver has two lights — <strong>Status</strong> and <strong>Central heating</strong>. A <strong>dual channel</strong> receiver has an additional <strong>Hot water</strong> light. Hive describes standalone search as a <strong>single pink/white flash</strong> on the top-right status light.</p>
+
+            <h3>Status light</h3>
+            <p>Both single and dual channel receivers have a Status light:</p>
+            <div class="article-table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Light</th>
+                        <th>Indicator</th>
+                        <th>Pattern</th>
+                        <th>Colour</th>
+                        <th>Meaning</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--pink hive-light__led--flash" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Status</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Flashing</td>
+                        <td>Pink / White</td>
+                        <td>Standalone pairing. The receiver is searching for a thermostat only (no app/hub). This is the light you want for this guide.</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--white" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Status</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Solid</td>
+                        <td>Pink / White</td>
+                        <td>Standalone search has timed out (about 40 minutes). Power-cycle the isolation switch/fuse spur so the light flashes pink/white again.</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--green" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Status</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Solid</td>
+                        <td>Green</td>
+                        <td>Paired and operating. After standalone pairing, Hive says this light turns green when ‘Search’ disappears from the thermostat.</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--blue" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Status</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Solid</td>
+                        <td>Blue</td>
+                        <td>Gravity-fed mode. Hive says the receiver flashes blue for 3 seconds, then goes solid blue.</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--amber hive-light__led--flash-double" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Status</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Double flashing</td>
+                        <td>Amber</td>
+                        <td>Hub / app pairing — not standalone. Release and hold Central Heating again until the light is a single pink/white flash.</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--amber hive-light__led--flash" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Status</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Flashing</td>
+                        <td>Amber</td>
+                        <td>The receiver has found the hub and is ready to pair with the thermostat. This is connected (online) mode, not standalone.</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--red" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Status</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Solid</td>
+                        <td>Red</td>
+                        <td>The receiver has lost its wireless connection to the thermostat. Heating and hot water default to off, but can be switched on with the receiver buttons (hot water only on dual channel).</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <h3>Central heating &amp; Hot water lights</h3>
+            <div class="article-table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Light</th>
+                        <th>Indicator</th>
+                        <th>Pattern</th>
+                        <th>Colour</th>
+                        <th>Meaning</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Central heating<br><small>Single &amp; dual channel</small></td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--green" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Heating</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Solid</td>
+                        <td>Green</td>
+                        <td>Heating is on. Hive’s test step: this light turns green when the target temperature is above room temperature.</td>
+                    </tr>
+                    <tr>
+                        <td>Hot water<br><small>Dual channel only</small></td>
+                        <td>
+                            <div class="hive-light">
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--off" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Heating</span>
+                                </div>
+                                <div class="hive-light__item">
+                                    <span class="hive-light__led hive-light__led--green" aria-hidden="true"></span>
+                                    <span class="hive-light__label">Hot water</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Solid</td>
+                        <td>Green</td>
+                        <td>Hot water is on. This light is only present on dual channel receivers.</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <h2>Troubleshooting Standalone Issues</h2>
+
+            <h3>Devices won't pair</h3>
+            <ul>
+                <li><strong>Wrong pairing colour:</strong> Flashing amber / orange is hub mode. Hold Central Heating again until the status light is a single flashing pink/white.</li>
+                <li><strong>Search timed out:</strong> Solid pink/white after about 40 minutes. Power-cycle the isolation switch/fuse spur and confirm a pink/white flash before you put the battery back.</li>
+                <li><strong>Thermostat screen is not ‘Welcome, searching’:</strong> Hive’s reconnect article says to repeat the factory reset if anything else appears. Press and hold the back arrow (button 8 on Hive’s diagram) and the menu button (button 7 on Hive’s diagram) until the screen shows ‘factory reset’ and counts down from 10 to 0. Release when ‘welcome’ appears.</li>
+                <li><strong>Take the thermostat to the receiver:</strong> Hive’s reconnect steps say to press the tab underneath the Hive 2 thermostat, take out one battery, and take the thermostat to the receiver near the boiler or hot water tank.</li>
+            </ul>
+
+            <h3>Already in standalone — reconnect the thermostat</h3>
+            <p>If the devices were already in standalone mode and have lost each other, Hive’s <a href="https://support.hivehome.com/portal/app/portlets/results/viewsolution.jsp?solutionid=022434009313539" rel="noopener noreferrer" target="_blank">Standalone: Re-connecting Your Hive 2 Thermostat to the Receiver</a> sequence is:</p>
+            <ol>
+                <li>Press the tab underneath the thermostat to remove it from the wall, and take out one battery.</li>
+                <li>Take the thermostat to the receiver.</li>
+                <li>Turn the boiler off at the mains isolation switch (the lights will go out), then turn it back on.</li>
+                <li>Press and hold the central heating button (bottom right) until the status light (top right) changes to single flashing pink. If it flashes orange, release and press again until it is single flashing pink.</li>
+                <li>Reinsert the battery. Press and hold the back arrow (button 8 on Hive’s diagram) and the menu button (button 7 on Hive’s diagram) until the screen shows ‘factory reset’ and counts down from 10 to 0. Release when ‘welcome’ appears. The thermostat will then display ‘searching’ with a timer.</li>
+                <li>If anything else appears on the thermostat screen, repeat the factory reset.</li>
+                <li>When found, the receiver’s status light (top right) will turn solid green, and the thermostat will display ‘let’s take a tour’.</li>
+                <li>Raise the target temperature above the room temperature to test the boiler.</li>
+            </ol>
+
+            <h3>Power-cycle first</h3>
+            <p>If you only need to wake an already-paired standalone system, Hive’s <a href="https://support.hivehome.com/portal/app/portlets/results/viewsolution.jsp?solutionid=022434009263431" rel="noopener noreferrer" target="_blank">Standalone: Power Cycle the Hive 2 Thermostat and Hive Receiver</a> steps are: switch the boiler off; remove the thermostat from the wall (tab underneath) and take it to the boiler; remove one battery; switch the boiler back on; put the battery back; put the thermostat back on the wall; turn the dial and press it in to raise the target temperature above room temperature. Success is the boiler firing and the central heating light turning green.</p>
+
+            <h3>Gravity-fed / part-pumped systems</h3>
+            <p>From Hive’s <a href="https://support.hivehome.com/portal/app/portlets/results/viewsolution.jsp?solutionid=250320155222590" rel="noopener noreferrer" target="_blank">Gravity-Fed Mode for Hive Thermostats</a> page:</p>
+            <ol>
+                <li>Switch off the boiler using the isolation switch.</li>
+                <li>Wait at least 5 seconds, then switch the isolation switch back on.</li>
+                <li>Press and hold the <strong>hot water</strong> button on the receiver for at least 10 seconds until the status light turns blue.</li>
+                <li>The receiver will flash blue for 3 seconds, then go solid blue to indicate it is in gravity-fed mode.</li>
+            </ol>
+            <p>In gravity-fed mode you can call for hot water only, but calling for heating will also turn on the hot water to fire the boiler.</p>
+
+            <h3>Thermostat not working — use the receiver buttons</h3>
+            <p>Hive’s <a href="https://support.hivehome.com/portal/app/portlets/results/viewsolution.jsp?solutionid=260203152901110" rel="noopener noreferrer" target="_blank">stay in control</a> article says you can still run heating from the receiver: press the button under the flame icon — the light at that button turns green when Hive has asked the boiler to turn heating on. On a dual channel receiver, press the button under the tap icon for hot water.</p>
+
+            <h2>Frequently asked questions</h2>
+
+            <h3>What is Hive standalone mode?</h3>
+            <p>Standalone mode allows your Hive thermostat and receiver to operate independently of the Hive Hub. The thermostat communicates directly with the receiver, so heating can still function if there are network problems or the Hub is unavailable.</p>
+
+            <h3>Can I still use the Hive app?</h3>
+            <p>No. Hive says that if you pair in standalone mode, the thermostat will work via the thermostat only and will not function via the Hive app. To use the app again, <a href="/how-to/pair-up-the-devices-hive-2/">pair the devices with the hub</a> (status light double-flashing amber, then the app).</p>
+
+            <h3>Do I need to unplug the Hive Hub?</h3>
+            <p>No. That step was on the old version of this page and is not in Hive’s Hive Thermostat 2 standalone instructions. Get the receiver onto a flashing pink/white status light. If it flashes amber or orange, hold Central Heating again until it is pink/white.</p>
+
+            <h3>Which buttons do I press on Hive 2?</h3>
+            <p>Hold the <strong>back arrow (button 8 on Hive’s diagram)</strong> and the <strong>menu button (button 7 on Hive’s diagram)</strong> together. Hive’s numbered Thermostat 2 diagram — the same labelled drawing on this page — marks <strong>8</strong> as the Back button and <strong>7</strong> as the Menu button. Hive Thermostat Mini uses the down arrow and the menu ‘O’ icon instead — see the same official standalone article for Mini wording.</p>
+
+            <h3>What if the status light is solid pink/white?</h3>
+            <p>The receiver has timed out of standalone search after about 40 minutes. Switch the isolation switch/fuse spur off and on again so the top-right status light is flashing pink/white, then put the battery back in the thermostat.</p>
+
+            <h3>How do I go back to hub and app control?</h3>
+            <p>Follow <a href="/how-to/pair-up-the-devices-hive-2/">How to Pair/Re-pair Hive 2 Heating Devices</a> and Hive’s <a href="https://support.hivehome.com/portal/app/portlets/results/viewsolution.jsp?solutionid=250725132342947" rel="noopener noreferrer" target="_blank">Step-by-Step Guide to Reconnecting Your Hive Heating Devices</a>: hold Central Heating until the status light <strong>double-flashes amber</strong>, then pair through the app.</p>
+
+            <h2>Official Hive sources</h2>
+            <p>Button sequences and light colours on this page follow these Hive support articles. Button numbers 7 and 8 are from Hive’s official Thermostat 2 diagram (Menu = 7, Back = 8). If Hive updates the wording, use their pages.</p>
+            <ul class="article-sources">
+                <li><a href="https://assets.ctfassets.net/mijf9lz5yt3u/4qZVCrltZDWqGMmpi6CwfM/1f3ae4e9ee96c4834a8521eb21929e82/Hive_Active_Heating_2_Wireless_Thermostat_User_Guide.pdf" rel="noopener noreferrer" target="_blank">Hive Active Heating 2 Wireless Thermostat User Guide</a> — numbered diagram: 7 Menu button, 8 Back button</li>
+                <li><a href="https://support.hivehome.com/portal/app/portlets/results/viewsolution.jsp?solutionid=250103102513180" rel="noopener noreferrer" target="_blank">Standalone Mode for Hive Thermostats</a> — Hive Thermostat 2 pairing steps used above</li>
+                <li><a href="https://support.hivehome.com/portal/app/portlets/results/viewsolution.jsp?solutionid=022434009313539" rel="noopener noreferrer" target="_blank">Standalone: Re-connecting Your Hive 2 Thermostat to the Receiver</a></li>
+                <li><a href="https://support.hivehome.com/portal/app/portlets/results/viewsolution.jsp?solutionid=022434009263431" rel="noopener noreferrer" target="_blank">Standalone: Power Cycle the Hive 2 Thermostat and Hive Receiver</a></li>
+                <li><a href="https://support.hivehome.com/portal/app/portlets/results/viewsolution.jsp?solutionid=250725132342947" rel="noopener noreferrer" target="_blank">Step-by-Step Guide to Reconnecting Your Hive Heating Devices</a> — pink/white vs amber status lights</li>
+                <li><a href="https://support.hivehome.com/portal/app/portlets/results/viewsolution.jsp?solutionid=250320155222590" rel="noopener noreferrer" target="_blank">Gravity-Fed Mode for Hive Thermostats</a></li>
+                <li><a href="https://support.hivehome.com/portal/app/portlets/results/viewsolution.jsp?solutionid=260203152901110" rel="noopener noreferrer" target="_blank">Hive Heating and Hot Water: How to Stay in Control When the Hive App or the Thermostat Stops Working</a></li>
+            </ul>
+
+            <h2>Related guides</h2>
+            <ul>
+                <li><a href="/how-to/pair-up-the-devices-hive-2/">How to pair/re-pair Hive 2 heating devices</a> (hub and app)</li>
+                <li><a href="/how-to-pair-up-the-devices-hive-1/">How to pair up the devices – Hive 1</a></li>
+                <li><a href="/smart-thermostats/nest-combi-boiler/">Nest and a combi boiler</a></li>
+                <li><a href="/advice/">Advice</a></li>
+            </ul>
+
+            <h2>Still Having Issues?</h2>
+            <p>If you are still having problems after these official Hive steps, contact <a href="https://www.hivehome.com/support" rel="noopener noreferrer" target="_blank">Hive support</a>. For wiring or boiler work, use a qualified heating engineer.</p>
+            <p class="article-resource"><a href="/how-to/pair-up-the-devices-hive-2/resources/hive-thermostat-mini-slt6-ig.pdf" target="_blank" rel="noopener">Download: Hive Thermostat Mini installation guide</a></p>
+        </article>
     </div>
+
+    
 
     
 
