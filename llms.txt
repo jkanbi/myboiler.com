@@ -7,6 +7,7 @@ Pages are static HTML. Each content page has a title, a description, a canonical
 ## Start here
 
 - [Advice](https://myboiler.com/advice/): Boiler, OpenTherm, heat pump, and heating guides.
+- [Heat as a Service](https://myboiler.com/heat-as-a-service/): Paying for warm hours rather than units of gas; the 2019–20 Catapult / Bristol Energy / Baxi trials, and why the product is not a normal UK tariff in 2026.
 - [Fault codes](https://myboiler.com/fault-codes/): Search a display code by brand.
 - [Boiler optimiser](https://myboiler.com/boiler-optimiser/): Heating flow temperature and maximum heating output for a condensing boiler.
 - [Heat pump checker](https://myboiler.com/heat-pump-checker/): Whether a house is a plausible heat-pump candidate.
