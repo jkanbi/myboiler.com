@@ -58,7 +58,7 @@
         '</div>' +
         '<p style="margin:0 auto"><a href="http://eepurl.com/i6R-1E" title="Mailchimp - email marketing made easy and fun">' +
         '<span style="display:inline-block;background-color:transparent;border-radius:4px">' +
-        '<img class="refferal_badge" src="/img/external/digitalasset.intuit.com/intuit-mc-rewards-text-light.svg" alt="Intuit Mailchimp" width="100" height="40">' +
+        '<img class="refferal_badge" src="https://cdn.myboiler.com/external/intuit/intuit-mc-rewards-text-light.svg" alt="Intuit Mailchimp" width="100" height="40">' +
         '</span></a></p>' +
         '</div></form></div></div></div></footer>' +
         '<footer class="copyright"><ul class="social-media no-bullets">' +
