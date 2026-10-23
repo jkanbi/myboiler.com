@@ -77,9 +77,148 @@
             margin-bottom: 0.75rem;
         }
 
+        .boiler-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 0 1.15rem;
+        }
+
+        .boiler-body {
+            position: relative;
+            width: 8.75rem;
+        }
+
+        .boiler-shape {
+            width: 8.75rem;
+            height: 12rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--text);
+            border-radius: 6px;
+            background: #f3f4f6;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text);
+        }
+
+        .condensate {
+            position: absolute;
+            left: calc(100% - 1.1rem);
+            top: calc(100% - 2px);
+            display: flex;
+            align-items: flex-end;
+            pointer-events: none;
+        }
+
+        .condensate-pipe {
+            width: 2.15rem;
+            height: 3.25rem;
+            border-left: 3px solid #6b7280;
+            border-bottom: 3px solid #6b7280;
+            border-radius: 0 0 0 3px;
+            background: transparent;
+            box-sizing: border-box;
+        }
+
+        .boiler-diagram[data-condensate="1"] .condensate-pipe,
+        .boiler-diagram[data-condensate="2"] .condensate-pipe,
+        .boiler-diagram[data-condensate="3"] .condensate-pipe {
+            border-left-width: 4px;
+            border-bottom-width: 4px;
+            border-color: #2ec4b6;
+        }
+
+        .condensate-drops {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.28rem;
+            margin: 0 0 0.02rem 0.35rem;
+            min-height: 0.7rem;
+        }
+
+        .drop {
+            background: #2ec4b6;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(45deg);
+            opacity: 0;
+        }
+
+        .drop:nth-child(1) {
+            width: 0.5rem;
+            height: 0.5rem;
+        }
+
+        .drop:nth-child(2) {
+            width: 0.4rem;
+            height: 0.4rem;
+            transform: rotate(45deg) translateY(0.12rem);
+        }
+
+        .drop:nth-child(3) {
+            width: 0.32rem;
+            height: 0.32rem;
+            transform: rotate(45deg) translateY(0.22rem);
+        }
+
+        .boiler-diagram[data-condensate="1"] .drop:nth-child(1),
+        .boiler-diagram[data-condensate="2"] .drop:nth-child(-n+2),
+        .boiler-diagram[data-condensate="3"] .drop:nth-child(-n+3) {
+            opacity: 1;
+        }
+
+        .boiler-diagram.no-condensate .condensate {
+            visibility: hidden;
+        }
+
+        .boiler-pipes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 8.75rem;
+            margin-top: -2px;
+            padding: 0 1.15rem;
+            box-sizing: border-box;
+        }
+
+        .boiler-pipe-line {
+            justify-self: center;
+            width: 5px;
+            height: 5rem;
+            border-radius: 0 0 2px 2px;
+        }
+
+        .boiler-pipe-line.is-flow {
+            background: #d64545;
+        }
+
+        .boiler-pipe-line.is-return {
+            background: #1863dc;
+        }
+
+        .boiler-temps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: min(100%, 18rem);
+            gap: 0.75rem;
+            margin-top: 0.4rem;
+        }
+
+        .boiler-temps .input-hint {
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .boiler-diagram.no-return .boiler-pipe-line.is-return,
+        .boiler-diagram.no-return #return-hint {
+            visibility: hidden;
+        }
+
         .flow-slider {
             position: relative;
-            --track-size: 2rem;
+            --track-size: 1.5rem;
             --thumb-size: 2.75rem;
             --red-stop: calc(var(--thumb-size) / 2 + (30 / 35) * (100% - var(--thumb-size)));
         }
@@ -109,6 +248,14 @@
             font-weight: 700;
             line-height: 1.35;
             color: var(--text);
+        }
+
+        #flow-card .input-heading .card-title {
+            margin: 0;
+        }
+
+        #flow-card .input-heading {
+            margin-bottom: 4rem;
         }
 
         .fold > summary {
@@ -540,7 +687,7 @@
             appearance: none;
             width: 2.75rem !important;
             height: 2.75rem !important;
-            margin-top: -0.375rem !important;
+            margin-top: calc((var(--track-size) - var(--thumb-size)) / 2) !important;
             border-radius: 50%;
             background: #fff;
             border: 2px solid #1b1b1b;
@@ -569,6 +716,9 @@
         #flow-state {
             font-size: 0.8125rem;
             font-weight: 700;
+            white-space: nowrap;
+            line-height: 1.2;
+            margin: 0 0 0.08rem 0.2rem;
         }
 
         .return-note {
@@ -928,13 +1078,33 @@
         <div class="calculator-card" id="flow-card">
             <div class="input-group">
                 <div class="input-heading">
-                    <label class="input-label" for="flow-temp">Flow Temperature</label>
-                    <span id="flow-state">Partially condensing</span>
-                    <span class="input-hint" id="flow-hint">75°C flow, about 55°C return</span>
+                    <h2 class="card-title">Condensing</h2>
                     <span class="input-hint" id="cylinder-hint" hidden>Cylinder about 70°C</span>
                 </div>
+                <div class="boiler-diagram" data-condensate="2">
+                    <div class="boiler-body">
+                        <div class="boiler-shape">Boiler</div>
+                        <div class="condensate">
+                            <span class="condensate-pipe" aria-hidden="true"></span>
+                            <span class="condensate-drops" aria-hidden="true">
+                                <span class="drop"></span>
+                                <span class="drop"></span>
+                                <span class="drop"></span>
+                            </span>
+                            <span id="flow-state">Partially condensing</span>
+                        </div>
+                    </div>
+                    <div class="boiler-pipes" aria-hidden="true">
+                        <span class="boiler-pipe-line is-flow"></span>
+                        <span class="boiler-pipe-line is-return"></span>
+                    </div>
+                    <div class="boiler-temps">
+                        <span class="input-hint" id="flow-hint">75°C flow</span>
+                        <span class="input-hint" id="return-hint">≈ 55°C return</span>
+                    </div>
+                </div>
                 <div class="flow-slider">
-                    <input type="range" id="flow-temp" class="input-slider" min="45" max="80" step="1" value="75" aria-describedby="legionella-warning">
+                    <input type="range" id="flow-temp" class="input-slider" min="45" max="80" step="1" value="75" aria-label="Flow temperature" aria-describedby="legionella-warning">
                 </div>
                 <p class="return-note" id="combi-tap-note">On a combi, this is the radiator flow. Tap and shower temperature stays as it is.</p>
                 <p class="legionella-label" id="legionella-warning" hidden>The cylinder is about 5°C below the flow. Legionella is possible once stored water drops below 50°C.</p>
@@ -1147,6 +1317,8 @@
             };
             var flowInput = document.getElementById('flow-temp');
             var flowHint = document.getElementById('flow-hint');
+            var returnHint = document.getElementById('return-hint');
+            var boilerDiagram = document.querySelector('#flow-card .boiler-diagram');
             var annualInput = document.getElementById('annual-kwh');
             var rateInput = document.getElementById('unit-rate');
             var usesGasCooking = true;
@@ -1500,12 +1672,24 @@
                     if (bacteriaDying) describedBy.push('inhibit-notice');
                     flowInput.setAttribute('aria-describedby', describedBy.join(' '));
                     flowHint.className = 'input-hint';
-                    flowHint.textContent = flow + '°C flow, about ' + ret + '°C return';
+                    flowHint.textContent = flow + '°C flow';
+                    returnHint.className = 'input-hint';
+                    returnHint.textContent = '≈ ' + ret + '°C return';
+                    boilerDiagram.classList.remove('no-return');
                 } else {
                     flowInput.removeAttribute('aria-describedby');
                     flowHint.className = 'input-hint';
                     flowHint.textContent = flow + '°C flow';
+                    returnHint.className = 'input-hint';
+                    boilerDiagram.classList.add('no-return');
                 }
+                var condensateLevel = 0;
+                if (condensingBoiler) {
+                    if (flow <= GREEN_MAX) condensateLevel = 3;
+                    else if (flow <= PARTIAL_FLOW) condensateLevel = 2;
+                }
+                boilerDiagram.setAttribute('data-condensate', String(condensateLevel));
+                boilerDiagram.classList.toggle('no-condensate', !condensingBoiler);
                 var pence = nonNegativeOrNull(rateInput);
                 var spaceHint = document.getElementById('space-heating-hint');
                 spaceHint.textContent = usesGasCooking
