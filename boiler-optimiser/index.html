@@ -84,6 +84,62 @@
             margin: 0 0 1.15rem;
         }
 
+        .boiler-plant {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 2.25rem;
+        }
+
+        .boiler-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cylinder[hidden] {
+            display: none;
+        }
+
+        .cylinder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cylinder-tank {
+            width: 6.5rem;
+            height: 12rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            border: 2px solid var(--text);
+            border-radius: 3.25rem;
+            background: linear-gradient(to bottom,
+                #c81e1e 0%,
+                #d64545 38%,
+                #f0b4b4 78%,
+                #b7c7db 100%);
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(27, 27, 27, 0.35);
+            box-sizing: border-box;
+        }
+
+        .cylinder-name {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .cylinder-temp {
+            font-size: 1.2rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
         .boiler-body {
             position: relative;
             width: 8.75rem;
@@ -220,7 +276,26 @@
             position: relative;
             --track-size: 1.5rem;
             --thumb-size: 2.75rem;
+            --thumb-pct: 0.857;
             --red-stop: calc(var(--thumb-size) / 2 + (30 / 35) * (100% - var(--thumb-size)));
+        }
+
+        .flow-thumb-value {
+            position: absolute;
+            top: 50%;
+            left: calc(var(--thumb-size) / 2 + var(--thumb-pct) * (100% - var(--thumb-size)));
+            transform: translate(-50%, -50%);
+            width: var(--thumb-size);
+            height: var(--thumb-size);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--text);
+            pointer-events: none;
+            z-index: 2;
         }
 
         .flow-slider .input-slider {
@@ -616,6 +691,13 @@
             line-height: 1.6;
         }
 
+        .tool-disclaimer {
+            margin: 1.25rem 0 0;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
         .tool-version {
             margin: 0.5rem 0 0;
             font-size: 0.8125rem;
@@ -716,9 +798,10 @@
         #flow-state {
             font-size: 0.8125rem;
             font-weight: 700;
-            white-space: nowrap;
-            line-height: 1.2;
+            max-width: 6.2em;
+            line-height: 1.15;
             margin: 0 0 0.08rem 0.2rem;
+            text-align: left;
         }
 
         .return-note {
@@ -894,6 +977,20 @@
 
             .system-thumb {
                 width: 100%;
+            }
+
+            .boiler-diagram {
+                align-items: flex-start;
+            }
+
+            .boiler-plant {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            #flow-state {
+                max-width: 5.4em;
+                font-size: 0.75rem;
             }
         }
 
@@ -1082,29 +1179,40 @@
                     <span class="input-hint" id="cylinder-hint" hidden>Cylinder about 70°C</span>
                 </div>
                 <div class="boiler-diagram" data-condensate="2">
-                    <div class="boiler-body">
-                        <div class="boiler-shape">Boiler</div>
-                        <div class="condensate">
-                            <span class="condensate-pipe" aria-hidden="true"></span>
-                            <span class="condensate-drops" aria-hidden="true">
-                                <span class="drop"></span>
-                                <span class="drop"></span>
-                                <span class="drop"></span>
-                            </span>
-                            <span id="flow-state">Partially condensing</span>
+                    <div class="boiler-plant">
+                        <div class="cylinder" id="cylinder-diagram" hidden>
+                            <div class="cylinder-tank">
+                                <span class="cylinder-name">Cylinder</span>
+                                <span class="cylinder-temp" id="cylinder-temp">70°C</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="boiler-pipes" aria-hidden="true">
-                        <span class="boiler-pipe-line is-flow"></span>
-                        <span class="boiler-pipe-line is-return"></span>
-                    </div>
-                    <div class="boiler-temps">
-                        <span class="input-hint" id="flow-hint">75°C flow</span>
-                        <span class="input-hint" id="return-hint">≈ 55°C return</span>
+                        <div class="boiler-column">
+                            <div class="boiler-body">
+                                <div class="boiler-shape">Boiler</div>
+                                <div class="condensate">
+                                    <span class="condensate-pipe" aria-hidden="true"></span>
+                                    <span class="condensate-drops" aria-hidden="true">
+                                        <span class="drop"></span>
+                                        <span class="drop"></span>
+                                        <span class="drop"></span>
+                                    </span>
+                                    <span id="flow-state">Partially condensing</span>
+                                </div>
+                            </div>
+                            <div class="boiler-pipes" aria-hidden="true">
+                                <span class="boiler-pipe-line is-flow"></span>
+                                <span class="boiler-pipe-line is-return"></span>
+                            </div>
+                            <div class="boiler-temps">
+                                <span class="input-hint" id="flow-hint">75°C flow</span>
+                                <span class="input-hint" id="return-hint">≈ 55°C return</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="flow-slider">
                     <input type="range" id="flow-temp" class="input-slider" min="45" max="80" step="1" value="75" aria-label="Flow temperature" aria-describedby="legionella-warning">
+                    <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                 </div>
                 <p class="return-note" id="combi-tap-note">On a combi, this is the radiator flow. Tap and shower temperature stays as it is.</p>
                 <p class="legionella-label" id="legionella-warning" hidden>The cylinder is about 5°C below the flow. Legionella is possible once stored water drops below 50°C.</p>
@@ -1234,6 +1342,7 @@
             <p>If this flow is keeping the house warm in peak winter, a heat pump may suit this system without many changes. <span id="heat-pump-size"></span></p>
             <a id="heat-pump-checker-link" href="/heat-pump-checker/">Check heat pump suitability</a>
         </div>
+        <p class="tool-disclaimer">This tool is in development. We accept no responsibility for issues that arise from these adjustments. Some systems are not installed correctly and may cause problems, especially where the condensate pipe is incorrectly installed or not insulated.</p>
         <p class="tool-version">2026-09-27 08:34 · 3</p>
     </div>
 
@@ -1319,6 +1428,10 @@
             var flowHint = document.getElementById('flow-hint');
             var returnHint = document.getElementById('return-hint');
             var boilerDiagram = document.querySelector('#flow-card .boiler-diagram');
+            var cylinderDiagram = document.getElementById('cylinder-diagram');
+            var cylinderTempEl = document.getElementById('cylinder-temp');
+            var flowThumbValue = document.getElementById('flow-thumb-value');
+            var flowSlider = flowInput.parentElement;
             var annualInput = document.getElementById('annual-kwh');
             var rateInput = document.getElementById('unit-rate');
             var usesGasCooking = true;
@@ -1659,11 +1772,15 @@
                 if (stateName === 'non-condensing') stateClass = 'red';
                 flowState.className = 'hint-' + stateClass;
                 flowState.textContent = stateName.charAt(0).toUpperCase() + stateName.slice(1);
-                cylinderHint.hidden = !(condensingBoiler && stored);
-                if (condensingBoiler && stored) {
-                    cylinderHint.className = 'input-hint' + (legionellaRisk ? ' hint-warn' : (currentBand.key === 'amber' ? ' hint-amber' : ''));
-                    cylinderHint.textContent = 'Cylinder about ' + cylinder + '°C';
+                cylinderHint.hidden = true;
+                cylinderDiagram.hidden = !stored;
+                if (stored) {
+                    cylinderTempEl.textContent = cylinder + '°C';
                 }
+                var minFlow = Number(flowInput.min);
+                var maxFlow = Number(flowInput.max);
+                flowSlider.style.setProperty('--thumb-pct', String((flow - minFlow) / (maxFlow - minFlow)));
+                flowThumbValue.textContent = flow + '°C';
                 if (condensingBoiler) {
                     var describedBy = ['flow-state'];
                     if (!stored) describedBy.push('combi-tap-note');
@@ -1686,7 +1803,8 @@
                 var condensateLevel = 0;
                 if (condensingBoiler) {
                     if (flow <= GREEN_MAX) condensateLevel = 3;
-                    else if (flow <= PARTIAL_FLOW) condensateLevel = 2;
+                    else if (flow <= PARTIAL_FLOW - 5) condensateLevel = 2;
+                    else if (flow <= PARTIAL_FLOW) condensateLevel = 1;
                 }
                 boilerDiagram.setAttribute('data-condensate', String(condensateLevel));
                 boilerDiagram.classList.toggle('no-condensate', !condensingBoiler);
