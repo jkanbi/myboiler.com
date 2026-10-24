@@ -73,6 +73,51 @@
             font-size: 0.95rem;
         }
 
+        .advice-jump {
+            margin: 0.15rem 0 0.85rem;
+            font-size: 0.8125rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        .advice-jump__label {
+            font-weight: 600;
+            margin-right: 0.35rem;
+            color: var(--text-muted);
+        }
+
+        .advice-jump__list {
+            display: inline;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .advice-jump__list li {
+            display: inline;
+        }
+
+        .advice-jump__list li[hidden] {
+            display: none;
+        }
+
+        .advice-jump__list li:not([hidden]) ~ li:not([hidden])::before {
+            content: " · ";
+            color: var(--text-muted);
+        }
+
+        .advice-jump__list a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .advice-jump__list a:hover,
+        .advice-jump__list a:focus {
+            color: var(--accent-dark);
+            text-decoration: underline;
+        }
+
         .advice-sections {
             column-count: 3;
             column-gap: 0.7rem;
@@ -86,6 +131,7 @@
             border-radius: var(--radius);
             border: 1px solid var(--border-subtle);
             box-shadow: var(--shadow-sm);
+            scroll-margin-top: 5.5rem;
         }
 
         .advice-section__title {
@@ -200,7 +246,7 @@
         <header class="article-header">
             <h1 class="article-title">Advice</h1>
             <p class="article-intro">
-                Guides on boilers, OpenTherm, heat pumps, fault codes, and heating systems.
+                Guides on boilers, controls, heat pumps, radiators, fault codes, and energy saving.
             </p>
             <form class="advice-search" role="search" onsubmit="return false;">
                 <input type="search" id="advice-search" placeholder="Search guides" aria-label="Search guides" autocomplete="off">
@@ -208,78 +254,128 @@
             <p class="advice-search__empty" id="advice-empty" hidden>No guides match that search.</p>
         </header>
 
+        <nav class="advice-jump" aria-label="Jump to category">
+            <span class="advice-jump__label">Jump to</span>
+            <ul class="advice-jump__list">
+                <li data-jump="choosing-installing"><a href="#choosing-installing">Choosing &amp; Installing</a></li>
+                <li data-jump="repairs-servicing"><a href="#repairs-servicing">Repairs &amp; Servicing</a></li>
+                <li data-jump="controls-thermostats"><a href="#controls-thermostats">Controls &amp; Thermostats</a></li>
+                <li data-jump="flow-temperature"><a href="#flow-temperature">Flow Temperature</a></li>
+                <li data-jump="radiators-underfloor"><a href="#radiators-underfloor">Radiators &amp; UFH</a></li>
+                <li data-jump="heat-pumps"><a href="#heat-pumps">Heat Pumps</a></li>
+                <li data-jump="energy-grants-vat"><a href="#energy-grants-vat">Energy Saving &amp; Grants</a></li>
+                <li data-jump="fault-codes"><a href="#fault-codes">Fault Codes</a></li>
+                <li data-jump="case-studies-reviews"><a href="#case-studies-reviews">Case Studies &amp; Reviews</a></li>
+            </ul>
+        </nav>
+
         <div class="advice-sections">
-            <section class="advice-section" aria-labelledby="advice-boilers">
-                <h2 class="advice-section__title" id="advice-boilers">Boilers</h2>
+            <section class="advice-section" id="choosing-installing" aria-labelledby="advice-choosing-installing">
+                <h2 class="advice-section__title" id="advice-choosing-installing">Choosing &amp; Installing a Boiler</h2>
                 <ul class="advice-section__list">
-                    <li><a href="/money-and-energy-saving/">Money and Energy Saving</a></li>
-                    <li><a href="/energy/">Energy</a></li>
-                    <li><a href="/money-and-energy-saving/energy-saving-materials-and-heating-equipment/">VAT on Energy-Saving Materials and Heating Equipment</a></li>
-                    <li><a href="/boiler-pressure/">Boiler Pressure</a></li>
-                    <li><a href="https://boilerservice.com">Boiler Service</a></li>
+                    <li><a href="/choosing-a-new-boiler/">Choosing a New Boiler</a></li>
+                    <li><a href="/combi-boiler/choosing-a-new-combi-boiler/">Choosing a New Combi Boiler</a></li>
+                    <li><a href="/combi-boiler/new-combi-boiler/">New Combi Boiler</a></li>
+                    <li><a href="/what-size-boiler/">What Size Boiler?</a></li>
                     <li><a href="/boiler-types/">Boiler Types</a></li>
                     <li><a href="/boilers/what-is-a-combi-boiler/">What is a Combi Boiler?</a></li>
                     <li><a href="/regular-boiler/">Regular Boiler</a></li>
                     <li><a href="/system-boiler/">System Boiler</a></li>
-                    <li><a href="/combi-boiler-problems/">Combi Boiler Problems</a></li>
-                    <li><a href="/what-size-boiler/">What Size Boiler?</a></li>
-                    <li><a href="/choosing-a-new-boiler/">Choosing a New Boiler</a></li>
-                    <li><a href="/combi-boiler/choosing-a-new-combi-boiler/">Choosing a New Combi Boiler</a></li>
-                    <li><a href="/combi-boiler/new-combi-boiler/">New Combi Boiler</a></li>
-                    <li><a href="/what-is-a-gc-number/">What is a GC Number?</a></li>
-                    <li><a href="/boiler-energy-efficiency/">Boiler Energy Efficiency</a></li>
-                    <li><a href="/boiler-plus/">Boiler Plus</a></li>
-                    <li><a href="/boiler-optimiser/">Boiler Optimisation Tool</a></li>
-                    <li><a href="/installation-efficiency/">Installation Efficiency</a></li>
-                    <li><a href="/repairs/">Boiler Repairs</a></li>
-                    <li><a href="/boiler-repair/">Boiler Repair</a></li>
-                    <li><a href="/fixed-price-repairs/">Manufacturer Fixed-Price Repairs</a></li>
                     <li><a href="/combi-boiler/combi-boiler-installation/">Combi Boiler Installation</a></li>
-                    <li><a href="/boiler-cover/">Boiler Cover</a></li>
-                    <li><a href="/heat-as-a-service/">Heat as a Service</a></li>
+                    <li><a href="/boiler-plus/">Boiler Plus</a></li>
+                    <li><a href="/installation-efficiency/">Installation Efficiency</a></li>
+                    <li><a href="/low-mains-water-pressure/">Low Mains Water Pressure</a></li>
+                    <li><a href="/what-is-a-gc-number/">What is a GC Number?</a></li>
                     <li><a href="/vaillant/vaillant-guarantee-options/">Vaillant Guarantee Options</a></li>
                     <li><a href="/worcester-bosch/worcester-bosch-guarantee-lengths/">Worcester Bosch Guarantee Lengths</a></li>
                 </ul>
             </section>
 
-            <section class="advice-section" aria-labelledby="advice-opentherm">
-                <h2 class="advice-section__title" id="advice-opentherm">OpenTherm &amp; Modulating Boilers</h2>
+            <section class="advice-section" id="repairs-servicing" aria-labelledby="advice-repairs-servicing">
+                <h2 class="advice-section__title" id="advice-repairs-servicing">Repairs &amp; Servicing</h2>
                 <ul class="advice-section__list">
-                    <li><a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm Capable Boilers</a></li>
-                    <li><a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm Controls</a></li>
+                    <li><a href="/repairs/">Boiler Repairs</a></li>
+                    <li><a href="/boiler-repair/">Boiler Repair</a></li>
+                    <li><a href="/fixed-price-repairs/">Manufacturer Fixed-Price Repairs</a></li>
+                    <li><a href="/combi-boiler-problems/">Combi Boiler Problems</a></li>
+                    <li><a href="/boiler-pressure/">Boiler Pressure</a></li>
+                    <li><a href="/inhibitor-testing/">Inhibitor Testing</a></li>
+                    <li><a href="/boiler-cover/">Boiler Cover</a></li>
+                    <li><a href="/solar-thermal/solar-thermal-service/">Solar Thermal Service</a></li>
+                </ul>
+            </section>
+
+            <section class="advice-section" id="controls-thermostats" aria-labelledby="advice-controls-thermostats">
+                <h2 class="advice-section__title" id="advice-controls-thermostats">Controls &amp; Thermostats</h2>
+                <ul class="advice-section__list">
+                    <li><a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm Boilers and Controls</a></li>
                     <li><a href="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">Modulating Boilers &amp; Smart Controls</a></li>
                     <li><a href="/smart-thermostats/nest-combi-boiler/">Nest and a Combi Boiler</a></li>
+                    <li><a href="/smart-thermostats/nest-thermostat-e/">Nest Thermostat E</a></li>
                     <li><a href="/tado/">tado Smart Thermostat</a></li>
                     <li><a href="/vaillant/vaillant-vsmart-thermostat/">Vaillant vSmart Thermostat</a></li>
                     <li><a href="/opentherm/vaillant-opentherm/">Vaillant Boiler and OpenTherm</a></li>
                     <li><a href="/opentherm/worcester-bosch-opentherm/">Worcester Bosch and OpenTherm</a></li>
+                    <li><a href="/s-plan/">S Plan &amp; S Plan Plus</a></li>
+                    <li><a href="/priority-domestic-hot-water/">Priority Domestic Hot Water (PDHW)</a></li>
+                    <li><a href="/articles/electronic-relay-types/">Electronic Relay Types</a></li>
+                    <li><a href="/how-to/standalone-mode-hive-2/">Hive 2 standalone mode</a></li>
+                    <li><a href="/how-to/pair-up-the-devices-hive-2/">Pair / re-pair Hive 2 heating devices</a></li>
+                    <li><a href="/how-to-pair-up-the-devices-hive-1/">Pair up the devices – Hive 1</a></li>
                 </ul>
             </section>
 
-            <section class="advice-section" aria-labelledby="advice-heat-pumps">
+            <section class="advice-section" id="flow-temperature" aria-labelledby="advice-flow-temperature">
+                <h2 class="advice-section__title" id="advice-flow-temperature">Flow Temperature &amp; Efficiency</h2>
+                <ul class="advice-section__list">
+                    <li><a href="/the-relationship-between-flow-temperature-and-power-output/">Flow Temperature and Power Output</a></li>
+                    <li><a href="/boiler-energy-efficiency/">Boiler Energy Efficiency</a></li>
+                </ul>
+            </section>
+
+            <section class="advice-section" id="radiators-underfloor" aria-labelledby="advice-radiators-underfloor">
+                <h2 class="advice-section__title" id="advice-radiators-underfloor">Radiators &amp; Underfloor Heating</h2>
+                <ul class="advice-section__list">
+                    <li><a href="/towel-radiators/">Towel Radiators</a></li>
+                    <li><a href="/air-conditioning-versus-radiators/">Air Conditioning vs Radiators</a></li>
+                    <li><a href="/underfloor-heating-vs-radiators/">Underfloor Heating vs Radiators</a></li>
+                    <li><a href="/underfloor-heating-repairs/">Underfloor Heating Repairs</a></li>
+                    <li><a href="/best-radiator-valves-and-thermostat-radiator-valves-trv/">Best Radiator Valves and TRVs</a></li>
+                </ul>
+            </section>
+
+            <section class="advice-section" id="heat-pumps" aria-labelledby="advice-heat-pumps">
                 <h2 class="advice-section__title" id="advice-heat-pumps">Heat Pumps</h2>
                 <ul class="advice-section__list">
                     <li><a href="/heat-pumps/">Heat Pumps</a></li>
                     <li><a href="/heat-pumps/terminology/">Heat Pump Terminology</a></li>
                     <li><a href="/heat-pump-top-10/">Heat Pump Top 10</a></li>
-                    <li><a href="/calculators/heat-pump-cop-breakeven-calculator/">Heat Pump COP Breakeven Calculator</a></li>
-                    <li><a href="/heat-pumps/retrofit-an-existing-hot-water-cylinder-with-a-plate-heat-exchanger-for-use-with-a-heat-pump/">Retrofit Existing Hot Water Cylinder</a></li>
-                    <li><a href="/vaillant/vaillant-unistor-cylinder-range/">Vaillant uniSTOR Cylinder Range</a></li>
                     <li><a href="/heat-pumps/air-source-heat-pumps/">Air Source Heat Pumps</a></li>
                     <li><a href="/heat-pumps/air-source-heat-pump-installation/">Air Source Heat Pump Installation</a></li>
-                    <li><a href="/bus-grant-scheme-for-installers/">BUS Grant Scheme for Installers</a></li>
                     <li><a href="/heat-pumps/hybrid-heat-pumps/">Hybrid Heat Pumps</a></li>
                     <li><a href="/co2-heat-pumps/">CO2 Heat Pumps</a></li>
                     <li><a href="/why-heat-pumps-work-well-with-underfloor-heating/">Heat Pumps and Underfloor Heating</a></li>
-                    <li><a href="/underfloor-heating-vs-radiators/">Underfloor Heating vs Radiators</a></li>
-                    <li><a href="/underfloor-heating-repairs/">Underfloor Heating Repairs</a></li>
-                    <li><a href="/air-conditioning-versus-radiators/">Air Conditioning vs Radiators</a></li>
-                    <li><a href="/towel-radiators/">Towel Radiators</a></li>
+                    <li><a href="/heat-pumps/retrofit-an-existing-hot-water-cylinder-with-a-plate-heat-exchanger-for-use-with-a-heat-pump/">Retrofit Existing Hot Water Cylinder</a></li>
+                    <li><a href="/vaillant/vaillant-unistor-cylinder-range/">Vaillant uniSTOR Cylinder Range</a></li>
                     <li><a href="/heat-meter/">Heat Meters</a></li>
                 </ul>
             </section>
 
-            <section class="advice-section" aria-labelledby="advice-fault-codes">
+            <section class="advice-section" id="energy-grants-vat" aria-labelledby="advice-energy-grants-vat">
+                <h2 class="advice-section__title" id="advice-energy-grants-vat">Energy Saving, Grants &amp; VAT</h2>
+                <ul class="advice-section__list">
+                    <li><a href="/money-and-energy-saving/">Money and Energy Saving</a></li>
+                    <li><a href="/energy/">Energy</a></li>
+                    <li><a href="/money-and-energy-saving/energy-saving-materials-and-heating-equipment/">VAT on Energy-Saving Materials and Heating Equipment</a></li>
+                    <li><a href="/business/boiler-manufacturer-reward-schemes/">Boiler Manufacturer Reward Schemes and Taxation</a></li>
+                    <li><a href="/bus-grant-scheme-for-installers/">BUS Grant Scheme for Installers</a></li>
+                    <li><a href="/heat-as-a-service/">Heat as a Service</a></li>
+                    <li><a href="/solar-thermal/">Solar Thermal</a></li>
+                    <li><a href="/intasol-combi-diverter-valve/">Intasol Combi Diverter Valve</a></li>
+                </ul>
+            </section>
+
+            <section class="advice-section" id="fault-codes" aria-labelledby="advice-fault-codes">
                 <h2 class="advice-section__title" id="advice-fault-codes">Fault Codes</h2>
                 <ul class="advice-section__list">
                     <li><a href="/fault-codes/">All Brands (A–Z)</a></li>
@@ -292,28 +388,13 @@
                 </ul>
             </section>
 
-            <section class="advice-section" aria-labelledby="advice-misc">
-                <h2 class="advice-section__title" id="advice-misc">Miscellaneous</h2>
+            <section class="advice-section" id="case-studies-reviews" aria-labelledby="advice-case-studies-reviews">
+                <h2 class="advice-section__title" id="advice-case-studies-reviews">Case Studies &amp; Reviews</h2>
                 <ul class="advice-section__list">
-                    <li><a href="/the-relationship-between-flow-temperature-and-power-output/">Flow Temperature and Power Output</a></li>
-                    <li><a href="/solar-thermal/">Solar Thermal</a></li>
-                    <li><a href="/solar-thermal/solar-thermal-service/">Solar Thermal Service</a></li>
-                    <li><a href="/intasol-combi-diverter-valve/">Intasol Combi Diverter Valve</a></li>
-                    <li><a href="/best-radiator-valves-and-thermostat-radiator-valves-trv/">Best Radiator Valves and TRVs</a></li>
-                    <li><a href="/low-mains-water-pressure/">Low Mains Water Pressure</a></li>
-                    <li><a href="/s-plan/">S Plan &amp; S Plan Plus</a></li>
-                    <li><a href="/articles/electronic-relay-types/">Electronic Relay Types</a></li>
-                    <li><a href="/case-studies/boiler-controls-and-trvs-vaillant-ecotec-624-with-honeywell-controls/">Vaillant ecoTEC 624, Honeywell Controls and TRVs</a></li>
-                    <li><a href="/priority-domestic-hot-water/">Priority Domestic Hot Water (PDHW)</a></li>
-                    <li><a href="/smart-thermostats/nest-thermostat-e/">Nest Thermostat E</a></li>
-                    <li><a href="/how-to/standalone-mode-hive-2/">Hive 2 standalone mode</a></li>
-                    <li><a href="/how-to/pair-up-the-devices-hive-2/">Pair / re-pair Hive 2 heating devices</a></li>
-                    <li><a href="/how-to-pair-up-the-devices-hive-1/">Pair up the devices – Hive 1</a></li>
-                    <li><a href="/case-studies/hybrid-smart-home-with-nest-and-honeywell/">Hybrid Smart Home (Nest and Honeywell)</a></li>
-                    <li><a href="/inhibitor-testing/">Inhibitor Testing</a></li>
-                    <li><a href="/business/boiler-manufacturer-reward-schemes/">Boiler Manufacturer Reward Schemes and Taxation</a></li>
                     <li><a href="/case-studies/">Case Studies</a></li>
                     <li><a href="/reviews/">Reviews</a></li>
+                    <li><a href="/case-studies/boiler-controls-and-trvs-vaillant-ecotec-624-with-honeywell-controls/">Vaillant ecoTEC 624, Honeywell Controls and TRVs</a></li>
+                    <li><a href="/case-studies/hybrid-smart-home-with-nest-and-honeywell/">Hybrid Smart Home (Nest and Honeywell)</a></li>
                 </ul>
             </section>
         </div>
@@ -327,6 +408,7 @@
             var input = document.getElementById('advice-search');
             var empty = document.getElementById('advice-empty');
             var sections = document.querySelectorAll('.advice-section');
+            var jumpNav = document.querySelector('.advice-jump');
             if (!input || !sections.length) return;
 
             function applyFilter() {
@@ -340,9 +422,12 @@
                         if (match) visible += 1;
                     });
                     section.hidden = visible === 0;
+                    var jumpItem = document.querySelector('.advice-jump__list [data-jump="' + section.id + '"]');
+                    if (jumpItem) jumpItem.hidden = visible === 0;
                     if (visible) any = true;
                 });
                 if (empty) empty.hidden = any;
+                if (jumpNav) jumpNav.hidden = !any;
             }
 
             input.addEventListener('input', applyFilter);
