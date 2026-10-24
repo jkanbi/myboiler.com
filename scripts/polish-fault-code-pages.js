@@ -7,6 +7,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { injectXPixel } = require("./inject-x-pixel");
 
 const ROOT = path.resolve(__dirname, "..");
 const FAULT_DIR = path.join(ROOT, "fault-codes");
@@ -77,6 +78,8 @@ function polish(filePath) {
             JS_TAG
         );
     }
+
+    html = injectXPixel(html).html;
 
     if (rel === "ariston-fault-codes/index.html") {
         html = html.replace(
