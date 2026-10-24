@@ -154,7 +154,6 @@
             '.optimiser-consent{position:fixed;left:0;right:0;bottom:0;z-index:1100;background:var(--surface);border-top:1px solid var(--border);box-shadow:var(--shadow-md);padding:0.75rem var(--page-inline,16px);}',
             '.optimiser-consent__inner{max-width:var(--max-width,1024px);margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:0.65rem 1rem;}',
             '.optimiser-consent__text{flex:1 1 16rem;margin:0;font-size:0.875rem;line-height:1.45;color:var(--text);}',
-            '.optimiser-consent__text a{color:var(--accent);font-weight:500;}',
             '.optimiser-consent__actions{display:flex;flex-wrap:wrap;gap:0.45rem;}',
             '.optimiser-consent button{min-height:2.5rem;padding:0.45rem 0.95rem;font:inherit;font-size:0.875rem;font-weight:600;border-radius:var(--radius);cursor:pointer;}',
             '.optimiser-consent__accept{background:var(--accent);color:#fff;border:2px solid var(--accent);}',
