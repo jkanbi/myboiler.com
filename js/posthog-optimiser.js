@@ -1,6 +1,6 @@
-/* Boiler Optimiser only. Replace __POSTHOG_PROJECT_TOKEN__ with the live project token. */
+/* Boiler Optimiser only. Replace phc_s4op4bcQEy4zkZJBE9Rr6THsUkoYmdm4jFzKjUeup7Q4 with the live project token. */
 (function () {
-    var TOKEN = '__POSTHOG_PROJECT_TOKEN__';
+    var TOKEN = 'phc_s4op4bcQEy4zkZJBE9Rr6THsUkoYmdm4jFzKjUeup7Q4';
     var API_HOST = 'https://eu.i.posthog.com';
     var UI_HOST = 'https://eu.posthog.com';
     var STORAGE_KEY = 'mb_optimiser_posthog';
