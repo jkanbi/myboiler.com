@@ -4,19 +4,6 @@
     var API_HOST = 'https://eu.i.posthog.com';
     var UI_HOST = 'https://eu.posthog.com';
     var STORAGE_KEY = 'mb_optimiser_posthog';
-    var MASK_TEXT_SELECTOR = [
-        '.result-value',
-        '.bill-results',
-        '#tool-results',
-        '#plan',
-        '#heat-pump-size',
-        '#space-heating-kwh',
-        '#heat-loss-range',
-        '[data-ph-mask]',
-        '[id*="postcode"]',
-        '[name*="postcode"]',
-        '[autocomplete="postal-code"]'
-    ].join(', ');
 
     var path = (location.pathname || '').replace(/\/+$/, '');
     if (path !== '/boiler-optimiser' && path.indexOf('/boiler-optimiser/') !== 0) {
@@ -117,7 +104,8 @@
     function recordingConfig() {
         return {
             maskAllInputs: true,
-            maskTextSelector: MASK_TEXT_SELECTOR
+            maskAllText: false,
+            mask_all_text: false
         };
     }
 
