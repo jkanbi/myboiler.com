@@ -103,7 +103,12 @@
 
     function recordingConfig() {
         return {
-            maskAllInputs: true,
+            maskAllInputs: false,
+            maskInputOptions: {
+                password: true,
+                email: true,
+                tel: true
+            },
             maskAllText: false,
             mask_all_text: false
         };
