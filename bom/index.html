@@ -7,7 +7,7 @@
     <meta name="robots" content="noindex, nofollow">
     <meta name="description" content="Radiators catalogue - comprehensive product specifications and pricing.">
     <link rel="canonical" href="https://myboiler.com/bom/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
     <style>
         .article-page {
             min-height: 100vh;
@@ -21,6 +21,7 @@
             padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
             margin: 0 auto;
             width: 100%;
+            max-width: var(--max-width, 1024px);
             box-sizing: border-box;
         }
 
@@ -111,6 +112,7 @@
         @media (max-width: 768px) {
             .article-container {
                 padding: 1.5rem 1rem;
+                max-width: var(--max-width, 1024px);
             }
 
             .article-content {

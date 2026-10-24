@@ -6,7 +6,7 @@
     <title>Heating System Water Content Calculator - MyBoiler.com</title>
     <meta name="description" content="Approximate heating-system water content from Wolseley CenterRad and Ultraheat Compact 4 panels plus copper Table X pipework, for vessel sizing and inhibitor dosing.">
     <link rel="canonical" href="https://myboiler.com/calculators/heating-system-water-content-calculator/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
     <style>
         .calculator-page {
             min-height: 100vh;
@@ -23,6 +23,7 @@
             padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
             margin: 0 auto;
             width: 100%;
+            max-width: var(--max-width, 1024px);
             box-sizing: border-box;
         }
 
@@ -380,6 +381,7 @@
         @media (max-width: 480px) {
             .calculator-container {
                 padding: 1.25rem 12px;
+                max-width: var(--max-width, 1024px);
             }
 
             .calculator-card {

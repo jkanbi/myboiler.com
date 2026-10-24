@@ -6,7 +6,7 @@
     <title>Regular Boiler - MyBoiler.com</title>
     <meta name="description" content="A regular (heat-only) boiler is the heat source only. Pump, expansion, zone valves and the cylinder sit outside the case. Open-vent and sealed-kit layouts, S Plan and PDHW.">
     <link rel="canonical" href="https://myboiler.com/regular-boiler/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
     <style>
         .article-page {
             min-height: 100vh;
@@ -20,6 +20,7 @@
             padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
             margin: 0 auto;
             width: 100%;
+            max-width: var(--max-width, 1024px);
             box-sizing: border-box;
         }
 
@@ -163,6 +164,7 @@
         @media (max-width: 640px) {
             .article-container {
                 padding: 1.25rem 16px 1.75rem;
+                max-width: var(--max-width, 1024px);
             }
 
             .article-content {

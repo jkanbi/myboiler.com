@@ -6,7 +6,7 @@
     <title>Advice - Boiler, Heat Pump & Heating Guides - MyBoiler Hub</title>
     <meta name="description" content="Expert advice and information on boilers, heat pumps, OpenTherm, fault codes, and heating systems.">
     <link rel="canonical" href="https://myboiler.com/advice/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
     <style>
         .article-page {
             min-height: 100vh;
@@ -20,6 +20,7 @@
             padding: 1.15rem clamp(16px, 3vw, 28px) 1.75rem;
             margin: 0 auto;
             width: 100%;
+            max-width: var(--max-width, 1024px);
             box-sizing: border-box;
         }
 
@@ -137,6 +138,7 @@
         @media (max-width: 640px) {
             .article-container {
                 padding: 1rem 16px 1.5rem;
+                max-width: var(--max-width, 1024px);
             }
 
             .advice-sections {
