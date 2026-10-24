@@ -6,7 +6,7 @@
     <title>Volume Flow Rate Q Calculator - MyBoiler.com</title>
     <meta name="description" content="Calculate volumetric flow rate for central heating pump sizing and other heating system applications.">
     <link rel="canonical" href="https://myboiler.com/calculators/volume-flow-rate-q-calculator/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=calc-fields">
     <style>
         /* Calculator page specific styles */
         .calculator-page {
@@ -372,7 +372,6 @@
             <div class="input-group">
                 <div class="input-label">
                     <span>Φ = Heat demand in [kW]</span>
-                    <span class="input-value" id="phi-value">5.0</span>
                 </div>
                 <input type="number" id="phi-input" class="input-field" step="0.1" value="5" min="0">
             </div>
@@ -380,7 +379,6 @@
             <div class="input-group">
                 <div class="input-label">
                     <span>t<sub>F</sub> = Flow pipe temperature [°C]</span>
-                    <span class="input-value" id="tf-value">75</span>
                 </div>
                 <input type="number" id="tf-input" class="input-field" step="1" value="75" min="0">
             </div>
@@ -388,7 +386,6 @@
             <div class="input-group">
                 <div class="input-label">
                     <span>t<sub>R</sub> = Return pipe temperature [°C]</span>
-                    <span class="input-value" id="tr-value">65</span>
                 </div>
                 <input type="number" id="tr-input" class="input-field" step="1" value="65" min="0">
             </div>
@@ -449,21 +446,21 @@
                 const tR = parseFloat(trInput.value) || 0;
                 const conversionFactor = 0.86;
 
-                phiValue.textContent = phi.toFixed(1);
-                tfValue.textContent = tF;
-                trValue.textContent = tR;
+                if (phiValue) phiValue.textContent = phi.toFixed(1);
+                if (tfValue) tfValue.textContent = tF;
+                if (trValue) trValue.textContent = tR;
 
                 if (phi < 0 || tF < 0 || tR < 0 || (tF - tR) === 0) {
-                    qResultM3h.textContent = '—';
-                    qResultLs.textContent = '—';
+                    if (qResultM3h) qResultM3h.textContent = '—';
+                    if (qResultLs) qResultLs.textContent = '—';
                     return;
                 }
 
                 const Q_m3h = prec(((phi * conversionFactor) / (tF - tR)), 4);
                 const Q_ls = prec(((Q_m3h / 3600) * 1000), 4);
 
-                qResultM3h.textContent = Q_m3h.toFixed(4);
-                qResultLs.textContent = Q_ls.toFixed(4);
+                if (qResultM3h) qResultM3h.textContent = Q_m3h.toFixed(4);
+                if (qResultLs) qResultLs.textContent = Q_ls.toFixed(4);
             }
 
             phiInput.addEventListener('input', calculate);
@@ -476,6 +473,7 @@
 
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/calculator-fields.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>

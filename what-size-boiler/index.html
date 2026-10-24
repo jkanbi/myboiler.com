@@ -6,7 +6,7 @@
     <title>What Size Boiler Do I Need? - MyBoiler Hub</title>
     <meta name="description" content="UK boiler size guide in kW from radiator count, bathrooms, and boiler type. A starting point for a Gas Safe survey, not a heat-loss calculation.">
     <link rel="canonical" href="https://myboiler.com/what-size-boiler/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=calc-fields">
     <style>
         .calculator-page {
             min-height: 100vh;
@@ -301,27 +301,27 @@
             </div>
 
             <div class="input-group">
-                <div class="slider-value-display">
-                    <label class="input-label" for="bedrooms">Bedrooms</label>
-                    <span class="slider-value" id="bedrooms-value">3</span>
+                <label class="input-label" for="bedrooms-input">Bedrooms</label>
+                <div class="input-combo">
+                    <input type="number" id="bedrooms-input" class="input-field" min="1" max="7" step="1" value="3" inputmode="numeric">
+                    <input type="range" id="bedrooms" class="input-slider" min="1" max="7" step="1" value="3" aria-label="Bedrooms slider">
                 </div>
-                <input type="range" id="bedrooms" class="input-slider" min="1" max="7" step="1" value="3">
             </div>
 
             <div class="input-group">
-                <div class="slider-value-display">
-                    <label class="input-label" for="radiators">Radiators</label>
-                    <span class="slider-value" id="radiators-value">10</span>
+                <label class="input-label" for="radiators-input">Radiators</label>
+                <div class="input-combo">
+                    <input type="number" id="radiators-input" class="input-field" min="4" max="24" step="1" value="10" inputmode="numeric">
+                    <input type="range" id="radiators" class="input-slider" min="4" max="24" step="1" value="10" aria-label="Radiators slider">
                 </div>
-                <input type="range" id="radiators" class="input-slider" min="4" max="24" step="1" value="10">
             </div>
 
             <div class="input-group">
-                <div class="slider-value-display">
-                    <label class="input-label" for="baths">Baths and showers</label>
-                    <span class="slider-value" id="baths-value">1</span>
+                <label class="input-label" for="baths-input">Baths and showers</label>
+                <div class="input-combo">
+                    <input type="number" id="baths-input" class="input-field" min="1" max="5" step="1" value="1" inputmode="numeric">
+                    <input type="range" id="baths" class="input-slider" min="1" max="5" step="1" value="1" aria-label="Baths and showers slider">
                 </div>
-                <input type="range" id="baths" class="input-slider" min="1" max="5" step="1" value="1">
             </div>
 
             <div class="results-grid">
@@ -382,9 +382,6 @@
                 var beds = parseInt(bedrooms.value, 10);
                 var rads = parseInt(radiators.value, 10);
                 var outlets = parseInt(baths.value, 10);
-                document.getElementById('bedrooms-value').textContent = beds === 7 ? '7+' : String(beds);
-                document.getElementById('radiators-value').textContent = String(rads);
-                document.getElementById('baths-value').textContent = String(outlets);
                 fillSlider(bedrooms);
                 fillSlider(radiators);
                 fillSlider(baths);
@@ -425,6 +422,7 @@
 
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/calculator-fields.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>

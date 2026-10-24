@@ -6,7 +6,7 @@
     <title>Heat Pump COP Breakeven Calculator - MyBoiler.com</title>
     <meta name="description" content="Find the heat-pump COP that matches a gas boiler on running cost, then the annual difference from the gas used for heating.">
     <link rel="canonical" href="https://myboiler.com/calculators/heat-pump-cop-breakeven-calculator/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=calc-fields">
     <style>
         .calculator-page {
             min-height: 100vh;
@@ -335,7 +335,6 @@
             <div class="input-group">
                 <div class="input-label">
                     <span>Electricity Price <span class="input-hint">£/kWh</span></span>
-                    <span class="input-value" id="elec-value">0.27</span>
                 </div>
                 <input type="number" id="elec-input" class="input-field" step="0.0001" min="0" value="0.27" inputmode="decimal">
             </div>
@@ -343,23 +342,21 @@
             <div class="input-group">
                 <div class="input-label">
                     <span>Gas Price <span class="input-hint">£/kWh</span></span>
-                    <span class="input-value" id="gas-value">0.0678</span>
                 </div>
                 <input type="number" id="gas-input" class="input-field" step="0.0001" min="0" value="0.0678" inputmode="decimal">
             </div>
 
             <div class="input-group">
-                <div class="input-label">
-                    <span>Boiler Efficiency</span>
-                    <span class="input-value" id="eff-value">0.90</span>
+                <label class="input-label" for="eff-slider-input">Boiler Efficiency</label>
+                <div class="input-combo">
+                    <input type="number" id="eff-slider-input" class="input-field" min="0" max="1" step="0.01" value="0.9" inputmode="decimal">
+                    <input type="range" id="eff-slider" class="input-slider" min="0" max="1" step="0.01" value="0.9" aria-label="Boiler Efficiency slider">
                 </div>
-                <input type="range" id="eff-slider" class="input-slider" min="0" max="1" step="0.01" value="0.9">
             </div>
 
             <div class="input-group">
                 <div class="input-label">
                     <span>Annual gas used for heating <span class="input-hint">kWh</span></span>
-                    <span class="input-value" id="gas-use-value">12,000</span>
                 </div>
                 <input type="number" id="gas-use-input" class="input-field" step="100" min="0" value="12000" inputmode="numeric">
             </div>
@@ -367,11 +364,11 @@
             <hr class="section-break">
 
             <div class="input-group">
-                <div class="input-label">
-                    <span>Heat Pump COP</span>
-                    <span class="input-value" id="cop-value">2.8</span>
+                <label class="input-label" for="cop-slider-input">Heat Pump COP</label>
+                <div class="input-combo">
+                    <input type="number" id="cop-slider-input" class="input-field" min="2" max="6" step="0.1" value="2.8" inputmode="decimal">
+                    <input type="range" id="cop-slider" class="input-slider" min="2" max="6" step="0.1" value="2.8" aria-label="Heat Pump COP slider">
                 </div>
-                <input type="range" id="cop-slider" class="input-slider" min="2" max="6" step="0.1" value="2.8">
             </div>
 
             <div class="results-grid">
@@ -467,40 +464,40 @@
                 var gasUse = parseFloat(gasUseInput.value);
                 if (!isFinite(gasUse) || gasUse < 0) gasUse = 0;
 
-                elecValue.textContent = formatRate(elec);
-                gasValue.textContent = formatRate(gas);
-                gasUseValue.textContent = Math.round(gasUse).toLocaleString('en-GB');
-                effValue.textContent = eff.toFixed(2);
-                copValue.textContent = cop.toFixed(1);
+                if (elecValue) elecValue.textContent = formatRate(elec);
+                if (gasValue) gasValue.textContent = formatRate(gas);
+                if (gasUseValue) gasUseValue.textContent = Math.round(gasUse).toLocaleString('en-GB');
+                if (effValue) effValue.textContent = eff.toFixed(2);
+                if (copValue) copValue.textContent = cop.toFixed(1);
 
                 updateSliderFill(effSlider);
                 updateSliderFill(copSlider);
 
                 savingsResult.classList.remove('is-saving', 'is-costlier');
                 annualResult.classList.remove('is-saving', 'is-costlier');
-                annualResult.textContent = '—';
-                annualDetail.textContent = annualDetailDefault;
+                if (annualResult) annualResult.textContent = '—';
+                if (annualDetail) annualDetail.textContent = annualDetailDefault;
 
                 if (gas === 0) {
-                    ratioResult.textContent = '—';
-                    breakevenResult.textContent = '—';
-                    savingsResult.textContent = '—';
+                    if (ratioResult) ratioResult.textContent = '—';
+                    if (breakevenResult) breakevenResult.textContent = '—';
+                    if (savingsResult) savingsResult.textContent = '—';
                     return;
                 }
 
                 var ratio = elec / gas;
                 var breakeven = ratio * eff;
-                ratioResult.textContent = ratio.toFixed(2);
-                breakevenResult.textContent = breakeven.toFixed(2);
+                if (ratioResult) ratioResult.textContent = ratio.toFixed(2);
+                if (breakevenResult) breakevenResult.textContent = breakeven.toFixed(2);
 
                 if (breakeven === 0) {
-                    savingsResult.textContent = '—';
+                    if (savingsResult) savingsResult.textContent = '—';
                     return;
                 }
 
                 var costDifference = ((breakeven - cop) / breakeven) * 100;
                 var rounded = Math.round(costDifference * 100) / 100;
-                savingsResult.textContent = (rounded > 0 ? '+' : '') + rounded.toFixed(2) + '%';
+                if (savingsResult) savingsResult.textContent = (rounded > 0 ? '+' : '') + rounded.toFixed(2) + '%';
                 if (rounded > 0) savingsResult.classList.add('is-costlier');
                 if (rounded < 0) savingsResult.classList.add('is-saving');
 
@@ -509,8 +506,8 @@
                 var boilerCost = gasUse * gas;
                 var heatPumpCost = (gasUse * eff / cop) * elec;
                 var annualDifference = Math.round((heatPumpCost - boilerCost) * 100) / 100;
-                annualResult.textContent = (annualDifference > 0 ? '+' : annualDifference < 0 ? '−' : '') + formatPounds(annualDifference);
-                annualDetail.textContent = 'Boiler ' + formatPounds(boilerCost) + ' a year. Heat pump ' + formatPounds(heatPumpCost) + ' a year.';
+                if (annualResult) annualResult.textContent = (annualDifference > 0 ? '+' : annualDifference < 0 ? '−' : '') + formatPounds(annualDifference);
+                if (annualDetail) annualDetail.textContent = 'Boiler ' + formatPounds(boilerCost) + ' a year. Heat pump ' + formatPounds(heatPumpCost) + ' a year.';
                 if (annualDifference > 0) annualResult.classList.add('is-costlier');
                 if (annualDifference < 0) annualResult.classList.add('is-saving');
             }
@@ -527,6 +524,7 @@
 
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/calculator-fields.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>

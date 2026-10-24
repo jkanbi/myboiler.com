@@ -6,7 +6,7 @@
     <title>LPS and LPM Convertor - MyBoiler.com</title>
     <meta name="description" content="Convert between litres per second (LPS) and litres per minute (LPM) for heating system flow rate calculations.">
     <link rel="canonical" href="https://myboiler.com/calculators/lps-and-lpm-convertor/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=calc-fields">
     <style>
         /* Calculator page specific styles */
         .calculator-page {
@@ -379,7 +379,6 @@
             <div class="input-group">
                 <div class="input-label">
                     <span id="input-label">Litres Per Second (LPS)</span>
-                    <span class="input-value" id="input-value">1.0000</span>
                 </div>
                 <input type="number" id="input-field" class="input-field" step="0.0001" value="1" min="0">
             </div>
@@ -434,18 +433,18 @@
                 if (mode === 'lps-to-lpm') {
                     lpsToLpmBtn.classList.add('active');
                     lpmToLpsBtn.classList.remove('active');
-                    inputLabel.textContent = 'Litres Per Second (LPS)';
-                    resultLabel.textContent = 'Litres Per Minute (LPM)';
-                    resultUnit.textContent = 'LPM';
-                    formulaText.textContent = 'LPM = LPS × 60';
+                    if (inputLabel) inputLabel.textContent = 'Litres Per Second (LPS)';
+                    if (resultLabel) resultLabel.textContent = 'Litres Per Minute (LPM)';
+                    if (resultUnit) resultUnit.textContent = 'LPM';
+                    if (formulaText) formulaText.textContent = 'LPM = LPS × 60';
                     inputField.value = '1';
                 } else {
                     lpmToLpsBtn.classList.add('active');
                     lpsToLpmBtn.classList.remove('active');
-                    inputLabel.textContent = 'Litres Per Minute (LPM)';
-                    resultLabel.textContent = 'Litres Per Second (LPS)';
-                    resultUnit.textContent = 'LPS';
-                    formulaText.textContent = 'LPS = LPM ÷ 60';
+                    if (inputLabel) inputLabel.textContent = 'Litres Per Minute (LPM)';
+                    if (resultLabel) resultLabel.textContent = 'Litres Per Second (LPS)';
+                    if (resultUnit) resultUnit.textContent = 'LPS';
+                    if (formulaText) formulaText.textContent = 'LPS = LPM ÷ 60';
                     inputField.value = '5';
                 }
 
@@ -454,10 +453,10 @@
 
             function calculate() {
                 const inputValue = parseFloat(inputField.value) || 0;
-                inputValueDisplay.textContent = inputValue.toFixed(4);
+                if (inputValueDisplay) inputValueDisplay.textContent = inputValue.toFixed(4);
 
                 if (inputValue < 0) {
-                    resultDisplay.textContent = '—';
+                    if (resultDisplay) resultDisplay.textContent = '—';
                     return;
                 }
 
@@ -469,7 +468,7 @@
                     result = PREC(inputValue / 60, 4);
                 }
 
-                resultDisplay.textContent = result.toFixed(4);
+                if (resultDisplay) resultDisplay.textContent = result.toFixed(4);
             }
 
             inputField.addEventListener('input', calculate);
@@ -480,6 +479,7 @@
 
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/calculator-fields.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>
