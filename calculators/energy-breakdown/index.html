@@ -6,7 +6,7 @@
     <title>Energy Breakdown Calculator - MyBoiler.com</title>
     <meta name="description" content="Split annual gas and electricity into heating, hot water, cooking, and other use. Tick the appliances you have. Defaults use the Ofgem price cap.">
     <link rel="canonical" href="https://myboiler.com/calculators/energy-breakdown/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
     <style>
         .calculator-page {
             min-height: 100vh;
@@ -23,6 +23,7 @@
             padding: 1.5rem clamp(20px, 4vw, 40px) 2.5rem;
             margin: 0 auto;
             width: 100%;
+            max-width: var(--max-width, 1024px);
             box-sizing: border-box;
         }
 
@@ -344,6 +345,7 @@
         @media (max-width: 640px) {
             .calculator-container {
                 padding: 1.15rem 16px 1.75rem;
+                max-width: var(--max-width, 1024px);
             }
 
             .field-grid,

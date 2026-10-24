@@ -6,7 +6,7 @@
     <title>LPS and LPM Convertor - MyBoiler.com</title>
     <meta name="description" content="Convert between litres per second (LPS) and litres per minute (LPM) for heating system flow rate calculations.">
     <link rel="canonical" href="https://myboiler.com/calculators/lps-and-lpm-convertor/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
     <style>
         /* Calculator page specific styles */
         .calculator-page {
@@ -24,6 +24,7 @@
             padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
             margin: 0 auto;
             width: 100%;
+            max-width: var(--max-width, 1024px);
             box-sizing: border-box;
         }
 
@@ -202,6 +203,7 @@
         @media (max-width: 768px) {
             .calculator-container {
                 padding: clamp(1.5rem, 4vw, 2.5rem) clamp(16px, 4vw, 24px);
+                max-width: var(--max-width, 1024px);
             }
 
             .calculator-header {
@@ -245,6 +247,7 @@
         @media (max-width: 480px) {
             .calculator-container {
                 padding: 1.25rem 12px;
+                max-width: var(--max-width, 1024px);
             }
 
             .calculator-header {

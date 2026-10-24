@@ -6,7 +6,7 @@
     <title>Heat Pump COP Breakeven Calculator - MyBoiler.com</title>
     <meta name="description" content="Find the heat-pump COP that matches a gas boiler on running cost, then the annual difference from the gas used for heating.">
     <link rel="canonical" href="https://myboiler.com/calculators/heat-pump-cop-breakeven-calculator/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
     <style>
         .calculator-page {
             min-height: 100vh;
@@ -23,6 +23,7 @@
             padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
             margin: 0 auto;
             width: 100%;
+            max-width: var(--max-width, 1024px);
             box-sizing: border-box;
         }
 
@@ -266,6 +267,7 @@
         @media (max-width: 768px) {
             .calculator-container {
                 padding: clamp(1.5rem, 4vw, 2.5rem) clamp(16px, 4vw, 24px);
+                max-width: var(--max-width, 1024px);
             }
 
             .calculator-card {

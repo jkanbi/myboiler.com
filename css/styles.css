@@ -528,23 +528,23 @@
             flex-direction: column;
         }
 
-        /* One desktop content column across article, app, calculator, and hub pages.
-           Per-page <style> blocks keep typography/padding; they must not set a
-           competing pixel max-width on these shells. */
-        .article-container,
-        .chat-container,
-        .quote-container,
-        .decide-container,
-        .checker-container,
-        .calculator-container,
-        .calculators-container,
-        .container,
-        #content-container,
-        .ar-hero__container,
-        .ar-topics__header,
-        .ar-box-pair-grid {
+        /* One desktop content column. body prefix beats per-page .foo { width:100% }
+           rules that omit max-width (those uncapped the column if this file was
+           stale/cached after #131 stripped the inline pixel caps). */
+        body .article-container,
+        body .chat-container,
+        body .quote-container,
+        body .decide-container,
+        body .checker-container,
+        body .calculator-container,
+        body .calculators-container,
+        body .container,
+        body #content-container,
+        body .ar-hero__container,
+        body .ar-topics__header,
+        body .ar-box-pair-grid {
             width: 100%;
-            max-width: var(--max-width);
+            max-width: var(--max-width, 1024px);
             margin-left: auto;
             margin-right: auto;
             box-sizing: border-box;
@@ -572,7 +572,7 @@
         .article-content,
         .article-header {
             width: 100%;
-            max-width: none;
+            max-width: 100%;
             box-sizing: border-box;
         }
 
