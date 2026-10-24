@@ -548,6 +548,8 @@
             margin-left: auto;
             margin-right: auto;
             box-sizing: border-box;
+            min-width: 0;
+            overflow-x: auto;
         }
 
         /* Grouping for right alignment */
@@ -1512,6 +1514,14 @@
 .article-content iframe,
 .markdown-content iframe {
     max-width: 100%;
+}
+
+/* Hidden WordPress embed iframes used a 600px box that expanded the
+   viewport on mobile even when clipped to 1px. */
+iframe.wp-embedded-content[style*="clip"] {
+    width: 1px !important;
+    height: 1px !important;
+    max-width: 1px;
 }
 
 .article-content table,
