@@ -6,7 +6,7 @@
     <title>Hot Water Flow Rate to KW Input - MyBoiler.com</title>
     <meta name="description" content="Calculate the required heat input (KW) based on hot water flow rate and desired temperature rise.">
     <link rel="canonical" href="https://myboiler.com/calculators/hot-water-flow-rate-to-kw-input/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=calc-fields">
     <style>
         /* Calculator page specific styles */
         .calculator-page {
@@ -382,19 +382,19 @@
 
         <div class="calculator-card">
             <div class="input-group">
-                <div class="input-label">
-                    <span>Flow Rate (LPM)</span>
-                    <span class="input-value" id="lpm-value">10.0</span>
+                <label class="input-label" for="lpm-slider-input">Flow Rate (LPM)</label>
+                <div class="input-combo">
+                    <input type="number" id="lpm-slider-input" class="input-field" min="0" max="20" step="0.1" value="10" inputmode="decimal">
+                    <input type="range" id="lpm-slider" class="input-slider" min="0" max="20" step="0.1" value="10" aria-label="Flow Rate (LPM) slider">
                 </div>
-                <input type="range" id="lpm-slider" class="input-slider" min="0" max="20" step="0.1" value="10">
             </div>
 
             <div class="input-group">
-                <div class="input-label">
-                    <span>Temperature Rise ΔT (°C)</span>
-                    <span class="input-value" id="temp-value">35</span>
+                <label class="input-label" for="temp-slider-input">Temperature Rise ΔT (°C)</label>
+                <div class="input-combo">
+                    <input type="number" id="temp-slider-input" class="input-field" min="0" max="60" step="1" value="35" inputmode="decimal">
+                    <input type="range" id="temp-slider" class="input-slider" min="0" max="60" step="1" value="35" aria-label="Temperature Rise ΔT (°C) slider">
                 </div>
-                <input type="range" id="temp-slider" class="input-slider" min="0" max="60" step="1" value="35">
             </div>
 
             <div class="results-grid">
@@ -443,17 +443,17 @@
                 const LPM = parseFloat(lpmSlider.value);
                 const DeltaT = parseFloat(tempSlider.value);
 
-                lpmValue.textContent = LPM.toFixed(1);
-                tempValue.textContent = DeltaT;
+                if (lpmValue) lpmValue.textContent = LPM.toFixed(1);
+                if (tempValue) tempValue.textContent = DeltaT;
 
                 if (LPM === 0 || DeltaT === 0) {
-                    kwResult.textContent = '—';
+                    if (kwResult) kwResult.textContent = '—';
                     return;
                 }
 
                 const KW = PREC(((LPM / 60) * DeltaT * 4.186), 2);
 
-                kwResult.textContent = KW.toFixed(2);
+                if (kwResult) kwResult.textContent = KW.toFixed(2);
 
                 updateSliderFill(lpmSlider);
                 updateSliderFill(tempSlider);
@@ -478,6 +478,7 @@
 
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/calculator-fields.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>

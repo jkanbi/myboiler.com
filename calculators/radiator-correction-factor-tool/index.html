@@ -6,7 +6,7 @@
     <title>Radiator Correction Factor Tool - MyBoiler.com</title>
     <meta name="description" content="Calculate radiator output at different delta T values for heat pump systems and conventional heating.">
     <link rel="canonical" href="https://myboiler.com/calculators/radiator-correction-factor-tool/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=calc-fields">
     <style>
         .calculator-page {
             min-height: 100vh;
@@ -371,7 +371,6 @@
             <div class="input-group">
                 <div class="input-label">
                     <span>Emitter Output (BTU / KW)</span>
-                    <span class="input-value" id="output1-value">1000</span>
                 </div>
                 <input type="number" id="output1-input" class="input-field" step="1" value="1000" min="0">
             </div>
@@ -419,7 +418,6 @@
             <div class="input-group">
                 <div class="input-label">
                     <span>Heatloss (BTU / KW required)</span>
-                    <span class="input-value" id="output2-value">1000</span>
                 </div>
                 <input type="number" id="output2-input" class="input-field" step="1" value="1000" min="0">
             </div>
@@ -510,15 +508,15 @@
                 const output = parseFloat(output1Input.value) || 0;
                 const factor = parseFloat(delta1Select.value) || 1;
 
-                output1Value.textContent = output.toFixed(0);
+                if (output1Value) output1Value.textContent = output.toFixed(0);
 
                 if (output < 0) {
-                    result1.textContent = '—';
+                    if (result1) result1.textContent = '—';
                     return;
                 }
 
                 const result = output * factor;
-                result1.textContent = result.toFixed(2);
+                if (result1) result1.textContent = result.toFixed(2);
             }
 
             output1Input.addEventListener('input', calculate1);
@@ -540,15 +538,15 @@
                 const heatloss = parseFloat(output2Input.value) || 0;
                 const factor = parseFloat(delta2Select.value) || 1;
 
-                output2Value.textContent = heatloss.toFixed(0);
+                if (output2Value) output2Value.textContent = heatloss.toFixed(0);
 
                 if (heatloss < 0 || factor === 0) {
-                    result2.textContent = '—';
+                    if (result2) result2.textContent = '—';
                     return;
                 }
 
                 const result = heatloss / factor;
-                result2.textContent = result.toFixed(2);
+                if (result2) result2.textContent = result.toFixed(2);
             }
 
             output2Input.addEventListener('input', calculate2);
@@ -560,6 +558,7 @@
 
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/calculator-fields.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>

@@ -593,6 +593,63 @@
             overflow-x: auto;
         }
 
+        /* Desktop: pack stacked calculator fields into two columns.
+           Sliders, combo controls, results, and copy still span the card.
+           Skip complex cards that already have their own layout. */
+        @media (min-width: 768px) {
+            .calculator-card:has(> .input-group):not(:has(.toggle-row, .section-grid, .pro-split, .audience-toggle, .field-grid)),
+            .metric-section:has(> .input-group),
+            .imperial-section:has(> .input-group) {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                grid-auto-flow: dense;
+                column-gap: 1.5rem;
+                row-gap: 1.25rem;
+                align-items: start;
+            }
+
+            .calculator-card:has(> .input-group):not(:has(.toggle-row, .section-grid, .pro-split, .audience-toggle, .field-grid)) > .input-group,
+            .metric-section:has(> .input-group) > .input-group,
+            .imperial-section:has(> .input-group) > .input-group {
+                margin-bottom: 0;
+            }
+
+            .calculator-card:has(> .input-group) > .input-group:has(.choice-toggle),
+            .calculator-card:has(> .input-group) > .input-group:has(.input-combo):has(+ .results-grid),
+            .calculator-card:has(> .input-group) > .input-group:has(.input-combo):has(+ .result-section),
+            .calculator-card:has(> .input-group) > :not(.input-group),
+            .metric-section:has(> .input-group) > :not(.input-group),
+            .imperial-section:has(> .input-group) > :not(.input-group) {
+                grid-column: 1 / -1;
+            }
+        }
+
+        /* Number box + compact slider, two-way synced by js/calculator-fields.js */
+        .input-combo {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.7rem;
+            align-items: center;
+        }
+
+        .input-combo .input-field {
+            width: 100%;
+            min-width: 0;
+        }
+
+        .input-combo .input-slider {
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-card:has(> .input-group) .input-combo,
+            .metric-section .input-combo,
+            .imperial-section .input-combo {
+                grid-template-columns: 1fr;
+                gap: 0.55rem;
+            }
+        }
+
         /* Grouping for right alignment */
         .right-header-items {
             display: flex;

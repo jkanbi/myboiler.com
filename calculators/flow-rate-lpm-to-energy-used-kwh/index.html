@@ -6,7 +6,7 @@
     <title>Flow Rate (LPM) to Energy Used (kWh) Calculator - MyBoiler.com</title>
     <meta name="description" content="Calculate energy consumption from hot water flow rate, temperature rise, and usage duration.">
     <link rel="canonical" href="https://myboiler.com/calculators/flow-rate-lpm-to-energy-used-kwh/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=calc-fields">
     <style>
         .calculator-page {
             min-height: 100vh;
@@ -405,27 +405,27 @@
         <div class="calculator-card">
             <!-- Inputs -->
             <div class="input-group">
-                <div class="input-label">
-                    <span>Flow Rate (Litres per Minute)</span>
-                    <span class="input-value" id="flow-value">10.0</span>
+                <label class="input-label" for="flow-slider-input">Flow Rate (Litres per Minute)</label>
+                <div class="input-combo">
+                    <input type="number" id="flow-slider-input" class="input-field" min="0" max="20" step="0.1" value="10" inputmode="decimal">
+                    <input type="range" id="flow-slider" class="input-slider" min="0" max="20" step="0.1" value="10" aria-label="Flow Rate (Litres per Minute) slider">
                 </div>
-                <input type="range" id="flow-slider" class="input-slider" min="0" max="20" step="0.1" value="10">
             </div>
 
             <div class="input-group">
-                <div class="input-label">
-                    <span>Temperature Rise (Degrees Celsius)</span>
-                    <span class="input-value" id="temp-value">35</span>
+                <label class="input-label" for="temp-slider-input">Temperature Rise (Degrees Celsius)</label>
+                <div class="input-combo">
+                    <input type="number" id="temp-slider-input" class="input-field" min="0" max="60" step="1" value="35" inputmode="decimal">
+                    <input type="range" id="temp-slider" class="input-slider" min="0" max="60" step="1" value="35" aria-label="Temperature Rise (Degrees Celsius) slider">
                 </div>
-                <input type="range" id="temp-slider" class="input-slider" min="0" max="60" step="1" value="35">
             </div>
 
             <div class="input-group">
-                <div class="input-label">
-                    <span>Duration of Water Usage (Minutes)</span>
-                    <span class="input-value" id="duration-value">1</span>
+                <label class="input-label" for="duration-slider-input">Duration of Water Usage (Minutes)</label>
+                <div class="input-combo">
+                    <input type="number" id="duration-slider-input" class="input-field" min="1" max="60" step="1" value="1" inputmode="decimal">
+                    <input type="range" id="duration-slider" class="input-slider" min="1" max="60" step="1" value="1" aria-label="Duration of Water Usage (Minutes) slider">
                 </div>
-                <input type="range" id="duration-slider" class="input-slider" min="1" max="60" step="1" value="1">
             </div>
 
             <!-- Result -->
@@ -476,17 +476,17 @@
                 const T = parseFloat(tempSlider.value) || 0;
                 const D = parseFloat(durationSlider.value) || 0;
 
-                flowValue.textContent = F.toFixed(1);
-                tempValue.textContent = T;
-                durationValue.textContent = D;
+                if (flowValue) flowValue.textContent = F.toFixed(1);
+                if (tempValue) tempValue.textContent = T;
+                if (durationValue) durationValue.textContent = D;
 
                 if (F < 0 || T < 0 || D < 0) {
-                    energyResult.textContent = '—';
+                    if (energyResult) energyResult.textContent = '—';
                     return;
                 }
 
                 const kWh = ((F / 60) * T * 4.186) * (D / 60);
-                energyResult.textContent = kWh.toFixed(2);
+                if (energyResult) energyResult.textContent = kWh.toFixed(2);
 
                 updateSliderFill(flowSlider);
                 updateSliderFill(tempSlider);
@@ -511,6 +511,7 @@
 
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/calculator-fields.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>

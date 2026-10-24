@@ -6,7 +6,7 @@
     <title>Buffer Minimum Volume Calculation - MyBoiler.com</title>
     <meta name="description" content="Calculate the required buffer vessel volume for heat pump systems to ensure proper cycling and efficiency.">
     <link rel="canonical" href="https://myboiler.com/calculators/buffer-minimum-volume-calculation/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=calc-fields">
     <style>
         .calculator-page {
             min-height: 100vh;
@@ -471,19 +471,19 @@
                     <h3 class="panel-title">Power Out / In</h3>
                     
                     <div class="input-group">
-                        <div class="input-label">
-                            <span>Minimum heat pump output (kW) - Pmin</span>
-                            <span class="input-value" id="pmin-value">0.0</span>
+                        <label class="input-label" for="pmin-slider-input">Minimum heat pump output (kW) - Pmin</label>
+                        <div class="input-combo">
+                            <input type="number" id="pmin-slider-input" class="input-field" min="0" max="20" step="0.1" value="0" inputmode="decimal">
+                            <input type="range" id="pmin-slider" class="input-slider" min="0" max="20" step="0.1" value="0" aria-label="Minimum heat pump output (kW) - Pmin slider">
                         </div>
-                        <input type="range" id="pmin-slider" class="input-slider" min="0" max="20" step="0.1" value="0">
                     </div>
 
                     <div class="input-group">
-                        <div class="input-label">
-                            <span>Minimum heat demand (kW) - Dmin</span>
-                            <span class="input-value" id="dmin-value">0.00</span>
+                        <label class="input-label" for="dmin-slider-input">Minimum heat demand (kW) - Dmin</label>
+                        <div class="input-combo">
+                            <input type="number" id="dmin-slider-input" class="input-field" min="0" max="20" step="0.01" value="0" inputmode="decimal">
+                            <input type="range" id="dmin-slider" class="input-slider" min="0" max="20" step="0.01" value="0" aria-label="Minimum heat demand (kW) - Dmin slider">
                         </div>
-                        <input type="range" id="dmin-slider" class="input-slider" min="0" max="20" step="0.01" value="0">
                     </div>
 
                     <div class="input-group">
@@ -499,11 +499,11 @@
                     <h3 class="panel-title">Starts per Hour and On Time</h3>
                     
                     <div class="input-group">
-                        <div class="input-label">
-                            <span>Starts Per Hour</span>
-                            <span class="input-value" id="starts-value">1</span>
+                        <label class="input-label" for="starts-slider-input">Starts Per Hour</label>
+                        <div class="input-combo">
+                            <input type="number" id="starts-slider-input" class="input-field" min="1" max="9" step="1" value="1" inputmode="decimal">
+                            <input type="range" id="starts-slider" class="input-slider" min="1" max="9" step="1" value="1" aria-label="Starts Per Hour slider">
                         </div>
-                        <input type="range" id="starts-slider" class="input-slider" min="1" max="9" step="1" value="1">
                     </div>
 
                     <div class="input-group">
@@ -533,11 +533,11 @@
                     </div>
 
                     <div class="input-group">
-                        <div class="input-label">
-                            <span>DT / Maximum allowable temperature variation (°C) - Hmax</span>
-                            <span class="input-value" id="hmax-value">5</span>
+                        <label class="input-label" for="hmax-slider-input">DT / Maximum allowable temperature variation (°C) - Hmax</label>
+                        <div class="input-combo">
+                            <input type="number" id="hmax-slider-input" class="input-field" min="0" max="20" step="1" value="5" inputmode="decimal">
+                            <input type="range" id="hmax-slider" class="input-slider" min="0" max="20" step="1" value="5" aria-label="DT / Maximum allowable temperature variation (°C) - Hmax slider">
                         </div>
-                        <input type="range" id="hmax-slider" class="input-slider" min="0" max="20" step="1" value="5">
                     </div>
                 </div>
 
@@ -555,7 +555,6 @@
                     <div class="input-group">
                         <div class="input-label">
                             <span>Existing system volume (liters) - Vs</span>
-                            <span class="input-value" id="vs-value">0</span>
                         </div>
                         <input type="number" id="vs-input" class="input-field" step="1" value="0" min="0">
                     </div>
@@ -641,11 +640,11 @@
                 const Vs = parseFloat(vsInput.value) || 0;
                 const SHC = 4.2;
 
-                pminValue.textContent = Pmin.toFixed(1);
-                dminValue.textContent = Dmin.toFixed(2);
-                startsValue.textContent = starts;
-                hmaxValue.textContent = Hmax;
-                vsValue.textContent = Vs.toFixed(0);
+                if (pminValue) pminValue.textContent = Pmin.toFixed(1);
+                if (dminValue) dminValue.textContent = Dmin.toFixed(2);
+                if (startsValue) startsValue.textContent = starts;
+                if (hmaxValue) hmaxValue.textContent = Hmax;
+                if (vsValue) vsValue.textContent = Vs.toFixed(0);
 
                 const excessPower = Pmin - Dmin;
                 excessField.value = excessPower.toFixed(2);
@@ -667,7 +666,7 @@
 
                 const Vb = totalVolume - Vs;
                 vbField.value = Vb.toFixed(2);
-                resultDisplay.textContent = Vb.toFixed(2);
+                if (resultDisplay) resultDisplay.textContent = Vb.toFixed(2);
 
                 updateSliderFill(pminSlider);
                 updateSliderFill(dminSlider);
@@ -695,6 +694,7 @@
 
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/calculator-fields.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>

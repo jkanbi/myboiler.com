@@ -6,7 +6,7 @@
     <title>Heat Output (KW) to Flow Rate (LPS/LPM) - MyBoiler.com</title>
     <meta name="description" content="Calculate the required flow rate for your heating system based on heat output, temperature difference, and specific heat capacity.">
     <link rel="canonical" href="https://myboiler.com/calculators/kw-to-flow-rate/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=calc-fields">
     <style>
         /* Calculator page specific styles */
         .calculator-page {
@@ -406,25 +406,24 @@
 
         <div class="calculator-card">
             <div class="input-group">
-                <div class="input-label">
-                    <span>Heat Output (KW)</span>
-                    <span class="input-value" id="kw-value">24</span>
+                <label class="input-label" for="kw-slider-input">Heat Output (KW)</label>
+                <div class="input-combo">
+                    <input type="number" id="kw-slider-input" class="input-field" min="0" max="100" step="1" value="24" inputmode="decimal">
+                    <input type="range" id="kw-slider" class="input-slider" min="0" max="100" step="1" value="24" aria-label="Heat Output (KW) slider">
                 </div>
-                <input type="range" id="kw-slider" class="input-slider" min="0" max="100" step="1" value="24">
             </div>
 
             <div class="input-group">
-                <div class="input-label">
-                    <span>Temperature Difference Δt (°C)</span>
-                    <span class="input-value" id="dt-value">35</span>
+                <label class="input-label" for="dt-slider-input">Temperature Difference Δt (°C)</label>
+                <div class="input-combo">
+                    <input type="number" id="dt-slider-input" class="input-field" min="0" max="100" step="1" value="35" inputmode="decimal">
+                    <input type="range" id="dt-slider" class="input-slider" min="0" max="100" step="1" value="35" aria-label="Temperature Difference Δt (°C) slider">
                 </div>
-                <input type="range" id="dt-slider" class="input-slider" min="0" max="100" step="1" value="35">
             </div>
 
             <div class="input-group">
                 <div class="input-label">
                     <span>Specific Heat Capacity (kJ/kg·K)</span>
-                    <span class="input-value" id="shc-value">4.186</span>
                 </div>
                 <input type="number" id="shc-input" class="input-number" min="0" step="0.001" value="4.186">
             </div>
@@ -493,14 +492,14 @@
                 const Dt = parseFloat(dtSlider.value);
                 const SHC = parseFloat(shcInput.value);
 
-                kwValue.textContent = KW;
-                dtValue.textContent = Dt;
-                shcValue.textContent = SHC;
+                if (kwValue) kwValue.textContent = KW;
+                if (dtValue) dtValue.textContent = Dt;
+                if (shcValue) shcValue.textContent = SHC;
 
                 if (Dt === 0 || SHC === 0) {
-                    lpsResult.textContent = '—';
-                    lpmResult.textContent = '—';
-                    lphResult.textContent = '—';
+                    if (lpsResult) lpsResult.textContent = '—';
+                    if (lpmResult) lpmResult.textContent = '—';
+                    if (lphResult) lphResult.textContent = '—';
                     return;
                 }
 
@@ -508,9 +507,9 @@
                 const LPM = PREC(LPS * 60, 4);
                 const LPH = PREC(LPS * 3600, 4);
 
-                lpsResult.textContent = LPS.toFixed(4);
-                lpmResult.textContent = LPM.toFixed(4);
-                lphResult.textContent = LPH.toFixed(4);
+                if (lpsResult) lpsResult.textContent = LPS.toFixed(4);
+                if (lpmResult) lpmResult.textContent = LPM.toFixed(4);
+                if (lphResult) lphResult.textContent = LPH.toFixed(4);
 
                 updateSliderFill(kwSlider);
                 updateSliderFill(dtSlider);
@@ -537,6 +536,7 @@
 
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/calculator-fields.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>

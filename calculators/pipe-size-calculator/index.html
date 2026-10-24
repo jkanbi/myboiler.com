@@ -6,7 +6,7 @@
     <title>Pipe Size Calculator - MyBoiler.com</title>
     <meta name="description" content="Calculate the required internal pipe diameter for your heating system based on power, temperature difference, and target velocity.">
     <link rel="canonical" href="https://myboiler.com/calculators/pipe-size-calculator/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=calc-fields">
     <style>
         /* Calculator page specific styles */
         .calculator-page {
@@ -426,27 +426,27 @@
         <div class="calculator-card">
             <!-- Inputs -->
             <div class="input-group">
-                <div class="input-label">
-                    <span>Power (KW)</span>
-                    <span class="input-value" id="kw-value">4.0</span>
+                <label class="input-label" for="kw-slider-input">Power (KW)</label>
+                <div class="input-combo">
+                    <input type="number" id="kw-slider-input" class="input-field" min="0" max="40" step="0.1" value="4" inputmode="decimal">
+                    <input type="range" id="kw-slider" class="input-slider" min="0" max="40" step="0.1" value="4" aria-label="Power (KW) slider">
                 </div>
-                <input type="range" id="kw-slider" class="input-slider" min="0" max="40" step="0.1" value="4">
             </div>
 
             <div class="input-group">
-                <div class="input-label">
-                    <span>Temperature Difference (ΔT °C)</span>
-                    <span class="input-value" id="deltaT-value">5</span>
+                <label class="input-label" for="deltaT-slider-input">Temperature Difference (ΔT °C)</label>
+                <div class="input-combo">
+                    <input type="number" id="deltaT-slider-input" class="input-field" min="0" max="20" step="1" value="5" inputmode="decimal">
+                    <input type="range" id="deltaT-slider" class="input-slider" min="0" max="20" step="1" value="5" aria-label="Temperature Difference (ΔT °C) slider">
                 </div>
-                <input type="range" id="deltaT-slider" class="input-slider" min="0" max="20" step="1" value="5">
             </div>
 
             <div class="input-group">
-                <div class="input-label">
-                    <span>Target Velocity (v m/s)</span>
-                    <span class="input-value" id="velocity-value">0.9</span>
+                <label class="input-label" for="velocity-slider-input">Target Velocity (v m/s)</label>
+                <div class="input-combo">
+                    <input type="number" id="velocity-slider-input" class="input-field" min="0" max="5" step="0.1" value="0.9" inputmode="decimal">
+                    <input type="range" id="velocity-slider" class="input-slider" min="0" max="5" step="0.1" value="0.9" aria-label="Target Velocity (v m/s) slider">
                 </div>
-                <input type="range" id="velocity-slider" class="input-slider" min="0" max="5" step="0.1" value="0.9">
             </div>
 
             <!-- Results -->
@@ -532,15 +532,15 @@
                 const Velocity = parseFloat(velocitySlider.value);
 
                 // Update display values
-                kwValue.textContent = KW.toFixed(1);
-                deltaTValue.textContent = DeltaT;
-                velocityValue.textContent = Velocity.toFixed(1);
+                if (kwValue) kwValue.textContent = KW.toFixed(1);
+                if (deltaTValue) deltaTValue.textContent = DeltaT;
+                if (velocityValue) velocityValue.textContent = Velocity.toFixed(1);
 
                 // Handle division by zero
                 if (DeltaT === 0 || Velocity === 0) {
-                    lpsResult.textContent = '—';
-                    lpmResult.textContent = '—';
-                    diameterResult.textContent = '—';
+                    if (lpsResult) lpsResult.textContent = '—';
+                    if (lpmResult) lpmResult.textContent = '—';
+                    if (diameterResult) diameterResult.textContent = '—';
                     return;
                 }
 
@@ -554,9 +554,9 @@
                 const d = PREC(2 * Math.sqrt(((1000 / 3.14) / Velocity) * LPS), 2);
 
                 // Update results
-                lpsResult.textContent = LPS.toFixed(3);
-                lpmResult.textContent = LPM.toFixed(3);
-                diameterResult.textContent = d.toFixed(2);
+                if (lpsResult) lpsResult.textContent = LPS.toFixed(3);
+                if (lpmResult) lpmResult.textContent = LPM.toFixed(3);
+                if (diameterResult) diameterResult.textContent = d.toFixed(2);
 
                 // Update slider fill
                 updateSliderFill(kwSlider);
@@ -595,6 +595,7 @@
     <!-- Add menu.js for navigation functionality -->
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/calculator-fields.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>

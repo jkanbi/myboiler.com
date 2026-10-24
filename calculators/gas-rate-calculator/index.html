@@ -6,7 +6,7 @@
     <title>Gas Rate Calculator - MyBoiler.com</title>
     <meta name="description" content="Calculate gas consumption of appliances to ensure they are within manufacturer and gas safety tolerances.">
     <link rel="canonical" href="https://myboiler.com/calculators/gas-rate-calculator/">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=calc-fields">
     <style>
         /* Calculator page specific styles */
         .calculator-page {
@@ -626,7 +626,6 @@
                 <div class="input-group">
                     <div class="input-label">
                         <span>Meter Start Reading</span>
-                        <span class="input-value" id="metric-start-value">000</span>
                     </div>
                     <input type="number" id="metric-start" class="input-field" value="000" step="1" min="0">
                 </div>
@@ -634,17 +633,16 @@
                 <div class="input-group">
                     <div class="input-label">
                         <span>Meter Finish Reading</span>
-                        <span class="input-value" id="metric-finish-value">—</span>
                     </div>
                     <input type="number" id="metric-finish" class="input-field" placeholder="Enter finish reading" step="1" min="0">
                 </div>
 
                 <div class="input-group">
-                    <div class="input-label">
-                        <span>Timer Value (Seconds)</span>
-                        <span class="input-value" id="metric-timer-value">60</span>
+                    <label class="input-label" for="metric-timer-input">Timer Value (Seconds)</label>
+                    <div class="input-combo">
+                        <input type="number" id="metric-timer-input" class="input-field" min="0" max="120" step="1" value="60" inputmode="decimal">
+                        <input type="range" id="metric-timer" class="input-slider" min="0" max="120" step="1" value="60" aria-label="Timer Value (Seconds) slider">
                     </div>
-                    <input type="range" id="metric-timer" class="input-slider" min="0" max="120" step="1" value="60">
                 </div>
 
                 <!-- Results -->
@@ -671,8 +669,8 @@
                         <div class="result-label">Net m³/h</div>
                         <div class="result-value" id="metric-net-m3h">—</div>
                         <div class="result-unit">cubic metres per hour</div>
-                    </div>
                 </div>
+            </div>
 
                 <!-- Instructions -->
                 <div class="instructions-section">
@@ -685,8 +683,8 @@
                             <li>At exactly 2 minutes take the second reading (R2)</li>
                         </ol>
                         <p><strong>Note:</strong> You multiply by 30 because your 2 min read converts to gas units used in 1 hour.</p>
-                    </div>
                 </div>
+            </div>
 
                 <!-- Formula Legend -->
                 <div class="formula-section">
@@ -702,8 +700,8 @@
 
                     <div class="chart-links">
                         <a href="/gas-rating-chart-metric/" class="chart-link" target="_blank">View Metric Gas Rating Chart</a>
-                    </div>
                 </div>
+            </div>
             </div>
 
             <div class="calculator-video">
@@ -756,13 +754,13 @@
                     </select>
                 </div>
 
-                <div class="input-group">
-                    <div class="input-label">
-                        <span>Time in Seconds</span>
-                        <span class="input-value" id="imperial-time-value">10</span>
-                    </div>
-                    <input type="range" id="imperial-time" class="input-slider" min="1" max="180" step="1" value="10">
+                                <div class="input-group">
+                <label class="input-label" for="imperial-time-input">Time in Seconds</label>
+                <div class="input-combo">
+                    <input type="number" id="imperial-time-input" class="input-field" min="1" max="180" step="1" value="10" inputmode="decimal">
+                    <input type="range" id="imperial-time" class="input-slider" min="1" max="180" step="1" value="10" aria-label="Time in Seconds slider">
                 </div>
+            </div>
 
                 <!-- Results -->
                 <div class="results-grid">
@@ -788,8 +786,8 @@
                         <div class="result-label">Net m³/h</div>
                         <div class="result-value" id="imperial-net-m3h">—</div>
                         <div class="result-unit">cubic metres per hour</div>
-                    </div>
                 </div>
+            </div>
 
                 <!-- Instructions -->
                 <div class="instructions-section">
@@ -801,8 +799,8 @@
                             <li>Time in seconds how long it takes for test dial to complete 1 revolution (1ft³)</li>
                         </ol>
                         <p><strong>Note:</strong> ft³ × 0.028 = m³</p>
-                    </div>
                 </div>
+            </div>
 
                 <!-- Formula Legend -->
                 <div class="formula-section">
@@ -819,8 +817,8 @@
 
                     <div class="chart-links">
                         <a href="/gas-rating-chart-imperial/" class="chart-link" target="_blank">View Imperial Gas Rating Chart</a>
-                    </div>
                 </div>
+            </div>
             </div>
         </div>
 
@@ -919,19 +917,19 @@
                 const timer = parseFloat(metricTimer.value);
 
                 // Update display values
-                metricStartValue.textContent = start.toString().padStart(3, '0');
-                metricFinishValue.textContent = isNaN(finish) ? '—' : finish.toString();
-                metricTimerValue.textContent = timer;
+                if (metricStartValue) metricStartValue.textContent = start.toString().padStart(3, '0');
+                if (metricFinishValue) metricFinishValue.textContent = isNaN(finish) ? '—' : finish.toString();
+                if (metricTimerValue) metricTimerValue.textContent = timer;
 
                 // Update slider fill
                 updateSliderFill(metricTimer);
 
                 // Validate inputs
                 if (isNaN(finish) || timer === 0 || finish <= start) {
-                    metricGrossKW.textContent = '—';
-                    metricGrossM3h.textContent = '—';
-                    metricNetKW.textContent = '—';
-                    metricNetM3h.textContent = '—';
+                    if (metricGrossKW) metricGrossKW.textContent = '—';
+                    if (metricGrossM3h) metricGrossM3h.textContent = '—';
+                    if (metricNetKW) metricNetKW.textContent = '—';
+                    if (metricNetM3h) metricNetM3h.textContent = '—';
                     return;
                 }
 
@@ -948,10 +946,10 @@
                 const netM3h = PREC(grossKW / CV_METRIC / GROSS_TO_NET, 2);
 
                 // Update results
-                metricGrossKW.textContent = grossKW.toFixed(2);
-                metricGrossM3h.textContent = grossM3h.toFixed(2);
-                metricNetKW.textContent = netKW.toFixed(2);
-                metricNetM3h.textContent = netM3h.toFixed(2);
+                if (metricGrossKW) metricGrossKW.textContent = grossKW.toFixed(2);
+                if (metricGrossM3h) metricGrossM3h.textContent = grossM3h.toFixed(2);
+                if (metricNetKW) metricNetKW.textContent = netKW.toFixed(2);
+                if (metricNetM3h) metricNetM3h.textContent = netM3h.toFixed(2);
             }
 
             // Add event listeners for Metric mode (both input and change)
@@ -979,17 +977,17 @@
                 const time = parseFloat(imperialTime.value);
 
                 // Update display values
-                imperialTimeValue.textContent = time;
+                if (imperialTimeValue) imperialTimeValue.textContent = time;
 
                 // Update slider fill
                 updateSliderFill(imperialTime);
 
                 // Validate inputs
                 if (time === 0) {
-                    imperialGrossKW.textContent = '—';
-                    imperialGasRate.textContent = '—';
-                    imperialNetKW.textContent = '—';
-                    imperialNetM3h.textContent = '—';
+                    if (imperialGrossKW) imperialGrossKW.textContent = '—';
+                    if (imperialGasRate) imperialGasRate.textContent = '—';
+                    if (imperialNetKW) imperialNetKW.textContent = '—';
+                    if (imperialNetM3h) imperialNetM3h.textContent = '—';
                     return;
                 }
 
@@ -1006,10 +1004,10 @@
                 const netM3h = PREC(grossKW / CV_METRIC / GROSS_TO_NET, 2);
 
                 // Update results
-                imperialGrossKW.textContent = grossKW.toFixed(2);
-                imperialGasRate.textContent = gasRate.toFixed(4);
-                imperialNetKW.textContent = netKW.toFixed(2);
-                imperialNetM3h.textContent = netM3h.toFixed(2);
+                if (imperialGrossKW) imperialGrossKW.textContent = grossKW.toFixed(2);
+                if (imperialGasRate) imperialGasRate.textContent = gasRate.toFixed(4);
+                if (imperialNetKW) imperialNetKW.textContent = netKW.toFixed(2);
+                if (imperialNetM3h) imperialNetM3h.textContent = netM3h.toFixed(2);
             }
 
             // Add event listeners for Imperial mode (both input and change)
@@ -1027,6 +1025,7 @@
     <!-- Add menu.js for navigation functionality -->
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/calculator-fields.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>
