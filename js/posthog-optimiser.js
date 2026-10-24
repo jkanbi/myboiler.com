@@ -159,8 +159,8 @@
             '.optimiser-consent button{min-height:2.5rem;padding:0.45rem 0.95rem;font:inherit;font-size:0.875rem;font-weight:600;border-radius:var(--radius);cursor:pointer;}',
             '.optimiser-consent__accept{background:var(--accent);color:#fff;border:2px solid var(--accent);}',
             '.optimiser-consent__decline{background:var(--surface);color:var(--text);border:2px solid var(--border);}',
-            'body.optimiser-consent-open{padding-bottom:6.5rem;}',
-            '@media (max-width:640px){body.optimiser-consent-open{padding-bottom:8.5rem;}.optimiser-consent{padding:0.7rem 16px;}}'
+            'body.optimiser-consent-open{padding-bottom:7.5rem;}',
+            '@media (max-width:640px){body.optimiser-consent-open{padding-bottom:10.5rem;}.optimiser-consent{padding:0.7rem 16px;}}'
         ].join('');
         document.head.appendChild(style);
     }
@@ -179,7 +179,7 @@
         banner.setAttribute('aria-label', 'Analytics consent');
         banner.innerHTML =
             '<div class="optimiser-consent__inner">' +
-                '<p class="optimiser-consent__text">We\'d like to record how you use this tool to improve it. No personal details are captured. <a href="/privacy-policy/">Privacy</a></p>' +
+                '<p class="optimiser-consent__text">We\'d like to record how you use the Boiler Optimiser, only to improve the tool. No personal data is stored, and all recordings will be deleted once the tool is finished.</p>' +
                 '<div class="optimiser-consent__actions">' +
                     '<button type="button" class="optimiser-consent__accept">Accept</button>' +
                     '<button type="button" class="optimiser-consent__decline">No thanks</button>' +
