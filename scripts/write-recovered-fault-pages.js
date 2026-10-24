@@ -6,6 +6,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { injectXPixel } = require("./inject-x-pixel");
 
 const ROOT = path.resolve(__dirname, "..");
 
@@ -88,7 +89,7 @@ ${BRAND_CSS}
 function writePage(relDir, html) {
     const dir = path.join(ROOT, relDir);
     fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, "index.html"), html, "utf8");
+    fs.writeFileSync(path.join(dir, "index.html"), injectXPixel(html).html, "utf8");
     console.log("wrote " + relDir + "/");
 }
 
