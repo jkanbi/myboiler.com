@@ -326,8 +326,46 @@
             z-index: 2;
         }
 
-        .boiler-temps {
-            display: none;
+        #flow-card .boiler-pipes {
+            height: auto;
+            min-height: 5rem;
+            padding-bottom: 2.4rem;
+            overflow: visible;
+        }
+
+        .pipe-with-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 5px;
+            flex-shrink: 0;
+        }
+
+        .pipe-caption {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: max-content;
+            margin-top: 0.28rem;
+            line-height: 1.15;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .pipe-caption .input-hint {
+            font-size: 0.75rem;
+            white-space: nowrap;
+        }
+
+        .pipe-name {
+            font-size: 0.6875rem;
+            font-weight: 500;
+            color: var(--text-muted);
         }
 
         .flow-slider {
@@ -383,12 +421,27 @@
             color: var(--text);
         }
 
+        #flow-card {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        #flow-card > .input-group {
+            width: 100%;
+        }
+
         #flow-card .input-heading .card-title {
             margin: 0;
         }
 
         #flow-card .input-heading {
             margin-bottom: 4rem;
+        }
+
+        #flow-card .boiler-diagram,
+        #flow-card .flow-slider {
+            width: 100%;
         }
 
         .fold > summary {
@@ -1039,17 +1092,12 @@
                 width: 100%;
             }
 
-            .boiler-diagram {
-                align-items: flex-start;
-            }
-
-            .boiler-plant {
-                width: 100%;
-                justify-content: flex-start;
-            }
-
             #flow-state {
-                max-width: 5.4em;
+                position: absolute;
+                left: 0;
+                top: 100%;
+                margin: 0.2rem 0 0;
+                max-width: 7.5em;
                 font-size: 0.75rem;
             }
         }
@@ -1297,21 +1345,29 @@
                                     <span id="flow-state">Partially condensing</span>
                                 </div>
                             </div>
-                            <div class="boiler-pipes" aria-hidden="true">
+                            <div class="boiler-pipes">
                                 <span class="pipe-cluster pipe-before">
-                                    <span class="boiler-pipe-line is-flow"></span>
-                                    <span class="boiler-pipe-line is-hot"></span>
+                                    <span class="pipe-with-label">
+                                        <span class="boiler-pipe-line is-flow" aria-hidden="true"></span>
+                                        <span class="pipe-caption">
+                                            <span class="input-hint" id="flow-hint">75°C</span>
+                                            <span class="pipe-name">flow</span>
+                                        </span>
+                                    </span>
+                                    <span class="boiler-pipe-line is-hot" aria-hidden="true"></span>
                                 </span>
-                                <span class="boiler-pipe-line is-gas"></span>
+                                <span class="boiler-pipe-line is-gas" aria-hidden="true"></span>
                                 <span class="pipe-cluster pipe-after">
-                                    <span class="boiler-pipe-line is-cold"></span>
-                                    <span class="boiler-pipe-line is-return"></span>
-                                    <span class="boiler-pipe-line is-prv"></span>
+                                    <span class="boiler-pipe-line is-cold" aria-hidden="true"></span>
+                                    <span class="pipe-with-label">
+                                        <span class="boiler-pipe-line is-return" aria-hidden="true"></span>
+                                        <span class="pipe-caption">
+                                            <span class="input-hint" id="return-hint">≈ 55°C</span>
+                                            <span class="pipe-name">return</span>
+                                        </span>
+                                    </span>
+                                    <span class="boiler-pipe-line is-prv" aria-hidden="true"></span>
                                 </span>
-                            </div>
-                            <div class="boiler-temps">
-                                <span class="input-hint" id="flow-hint">75°C flow</span>
-                                <span class="input-hint" id="return-hint">≈ 55°C return</span>
                             </div>
                         </div>
                         <svg class="primary-circuit" id="primary-circuit" hidden aria-hidden="true">
@@ -1960,15 +2016,12 @@
                     if (legionellaRisk) describedBy.push('legionella-warning');
                     if (bacteriaDying) describedBy.push('inhibit-notice');
                     flowInput.setAttribute('aria-describedby', describedBy.join(' '));
-                    flowHint.className = 'input-hint';
-                    flowHint.textContent = flow + '°C flow';
-                    returnHint.className = 'input-hint';
-                    returnHint.textContent = '≈ ' + ret + '°C return';
+                    flowHint.textContent = flow + '°C';
+                    returnHint.textContent = '≈ ' + ret + '°C';
                 } else {
                     flowInput.removeAttribute('aria-describedby');
-                    flowHint.className = 'input-hint';
-                    flowHint.textContent = flow + '°C flow';
-                    returnHint.className = 'input-hint';
+                    flowHint.textContent = flow + '°C';
+                    returnHint.textContent = '≈ ' + ret + '°C';
                 }
                 var condensateLevel = 0;
                 if (condensingBoiler) {
