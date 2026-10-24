@@ -5,7 +5,7 @@
 }
 
 .markdown-content {
-    max-width: 800px;
+    max-width: var(--max-width, 1024px);
     margin: 0 auto;
     padding: 2rem;
     line-height: 1.6;
