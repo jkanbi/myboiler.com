@@ -29,7 +29,11 @@
 		--shadow-lg: 0 16px 48px rgba(27, 27, 27, 0.08);
 		--radius: 12px;
 		--radius-lg: 20px;
-		--max-width: 1140px;
+		--max-width: 1024px;
+		--page-gutter: clamp(20px, 5vw, 40px);
+		/* Full-bleed chrome: keep surfaces edge-to-edge, align inner content
+		   with the 1024px page shell. Below 1024px this collapses to --page-gutter. */
+		--page-inline: max(var(--page-gutter), calc((100% - var(--max-width)) / 2));
 		--font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 
 		/* Legacy vars for compatibility */
@@ -129,7 +133,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			padding: 0.9rem clamp(20px, 5vw, 40px);
+			padding: 0.9rem var(--page-inline);
 			box-shadow: var(--shadow-sm);
 		}
 		
@@ -516,12 +520,77 @@
 
         #content-container {
             padding: 10px 0;
-            max-width: 90%;
+            max-width: var(--max-width);
             margin: 0 auto;
             flex: 1;
             min-height: calc(100vh - 500px); /* Further reduced from 450px */
             display: flex;
             flex-direction: column;
+        }
+
+        /* One desktop content column across article, app, calculator, and hub pages.
+           Per-page <style> blocks keep typography/padding; they must not set a
+           competing pixel max-width on these shells. */
+        .article-container,
+        .chat-container,
+        .quote-container,
+        .decide-container,
+        .checker-container,
+        .calculator-container,
+        .calculators-container,
+        .container,
+        #content-container,
+        .ar-hero__container,
+        .ar-topics__header,
+        .ar-box-pair-grid {
+            width: 100%;
+            max-width: var(--max-width);
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+            min-width: 0;
+        }
+
+        /* Flex app shells were align-items:center. Wrappers like .mode-content
+           then shrink-wrap to content (hot-water recovery ~400px, gas rate ~690px)
+           so the card looks like a mobile column on a 1440 desktop. Stretch the
+           column and force those wrappers to the 1024 shell. */
+        .calculator-container,
+        .chat-container,
+        .quote-container,
+        .decide-container,
+        .checker-container {
+            align-items: stretch;
+        }
+
+        .mode-content,
+        .mode-content.active,
+        .calculator-card,
+        .calculator-header,
+        .calculator-video,
+        .checker-form,
+        .article-content,
+        .article-header {
+            width: 100%;
+            max-width: none;
+            box-sizing: border-box;
+        }
+
+        .article-intro,
+        .calculator-connector,
+        .calculator-disclaimer,
+        .calculator-related,
+        .calculators-intro,
+        .checker-connector,
+        .decide-connector,
+        .quote-connector,
+        .chat-connector {
+            max-width: none;
+        }
+
+        .article-content,
+        .calculator-card {
+            overflow-x: auto;
         }
 
         /* Grouping for right alignment */
@@ -547,7 +616,7 @@
 
 		.container {
 		  width: 100%;
-		  max-width: 1200px;
+		  max-width: var(--max-width);
 		  margin: 0 auto;
 		  padding: 20px;
 		}
@@ -693,7 +762,7 @@
         /* Main footer styles - CombiBoiler design */
         .footer {
             background-color: var(--footer-bg);
-            padding: 3rem clamp(20px, 5vw, 40px) 2rem;
+            padding: 3rem var(--page-inline) 2rem;
             display: grid;
             grid-template-columns: 1.4fr 1fr 1fr 1fr;
             gap: 2rem 3rem;
@@ -814,7 +883,7 @@
             background-color: var(--copyright-color);
             color: var(--footer-text);
             text-align: center;
-            padding: 1.5rem clamp(20px, 5vw, 40px) 1rem;
+            padding: 1.5rem var(--page-inline) 1rem;
             border-top: 1px solid var(--border-subtle);
         }
         
@@ -854,7 +923,7 @@
             .footer {
                 grid-template-columns: 1fr;
                 gap: 1.75rem;
-                padding: 2rem clamp(20px, 5vw, 40px);
+                padding: 2rem var(--page-inline);
             }
         }
 
@@ -1164,12 +1233,15 @@
   width: 100%;
   background: #e8f4fc;
   border-bottom: 1px solid var(--border-subtle);
-  padding: clamp(2.5rem, 6vw, 4rem) clamp(20px, 5vw, 40px) clamp(2rem, 5vw, 3.5rem);
+  padding: clamp(2.5rem, 6vw, 4rem) 0 clamp(2rem, 5vw, 3.5rem);
 }
 
 .ar-hero__container {
   max-width: var(--max-width);
   margin: 0 auto;
+  padding-left: var(--page-gutter);
+  padding-right: var(--page-gutter);
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1391,7 +1463,7 @@
 
 @media (min-width: 900px) {
   .ar-hero {
-    padding: clamp(3rem, 6vw, 4.5rem) clamp(20px, 5vw, 40px);
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
   }
   
   .ar-hero__container {
@@ -1483,6 +1555,14 @@
 .article-content iframe,
 .markdown-content iframe {
     max-width: 100%;
+}
+
+/* Hidden WordPress embed iframes used a 600px box that expanded the
+   viewport on mobile even when clipped to 1px. */
+iframe.wp-embedded-content[style*="clip"] {
+    width: 1px !important;
+    height: 1px !important;
+    max-width: 1px;
 }
 
 .article-content table,

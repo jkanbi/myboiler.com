@@ -2,7 +2,7 @@
 /* Keeping for reference if needed on other pages */
 .ar-hero-video {
   width: calc(100% - 32px);
-  max-width: 1320px;
+  max-width: var(--max-width, 1024px);
   margin: 18px auto 14px;
   border: 0 !important;
   border-bottom: 0 !important;
@@ -97,7 +97,7 @@
   color: white;
   z-index: 1;
   width: 90%;
-  max-width: 1200px;
+  max-width: var(--max-width, 1024px);
 }
 
 /* Responsive adjustments */
