@@ -765,6 +765,27 @@
             display: none;
         }
 
+        #model-card {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        #vaillant-models .choice-toggle {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.5rem;
+        }
+
+        #vaillant-models .choice-button {
+            flex: none;
+            min-width: 0;
+            padding: 0.75rem 0.45rem;
+            line-height: 1.25;
+            text-align: center;
+            white-space: normal;
+        }
+
         #vaillant-models,
         #intergas-models,
         #worcester-models {
@@ -1475,9 +1496,9 @@
                         <span class="input-hint">Match the picture to the front of the boiler.</span>
                     </div>
                     <div class="choice-toggle" role="group" aria-labelledby="model-label">
-                        <button type="button" class="choice-button" data-model="old" aria-pressed="false">ecoTEC before 2012</button>
-                        <button type="button" class="choice-button" data-model="new" aria-pressed="false">ecoTEC from 2012</button>
-                        <button type="button" class="choice-button" data-model="latest" aria-pressed="false">ecoTEC New Type</button>
+                        <button type="button" class="choice-button" data-model="old" aria-pressed="false">Before 2012</button>
+                        <button type="button" class="choice-button" data-model="new" aria-pressed="false">From 2012</button>
+                        <button type="button" class="choice-button" data-model="latest" aria-pressed="false">New Type</button>
                     </div>
                     <figure class="model-figure" id="model-figure" hidden>
                         <a class="system-thumb model-thumb" id="model-thumb" href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-pre-2012-models/">
