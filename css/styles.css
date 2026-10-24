@@ -549,6 +549,47 @@
             margin-right: auto;
             box-sizing: border-box;
             min-width: 0;
+        }
+
+        /* Flex app shells were align-items:center. Wrappers like .mode-content
+           then shrink-wrap to content (hot-water recovery ~400px, gas rate ~690px)
+           so the card looks like a mobile column on a 1440 desktop. Stretch the
+           column and force those wrappers to the 1024 shell. */
+        .calculator-container,
+        .chat-container,
+        .quote-container,
+        .decide-container,
+        .checker-container {
+            align-items: stretch;
+        }
+
+        .mode-content,
+        .mode-content.active,
+        .calculator-card,
+        .calculator-header,
+        .calculator-video,
+        .checker-form,
+        .article-content,
+        .article-header {
+            width: 100%;
+            max-width: none;
+            box-sizing: border-box;
+        }
+
+        .article-intro,
+        .calculator-connector,
+        .calculator-disclaimer,
+        .calculator-related,
+        .calculators-intro,
+        .checker-connector,
+        .decide-connector,
+        .quote-connector,
+        .chat-connector {
+            max-width: none;
+        }
+
+        .article-content,
+        .calculator-card {
             overflow-x: auto;
         }
 
