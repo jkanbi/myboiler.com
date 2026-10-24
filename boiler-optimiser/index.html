@@ -917,6 +917,15 @@
             text-align: left;
         }
 
+        .slider-prompt {
+            margin: 0 0 0.7rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            line-height: 1.4;
+            text-align: center;
+            color: var(--text);
+        }
+
         .return-note {
             margin: 0.65rem 0 0;
             font-size: 0.8125rem;
@@ -1383,8 +1392,9 @@
                         </svg>
                     </div>
                 </div>
+                <p class="slider-prompt" id="slider-prompt">Move the slider to see the saving.</p>
                 <div class="flow-slider">
-                    <input type="range" id="flow-temp" class="input-slider" min="45" max="80" step="1" value="75" aria-label="Flow temperature" aria-describedby="legionella-warning">
+                    <input type="range" id="flow-temp" class="input-slider" min="45" max="80" step="1" value="75" aria-label="Flow temperature" aria-describedby="slider-prompt">
                     <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                 </div>
                 <p class="return-note" id="combi-tap-note">On a combi, this is the radiator flow. Tap and shower temperature stays as it is.</p>
@@ -2010,7 +2020,7 @@
                 flowSlider.style.setProperty('--thumb-pct', String((flow - minFlow) / (maxFlow - minFlow)));
                 flowThumbValue.textContent = flow + '°C';
                 if (condensingBoiler) {
-                    var describedBy = ['flow-state'];
+                    var describedBy = ['slider-prompt', 'flow-state'];
                     if (!stored) describedBy.push('combi-tap-note');
                     if (stored) describedBy.splice(1, 0, 'cylinder-delta-note');
                     if (legionellaRisk) describedBy.push('legionella-warning');
@@ -2019,7 +2029,7 @@
                     flowHint.textContent = flow + '°C';
                     returnHint.textContent = '≈ ' + ret + '°C';
                 } else {
-                    flowInput.removeAttribute('aria-describedby');
+                    flowInput.setAttribute('aria-describedby', 'slider-prompt');
                     flowHint.textContent = flow + '°C';
                     returnHint.textContent = '≈ ' + ret + '°C';
                 }
