@@ -424,8 +424,8 @@
             line-height: 0;
             --track-size: 0.7rem;
             --thumb-size: 2.75rem;
-            --thumb-pct: 0.857;
-            --red-stop: calc(var(--thumb-size) / 2 + (30 / 35) * (100% - var(--thumb-size)));
+            --thumb-pct: 0.727;
+            --red-stop: calc(var(--thumb-size) / 2 + (40 / 55) * (100% - var(--thumb-size)));
         }
 
         .flow-thumb-value {
@@ -1065,9 +1065,9 @@
             height: 10px;
             border-radius: 999px;
             background: linear-gradient(to right,
-                #d64545 0 30%,
-                #2f9e44 30% 57.14%,
-                #e6a817 57.14% var(--red-stop),
+                #d64545 0 36.36%,
+                #2f9e44 36.36% 54.55%,
+                #e6a817 54.55% var(--red-stop),
                 #d64545 var(--red-stop) 100%);
             outline: none;
         }
@@ -1076,9 +1076,9 @@
             height: 10px;
             border-radius: 999px;
             background: linear-gradient(to right,
-                #d64545 0 30%,
-                #2f9e44 30% 57.14%,
-                #e6a817 57.14% var(--red-stop),
+                #d64545 0 36.36%,
+                #2f9e44 36.36% 54.55%,
+                #e6a817 54.55% var(--red-stop),
                 #d64545 var(--red-stop) 100%);
         }
 
@@ -1213,17 +1213,17 @@
         .input-slider.flow-combi,
         .input-slider.flow-combi::-webkit-slider-runnable-track {
             background: linear-gradient(to right,
-                #2f9e44 0 57.14%,
-                #e6a817 57.14% var(--red-stop),
+                #2f9e44 0 54.55%,
+                #e6a817 54.55% var(--red-stop),
                 #d64545 var(--red-stop) 100%);
         }
 
         .input-slider.flow-cylinder,
         .input-slider.flow-cylinder::-webkit-slider-runnable-track {
             background: linear-gradient(to right,
-                #d64545 0 27.14%,
-                #e6a817 27.14% 44.29%,
-                #2f9e44 44.29% var(--red-stop),
+                #d64545 0 36.36%,
+                #e6a817 36.36% 45.45%,
+                #2f9e44 45.45% var(--red-stop),
                 #d64545 var(--red-stop) 100%);
         }
 
@@ -1452,7 +1452,7 @@
     twq('config','nvyf0');
     </script>
     <!-- End X conversion tracking base code -->
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=confirm-3" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=flow-35-90" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -1670,7 +1670,7 @@
                 </div>
                 <p class="slider-prompt" id="slider-prompt">Move the slider that represents your boiler flow temperature.</p>
                 <div class="flow-slider is-hinting">
-                    <input type="range" id="flow-temp" class="input-slider" min="45" max="80" step="1" value="75" aria-label="Flow temperature" aria-describedby="slider-prompt">
+                    <input type="range" id="flow-temp" class="input-slider" min="35" max="90" step="1" value="75" aria-label="Flow temperature" aria-describedby="slider-prompt">
                     <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                 </div>
                 <p class="cylinder-stat-note" id="cylinder-stat-note" hidden>Change the cylinder thermostat as well. Set it to 60°C. It is a separate control on the cylinder.</p>
@@ -1808,19 +1808,19 @@
                 <div class="tool-confirm-field">
                     <label class="input-label" for="from-flow">What the flow was</label>
                     <div class="tool-confirm-row">
-                        <input type="number" id="from-flow" class="input-field" inputmode="numeric" min="30" max="90" step="1" placeholder="xx" required autocomplete="off">
+                        <input type="number" id="from-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" placeholder="xx" required autocomplete="off">
                         <span class="tool-confirm-unit" aria-hidden="true">°C</span>
                     </div>
                 </div>
                 <div class="tool-confirm-field">
                     <label class="input-label" for="set-flow">What it is now</label>
                     <div class="tool-confirm-row">
-                        <input type="number" id="set-flow" class="input-field" inputmode="numeric" min="30" max="90" step="1" placeholder="xx" required autocomplete="off">
+                        <input type="number" id="set-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" placeholder="xx" required autocomplete="off">
                         <span class="tool-confirm-unit" aria-hidden="true">°C</span>
                     </div>
                 </div>
                 <div class="tool-confirm-field">
-                    <label class="input-label" for="confirm-kwh">Annual gas usage</label>
+                    <label class="input-label" for="confirm-kwh">Annual gas usage (optional)</label>
                     <div class="tool-confirm-row">
                         <input type="number" id="confirm-kwh" class="input-field is-kwh" inputmode="numeric" min="0" max="200000" step="1" placeholder="xx" autocomplete="off">
                         <span class="tool-confirm-unit" aria-hidden="true">kWh</span>
@@ -2308,7 +2308,7 @@
                 if (stored) {
                     var statText = 'Change the cylinder thermostat as well. Set it to ' + cylinder + '°C. It is a separate control on the cylinder.';
                     if (legionellaRisk) {
-                        statText = 'Change the cylinder thermostat as well. Set it to ' + cylinder + '°C. Legionella is possible below ' + LEGIONELLA_STORE + '°C stored water.';
+                        statText = 'Change the cylinder thermostat as well. Set it to ' + cylinder + '°C. Legionella is possible below ' + LEGIONELLA_STORE + '°C stored water. A pasteurisation cycle would be required.';
                     } else if (bacteriaDying) {
                         statText = 'Change the cylinder thermostat as well. Set it to ' + cylinder + '°C. Bacteria start dying at this store temperature. Growth is inhibited from ' + LEGIONELLA_STORE + '°C.';
                     }

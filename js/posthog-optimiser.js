@@ -78,7 +78,7 @@
     }
 
     function validFlow(n) {
-        return isFinite(n) && n >= 30 && n <= 90;
+        return isFinite(n) && n >= 35 && n <= 90;
     }
 
     function validKwh(n) {
