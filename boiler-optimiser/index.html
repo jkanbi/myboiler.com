@@ -947,19 +947,34 @@
             align-items: start;
         }
 
+        #vaillant-models .model-pick {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 0;
+        }
+
         #vaillant-models .choice-button {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 0.5rem;
             flex: none;
-            align-self: start;
+            align-self: stretch;
+            width: 100%;
             min-width: 0;
             height: auto;
             padding: 0.65rem 0.4rem 0.55rem;
             line-height: 1.25;
             text-align: center;
             white-space: normal;
+        }
+
+        #vaillant-models .choice-button:focus,
+        #vaillant-models .choice-button:focus-visible {
+            outline: none;
+            border-color: var(--text);
         }
 
         #vaillant-models .choice-button img {
@@ -971,6 +986,30 @@
             background: #e8e8e8;
             border-radius: calc(var(--radius) - 2px);
             pointer-events: none;
+        }
+
+        #vaillant-models .choice-button.active {
+            background: var(--surface);
+            color: var(--text);
+            border-color: var(--text);
+        }
+
+        #vaillant-models .model-go {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 4.5rem;
+            padding: 0.45rem 1.1rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: #fff;
+            background: var(--accent);
+            border-radius: var(--radius);
+            text-decoration: none;
+        }
+
+        #vaillant-models .model-go[hidden] {
+            display: none;
         }
 
         #vaillant-models,
@@ -1810,18 +1849,27 @@
                 <p id="brand-note" hidden>Button steps for this brand are not here yet.</p>
                 <div id="vaillant-models" hidden>
                     <div class="choice-toggle" role="group" aria-label="Which ecoTEC">
-                        <button type="button" class="choice-button" data-model="old" aria-pressed="false" aria-label="Before 2012. Older Vaillant ecoTEC, with two temperature dials and four round buttons.">
-                            <span>Before 2012</span>
-                            <img src="/boiler-optimiser/images/ecotec-old-type.png" alt="" width="186" height="318">
-                        </button>
-                        <button type="button" class="choice-button" data-model="new" aria-pressed="false" aria-label="From 2012. Vaillant ecoTEC from 2012, with four rectangular buttons and no dials.">
-                            <span>From 2012</span>
-                            <img src="/boiler-optimiser/images/ecotec-new-type.png" alt="" width="275" height="445">
-                        </button>
-                        <button type="button" class="choice-button" data-model="latest" aria-pressed="false" aria-label="New Type. Current Vaillant ecoTEC plus, with a black display and a silver panel underneath.">
-                            <span>New Type</span>
-                            <img src="/combi-boiler/combi-boiler-cost/images/vaillant-ecotec-plus.png" alt="" width="825" height="819">
-                        </button>
+                        <div class="model-pick">
+                            <button type="button" class="choice-button" data-model="old" aria-pressed="false" aria-label="Before 2012. Older Vaillant ecoTEC, with two temperature dials and four round buttons.">
+                                <span>Before 2012</span>
+                                <img src="/boiler-optimiser/images/ecotec-old-type.png" alt="" width="186" height="318">
+                            </button>
+                            <a class="model-go" data-model="old" href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-pre-2012-models/" hidden>Go</a>
+                        </div>
+                        <div class="model-pick">
+                            <button type="button" class="choice-button" data-model="new" aria-pressed="false" aria-label="From 2012. Vaillant ecoTEC from 2012, with four rectangular buttons and no dials.">
+                                <span>From 2012</span>
+                                <img src="/boiler-optimiser/images/ecotec-new-type.png" alt="" width="275" height="445">
+                            </button>
+                            <a class="model-go" data-model="new" href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-post-2012-models/" hidden>Go</a>
+                        </div>
+                        <div class="model-pick">
+                            <button type="button" class="choice-button" data-model="latest" aria-pressed="false" aria-label="New Type. Current Vaillant ecoTEC plus, with a black display and a silver panel underneath.">
+                                <span>New Type</span>
+                                <img src="/combi-boiler/combi-boiler-cost/images/vaillant-ecotec-plus.png" alt="" width="825" height="819">
+                            </button>
+                            <a class="model-go" data-model="latest" href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-new-type/" hidden>Go</a>
+                        </div>
                     </div>
                     <p id="model-steps" hidden></p>
                 </div>
@@ -2136,7 +2184,7 @@
                 steps.textContent = '';
                 intergasSteps.textContent = '';
                 worcesterSteps.textContent = '';
-                steps.hidden = brand !== 'vaillant' || !boilerModel;
+                steps.hidden = true;
                 intergasSteps.hidden = brand !== 'intergas' || !boilerModel;
                 worcesterSteps.hidden = brand !== 'worcester' || !boilerModel;
                 if (brand === 'worcester' && boilerModel) {
@@ -2163,24 +2211,6 @@
                     outputNote(intergasSteps);
                     return;
                 }
-                if (brand !== 'vaillant' || !boilerModel) return;
-                function add(text) {
-                    steps.appendChild(document.createTextNode(text));
-                }
-                if (boilerModel === 'old') {
-                    add('Turn the heating dial to ' + target + '°C. ');
-                    steps.appendChild(linkEl('/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-pre-2012-models/', 'Show me on this boiler'));
-                    add('.');
-                } else if (boilerModel === 'new') {
-                    add('Press the button under the radiator symbol. Set ' + target + '°C with + and −, then press OK. ');
-                    steps.appendChild(linkEl('/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-post-2012-models/', 'Show me on this boiler'));
-                    add('.');
-                } else if (boilerModel === 'latest') {
-                    add('From the basic display, press the heating control. Set ' + target + '°C with the scrollbar, then confirm. ');
-                    steps.appendChild(linkEl('/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-new-type/', 'Show me on this boiler'));
-                    add('.');
-                }
-                outputNote(steps);
             }
 
             function layoutPrimaryCircuit() {
@@ -2226,6 +2256,9 @@
 
             function update() {
                 document.getElementById('vaillant-models').hidden = brand !== 'vaillant';
+                document.querySelectorAll('#vaillant-models .model-go').forEach(function (go) {
+                    go.hidden = go.getAttribute('data-model') !== boilerModel;
+                });
                 document.getElementById('intergas-models').hidden = brand !== 'intergas';
                 document.getElementById('intergas-figure').hidden = brand !== 'intergas' || boilerModel !== 'intergas';
                 document.getElementById('worcester-models').hidden = brand !== 'worcester';
