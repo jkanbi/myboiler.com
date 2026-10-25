@@ -77,31 +77,60 @@
         return isFinite(n) ? n : null;
     }
 
+    function validFlow(n) {
+        return isFinite(n) && n >= 30 && n <= 90;
+    }
+
+    function validKwh(n) {
+        return isFinite(n) && n >= 0 && n <= 200000;
+    }
+
     function bindConfirm() {
         var form = document.getElementById('tool-confirm');
-        var input = document.getElementById('set-flow');
+        var fromInput = document.getElementById('from-flow');
+        var setInput = document.getElementById('set-flow');
+        var kwhInput = document.getElementById('confirm-kwh');
         var done = document.getElementById('tool-confirm-done');
         var button = document.getElementById('tool-confirm-submit');
-        if (!form || !input) return;
+        if (!form || !fromInput || !setInput) return;
         var submitted = false;
 
-        input.addEventListener('input', function () {
-            input.dataset.edited = '1';
+        fromInput.addEventListener('input', function () {
+            fromInput.dataset.edited = '1';
         });
+        setInput.addEventListener('input', function () {
+            setInput.dataset.edited = '1';
+        });
+        if (kwhInput) {
+            kwhInput.addEventListener('input', function () {
+                kwhInput.dataset.edited = '1';
+            });
+        }
 
         form.addEventListener('submit', function (event) {
             event.preventDefault();
             if (submitted) return;
-            var setFlow = Number(input.value);
-            if (!isFinite(setFlow) || setFlow < 30 || setFlow > 90) {
-                input.focus();
+            var fromFlow = Number(fromInput.value);
+            var setFlow = Number(setInput.value);
+            var annualKwh = kwhInput && kwhInput.value.trim() !== '' ? Number(kwhInput.value) : null;
+            if (!validFlow(fromFlow)) {
+                fromInput.focus();
+                return;
+            }
+            if (!validFlow(setFlow)) {
+                setInput.focus();
+                return;
+            }
+            if (annualKwh !== null && !validKwh(annualKwh)) {
+                if (kwhInput) kwhInput.focus();
                 return;
             }
             submitted = true;
             var props = resultProperties();
+            props.from_flow = fromFlow;
             props.set_flow = setFlow;
+            props.annual_kwh = annualKwh;
             props.tool_flow = numericAttr(form, 'data-tool-flow');
-            props.from_flow = numericAttr(form, 'data-from-flow');
             props.saving_gbp = numericAttr(form, 'data-saving-gbp');
             props.space_kwh = numericAttr(form, 'data-space-kwh');
             if (props.tool_flow === null) {
@@ -112,11 +141,15 @@
             capture('optimiser_flow_turned_down', props);
             captureStep(10, 'flow_turned_down');
             form.classList.add('is-done');
-            input.disabled = true;
+            fromInput.disabled = true;
+            setInput.disabled = true;
+            if (kwhInput) kwhInput.disabled = true;
             if (button) button.disabled = true;
             if (done) {
                 done.hidden = false;
-                done.textContent = 'Thanks. We logged that you set it to ' + setFlow + '°C.';
+                done.textContent = annualKwh === null
+                    ? 'Thanks. We logged that it was ' + fromFlow + '°C, and you set it to ' + setFlow + '°C.'
+                    : 'Thanks. We logged that it was ' + fromFlow + '°C, you set it to ' + setFlow + '°C, and annual use is ' + Math.round(annualKwh) + ' kWh.';
             }
         });
     }

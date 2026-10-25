@@ -662,6 +662,23 @@
             border-color: var(--accent);
         }
 
+        .choice-button.active[data-boiler="condensing"],
+        .choice-button.active[data-system="combi"] {
+            background: #2f9e44;
+            border-color: #2f9e44;
+        }
+
+        .choice-button.active[data-system="system"] {
+            background: #b58100;
+            border-color: #b58100;
+        }
+
+        .choice-button.active[data-boiler="standard"],
+        .choice-button.active[data-system="combi-cylinder"] {
+            background: #d64545;
+            border-color: #d64545;
+        }
+
         .advanced-toggle {
             width: 100%;
             margin: 0 0 2rem;
@@ -915,13 +932,32 @@
             margin: 0 0 0.75rem;
         }
 
+        .tool-confirm-fields {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 0.85rem 1.25rem;
+            margin: 0 0 0.85rem;
+        }
+
+        .tool-confirm-field {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .tool-confirm-field .input-label {
+            margin: 0;
+            font-size: 0.875rem;
+        }
+
         .tool-confirm-row {
             display: flex;
             justify-content: center;
             align-items: stretch;
             gap: 0.5rem;
-            max-width: 24rem;
-            margin: 0 auto;
         }
 
         .tool-confirm-row .input-field {
@@ -929,6 +965,28 @@
             flex: 0 0 6.5rem;
             text-align: center;
             background: #fff;
+        }
+
+        .tool-confirm-row .input-field.is-kwh {
+            width: 7.5rem;
+            flex-basis: 7.5rem;
+        }
+
+        #from-flow,
+        #from-flow:focus {
+            border-color: #d64545;
+        }
+
+        #set-flow,
+        #set-flow:focus {
+            border-color: #2f9e44;
+        }
+
+        #from-flow::placeholder,
+        #set-flow::placeholder,
+        #confirm-kwh::placeholder {
+            color: #9aa3ad;
+            opacity: 1;
         }
 
         .tool-confirm-unit {
@@ -940,7 +998,8 @@
         }
 
         #tool-confirm-submit {
-            flex: 0 0 auto;
+            display: inline-flex;
+            justify-content: center;
             min-width: 8.25rem;
             color: var(--text);
             background: #fff;
@@ -953,8 +1012,9 @@
             color: var(--text);
         }
 
-        .tool-confirm.is-done .tool-confirm-row,
-        .tool-confirm.is-done .input-hint {
+        .tool-confirm.is-done .tool-confirm-fields,
+        .tool-confirm.is-done .input-hint,
+        .tool-confirm.is-done #tool-confirm-submit {
             display: none;
         }
 
@@ -1392,7 +1452,7 @@
     twq('config','nvyf0');
     </script>
     <!-- End X conversion tracking base code -->
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=confirm-1" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=confirm-3" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -1742,13 +1802,32 @@
             </figure>
         </details>
         <form class="tool-confirm" id="tool-confirm">
-            <label class="input-label" for="set-flow">Have you turned the heating flow down? Come back here and let us know.</label>
-            <span class="input-hint">Enter the temperature you set on the boiler. We log this anonymously.</span>
-            <div class="tool-confirm-row">
-                <input type="number" id="set-flow" class="input-field" inputmode="numeric" min="30" max="90" step="1" value="75" required autocomplete="off" aria-label="Flow temperature you set">
-                <span class="tool-confirm-unit" aria-hidden="true">°C</span>
-                <button type="submit" class="choice-button" id="tool-confirm-submit">I've set it</button>
+            <p class="input-label">Have you turned the heating flow down? Come back here and let us know.</p>
+            <span class="input-hint">Enter what the flow was, and what you set it to. Add annual kWh if you know it. We log this anonymously.</span>
+            <div class="tool-confirm-fields">
+                <div class="tool-confirm-field">
+                    <label class="input-label" for="from-flow">What the flow was</label>
+                    <div class="tool-confirm-row">
+                        <input type="number" id="from-flow" class="input-field" inputmode="numeric" min="30" max="90" step="1" placeholder="xx" required autocomplete="off">
+                        <span class="tool-confirm-unit" aria-hidden="true">°C</span>
+                    </div>
+                </div>
+                <div class="tool-confirm-field">
+                    <label class="input-label" for="set-flow">What it is now</label>
+                    <div class="tool-confirm-row">
+                        <input type="number" id="set-flow" class="input-field" inputmode="numeric" min="30" max="90" step="1" placeholder="xx" required autocomplete="off">
+                        <span class="tool-confirm-unit" aria-hidden="true">°C</span>
+                    </div>
+                </div>
+                <div class="tool-confirm-field">
+                    <label class="input-label" for="confirm-kwh">Annual gas usage</label>
+                    <div class="tool-confirm-row">
+                        <input type="number" id="confirm-kwh" class="input-field is-kwh" inputmode="numeric" min="0" max="200000" step="1" placeholder="xx" autocomplete="off">
+                        <span class="tool-confirm-unit" aria-hidden="true">kWh</span>
+                    </div>
+                </div>
             </div>
+            <button type="submit" class="choice-button" id="tool-confirm-submit">Submit</button>
             <p class="tool-confirm-done" id="tool-confirm-done" hidden>Thanks. We logged that you set it.</p>
         </form>
         <p class="tool-feedback">Please let us know if this helped. Send a message via <a href="https://wa.me/442081234411" rel="noopener noreferrer" target="_blank">WhatsApp</a>, <a href="https://x.com/myboiler" rel="noopener noreferrer" target="_blank">X</a>, or <a href="https://facebook.com/myboiler" rel="noopener noreferrer" target="_blank">Facebook</a>.</p>
@@ -1839,6 +1918,9 @@
                 }
             };
             var flowInput = document.getElementById('flow-temp');
+            var flowTouched = false;
+            var flowWas = Number(flowInput.value);
+            var annualTouched = false;
             var flowHint = document.getElementById('flow-hint');
             var returnHint = document.getElementById('return-hint');
             var boilerDiagram = document.querySelector('#flow-card .boiler-diagram');
@@ -2333,15 +2415,26 @@
                     ? percent(fraction) + ' versus a 75°C flow'
                     : 'no condensing gain on this boiler';
                 var confirmForm = document.getElementById('tool-confirm');
+                var fromFlowInput = document.getElementById('from-flow');
                 var setFlowInput = document.getElementById('set-flow');
+                var confirmKwhInput = document.getElementById('confirm-kwh');
                 if (confirmForm) {
-                    confirmForm.setAttribute('data-from-flow', String(FACTORY_FLOW));
                     confirmForm.setAttribute('data-tool-flow', String(flow));
                     confirmForm.setAttribute('data-saving-gbp', spaceKwh === null || pence === null ? '' : String(Math.round(savingAmount * 100) / 100));
                     confirmForm.setAttribute('data-space-kwh', spaceKwh === null ? '' : String(Math.round(spaceKwh)));
+                    confirmForm.setAttribute('data-annual-kwh', annual === null ? '' : String(Math.round(annual)));
                 }
-                if (setFlowInput && !setFlowInput.dataset.edited && document.activeElement !== setFlowInput) {
-                    setFlowInput.value = String(flow);
+                function fillConfirmField(input, value) {
+                    if (!input || input.disabled || input.dataset.edited || document.activeElement === input) return;
+                    if (value === null || !isFinite(value)) return;
+                    input.value = String(value);
+                }
+                if (flowTouched) {
+                    fillConfirmField(fromFlowInput, Math.round(flowWas));
+                    fillConfirmField(setFlowInput, Math.round(flow));
+                }
+                if (annualTouched) {
+                    fillConfirmField(confirmKwhInput, annual === null ? null : Math.round(annual));
                 }
 
                 var graphFigure = document.getElementById('note-5-figure');
@@ -2483,11 +2576,25 @@
                 });
             });
 
+            function markConfirmEdited(event) {
+                if (event.target) event.target.dataset.edited = '1';
+            }
+            var fromFlowInput = document.getElementById('from-flow');
+            var setFlowInput = document.getElementById('set-flow');
+            var confirmKwhInput = document.getElementById('confirm-kwh');
+            if (fromFlowInput) fromFlowInput.addEventListener('input', markConfirmEdited);
+            if (setFlowInput) setFlowInput.addEventListener('input', markConfirmEdited);
+            if (confirmKwhInput) confirmKwhInput.addEventListener('input', markConfirmEdited);
+
             flowInput.addEventListener('input', function () {
                 flowSlider.classList.remove('is-hinting');
+                flowTouched = true;
                 update();
             });
-            annualInput.addEventListener('input', update);
+            annualInput.addEventListener('input', function () {
+                annualTouched = annualInput.value.trim() !== '';
+                update();
+            });
             rateInput.addEventListener('input', update);
             heatLossInput.addEventListener('input', function () {
                 heatLossManual = heatLossInput.value.trim() !== '';
