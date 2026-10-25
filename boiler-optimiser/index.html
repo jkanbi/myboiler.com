@@ -1106,9 +1106,25 @@
             color: var(--accent);
         }
 
-        #note-1 {
+        #note-1,
+        #note-5 {
             scroll-margin-top: 5.5rem;
         }
+
+        .efficiency-figure {
+            margin: 0.75rem 0 0;
+        }
+
+        .efficiency-figure img {
+            display: block;
+            width: 100%;
+            max-width: 28rem;
+            height: auto;
+            margin: 0 auto;
+            border-radius: var(--radius);
+            background: #fff;
+        }
+
 
         .label-aside {
             font-size: 0.9375rem;
@@ -1134,12 +1150,27 @@
             text-align: center;
         }
 
+        .result-heading {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.3rem 0.5rem;
+        }
+
         .result-label {
             font-size: 0.75rem;
             font-weight: 600;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.03em;
+        }
+
+        .result-aside {
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: none;
+            letter-spacing: 0;
+            color: var(--accent);
         }
 
         .result-value {
@@ -1488,7 +1519,10 @@
                     <div class="result-unit" id="condensing-saving-unit">versus a 75°C flow</div>
                 </div>
                 <div class="result-item">
-                    <div class="result-label">Graph efficiency</div>
+                    <div class="result-heading">
+                        <div class="result-label">Efficiency</div>
+                        <a class="result-aside" href="#note-5">[Notes 5.]</a>
+                    </div>
                     <div class="result-value" id="graph-efficiency">—</div>
                     <div class="result-unit" id="graph-efficiency-unit">from return temperature</div>
                 </div>
@@ -1588,12 +1622,15 @@
         </details>
 
         <details class="calculator-card fold" id="tool-results">
-            <summary class="card-title">Further notes, keys and appendix</summary>
+            <summary class="card-title">Notes, Keys and Information</summary>
             <ol class="plan-list" id="plan"></ol>
             <div id="notes-card">
                 <p class="return-note" id="cylinder-delta-note" hidden>The cylinder is assumed to sit 5°C below the flow. The gap can be higher than that.</p>
                 <p class="return-note" id="stored-campaign-note" hidden>Public campaigns usually cover combi boilers only, because stored hot water has to stay hot enough.</p>
             </div>
+            <figure class="efficiency-figure" id="note-5-figure">
+                <img src="/money-and-energy-saving/images/boiler-condensing-efficiency-watermark.jpeg" alt="Boiler efficiency against return water temperature for condensing boilers, with dew point at 54°C." width="600" height="600">
+            </figure>
         </details>
         <div class="calculator-card heat-pump-cta" id="heat-pump-cta" hidden>
             <p>If this flow is keeping the house warm in peak winter, a heat pump may suit this system without many changes. <span id="heat-pump-size"></span></p>
@@ -1825,11 +1862,15 @@
                 return note;
             }
 
+            function graphNote() {
+                return 'Graph efficiency is read from this curve. Return is taken as 20°C under the flow. Dew point is 54°C return. The figures are gross, and include latent heat once the return is below dew point.';
+            }
+
             function methodNote() {
                 var note = document.createDocumentFragment();
                 note.appendChild(document.createTextNode('The return is taken as 20°C under the flow. Radiator output is compared with a standard catalogue radiator in a 20°C room. The saving uses the same efficiency curve as the '));
                 note.appendChild(linkEl('/energy-saving/combi-boiler-condensing-mode-savings/', 'condensing-mode calculator'));
-                note.appendChild(document.createTextNode('. Standing charge is not included. See '));
+                note.appendChild(document.createTextNode('. That curve is the graph below. Standing charge is not included. See '));
                 note.appendChild(linkEl('/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/', 'how to lower flow temperature'));
                 note.appendChild(document.createTextNode(', '));
                 note.appendChild(linkEl('/boiler-maximum-and-minimum-output-mode-videos/', 'maximum output mode'));
@@ -2173,6 +2214,9 @@
                     ? percent(fraction) + ' versus a 75°C flow'
                     : 'no condensing gain on this boiler';
 
+                var graphFigure = document.getElementById('note-5-figure');
+                var results = document.getElementById('tool-results');
+                if (graphFigure && results) results.appendChild(graphFigure);
                 plan.textContent = '';
                 var step = 1;
                 function stepTitle(name) {
@@ -2209,6 +2253,13 @@
                 fillModelSteps(target, heatLoss, boilerKw);
                 plan.appendChild(item(stepTitle('How this is worked out'), methodNote()));
                 plan.appendChild(item(stepTitle('Smart & Modulating Controls'), controlsNote(storesHotWater())));
+                var graphStep = step;
+                var graphItem = item(stepTitle('Graph Efficiency'), graphNote());
+                graphItem.id = 'note-5';
+                if (graphFigure) graphItem.appendChild(graphFigure);
+                plan.appendChild(graphItem);
+                var graphAside = document.querySelector('.result-aside');
+                if (graphAside) graphAside.textContent = '[Notes ' + graphStep + '.]';
             }
 
             function bindChoice(nodeList, assign) {
@@ -2244,19 +2295,29 @@
                 boilerModel = button.getAttribute('data-model');
             });
 
-            document.querySelector('.label-aside').addEventListener('click', function (event) {
-                var note = document.getElementById('note-1');
+            function openAppendixNote(event) {
+                var href = event.currentTarget.getAttribute('href') || '';
+                if (href.charAt(0) !== '#') return;
+                var id = href.slice(1);
+                var note = document.getElementById(id);
                 var results = document.getElementById('tool-results');
                 if (!note || !results) return;
                 event.preventDefault();
                 results.hidden = false;
                 results.open = true;
-                if (location.hash === '#note-1') {
+                if (location.hash === href) {
                     history.replaceState(null, '', location.pathname + location.search);
                 }
+                function goToNote() {
+                    location.hash = id;
+                    note.scrollIntoView({ block: 'start' });
+                }
                 requestAnimationFrame(function () {
-                    location.hash = 'note-1';
+                    requestAnimationFrame(goToNote);
                 });
+            }
+            document.querySelectorAll('.label-aside, .result-aside').forEach(function (link) {
+                link.addEventListener('click', openAppendixNote);
             });
 
             var systemThumb = document.getElementById('system-thumb');
