@@ -1,4 +1,50 @@
 (function () {
+    if (window.__mbWinterBannerLoader) return;
+    window.__mbWinterBannerLoader = true;
+
+    if (/(^|\/)boiler-optimiser(\/|$)/.test(location.pathname || '')) return;
+
+    try {
+        if (window.localStorage.getItem('mb_winter_banner_dismissed_2026') === '1') return;
+    } catch (err) {
+        try {
+            if (window.sessionStorage.getItem('mb_winter_banner_dismissed_2026') === '1') return;
+        } catch (sessionErr) {}
+    }
+
+    document.documentElement.classList.add('mb-winter-banner-on');
+
+    var reserve = document.createElement('style');
+    reserve.id = 'mb-winter-banner-reserve';
+    reserve.textContent =
+        'html.mb-winter-banner-on body{border-top:34px solid #0f4eb5}' +
+        '@media (max-width:720px){html.mb-winter-banner-on body{border-top-width:46px}}';
+    (document.head || document.documentElement).appendChild(reserve);
+
+    if (!document.getElementById('mb-winter-banner-critical')) {
+        var critical = document.createElement('style');
+        critical.id = 'mb-winter-banner-critical';
+        critical.textContent =
+            '.mb-winter-banner{background:#0f4eb5;color:#fff;width:100%;height:34px;font-size:13px;line-height:1.25}' +
+            '.mb-winter-banner__inner{display:flex;align-items:center;gap:.6rem;height:34px;padding:0 max(20px,calc((100% - 1024px)/2))}' +
+            '.mb-winter-banner__link{flex:1 1 auto;min-width:0;color:#fff;text-decoration:none;font-weight:500;white-space:nowrap}' +
+            '.mb-winter-banner__close{flex:0 0 auto;width:28px;height:28px;border:0;background:transparent;color:#fff;font-size:1.125rem;cursor:pointer}';
+        (document.head || document.documentElement).appendChild(critical);
+    }
+
+    var css = document.createElement('link');
+    css.id = 'mb-winter-banner-css';
+    css.rel = 'stylesheet';
+    css.href = '/css/winter-banner.css?v=winter-1';
+    (document.head || document.documentElement).appendChild(css);
+
+    var script = document.createElement('script');
+    script.src = '/js/winter-banner.js?v=winter-1';
+    script.setAttribute('data-cfasync', 'false');
+    (document.head || document.documentElement).appendChild(script);
+})();
+
+(function () {
     window.SITE_NAV_HTML =
         '<ul class="nav-list">' +
         '<li class="nav-item"><a href="/repairs/"><span>Repairs</span></a></li>' +
