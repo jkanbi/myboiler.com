@@ -1488,13 +1488,8 @@
                 align-items: start;
             }
 
-            .model-figure[data-model="new"] .model-thumb,
             .system-figure[data-system="system"] .system-thumb {
                 grid-column: 2;
-            }
-
-            .model-figure[data-model="latest"] .model-thumb {
-                grid-column: 3;
             }
 
             .system-figure[data-system="combi-cylinder"] .system-thumb {
@@ -1506,12 +1501,19 @@
             }
         }
 
+        .model-figure {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            column-gap: 0.5rem;
+            align-items: start;
+        }
+
         .model-figure .model-thumb {
-            width: 8.5rem;
-            height: 8.5rem;
-            max-width: 100%;
+            width: 100%;
+            max-width: 8.5rem;
+            height: auto;
             aspect-ratio: 1;
-            justify-self: start;
+            justify-self: center;
             cursor: pointer;
         }
 
@@ -1817,9 +1819,15 @@
                         <button type="button" class="choice-button" data-model="new" aria-pressed="false">From 2012</button>
                         <button type="button" class="choice-button" data-model="latest" aria-pressed="false">New Type</button>
                     </div>
-                    <figure class="model-figure" id="model-figure" hidden>
-                        <a class="system-thumb model-thumb" id="model-thumb" href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-pre-2012-models/">
+                    <figure class="model-figure" id="model-figure">
+                        <a class="system-thumb model-thumb" href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-pre-2012-models/" aria-label="Open the guide. Older Vaillant ecoTEC, with two temperature dials and four round buttons.">
                             <img src="/boiler-optimiser/images/ecotec-old-type.png" alt="Older Vaillant ecoTEC, with two temperature dials and four round buttons." width="186" height="318">
+                        </a>
+                        <a class="system-thumb model-thumb" href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-post-2012-models/" aria-label="Open the guide. Vaillant ecoTEC from 2012, with four rectangular buttons and no dials.">
+                            <img src="/boiler-optimiser/images/ecotec-new-type.png" alt="Vaillant ecoTEC from 2012, with four rectangular buttons and no dials." width="275" height="445">
+                        </a>
+                        <a class="system-thumb model-thumb" href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-new-type/" aria-label="Open the guide. Current Vaillant ecoTEC plus, with a black display and a silver panel underneath.">
+                            <img src="/combi-boiler/combi-boiler-cost/images/vaillant-ecotec-plus.png" alt="Current Vaillant ecoTEC plus, with a black display and a silver panel underneath." width="825" height="819">
                         </a>
                     </figure>
                     <p id="model-steps" hidden></p>
@@ -1955,29 +1963,6 @@
             var boilerType = 'condensing';
             var brand = '';
             var boilerModel = '';
-            var modelImages = {
-                old: {
-                    src: '/boiler-optimiser/images/ecotec-old-type.png',
-                    alt: 'Older Vaillant ecoTEC, with two temperature dials and four round buttons.',
-                    href: '/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-pre-2012-models/',
-                    width: 186,
-                    height: 318
-                },
-                new: {
-                    src: '/boiler-optimiser/images/ecotec-new-type.png',
-                    alt: 'Vaillant ecoTEC from 2012, with four rectangular buttons and no dials.',
-                    href: '/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-post-2012-models/',
-                    width: 275,
-                    height: 445
-                },
-                latest: {
-                    src: '/combi-boiler/combi-boiler-cost/images/vaillant-ecotec-plus.png',
-                    alt: 'Current Vaillant ecoTEC plus, with a black display and a silver panel underneath.',
-                    href: '/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-new-type/',
-                    width: 825,
-                    height: 819
-                }
-            };
             var flowInput = document.getElementById('flow-temp');
             var flowTouched = false;
             var flowWas = Number(flowInput.value);
@@ -2000,7 +1985,7 @@
             var systemButtons = document.querySelectorAll('[data-system]');
             var boilerButtons = document.querySelectorAll('[data-boiler]');
             var brandSelect = document.getElementById('brand');
-            var modelButtons = document.querySelectorAll('[data-model]');
+            var modelButtons = document.querySelectorAll('button[data-model]');
 
             function interpolate(t) {
                 var points = EFFICIENCY_CURVE;
@@ -2252,25 +2237,6 @@
                 document.getElementById('intergas-figure').hidden = brand !== 'intergas' || boilerModel !== 'intergas';
                 document.getElementById('worcester-models').hidden = brand !== 'worcester';
                 document.getElementById('brand-note').hidden = !brand || brand === 'vaillant' || brand === 'intergas' || brand === 'worcester';
-                var modelFigureEl = document.getElementById('model-figure');
-                var modelPhoto = brand === 'vaillant' ? modelImages[boilerModel] : null;
-                var modelImage = modelFigureEl.querySelector('img');
-                modelFigureEl.hidden = !modelPhoto;
-                modelFigureEl.setAttribute('data-model', boilerModel);
-                if (modelPhoto && modelImage.getAttribute('src') !== modelPhoto.src) {
-                    modelImage.src = modelPhoto.src;
-                    modelImage.alt = modelPhoto.alt;
-                    modelImage.width = modelPhoto.width;
-                    modelImage.height = modelPhoto.height;
-                }
-                var modelThumb = document.getElementById('model-thumb');
-                if (modelPhoto && modelPhoto.href) {
-                    modelThumb.href = modelPhoto.href;
-                    modelThumb.setAttribute('aria-label', 'Open the guide. ' + modelPhoto.alt);
-                } else {
-                    modelThumb.removeAttribute('href');
-                    modelThumb.setAttribute('aria-label', modelPhoto ? modelPhoto.alt : 'Boiler');
-                }
                 var otherType = system === 'combi-cylinder';
                 var standardBoiler = boilerType !== 'condensing';
                 var condensingSystem = boilerType === 'condensing' && system === 'system';
@@ -2561,7 +2527,7 @@
             brandSelect.addEventListener('change', function () {
                 brand = brandSelect.value;
                 boilerModel = '';
-                document.querySelectorAll('[data-model]').forEach(function (other) {
+                document.querySelectorAll('button[data-model]').forEach(function (other) {
                     other.classList.remove('active');
                     other.setAttribute('aria-pressed', 'false');
                 });
