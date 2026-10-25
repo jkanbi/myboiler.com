@@ -146,10 +146,14 @@
         }
 
         .cylinder-name {
-            font-size: 0.65rem;
+            font-size: 0.62rem;
             font-weight: 700;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.03em;
             text-transform: uppercase;
+            text-align: center;
+            line-height: 1.15;
+            max-width: 5.4rem;
+            padding: 0 0.3rem;
         }
 
         .cylinder-temp {
@@ -219,11 +223,6 @@
         .boiler-saving.is-red .boiler-saving-label,
         .boiler-saving.is-red .boiler-saving-value {
             color: #d64545;
-        }
-
-        .boiler-saving.is-low .boiler-saving-label,
-        .boiler-saving.is-low .boiler-saving-value {
-            color: #111;
         }
 
         .condensate {
@@ -423,7 +422,7 @@
         .flow-slider {
             position: relative;
             line-height: 0;
-            --track-size: 1.5rem;
+            --track-size: 0.7rem;
             --thumb-size: 2.75rem;
             --thumb-pct: 0.857;
             --red-stop: calc(var(--thumb-size) / 2 + (30 / 35) * (100% - var(--thumb-size)));
@@ -894,6 +893,22 @@
             line-height: 1.6;
         }
 
+        .tool-feedback {
+            margin: 0 0 2rem;
+            font-size: 0.9375rem;
+            line-height: 1.5;
+            color: var(--text);
+            text-align: center;
+        }
+
+        .tool-feedback a {
+            color: var(--accent);
+        }
+
+        #tool-results[hidden] + .tool-feedback {
+            display: none;
+        }
+
         .tool-disclaimer {
             margin: 1.25rem 0 0;
             font-size: 0.75rem;
@@ -924,7 +939,7 @@
             height: 10px;
             border-radius: 999px;
             background: linear-gradient(to right,
-                #111 0 30%,
+                #d64545 0 30%,
                 #2f9e44 30% 57.14%,
                 #e6a817 57.14% var(--red-stop),
                 #d64545 var(--red-stop) 100%);
@@ -935,7 +950,7 @@
             height: 10px;
             border-radius: 999px;
             background: linear-gradient(to right,
-                #111 0 30%,
+                #d64545 0 30%,
                 #2f9e44 30% 57.14%,
                 #e6a817 57.14% var(--red-stop),
                 #d64545 var(--red-stop) 100%);
@@ -1072,7 +1087,7 @@
         .input-slider.flow-cylinder,
         .input-slider.flow-cylinder::-webkit-slider-runnable-track {
             background: linear-gradient(to right,
-                #111 0 27.14%,
+                #d64545 0 27.14%,
                 #e6a817 27.14% 44.29%,
                 #2f9e44 44.29% var(--red-stop),
                 #d64545 var(--red-stop) 100%);
@@ -1458,7 +1473,7 @@
                     <div class="boiler-plant">
                         <div class="cylinder" id="cylinder-diagram" hidden>
                             <div class="cylinder-tank">
-                                <span class="cylinder-name">Cylinder</span>
+                                <span class="cylinder-name">Hot Water Cylinder</span>
                                 <span class="cylinder-temp" id="cylinder-temp">70°C</span>
                             </div>
                         </div>
@@ -1524,7 +1539,7 @@
                     <input type="range" id="flow-temp" class="input-slider" min="45" max="80" step="1" value="75" aria-label="Flow temperature" aria-describedby="slider-prompt">
                     <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                 </div>
-                <p class="legionella-label" id="legionella-warning" hidden>The cylinder is about 5°C below the flow. Legionella is possible once stored water drops below 50°C.</p>
+                <p class="legionella-label" id="legionella-warning" hidden>Warning: The cylinder is about 5°C below the flow. Legionella is possible once stored water drops below 50°C.</p>
                 <p class="inhibit-label" id="inhibit-notice" hidden>Bacteria start dying. The cylinder is about 50–55°C, where growth is inhibited and the bacteria die off as the stored water rises.</p>
             </div>
 
@@ -1653,6 +1668,7 @@
                 <img src="/money-and-energy-saving/images/boiler-condensing-efficiency-watermark.jpeg" alt="Boiler efficiency against return water temperature for condensing boilers, with dew point at 54°C." width="600" height="600">
             </figure>
         </details>
+        <p class="tool-feedback">Please let us know if this helped. Send a message via <a href="https://wa.me/442081234411" rel="noopener noreferrer" target="_blank">WhatsApp</a>, <a href="https://x.com/myboiler" rel="noopener noreferrer" target="_blank">X</a>, or <a href="https://facebook.com/myboiler" rel="noopener noreferrer" target="_blank">Facebook</a>.</p>
         <div class="calculator-card heat-pump-cta" id="heat-pump-cta" hidden>
             <p>If this flow is keeping the house warm in peak winter, a heat pump may suit this system without many changes. <span id="heat-pump-size"></span></p>
             <a id="heat-pump-checker-link" href="/heat-pump-checker/">Check heat pump suitability</a>
@@ -2127,7 +2143,7 @@
                 legionellaWarning.hidden = !legionellaRisk;
                 inhibitNotice.hidden = !bacteriaDying;
                 if (legionellaRisk) {
-                    legionellaWarning.textContent = 'The cylinder is about ' + cylinder + '°C, ' + CYLINDER_BELOW_FLOW + '°C below the flow. Legionella is possible once stored water drops below ' + LEGIONELLA_STORE + '°C.';
+                    legionellaWarning.textContent = 'Warning: The cylinder is about ' + cylinder + '°C, ' + CYLINDER_BELOW_FLOW + '°C below the flow. Legionella is possible once stored water drops below ' + LEGIONELLA_STORE + '°C.';
                 }
                 if (bacteriaDying) {
                     inhibitNotice.textContent = 'Bacteria start dying. The cylinder is about ' + cylinder + '°C, ' + CYLINDER_BELOW_FLOW + '°C below the flow. Growth is inhibited from ' + LEGIONELLA_STORE + '°C, and the bacteria die off as the stored water rises.';
@@ -2225,7 +2241,7 @@
                 boilerSaving.textContent = savingText;
                 var savingTone = 'red';
                 if (savingAmount > 0 && condensingBoiler) {
-                    savingTone = currentBand.key === 'low' ? 'low' : currentBand.key;
+                    savingTone = currentBand.key === 'low' ? 'red' : currentBand.key;
                 }
                 boilerSavingWrap.className = 'boiler-saving is-' + savingTone;
                 document.getElementById('condensing-saving-unit').textContent = condensingBoiler
