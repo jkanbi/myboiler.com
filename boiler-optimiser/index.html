@@ -17,6 +17,11 @@
             html {
                 scroll-behavior: auto;
             }
+
+            .flow-slider.is-hinting .flow-thumb-value {
+                animation: none;
+                box-shadow: 0 0 0 3px rgba(24, 99, 220, 0.4);
+            }
         }
 
         .article-page {
@@ -417,6 +422,7 @@
 
         .flow-slider {
             position: relative;
+            line-height: 0;
             --track-size: 1.5rem;
             --thumb-size: 2.75rem;
             --thumb-pct: 0.857;
@@ -439,9 +445,25 @@
             color: var(--text);
             pointer-events: none;
             z-index: 2;
+            border-radius: 50%;
+        }
+
+        .flow-slider.is-hinting .flow-thumb-value {
+            animation: flow-thumb-pulse 3.6s ease-in-out infinite;
+        }
+
+        @keyframes flow-thumb-pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 3px rgba(24, 99, 220, 0.38), 0 0 8px 2px rgba(24, 99, 220, 0.22);
+            }
+            50% {
+                box-shadow: 0 0 0 8px rgba(24, 99, 220, 0.42), 0 0 14px 5px rgba(24, 99, 220, 0.28);
+            }
         }
 
         .flow-slider .input-slider {
+            display: block;
+            margin: 0;
             height: var(--track-size);
         }
 
@@ -1497,12 +1519,11 @@
                         </svg>
                     </div>
                 </div>
-                <p class="slider-prompt" id="slider-prompt">Move the slider to see the saving.</p>
-                <div class="flow-slider">
+                <p class="slider-prompt" id="slider-prompt">Move the slider that represents your boiler flow temperature.</p>
+                <div class="flow-slider is-hinting">
                     <input type="range" id="flow-temp" class="input-slider" min="45" max="80" step="1" value="75" aria-label="Flow temperature" aria-describedby="slider-prompt">
                     <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                 </div>
-                <p class="return-note" id="combi-tap-note">On a combi, this is the radiator flow. Tap and shower temperature stays as it is.</p>
                 <p class="legionella-label" id="legionella-warning" hidden>The cylinder is about 5°C below the flow. Legionella is possible once stored water drops below 50°C.</p>
                 <p class="inhibit-label" id="inhibit-notice" hidden>Bacteria start dying. The cylinder is about 50–55°C, where growth is inhibited and the bacteria die off as the stored water rises.</p>
             </div>
@@ -2094,13 +2115,11 @@
                 var cylinderHint = document.getElementById('cylinder-hint');
                 var cylinderDeltaNote = document.getElementById('cylinder-delta-note');
                 var storedCampaignNote = document.getElementById('stored-campaign-note');
-                var combiTapNote = document.getElementById('combi-tap-note');
                 flowInput.classList.toggle('is-plain', !condensingBoiler);
                 flowInput.classList.toggle('flow-cylinder', condensingBoiler && stored);
                 flowInput.classList.toggle('flow-combi', condensingBoiler && !stored);
                 cylinderDeltaNote.hidden = !(condensingBoiler && stored);
                 storedCampaignNote.hidden = !(condensingBoiler && stored);
-                combiTapNote.hidden = stored;
                 if (condensingBoiler && stored) {
                     cylinderDeltaNote.textContent = 'The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow. The gap can be higher than that.';
                 }
@@ -2136,7 +2155,6 @@
                 flowThumbValue.textContent = flow + '°C';
                 if (condensingBoiler) {
                     var describedBy = ['slider-prompt', 'flow-state'];
-                    if (!stored) describedBy.push('combi-tap-note');
                     if (stored) describedBy.splice(1, 0, 'cylinder-delta-note');
                     if (legionellaRisk) describedBy.push('legionella-warning');
                     if (bacteriaDying) describedBy.push('inhibit-notice');
@@ -2233,7 +2251,9 @@
                         target === flow
                             ? 'Leave the heating flow at ' + flow + '°C. That is already a reasonably low setting. If a room is short of heat, raise it by 5°C.'
                             : 'Set the heating flow to about ' + target + '°C. That is a reasonably low setting, well under a factory 75–80°C. If a room does not reach temperature, raise the flow by 5°C.'
-                            + (storesHotWater() ? ' Keep it high enough for stored hot water at about 60°C.' : '')
+                            + (storesHotWater()
+                                ? ' Keep it high enough for stored hot water at about 60°C.'
+                                : ' On a combi, this is the radiator flow. Tap and shower temperature stays as it is.')
                     ));
                 } else if (!storesHotWater()) {
                     plan.appendChild(item(
@@ -2241,7 +2261,7 @@
                         (target === flow
                             ? 'Leave the heating flow at ' + flow + '°C.'
                             : 'Set the heating flow to ' + target + '°C.')
-                        + ' Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow by 5°C. You can lower it again at any time. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow can sit lower.'
+                        + ' On a combi, this is the radiator flow. Tap and shower temperature stays as it is. Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow by 5°C. You can lower it again at any time. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow can sit lower.'
                     ));
                 } else {
                     plan.appendChild(item(
@@ -2351,7 +2371,10 @@
                 });
             });
 
-            flowInput.addEventListener('input', update);
+            flowInput.addEventListener('input', function () {
+                flowSlider.classList.remove('is-hinting');
+                update();
+            });
             annualInput.addEventListener('input', update);
             rateInput.addEventListener('input', update);
             heatLossInput.addEventListener('input', function () {
