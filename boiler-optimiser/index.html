@@ -886,7 +886,9 @@
         #intergas-figure[hidden],
         #worcester-models[hidden],
         #worcester-steps[hidden],
-        #brand-note[hidden] {
+        #brand-note[hidden],
+        #brand-back[hidden],
+        .brand-tile[hidden] {
             display: none;
         }
 
@@ -907,7 +909,7 @@
         }
 
         #model-card[open] > summary {
-            margin-bottom: 1rem;
+            margin-bottom: 1.75rem;
         }
 
         #model-card > summary > span {
@@ -919,16 +921,93 @@
             display: none;
         }
 
-        #model-card > summary > #brand {
+        #model-card .brand-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 36rem;
+            margin: 0.25rem auto 1rem;
+        }
+
+        #model-card .brand-bar.is-chosen {
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .brand-picks {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .brand-bar.is-chosen .brand-picks {
+            display: flex;
+            width: auto;
             flex: none;
-            align-self: center;
-            width: 16rem;
-            max-width: 100%;
-            margin: 0;
-            font-size: 1rem;
-            font-weight: 600;
+        }
+
+        .brand-tile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            min-width: 0;
+            padding: 0.7rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--text);
             cursor: pointer;
-            text-align: center;
+        }
+
+        .brand-tile img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+        }
+
+        .brand-tile:focus,
+        .brand-tile:focus-visible {
+            outline: none;
+            border-color: var(--text);
+        }
+
+        .brand-tile.active {
+            background: var(--surface);
+            border-color: var(--text);
+        }
+
+        .brand-bar.is-chosen .brand-tile {
+            width: 5.5rem;
+            height: 5.5rem;
+            aspect-ratio: auto;
+        }
+
+        .brand-back {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: none;
+            padding: 0.55rem 1rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+        }
+
+        .brand-back:hover {
+            border-color: var(--accent);
         }
 
         #model-card > .input-group {
@@ -1520,6 +1599,10 @@
                 align-items: start;
             }
 
+            .brand-picks {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
             .system-thumb {
                 width: 100%;
             }
@@ -1584,7 +1667,7 @@
     twq('config','nvyf0');
     </script>
     <!-- End X conversion tracking base code -->
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=power-output-page" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=brand-tiles" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -1834,18 +1917,31 @@
             </div>
         </div>
 
-        <details class="calculator-card fold" id="model-card" hidden>
+        <details class="calculator-card fold" id="model-card" open hidden>
             <summary class="card-title">
                 <span>How to set your flow temperature for your boiler</span>
-                <select id="brand" class="input-field" aria-label="Which brand">
-                    <option value="">Choose a brand</option>
-                    <option value="vaillant">Vaillant</option>
-                    <option value="worcester">Worcester Bosch</option>
-                    <option value="baxi">Baxi / Main</option>
-                    <option value="intergas">Intergas</option>
-                </select>
             </summary>
             <div class="input-group">
+                <div class="brand-bar" id="brand-bar">
+                    <button type="button" class="brand-back" id="brand-back" hidden>← Back</button>
+                    <div class="brand-picks" id="brand-picks" role="group" aria-label="Which brand">
+                        <button type="button" class="brand-tile" data-brand="vaillant" aria-pressed="false" aria-label="Vaillant">
+                            <img src="/boiler-optimiser/images/brands/vaillant.svg" alt="" width="160" height="46">
+                        </button>
+                        <button type="button" class="brand-tile" data-brand="worcester" aria-pressed="false" aria-label="Worcester Bosch">
+                            <img src="/boiler-optimiser/images/brands/worcester-bosch.svg" alt="" width="160" height="58">
+                        </button>
+                        <button type="button" class="brand-tile" data-brand="baxi" aria-pressed="false" aria-label="Baxi">
+                            <img src="/boiler-optimiser/images/brands/baxi.svg" alt="" width="160" height="49">
+                        </button>
+                        <button type="button" class="brand-tile" data-brand="main" aria-pressed="false" aria-label="Main Heating">
+                            <img src="/boiler-optimiser/images/brands/main.png" alt="" width="160" height="76">
+                        </button>
+                        <button type="button" class="brand-tile" data-brand="intergas" aria-pressed="false" aria-label="Intergas">
+                            <img src="/boiler-optimiser/images/brands/intergas.svg" alt="" width="160" height="12">
+                        </button>
+                    </div>
+                </div>
                 <p id="brand-note" hidden>Button steps for this brand are not here yet.</p>
                 <div id="vaillant-models" hidden>
                     <div class="choice-toggle" role="group" aria-label="Which ecoTEC">
@@ -1889,10 +1985,7 @@
                     <p id="intergas-steps" hidden></p>
                 </div>
                 <div id="worcester-models" hidden>
-                    <div class="input-heading">
-                        <div class="input-label" id="worcester-label">Which Worcester Bosch</div>
-                    </div>
-                    <div class="choice-toggle" role="group" aria-labelledby="worcester-label">
+                    <div class="choice-toggle" role="group" aria-label="Which Worcester Bosch">
                         <button type="button" class="choice-button" data-model="greenstar-i" aria-pressed="false">Greenstar i</button>
                     </div>
                     <p id="worcester-steps" hidden></p>
@@ -2025,7 +2118,9 @@
             var plan = document.getElementById('plan');
             var systemButtons = document.querySelectorAll('[data-system]');
             var boilerButtons = document.querySelectorAll('[data-boiler]');
-            var brandSelect = document.getElementById('brand');
+            var brandButtons = document.querySelectorAll('[data-brand]');
+            var brandBar = document.getElementById('brand-bar');
+            var brandBack = document.getElementById('brand-back');
             var modelButtons = document.querySelectorAll('button[data-model]');
 
             function interpolate(t) {
@@ -2254,7 +2349,23 @@
                 primaryCircuit.removeAttribute('hidden');
             }
 
+            function clearModelChoice() {
+                boilerModel = '';
+                document.querySelectorAll('button[data-model]').forEach(function (other) {
+                    other.classList.remove('active');
+                    other.setAttribute('aria-pressed', 'false');
+                });
+            }
+
             function update() {
+                document.querySelectorAll('[data-brand]').forEach(function (tile) {
+                    var on = tile.getAttribute('data-brand') === brand;
+                    tile.classList.toggle('active', on);
+                    tile.setAttribute('aria-pressed', on ? 'true' : 'false');
+                    tile.hidden = !!brand && !on;
+                });
+                brandBack.hidden = !brand;
+                brandBar.classList.toggle('is-chosen', !!brand);
                 document.getElementById('vaillant-models').hidden = brand !== 'vaillant';
                 document.querySelectorAll('#vaillant-models .model-go').forEach(function (go) {
                     go.hidden = go.getAttribute('data-model') !== boilerModel;
@@ -2544,20 +2655,13 @@
             bindChoice(boilerButtons, function (button) {
                 boilerType = button.getAttribute('data-boiler');
             });
-            function keepModelCardOpen(event) {
-                event.stopPropagation();
-            }
-            brandSelect.addEventListener('click', keepModelCardOpen);
-            brandSelect.addEventListener('pointerdown', keepModelCardOpen);
-            brandSelect.addEventListener('mousedown', keepModelCardOpen);
-            brandSelect.addEventListener('change', function () {
-                brand = brandSelect.value;
-                boilerModel = '';
-                document.querySelectorAll('button[data-model]').forEach(function (other) {
-                    other.classList.remove('active');
-                    other.setAttribute('aria-pressed', 'false');
-                });
-                if (brand) document.getElementById('model-card').open = true;
+            bindChoice(brandButtons, function (button) {
+                brand = button.getAttribute('data-brand');
+                clearModelChoice();
+            });
+            brandBack.addEventListener('click', function () {
+                brand = '';
+                clearModelChoice();
                 update();
             });
             bindChoice(modelButtons, function (button) {

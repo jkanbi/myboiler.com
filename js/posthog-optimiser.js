@@ -331,6 +331,7 @@
                 captureResult();
             }
             if (event.target.closest('#output-auto')) captureStep(7, 'heating_output');
+            if (event.target.closest('[data-brand]')) captureStep(8, 'brand');
             if (event.target.closest('[data-model]')) captureStep(9, 'model');
 
             var summary = event.target.closest('#tool-results > summary, #bill-card > summary');
@@ -355,10 +356,6 @@
             }
             if (id === 'heat-loss') captureStep(6, 'heat_loss');
             if (id === 'boiler-kw') captureStep(7, 'heating_output');
-        });
-
-        document.addEventListener('change', function (event) {
-            if (event.target && event.target.id === 'brand') captureStep(8, 'brand');
         });
     }
 
