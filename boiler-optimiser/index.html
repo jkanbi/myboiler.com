@@ -729,13 +729,11 @@
             border-color: #d64545;
         }
 
-        .system-figure,
-        .model-figure {
+        .system-figure {
             margin: 0.85rem 0 0;
         }
 
-        .system-figure[hidden],
-        .model-figure[hidden] {
+        .system-figure[hidden] {
             display: none;
         }
 
@@ -946,15 +944,33 @@
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 0.5rem;
+            align-items: start;
         }
 
         #vaillant-models .choice-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
             flex: none;
+            align-self: start;
             min-width: 0;
-            padding: 0.75rem 0.45rem;
+            height: auto;
+            padding: 0.65rem 0.4rem 0.55rem;
             line-height: 1.25;
             text-align: center;
             white-space: normal;
+        }
+
+        #vaillant-models .choice-button img {
+            display: block;
+            width: 100%;
+            max-width: 8.5rem;
+            height: 8.5rem;
+            object-fit: contain;
+            background: #e8e8e8;
+            border-radius: calc(var(--radius) - 2px);
+            pointer-events: none;
         }
 
         #vaillant-models,
@@ -1459,6 +1475,12 @@
                 display: flex;
             }
 
+            #vaillant-models .choice-toggle {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                align-items: start;
+            }
+
             .system-thumb {
                 width: 100%;
             }
@@ -1480,8 +1502,7 @@
                 gap: 0.5rem;
             }
 
-            .system-figure,
-            .model-figure {
+            .system-figure {
                 display: grid;
                 grid-template-columns: repeat(3, minmax(0, 1fr));
                 column-gap: 0.5rem;
@@ -1499,28 +1520,6 @@
             .system-thumb {
                 width: 100%;
             }
-        }
-
-        .model-figure {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            column-gap: 0.5rem;
-            align-items: start;
-        }
-
-        .model-figure .model-thumb {
-            width: 100%;
-            max-width: 8.5rem;
-            height: auto;
-            aspect-ratio: 1;
-            justify-self: center;
-            cursor: pointer;
-        }
-
-        .model-figure .model-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
         }
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
@@ -1810,26 +1809,20 @@
             <div class="input-group">
                 <p id="brand-note" hidden>Button steps for this brand are not here yet.</p>
                 <div id="vaillant-models" hidden>
-                    <div class="input-heading">
-                        <div class="input-label" id="model-label">Which ecoTEC</div>
-                        <span class="input-hint">Match the picture to the front of the boiler.</span>
+                    <div class="choice-toggle" role="group" aria-label="Which ecoTEC">
+                        <button type="button" class="choice-button" data-model="old" aria-pressed="false" aria-label="Before 2012. Older Vaillant ecoTEC, with two temperature dials and four round buttons.">
+                            <span>Before 2012</span>
+                            <img src="/boiler-optimiser/images/ecotec-old-type.png" alt="" width="186" height="318">
+                        </button>
+                        <button type="button" class="choice-button" data-model="new" aria-pressed="false" aria-label="From 2012. Vaillant ecoTEC from 2012, with four rectangular buttons and no dials.">
+                            <span>From 2012</span>
+                            <img src="/boiler-optimiser/images/ecotec-new-type.png" alt="" width="275" height="445">
+                        </button>
+                        <button type="button" class="choice-button" data-model="latest" aria-pressed="false" aria-label="New Type. Current Vaillant ecoTEC plus, with a black display and a silver panel underneath.">
+                            <span>New Type</span>
+                            <img src="/combi-boiler/combi-boiler-cost/images/vaillant-ecotec-plus.png" alt="" width="825" height="819">
+                        </button>
                     </div>
-                    <div class="choice-toggle" role="group" aria-labelledby="model-label">
-                        <button type="button" class="choice-button" data-model="old" aria-pressed="false">Before 2012</button>
-                        <button type="button" class="choice-button" data-model="new" aria-pressed="false">From 2012</button>
-                        <button type="button" class="choice-button" data-model="latest" aria-pressed="false">New Type</button>
-                    </div>
-                    <figure class="model-figure" id="model-figure">
-                        <a class="system-thumb model-thumb" href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-pre-2012-models/" aria-label="Open the guide. Older Vaillant ecoTEC, with two temperature dials and four round buttons.">
-                            <img src="/boiler-optimiser/images/ecotec-old-type.png" alt="Older Vaillant ecoTEC, with two temperature dials and four round buttons." width="186" height="318">
-                        </a>
-                        <a class="system-thumb model-thumb" href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-post-2012-models/" aria-label="Open the guide. Vaillant ecoTEC from 2012, with four rectangular buttons and no dials.">
-                            <img src="/boiler-optimiser/images/ecotec-new-type.png" alt="Vaillant ecoTEC from 2012, with four rectangular buttons and no dials." width="275" height="445">
-                        </a>
-                        <a class="system-thumb model-thumb" href="/vaillant/how-to-adjust-the-flow-temperature-on-vaillant-ecotec-new-type/" aria-label="Open the guide. Current Vaillant ecoTEC plus, with a black display and a silver panel underneath.">
-                            <img src="/combi-boiler/combi-boiler-cost/images/vaillant-ecotec-plus.png" alt="Current Vaillant ecoTEC plus, with a black display and a silver panel underneath." width="825" height="819">
-                        </a>
-                    </figure>
                     <p id="model-steps" hidden></p>
                 </div>
                 <div id="intergas-models" hidden>
