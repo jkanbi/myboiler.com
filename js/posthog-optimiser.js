@@ -71,6 +71,56 @@
         capture('optimiser_result_viewed', resultProperties());
     }
 
+    function numericAttr(el, name) {
+        if (!el) return null;
+        var n = Number(el.getAttribute(name));
+        return isFinite(n) ? n : null;
+    }
+
+    function bindConfirm() {
+        var form = document.getElementById('tool-confirm');
+        var input = document.getElementById('set-flow');
+        var done = document.getElementById('tool-confirm-done');
+        var button = document.getElementById('tool-confirm-submit');
+        if (!form || !input) return;
+        var submitted = false;
+
+        input.addEventListener('input', function () {
+            input.dataset.edited = '1';
+        });
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            if (submitted) return;
+            var setFlow = Number(input.value);
+            if (!isFinite(setFlow) || setFlow < 30 || setFlow > 90) {
+                input.focus();
+                return;
+            }
+            submitted = true;
+            var props = resultProperties();
+            props.set_flow = setFlow;
+            props.tool_flow = numericAttr(form, 'data-tool-flow');
+            props.from_flow = numericAttr(form, 'data-from-flow');
+            props.saving_gbp = numericAttr(form, 'data-saving-gbp');
+            props.space_kwh = numericAttr(form, 'data-space-kwh');
+            if (props.tool_flow === null) {
+                var slider = document.getElementById('flow-temp');
+                var toolFlow = slider ? Number(slider.value) : NaN;
+                props.tool_flow = isFinite(toolFlow) ? toolFlow : null;
+            }
+            capture('optimiser_flow_turned_down', props);
+            captureStep(10, 'flow_turned_down');
+            form.classList.add('is-done');
+            input.disabled = true;
+            if (button) button.disabled = true;
+            if (done) {
+                done.hidden = false;
+                done.textContent = 'Thanks. We logged that you set it to ' + setFlow + '°C.';
+            }
+        });
+    }
+
     function ctaDest(href) {
         var url;
         try {
@@ -280,6 +330,7 @@
 
     ready(function () {
         bindFunnel();
+        bindConfirm();
         var choiceMade = storedChoice();
         if (choiceMade === 'accepted') {
             startPosthog('full');
