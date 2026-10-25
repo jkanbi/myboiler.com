@@ -20,8 +20,8 @@ assert(js.indexOf('utm_campaign=winter_combi') !== -1, 'UTM campaign');
 assert(js.indexOf('mb_winter_banner_dismissed_2026') !== -1, 'storage key');
 assert(js.indexOf('Dismiss winter alert') !== -1, 'accessible dismiss label');
 assert(loader.indexOf('data-cfasync') !== -1, 'Rocket Loader flag on injected script');
-assert(loader.indexOf('/js/winter-banner.js?v=winter-2') !== -1, 'cache-busted script');
-assert(loader.indexOf('/css/winter-banner.css?v=winter-2') !== -1, 'cache-busted css');
+assert(loader.indexOf('/js/winter-banner.js?v=winter-3') !== -1, 'cache-busted script');
+assert(loader.indexOf('/css/winter-banner.css?v=winter-3') !== -1, 'cache-busted css');
 
 function El(name) {
     this.tagName = String(name).toUpperCase();

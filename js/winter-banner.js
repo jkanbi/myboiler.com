@@ -56,7 +56,7 @@
         var link = document.createElement('link');
         link.id = 'mb-winter-banner-css';
         link.rel = 'stylesheet';
-        link.href = '/css/winter-banner.css?v=winter-2';
+        link.href = '/css/winter-banner.css?v=winter-3';
         (document.head || document.documentElement).appendChild(link);
     }
 
