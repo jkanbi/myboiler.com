@@ -885,7 +885,6 @@
         #intergas-steps[hidden],
         #intergas-figure[hidden],
         #worcester-models[hidden],
-        #worcester-steps[hidden],
         #brand-note[hidden],
         #brand-back[hidden],
         .brand-tile[hidden] {
@@ -935,6 +934,7 @@
             flex-direction: row;
             justify-content: center;
             align-items: center;
+            gap: 0.5rem;
             margin-bottom: 1rem;
         }
 
@@ -991,23 +991,13 @@
             aspect-ratio: auto;
         }
 
-        .brand-back {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            flex: none;
-            padding: 0.55rem 1rem;
+        #brand-back {
+            flex-direction: column;
+            gap: 0.15rem;
             font-size: 0.9375rem;
             font-weight: 600;
-            color: var(--text);
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            cursor: pointer;
-        }
-
-        .brand-back:hover {
-            border-color: var(--accent);
+            line-height: 1.15;
+            text-align: center;
         }
 
         #model-card > .input-group {
@@ -1019,14 +1009,25 @@
             justify-content: center;
         }
 
-        #vaillant-models .choice-toggle {
+        #vaillant-models .choice-toggle,
+        #worcester-models .choice-toggle {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 0.5rem;
             align-items: start;
         }
 
-        #vaillant-models .model-pick {
+        #vaillant-models .choice-toggle {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        #worcester-models .choice-toggle {
+            grid-template-columns: minmax(0, 9.5rem);
+            justify-content: center;
+            width: 100%;
+        }
+
+        #vaillant-models .model-pick,
+        #worcester-models .model-pick {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1034,7 +1035,8 @@
             min-width: 0;
         }
 
-        #vaillant-models .choice-button {
+        #vaillant-models .choice-button,
+        #worcester-models .choice-button {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1051,12 +1053,15 @@
         }
 
         #vaillant-models .choice-button:focus,
-        #vaillant-models .choice-button:focus-visible {
+        #vaillant-models .choice-button:focus-visible,
+        #worcester-models .choice-button:focus,
+        #worcester-models .choice-button:focus-visible {
             outline: none;
             border-color: var(--text);
         }
 
-        #vaillant-models .choice-button img {
+        #vaillant-models .choice-button img,
+        #worcester-models .choice-button img {
             display: block;
             width: 100%;
             max-width: 8.5rem;
@@ -1067,13 +1072,15 @@
             pointer-events: none;
         }
 
-        #vaillant-models .choice-button.active {
+        #vaillant-models .choice-button.active,
+        #worcester-models .choice-button.active {
             background: var(--surface);
             color: var(--text);
             border-color: var(--text);
         }
 
-        #vaillant-models .model-go {
+        #vaillant-models .model-go,
+        #worcester-models .model-go {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -1087,7 +1094,8 @@
             text-decoration: none;
         }
 
-        #vaillant-models .model-go[hidden] {
+        #vaillant-models .model-go[hidden],
+        #worcester-models .model-go[hidden] {
             display: none;
         }
 
@@ -1097,14 +1105,12 @@
             margin-top: 0;
         }
 
-        #intergas-steps,
-        #worcester-steps {
+        #intergas-steps {
             margin: 0.85rem 0 0;
             line-height: 1.6;
         }
 
-        #intergas-steps a,
-        #worcester-steps a {
+        #intergas-steps a {
             color: var(--accent);
         }
 
@@ -1923,7 +1929,10 @@
             </summary>
             <div class="input-group">
                 <div class="brand-bar" id="brand-bar">
-                    <button type="button" class="brand-back" id="brand-back" hidden>← Back</button>
+                    <button type="button" class="brand-tile" id="brand-back" hidden aria-label="Back">
+                        <span>←</span>
+                        <span>Back</span>
+                    </button>
                     <div class="brand-picks" id="brand-picks" role="group" aria-label="Which brand">
                         <button type="button" class="brand-tile" data-brand="vaillant" aria-pressed="false" aria-label="Vaillant">
                             <img src="/boiler-optimiser/images/brands/vaillant.svg" alt="" width="160" height="46">
@@ -1986,9 +1995,14 @@
                 </div>
                 <div id="worcester-models" hidden>
                     <div class="choice-toggle" role="group" aria-label="Which Worcester Bosch">
-                        <button type="button" class="choice-button" data-model="greenstar-i" aria-pressed="false">Greenstar i</button>
+                        <div class="model-pick">
+                            <button type="button" class="choice-button" data-model="greenstar-i" aria-pressed="false" aria-label="Greenstar i. Worcester Greenstar i, with a green display and a pressure gauge behind the lower flap.">
+                                <span>Greenstar i</span>
+                                <img src="/boiler-optimiser/images/greenstar-i.jpg" alt="" width="560" height="290">
+                            </button>
+                            <a class="model-go" data-model="greenstar-i" href="/flow-temp-worcester-bosch-greenstar-i-reduce-flow-temperature-82-to-55-degrees/" hidden>Go</a>
+                        </div>
                     </div>
-                    <p id="worcester-steps" hidden></p>
                 </div>
             </div>
         </details>
@@ -2275,23 +2289,10 @@
             function fillModelSteps(target) {
                 var steps = document.getElementById('model-steps');
                 var intergasSteps = document.getElementById('intergas-steps');
-                var worcesterSteps = document.getElementById('worcester-steps');
                 steps.textContent = '';
                 intergasSteps.textContent = '';
-                worcesterSteps.textContent = '';
                 steps.hidden = true;
                 intergasSteps.hidden = brand !== 'intergas' || !boilerModel;
-                worcesterSteps.hidden = brand !== 'worcester' || !boilerModel;
-                if (brand === 'worcester' && boilerModel) {
-                    function addWorcester(text) {
-                        worcesterSteps.appendChild(document.createTextNode(text));
-                    }
-                    addWorcester('Set the heating flow to ' + target + '°C on the display. The video takes a Greenstar i from 82°C down to 55°C. ');
-                    worcesterSteps.appendChild(linkEl('/flow-temp-worcester-bosch-greenstar-i-reduce-flow-temperature-82-to-55-degrees/', 'Show me on this boiler'));
-                    addWorcester('.');
-                    outputNote(worcesterSteps);
-                    return;
-                }
                 if (brand === 'intergas' && boilerModel) {
                     function addIntergas(text) {
                         intergasSteps.appendChild(document.createTextNode(text));
@@ -2367,7 +2368,7 @@
                 brandBack.hidden = !brand;
                 brandBar.classList.toggle('is-chosen', !!brand);
                 document.getElementById('vaillant-models').hidden = brand !== 'vaillant';
-                document.querySelectorAll('#vaillant-models .model-go').forEach(function (go) {
+                document.querySelectorAll('#vaillant-models .model-go, #worcester-models .model-go').forEach(function (go) {
                     go.hidden = go.getAttribute('data-model') !== boilerModel;
                 });
                 document.getElementById('intergas-models').hidden = brand !== 'intergas';
