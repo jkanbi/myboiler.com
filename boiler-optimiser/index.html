@@ -885,6 +885,7 @@
         #intergas-steps[hidden],
         #intergas-figure[hidden],
         #worcester-models[hidden],
+        #main-models[hidden],
         #brand-note[hidden],
         #brand-back[hidden],
         .brand-tile[hidden] {
@@ -1010,7 +1011,9 @@
         }
 
         #vaillant-models .choice-toggle,
-        #worcester-models .choice-toggle {
+        #worcester-models .choice-toggle,
+        #intergas-models .choice-toggle,
+        #main-models .choice-toggle {
             display: grid;
             gap: 0.5rem;
             align-items: start;
@@ -1020,14 +1023,24 @@
             grid-template-columns: repeat(3, minmax(0, 1fr));
         }
 
-        #worcester-models .choice-toggle {
+        #worcester-models .choice-toggle,
+        #main-models .choice-toggle {
             grid-template-columns: minmax(0, 9.5rem);
             justify-content: center;
             width: 100%;
         }
 
+        #intergas-models .choice-toggle {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            max-width: 20rem;
+            width: 100%;
+            margin: 0 auto;
+        }
+
         #vaillant-models .model-pick,
-        #worcester-models .model-pick {
+        #worcester-models .model-pick,
+        #intergas-models .model-pick,
+        #main-models .model-pick {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1036,7 +1049,9 @@
         }
 
         #vaillant-models .choice-button,
-        #worcester-models .choice-button {
+        #worcester-models .choice-button,
+        #intergas-models .choice-button,
+        #main-models .choice-button {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1055,13 +1070,19 @@
         #vaillant-models .choice-button:focus,
         #vaillant-models .choice-button:focus-visible,
         #worcester-models .choice-button:focus,
-        #worcester-models .choice-button:focus-visible {
+        #worcester-models .choice-button:focus-visible,
+        #intergas-models .choice-button:focus,
+        #intergas-models .choice-button:focus-visible,
+        #main-models .choice-button:focus,
+        #main-models .choice-button:focus-visible {
             outline: none;
             border-color: var(--text);
         }
 
         #vaillant-models .choice-button img,
-        #worcester-models .choice-button img {
+        #worcester-models .choice-button img,
+        #intergas-models .choice-button img,
+        #main-models .choice-button img {
             display: block;
             width: 100%;
             max-width: 8.5rem;
@@ -1073,14 +1094,18 @@
         }
 
         #vaillant-models .choice-button.active,
-        #worcester-models .choice-button.active {
+        #worcester-models .choice-button.active,
+        #intergas-models .choice-button.active,
+        #main-models .choice-button.active {
             background: var(--surface);
             color: var(--text);
             border-color: var(--text);
         }
 
         #vaillant-models .model-go,
-        #worcester-models .model-go {
+        #worcester-models .model-go,
+        #intergas-models .model-go,
+        #main-models .model-go {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -1095,13 +1120,16 @@
         }
 
         #vaillant-models .model-go[hidden],
-        #worcester-models .model-go[hidden] {
+        #worcester-models .model-go[hidden],
+        #intergas-models .model-go[hidden],
+        #main-models .model-go[hidden] {
             display: none;
         }
 
         #vaillant-models,
         #intergas-models,
-        #worcester-models {
+        #worcester-models,
+        #main-models {
             margin-top: 0;
         }
 
@@ -1605,6 +1633,10 @@
                 align-items: start;
             }
 
+            #intergas-models .choice-toggle {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
             .brand-picks {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
             }
@@ -1979,12 +2011,20 @@
                     <p id="model-steps" hidden></p>
                 </div>
                 <div id="intergas-models" hidden>
-                    <div class="input-heading">
-                        <div class="input-label" id="intergas-label">Which Intergas</div>
-                    </div>
-                    <div class="choice-toggle" role="group" aria-labelledby="intergas-label">
-                        <button type="button" class="choice-button" data-model="intergas" aria-pressed="false">Rapid, HRE and ECO RF</button>
-                        <button type="button" class="choice-button" data-model="xclusive" aria-pressed="false">Xclusive and Xtreme</button>
+                    <div class="choice-toggle" role="group" aria-label="Which Intergas">
+                        <div class="model-pick">
+                            <button type="button" class="choice-button" data-model="intergas" aria-pressed="false" aria-label="Rapid, HRE and ECO RF. Intergas with a recessed button strip and an Intergas badge on the lower panel.">
+                                <span>Rapid, HRE and ECO RF</span>
+                                <img src="/boiler-optimiser/images/intergas-eco-rf.jpg" alt="" width="357" height="480">
+                            </button>
+                            <a class="model-go" data-model="intergas" href="/intergas/how-to-adjust-the-flow-temperature-on-intergas-rapid-hre-and-eco-rf/" hidden>Go</a>
+                        </div>
+                        <div class="model-pick">
+                            <button type="button" class="choice-button" data-model="xclusive" aria-pressed="false" aria-label="Xclusive and Xtreme. Intergas with a glass touchscreen strip along the bottom.">
+                                <span>Xclusive and Xtreme</span>
+                                <img src="/boiler-optimiser/images/intergas-xclusive.jpg" alt="" width="326" height="480">
+                            </button>
+                        </div>
                     </div>
                     <figure class="intergas-figure" id="intergas-figure" hidden>
                         <a href="/intergas/how-to-adjust-the-flow-temperature-on-intergas-rapid-hre-and-eco-rf/">
@@ -2001,6 +2041,17 @@
                                 <img src="/boiler-optimiser/images/greenstar-i.jpg" alt="" width="560" height="290">
                             </button>
                             <a class="model-go" data-model="greenstar-i" href="/flow-temp-worcester-bosch-greenstar-i-reduce-flow-temperature-82-to-55-degrees/" hidden>Go</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="main-models" hidden>
+                    <div class="choice-toggle" role="group" aria-label="Which Main Heating">
+                        <div class="model-pick">
+                            <button type="button" class="choice-button" data-model="combi-eco" aria-pressed="false" aria-label="Combi Eco. Main Combi Eco, with a reset selector, a red temperature display, and a radiator knob.">
+                                <span>Combi Eco</span>
+                                <img src="/boiler-optimiser/images/main-combi-eco.jpg" alt="" width="560" height="205">
+                            </button>
+                            <a class="model-go" data-model="combi-eco" href="/main/how-to-adjust-the-flow-temperature-on-main-combi-eco/" hidden>Go</a>
                         </div>
                     </div>
                 </div>
@@ -2368,13 +2419,14 @@
                 brandBack.hidden = !brand;
                 brandBar.classList.toggle('is-chosen', !!brand);
                 document.getElementById('vaillant-models').hidden = brand !== 'vaillant';
-                document.querySelectorAll('#vaillant-models .model-go, #worcester-models .model-go').forEach(function (go) {
+                document.querySelectorAll('#vaillant-models .model-go, #worcester-models .model-go, #intergas-models .model-go, #main-models .model-go').forEach(function (go) {
                     go.hidden = go.getAttribute('data-model') !== boilerModel;
                 });
                 document.getElementById('intergas-models').hidden = brand !== 'intergas';
                 document.getElementById('intergas-figure').hidden = brand !== 'intergas' || boilerModel !== 'intergas';
                 document.getElementById('worcester-models').hidden = brand !== 'worcester';
-                document.getElementById('brand-note').hidden = !brand || brand === 'vaillant' || brand === 'intergas' || brand === 'worcester';
+                document.getElementById('main-models').hidden = brand !== 'main';
+                document.getElementById('brand-note').hidden = !brand || brand === 'vaillant' || brand === 'intergas' || brand === 'worcester' || brand === 'main';
                 var otherType = system === 'combi-cylinder';
                 var standardBoiler = boilerType !== 'condensing';
                 var condensingSystem = boilerType === 'condensing' && system === 'system';
