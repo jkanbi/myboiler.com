@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boiler Optimisation - Power output - MyBoiler Hub</title>
+    <meta name="description" content="Set a condensing boiler’s maximum heating output from the calculated house heat loss. A Gas Safe engineer sets this on the boiler.">
+    <link rel="canonical" href="https://myboiler.com/boiler-optimiser-advance-power-output/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            margin: 0 auto;
+            width: 100%;
+            max-width: var(--max-width, 1024px);
+            box-sizing: border-box;
+        }
+
+        .article-title {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            font-weight: 700;
+            line-height: 1.15;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.0625rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 0.75rem;
+        }
+
+        .article-intro a {
+            color: var(--accent);
+        }
+
+        .calculator-card {
+            width: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .input-group,
+        .card-lead,
+        .output-advice {
+            align-self: stretch;
+            width: 100%;
+            max-width: 36rem;
+            margin-inline: auto;
+        }
+
+        .input-group {
+            margin-bottom: 0;
+        }
+
+        #heat-loss-card {
+            align-items: stretch;
+        }
+
+        #heat-loss-card .input-group {
+            box-sizing: border-box;
+        }
+
+        .input-heading {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.2rem 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .input-label {
+            margin: 0;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .card-title {
+            margin: 0 0 1.25rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            line-height: 1.35;
+            color: var(--text);
+        }
+
+        .input-hint {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            font-weight: 500;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .input-field.is-auto {
+            opacity: 0.55;
+        }
+
+        .card-lead {
+            width: 100%;
+            max-width: 36rem;
+            margin: -0.25rem 0 1.25rem;
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .card-lead p {
+            margin: 0 0 0.75rem;
+        }
+
+        .card-lead p:last-child {
+            margin-bottom: 0;
+        }
+
+        .output-row {
+            display: flex;
+            gap: 0.5rem;
+            align-items: stretch;
+        }
+
+        .output-row .input-field {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .choice-button {
+            flex: 0 0 auto;
+            min-width: 5.5rem;
+            padding: 0.75rem 1rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .choice-button.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .output-advice {
+            width: 100%;
+            max-width: 36rem;
+            margin: 1.25rem 0 0;
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .output-advice[hidden] {
+            display: none;
+        }
+
+        .tool-disclaimer {
+            font-size: 0.8125rem;
+            line-height: 1.55;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .calculator-card {
+                padding: 1.25rem;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Boiler Optimisation - Power output",
+  "url": "https://myboiler.com/boiler-optimiser-advance-power-output/",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MyBoiler.com",
+    "url": "https://myboiler.com/"
+  },
+  "description": "Set a condensing boiler’s maximum heating output from the calculated house heat loss. A Gas Safe engineer sets this on the boiler."
+}
+    </script>
+    <script data-cfasync="false">
+    !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+    },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
+    a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+    twq('config','nvyf0');
+    </script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=power-output-page" data-cfasync="false"></script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <div class="calculator-card">
+            <h1 class="article-title">Boiler Optimisation - Power output</h1>
+            <p class="article-intro">Enter the calculated heat loss. Then pick a heating output, or Auto if the maximum is not capped. A Gas Safe engineer sets this on the boiler.</p>
+            <p class="article-intro"><a href="/boiler-optimiser/">Back to the Boiler Optimiser</a></p>
+        </div>
+
+        <div class="calculator-card" id="heat-loss-card">
+            <div class="input-group">
+                <div class="input-heading">
+                    <label class="input-label" for="heat-loss">Calculated heat loss</label>
+                    <span class="input-hint">The house heat loss in kW.</span>
+                </div>
+                <input type="number" id="heat-loss" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 6">
+            </div>
+        </div>
+
+        <div class="calculator-card" id="power-card">
+            <h2 class="card-title">Heating output</h2>
+            <div class="card-lead">
+                <p>A boiler left on its full heating rating often puts out more heat than the house can lose. It reaches temperature, shuts off, then starts again. Those short runs use more gas on each ignition, make more noise, and wear the boiler.</p>
+                <p>A lower central-heating maximum keeps the burner on longer at a lower rate. That is steadier heat, and on a condensing boiler it spends more time with a cool enough return to condense. On a combi, leave the hot-water output at its higher rating so the taps stay hot. A Gas Safe engineer sets this.</p>
+            </div>
+            <div class="input-group">
+                <div class="input-heading">
+                    <label class="input-label" for="boiler-kw">Boiler heating output</label>
+                    <span class="input-hint">The central-heating kW, or Auto if the maximum is not capped.</span>
+                </div>
+                <div class="output-row">
+                    <input type="number" id="boiler-kw" class="input-field" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 24">
+                    <button type="button" class="choice-button auto-button" id="output-auto" aria-pressed="false">Auto</button>
+                </div>
+                <p class="output-advice" id="output-advice" hidden></p>
+            </div>
+        </div>
+
+        <p class="tool-disclaimer">This tool is in development. We accept no responsibility for issues that arise from these adjustments. Some systems are not installed correctly and may cause problems, especially where the condensate pipe is incorrectly installed or not insulated.</p>
+    </div>
+
+    <div id="site-footer"></div>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+    <script>
+        (function () {
+            var heatLossInput = document.getElementById('heat-loss');
+            var boilerInput = document.getElementById('boiler-kw');
+            var outputAutoButton = document.getElementById('output-auto');
+            var outputAdvice = document.getElementById('output-advice');
+            var outputAuto = false;
+
+            function queryNumber(name) {
+                var raw = new URLSearchParams(location.search).get(name);
+                if (raw === null || String(raw).trim() === '') return null;
+                var value = Number(raw);
+                return isFinite(value) && value > 0 ? value : null;
+            }
+
+            function numberOrNull(input) {
+                if (input.value.trim() === '') return null;
+                var value = Number(input.value);
+                return value > 0 ? value : null;
+            }
+
+            function formatKw(kw) {
+                var rounded = Math.round(kw * 10) / 10;
+                return rounded % 1 === 0 ? String(rounded) : rounded.toFixed(1);
+            }
+
+            function outputCap(heatLoss, boilerKw) {
+                if (outputAuto && heatLoss) return heatLoss;
+                if (!outputAuto && heatLoss && boilerKw && boilerKw > heatLoss + 0.5) return heatLoss;
+                return null;
+            }
+
+            function setOutputAuto(on) {
+                outputAuto = on;
+                outputAutoButton.classList.toggle('active', on);
+                outputAutoButton.setAttribute('aria-pressed', on ? 'true' : 'false');
+                boilerInput.classList.toggle('is-auto', on);
+            }
+
+            function update() {
+                var heatLoss = numberOrNull(heatLossInput);
+                var boilerKw = numberOrNull(boilerInput);
+                var cap = outputCap(heatLoss, boilerKw);
+                if (cap) {
+                    outputAdvice.hidden = false;
+                    outputAdvice.textContent = 'Ask a Gas Safe engineer to set the heating output to about ' + formatKw(cap) + ' kW.';
+                    return;
+                }
+                if (heatLoss && outputAuto) {
+                    outputAdvice.hidden = false;
+                    outputAdvice.textContent = 'Ask a Gas Safe engineer to set the heating output to about ' + formatKw(heatLoss) + ' kW.';
+                    return;
+                }
+                if (heatLoss) {
+                    outputAdvice.hidden = false;
+                    outputAdvice.textContent = 'The heating output is a separate setting. Ask a Gas Safe engineer to change that.';
+                    return;
+                }
+                outputAdvice.hidden = true;
+                outputAdvice.textContent = '';
+            }
+
+            var fromQuery = queryNumber('heat-loss');
+            if (fromQuery !== null) heatLossInput.value = String(fromQuery);
+
+            heatLossInput.addEventListener('input', update);
+            boilerInput.addEventListener('input', update);
+            outputAutoButton.addEventListener('click', function () {
+                setOutputAuto(!outputAuto);
+                update();
+            });
+            function clearAutoFromInput() {
+                if (!outputAuto) return;
+                setOutputAuto(false);
+                update();
+            }
+            boilerInput.addEventListener('pointerdown', clearAutoFromInput);
+            boilerInput.addEventListener('click', clearAutoFromInput);
+            update();
+        })();
+    </script>
+</body>
+</html>

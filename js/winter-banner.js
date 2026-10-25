@@ -10,7 +10,7 @@
     var CTA = 'Try the free Boiler Optimiser →';
 
     function isOptimiserPath() {
-        return /(^|\/)boiler-optimiser(\/|$)/.test(location.pathname || '');
+        return /(^|\/)boiler-optimiser(\/|-|$)/.test(location.pathname || '');
     }
 
     function wasDismissed() {

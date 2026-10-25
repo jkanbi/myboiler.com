@@ -6,7 +6,7 @@
     var STORAGE_KEY = 'mb_optimiser_posthog';
 
     var path = (location.pathname || '').replace(/\/+$/, '');
-    if (path !== '/boiler-optimiser' && path.indexOf('/boiler-optimiser/') !== 0) {
+    if (path.indexOf('/boiler-optimiser') !== 0) {
         return;
     }
 
@@ -162,6 +162,7 @@
             return 'other';
         }
         if (url.pathname.indexOf('/heat-pump-checker') === 0) return 'heat_pump_checker';
+        if (url.pathname.indexOf('/boiler-optimiser-advance-power-output') === 0) return 'power_output';
         if (url.pathname.indexOf('/quote') === 0) {
             var need = url.searchParams.get('need') || '';
             if (need === 'boiler-replacement') return 'quote_boiler_replacement';
@@ -325,7 +326,7 @@
                 if (system.getAttribute('data-system') === 'combi-cylinder') captureResult();
             }
             if (event.target.closest('[data-gas-cooking]')) captureStep(3, 'bill_inputs');
-            if (event.target.closest('#advanced-toggle')) {
+            if (event.target.closest('#advanced-toggle') || event.target.closest('a[href*="/boiler-optimiser-advance-power-output"]')) {
                 captureStep(5, 'advanced');
                 captureResult();
             }
@@ -367,9 +368,10 @@
         var choiceMade = storedChoice();
         if (choiceMade === 'accepted') {
             startPosthog('full');
-            return;
+        } else {
+            startPosthog('anonymous');
+            if (choiceMade !== 'declined') showBanner();
         }
-        startPosthog('anonymous');
-        if (choiceMade !== 'declined') showBanner();
+        if (path.indexOf('/boiler-optimiser-advance-power-output') === 0) captureStep(5, 'advanced');
     });
 })();

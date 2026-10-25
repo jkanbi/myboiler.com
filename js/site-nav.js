@@ -2,7 +2,7 @@
     if (window.__mbWinterBannerLoader) return;
     window.__mbWinterBannerLoader = true;
 
-    if (/(^|\/)boiler-optimiser(\/|$)/.test(location.pathname || '')) return;
+    if (/(^|\/)boiler-optimiser(\/|-|$)/.test(location.pathname || '')) return;
 
     try {
         if (window.localStorage.getItem('mb_winter_banner_dismissed_2026') === '1') return;

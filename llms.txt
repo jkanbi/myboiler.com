@@ -9,7 +9,8 @@ Pages are static HTML. Each content page has a title, a description, a canonical
 - [Advice](https://myboiler.com/advice/): Boiler, OpenTherm, heat pump, and heating guides.
 - [Heat as a Service](https://myboiler.com/heat-as-a-service/): Paying for warm hours rather than units of gas; the 2019–20 Catapult / Bristol Energy / Baxi trials, and why the product is not a normal UK tariff in 2026.
 - [Fault codes](https://myboiler.com/fault-codes/): Search a display code by brand.
-- [Boiler optimiser](https://myboiler.com/boiler-optimiser/): Heating flow temperature and maximum heating output for a condensing boiler.
+- [Boiler optimiser](https://myboiler.com/boiler-optimiser/): Heating flow temperature for a condensing boiler.
+- [Boiler Optimisation - Power output](https://myboiler.com/boiler-optimiser-advance-power-output/): Maximum heating output from calculated heat loss.
 - [Heat pump checker](https://myboiler.com/heat-pump-checker/): Whether a house is a plausible heat-pump candidate.
 - [Boiler pressure](https://myboiler.com/boiler-pressure/): About 1.2 bar when cold, in the 1 to 2 bar band.
 - [Combi boiler problems](https://myboiler.com/combi-boiler-problems/): Low pressure, no hot water, cold radiators, condensate, kettling.
