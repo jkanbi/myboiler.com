@@ -162,16 +162,63 @@
             width: 8.75rem;
             height: 12rem;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 1.2rem;
             border: 2px solid var(--text);
             border-radius: 6px;
             background: #f3f4f6;
+            color: var(--text);
+            text-transform: uppercase;
+        }
+
+        .boiler-name {
             font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 0.06em;
             text-transform: uppercase;
-            color: var(--text);
+        }
+
+        .boiler-saving {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.12rem;
+            text-transform: none;
+        }
+
+        .boiler-saving-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        .boiler-saving-value {
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: 0;
+        }
+
+        .boiler-saving.is-green .boiler-saving-label,
+        .boiler-saving.is-green .boiler-saving-value {
+            color: #2f9e44;
+        }
+
+        .boiler-saving.is-amber .boiler-saving-label,
+        .boiler-saving.is-amber .boiler-saving-value {
+            color: #e6a817;
+        }
+
+        .boiler-saving.is-red .boiler-saving-label,
+        .boiler-saving.is-red .boiler-saving-value {
+            color: #d64545;
+        }
+
+        .boiler-saving.is-low .boiler-saving-label,
+        .boiler-saving.is-low .boiler-saving-value {
+            color: #111;
         }
 
         .condensate {
@@ -1364,7 +1411,13 @@
                         </div>
                         <div class="boiler-column">
                             <div class="boiler-body">
-                                <div class="boiler-shape">Boiler</div>
+                                <div class="boiler-shape">
+                                    <span class="boiler-name">Boiler</span>
+                                    <span class="boiler-saving is-red">
+                                        <span class="boiler-saving-label">Savings</span>
+                                        <span class="boiler-saving-value" id="boiler-saving">£0.00</span>
+                                    </span>
+                                </div>
                                 <div class="condensate">
                                     <span class="condensate-pipe" aria-hidden="true"></span>
                                     <span class="condensate-drops" aria-hidden="true">
@@ -2101,9 +2154,21 @@
                 document.getElementById('graph-efficiency-unit').textContent = condensingBoiler
                     ? 'at ' + ret + '°C return'
                     : 'not a condensing boiler';
-                document.getElementById('condensing-saving').textContent = spaceKwh === null || pence === null
+                var savingAmount = spaceKwh === null || pence === null
+                    ? 0
+                    : spaceKwh * (pence / 100) * fraction;
+                var savingText = spaceKwh === null || pence === null
                     ? '—'
-                    : formatGBP(spaceKwh * (pence / 100) * fraction);
+                    : formatGBP(savingAmount);
+                document.getElementById('condensing-saving').textContent = savingText;
+                var boilerSaving = document.getElementById('boiler-saving');
+                var boilerSavingWrap = boilerSaving.parentElement;
+                boilerSaving.textContent = savingText;
+                var savingTone = 'red';
+                if (savingAmount > 0 && condensingBoiler) {
+                    savingTone = currentBand.key === 'low' ? 'low' : currentBand.key;
+                }
+                boilerSavingWrap.className = 'boiler-saving is-' + savingTone;
                 document.getElementById('condensing-saving-unit').textContent = condensingBoiler
                     ? percent(fraction) + ' versus a 75°C flow'
                     : 'no condensing gain on this boiler';
