@@ -5,8 +5,9 @@
     var STORAGE_KEY = 'mb_winter_banner_dismissed_2026';
     var OPTIMISER_HREF =
         '/boiler-optimiser/?utm_source=myboiler&utm_medium=site_banner&utm_campaign=winter_combi';
-    var COPY =
-        '❄️ Got a combi boiler? Turning the flow temperature down could cut your gas bill this winter. Try the free Boiler Optimiser →';
+    var LEAD =
+        '❄️ Got a combi boiler? Turning the flow temperature down could cut your gas bill this winter. ';
+    var CTA = 'Try the free Boiler Optimiser →';
 
     function isOptimiserPath() {
         return /(^|\/)boiler-optimiser(\/|$)/.test(location.pathname || '');
@@ -55,7 +56,7 @@
         var link = document.createElement('link');
         link.id = 'mb-winter-banner-css';
         link.rel = 'stylesheet';
-        link.href = '/css/winter-banner.css?v=winter-1';
+        link.href = '/css/winter-banner.css?v=winter-2';
         (document.head || document.documentElement).appendChild(link);
     }
 
@@ -69,10 +70,17 @@
         var inner = document.createElement('div');
         inner.className = 'mb-winter-banner__inner';
 
+        var text = document.createElement('p');
+        text.className = 'mb-winter-banner__text';
+        var lead = document.createElement('span');
+        lead.textContent = LEAD;
+        text.appendChild(lead);
+
         var link = document.createElement('a');
         link.className = 'mb-winter-banner__link';
         link.href = OPTIMISER_HREF;
-        link.textContent = COPY;
+        link.textContent = CTA;
+        text.appendChild(link);
 
         var close = document.createElement('button');
         close.type = 'button';
@@ -85,7 +93,7 @@
             hideBanner(banner);
         });
 
-        inner.appendChild(link);
+        inner.appendChild(text);
         inner.appendChild(close);
         banner.appendChild(inner);
         return banner;

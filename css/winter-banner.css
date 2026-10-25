@@ -1,7 +1,8 @@
 /* Slim sitewide winter alert. Desktop target: one 34px line. */
 .mb-winter-banner {
-	background: var(--accent-dark, #0f4eb5);
-	color: #fff;
+	background: #f1f3f5;
+	color: #1f2933;
+	border-bottom: 1px solid #e2e5e9;
 	width: 100%;
 	height: 34px;
 	box-sizing: border-box;
@@ -14,30 +15,35 @@
 	display: flex;
 	align-items: center;
 	gap: 0.6rem;
-	height: 34px;
+	height: 33px;
 	padding: 0 var(--page-inline, max(20px, calc((100% - 1024px) / 2)));
 	box-sizing: border-box;
 }
 
-.mb-winter-banner__link {
+.mb-winter-banner__text {
 	flex: 1 1 auto;
 	min-width: 0;
-	color: #fff;
-	text-decoration: none;
-	font-weight: 500;
+	margin: 0;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
+.mb-winter-banner__link {
+	color: var(--accent, #1863dc);
+	text-decoration: none;
+	font-weight: 500;
+}
+
 .mb-winter-banner__link:hover,
 .mb-winter-banner__link:focus {
-	color: #fff;
+	color: var(--link-hover, #0f4eb5);
+	font-weight: 700;
 	text-decoration: underline;
 }
 
 .mb-winter-banner__link:focus-visible {
-	outline: 2px solid #fff;
+	outline: 2px solid var(--accent, #1863dc);
 	outline-offset: 2px;
 	border-radius: 2px;
 }
@@ -52,18 +58,19 @@
 	border: 0;
 	border-radius: 4px;
 	background: transparent;
-	color: #fff;
+	color: #4b5563;
 	font-size: 1.125rem;
 	line-height: 1;
 	cursor: pointer;
 }
 
 .mb-winter-banner__close:hover {
-	background: rgba(255, 255, 255, 0.14);
+	background: rgba(31, 41, 51, 0.08);
+	color: #1f2933;
 }
 
 .mb-winter-banner__close:focus-visible {
-	outline: 2px solid #fff;
+	outline: 2px solid #4b5563;
 	outline-offset: 2px;
 }
 
@@ -76,13 +83,13 @@
 
 	.mb-winter-banner__inner {
 		height: auto;
-		min-height: 34px;
+		min-height: 33px;
 		align-items: flex-start;
 		padding-top: 6px;
 		padding-bottom: 6px;
 	}
 
-	.mb-winter-banner__link {
+	.mb-winter-banner__text {
 		white-space: normal;
 		overflow: visible;
 		text-overflow: unset;

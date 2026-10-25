@@ -20,8 +20,8 @@ assert(js.indexOf('utm_campaign=winter_combi') !== -1, 'UTM campaign');
 assert(js.indexOf('mb_winter_banner_dismissed_2026') !== -1, 'storage key');
 assert(js.indexOf('Dismiss winter alert') !== -1, 'accessible dismiss label');
 assert(loader.indexOf('data-cfasync') !== -1, 'Rocket Loader flag on injected script');
-assert(loader.indexOf('/js/winter-banner.js?v=winter-1') !== -1, 'cache-busted script');
-assert(loader.indexOf('/css/winter-banner.css?v=winter-1') !== -1, 'cache-busted css');
+assert(loader.indexOf('/js/winter-banner.js?v=winter-2') !== -1, 'cache-busted script');
+assert(loader.indexOf('/css/winter-banner.css?v=winter-2') !== -1, 'cache-busted css');
 
 function El(name) {
     this.tagName = String(name).toUpperCase();
@@ -161,13 +161,22 @@ function runOn(pathname, storage) {
 }
 
 var home = runOn('/');
+function allText(node) {
+    var out = node.textContent || '';
+    (node.children || []).forEach(function (child) {
+        out += allText(child);
+    });
+    return out;
+}
+
 var banner = findById(home.html, 'mb-winter-banner');
 assert(banner, 'banner mounts on a normal page');
 assert(home.body.children[0] === banner, 'banner sits above the header');
 var link = findByClass(banner, 'mb-winter-banner__link');
 assert(link, 'banner has a link');
 assert(link.href.indexOf('/boiler-optimiser/?utm_source=myboiler&utm_medium=site_banner&utm_campaign=winter_combi') !== -1, 'optimiser UTM href');
-assert(link.textContent.indexOf('Got a combi boiler?') !== -1, 'suggested copy');
+assert(link.textContent === 'Try the free Boiler Optimiser →', 'CTA is the only link text');
+assert(allText(banner).indexOf('Got a combi boiler?') !== -1, 'suggested lead copy');
 
 var close = findByClass(banner, 'mb-winter-banner__close');
 assert(close && close.attrs['aria-label'] === 'Dismiss winter alert', 'dismiss label');

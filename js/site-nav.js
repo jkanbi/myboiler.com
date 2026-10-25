@@ -17,7 +17,7 @@
     var reserve = document.createElement('style');
     reserve.id = 'mb-winter-banner-reserve';
     reserve.textContent =
-        'html.mb-winter-banner-on body{border-top:34px solid #0f4eb5}' +
+        'html.mb-winter-banner-on body{border-top:34px solid #f1f3f5}' +
         '@media (max-width:720px){html.mb-winter-banner-on body{border-top-width:46px}}';
     (document.head || document.documentElement).appendChild(reserve);
 
@@ -25,21 +25,22 @@
         var critical = document.createElement('style');
         critical.id = 'mb-winter-banner-critical';
         critical.textContent =
-            '.mb-winter-banner{background:#0f4eb5;color:#fff;width:100%;height:34px;font-size:13px;line-height:1.25}' +
-            '.mb-winter-banner__inner{display:flex;align-items:center;gap:.6rem;height:34px;padding:0 max(20px,calc((100% - 1024px)/2))}' +
-            '.mb-winter-banner__link{flex:1 1 auto;min-width:0;color:#fff;text-decoration:none;font-weight:500;white-space:nowrap}' +
-            '.mb-winter-banner__close{flex:0 0 auto;width:28px;height:28px;border:0;background:transparent;color:#fff;font-size:1.125rem;cursor:pointer}';
+            '.mb-winter-banner{background:#f1f3f5;color:#1f2933;border-bottom:1px solid #e2e5e9;width:100%;height:34px;box-sizing:border-box;font-size:13px;line-height:1.25}' +
+            '.mb-winter-banner__inner{display:flex;align-items:center;gap:.6rem;height:33px;padding:0 max(20px,calc((100% - 1024px)/2))}' +
+            '.mb-winter-banner__text{flex:1 1 auto;min-width:0;margin:0;white-space:nowrap}' +
+            '.mb-winter-banner__link{color:#1863dc;text-decoration:none;font-weight:500}' +
+            '.mb-winter-banner__close{flex:0 0 auto;width:28px;height:28px;border:0;background:transparent;color:#4b5563;font-size:1.125rem;cursor:pointer}';
         (document.head || document.documentElement).appendChild(critical);
     }
 
     var css = document.createElement('link');
     css.id = 'mb-winter-banner-css';
     css.rel = 'stylesheet';
-    css.href = '/css/winter-banner.css?v=winter-1';
+    css.href = '/css/winter-banner.css?v=winter-2';
     (document.head || document.documentElement).appendChild(css);
 
     var script = document.createElement('script');
-    script.src = '/js/winter-banner.js?v=winter-1';
+    script.src = '/js/winter-banner.js?v=winter-2';
     script.setAttribute('data-cfasync', 'false');
     (document.head || document.documentElement).appendChild(script);
 })();
