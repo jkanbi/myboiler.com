@@ -561,16 +561,10 @@
             margin-bottom: 0.85rem;
         }
 
-        #annual-kwh,
-        #space-heating-kwh {
+        #annual-kwh {
             width: 12rem;
             max-width: 100%;
             text-align: center;
-        }
-
-        #space-heating-kwh {
-            display: block;
-            margin-inline: auto;
         }
 
         #annual-kwh,
@@ -580,14 +574,48 @@
         }
 
         #bill-card .cooking-toggle {
-            justify-content: center;
-            max-width: 18rem;
+            display: flex;
+            flex-wrap: nowrap;
+            flex-shrink: 0;
+            align-items: stretch;
+            gap: 0;
+            width: 12.25rem;
+            min-height: 3.15rem;
+            padding: 0.22rem;
             margin-inline: auto;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 999px;
+            box-sizing: border-box;
         }
 
         #bill-card .cooking-toggle .choice-button {
-            flex: 1 1 6.5rem;
-            max-width: 8rem;
+            flex: 1 1 0;
+            max-width: none;
+            min-height: 2.75rem;
+            padding: 0.6rem 0.85rem;
+            border: 0;
+            border-radius: 999px;
+            background: transparent;
+            color: var(--text-muted);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        #bill-card .cooking-toggle .choice-button.active {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 1px 4px rgba(24, 99, 220, 0.28);
+        }
+
+        #bill-card .cooking-toggle .choice-button:focus {
+            outline: none;
+        }
+
+        #bill-card .cooking-toggle .choice-button:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+            z-index: 1;
         }
 
         #bill-card .bill-next {
@@ -1512,16 +1540,30 @@
                 #d64545 var(--red-stop) 100%);
         }
 
+        .calculated-output {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 0;
+        }
+
         .calculated-field {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            font-size: 1rem;
-            border: 2px solid var(--border-subtle);
-            border-radius: var(--radius);
-            background: var(--bg);
-            color: var(--accent);
+            margin: 0;
+            font-size: 1.75rem;
             font-weight: 700;
-            box-sizing: border-box;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: #2f9e44;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .calculated-hint {
+            margin: 0.15rem 0 0;
+            font-size: 0.75rem;
+            font-weight: 500;
+            line-height: 1.3;
+            color: var(--text-muted);
         }
 
         .heat-loss-known {
@@ -1687,6 +1729,28 @@
         }
 
         @media (min-width: 701px) {
+            #bill-card > .input-group {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
+            #bill-card > .input-group .input-heading {
+                margin-bottom: 0;
+                justify-content: flex-start;
+            }
+
+            #bill-card .cooking-toggle {
+                margin-inline: 0;
+            }
+
+            #space-heating-group .calculated-output {
+                align-items: flex-start;
+                text-align: left;
+            }
+
             #system-group > .choice-toggle {
                 display: grid;
                 grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1869,9 +1933,12 @@
             </div>
 
             <div class="input-group">
+                <div class="input-heading">
+                    <label class="input-label" for="unit-rate">Unit rate</label>
+                </div>
                 <div class="unit-rate-field">
                     <input type="number" id="unit-rate" class="input-field" inputmode="decimal" min="0" step="0.01" value="7.97">
-                    <label class="input-label" for="unit-rate">pence / kWh</label>
+                    <label class="input-label" for="unit-rate">p/kWh</label>
                 </div>
             </div>
 
@@ -1880,7 +1947,10 @@
                     <div class="input-label" id="space-heating-label">Estimated annual space heating usage</div>
                     <a class="label-aside" id="space-heating-aside" href="#note-space">[Notes 5.]</a>
                 </div>
-                <div class="calculated-field" id="space-heating-kwh" aria-labelledby="space-heating-label">—</div>
+                <div class="calculated-output">
+                    <div class="calculated-field" id="space-heating-kwh" aria-labelledby="space-heating-label">—</div>
+                    <p class="calculated-hint">Calculated automatically</p>
+                </div>
             </div>
             <p class="bill-next">Enter / change your details if needed, then proceed to next section.</p>
         </details>
