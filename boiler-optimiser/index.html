@@ -1837,19 +1837,19 @@
                 </div>
             </div>
 
-            <div class="input-group" id="space-heating-group">
-                <div class="input-heading">
-                    <div class="input-label" id="space-heating-label">Estimated space heating usage</div>
-                    <a class="label-aside" id="space-heating-aside" href="#note-space">[Notes 5.]</a>
-                </div>
-                <div class="calculated-field" id="space-heating-kwh" aria-labelledby="space-heating-label">—</div>
-            </div>
-
             <div class="input-group">
                 <div class="unit-rate-field">
                     <input type="number" id="unit-rate" class="input-field" inputmode="decimal" min="0" step="0.01" value="7.97">
                     <label class="input-label" for="unit-rate">pence / kWh</label>
                 </div>
+            </div>
+
+            <div class="input-group" id="space-heating-group">
+                <div class="input-heading">
+                    <div class="input-label" id="space-heating-label">Estimated annual space heating usage</div>
+                    <a class="label-aside" id="space-heating-aside" href="#note-space">[Notes 5.]</a>
+                </div>
+                <div class="calculated-field" id="space-heating-kwh" aria-labelledby="space-heating-label">—</div>
             </div>
             <p class="bill-next">Enter / change your details if needed, then proceed to next section.</p>
         </details>
@@ -2668,7 +2668,7 @@
                 if (billAside) billAside.textContent = '[Notes ' + billStep + '.]';
                 var spaceStep = step;
                 var spaceItem = item(
-                    stepTitle('Estimated space heating usage'),
+                    stepTitle('Estimated annual space heating usage'),
                     usesGasCooking
                         ? 'Bill kWh minus typical gas cooking (3% of annual use).'
                         : 'Same as annual gas usage (no cooking deducted).'
