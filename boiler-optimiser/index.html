@@ -1006,6 +1006,14 @@
             max-width: 36rem;
         }
 
+        #model-card .model-timing-note {
+            margin: 0 auto;
+            max-width: 36rem;
+            font-size: 0.9375rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
         #model-card .input-heading {
             justify-content: center;
         }
@@ -1737,7 +1745,7 @@
             <div class="input-group">
                 <div class="input-heading">
                     <div class="input-label" id="boiler-type-label">Boiler</div>
-                    <a class="label-aside" href="#note-1">(not sure see 1. below)</a>
+                    <a class="label-aside" href="#note-1">[Notes 1.]</a>
                 </div>
                 <div class="choice-toggle" role="group" aria-labelledby="boiler-type-label">
                     <button type="button" class="choice-button active" data-boiler="condensing" aria-pressed="true">Condensing</button>
@@ -1983,6 +1991,7 @@
                         </button>
                     </div>
                 </div>
+                <p class="model-timing-note">Please don’t forget to change your heating programming timings, as reducing flow temperature means it will take longer to warm up, but lead to a more stable system, so you will need to add more time if necessary.</p>
                 <p id="brand-note" hidden>Button steps for this brand are not here yet.</p>
                 <div id="vaillant-models" hidden>
                     <div class="choice-toggle" role="group" aria-label="Which ecoTEC">
