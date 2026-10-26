@@ -230,10 +230,10 @@
 
         .condensate {
             position: absolute;
-            left: calc(100% - 0.4rem);
+            left: 7rem;
             top: calc(100% - 2px);
             display: flex;
-            align-items: flex-end;
+            align-items: flex-start;
             pointer-events: none;
         }
 
@@ -257,15 +257,16 @@
 
         .condensate-drops {
             display: flex;
-            align-items: flex-end;
-            gap: 0.28rem;
-            margin: 0 0 0.02rem 0.35rem;
-            min-height: 0.7rem;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.16rem;
+            margin: 3.05rem 0 0 0.08rem;
+            min-height: 0;
         }
 
         .drop {
             background: #2ec4b6;
-            border-radius: 50% 50% 50% 0;
+            border-radius: 0 50% 50% 50%;
             transform: rotate(45deg);
             opacity: 0;
         }
@@ -278,13 +279,11 @@
         .drop:nth-child(2) {
             width: 0.4rem;
             height: 0.4rem;
-            transform: rotate(45deg) translateY(0.12rem);
         }
 
         .drop:nth-child(3) {
             width: 0.32rem;
             height: 0.32rem;
-            transform: rotate(45deg) translateY(0.22rem);
         }
 
         .boiler-diagram[data-condensate="1"] .drop:nth-child(1),
@@ -359,7 +358,7 @@
 
         .boiler-pipe-line.is-prv {
             position: absolute;
-            left: calc(100% + 2.45rem);
+            left: 90%;
             top: 0;
             width: 3px;
             height: 1.15rem;
