@@ -2292,7 +2292,7 @@
 
             function condensateNote() {
                 var note = document.createDocumentFragment();
-                note.appendChild(document.createTextNode('A white plastic pipe comes out underneath the boiler. That is the condensate pipe. '));
+                note.appendChild(document.createTextNode('A white plastic pipe comes out underneath the boiler. That is the condensate pipe, and it means you have a condensing boiler. '));
                 var link = document.createElement('a');
                 link.href = 'https://www.youtube.com/watch?v=1kSWx4ygM8Y';
                 link.target = '_blank';
@@ -2634,7 +2634,7 @@
                     return (step++) + '. ' + name;
                 }
                 if (condensingBoiler) {
-                    var condensateItem = item(stepTitle('Condensate pipe'), condensateNote());
+                    var condensateItem = item(stepTitle('Identifying if you have a condensing boiler'), condensateNote());
                     condensateItem.id = 'note-1';
                     plan.appendChild(condensateItem);
                 }
