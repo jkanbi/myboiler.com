@@ -59,10 +59,16 @@
         capture('optimiser_started');
     }
 
-    function captureStep(step, name) {
+    function captureStep(step, name, extra) {
         if (completed[name]) return;
         completed[name] = true;
-        capture('optimiser_step_completed', { step: step, step_name: name });
+        var props = { step: step, step_name: name };
+        if (extra) {
+            Object.keys(extra).forEach(function (key) {
+                props[key] = extra[key];
+            });
+        }
+        capture('optimiser_step_completed', props);
     }
 
     function captureResult() {
@@ -331,7 +337,18 @@
                 captureResult();
             }
             if (event.target.closest('#output-auto')) captureStep(7, 'heating_output');
-            if (event.target.closest('[data-brand]')) captureStep(8, 'brand');
+            var brandTile = event.target.closest('[data-brand]');
+            if (brandTile) {
+                var brandKey = brandTile.getAttribute('data-brand') || '';
+                var brandLabel = brandTile.getAttribute('aria-label') || brandKey;
+                var hasHowTo = brandKey === 'worcester' || brandKey === 'vaillant' || brandKey === 'main' || brandKey === 'intergas';
+                capture('optimiser_brand_selected', {
+                    brand: brandKey,
+                    brand_label: brandLabel,
+                    has_how_to: hasHowTo
+                });
+                captureStep(8, 'brand', { brand: brandKey, brand_label: brandLabel });
+            }
             if (event.target.closest('[data-model]')) captureStep(9, 'model');
 
             var summary = event.target.closest('#tool-results > summary, #bill-card > summary');

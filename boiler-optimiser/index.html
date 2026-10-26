@@ -891,6 +891,7 @@
         #worcester-models[hidden],
         #main-models[hidden],
         #brand-note[hidden],
+        #videos-soon-note[hidden],
         #brand-back[hidden],
         .brand-tile[hidden] {
             display: none;
@@ -1010,9 +1011,22 @@
             max-width: 36rem;
         }
 
-        #model-card .model-timing-note {
-            margin: 0 auto;
+        #model-card .model-timing {
+            margin: 0.85rem auto 0;
             max-width: 36rem;
+        }
+
+        #model-card .model-timing-heading {
+            margin: 0 0 0.35rem;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: 0.02em;
+            color: var(--text);
+        }
+
+        #model-card .model-timing-note {
+            margin: 0;
             font-size: 0.9375rem;
             line-height: 1.5;
             color: var(--text-muted);
@@ -1171,9 +1185,14 @@
             background: #fff;
         }
 
+        #videos-soon-note,
         #brand-note {
             margin: 0.85rem 0 0;
             line-height: 1.6;
+        }
+
+        #videos-soon-note {
+            color: var(--text-muted);
         }
 
         .tool-confirm {
@@ -1717,7 +1736,7 @@
     twq('config','nvyf0');
     </script>
     <!-- End X conversion tracking base code -->
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=brand-tiles" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=brand-select" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -1978,25 +1997,55 @@
                         <span>Back</span>
                     </button>
                     <div class="brand-picks" id="brand-picks" role="group" aria-label="Which brand">
-                        <button type="button" class="brand-tile" data-brand="vaillant" aria-pressed="false" aria-label="Vaillant">
-                            <img src="/boiler-optimiser/images/brands/vaillant.svg" alt="" width="160" height="46">
-                        </button>
                         <button type="button" class="brand-tile" data-brand="worcester" aria-pressed="false" aria-label="Worcester Bosch">
                             <img src="/boiler-optimiser/images/brands/worcester-bosch.svg" alt="" width="160" height="58">
+                        </button>
+                        <button type="button" class="brand-tile" data-brand="vaillant" aria-pressed="false" aria-label="Vaillant">
+                            <img src="/boiler-optimiser/images/brands/vaillant.svg" alt="" width="160" height="46">
                         </button>
                         <button type="button" class="brand-tile" data-brand="baxi" aria-pressed="false" aria-label="Baxi">
                             <img src="/boiler-optimiser/images/brands/baxi.svg" alt="" width="160" height="49">
                         </button>
-                        <button type="button" class="brand-tile" data-brand="main" aria-pressed="false" aria-label="Main Heating">
-                            <img src="/boiler-optimiser/images/brands/main.png" alt="" width="160" height="76">
+                        <button type="button" class="brand-tile" data-brand="ideal" aria-pressed="false" aria-label="Ideal">
+                            <img src="/boiler-optimiser/images/brands/ideal.svg" alt="" width="204" height="107">
+                        </button>
+                        <button type="button" class="brand-tile" data-brand="viessmann" aria-pressed="false" aria-label="Viessmann">
+                            <img src="/boiler-optimiser/images/brands/viessmann.svg" alt="" width="561" height="122">
+                        </button>
+                        <button type="button" class="brand-tile" data-brand="glow-worm" aria-pressed="false" aria-label="Glow-worm">
+                            <img src="/boiler-optimiser/images/brands/glow-worm.svg" alt="" width="530" height="95">
+                        </button>
+                        <button type="button" class="brand-tile" data-brand="potterton" aria-pressed="false" aria-label="Potterton">
+                            <img src="/boiler-optimiser/images/brands/potterton.svg" alt="" width="300" height="82">
+                        </button>
+                        <button type="button" class="brand-tile" data-brand="main" aria-pressed="false" aria-label="Main">
+                            <img src="/boiler-optimiser/images/brands/main.svg" alt="" width="455" height="209">
+                        </button>
+                        <button type="button" class="brand-tile" data-brand="alpha" aria-pressed="false" aria-label="Alpha">
+                            <img src="/boiler-optimiser/images/brands/alpha.svg" alt="" width="154" height="71">
                         </button>
                         <button type="button" class="brand-tile" data-brand="intergas" aria-pressed="false" aria-label="Intergas">
                             <img src="/boiler-optimiser/images/brands/intergas.svg" alt="" width="160" height="12">
                         </button>
+                        <button type="button" class="brand-tile" data-brand="ariston" aria-pressed="false" aria-label="Ariston">
+                            <img src="/boiler-optimiser/images/brands/ariston.svg" alt="" width="1226" height="192">
+                        </button>
+                        <button type="button" class="brand-tile" data-brand="vokera" aria-pressed="false" aria-label="Vokera">
+                            <img src="/boiler-optimiser/images/brands/vokera.svg" alt="" width="137" height="64">
+                        </button>
+                        <button type="button" class="brand-tile" data-brand="ferroli" aria-pressed="false" aria-label="Ferroli">
+                            <img src="/boiler-optimiser/images/brands/ferroli.svg" alt="" width="65" height="24">
+                        </button>
+                        <button type="button" class="brand-tile" data-brand="grant" aria-pressed="false" aria-label="Grant">
+                            <img src="/boiler-optimiser/images/brands/grant.svg" alt="" width="483" height="203">
+                        </button>
+                        <button type="button" class="brand-tile" data-brand="british-gas" aria-pressed="false" aria-label="British Gas">
+                            <img src="/boiler-optimiser/images/brands/british-gas.svg" alt="" width="145" height="56">
+                        </button>
                     </div>
                 </div>
-                <p class="model-timing-note">Please don’t forget to change your heating programming timings, as reducing flow temperature means it will take longer to warm up, but lead to a more stable system, so you will need to add more time if necessary.</p>
-                <p id="brand-note" hidden>Button steps for this brand are not here yet.</p>
+                <p id="videos-soon-note">More boiler videos will be added soon.</p>
+                <p id="brand-note" hidden></p>
                 <div id="vaillant-models" hidden>
                     <div class="choice-toggle" role="group" aria-label="Which ecoTEC">
                         <div class="model-pick">
@@ -2067,6 +2116,10 @@
                             <a class="model-go" data-model="combi-eco" href="/main/how-to-adjust-the-flow-temperature-on-main-combi-eco/" hidden>Go</a>
                         </div>
                     </div>
+                </div>
+                <div class="model-timing">
+                    <h3 class="model-timing-heading">Heating Programmer Timings</h3>
+                    <p class="model-timing-note">Please don’t forget to change your heating programming timings, as reducing flow temperature means it will take longer to warm up, but lead to a more stable system, so you will need to add more time if necessary.</p>
                 </div>
             </div>
         </details>
@@ -2200,6 +2253,48 @@
             var brandBar = document.getElementById('brand-bar');
             var brandBack = document.getElementById('brand-back');
             var modelButtons = document.querySelectorAll('button[data-model]');
+            var BRANDS_WITH_STEPS = { worcester: 1, vaillant: 1, main: 1, intergas: 1 };
+            var BRAND_MANUALS = {
+                worcester: { name: 'Worcester Bosch', href: 'https://boilermanuals.com/brands/worcester-bosch.html' },
+                vaillant: { name: 'Vaillant', href: 'https://boilermanuals.com/brands/vaillant.html' },
+                baxi: { name: 'Baxi', href: 'https://boilermanuals.com/brands/baxi.html' },
+                ideal: { name: 'Ideal', href: 'https://boilermanuals.com/brands/ideal.html' },
+                viessmann: { name: 'Viessmann', href: 'https://boilermanuals.com/brands/viessmann.html' },
+                'glow-worm': { name: 'Glow-worm', href: 'https://boilermanuals.com/brands/glow-worm.html' },
+                potterton: { name: 'Potterton', href: 'https://boilermanuals.com/brands/potterton.html' },
+                main: { name: 'Main', href: 'https://boilermanuals.com/brands/main.html' },
+                alpha: { name: 'Alpha', href: 'https://boilermanuals.com/brands/alpha.html' },
+                intergas: { name: 'Intergas', href: 'https://boilermanuals.com/brands/intergas.html' },
+                ariston: { name: 'Ariston', href: 'https://boilermanuals.com/brands/ariston.html' },
+                vokera: { name: 'Vokera', href: 'https://boilermanuals.com/brands/vokera.html' },
+                ferroli: { name: 'Ferroli', href: 'https://boilermanuals.com/brands/ferroli.html' },
+                grant: { name: 'Grant', href: 'https://boilermanuals.com/brands/grant.html' },
+                'british-gas': { name: 'British Gas', href: 'https://boilermanuals.com/brands/british-gas.html' }
+            };
+
+            function fillBrandNote(selectedBrand) {
+                var note = document.getElementById('brand-note');
+                var soon = document.getElementById('videos-soon-note');
+                var hasSteps = !!BRANDS_WITH_STEPS[selectedBrand];
+                soon.hidden = !!selectedBrand && hasSteps;
+                if (!selectedBrand || hasSteps) {
+                    note.hidden = true;
+                    note.textContent = '';
+                    return;
+                }
+                var info = BRAND_MANUALS[selectedBrand] || { name: 'boiler', href: 'https://boilermanuals.com/' };
+                note.hidden = false;
+                note.textContent = '';
+                if (selectedBrand === 'baxi') {
+                    note.appendChild(document.createTextNode('Some Baxi boilers are similar to Main Heating. '));
+                }
+                note.appendChild(document.createTextNode('Look up your particular ' + info.name + ' on '));
+                var manuals = document.createElement('a');
+                manuals.href = info.href;
+                manuals.textContent = 'Boiler Manuals';
+                note.appendChild(manuals);
+                note.appendChild(document.createTextNode('.'));
+            }
 
             function interpolate(t) {
                 var points = EFFICIENCY_CURVE;
@@ -2444,7 +2539,7 @@
                 document.getElementById('intergas-figure').hidden = brand !== 'intergas' || boilerModel !== 'intergas';
                 document.getElementById('worcester-models').hidden = brand !== 'worcester';
                 document.getElementById('main-models').hidden = brand !== 'main';
-                document.getElementById('brand-note').hidden = !brand || brand === 'vaillant' || brand === 'intergas' || brand === 'worcester' || brand === 'main';
+                fillBrandNote(brand);
                 var otherType = system === 'combi-cylinder';
                 var standardBoiler = boilerType !== 'condensing';
                 var condensingSystem = boilerType === 'condensing' && system === 'system';
