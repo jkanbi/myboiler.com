@@ -2299,7 +2299,12 @@
                 link.rel = 'noopener noreferrer';
                 link.textContent = 'This video shows how to identify it';
                 note.appendChild(link);
-                note.appendChild(document.createTextNode('.'));
+                note.appendChild(document.createTextNode('. You can also look the model up on '));
+                var manuals = document.createElement('a');
+                manuals.href = 'https://boilermanuals.com/';
+                manuals.textContent = 'Boiler Manuals';
+                note.appendChild(manuals);
+                note.appendChild(document.createTextNode(', which marks condensing boilers as CB and condensing combi boilers as CCB.'));
                 return note;
             }
 
