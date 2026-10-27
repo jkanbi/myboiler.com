@@ -44,7 +44,8 @@
         return {
             boiler_type: choice('data-boiler') || 'condensing',
             system: choice('data-system') || 'combi',
-            recommendation_category: recommendationCategory()
+            recommendation_category: recommendationCategory(),
+            unit_rate: unitRateFrom(document.getElementById('unit-rate'))
         };
     }
 
@@ -91,11 +92,22 @@
         return isFinite(n) && n >= 0 && n <= 200000;
     }
 
+    function validRate(n) {
+        return isFinite(n) && n >= 0 && n <= 100;
+    }
+
+    function unitRateFrom(el) {
+        if (!el || el.value.trim() === '') return null;
+        var n = Number(el.value);
+        return validRate(n) ? n : null;
+    }
+
     function bindConfirm() {
         var form = document.getElementById('tool-confirm');
         var fromInput = document.getElementById('from-flow');
         var setInput = document.getElementById('set-flow');
         var kwhInput = document.getElementById('confirm-kwh');
+        var rateInput = document.getElementById('confirm-rate');
         var done = document.getElementById('tool-confirm-done');
         var button = document.getElementById('tool-confirm-submit');
         if (!form || !fromInput || !setInput) return;
@@ -112,6 +124,11 @@
                 kwhInput.dataset.edited = '1';
             });
         }
+        if (rateInput) {
+            rateInput.addEventListener('input', function () {
+                rateInput.dataset.edited = '1';
+            });
+        }
 
         form.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -119,6 +136,9 @@
             var fromFlow = Number(fromInput.value);
             var setFlow = Number(setInput.value);
             var annualKwh = kwhInput && kwhInput.value.trim() !== '' ? Number(kwhInput.value) : null;
+            var unitRate = unitRateFrom(rateInput);
+            if (unitRate === null) unitRate = numericAttr(form, 'data-unit-rate');
+            if (unitRate === null) unitRate = unitRateFrom(document.getElementById('unit-rate'));
             if (!validFlow(fromFlow)) {
                 fromInput.focus();
                 return;
@@ -131,11 +151,16 @@
                 if (kwhInput) kwhInput.focus();
                 return;
             }
+            if (rateInput && rateInput.value.trim() !== '' && !validRate(Number(rateInput.value))) {
+                rateInput.focus();
+                return;
+            }
             submitted = true;
             var props = resultProperties();
             props.from_flow = fromFlow;
             props.set_flow = setFlow;
             props.annual_kwh = annualKwh;
+            props.unit_rate = unitRate;
             props.tool_flow = numericAttr(form, 'data-tool-flow');
             props.saving_gbp = numericAttr(form, 'data-saving-gbp');
             props.space_kwh = numericAttr(form, 'data-space-kwh');
@@ -150,12 +175,15 @@
             fromInput.disabled = true;
             setInput.disabled = true;
             if (kwhInput) kwhInput.disabled = true;
+            if (rateInput) rateInput.disabled = true;
             if (button) button.disabled = true;
             if (done) {
                 done.hidden = false;
-                done.textContent = annualKwh === null
-                    ? 'Thanks. We logged that it was ' + fromFlow + '°C, and you set it to ' + setFlow + '°C.'
-                    : 'Thanks. We logged that it was ' + fromFlow + '°C, you set it to ' + setFlow + '°C, and annual use is ' + Math.round(annualKwh) + ' kWh.';
+                var parts = ['it was ' + fromFlow + '°C', 'you set it to ' + setFlow + '°C'];
+                if (annualKwh !== null) parts.push('annual use is ' + Math.round(annualKwh) + ' kWh');
+                if (unitRate !== null) parts.push('unit rate is ' + unitRate + ' p/kWh');
+                var last = parts.pop();
+                done.textContent = 'Thanks. We logged that ' + (parts.length ? parts.join(', ') + ', and ' + last : last) + '.';
             }
         });
     }
@@ -366,7 +394,11 @@
 
         document.addEventListener('input', function (event) {
             var id = event.target && event.target.id;
-            if (id === 'annual-kwh' || id === 'unit-rate') captureStep(3, 'bill_inputs');
+            if (id === 'annual-kwh' || id === 'unit-rate') {
+                captureStep(3, 'bill_inputs', {
+                    unit_rate: unitRateFrom(document.getElementById('unit-rate'))
+                });
+            }
             if (id === 'flow-temp') {
                 captureStep(4, 'flow_temperature');
                 captureResult();

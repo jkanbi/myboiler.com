@@ -1280,7 +1280,8 @@
             background: #fff;
         }
 
-        .tool-confirm-row .input-field.is-kwh {
+        .tool-confirm-row .input-field.is-kwh,
+        .tool-confirm-row .input-field.is-rate {
             width: 7.5rem;
             flex-basis: 7.5rem;
         }
@@ -1297,7 +1298,8 @@
 
         #from-flow::placeholder,
         #set-flow::placeholder,
-        #confirm-kwh::placeholder {
+        #confirm-kwh::placeholder,
+        #confirm-rate::placeholder {
             color: #9aa3ad;
             opacity: 1;
         }
@@ -1800,7 +1802,7 @@
     twq('config','nvyf0');
     </script>
     <!-- End X conversion tracking base code -->
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=brand-select" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=unit-rate" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -2207,7 +2209,7 @@
         </details>
         <form class="tool-confirm" id="tool-confirm">
             <p class="input-label">Have you turned the heating flow down? Come back here and let us know.</p>
-            <span class="input-hint">Enter what the flow was, and what you set it to. Add annual kWh if you know it. We log this anonymously.</span>
+            <span class="input-hint">Enter what the flow was, and what you set it to. Add annual kWh and unit rate if you know them. We log this anonymously.</span>
             <div class="tool-confirm-fields">
                 <div class="tool-confirm-field">
                     <label class="input-label" for="from-flow">What the flow was</label>
@@ -2230,6 +2232,13 @@
                         <span class="tool-confirm-unit" aria-hidden="true">kWh</span>
                     </div>
                 </div>
+                <div class="tool-confirm-field">
+                    <label class="input-label" for="confirm-rate">Unit rate (optional)</label>
+                    <div class="tool-confirm-row">
+                        <input type="number" id="confirm-rate" class="input-field is-rate" inputmode="decimal" min="0" max="100" step="0.01" placeholder="x.xx" autocomplete="off">
+                        <span class="tool-confirm-unit" aria-hidden="true">p/kWh</span>
+                    </div>
+                </div>
             </div>
             <button type="submit" class="choice-button" id="tool-confirm-submit">Submit</button>
             <p class="tool-confirm-done" id="tool-confirm-done" hidden>Thanks. We logged that you set it.</p>
@@ -2240,7 +2249,7 @@
             <a id="heat-pump-checker-link" href="/heat-pump-checker/">Check heat pump suitability</a>
         </div>
         <p class="tool-disclaimer">This tool is in development. We accept no responsibility for issues that arise from these adjustments. Some systems are not installed correctly and may cause problems, especially where the condensate pipe is incorrectly installed or not insulated.</p>
-        <p class="tool-version">2026-09-27 08:34 · 3</p>
+        <p class="tool-version">2026-10-27 16:15 · 4</p>
     </div>
 
     <div id="site-footer"></div>
@@ -2302,6 +2311,7 @@
             var flowTouched = false;
             var flowWas = Number(flowInput.value);
             var annualTouched = false;
+            var rateTouched = false;
             var flowHint = document.getElementById('flow-hint');
             var returnHint = document.getElementById('return-hint');
             var boilerDiagram = document.querySelector('#flow-card .boiler-diagram');
@@ -2780,11 +2790,13 @@
                 var fromFlowInput = document.getElementById('from-flow');
                 var setFlowInput = document.getElementById('set-flow');
                 var confirmKwhInput = document.getElementById('confirm-kwh');
+                var confirmRateInput = document.getElementById('confirm-rate');
                 if (confirmForm) {
                     confirmForm.setAttribute('data-tool-flow', String(flow));
                     confirmForm.setAttribute('data-saving-gbp', spaceKwh === null || pence === null ? '' : String(Math.round(savingAmount * 100) / 100));
                     confirmForm.setAttribute('data-space-kwh', spaceKwh === null ? '' : String(Math.round(spaceKwh)));
                     confirmForm.setAttribute('data-annual-kwh', annual === null ? '' : String(Math.round(annual)));
+                    confirmForm.setAttribute('data-unit-rate', pence === null ? '' : String(Math.round(pence * 100) / 100));
                 }
                 function fillConfirmField(input, value) {
                     if (!input || input.disabled || input.dataset.edited || document.activeElement === input) return;
@@ -2797,6 +2809,9 @@
                 }
                 if (annualTouched) {
                     fillConfirmField(confirmKwhInput, annual === null ? null : Math.round(annual));
+                }
+                if (rateTouched) {
+                    fillConfirmField(confirmRateInput, pence === null ? null : Math.round(pence * 100) / 100);
                 }
 
                 var graphFigure = document.getElementById('note-5-figure');
@@ -2966,9 +2981,11 @@
             var fromFlowInput = document.getElementById('from-flow');
             var setFlowInput = document.getElementById('set-flow');
             var confirmKwhInput = document.getElementById('confirm-kwh');
+            var confirmRateInput = document.getElementById('confirm-rate');
             if (fromFlowInput) fromFlowInput.addEventListener('input', markConfirmEdited);
             if (setFlowInput) setFlowInput.addEventListener('input', markConfirmEdited);
             if (confirmKwhInput) confirmKwhInput.addEventListener('input', markConfirmEdited);
+            if (confirmRateInput) confirmRateInput.addEventListener('input', markConfirmEdited);
 
             flowInput.addEventListener('input', function () {
                 flowSlider.classList.remove('is-hinting');
@@ -2979,7 +2996,10 @@
                 annualTouched = annualInput.value.trim() !== '';
                 update();
             });
-            rateInput.addEventListener('input', update);
+            rateInput.addEventListener('input', function () {
+                rateTouched = rateInput.value.trim() !== '';
+                update();
+            });
             window.addEventListener('resize', layoutPrimaryCircuit);
             update();
         })();
