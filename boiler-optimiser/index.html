@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
     <title>Boiler Optimiser - MyBoiler</title>
     <meta name="description" content="Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow. A cylinder still needs 60°C stored water.">
     <link rel="canonical" href="https://myboiler.com/boiler-optimiser/">
@@ -11,6 +11,9 @@
     <style>
         html {
             scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            touch-action: pan-x pan-y;
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -499,6 +502,7 @@
             display: flex;
             flex-direction: column;
             align-items: stretch;
+            overflow-x: hidden;
         }
 
         #flow-card > .input-group {
@@ -516,6 +520,10 @@
         #flow-card .boiler-diagram,
         #flow-card .flow-slider {
             width: 100%;
+        }
+
+        #flow-card .boiler-plant {
+            padding-right: 3.6rem;
         }
 
         .fold > summary {
@@ -1373,6 +1381,11 @@
             color: var(--accent);
         }
 
+        .flow-slider,
+        .flow-slider .input-slider {
+            touch-action: none;
+        }
+
         .input-slider {
             -webkit-appearance: none;
             appearance: none;
@@ -1503,6 +1516,56 @@
 
         .cylinder-stat-note[hidden] {
             display: none;
+        }
+
+        .system-savings-note {
+            margin: 1.35rem 0 0;
+            padding: 0.9rem 1rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: #f7f8fa;
+            text-align: left;
+        }
+
+        .system-savings-note[hidden] {
+            display: none;
+        }
+
+        .system-savings-title {
+            margin: 0 0 0.45rem;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: var(--text);
+        }
+
+        .system-savings-lead {
+            margin: 0 0 0.7rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            line-height: 1.45;
+            color: var(--text);
+        }
+
+        .system-savings-note ul {
+            margin: 0;
+            padding: 0 0 0 1.15rem;
+        }
+
+        .system-savings-note li {
+            margin: 0 0 0.55rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            line-height: 1.45;
+            color: var(--text);
+        }
+
+        .system-savings-note li:last-child {
+            margin-bottom: 0;
+        }
+
+        .system-savings-note a {
+            color: var(--accent);
         }
 
         .return-note {
@@ -1727,6 +1790,16 @@
                 margin: 0.2rem 0 0;
                 max-width: 7.5em;
                 font-size: 0.75rem;
+            }
+
+            #flow-card .boiler-plant {
+                gap: 1.1rem;
+                padding-right: 3.1rem;
+                zoom: 0.82;
+            }
+
+            #flow-card .boiler-plant:has(#cylinder-diagram:not([hidden])) {
+                padding-left: 1.1rem;
             }
         }
 
@@ -2034,6 +2107,15 @@
                     <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                 </div>
                 <p class="cylinder-stat-note" id="cylinder-stat-note" hidden>Change the cylinder thermostat as well. Set it to 60°C. It is a separate control on the cylinder.</p>
+                <aside class="system-savings-note" id="system-savings-note" hidden>
+                    <h3 class="system-savings-title">Saving more than one flow temperature</h3>
+                    <p class="system-savings-lead">This slider is one knob for the whole system. A cylinder usually keeps that flow high, around 70°C, so the radiators never sit in the best condensing band. These setups split the jobs, so heating can run cooler and you save more:</p>
+                    <ul>
+                        <li><strong>PDHW</strong> — priority domestic hot water. The cylinder call takes a short, hot reheat (about 70–80°C). Heating then runs at a lower condensing flow, typically 45–55°C. See <a href="/priority-domestic-hot-water/">priority domestic hot water</a>.</li>
+                        <li><strong>4-pipe system boilers</strong> — a separate flow and return to the cylinder, often with an integral diverter (Viessmann Vitodens 100-W is the usual example). External zone valves can come off. That plumbing makes two temperatures straightforward.</li>
+                        <li><strong>Manufacturer controls</strong> — weather compensation or the maker’s own modulating thermostat can drop the heating flow as the house warms, and still lift it for a cylinder call. A plain on/off room stat cannot. See <a href="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">modulating controls</a>.</li>
+                    </ul>
+                </aside>
             </div>
 
             <div class="result-grid bill-results">
@@ -2249,7 +2331,7 @@
             <a id="heat-pump-checker-link" href="/heat-pump-checker/">Check heat pump suitability</a>
         </div>
         <p class="tool-disclaimer">This tool is in development. We accept no responsibility for issues that arise from these adjustments. Some systems are not installed correctly and may cause problems, especially where the condensate pipe is incorrectly installed or not insulated.</p>
-        <p class="tool-version">2026-10-27 16:15 · 4</p>
+        <p class="tool-version">2026-10-27 16:40 · 6</p>
     </div>
 
     <div id="site-footer"></div>
@@ -2257,6 +2339,34 @@
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
     <script>
         (function () {
+            var VIEWPORT = 'width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover';
+            var viewportMeta = document.querySelector('meta[name="viewport"]');
+            function setViewport(content) {
+                if (viewportMeta) viewportMeta.setAttribute('content', content);
+            }
+            function lockScale() {
+                var scale = window.visualViewport ? window.visualViewport.scale : 1;
+                if (scale <= 1.01) return;
+                setViewport(VIEWPORT + ', user-scalable=no');
+                requestAnimationFrame(function () {
+                    setViewport(VIEWPORT);
+                });
+            }
+            document.addEventListener('gesturestart', function (event) {
+                event.preventDefault();
+            }, { passive: false });
+            document.addEventListener('touchmove', function (event) {
+                if (typeof event.scale === 'number' && event.scale !== 1) {
+                    event.preventDefault();
+                }
+            }, { passive: false });
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', lockScale);
+                window.visualViewport.addEventListener('scroll', lockScale);
+            }
+            window.addEventListener('orientationchange', lockScale);
+            document.addEventListener('focusout', lockScale);
+
             var FACTORY_FLOW = 75;
             var COOKING_SHARE = 0.03;
             var MILD_FULL_LOAD_HOURS = 2200;
@@ -2510,6 +2620,8 @@
                 note.appendChild(document.createTextNode('A fixed flow temperature is the manual version. Smart thermostats, OpenTherm controls, and a manufacturer’s own modulating control can lower the flow on their own as the room warms up, and turn the burner down with it. '));
                 if (stored) {
                     note.appendChild(document.createTextNode('With stored hot water, the control also has to know the cylinder temperature, or the store never reaches about 60°C. '));
+                    note.appendChild(linkEl('/priority-domestic-hot-water/', 'PDHW'));
+                    note.appendChild(document.createTextNode(', a 4-pipe system boiler, or the maker’s weather compensation can reheat the cylinder hot and then run heating cooler. '));
                 }
                 note.appendChild(document.createTextNode('See '));
                 note.appendChild(linkEl('/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/', 'modulating controls'));
@@ -2673,12 +2785,20 @@
                 var cylinderDeltaNote = document.getElementById('cylinder-delta-note');
                 var storedCampaignNote = document.getElementById('stored-campaign-note');
                 var cylinderStatNote = document.getElementById('cylinder-stat-note');
+                var systemSavingsNote = document.getElementById('system-savings-note');
+                var sliderPrompt = document.getElementById('slider-prompt');
                 flowInput.classList.toggle('is-plain', !condensingBoiler);
                 flowInput.classList.toggle('flow-cylinder', condensingBoiler && stored);
                 flowInput.classList.toggle('flow-combi', condensingBoiler && !stored);
                 cylinderDeltaNote.hidden = !(condensingBoiler && stored);
                 storedCampaignNote.hidden = !(condensingBoiler && stored);
                 cylinderStatNote.hidden = !stored;
+                if (systemSavingsNote) systemSavingsNote.hidden = system !== 'system';
+                if (sliderPrompt) {
+                    sliderPrompt.textContent = system === 'system'
+                        ? 'Move the slider that represents your boiler flow temperature. If heating and hot water can run at different temperatures, you can save more than this slider shows.'
+                        : 'Move the slider that represents your boiler flow temperature.';
+                }
                 if (condensingBoiler && stored) {
                     cylinderDeltaNote.textContent = 'The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow. The gap can be higher than that.';
                 }
@@ -2719,6 +2839,7 @@
                 if (condensingBoiler) {
                     var describedBy = ['slider-prompt', 'flow-state'];
                     if (stored) describedBy.splice(1, 0, 'cylinder-stat-note', 'cylinder-delta-note');
+                    if (system === 'system') describedBy.push('system-savings-note');
                     flowInput.setAttribute('aria-describedby', describedBy.join(' '));
                     flowHint.textContent = flow + '°C';
                     returnHint.textContent = '≈ ' + ret + '°C';
