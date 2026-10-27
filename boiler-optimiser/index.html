@@ -1895,6 +1895,47 @@
         .comp-card .comp-copy:last-child {
             margin-bottom: 0;
         }
+
+        .comp-more .comp-copy:last-child {
+            margin-bottom: 0;
+        }
+
+        .comp-more-toggle {
+            display: none;
+            appearance: none;
+            margin: 0.35rem 0 0;
+            padding: 0;
+            border: 0;
+            background: none;
+            font: inherit;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--accent, #1863dc);
+            cursor: pointer;
+        }
+
+        .comp-more-toggle:hover,
+        .comp-more-toggle:focus {
+            color: var(--link-hover, #0f4eb5);
+            text-decoration: underline;
+        }
+
+        .comp-more-toggle:focus-visible {
+            outline: 2px solid var(--accent, #1863dc);
+            outline-offset: 2px;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 700px) {
+            .comp-card--ready .comp-more-toggle {
+                display: inline-block;
+            }
+
+            .comp-card--ready:not(.is-open) .comp-more {
+                display: none;
+            }
+        }
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="application/ld+json">
@@ -2329,15 +2370,19 @@
         <section class="calculator-card comp-card" id="load-compensation">
             <h2 class="card-title">Load compensation (OpenTherm)</h2>
             <p class="comp-copy">A load-compensating thermostat, sometimes called a modulating thermostat, talks to the boiler instead of just switching it on and off. As rooms get close to the temperature you have set, it turns the flow temperature down. OpenTherm is one common way of doing this; some boilers use the maker’s own protocol.</p>
-            <p class="comp-copy">This is usually the easier extra option to set up: often just a compatible thermostat swap, with no outdoor sensor or heating curve. Many boiler makers sell their own load-compensating controls that talk to their boilers over the maker’s own connection; these usually only work fully with that maker’s boilers, so check compatibility before you buy. If your boiler does not support OpenTherm, the maker’s own control is often the simplest match; some also offer OpenTherm. It can also be used with weather compensation.</p>
-            <p class="comp-copy">A sensible fixed, lower flow temperature is still a good, simple start. That is what the Boiler Optimiser helps you find. If you rent, check with your landlord before you change any controls. See <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm boilers and controls</a> and <a href="/vaillant/vaillant-controls/">Vaillant controls</a>.</p>
+            <div class="comp-more" id="load-compensation-more">
+                <p class="comp-copy">This is usually the easier extra option to set up: often just a compatible thermostat swap, with no outdoor sensor or heating curve. Many boiler makers sell their own load-compensating controls that talk to their boilers over the maker’s own connection; these usually only work fully with that maker’s boilers, so check compatibility before you buy. If your boiler does not support OpenTherm, the maker’s own control is often the simplest match; some also offer OpenTherm. It can also be used with weather compensation.</p>
+                <p class="comp-copy">A sensible fixed, lower flow temperature is still a good, simple start. That is what the Boiler Optimiser helps you find. If you rent, check with your landlord before you change any controls. See <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm boilers and controls</a> and <a href="/vaillant/vaillant-controls/">Vaillant controls</a>.</p>
+            </div>
         </section>
 
         <section class="calculator-card comp-card" id="weather-compensation">
             <h2 class="card-title">Weather compensation</h2>
             <p class="comp-copy">Weather compensation goes a step further and is a little more advanced. It works well when it is fitted and set up properly, but for some homes it can complicate things.</p>
-            <p class="comp-copy">An outdoor sensor tells the boiler how cold it is outside. The boiler then changes its heating flow temperature on its own: lower on mild days, higher on the coldest ones. That only works well if the heating curve is set for your home. Many combi boilers never had that sensor fitted, or it is there but not set up.</p>
-            <p class="comp-copy">For most homes a sensible fixed, lower flow temperature is the simpler route. That is what the Boiler Optimiser helps you find. If a compensation sensor is already fitted and working, keep using it. If you rent, check with your landlord before you change any controls or have a sensor fitted.</p>
+            <div class="comp-more" id="weather-compensation-more">
+                <p class="comp-copy">An outdoor sensor tells the boiler how cold it is outside. The boiler then changes its heating flow temperature on its own: lower on mild days, higher on the coldest ones. That only works well if the heating curve is set for your home. Many combi boilers never had that sensor fitted, or it is there but not set up.</p>
+                <p class="comp-copy">For most homes a sensible fixed, lower flow temperature is the simpler route. That is what the Boiler Optimiser helps you find. If a compensation sensor is already fitted and working, keep using it. If you rent, check with your landlord before you change any controls or have a sensor fitted.</p>
+            </div>
         </section>
 
         <details class="calculator-card fold" id="tool-results">
@@ -2399,6 +2444,7 @@
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/comp-read-more.js?v=comp-more-1" data-cfasync="false"></script>
     <script>
         (function () {
             var VIEWPORT = 'width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover';
