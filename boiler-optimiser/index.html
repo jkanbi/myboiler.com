@@ -1885,14 +1885,14 @@
             }
         }
 
-        #weather-compensation .weather-comp-copy {
+        .comp-card .comp-copy {
             margin: 0 0 0.85rem;
             font-size: 1rem;
             line-height: 1.6;
             color: var(--text);
         }
 
-        #weather-compensation .weather-comp-copy:last-child {
+        .comp-card .comp-copy:last-child {
             margin-bottom: 0;
         }
     </style>
@@ -2326,11 +2326,18 @@
             </div>
         </details>
 
-        <section class="calculator-card" id="weather-compensation">
+        <section class="calculator-card comp-card" id="load-compensation">
+            <h2 class="card-title">Load compensation (OpenTherm)</h2>
+            <p class="comp-copy">A load-compensating thermostat, sometimes called a modulating thermostat, talks to the boiler instead of just switching it on and off. As rooms get close to the temperature you have set, it turns the flow temperature down. OpenTherm is one common way of doing this; some boilers use the maker’s own protocol.</p>
+            <p class="comp-copy">This is usually the easier of the two extra options to set up. Often it is just a compatible thermostat swap. You do not need an outdoor sensor or a heating curve. The boiler and thermostat must both support the same protocol, whether that is OpenTherm or the boiler maker’s own. It can also be used with weather compensation.</p>
+            <p class="comp-copy">A sensible fixed, lower flow temperature is still a good, simple start. That is what the Boiler Optimiser helps you find. If you rent, check with your landlord before you change any controls. See <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm boilers and controls</a>.</p>
+        </section>
+
+        <section class="calculator-card comp-card" id="weather-compensation">
             <h2 class="card-title">Weather compensation</h2>
-            <p class="weather-comp-copy">Weather compensation is a little more advanced than setting the flow yourself. It works well when it is fitted and set up properly, but for some homes it can complicate things.</p>
-            <p class="weather-comp-copy">An outdoor sensor tells the boiler how cold it is outside. The boiler then changes its heating flow temperature on its own: lower on mild days, higher on the coldest ones. That only works well if the heating curve is set for your home. Many combi boilers never had that sensor fitted, or it is there but not set up.</p>
-            <p class="weather-comp-copy">For most homes a sensible fixed, lower flow temperature is the simpler route. That is what the Boiler Optimiser helps you find. If a compensation sensor is already fitted and working, keep using it. If you rent, check with your landlord before you change any controls or have a sensor fitted.</p>
+            <p class="comp-copy">Weather compensation goes a step further and is a little more advanced. It works well when it is fitted and set up properly, but for some homes it can complicate things.</p>
+            <p class="comp-copy">An outdoor sensor tells the boiler how cold it is outside. The boiler then changes its heating flow temperature on its own: lower on mild days, higher on the coldest ones. That only works well if the heating curve is set for your home. Many combi boilers never had that sensor fitted, or it is there but not set up.</p>
+            <p class="comp-copy">For most homes a sensible fixed, lower flow temperature is the simpler route. That is what the Boiler Optimiser helps you find. If a compensation sensor is already fitted and working, keep using it. If you rent, check with your landlord before you change any controls or have a sensor fitted.</p>
         </section>
 
         <details class="calculator-card fold" id="tool-results">
