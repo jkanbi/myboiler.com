@@ -373,10 +373,6 @@
             visibility: hidden;
         }
 
-        .type-diagram {
-            margin: 1rem 0 0.35rem;
-        }
-
         .primary-circuit {
             position: absolute;
             left: 0;
@@ -431,6 +427,8 @@
         .flow-slider {
             position: relative;
             line-height: 0;
+            padding-top: 1.15rem;
+            padding-bottom: calc(var(--thumb-size) / 2);
             --track-size: 0.7rem;
             --thumb-size: 2.75rem;
             --thumb-pct: 0.727;
@@ -496,6 +494,14 @@
             font-weight: 700;
             line-height: 1.35;
             color: var(--text);
+        }
+
+        #setup-heading {
+            margin-bottom: 0.75rem;
+        }
+
+        #setup-heading .card-title {
+            margin: 0;
         }
 
         #flow-card {
@@ -626,12 +632,60 @@
             z-index: 1;
         }
 
-        #bill-card .bill-next {
+        .bill-prompt {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 0;
+            text-align: center;
+        }
+
+        .bill-prompt-copy {
             margin: 0;
-            max-width: 36rem;
+            max-width: 28rem;
             font-size: 0.9375rem;
-            line-height: 1.5;
+            font-weight: 500;
+            line-height: 1.45;
             color: var(--text-muted);
+        }
+
+        #show-bill-card {
+            flex: none;
+            width: auto;
+            min-width: 0;
+            max-width: 100%;
+            padding-inline: 1.25rem;
+            color: var(--accent);
+            border-color: var(--accent);
+            background: var(--surface);
+        }
+
+        #bill-flow-group {
+            max-width: 36rem;
+        }
+
+        .bill-flow-pair {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem 1.25rem;
+            width: 100%;
+        }
+
+        .bill-flow-field {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.55rem;
+        }
+
+        .bill-flow-field .input-label {
+            margin: 0;
+        }
+
+        #initial-flow,
+        #final-flow {
+            width: 6.5rem;
         }
 
         .fold > summary::-webkit-details-marker,
@@ -662,7 +716,7 @@
             margin-top: 1.25rem;
         }
 
-        #setup-card .input-group {
+        #setup-card > .input-group {
             margin-bottom: 1.25rem;
         }
 
@@ -769,75 +823,8 @@
             border-color: #d64545;
         }
 
-        .system-figure {
-            margin: 0.85rem 0 0;
-        }
-
-        .system-figure[hidden] {
-            display: none;
-        }
-
-        .system-thumb {
-            display: block;
-            width: calc((100% - 1rem) / 3);
-            aspect-ratio: 1;
-            padding: 0.35rem;
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            background: #e8e8e8;
-            cursor: zoom-in;
-            overflow: hidden;
-        }
-
-        .system-figure .system-thumb {
-            width: 100%;
-            min-width: 0;
-            height: auto;
-            aspect-ratio: 1431 / 805;
-        }
-
-        .system-thumb img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .system-lightbox {
-            width: min(56rem, calc(100vw - 2rem));
-            max-height: calc(100vh - 2rem);
-            padding: 1rem;
-            border: none;
-            border-radius: var(--radius-lg);
-            background: var(--surface);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .system-lightbox::backdrop {
-            background: rgba(16, 18, 22, 0.62);
-        }
-
-        .system-lightbox img {
-            display: block;
-            width: 100%;
-            height: auto;
-            max-height: calc(100vh - 6rem);
-            object-fit: contain;
-            background: #e8e8e8;
-            border-radius: var(--radius);
-        }
-
-        .lightbox-close {
-            display: block;
-            margin: 0 0 0.75rem auto;
-            padding: 0.4rem 0.8rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            background: var(--surface);
-            color: var(--text);
-            cursor: pointer;
+        #setup-card #flow-card {
+            margin-top: 0.35rem;
         }
 
         .other-note {
@@ -911,10 +898,10 @@
         .heat-pump-cta[hidden],
         .standard-note[hidden],
         #primary-circuit[hidden],
-        #type-diagram[hidden],
         #system-group[hidden],
         .other-note[hidden],
         #flow-card[hidden],
+        .bill-prompt[hidden],
         #bill-card[hidden],
         #notes-card[hidden],
         #tool-results[hidden],
@@ -1294,6 +1281,13 @@
             flex-basis: 7.5rem;
         }
 
+        .tool-confirm-row .input-field.is-brand {
+            width: 13rem;
+            flex-basis: 13rem;
+            text-align: left;
+            cursor: pointer;
+        }
+
         #from-flow,
         #from-flow:focus {
             border-color: #d64545;
@@ -1477,7 +1471,7 @@
         }
 
         .slider-prompt {
-            margin: 0 0 0.7rem;
+            margin: 0 0 0.35rem;
             font-size: 0.875rem;
             font-weight: 600;
             line-height: 1.4;
@@ -1812,8 +1806,16 @@
                 display: grid;
             }
 
+            #usage-chips {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
             #bill-card .cooking-toggle {
                 display: flex;
+            }
+
+            .bill-flow-pair {
+                grid-template-columns: 1fr;
             }
 
             #vaillant-models .choice-toggle {
@@ -1835,10 +1837,6 @@
 
             .brand-picks {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
-
-            .system-thumb {
-                width: 100%;
             }
 
             #flow-state {
@@ -1879,35 +1877,74 @@
                 margin-inline: 0;
             }
 
+            #bill-card > #bill-flow-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #bill-flow-group .input-heading {
+                margin-bottom: 0.85rem;
+            }
+
             #space-heating-group .calculated-output {
                 align-items: flex-start;
                 text-align: left;
             }
 
-            #system-group > .choice-toggle {
+            #setup-choices {
                 display: grid;
                 grid-template-columns: repeat(3, minmax(0, 1fr));
                 gap: 0.5rem;
             }
+        }
 
-            .system-figure {
-                display: grid;
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-                column-gap: 0.5rem;
-                align-items: start;
-            }
+        .usage-band {
+            margin-top: 1.5rem;
+        }
 
-            .system-figure[data-system="system"] .system-thumb {
-                grid-column: 2;
-            }
+        .usage-band .input-heading {
+            margin-bottom: 0.65rem;
+        }
 
-            .system-figure[data-system="combi-cylinder"] .system-thumb {
-                grid-column: 3;
-            }
+        #usage-rate-hint {
+            text-decoration: none;
+        }
 
-            .system-thumb {
-                width: 100%;
-            }
+        #usage-rate-hint:hover,
+        #usage-rate-hint:focus {
+            text-decoration: underline;
+        }
+
+        #usage-chips {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.5rem;
+        }
+
+        #usage-chips .choice-button {
+            flex: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.15rem;
+            min-width: 0;
+            padding: 0.65rem 0.4rem;
+            line-height: 1.2;
+        }
+
+        .usage-chip-kwh {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .usage-band + .result-grid {
+            margin-top: 0.85rem;
+        }
+
+        #bill-card .result-grid {
+            width: 100%;
+            margin-top: 0;
+            text-align: left;
         }
 
         .comp-card .comp-copy {
@@ -1983,7 +2020,7 @@
     twq('config','nvyf0');
     </script>
     <!-- End X conversion tracking base code -->
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=comp-expand" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=brand-videos-2" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -2011,44 +2048,15 @@
         </div>
 
         <div class="calculator-card" id="setup-card">
-            <h2 class="card-title">Which Boiler/System type you have?</h2>
-            <div class="input-group">
-                <div class="input-heading">
-                    <div class="input-label" id="boiler-type-label">Boiler</div>
-                    <a class="label-aside" href="#note-1">[Notes 1.]</a>
-                </div>
-                <div class="choice-toggle" role="group" aria-labelledby="boiler-type-label">
-                    <button type="button" class="choice-button active" data-boiler="condensing" aria-pressed="true">Condensing</button>
-                    <button type="button" class="choice-button" data-boiler="standard" aria-pressed="false">Non-condensing</button>
-                </div>
-                <div class="boiler-diagram type-diagram" id="type-diagram" data-condensate="3">
-                    <div class="boiler-plant">
-                        <div class="boiler-column">
-                            <div class="boiler-body">
-                                <div class="boiler-shape">Boiler</div>
-                                <div class="condensate">
-                                    <span class="condensate-pipe" aria-hidden="true"></span>
-                                    <span class="condensate-drops" aria-hidden="true">
-                                        <span class="drop"></span>
-                                        <span class="drop"></span>
-                                        <span class="drop"></span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="boiler-pipes" aria-hidden="true">
-                                <span class="pipe-cluster pipe-before">
-                                    <span class="boiler-pipe-line is-flow"></span>
-                                    <span class="boiler-pipe-line is-hot"></span>
-                                </span>
-                                <span class="boiler-pipe-line is-gas"></span>
-                                <span class="pipe-cluster pipe-after">
-                                    <span class="boiler-pipe-line is-cold"></span>
-                                    <span class="boiler-pipe-line is-return"></span>
-                                    <span class="boiler-pipe-line is-prv"></span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="input-heading" id="setup-heading">
+                <h2 class="card-title" id="setup-label">Which Boiler/System type you have?</h2>
+                <a class="label-aside" href="#note-1">[Notes 1.]</a>
+            </div>
+            <div class="input-group" id="system-group">
+                <div class="choice-toggle" id="setup-choices" role="group" aria-labelledby="setup-label">
+                    <button type="button" class="choice-button active" data-choice="combi" data-boiler="condensing" data-system="combi" aria-pressed="true">Condensing combi</button>
+                    <button type="button" class="choice-button" data-choice="system" data-boiler="condensing" data-system="system" aria-pressed="false">Condensing system / stored hot water</button>
+                    <button type="button" class="choice-button" data-choice="standard" data-boiler="standard" data-system="combi" aria-pressed="false">Non-condensing</button>
                 </div>
                 <div class="standard-note" id="standard-note" hidden>
                     <p>A non-condensing boiler cannot be optimised in the same way as a condensing boiler. Any saving from a lower flow temperature is much smaller than on a modern condensing boiler.</p>
@@ -2070,80 +2078,9 @@
                 </div>
             </div>
 
-            <div class="input-group" id="system-group">
-                <div class="input-heading">
-                    <div class="input-label" id="system-label">Boiler Type</div>
-                </div>
-                <div class="choice-toggle" role="group" aria-labelledby="system-label">
-                    <button type="button" class="choice-button active" data-system="combi" aria-pressed="true">Combi boiler</button>
-                    <button type="button" class="choice-button" data-system="system" aria-pressed="false">System/vented with stored hot water</button>
-                    <button type="button" class="choice-button" data-system="combi-cylinder" aria-pressed="false">Other type</button>
-                </div>
-                <figure class="system-figure" id="system-figure">
-                    <button type="button" class="system-thumb" id="system-thumb" aria-label="Enlarge diagram">
-                        <img src="/combi-boiler/images/combi-boiler-diagram.jpg" alt="A combi boiler heats the taps and the radiators directly. There is no hot water cylinder." width="1431" height="805">
-                    </button>
-                </figure>
-                <dialog class="system-lightbox" id="system-lightbox">
-                    <button type="button" class="lightbox-close" id="system-lightbox-close">Close</button>
-                    <img id="system-lightbox-img" alt="">
-                </dialog>
-                <p class="other-note" id="other-note" hidden><a href="/quote/">Get in touch</a> and we can advise on the right settings.</p>
-            </div>
-        </div>
-
-        <details class="calculator-card fold" id="bill-card" open>
-            <summary class="card-title">Gas Usage from your bills</summary>
+            <div id="flow-card">
             <div class="input-group">
-                <div class="input-heading">
-                    <label class="input-label" for="annual-kwh">Annual gas usage</label>
-                    <a class="label-aside" id="bill-kwh-aside" href="#note-bill">[Notes 7.]</a>
-                </div>
-                <div class="unit-rate-field">
-                    <input type="number" id="annual-kwh" class="input-field" inputmode="decimal" min="0" step="1" placeholder="e.g. 12000" value="12000">
-                    <label class="input-label" for="annual-kwh">kWh</label>
-                </div>
-            </div>
-
-            <div class="input-group">
-                <div class="input-heading">
-                    <div class="input-label" id="gas-cooking-label">Do you use gas for cooking?</div>
-                </div>
-                <div class="choice-toggle cooking-toggle" role="group" aria-labelledby="gas-cooking-label">
-                    <button type="button" class="choice-button active" data-gas-cooking="yes" aria-pressed="true">Yes</button>
-                    <button type="button" class="choice-button" data-gas-cooking="no" aria-pressed="false">No</button>
-                </div>
-            </div>
-
-            <div class="input-group">
-                <div class="input-heading">
-                    <label class="input-label" for="unit-rate">Unit rate</label>
-                </div>
-                <div class="unit-rate-field">
-                    <input type="number" id="unit-rate" class="input-field" inputmode="decimal" min="0" step="0.01" value="7.97">
-                    <label class="input-label" for="unit-rate">p/kWh</label>
-                </div>
-            </div>
-
-            <div class="input-group" id="space-heating-group">
-                <div class="input-heading">
-                    <div class="input-label" id="space-heating-label">Estimated annual space heating usage</div>
-                    <a class="label-aside" id="space-heating-aside" href="#note-space">[Notes 5.]</a>
-                </div>
-                <div class="calculated-output">
-                    <div class="calculated-field" id="space-heating-kwh" aria-labelledby="space-heating-label">—</div>
-                    <p class="calculated-hint">Calculated automatically</p>
-                </div>
-            </div>
-            <p class="bill-next">Enter / change your details if needed, then proceed to next section.</p>
-        </details>
-
-        <div class="calculator-card" id="flow-card">
-            <div class="input-group">
-                <div class="input-heading">
-                    <h2 class="card-title">Condensing</h2>
-                    <span class="input-hint" id="cylinder-hint" hidden>Cylinder about 70°C</span>
-                </div>
+                <span class="input-hint" id="cylinder-hint" hidden>Cylinder about 70°C</span>
                 <div class="boiler-diagram" data-condensate="2">
                     <div class="boiler-plant">
                         <div class="cylinder" id="cylinder-diagram" hidden>
@@ -2226,24 +2163,37 @@
                 </aside>
             </div>
 
+            <div class="usage-band" id="usage-band">
+                <div class="input-heading">
+                    <div class="input-label" id="usage-band-label">Annual gas usage</div>
+                    <a class="input-hint" id="usage-rate-hint" href="#unit-rate">at 7.97p/kWh</a>
+                </div>
+                <div class="choice-toggle" id="usage-chips" role="group" aria-labelledby="usage-band-label" aria-describedby="usage-rate-hint">
+                    <button type="button" class="choice-button" data-band="low" data-kwh="6000" aria-pressed="false">Low<span class="usage-chip-kwh">6,000 kWh</span></button>
+                    <button type="button" class="choice-button active" data-band="medium" data-kwh="12000" aria-pressed="true">Medium<span class="usage-chip-kwh">12,000 kWh</span></button>
+                    <button type="button" class="choice-button" data-band="high" data-kwh="20000" aria-pressed="false">High<span class="usage-chip-kwh">20,000 kWh</span></button>
+                    <button type="button" class="choice-button" data-band="very-high" data-kwh="30000" aria-pressed="false">Very high<span class="usage-chip-kwh">30,000 kWh</span></button>
+                </div>
+            </div>
+
             <div class="result-grid bill-results">
                 <div class="result-item">
                     <div class="result-label">Annual space heating cost</div>
-                    <div class="result-value" id="heating-cost">—</div>
+                    <div class="result-value" id="heating-cost" data-result="heating-cost">—</div>
                     <div class="result-unit">excluding standing charge</div>
                 </div>
                 <div class="result-item is-key">
                     <div class="result-label">Annual condensing-mode saving</div>
-                    <div class="result-value" id="condensing-saving">—</div>
-                    <div class="result-unit" id="condensing-saving-unit">versus a 75°C flow</div>
+                    <div class="result-value" id="condensing-saving" data-result="condensing-saving">—</div>
+                    <div class="result-unit" id="condensing-saving-unit" data-result="condensing-saving-unit">versus a 75°C flow</div>
                 </div>
                 <div class="result-item">
                     <div class="result-heading">
                         <div class="result-label">Efficiency</div>
                         <a class="result-aside" href="#note-5">[Notes 5.]</a>
                     </div>
-                    <div class="result-value" id="graph-efficiency">—</div>
-                    <div class="result-unit" id="graph-efficiency-unit">from return temperature</div>
+                    <div class="result-value" id="graph-efficiency" data-result="graph-efficiency">—</div>
+                    <div class="result-unit" id="graph-efficiency-unit" data-result="graph-efficiency-unit">from return temperature</div>
                 </div>
             </div>
             <aside class="reliability-note">
@@ -2263,7 +2213,99 @@
                     </li>
                 </ul>
             </aside>
+            <div class="bill-prompt" id="bill-prompt">
+                <p class="bill-prompt-copy">Have a bill? Enter your exact usage and unit rate for a closer saving.</p>
+                <button type="button" class="choice-button" id="show-bill-card">Enter exact gas usage and unit rates</button>
+            </div>
+            </div>
         </div>
+
+        <details class="calculator-card fold" id="bill-card" hidden>
+            <summary class="card-title">Gas Usage from your bills</summary>
+            <div class="input-group">
+                <div class="input-heading">
+                    <label class="input-label" for="annual-kwh">Annual gas usage</label>
+                    <a class="label-aside" id="bill-kwh-aside" href="#note-bill">[Notes 7.]</a>
+                </div>
+                <div class="unit-rate-field">
+                    <input type="number" id="annual-kwh" class="input-field" inputmode="decimal" min="0" step="1" placeholder="e.g. 12000" value="12000">
+                    <label class="input-label" for="annual-kwh">kWh</label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-heading">
+                    <div class="input-label" id="gas-cooking-label">Do you use gas for cooking?</div>
+                </div>
+                <div class="choice-toggle cooking-toggle" role="group" aria-labelledby="gas-cooking-label">
+                    <button type="button" class="choice-button active" data-gas-cooking="yes" aria-pressed="true">Yes</button>
+                    <button type="button" class="choice-button" data-gas-cooking="no" aria-pressed="false">No</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-heading">
+                    <label class="input-label" for="unit-rate">Unit rate</label>
+                </div>
+                <div class="unit-rate-field">
+                    <input type="number" id="unit-rate" class="input-field" inputmode="decimal" min="0" step="0.01" value="7.97">
+                    <label class="input-label" for="unit-rate">p/kWh</label>
+                </div>
+            </div>
+
+            <div class="input-group" id="bill-flow-group">
+                <div class="input-heading">
+                    <div class="input-label" id="bill-flow-label">Flow temperature</div>
+                </div>
+                <div class="bill-flow-pair" role="group" aria-labelledby="bill-flow-label">
+                    <div class="bill-flow-field">
+                        <label class="input-label" for="initial-flow">Initial</label>
+                        <div class="unit-rate-field">
+                            <input type="number" id="initial-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" value="75" aria-label="Initial flow temperature">
+                            <span class="input-label" aria-hidden="true">°C</span>
+                        </div>
+                    </div>
+                    <div class="bill-flow-field">
+                        <label class="input-label" for="final-flow">Final</label>
+                        <div class="unit-rate-field">
+                            <input type="number" id="final-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" value="75" aria-label="Final flow temperature">
+                            <span class="input-label" aria-hidden="true">°C</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group" id="space-heating-group">
+                <div class="input-heading">
+                    <div class="input-label" id="space-heating-label">Estimated annual space heating usage</div>
+                    <a class="label-aside" id="space-heating-aside" href="#note-space">[Notes 5.]</a>
+                </div>
+                <div class="calculated-output">
+                    <div class="calculated-field" id="space-heating-kwh" aria-labelledby="space-heating-label">—</div>
+                    <p class="calculated-hint">Calculated automatically</p>
+                </div>
+            </div>
+            <div class="result-grid bill-results">
+                <div class="result-item">
+                    <div class="result-label">Annual space heating cost</div>
+                    <div class="result-value" data-result="heating-cost">—</div>
+                    <div class="result-unit">excluding standing charge</div>
+                </div>
+                <div class="result-item is-key">
+                    <div class="result-label">Annual condensing-mode saving</div>
+                    <div class="result-value" data-result="condensing-saving">—</div>
+                    <div class="result-unit" data-result="condensing-saving-unit">versus a 75°C flow</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-heading">
+                        <div class="result-label">Efficiency</div>
+                        <a class="result-aside" href="#note-5">[Notes 5.]</a>
+                    </div>
+                    <div class="result-value" data-result="graph-efficiency">—</div>
+                    <div class="result-unit" data-result="graph-efficiency-unit">from return temperature</div>
+                </div>
+            </div>
+        </details>
 
         <details class="calculator-card fold" id="model-card" open hidden>
             <summary class="card-title">
@@ -2434,8 +2476,32 @@
         </details>
         <form class="tool-confirm" id="tool-confirm">
             <p class="input-label">Have you turned the heating flow down? Come back here and let us know.</p>
-            <span class="input-hint">Enter what the flow was, and what you set it to. Add annual kWh and unit rate if you know them. We log this anonymously.</span>
+            <span class="input-hint">Choose the boiler brand, then what the flow was and what you set it to. Add annual kWh and unit rate if you know them. We log this anonymously.</span>
             <div class="tool-confirm-fields">
+                <div class="tool-confirm-field">
+                    <label class="input-label" for="confirm-brand">Boiler brand</label>
+                    <div class="tool-confirm-row">
+                        <select id="confirm-brand" class="input-field is-brand" required autocomplete="off">
+                            <option value="">Select brand</option>
+                            <option value="worcester">Worcester Bosch</option>
+                            <option value="vaillant">Vaillant</option>
+                            <option value="baxi">Baxi</option>
+                            <option value="ideal">Ideal</option>
+                            <option value="viessmann">Viessmann</option>
+                            <option value="glow-worm">Glow-worm</option>
+                            <option value="potterton">Potterton</option>
+                            <option value="main">Main</option>
+                            <option value="alpha">Alpha</option>
+                            <option value="intergas">Intergas</option>
+                            <option value="ariston">Ariston</option>
+                            <option value="vokera">Vokera</option>
+                            <option value="ferroli">Ferroli</option>
+                            <option value="grant">Grant</option>
+                            <option value="british-gas">British Gas</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="tool-confirm-field">
                     <label class="input-label" for="from-flow">What the flow was</label>
                     <div class="tool-confirm-row">
@@ -2474,7 +2540,7 @@
             <a id="heat-pump-checker-link" href="/heat-pump-checker/">Check heat pump suitability</a>
         </div>
         <p class="tool-disclaimer">This tool is in development. We accept no responsibility for issues that arise from these adjustments. Some systems are not installed correctly and may cause problems, especially where the condensate pipe is incorrectly installed or not insulated.</p>
-        <p class="tool-version">2026-10-27 21:50 · 14</p>
+        <p class="tool-version">2026-10-27 23:34 · 30</p>
     </div>
 
     <div id="site-footer"></div>
@@ -2536,20 +2602,6 @@
             var PARTIAL_FLOW = CONDENSING_RETURN_MAX + DELTA;
             var RELIABILITY_FLOW = 65;
             var system = 'combi';
-            var systemImages = {
-                system: {
-                    src: '/system-boiler/images/system-or-regular-boiler-diagram.jpg',
-                    alt: 'A system boiler heats a hot water cylinder. The cylinder supplies the taps, and the radiators are on a separate heating circuit.'
-                },
-                combi: {
-                    src: '/combi-boiler/images/combi-boiler-diagram.jpg',
-                    alt: 'A combi boiler heats the taps and the radiators directly. There is no hot water cylinder.'
-                },
-                'combi-cylinder': {
-                    src: '/boiler-optimiser/images/other-system.svg?v=qmark',
-                    alt: 'Another heating system, shown as a question mark.'
-                }
-            };
 
             function storesHotWater() {
                 return system !== 'combi';
@@ -2566,6 +2618,7 @@
             var flowWas = Number(flowInput.value);
             var annualTouched = false;
             var rateTouched = false;
+            var billExactOpen = false;
             var flowHint = document.getElementById('flow-hint');
             var returnHint = document.getElementById('return-hint');
             var boilerDiagram = document.querySelector('#flow-card .boiler-diagram');
@@ -2579,10 +2632,10 @@
             var flowSlider = flowInput.parentElement;
             var annualInput = document.getElementById('annual-kwh');
             var rateInput = document.getElementById('unit-rate');
+            var initialFlowInput = document.getElementById('initial-flow');
+            var finalFlowInput = document.getElementById('final-flow');
             var usesGasCooking = true;
             var plan = document.getElementById('plan');
-            var systemButtons = document.querySelectorAll('[data-system]');
-            var boilerButtons = document.querySelectorAll('[data-boiler]');
             var brandButtons = document.querySelectorAll('[data-brand]');
             var brandBar = document.getElementById('brand-bar');
             var brandBack = document.getElementById('brand-back');
@@ -2699,6 +2752,20 @@
                 return isFinite(value) && value >= 0 ? value : null;
             }
 
+            function clampFlow(value) {
+                var min = Number(flowInput.min);
+                var max = Number(flowInput.max);
+                if (!isFinite(value)) return Number(flowInput.value);
+                return Math.min(max, Math.max(min, Math.round(value)));
+            }
+
+            function flowFromInput(input, fallback) {
+                if (!input || input.value.trim() === '') return fallback;
+                var value = Number(input.value);
+                if (!isFinite(value)) return fallback;
+                return clampFlow(value);
+            }
+
             function formatGBP(amount) {
                 return '£' + amount.toLocaleString('en-GB', {
                     minimumFractionDigits: 2,
@@ -2708,6 +2775,21 @@
 
             function formatKwh(amount) {
                 return Math.round(amount).toLocaleString('en-GB') + ' kWh';
+            }
+
+            function setResult(name, text) {
+                document.querySelectorAll('[data-result="' + name + '"]').forEach(function (el) {
+                    el.textContent = text;
+                });
+            }
+
+            function syncUsageChips(annual) {
+                var rounded = annual === null ? null : Math.round(annual);
+                document.querySelectorAll('#usage-chips [data-kwh]').forEach(function (button) {
+                    var on = rounded !== null && Number(button.getAttribute('data-kwh')) === rounded;
+                    button.classList.toggle('active', on);
+                    button.setAttribute('aria-pressed', on ? 'true' : 'false');
+                });
             }
 
             function item(title, content) {
@@ -2881,34 +2963,23 @@
                 var condensingSystem = boilerType === 'condensing' && system === 'system';
                 var blocked = otherType || standardBoiler;
                 document.getElementById('standard-note').hidden = !standardBoiler;
-                var typeDiagram = document.getElementById('type-diagram');
-                typeDiagram.hidden = false;
-                typeDiagram.classList.toggle('no-condensate', standardBoiler);
-                typeDiagram.classList.toggle('no-dhw', !standardBoiler && storesHotWater());
-                typeDiagram.setAttribute('data-condensate', standardBoiler ? '0' : '3');
-                document.getElementById('system-group').hidden = standardBoiler;
-                document.getElementById('other-note').hidden = standardBoiler || !otherType;
                 document.getElementById('flow-card').hidden = blocked;
-                document.getElementById('bill-card').hidden = blocked;
+                document.getElementById('bill-card').hidden = blocked || !billExactOpen;
+                var billPrompt = document.getElementById('bill-prompt');
+                if (billPrompt) billPrompt.hidden = blocked || billExactOpen;
                 document.getElementById('tool-results').hidden = blocked;
                 document.getElementById('model-card').hidden = blocked;
                 document.getElementById('notes-card').hidden = blocked || !storesHotWater();
                 document.getElementById('heat-pump-cta').hidden = blocked;
-                var systemFigureEl = document.getElementById('system-figure');
-                var diagram = systemImages[system];
-                var systemImage = systemFigureEl.querySelector('img');
-                systemFigureEl.hidden = !diagram;
-                systemFigureEl.setAttribute('data-system', system);
-                if (diagram && systemImage.getAttribute('src') !== diagram.src) {
-                    systemImage.src = diagram.src;
-                    systemImage.alt = diagram.alt;
-                }
-                document.getElementById('system-thumb').setAttribute('aria-label', diagram ? 'Enlarge diagram. ' + diagram.alt : 'Enlarge diagram');
                 if (blocked) {
                     primaryCircuit.setAttribute('hidden', '');
                     return;
                 }
                 var flow = Number(flowInput.value);
+                if (finalFlowInput && document.activeElement !== finalFlowInput) {
+                    finalFlowInput.value = String(Math.round(flow));
+                }
+                var fromFlow = flowFromInput(initialFlowInput, FACTORY_FLOW);
                 document.getElementById('heat-pump-cta').hidden = flow > 55 || storesHotWater();
                 var ret = flow - DELTA;
                 var currentBand = band(flow);
@@ -3001,6 +3072,12 @@
                 boilerDiagram.setAttribute('data-condensate', String(condensateLevel));
                 boilerDiagram.classList.toggle('no-condensate', !condensingBoiler);
                 var pence = nonNegativeOrNull(rateInput);
+                var rateHint = document.getElementById('usage-rate-hint');
+                if (rateHint) {
+                    rateHint.textContent = pence === null
+                        ? 'add a unit rate below'
+                        : ('at ' + (Math.round(pence * 100) / 100).toFixed(2) + 'p/kWh');
+                }
                 document.getElementById('space-heating-kwh').textContent = spaceKwh === null ? '—' : formatKwh(spaceKwh);
                 var pumpSize = document.getElementById('heat-pump-size');
                 var checkerLink = document.getElementById('heat-pump-checker-link');
@@ -3023,23 +3100,23 @@
                     }
                     checkerLink.href = '/heat-pump-checker/?' + checkerParams.toString();
                 }
-                document.getElementById('heating-cost').textContent = spaceKwh === null || pence === null
+                setResult('heating-cost', spaceKwh === null || pence === null
                     ? '—'
-                    : formatGBP(spaceKwh * (pence / 100));
-                var fraction = condensingBoiler ? saving(FACTORY_FLOW, flow) : 0;
-                document.getElementById('graph-efficiency').textContent = condensingBoiler
+                    : formatGBP(spaceKwh * (pence / 100)));
+                var fraction = condensingBoiler ? saving(fromFlow, flow) : 0;
+                setResult('graph-efficiency', condensingBoiler
                     ? efficiency(flow).toFixed(1) + '%'
-                    : '—';
-                document.getElementById('graph-efficiency-unit').textContent = condensingBoiler
+                    : '—');
+                setResult('graph-efficiency-unit', condensingBoiler
                     ? 'at ' + ret + '°C return'
-                    : 'not a condensing boiler';
+                    : 'not a condensing boiler');
                 var savingAmount = spaceKwh === null || pence === null
                     ? 0
                     : spaceKwh * (pence / 100) * fraction;
                 var savingText = spaceKwh === null || pence === null
                     ? '—'
                     : formatGBP(savingAmount);
-                document.getElementById('condensing-saving').textContent = savingText;
+                setResult('condensing-saving', savingText);
                 var boilerSaving = document.getElementById('boiler-saving');
                 var boilerSavingWrap = boilerSaving.parentElement;
                 boilerSaving.textContent = savingText;
@@ -3048,9 +3125,10 @@
                     savingTone = currentBand.key === 'low' ? 'red' : currentBand.key;
                 }
                 boilerSavingWrap.className = 'boiler-saving is-' + savingTone;
-                document.getElementById('condensing-saving-unit').textContent = condensingBoiler
-                    ? percent(fraction) + ' versus a 75°C flow'
-                    : 'no condensing gain on this boiler';
+                setResult('condensing-saving-unit', condensingBoiler
+                    ? percent(fraction) + ' versus ' + Math.round(fromFlow) + '°C flow'
+                    : 'no condensing gain on this boiler');
+                syncUsageChips(annual);
                 var confirmForm = document.getElementById('tool-confirm');
                 var fromFlowInput = document.getElementById('from-flow');
                 var setFlowInput = document.getElementById('set-flow');
@@ -3147,8 +3225,9 @@
                 graphItem.id = 'note-5';
                 if (graphFigure) graphItem.appendChild(graphFigure);
                 plan.appendChild(graphItem);
-                var graphAside = document.querySelector('.result-aside');
-                if (graphAside) graphAside.textContent = '[Notes ' + graphStep + '.]';
+                document.querySelectorAll('.result-aside').forEach(function (graphAside) {
+                    graphAside.textContent = '[Notes ' + graphStep + '.]';
+                });
             }
 
             function bindChoice(nodeList, assign) {
@@ -3165,11 +3244,63 @@
                 });
             }
 
-            bindChoice(systemButtons, function (button) {
-                system = button.getAttribute('data-system');
+            function revealBillCard(focusId) {
+                billExactOpen = true;
+                var bill = document.getElementById('bill-card');
+                bill.open = true;
+                update();
+                var target = focusId ? document.getElementById(focusId) : null;
+                requestAnimationFrame(function () {
+                    bill.scrollIntoView({ block: 'start' });
+                    if (target && window.matchMedia('(pointer: fine)').matches) target.focus();
+                });
+            }
+            function hideBillCard() {
+                billExactOpen = false;
+                var bill = document.getElementById('bill-card');
+                bill.open = false;
+                update();
+                var prompt = document.getElementById('bill-prompt');
+                if (prompt) prompt.scrollIntoView({ block: 'nearest' });
+            }
+            var usageRateHint = document.getElementById('usage-rate-hint');
+            if (usageRateHint) {
+                usageRateHint.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    revealBillCard('unit-rate');
+                });
+            }
+            var showBillCard = document.getElementById('show-bill-card');
+            if (showBillCard) {
+                showBillCard.addEventListener('click', function () {
+                    revealBillCard('annual-kwh');
+                });
+            }
+            var billCard = document.getElementById('bill-card');
+            if (billCard) {
+                billCard.addEventListener('toggle', function () {
+                    if (billCard.open || !billExactOpen) return;
+                    hideBillCard();
+                });
+            }
+            document.getElementById('usage-chips').addEventListener('click', function (event) {
+                var button = event.target.closest('[data-kwh]');
+                if (!button || !this.contains(button)) return;
+                annualInput.value = button.getAttribute('data-kwh');
+                annualTouched = true;
+                update();
             });
-            bindChoice(boilerButtons, function (button) {
+            document.getElementById('setup-choices').addEventListener('click', function (event) {
+                var button = event.target.closest('[data-choice]');
+                if (!button || !this.contains(button)) return;
                 boilerType = button.getAttribute('data-boiler');
+                system = button.getAttribute('data-system');
+                this.querySelectorAll('[data-choice]').forEach(function (other) {
+                    var on = other === button;
+                    other.classList.toggle('active', on);
+                    other.setAttribute('aria-pressed', on ? 'true' : 'false');
+                });
+                update();
             });
             bindChoice(brandButtons, function (button) {
                 brand = button.getAttribute('data-brand');
@@ -3209,25 +3340,6 @@
                 link.addEventListener('click', openAppendixNote);
             });
 
-            var systemThumb = document.getElementById('system-thumb');
-            var systemLightbox = document.getElementById('system-lightbox');
-            var systemLightboxImg = document.getElementById('system-lightbox-img');
-            function openLightbox(thumb) {
-                var thumbImage = thumb.querySelector('img');
-                systemLightboxImg.src = thumbImage.src;
-                systemLightboxImg.alt = thumbImage.alt;
-                systemLightbox.showModal();
-            }
-            systemThumb.addEventListener('click', function () {
-                openLightbox(systemThumb);
-            });
-            document.getElementById('system-lightbox-close').addEventListener('click', function () {
-                systemLightbox.close();
-            });
-            systemLightbox.addEventListener('click', function (event) {
-                if (event.target === systemLightbox) systemLightbox.close();
-            });
-
             document.querySelectorAll('[data-gas-cooking]').forEach(function (button) {
                 button.addEventListener('click', function () {
                     usesGasCooking = button.getAttribute('data-gas-cooking') === 'yes';
@@ -3247,10 +3359,12 @@
             var setFlowInput = document.getElementById('set-flow');
             var confirmKwhInput = document.getElementById('confirm-kwh');
             var confirmRateInput = document.getElementById('confirm-rate');
+            var confirmBrandInput = document.getElementById('confirm-brand');
             if (fromFlowInput) fromFlowInput.addEventListener('input', markConfirmEdited);
             if (setFlowInput) setFlowInput.addEventListener('input', markConfirmEdited);
             if (confirmKwhInput) confirmKwhInput.addEventListener('input', markConfirmEdited);
             if (confirmRateInput) confirmRateInput.addEventListener('input', markConfirmEdited);
+            if (confirmBrandInput) confirmBrandInput.addEventListener('change', markConfirmEdited);
 
             flowInput.addEventListener('input', function () {
                 flowSlider.classList.remove('is-hinting');
@@ -3265,6 +3379,39 @@
                 rateTouched = rateInput.value.trim() !== '';
                 update();
             });
+            function applyFinalFlow(commit) {
+                var raw = Number(finalFlowInput.value);
+                if (finalFlowInput.value.trim() === '' || !isFinite(raw)) {
+                    if (!commit) return;
+                    finalFlowInput.value = String(Math.round(Number(flowInput.value)));
+                    update();
+                    return;
+                }
+                if (!commit && (raw < Number(flowInput.min) || raw > Number(flowInput.max))) return;
+                var next = String(clampFlow(raw));
+                if (flowInput.value !== next) {
+                    flowInput.value = next;
+                    flowSlider.classList.remove('is-hinting');
+                    flowTouched = true;
+                }
+                if (commit) finalFlowInput.value = next;
+                update();
+            }
+            if (initialFlowInput) {
+                initialFlowInput.addEventListener('input', update);
+                initialFlowInput.addEventListener('change', function () {
+                    initialFlowInput.value = String(flowFromInput(initialFlowInput, FACTORY_FLOW));
+                    update();
+                });
+            }
+            if (finalFlowInput) {
+                finalFlowInput.addEventListener('input', function () {
+                    applyFinalFlow(false);
+                });
+                finalFlowInput.addEventListener('change', function () {
+                    applyFinalFlow(true);
+                });
+            }
             window.addEventListener('resize', layoutPrimaryCircuit);
             update();
         })();

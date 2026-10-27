@@ -10,10 +10,6 @@
         return;
     }
 
-    var started = false;
-    var resultViewed = false;
-    var completed = {};
-
     function ready(fn) {
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', fn);
@@ -54,30 +50,6 @@
         window.posthog.capture(event, properties || {});
     }
 
-    function captureStarted() {
-        if (started) return;
-        started = true;
-        capture('optimiser_started');
-    }
-
-    function captureStep(step, name, extra) {
-        if (completed[name]) return;
-        completed[name] = true;
-        var props = { step: step, step_name: name };
-        if (extra) {
-            Object.keys(extra).forEach(function (key) {
-                props[key] = extra[key];
-            });
-        }
-        capture('optimiser_step_completed', props);
-    }
-
-    function captureResult() {
-        if (resultViewed) return;
-        resultViewed = true;
-        capture('optimiser_result_viewed', resultProperties());
-    }
-
     function numericAttr(el, name) {
         if (!el) return null;
         var n = Number(el.getAttribute(name));
@@ -108,9 +80,10 @@
         var setInput = document.getElementById('set-flow');
         var kwhInput = document.getElementById('confirm-kwh');
         var rateInput = document.getElementById('confirm-rate');
+        var brandInput = document.getElementById('confirm-brand');
         var done = document.getElementById('tool-confirm-done');
         var button = document.getElementById('tool-confirm-submit');
-        if (!form || !fromInput || !setInput) return;
+        if (!form || !fromInput || !setInput || !brandInput) return;
         var submitted = false;
 
         fromInput.addEventListener('input', function () {
@@ -129,10 +102,19 @@
                 rateInput.dataset.edited = '1';
             });
         }
+        brandInput.addEventListener('change', function () {
+            brandInput.dataset.edited = '1';
+        });
 
         form.addEventListener('submit', function (event) {
             event.preventDefault();
             if (submitted) return;
+            var brandKey = brandInput.value || '';
+            if (!brandKey) {
+                if (typeof brandInput.reportValidity === 'function') brandInput.reportValidity();
+                else brandInput.focus();
+                return;
+            }
             var fromFlow = Number(fromInput.value);
             var setFlow = Number(setInput.value);
             var annualKwh = kwhInput && kwhInput.value.trim() !== '' ? Number(kwhInput.value) : null;
@@ -156,11 +138,17 @@
                 return;
             }
             submitted = true;
+            var brandLabel = '';
+            var selected = brandInput.options[brandInput.selectedIndex];
+            if (selected && selected.value === brandKey) brandLabel = selected.text;
             var props = resultProperties();
             props.from_flow = fromFlow;
             props.set_flow = setFlow;
             props.annual_kwh = annualKwh;
             props.unit_rate = unitRate;
+            props.brand = brandKey;
+            props.brand_label = brandLabel || brandKey;
+            props.section = 'confirm_form';
             props.tool_flow = numericAttr(form, 'data-tool-flow');
             props.saving_gbp = numericAttr(form, 'data-saving-gbp');
             props.space_kwh = numericAttr(form, 'data-space-kwh');
@@ -170,16 +158,17 @@
                 props.tool_flow = isFinite(toolFlow) ? toolFlow : null;
             }
             capture('optimiser_flow_turned_down', props);
-            captureStep(10, 'flow_turned_down');
             form.classList.add('is-done');
             fromInput.disabled = true;
             setInput.disabled = true;
+            brandInput.disabled = true;
             if (kwhInput) kwhInput.disabled = true;
             if (rateInput) rateInput.disabled = true;
             if (button) button.disabled = true;
             if (done) {
                 done.hidden = false;
                 var parts = ['it was ' + fromFlow + '°C', 'you set it to ' + setFlow + '°C'];
+                if (brandLabel) parts.push('the brand is ' + brandLabel);
                 if (annualKwh !== null) parts.push('annual use is ' + Math.round(annualKwh) + ' kWh');
                 if (unitRate !== null) parts.push('unit rate is ' + unitRate + ' p/kWh');
                 var last = parts.pop();
@@ -188,29 +177,23 @@
         });
     }
 
-    function ctaDest(href) {
-        var url;
-        try {
-            url = new URL(href, location.origin);
-        } catch (err) {
-            return 'other';
-        }
-        if (url.pathname.indexOf('/heat-pump-checker') === 0) return 'heat_pump_checker';
-        if (url.pathname.indexOf('/boiler-optimiser-advance-power-output') === 0) return 'power_output';
-        if (url.pathname.indexOf('/quote') === 0) {
-            var need = url.searchParams.get('need') || '';
-            if (need === 'boiler-replacement') return 'quote_boiler_replacement';
-            if (need === 'heat-pump') return 'quote_heat_pump';
-            return 'quote';
-        }
-        return '';
-    }
+    var BRANDS_WITH_VIDEOS = { worcester: 1, vaillant: 1, main: 1, intergas: 1 };
 
-    function ctaLabel(link) {
-        if (link.id === 'heat-pump-checker-link') return 'heat_pump_checker';
-        var text = (link.textContent || '').replace(/\s+/g, ' ').trim();
-        if (text.length > 60) text = text.slice(0, 60);
-        return text || 'cta';
+    function bindBrandVideos() {
+        var picks = document.getElementById('brand-picks');
+        if (!picks) return;
+        picks.addEventListener('click', function (event) {
+            var tile = event.target.closest('[data-brand]');
+            if (!tile || !picks.contains(tile)) return;
+            var brandKey = tile.getAttribute('data-brand') || '';
+            if (!brandKey) return;
+            capture('optimiser_brand_selected', {
+                brand: brandKey,
+                brand_label: tile.getAttribute('aria-label') || brandKey,
+                has_how_to: !!BRANDS_WITH_VIDEOS[brandKey],
+                section: 'how_to_videos'
+            });
+        });
     }
 
     function loadSnippet() {
@@ -232,38 +215,39 @@
         };
     }
 
-    function anonymousConfig() {
+    function dashboardConfig() {
         return {
-            api_host: API_HOST,
-            ui_host: UI_HOST,
-            person_profiles: 'identified_only',
             autocapture: false,
-            capture_pageview: true,
+            capture_pageview: false,
+            capture_pageleave: false,
             disable_surveys: true,
-            persistence: 'memory',
-            disable_session_recording: true,
-            session_recording: recordingConfig()
+            person_profiles: 'identified_only'
         };
     }
 
+    function anonymousConfig() {
+        var config = dashboardConfig();
+        config.api_host = API_HOST;
+        config.ui_host = UI_HOST;
+        config.persistence = 'memory';
+        config.disable_session_recording = true;
+        config.session_recording = recordingConfig();
+        return config;
+    }
+
     function fullConfig() {
-        return {
-            api_host: API_HOST,
-            ui_host: UI_HOST,
-            person_profiles: 'identified_only',
-            autocapture: true,
-            capture_pageview: true,
-            disable_surveys: true,
-            persistence: 'localStorage+cookie',
-            disable_session_recording: false,
-            session_recording: recordingConfig()
-        };
+        var config = dashboardConfig();
+        config.api_host = API_HOST;
+        config.ui_host = UI_HOST;
+        config.persistence = 'localStorage+cookie';
+        config.disable_session_recording = false;
+        config.session_recording = recordingConfig();
+        return config;
     }
 
     function startPosthog(mode) {
         loadSnippet();
         window.posthog.init(TOKEN, mode === 'full' ? fullConfig() : anonymousConfig());
-        captureStarted();
     }
 
     function enableFullMode() {
@@ -273,7 +257,9 @@
         }
         window.posthog.set_config({
             persistence: 'localStorage+cookie',
-            autocapture: true,
+            autocapture: false,
+            capture_pageview: false,
+            capture_pageleave: false,
             disable_session_recording: false,
             session_recording: recordingConfig()
         });
@@ -347,79 +333,9 @@
         });
     }
 
-    function bindFunnel() {
-        document.addEventListener('click', function (event) {
-            var boiler = event.target.closest('[data-boiler]');
-            if (boiler) {
-                captureStep(1, 'boiler_type');
-                if (boiler.getAttribute('data-boiler') === 'standard') captureResult();
-            }
-            var system = event.target.closest('[data-system]');
-            if (system) {
-                captureStep(2, 'system_type');
-                if (system.getAttribute('data-system') === 'combi-cylinder') captureResult();
-            }
-            if (event.target.closest('[data-gas-cooking]')) captureStep(3, 'bill_inputs');
-            if (event.target.closest('#advanced-toggle') || event.target.closest('a[href*="/boiler-optimiser-advance-power-output"]')) {
-                captureStep(5, 'advanced');
-                captureResult();
-            }
-            if (event.target.closest('#output-auto')) captureStep(7, 'heating_output');
-            var brandTile = event.target.closest('[data-brand]');
-            if (brandTile) {
-                var brandKey = brandTile.getAttribute('data-brand') || '';
-                var brandLabel = brandTile.getAttribute('aria-label') || brandKey;
-                var hasHowTo = brandKey === 'worcester' || brandKey === 'vaillant' || brandKey === 'main' || brandKey === 'intergas';
-                capture('optimiser_brand_selected', {
-                    brand: brandKey,
-                    brand_label: brandLabel,
-                    has_how_to: hasHowTo
-                });
-                captureStep(8, 'brand', { brand: brandKey, brand_label: brandLabel });
-            }
-            if (event.target.closest('[data-model]')) captureStep(9, 'model');
-
-            var moreToggle = event.target.closest('.comp-more-toggle');
-            if (moreToggle) {
-                var card = moreToggle.closest('.comp-card');
-                if (card && card.classList.contains('is-open')) {
-                    var topic = card.id === 'weather-compensation' ? 'weather_compensation' : 'load_compensation';
-                    capture('optimiser_compensation_expanded', { topic: topic });
-                }
-            }
-
-            var summary = event.target.closest('#tool-results > summary, #bill-card > summary');
-            if (summary) {
-                if (summary.parentElement.id === 'bill-card') captureStep(3, 'bill_inputs');
-                if (summary.parentElement.id === 'tool-results') captureResult();
-            }
-
-            var link = event.target.closest('a');
-            if (!link) return;
-            var dest = ctaDest(link.getAttribute('href') || '');
-            if (!dest) return;
-            capture('optimiser_cta_clicked', { cta: ctaLabel(link), dest: dest });
-        });
-
-        document.addEventListener('input', function (event) {
-            var id = event.target && event.target.id;
-            if (id === 'annual-kwh' || id === 'unit-rate') {
-                captureStep(3, 'bill_inputs', {
-                    unit_rate: unitRateFrom(document.getElementById('unit-rate'))
-                });
-            }
-            if (id === 'flow-temp') {
-                captureStep(4, 'flow_temperature');
-                captureResult();
-            }
-            if (id === 'heat-loss') captureStep(6, 'heat_loss');
-            if (id === 'boiler-kw') captureStep(7, 'heating_output');
-        });
-    }
-
     ready(function () {
-        bindFunnel();
         bindConfirm();
+        bindBrandVideos();
         var choiceMade = storedChoice();
         if (choiceMade === 'accepted') {
             startPosthog('full');
@@ -427,6 +343,5 @@
             startPosthog('anonymous');
             if (choiceMade !== 'declined') showBanner();
         }
-        if (path.indexOf('/boiler-optimiser-advance-power-output') === 0) captureStep(5, 'advanced');
     });
 })();
