@@ -1884,6 +1884,17 @@
                 width: 100%;
             }
         }
+
+        #weather-compensation .weather-comp-copy {
+            margin: 0 0 0.85rem;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        #weather-compensation .weather-comp-copy:last-child {
+            margin-bottom: 0;
+        }
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="application/ld+json">
@@ -2314,6 +2325,13 @@
                 </div>
             </div>
         </details>
+
+        <section class="calculator-card" id="weather-compensation">
+            <h2 class="card-title">Weather compensation</h2>
+            <p class="weather-comp-copy">Weather compensation is a little more advanced than setting the flow yourself. It works well when it is fitted and set up properly, but for some homes it can complicate things.</p>
+            <p class="weather-comp-copy">An outdoor sensor tells the boiler how cold it is outside. The boiler then changes its heating flow temperature on its own: lower on mild days, higher on the coldest ones. That only works well if the heating curve is set for your home. Many combi boilers never had that sensor fitted, or it is there but not set up.</p>
+            <p class="weather-comp-copy">For most homes a sensible fixed, lower flow temperature is the simpler route. That is what the Boiler Optimiser helps you find. If a compensation sensor is already fitted and working, keep using it. If you rent, check with your landlord before you change any controls or have a sensor fitted.</p>
+        </section>
 
         <details class="calculator-card fold" id="tool-results">
             <summary class="card-title">Notes, Keys and Information</summary>
