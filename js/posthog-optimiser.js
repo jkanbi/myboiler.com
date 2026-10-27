@@ -379,6 +379,15 @@
             }
             if (event.target.closest('[data-model]')) captureStep(9, 'model');
 
+            var moreToggle = event.target.closest('.comp-more-toggle');
+            if (moreToggle) {
+                var card = moreToggle.closest('.comp-card');
+                if (card && card.classList.contains('is-open')) {
+                    var topic = card.id === 'weather-compensation' ? 'weather_compensation' : 'load_compensation';
+                    capture('optimiser_compensation_expanded', { topic: topic });
+                }
+            }
+
             var summary = event.target.closest('#tool-results > summary, #bill-card > summary');
             if (summary) {
                 if (summary.parentElement.id === 'bill-card') captureStep(3, 'bill_inputs');

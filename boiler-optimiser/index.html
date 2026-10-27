@@ -1817,9 +1817,16 @@
             }
 
             #vaillant-models .choice-toggle {
-                display: grid;
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-                align-items: start;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            #vaillant-models .choice-button {
+                padding: 0.75rem 0.55rem 0.65rem;
+            }
+
+            #vaillant-models .choice-button img {
+                max-width: 9.5rem;
+                height: 9.5rem;
             }
 
             #intergas-models .choice-toggle {
@@ -1945,14 +1952,12 @@
             border-radius: 2px;
         }
 
-        @media (max-width: 700px) {
-            .comp-card--ready .comp-more-toggle {
-                display: inline-block;
-            }
+        .comp-card--ready .comp-more-toggle {
+            display: inline-block;
+        }
 
-            .comp-card--ready:not(.is-open) .comp-more {
-                display: none;
-            }
+        .comp-card--ready:not(.is-open) .comp-more {
+            display: none;
         }
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
@@ -1978,7 +1983,7 @@
     twq('config','nvyf0');
     </script>
     <!-- End X conversion tracking base code -->
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=unit-rate" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=comp-expand" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -2469,7 +2474,7 @@
             <a id="heat-pump-checker-link" href="/heat-pump-checker/">Check heat pump suitability</a>
         </div>
         <p class="tool-disclaimer">This tool is in development. We accept no responsibility for issues that arise from these adjustments. Some systems are not installed correctly and may cause problems, especially where the condensate pipe is incorrectly installed or not insulated.</p>
-        <p class="tool-version">2026-10-27 20:50 · 10</p>
+        <p class="tool-version">2026-10-27 21:00 · 12</p>
     </div>
 
     <div id="site-footer"></div>
