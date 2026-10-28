@@ -1744,7 +1744,7 @@
 
         .result-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: 1fr;
             gap: 0.75rem;
             margin-top: 1.75rem;
         }
@@ -1759,6 +1759,30 @@
             border: 2px solid #2f9e44;
             box-shadow: 0 6px 18px rgba(47, 158, 68, 0.28);
             text-align: center;
+        }
+
+        .result-item.is-key.is-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem 0.5rem;
+            align-items: start;
+            padding: 0.85rem 0.4rem 0.95rem;
+        }
+
+        .result-item.is-key.is-split .result-split + .result-split {
+            border-left: 1px solid rgba(47, 158, 68, 0.28);
+            padding-left: 0.75rem;
+        }
+
+        .result-item.is-key.is-split .result-foot {
+            grid-column: 1 / -1;
+            border-top: 1px solid rgba(47, 158, 68, 0.28);
+            margin: 0.15rem 0.6rem 0;
+            padding: 0.75rem 0.25rem 0.05rem;
+        }
+
+        .result-item.is-key .result-heading {
+            justify-content: center;
         }
 
         .result-heading {
@@ -1805,6 +1829,18 @@
             .result-grid {
                 grid-template-columns: 1fr;
                 display: grid;
+            }
+
+            .result-item.is-key.is-split {
+                grid-template-columns: 1fr;
+                padding: 0.85rem 1rem;
+            }
+
+            .result-item.is-key.is-split .result-split + .result-split {
+                border-left: 0;
+                border-top: 1px solid rgba(47, 158, 68, 0.28);
+                padding-left: 0;
+                padding-top: 0.75rem;
             }
 
             #usage-chips {
@@ -1908,17 +1944,44 @@
             margin-bottom: 0.65rem;
         }
 
+        .usage-rate-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.65rem;
+        }
+
         #change-unit-rate {
+            display: inline-flex;
             flex: none;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: center;
+            gap: 0.35rem 0.5rem;
             width: auto;
             min-width: 0;
-            margin-left: auto;
-            padding: 0.4rem 0.85rem;
+            margin: 0;
+            padding: 0.4rem 0.9rem;
             font-size: 0.8125rem;
+            font-weight: 500;
+            line-height: 1.3;
             white-space: nowrap;
             color: var(--accent);
             border-color: var(--accent);
             background: var(--surface);
+        }
+
+        #change-unit-rate:hover,
+        #change-unit-rate:focus-visible {
+            background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+        }
+
+        #change-unit-rate .input-hint {
+            color: inherit;
+        }
+
+        #change-unit-rate .usage-rate-action {
+            font-weight: 600;
         }
 
         #usage-chips {
@@ -1943,6 +2006,56 @@
             font-weight: 500;
         }
 
+        #usage-chips .usage-custom {
+            justify-content: center;
+            font-family: inherit;
+        }
+
+        #usage-chips .usage-custom-name {
+            font-weight: 600;
+        }
+
+        #usage-chips .usage-custom-input {
+            width: 100%;
+            max-width: 7.25rem;
+            margin: 0 auto;
+            padding: 0.05rem 0.2rem;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            font-size: 0.75rem;
+            font-weight: 500;
+            line-height: 1.2;
+            text-align: center;
+            box-sizing: border-box;
+            box-shadow: none;
+            outline: none;
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        #usage-chips .usage-custom-input::-webkit-outer-spin-button,
+        #usage-chips .usage-custom-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        #usage-chips .usage-custom.active .usage-custom-input {
+            color: inherit;
+        }
+
+        #usage-chips .usage-custom-input:focus,
+        #usage-chips .usage-custom-input:focus-visible {
+            outline: none;
+            box-shadow: none;
+        }
+
+        #usage-chips .usage-custom:focus-within {
+            border-color: var(--accent);
+        }
+
         .usage-band + .result-grid {
             margin-top: 0.85rem;
         }
@@ -1951,6 +2064,10 @@
             width: 100%;
             margin-top: 0;
             text-align: left;
+        }
+
+        #bill-card .result-item.is-key {
+            text-align: center;
         }
 
         .comp-card .comp-copy {
@@ -2173,35 +2290,44 @@
                 <div class="input-heading">
                     <div class="input-label" id="usage-band-label">Annual gas usage</div>
                     <a class="label-aside" id="usage-band-aside" href="#note-bill" aria-label="Note 3">[3.]</a>
-                    <span class="input-hint" id="usage-rate-hint">at 7.97p/kWh</span>
-                    <button type="button" class="choice-button" id="change-unit-rate">Change unit rate</button>
                 </div>
                 <div class="choice-toggle" id="usage-chips" role="group" aria-labelledby="usage-band-label" aria-describedby="usage-rate-hint">
                     <button type="button" class="choice-button" data-band="low" data-kwh="6000" aria-pressed="false">Low<span class="usage-chip-kwh">6,000 kWh</span></button>
                     <button type="button" class="choice-button active" data-band="medium" data-kwh="12000" aria-pressed="true">Medium<span class="usage-chip-kwh">12,000 kWh</span></button>
                     <button type="button" class="choice-button" data-band="high" data-kwh="20000" aria-pressed="false">High<span class="usage-chip-kwh">20,000 kWh</span></button>
-                    <button type="button" class="choice-button" data-band="very-high" data-kwh="30000" aria-pressed="false">Very high<span class="usage-chip-kwh">30,000 kWh</span></button>
+                    <div class="choice-button usage-custom" id="usage-custom" data-band="custom">
+                        <label class="usage-custom-name" for="custom-kwh">Custom</label>
+                        <input type="number" id="custom-kwh" class="usage-custom-input" inputmode="decimal" min="0" step="1" placeholder="kWh" autocomplete="off" aria-label="Custom annual gas usage in kWh">
+                    </div>
+                </div>
+                <div class="usage-rate-row">
+                    <button type="button" class="choice-button" id="change-unit-rate">
+                        <span class="input-hint" id="usage-rate-hint">at 7.97p/kWh</span>
+                        <span class="usage-rate-action">click to change</span>
+                    </button>
                 </div>
             </div>
 
             <div class="result-grid bill-results">
-                <div class="result-item">
-                    <div class="result-label">Annual space heating cost</div>
-                    <div class="result-value" id="heating-cost" data-result="heating-cost">—</div>
-                    <div class="result-unit">excluding standing charge</div>
-                </div>
-                <div class="result-item is-key">
-                    <div class="result-label">Annual condensing-mode saving</div>
-                    <div class="result-value" id="condensing-saving" data-result="condensing-saving">—</div>
-                    <div class="result-unit" id="condensing-saving-unit" data-result="condensing-saving-unit">versus a 75°C flow</div>
-                </div>
-                <div class="result-item">
-                    <div class="result-heading">
-                        <div class="result-label">Efficiency</div>
-                            <a class="result-aside" href="#note-5" aria-label="Note 4">[4.]</a>
+                <div class="result-item is-key is-split">
+                    <div class="result-split">
+                        <div class="result-label">Annual condensing-mode saving</div>
+                        <div class="result-value" id="condensing-saving" data-result="condensing-saving">—</div>
+                        <div class="result-unit" id="condensing-saving-unit" data-result="condensing-saving-unit">versus a 75°C flow</div>
                     </div>
-                    <div class="result-value" id="graph-efficiency" data-result="graph-efficiency">—</div>
-                    <div class="result-unit" id="graph-efficiency-unit" data-result="graph-efficiency-unit">from return temperature</div>
+                    <div class="result-split">
+                        <div class="result-label">Your annual space heating cost</div>
+                        <div class="result-value" id="heating-cost" data-result="heating-cost">—</div>
+                        <div class="result-unit">excluding standing charge</div>
+                    </div>
+                    <div class="result-foot">
+                        <div class="result-heading">
+                            <div class="result-label">Efficiency</div>
+                            <a class="result-aside" href="#note-5" aria-label="Note 4">[4.]</a>
+                        </div>
+                        <div class="result-value" id="graph-efficiency" data-result="graph-efficiency">—</div>
+                        <div class="result-unit" id="graph-efficiency-unit" data-result="graph-efficiency-unit">from return temperature</div>
+                    </div>
                 </div>
             </div>
             <aside class="reliability-note">
@@ -2294,23 +2420,25 @@
                 </div>
             </div>
             <div class="result-grid bill-results">
-                <div class="result-item">
-                    <div class="result-label">Annual space heating cost</div>
-                    <div class="result-value" data-result="heating-cost">—</div>
-                    <div class="result-unit">excluding standing charge</div>
-                </div>
-                <div class="result-item is-key">
-                    <div class="result-label">Annual condensing-mode saving</div>
-                    <div class="result-value" data-result="condensing-saving">—</div>
-                    <div class="result-unit" data-result="condensing-saving-unit">versus a 75°C flow</div>
-                </div>
-                <div class="result-item">
-                    <div class="result-heading">
-                        <div class="result-label">Efficiency</div>
-                            <a class="result-aside" href="#note-5" aria-label="Note 4">[4.]</a>
+                <div class="result-item is-key is-split">
+                    <div class="result-split">
+                        <div class="result-label">Annual condensing-mode saving</div>
+                        <div class="result-value" data-result="condensing-saving">—</div>
+                        <div class="result-unit" data-result="condensing-saving-unit">versus a 75°C flow</div>
                     </div>
-                    <div class="result-value" data-result="graph-efficiency">—</div>
-                    <div class="result-unit" data-result="graph-efficiency-unit">from return temperature</div>
+                    <div class="result-split">
+                        <div class="result-label">Your annual space heating cost</div>
+                        <div class="result-value" data-result="heating-cost">—</div>
+                        <div class="result-unit">excluding standing charge</div>
+                    </div>
+                    <div class="result-foot">
+                        <div class="result-heading">
+                            <div class="result-label">Efficiency</div>
+                            <a class="result-aside" href="#note-5" aria-label="Note 4">[4.]</a>
+                        </div>
+                        <div class="result-value" data-result="graph-efficiency">—</div>
+                        <div class="result-unit" data-result="graph-efficiency-unit">from return temperature</div>
+                    </div>
                 </div>
             </div>
         </details>
@@ -2625,6 +2753,7 @@
             var flowTouched = false;
             var flowWas = Number(flowInput.value);
             var annualTouched = false;
+            var usageCustomSelected = false;
             var rateTouched = false;
             var billExactOpen = false;
             var flowHint = document.getElementById('flow-hint');
@@ -2793,11 +2922,20 @@
 
             function syncUsageChips(annual) {
                 var rounded = annual === null ? null : Math.round(annual);
+                var custom = document.getElementById('usage-custom');
+                var customInput = document.getElementById('custom-kwh');
+                var matchedPreset = false;
                 document.querySelectorAll('#usage-chips [data-kwh]').forEach(function (button) {
-                    var on = rounded !== null && Number(button.getAttribute('data-kwh')) === rounded;
+                    var on = !usageCustomSelected && rounded !== null && Number(button.getAttribute('data-kwh')) === rounded;
+                    if (on) matchedPreset = true;
                     button.classList.toggle('active', on);
                     button.setAttribute('aria-pressed', on ? 'true' : 'false');
                 });
+                var customOn = usageCustomSelected || (rounded !== null && !matchedPreset);
+                if (custom) custom.classList.toggle('active', customOn);
+                if (customInput && document.activeElement !== customInput) {
+                    customInput.value = customOn && rounded !== null ? String(rounded) : '';
+                }
             }
 
             function item(title, content) {
@@ -2850,7 +2988,7 @@
             }
 
             function billUsageNote() {
-                return 'Low 6,000, Medium 12,000, High 20,000 and Very high 30,000 kWh are typical annual bands. Enter the exact figure from your gas bill, in kilowatt hours (kWh), if you have it. The default unit rate is 7.97p/kWh.';
+                return 'Low 6,000, Medium 12,000 and High 20,000 kWh are typical annual bands. Choose Custom to enter the exact figure from your gas bill, in kilowatt hours (kWh). The default unit rate is 7.97p/kWh.';
             }
 
             function controlsNote(stored) {
@@ -3302,13 +3440,43 @@
                     hideBillCard();
                 });
             }
-            document.getElementById('usage-chips').addEventListener('click', function (event) {
-                var button = event.target.closest('[data-kwh]');
-                if (!button || !this.contains(button)) return;
-                annualInput.value = button.getAttribute('data-kwh');
-                annualTouched = true;
-                update();
+            document.querySelectorAll('#usage-chips [data-kwh]').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    usageCustomSelected = false;
+                    annualInput.value = button.getAttribute('data-kwh');
+                    annualTouched = true;
+                    update();
+                });
             });
+            var usageCustom = document.getElementById('usage-custom');
+            var customKwhInput = document.getElementById('custom-kwh');
+            if (usageCustom && customKwhInput) {
+                usageCustom.addEventListener('click', function (event) {
+                    if (event.target === customKwhInput) return;
+                    usageCustomSelected = true;
+                    if (customKwhInput.value.trim() === '') {
+                        var current = nonNegativeOrNull(annualInput);
+                        if (current !== null) customKwhInput.value = String(Math.round(current));
+                    }
+                    customKwhInput.focus();
+                    customKwhInput.select();
+                    update();
+                });
+                customKwhInput.addEventListener('focus', function () {
+                    usageCustomSelected = true;
+                    if (customKwhInput.value.trim() === '') {
+                        var current = nonNegativeOrNull(annualInput);
+                        if (current !== null) customKwhInput.value = String(Math.round(current));
+                    }
+                    update();
+                });
+                customKwhInput.addEventListener('input', function () {
+                    usageCustomSelected = true;
+                    annualInput.value = customKwhInput.value;
+                    annualTouched = customKwhInput.value.trim() !== '';
+                    update();
+                });
+            }
             document.getElementById('setup-choices').addEventListener('click', function (event) {
                 var button = event.target.closest('[data-choice]');
                 if (!button || !this.contains(button)) return;
@@ -3392,6 +3560,9 @@
             });
             annualInput.addEventListener('input', function () {
                 annualTouched = annualInput.value.trim() !== '';
+                var typed = nonNegativeOrNull(annualInput);
+                var rounded = typed === null ? null : Math.round(typed);
+                usageCustomSelected = annualTouched && rounded !== 6000 && rounded !== 12000 && rounded !== 20000;
                 update();
             });
             rateInput.addEventListener('input', function () {
