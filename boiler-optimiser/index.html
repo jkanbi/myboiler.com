@@ -2427,7 +2427,7 @@
                     <input type="range" id="flow-temp" class="input-slider" min="35" max="90" step="1" value="75" aria-label="Flow temperature" aria-describedby="slider-prompt">
                     <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                 </div>
-                <p class="slider-prompt" id="slider-prompt"><span id="slider-prompt-text">Move this slider above your current temperature by dragging the circle.</span> <a class="label-aside" id="flow-aside" href="#note-flow" aria-label="Note 2">[2.]</a></p>
+                <p class="slider-prompt" id="slider-prompt"><span id="slider-prompt-text">Move this slider to show your savings when reducing your flow temperature.</span> <a class="label-aside" id="flow-aside" href="#note-flow" aria-label="Note 2">[2.]</a></p>
                 <p class="cylinder-stat-note" id="cylinder-stat-note" hidden>Change the cylinder thermostat as well. Set it to 60°C. It is a separate control on the cylinder.</p>
                 <aside class="system-savings-note" id="system-savings-note" hidden>
                     <h3 class="system-savings-title">Keep heating cooler than the cylinder</h3>
@@ -3378,8 +3378,8 @@
                 if (systemSavingsNote) systemSavingsNote.hidden = system !== 'system';
                 if (sliderPrompt) {
                     sliderPrompt.textContent = system === 'system'
-                        ? 'Move this slider above your current temperature by dragging the circle. If heating and hot water can run at different temperatures, you can save more than this slider shows.'
-                        : 'Move this slider above your current temperature by dragging the circle.';
+                        ? 'Move this slider to show your savings when reducing your flow temperature. If heating and hot water can run at different temperatures, you can save more than this slider shows.'
+                        : 'Move this slider to show your savings when reducing your flow temperature.';
                 }
                 if (condensingBoiler && stored) {
                     cylinderDeltaNote.textContent = 'The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow. The gap can be higher than that.';
