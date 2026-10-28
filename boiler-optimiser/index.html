@@ -2119,6 +2119,10 @@
             display: none;
         }
 
+        .custom-usage-spacer {
+            display: none;
+        }
+
         .custom-usage-done {
             width: 100%;
             flex: none;
@@ -2136,28 +2140,60 @@
         }
 
         @media (max-width: 700px) {
-            .custom-usage-dialog {
+            .custom-usage-dialog[open] {
+                position: fixed;
+                inset: 0;
                 width: 100%;
+                height: 100%;
                 max-width: none;
-                margin: auto 0 0;
+                max-height: none;
+                margin: 0;
+                padding: 0;
+                border-radius: 0;
+                background: var(--surface);
             }
 
             .custom-usage-panel {
-                border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-                padding: 0.55rem 1rem max(0.95rem, env(safe-area-inset-bottom));
+                width: 100%;
+                height: 100%;
+                min-height: 100%;
+                border-radius: 0;
+                box-shadow: none;
+                padding: max(0.85rem, env(safe-area-inset-top)) 1.15rem max(1.1rem, env(safe-area-inset-bottom));
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
             }
 
             .custom-usage-handle {
+                display: none;
+            }
+
+            .custom-usage-fields {
+                flex: none;
+                margin-top: 0.35rem;
+                align-content: start;
+            }
+
+            .custom-usage-panel .unit-rate-field {
+                flex: none;
+                align-self: stretch;
+            }
+
+            .custom-usage-spacer {
                 display: block;
-                width: 2.25rem;
-                height: 0.25rem;
-                margin: 0.05rem auto 0.55rem;
-                border-radius: 99px;
-                background: var(--border);
+                flex: 1 1 auto;
+                min-height: 0.75rem;
+                pointer-events: none;
+            }
+
+            .custom-usage-done {
+                margin-top: 0;
             }
 
             .custom-usage-panel .input-field {
                 font-size: 1rem;
+                height: auto;
             }
         }
 
@@ -2424,6 +2460,7 @@
                         </div>
                     </div>
                     <p class="custom-usage-error" id="custom-usage-error" hidden>Enter a usage and unit rate above 0.</p>
+                    <div class="custom-usage-spacer" aria-hidden="true"></div>
                     <button type="button" class="choice-button custom-usage-done" id="custom-usage-done">Done</button>
                 </div>
             </dialog>
@@ -3629,6 +3666,23 @@
                 markCustomField(customKwhInput, true);
                 markCustomField(customRateInput, true);
             }
+            var customUsageScrollX = 0;
+            var customUsageScrollY = 0;
+            function rememberCustomUsageScroll() {
+                customUsageScrollX = window.scrollX;
+                customUsageScrollY = window.scrollY;
+            }
+            function restoreCustomUsageScroll() {
+                var html = document.documentElement;
+                var previous = html.style.scrollBehavior;
+                html.style.scrollBehavior = 'auto';
+                window.scrollTo(customUsageScrollX, customUsageScrollY);
+                if (usageCustom) usageCustom.focus({ preventScroll: true });
+                requestAnimationFrame(function () {
+                    window.scrollTo(customUsageScrollX, customUsageScrollY);
+                    html.style.scrollBehavior = previous;
+                });
+            }
             function closeCustomUsage() {
                 if (customDialog && customDialog.open) customDialog.close();
             }
@@ -3653,31 +3707,38 @@
                 closeCustomUsage();
             }
             function openCustomUsage() {
+                rememberCustomUsageScroll();
                 selectCustomUsage();
                 clearCustomUsageError();
                 update();
                 if (!customDialog) return;
                 if (!customDialog.open) customDialog.showModal();
                 if (usageCustom) usageCustom.setAttribute('aria-expanded', 'true');
-                if (customKwhInput) {
-                    customKwhInput.focus();
-                    if (window.matchMedia('(pointer: fine)').matches) customKwhInput.select();
-                }
-            }
-            if (usageCustom) {
-                usageCustom.addEventListener('click', function () {
-                    openCustomUsage();
+                requestAnimationFrame(function () {
+                    if (customKwhInput) {
+                        customKwhInput.focus({ preventScroll: true });
+                        if (window.matchMedia('(pointer: fine)').matches) customKwhInput.select();
+                    }
                 });
             }
+            document.addEventListener('click', function (event) {
+                var button = event.target.closest('#usage-custom');
+                if (!button) return;
+                event.preventDefault();
+                openCustomUsage();
+            });
             if (customDialog) {
                 customDialog.addEventListener('click', function (event) {
-                    if (event.target === customDialog) closeCustomUsage();
+                    if (event.target !== customDialog) return;
+                    if (window.matchMedia('(max-width: 700px)').matches) return;
+                    closeCustomUsage();
                 });
                 customDialog.addEventListener('close', function () {
                     clearCustomUsageError();
                     if (usageCustom) usageCustom.setAttribute('aria-expanded', 'false');
-                    if (usageCustom && window.matchMedia('(pointer: fine)').matches) usageCustom.focus();
+                    restoreCustomUsageScroll();
                     update();
+                    restoreCustomUsageScroll();
                 });
             }
             if (customUsageDone) customUsageDone.addEventListener('click', submitCustomUsage);
