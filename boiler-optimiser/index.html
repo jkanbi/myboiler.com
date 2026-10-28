@@ -1534,11 +1534,19 @@
         }
 
         .system-savings-lead {
-            margin: 0 0 0.7rem;
+            margin: 0;
             font-size: 0.8125rem;
             font-weight: 500;
             line-height: 1.45;
             color: var(--text);
+        }
+
+        .system-savings-note .comp-more {
+            margin-top: 0.7rem;
+        }
+
+        .system-savings-note .comp-more-toggle {
+            font-size: 0.8125rem;
         }
 
         .system-savings-note ul {
@@ -1843,10 +1851,6 @@
                 padding-top: 0.75rem;
             }
 
-            #usage-chips {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
             #bill-card .cooking-toggle {
                 display: flex;
             }
@@ -1944,50 +1948,16 @@
             margin-bottom: 0.65rem;
         }
 
-        .usage-rate-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 0.65rem;
-        }
-
-        #change-unit-rate {
-            display: inline-flex;
-            flex: none;
-            flex-wrap: wrap;
-            align-items: baseline;
-            justify-content: center;
-            gap: 0.35rem 0.5rem;
-            width: auto;
-            min-width: 0;
-            margin: 0;
-            padding: 0.4rem 0.9rem;
-            font-size: 0.8125rem;
-            font-weight: 500;
-            line-height: 1.3;
-            white-space: nowrap;
-            color: var(--accent);
-            border-color: var(--accent);
-            background: var(--surface);
-        }
-
-        #change-unit-rate:hover,
-        #change-unit-rate:focus-visible {
-            background: color-mix(in srgb, var(--accent) 8%, var(--surface));
-        }
-
-        #change-unit-rate .input-hint {
-            color: inherit;
-        }
-
-        #change-unit-rate .usage-rate-action {
-            font-weight: 600;
-        }
-
         #usage-chips {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.5rem;
+        }
+
+        @media (min-width: 701px) {
+            #usage-chips {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
         }
 
         #usage-chips .choice-button {
@@ -2001,7 +1971,8 @@
             line-height: 1.2;
         }
 
-        .usage-chip-kwh {
+        .usage-chip-kwh,
+        .usage-chip-rate {
             font-size: 0.75rem;
             font-weight: 500;
         }
@@ -2054,6 +2025,11 @@
 
         #usage-chips .usage-custom:focus-within {
             border-color: var(--accent);
+        }
+
+        #usage-chips .usage-custom-input::placeholder {
+            color: inherit;
+            opacity: 0.72;
         }
 
         .usage-band + .result-grid {
@@ -2276,13 +2252,15 @@
                 </div>
                 <p class="cylinder-stat-note" id="cylinder-stat-note" hidden>Change the cylinder thermostat as well. Set it to 60°C. It is a separate control on the cylinder.</p>
                 <aside class="system-savings-note" id="system-savings-note" hidden>
-                    <h3 class="system-savings-title">Saving more than one flow temperature</h3>
-                    <p class="system-savings-lead">This slider is one knob for the whole system. A cylinder usually keeps that flow high, around 70°C, so the radiators never sit in the best condensing band. These setups split the jobs, so heating can run cooler and you save more:</p>
-                    <ul>
-                        <li><strong>PDHW</strong> — priority domestic hot water. The cylinder call takes a short, hot reheat (about 70–80°C). Heating then runs at a lower condensing flow, typically 45–55°C. See <a href="/priority-domestic-hot-water/">priority domestic hot water</a>.</li>
-                        <li><strong>4-pipe system boilers</strong> — a separate flow and return to the cylinder, often with an integral diverter (Viessmann Vitodens 100-W is the usual example). External zone valves can come off. That plumbing makes two temperatures straightforward.</li>
-                        <li><strong>Manufacturer controls</strong> — weather compensation or the maker’s own modulating thermostat can drop the heating flow as the house warms, and still lift it for a cylinder call. A plain on/off room stat cannot. See <a href="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">modulating controls</a>.</li>
-                    </ul>
+                    <h3 class="system-savings-title">Keep heating cooler than the cylinder</h3>
+                    <p class="system-savings-lead">This slider is one knob for the whole system. A cylinder usually keeps that flow high, around 70°C, so the radiators never sit in the best condensing band. Weather compensation, priority hot water, and some boiler setups can split the jobs, so heating can run cooler and you save more.</p>
+                    <div class="comp-more" id="system-savings-more">
+                        <ul>
+                            <li><strong>PDHW</strong> — priority domestic hot water. The cylinder call takes a short, hot reheat (about 70–80°C). Heating then runs at a lower condensing flow, typically 45–55°C. See <a href="/priority-domestic-hot-water/">priority domestic hot water</a>.</li>
+                            <li><strong>4-pipe system boilers</strong> — a separate flow and return to the cylinder, often with an integral diverter (Viessmann Vitodens 100-W is the usual example). External zone valves can come off. That plumbing makes two temperatures straightforward.</li>
+                            <li><strong>Manufacturer controls</strong> — weather compensation or the maker’s own modulating thermostat can drop the heating flow as the house warms, and still lift it for a cylinder call. A plain on/off room stat cannot. See <a href="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">modulating controls</a>.</li>
+                        </ul>
+                    </div>
                 </aside>
             </div>
 
@@ -2291,20 +2269,15 @@
                     <div class="input-label" id="usage-band-label">Annual gas usage</div>
                     <a class="label-aside" id="usage-band-aside" href="#note-bill" aria-label="Note 3">[3.]</a>
                 </div>
-                <div class="choice-toggle" id="usage-chips" role="group" aria-labelledby="usage-band-label" aria-describedby="usage-rate-hint">
-                    <button type="button" class="choice-button" data-band="low" data-kwh="6000" aria-pressed="false">Low<span class="usage-chip-kwh">6,000 kWh</span></button>
-                    <button type="button" class="choice-button active" data-band="medium" data-kwh="12000" aria-pressed="true">Medium<span class="usage-chip-kwh">12,000 kWh</span></button>
-                    <button type="button" class="choice-button" data-band="high" data-kwh="20000" aria-pressed="false">High<span class="usage-chip-kwh">20,000 kWh</span></button>
+                <div class="choice-toggle" id="usage-chips" role="group" aria-labelledby="usage-band-label">
+                    <button type="button" class="choice-button" data-band="low" data-kwh="6000" aria-pressed="false">Low<span class="usage-chip-kwh">6,000 kWh</span><span class="usage-chip-rate" data-usage-rate>7.97p/kWh</span></button>
+                    <button type="button" class="choice-button active" data-band="medium" data-kwh="12000" aria-pressed="true">Medium<span class="usage-chip-kwh">12,000 kWh</span><span class="usage-chip-rate" data-usage-rate>7.97p/kWh</span></button>
+                    <button type="button" class="choice-button" data-band="high" data-kwh="20000" aria-pressed="false">High<span class="usage-chip-kwh">20,000 kWh</span><span class="usage-chip-rate" data-usage-rate>7.97p/kWh</span></button>
                     <div class="choice-button usage-custom" id="usage-custom" data-band="custom">
                         <label class="usage-custom-name" for="custom-kwh">Custom</label>
                         <input type="number" id="custom-kwh" class="usage-custom-input" inputmode="decimal" min="0" step="1" placeholder="kWh" autocomplete="off" aria-label="Custom annual gas usage in kWh">
+                        <input type="number" id="custom-rate" class="usage-custom-input" inputmode="decimal" min="0" step="0.01" placeholder="X.XXp/kWh" autocomplete="off" aria-label="Unit rate in pence per kWh">
                     </div>
-                </div>
-                <div class="usage-rate-row">
-                    <button type="button" class="choice-button" id="change-unit-rate">
-                        <span class="input-hint" id="usage-rate-hint">at 7.97p/kWh</span>
-                        <span class="usage-rate-action">click to change</span>
-                    </button>
                 </div>
             </div>
 
@@ -2682,7 +2655,7 @@
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
-    <script type="text/javascript" src="/js/comp-read-more.js?v=comp-more-1" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/comp-read-more.js?v=comp-more-2" data-cfasync="false"></script>
     <script>
         (function () {
             var VIEWPORT = 'width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover';
@@ -2988,7 +2961,7 @@
             }
 
             function billUsageNote() {
-                return 'Low 6,000, Medium 12,000 and High 20,000 kWh are typical annual bands. Choose Custom to enter the exact figure from your gas bill, in kilowatt hours (kWh). The default unit rate is 7.97p/kWh.';
+                return 'Low 6,000, Medium 12,000 and High 20,000 kWh are typical annual bands. Choose Custom to enter the exact figure from your gas bill, in kilowatt hours (kWh), and to change the unit rate. The default unit rate is 7.97p/kWh.';
             }
 
             function controlsNote(stored) {
@@ -3224,11 +3197,17 @@
                 boilerDiagram.setAttribute('data-condensate', String(condensateLevel));
                 boilerDiagram.classList.toggle('no-condensate', !condensingBoiler);
                 var pence = nonNegativeOrNull(rateInput);
-                var rateHint = document.getElementById('usage-rate-hint');
-                if (rateHint) {
-                    rateHint.textContent = pence === null
-                        ? 'add a unit rate below'
-                        : ('at ' + (Math.round(pence * 100) / 100).toFixed(2) + 'p/kWh');
+                var rateLabel = pence === null
+                    ? 'p/kWh'
+                    : ((Math.round(pence * 100) / 100).toFixed(2) + 'p/kWh');
+                document.querySelectorAll('[data-usage-rate]').forEach(function (el) {
+                    el.textContent = rateLabel;
+                });
+                var customRate = document.getElementById('custom-rate');
+                if (customRate && document.activeElement !== customRate) {
+                    customRate.value = rateTouched && pence !== null
+                        ? String(Math.round(pence * 100) / 100)
+                        : '';
                 }
                 document.getElementById('space-heating-kwh').textContent = spaceKwh === null ? '—' : formatKwh(spaceKwh);
                 var pumpSize = document.getElementById('heat-pump-size');
@@ -3421,12 +3400,6 @@
                 var prompt = document.getElementById('bill-prompt');
                 if (prompt) prompt.scrollIntoView({ block: 'nearest' });
             }
-            var changeUnitRate = document.getElementById('change-unit-rate');
-            if (changeUnitRate) {
-                changeUnitRate.addEventListener('click', function () {
-                    revealBillCard('unit-rate');
-                });
-            }
             var showBillCard = document.getElementById('show-bill-card');
             if (showBillCard) {
                 showBillCard.addEventListener('click', function () {
@@ -3450,30 +3423,47 @@
             });
             var usageCustom = document.getElementById('usage-custom');
             var customKwhInput = document.getElementById('custom-kwh');
+            var customRateInput = document.getElementById('custom-rate');
+            function selectCustomUsage() {
+                usageCustomSelected = true;
+                if (customKwhInput && customKwhInput.value.trim() === '') {
+                    var current = nonNegativeOrNull(annualInput);
+                    if (current !== null) customKwhInput.value = String(Math.round(current));
+                }
+            }
             if (usageCustom && customKwhInput) {
                 usageCustom.addEventListener('click', function (event) {
-                    if (event.target === customKwhInput) return;
-                    usageCustomSelected = true;
-                    if (customKwhInput.value.trim() === '') {
-                        var current = nonNegativeOrNull(annualInput);
-                        if (current !== null) customKwhInput.value = String(Math.round(current));
-                    }
+                    if (event.target.closest('#custom-kwh, #custom-rate')) return;
+                    selectCustomUsage();
                     customKwhInput.focus();
                     customKwhInput.select();
                     update();
                 });
                 customKwhInput.addEventListener('focus', function () {
-                    usageCustomSelected = true;
-                    if (customKwhInput.value.trim() === '') {
-                        var current = nonNegativeOrNull(annualInput);
-                        if (current !== null) customKwhInput.value = String(Math.round(current));
-                    }
+                    selectCustomUsage();
                     update();
                 });
                 customKwhInput.addEventListener('input', function () {
                     usageCustomSelected = true;
                     annualInput.value = customKwhInput.value;
                     annualTouched = customKwhInput.value.trim() !== '';
+                    update();
+                });
+            }
+            if (customRateInput) {
+                customRateInput.addEventListener('focus', function () {
+                    selectCustomUsage();
+                    customRateInput.select();
+                    update();
+                });
+                customRateInput.addEventListener('input', function () {
+                    selectCustomUsage();
+                    rateInput.value = customRateInput.value;
+                    rateTouched = customRateInput.value.trim() !== '';
+                    if (customKwhInput && customKwhInput.value.trim() !== '') {
+                        annualInput.value = customKwhInput.value;
+                        annualTouched = true;
+                    }
                     update();
                 });
             }
