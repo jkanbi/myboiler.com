@@ -1054,7 +1054,7 @@
             max-width: 36rem;
         }
 
-        #programmer-timings .programmer-photos {
+        .programmer-photos {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 0.75rem;
@@ -1062,12 +1062,12 @@
             max-width: 28rem;
         }
 
-        #programmer-timings .programmer-photos figure {
+        .programmer-photos figure {
             margin: 0;
             min-width: 0;
         }
 
-        #programmer-timings .programmer-photos img {
+        .programmer-photos img {
             display: block;
             width: 100%;
             height: 9.5rem;
@@ -1076,7 +1076,7 @@
             border-radius: calc(var(--radius) - 2px);
         }
 
-        #programmer-timings .programmer-photos figcaption {
+        .programmer-photos figcaption {
             margin: 0.4rem 0 0;
             font-size: 0.75rem;
             font-weight: 600;
@@ -1085,7 +1085,7 @@
             color: var(--text);
         }
 
-        #programmer-timings .programmer-photos figcaption span {
+        .programmer-photos figcaption span {
             display: block;
             margin-top: 0.15rem;
             font-weight: 500;
@@ -1372,21 +1372,32 @@
             display: none;
         }
 
-        .tool-feedback {
-            margin: 0 0 2rem;
-            font-size: 0.9375rem;
+        #model-card[hidden] ~ .tool-confirm {
+            display: none;
+        }
+
+        .condensate-warning {
+            margin: 0 0 1.25rem;
+            padding: 1rem 1.15rem;
+            border: 3px solid #d64545;
+            border-radius: var(--radius);
+            background: #fff4f4;
+        }
+
+        .condensate-warning h2 {
+            margin: 0 0 0.45rem;
+            font-size: 1.125rem;
+            font-weight: 800;
+            line-height: 1.25;
+            color: #d64545;
+        }
+
+        .condensate-warning p {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
             line-height: 1.5;
             color: var(--text);
-            text-align: center;
-        }
-
-        .tool-feedback a {
-            color: var(--accent);
-        }
-
-        #tool-results[hidden] ~ .tool-confirm,
-        #tool-results[hidden] ~ .tool-feedback {
-            display: none;
         }
 
         .tool-disclaimer {
@@ -1514,6 +1525,42 @@
             line-height: 1.4;
             text-align: center;
             color: var(--text);
+        }
+
+        .timing-note {
+            margin: 0.55rem 0 0;
+            font-size: 0.875rem;
+            font-weight: 600;
+            line-height: 1.4;
+            text-align: center;
+            color: var(--text);
+        }
+
+        .timing-note[hidden] {
+            display: none;
+        }
+
+        #advanced-notes {
+            margin-top: 1.5rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        #advanced-notes .comp-card {
+            margin: 0 0 1.35rem;
+            padding: 0;
+            background: none;
+            box-shadow: none;
+            border-radius: 0;
+        }
+
+        #advanced-notes .comp-card:last-child {
+            margin-bottom: 0;
+        }
+
+        #advanced-notes .card-title {
+            font-size: 1.0625rem;
+            margin: 0 0 0.45rem;
         }
 
         .cylinder-stat-note {
@@ -1761,6 +1808,7 @@
 
         #note-1,
         #note-flow,
+        #note-timings,
         #note-5,
         #note-bill,
         #note-space {
@@ -2428,6 +2476,7 @@
                     <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                 </div>
                 <p class="slider-prompt" id="slider-prompt"><span id="slider-prompt-text">Move this slider to show your savings when reducing your flow temperature.</span> <a class="label-aside" id="flow-aside" href="#note-flow" aria-label="Note 2">[2.]</a></p>
+                <p class="timing-note" id="timing-note">You may need to add more time on the heating programmer. Lower flow takes longer to warm the house. <a class="label-aside" id="timing-aside" href="#note-timings" aria-label="Note">[.]</a></p>
                 <p class="cylinder-stat-note" id="cylinder-stat-note" hidden>Change the cylinder thermostat as well. Set it to 60°C. It is a separate control on the cylinder.</p>
                 <aside class="system-savings-note" id="system-savings-note" hidden>
                     <h3 class="system-savings-title">Keep heating cooler than the cylinder</h3>
@@ -2747,50 +2796,6 @@
             </div>
         </details>
 
-        <section class="calculator-card comp-card" id="programmer-timings">
-            <h2 class="card-title">Heating Programmer Timings</h2>
-            <p class="comp-copy">You may need to adjust your heating programming timings, as reducing flow temperature means it will take longer to warm up, but lead to a more stable system, so add more time if necessary.</p>
-            <div class="programmer-photos">
-                <figure>
-                    <img src="/boiler-optimiser/images/programmer-single-channel.jpg" alt="Single channel heating programmer, such as a Honeywell Home ST9100C" width="783" height="691">
-                    <figcaption>Single channel<span>Honeywell Home ST9100C</span></figcaption>
-                </figure>
-                <figure>
-                    <img src="/boiler-optimiser/images/programmer-dual-channel.jpg" alt="Dual channel heating and hot water programmer, such as a Honeywell Home ST9400C" width="783" height="691">
-                    <figcaption>Dual channel<span>Honeywell Home ST9400C</span></figcaption>
-                </figure>
-            </div>
-        </section>
-
-        <section class="calculator-card comp-card" id="load-compensation">
-            <h2 class="card-title">Load compensation (OpenTherm)</h2>
-            <p class="comp-copy">A load-compensating thermostat, sometimes called a modulating thermostat, talks to the boiler instead of just switching it on and off. As rooms get close to the temperature you have set, it turns the flow temperature down. OpenTherm is one common way of doing this; some boilers use the maker’s own protocol.</p>
-            <div class="comp-more" id="load-compensation-more">
-                <p class="comp-copy">This is usually the easier extra option to set up: often just a compatible thermostat swap, with no outdoor sensor or heating curve. Many boiler makers sell their own load-compensating controls that talk to their boilers over the maker’s own connection; these usually only work fully with that maker’s boilers, so check compatibility before you buy. If your boiler does not support OpenTherm, the maker’s own control is often the simplest match; some also offer OpenTherm. It can also be used with weather compensation.</p>
-                <p class="comp-copy">A sensible fixed, lower flow temperature is still a good, simple start. That is what the Boiler Optimiser helps you find. If you rent, check with your landlord before you change any controls. See <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm boilers and controls</a> and <a href="/vaillant/vaillant-controls/">Vaillant controls</a>.</p>
-            </div>
-        </section>
-
-        <section class="calculator-card comp-card" id="weather-compensation">
-            <h2 class="card-title">Weather compensation</h2>
-            <p class="comp-copy">Weather compensation goes a step further and is a little more advanced. It uses a sensor fitted on an outside wall to turn the boiler’s flow temperature down as the weather gets milder. It works well when it is fitted and set up properly, but for some homes it can complicate things.</p>
-            <div class="comp-more" id="weather-compensation-more">
-                <p class="comp-copy">That only works well if the heating curve is set for your home. Many combi boilers never had that sensor fitted, or it is there but not set up.</p>
-                <p class="comp-copy">For most homes a sensible fixed, lower flow temperature is the simpler route. That is what the Boiler Optimiser helps you find. If a compensation sensor is already fitted and working, keep using it. If you rent, check with your landlord before you change any controls or have a sensor fitted.</p>
-            </div>
-        </section>
-
-        <details class="calculator-card fold" id="tool-results">
-            <summary class="card-title">Notes, Keys and Information</summary>
-            <ol class="plan-list" id="plan"></ol>
-            <div id="notes-card">
-                <p class="return-note" id="cylinder-delta-note" hidden>The cylinder is assumed to sit 5°C below the flow. The gap can be higher than that.</p>
-                <p class="return-note" id="stored-campaign-note" hidden>Public campaigns usually cover combi boilers only, because stored hot water has to stay hot enough.</p>
-            </div>
-            <figure class="efficiency-figure" id="note-5-figure">
-                <img src="/money-and-energy-saving/images/boiler-condensing-efficiency-watermark.jpeg" alt="Boiler efficiency against return water temperature for condensing boilers, with dew point at 54°C." width="600" height="600">
-            </figure>
-        </details>
         <form class="tool-confirm" id="tool-confirm">
             <p class="input-label">Have you successfully turned the heating flow down? Come back here and let us know.</p>
             <span class="input-hint">Choose the boiler brand, then what the flow was and what you set it to. Add annual kWh and unit rate if you know them. We log this anonymously.</span>
@@ -2851,11 +2856,55 @@
             <button type="submit" class="choice-button" id="tool-confirm-submit">Submit</button>
             <p class="tool-confirm-done" id="tool-confirm-done" hidden>Thanks. We logged that you set it.</p>
         </form>
-        <p class="tool-feedback">Please let us know if this helped. Send a message via <a href="https://wa.me/442081234411" rel="noopener noreferrer" target="_blank">WhatsApp</a>, <a href="https://x.com/myboiler" rel="noopener noreferrer" target="_blank">X</a>, or <a href="https://facebook.com/myboiler" rel="noopener noreferrer" target="_blank">Facebook</a>.</p>
         <div class="calculator-card heat-pump-cta" id="heat-pump-cta" hidden>
             <p>If this flow is keeping the house warm in peak winter, a heat pump may suit this system without many changes. <span id="heat-pump-size"></span></p>
             <a id="heat-pump-checker-link" href="/heat-pump-checker/">Check heat pump suitability</a>
         </div>
+        <aside class="condensate-warning" id="condensate-warning">
+            <h2>Warning: your condensate pipe must be insulated</h2>
+            <p>Otherwise it can freeze in winter. The temporary remedy is to increase the flow temperature and lose the savings during freezing weather.</p>
+        </aside>
+
+        <details class="calculator-card fold" id="tool-results">
+            <summary class="card-title">Notes, Keys and Information</summary>
+            <ol class="plan-list" id="plan"></ol>
+            <div id="notes-card">
+                <p class="return-note" id="cylinder-delta-note" hidden>The cylinder is assumed to sit 5°C below the flow. The gap can be higher than that.</p>
+                <p class="return-note" id="stored-campaign-note" hidden>Public campaigns usually cover combi boilers only, because stored hot water has to stay hot enough.</p>
+            </div>
+            <figure class="efficiency-figure" id="note-5-figure">
+                <img src="/money-and-energy-saving/images/boiler-condensing-efficiency-watermark.jpeg" alt="Boiler efficiency against return water temperature for condensing boilers, with dew point at 54°C." width="600" height="600">
+            </figure>
+            <div class="programmer-photos" id="programmer-photos">
+                <figure>
+                    <img src="/boiler-optimiser/images/programmer-single-channel.jpg" alt="Single channel heating programmer, such as a Honeywell Home ST9100C" width="783" height="691">
+                    <figcaption>Single channel<span>Honeywell Home ST9100C</span></figcaption>
+                </figure>
+                <figure>
+                    <img src="/boiler-optimiser/images/programmer-dual-channel.jpg" alt="Dual channel heating and hot water programmer, such as a Honeywell Home ST9400C" width="783" height="691">
+                    <figcaption>Dual channel<span>Honeywell Home ST9400C</span></figcaption>
+                </figure>
+            </div>
+            <div id="advanced-notes">
+                <section class="comp-card" id="load-compensation">
+                    <h2 class="card-title">Load compensation (OpenTherm)</h2>
+                    <p class="comp-copy">A load-compensating thermostat, sometimes called a modulating thermostat, talks to the boiler instead of just switching it on and off. As rooms get close to the temperature you have set, it turns the flow temperature down. OpenTherm is one common way of doing this; some boilers use the maker’s own protocol.</p>
+                    <div class="comp-more" id="load-compensation-more">
+                        <p class="comp-copy">This is usually the easier extra option to set up: often just a compatible thermostat swap, with no outdoor sensor or heating curve. Many boiler makers sell their own load-compensating controls that talk to their boilers over the maker’s own connection; these usually only work fully with that maker’s boilers, so check compatibility before you buy. If your boiler does not support OpenTherm, the maker’s own control is often the simplest match; some also offer OpenTherm. It can also be used with weather compensation.</p>
+                        <p class="comp-copy">A sensible fixed, lower flow temperature is still a good, simple start. That is what the Boiler Optimiser helps you find. If you rent, check with your landlord before you change any controls. See <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm boilers and controls</a> and <a href="/vaillant/vaillant-controls/">Vaillant controls</a>.</p>
+                    </div>
+                </section>
+                <section class="comp-card" id="weather-compensation">
+                    <h2 class="card-title">Weather compensation</h2>
+                    <p class="comp-copy">Weather compensation goes a step further and is a little more advanced. It uses a sensor fitted on an outside wall to turn the boiler’s flow temperature down as the weather gets milder. It works well when it is fitted and set up properly, but for some homes it can complicate things.</p>
+                    <div class="comp-more" id="weather-compensation-more">
+                        <p class="comp-copy">That only works well if the heating curve is set for your home. Many combi boilers never had that sensor fitted, or it is there but not set up.</p>
+                        <p class="comp-copy">For most homes a sensible fixed, lower flow temperature is the simpler route. That is what the Boiler Optimiser helps you find. If a compensation sensor is already fitted and working, keep using it. If you rent, check with your landlord before you change any controls or have a sensor fitted.</p>
+                    </div>
+                </section>
+            </div>
+        </details>
+
         <p class="tool-disclaimer">This tool is in development. We accept no responsibility for issues that arise from these adjustments. Some systems are not installed correctly and may cause problems, especially where the condensate pipe is incorrectly installed or not insulated.</p>
         <p class="tool-version">2026-10-28 00:10 · 34</p>
     </div>
@@ -3422,7 +3471,7 @@
                 flowSlider.style.setProperty('--thumb-pct', String((flow - minFlow) / (maxFlow - minFlow)));
                 flowThumbValue.textContent = flow + '°C';
                 if (condensingBoiler) {
-                    var describedBy = ['slider-prompt', 'flow-state'];
+                    var describedBy = ['slider-prompt', 'timing-note', 'flow-state'];
                     if (stored) describedBy.splice(1, 0, 'cylinder-stat-note', 'cylinder-delta-note');
                     if (system === 'system') describedBy.push('system-savings-note');
                     flowInput.setAttribute('aria-describedby', describedBy.join(' '));
@@ -3535,7 +3584,9 @@
 
                 var graphFigure = document.getElementById('note-5-figure');
                 var results = document.getElementById('tool-results');
+                var advancedNotes = document.getElementById('advanced-notes');
                 if (graphFigure && results) results.appendChild(graphFigure);
+                if (advancedNotes && results) results.appendChild(advancedNotes);
                 plan.textContent = '';
                 var step = 1;
                 function stepTitle(name) {
@@ -3584,6 +3635,13 @@
                 }
                 var flowStep = appendNote('Flow temperature', flowCopy, 'note-flow');
                 setAside('flow-aside', flowStep);
+                var timingsCopy = document.createDocumentFragment();
+                timingsCopy.appendChild(document.createTextNode('You may need to add more time on the heating programmer. Reducing flow temperature means the house takes longer to warm up, but the system is more stable, so add more time if necessary.'));
+                var timingsStep = appendNote('Heating Programmer Timings', timingsCopy, 'note-timings');
+                var timingPhotos = document.getElementById('programmer-photos');
+                var timingItem = document.getElementById('note-timings');
+                if (timingPhotos && timingItem) timingItem.appendChild(timingPhotos);
+                setAside('timing-aside', timingsStep);
 
                 fillModelSteps(target);
                 var billStep = appendNote('Annual gas usage', billUsageNote(), 'note-bill');
