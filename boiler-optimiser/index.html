@@ -2344,7 +2344,7 @@
     twq('config','nvyf0');
     </script>
     <!-- End X conversion tracking base code -->
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=brand-videos-2" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=confirm-form-saving" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -3985,6 +3985,19 @@
                     applyFinalFlow(true);
                 });
             }
+            window.mbOptimiserConfirmMetrics = function (fromFlow, setFlow, annualKwh, unitRate) {
+                var annual = annualKwh != null && isFinite(annualKwh) ? annualKwh : nonNegativeOrNull(annualInput);
+                var pence = unitRate != null && isFinite(unitRate) ? unitRate : nonNegativeOrNull(rateInput);
+                var spaceKwh = annual === null ? null : (usesGasCooking ? annual * (1 - COOKING_SHARE) : annual);
+                var fraction = boilerType === 'condensing' ? saving(fromFlow, setFlow) : 0;
+                var savingAmount = spaceKwh === null || pence === null
+                    ? null
+                    : Math.round(spaceKwh * (pence / 100) * fraction * 100) / 100;
+                return {
+                    space_kwh: spaceKwh === null ? null : Math.round(spaceKwh),
+                    saving_gbp: savingAmount
+                };
+            };
             window.addEventListener('resize', layoutPrimaryCircuit);
             update();
         })();

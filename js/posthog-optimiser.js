@@ -84,6 +84,8 @@
         var done = document.getElementById('tool-confirm-done');
         var button = document.getElementById('tool-confirm-submit');
         if (!form || !fromInput || !setInput || !brandInput) return;
+        if (form.dataset.phBound === '1') return;
+        form.dataset.phBound = '1';
         var submitted = false;
 
         fromInput.addEventListener('input', function () {
@@ -150,12 +152,20 @@
             props.brand_label = brandLabel || brandKey;
             props.section = 'confirm_form';
             props.tool_flow = numericAttr(form, 'data-tool-flow');
-            props.saving_gbp = numericAttr(form, 'data-saving-gbp');
-            props.space_kwh = numericAttr(form, 'data-space-kwh');
             if (props.tool_flow === null) {
                 var slider = document.getElementById('flow-temp');
                 var toolFlow = slider ? Number(slider.value) : NaN;
                 props.tool_flow = isFinite(toolFlow) ? toolFlow : null;
+            }
+            var metrics = typeof window.mbOptimiserConfirmMetrics === 'function'
+                ? window.mbOptimiserConfirmMetrics(fromFlow, setFlow, annualKwh, unitRate)
+                : null;
+            if (metrics) {
+                props.saving_gbp = metrics.saving_gbp;
+                props.space_kwh = metrics.space_kwh;
+            } else {
+                props.saving_gbp = numericAttr(form, 'data-saving-gbp');
+                props.space_kwh = numericAttr(form, 'data-space-kwh');
             }
             capture('optimiser_flow_turned_down', props);
             form.classList.add('is-done');
