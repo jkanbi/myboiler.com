@@ -130,8 +130,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 0.3rem;
+            justify-content: flex-start;
+            gap: 0.2rem;
+            padding: 1.55rem 0.3rem 0;
             border: 2px solid var(--text);
             border-radius: 3.25rem 3.25rem 4px 4px;
             background: linear-gradient(to bottom,
@@ -394,6 +395,8 @@
             position: absolute;
             left: 0;
             top: 0;
+            width: 100%;
+            height: 100%;
             overflow: visible;
             pointer-events: none;
             z-index: 2;
@@ -1505,7 +1508,7 @@
         }
 
         .slider-prompt {
-            margin: 0 0 0.35rem;
+            margin: 0.7rem 0 0;
             font-size: 0.875rem;
             font-weight: 600;
             line-height: 1.4;
@@ -2086,7 +2089,8 @@
         .custom-usage-fields {
             display: grid;
             gap: 0.45rem;
-            margin-bottom: 0.7rem;
+            margin-top: 0.55rem;
+            margin-bottom: 0.45rem;
         }
 
         .custom-usage-panel .unit-rate-field {
@@ -2117,6 +2121,14 @@
 
         .custom-usage-error[hidden] {
             display: none;
+        }
+
+        .custom-usage-hint {
+            margin: 0.45rem 0 0;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--text-muted);
         }
 
         .custom-usage-spacer {
@@ -2171,7 +2183,7 @@
 
             .custom-usage-fields {
                 flex: none;
-                margin-top: 0.35rem;
+                margin-top: 1.15rem;
                 align-content: start;
             }
 
@@ -2411,11 +2423,11 @@
                         </svg>
                     </div>
                 </div>
-                <p class="slider-prompt" id="slider-prompt"><span id="slider-prompt-text">Move the slider that represents your boiler flow temperature.</span> <a class="label-aside" id="flow-aside" href="#note-flow" aria-label="Note 2">[2.]</a></p>
                 <div class="flow-slider is-hinting">
                     <input type="range" id="flow-temp" class="input-slider" min="35" max="90" step="1" value="75" aria-label="Flow temperature" aria-describedby="slider-prompt">
                     <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                 </div>
+                <p class="slider-prompt" id="slider-prompt"><span id="slider-prompt-text">Move this slider above your current temperature by dragging the circle.</span> <a class="label-aside" id="flow-aside" href="#note-flow" aria-label="Note 2">[2.]</a></p>
                 <p class="cylinder-stat-note" id="cylinder-stat-note" hidden>Change the cylinder thermostat as well. Set it to 60°C. It is a separate control on the cylinder.</p>
                 <aside class="system-savings-note" id="system-savings-note" hidden>
                     <h3 class="system-savings-title">Keep heating cooler than the cylinder</h3>
@@ -2460,6 +2472,7 @@
                         </div>
                     </div>
                     <p class="custom-usage-error" id="custom-usage-error" hidden>Enter a usage and unit rate above 0.</p>
+                    <p class="custom-usage-hint">Did you adjust the slider to see what your savings are?</p>
                     <div class="custom-usage-spacer" aria-hidden="true"></div>
                     <button type="button" class="choice-button custom-usage-done" id="custom-usage-done">Done</button>
                 </div>
@@ -3237,21 +3250,34 @@
                     return;
                 }
                 var plant = primaryCircuit.parentElement;
-                var plantBox = plant.getBoundingClientRect();
-                var tank = cylinderDiagram.querySelector('.cylinder-tank').getBoundingClientRect();
-                var flowPipe = boilerDiagram.querySelector('.is-flow').getBoundingClientRect();
-                var returnPipe = boilerDiagram.querySelector('.is-return').getBoundingClientRect();
-                var width = plantBox.width;
-                var height = plantBox.height;
+                var width = plant.clientWidth;
+                var height = plant.clientHeight;
                 if (width < 8 || height < 8) {
                     primaryCircuit.setAttribute('hidden', '');
                     return;
                 }
+                var plantBox = plant.getBoundingClientRect();
+                var scaleX = plantBox.width / width;
+                var scaleY = plantBox.height / height;
+                if (!isFinite(scaleX) || scaleX === 0) scaleX = 1;
+                if (!isFinite(scaleY) || scaleY === 0) scaleY = 1;
+                function localBox(el) {
+                    var box = el.getBoundingClientRect();
+                    return {
+                        left: (box.left - plantBox.left) / scaleX,
+                        top: (box.top - plantBox.top) / scaleY,
+                        width: box.width / scaleX,
+                        height: box.height / scaleY
+                    };
+                }
+                var tank = localBox(cylinderDiagram.querySelector('.cylinder-tank'));
+                var flowPipe = localBox(boilerDiagram.querySelector('.is-flow'));
+                var returnPipe = localBox(boilerDiagram.querySelector('.is-return'));
                 primaryCircuit.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
-                primaryCircuit.setAttribute('width', String(width));
-                primaryCircuit.setAttribute('height', String(height));
-                var tankLeft = tank.left - plantBox.left;
-                var tankTop = tank.top - plantBox.top;
+                primaryCircuit.removeAttribute('width');
+                primaryCircuit.removeAttribute('height');
+                var tankLeft = tank.left;
+                var tankTop = tank.top;
                 var tankWidth = tank.width;
                 var tankHeight = tank.height;
                 var coilLeft = tankLeft + 3;
@@ -3261,10 +3287,10 @@
                 var bend = Math.max(8, (yOut - yIn) / 2);
                 var flowDropX = Math.max(3, tankLeft - 12);
                 var returnDropX = Math.max(3, tankLeft - 24);
-                var flowX = flowPipe.left + flowPipe.width / 2 - plantBox.left;
-                var returnX = returnPipe.left + returnPipe.width / 2 - plantBox.left;
-                var flowTY = flowPipe.top + flowPipe.height * 0.22 - plantBox.top;
-                var returnTY = returnPipe.top + returnPipe.height * 0.48 - plantBox.top;
+                var flowX = flowPipe.left + flowPipe.width / 2;
+                var returnX = returnPipe.left + returnPipe.width / 2;
+                var flowTY = flowPipe.top + flowPipe.height * 0.22;
+                var returnTY = returnPipe.top + returnPipe.height * 0.48;
                 primaryFlow.setAttribute('d', 'M ' + flowX + ' ' + flowTY + ' H ' + flowDropX + ' V ' + yIn + ' H ' + coilLeft);
                 primaryCoil.setAttribute('d', 'M ' + coilLeft + ' ' + yIn + ' H ' + (coilRight - bend) + ' A ' + bend + ' ' + bend + ' 0 0 1 ' + (coilRight - bend) + ' ' + yOut + ' H ' + coilLeft);
                 primaryReturn.setAttribute('d', 'M ' + coilLeft + ' ' + yOut + ' H ' + returnDropX + ' V ' + returnTY + ' H ' + returnX);
@@ -3352,8 +3378,8 @@
                 if (systemSavingsNote) systemSavingsNote.hidden = system !== 'system';
                 if (sliderPrompt) {
                     sliderPrompt.textContent = system === 'system'
-                        ? 'Move the slider that represents your boiler flow temperature. If heating and hot water can run at different temperatures, you can save more than this slider shows.'
-                        : 'Move the slider that represents your boiler flow temperature.';
+                        ? 'Move this slider above your current temperature by dragging the circle. If heating and hot water can run at different temperatures, you can save more than this slider shows.'
+                        : 'Move this slider above your current temperature by dragging the circle.';
                 }
                 if (condensingBoiler && stored) {
                     cylinderDeltaNote.textContent = 'The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow. The gap can be higher than that.';
