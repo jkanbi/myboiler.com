@@ -168,6 +168,23 @@
             line-height: 1;
         }
 
+        .cylinder-hazard {
+            position: absolute;
+            top: 0.7rem;
+            left: 50%;
+            z-index: 2;
+            transform: translateX(-50%);
+            font-family: "Apple Symbols", "Segoe UI Symbol", "Noto Sans Symbols 2", sans-serif;
+            font-size: 2.6rem;
+            line-height: 1;
+            color: #111;
+            text-shadow: none;
+        }
+
+        .cylinder-hazard[hidden] {
+            display: none;
+        }
+
         .boiler-body {
             position: relative;
             width: 8.75rem;
@@ -1034,24 +1051,41 @@
             max-width: 36rem;
         }
 
-        #model-card .model-timing {
-            margin: 1.75rem auto 0;
-            max-width: 36rem;
+        #programmer-timings .programmer-photos {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin: 1rem auto 0;
+            max-width: 28rem;
         }
 
-        #model-card .model-timing-heading {
-            margin: 0 0 0.35rem;
-            font-size: 0.8125rem;
-            font-weight: 700;
+        #programmer-timings .programmer-photos figure {
+            margin: 0;
+            min-width: 0;
+        }
+
+        #programmer-timings .programmer-photos img {
+            display: block;
+            width: 100%;
+            height: 9.5rem;
+            object-fit: contain;
+            background: #e8e8e8;
+            border-radius: calc(var(--radius) - 2px);
+        }
+
+        #programmer-timings .programmer-photos figcaption {
+            margin: 0.4rem 0 0;
+            font-size: 0.75rem;
+            font-weight: 600;
             line-height: 1.3;
-            letter-spacing: 0.02em;
+            text-align: center;
             color: var(--text);
         }
 
-        #model-card .model-timing-note {
-            margin: 0;
-            font-size: 0.9375rem;
-            line-height: 1.5;
+        #programmer-timings .programmer-photos figcaption span {
+            display: block;
+            margin-top: 0.15rem;
+            font-weight: 500;
             color: var(--text-muted);
         }
 
@@ -1982,54 +2016,149 @@
             font-family: inherit;
         }
 
-        #usage-chips .usage-custom-name {
-            font-weight: 600;
+        .custom-usage-dialog {
+            padding: 0;
+            border: 0;
+            background: transparent;
+            width: min(18.5rem, calc(100vw - 1.5rem));
+            max-width: none;
+            margin: auto;
+            color: var(--text);
         }
 
-        #usage-chips .usage-custom-input {
-            width: 100%;
-            max-width: 7.25rem;
-            margin: 0 auto;
-            padding: 0.05rem 0.2rem;
+        .custom-usage-dialog::backdrop {
+            background: rgba(27, 27, 27, 0.45);
+        }
+
+        .custom-usage-panel {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 0.85rem 0.95rem 0.95rem;
+            overscroll-behavior: contain;
+        }
+
+        .custom-usage-handle {
+            display: none;
+        }
+
+        .custom-usage-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .custom-usage-head h3 {
+            margin: 0;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+        }
+
+        .custom-usage-close {
+            flex: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.25rem;
+            height: 2.25rem;
+            margin: -0.35rem -0.35rem -0.35rem 0;
+            padding: 0;
             border: 0;
-            border-radius: 0;
+            border-radius: 999px;
             background: transparent;
-            color: inherit;
-            font: inherit;
+            color: var(--text-muted);
+            font-size: 1.45rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .custom-usage-close:hover,
+        .custom-usage-close:focus-visible {
+            background: var(--bg);
+            color: var(--text);
+            outline: none;
+        }
+
+        .custom-usage-fields {
+            display: grid;
+            gap: 0.45rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .custom-usage-panel .unit-rate-field {
+            justify-content: flex-start;
+            gap: 0.5rem;
+        }
+
+        .custom-usage-panel .unit-rate-field .input-field {
+            width: 100%;
+            padding: 0.55rem 0.7rem;
+        }
+
+        .custom-usage-panel .unit-rate-field .input-label {
+            min-width: 3.25rem;
+        }
+
+        .custom-usage-panel .input-field.is-invalid {
+            border-color: #d64545;
+        }
+
+        .custom-usage-error {
+            margin: -0.25rem 0 0.55rem;
             font-size: 0.75rem;
             font-weight: 500;
-            line-height: 1.2;
-            text-align: center;
-            box-sizing: border-box;
-            box-shadow: none;
-            outline: none;
-            -moz-appearance: textfield;
-            appearance: textfield;
+            line-height: 1.3;
+            color: #d64545;
         }
 
-        #usage-chips .usage-custom-input::-webkit-outer-spin-button,
-        #usage-chips .usage-custom-input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
+        .custom-usage-error[hidden] {
+            display: none;
         }
 
-        #usage-chips .usage-custom.active .usage-custom-input {
-            color: inherit;
-        }
-
-        #usage-chips .usage-custom-input:focus,
-        #usage-chips .usage-custom-input:focus-visible {
-            outline: none;
-            box-shadow: none;
-        }
-
-        #usage-chips .usage-custom:focus-within {
+        .custom-usage-done {
+            width: 100%;
+            flex: none;
+            padding: 0.55rem 0.75rem;
+            background: var(--accent);
+            color: #fff;
             border-color: var(--accent);
         }
 
-        #usage-chips .usage-custom-input::placeholder {
-            color: inherit;
-            opacity: 0.72;
+        .custom-usage-done:hover,
+        .custom-usage-done:focus-visible {
+            background: var(--accent-dark);
+            border-color: var(--accent-dark);
+            color: #fff;
+        }
+
+        @media (max-width: 700px) {
+            .custom-usage-dialog {
+                width: 100%;
+                max-width: none;
+                margin: auto 0 0;
+            }
+
+            .custom-usage-panel {
+                border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+                padding: 0.55rem 1rem max(0.95rem, env(safe-area-inset-bottom));
+            }
+
+            .custom-usage-handle {
+                display: block;
+                width: 2.25rem;
+                height: 0.25rem;
+                margin: 0.05rem auto 0.55rem;
+                border-radius: 99px;
+                background: var(--border);
+            }
+
+            .custom-usage-panel .input-field {
+                font-size: 1rem;
+            }
         }
 
         .usage-band + .result-grid {
@@ -2184,6 +2313,7 @@
                     <div class="boiler-plant">
                         <div class="cylinder" id="cylinder-diagram" hidden>
                             <div class="cylinder-tank">
+                                <span class="cylinder-hazard" id="cylinder-hazard" hidden role="img" aria-label="Danger: stored water below 45 degrees">&#x2620;&#xFE0E;</span>
                                 <span class="cylinder-name">Hot Water Cylinder</span>
                                 <span class="cylinder-temp" id="cylinder-temp">70°C</span>
                             </div>
@@ -2273,13 +2403,30 @@
                     <button type="button" class="choice-button" data-band="low" data-kwh="6000" aria-pressed="false">Low<span class="usage-chip-kwh">6,000 kWh</span><span class="usage-chip-rate" data-usage-rate>7.97p/kWh</span></button>
                     <button type="button" class="choice-button active" data-band="medium" data-kwh="12000" aria-pressed="true">Medium<span class="usage-chip-kwh">12,000 kWh</span><span class="usage-chip-rate" data-usage-rate>7.97p/kWh</span></button>
                     <button type="button" class="choice-button" data-band="high" data-kwh="20000" aria-pressed="false">High<span class="usage-chip-kwh">20,000 kWh</span><span class="usage-chip-rate" data-usage-rate>7.97p/kWh</span></button>
-                    <div class="choice-button usage-custom" id="usage-custom" data-band="custom">
-                        <label class="usage-custom-name" for="custom-kwh">Custom</label>
-                        <input type="number" id="custom-kwh" class="usage-custom-input" inputmode="decimal" min="0" step="1" placeholder="kWh" autocomplete="off" aria-label="Custom annual gas usage in kWh">
-                        <input type="number" id="custom-rate" class="usage-custom-input" inputmode="decimal" min="0" step="0.01" placeholder="X.XXp/kWh" autocomplete="off" aria-label="Unit rate in pence per kWh">
-                    </div>
+                    <button type="button" class="choice-button usage-custom" id="usage-custom" data-band="custom" aria-pressed="false" aria-haspopup="dialog" aria-controls="custom-usage-dialog" aria-expanded="false">Custom<span class="usage-chip-kwh" id="custom-chip-kwh">xx,xxx</span><span class="usage-chip-rate" id="custom-chip-rate">x.xxp/kWh</span></button>
                 </div>
             </div>
+            <dialog class="custom-usage-dialog" id="custom-usage-dialog" aria-labelledby="custom-usage-title">
+                <div class="custom-usage-panel">
+                    <div class="custom-usage-handle" aria-hidden="true"></div>
+                    <div class="custom-usage-head">
+                        <h3 id="custom-usage-title">Custom usage</h3>
+                        <button type="button" class="custom-usage-close" id="custom-usage-close" aria-label="Close">&times;</button>
+                    </div>
+                    <div class="custom-usage-fields">
+                        <div class="unit-rate-field">
+                            <input type="number" id="custom-kwh" class="input-field" inputmode="decimal" min="1" step="1" placeholder="xx,xxx" autocomplete="off" enterkeyhint="next" required aria-label="Annual gas usage in kWh">
+                            <label class="input-label" for="custom-kwh">kWh</label>
+                        </div>
+                        <div class="unit-rate-field">
+                            <input type="number" id="custom-rate" class="input-field" inputmode="decimal" min="0.01" step="0.01" placeholder="x.xx" autocomplete="off" enterkeyhint="done" required aria-label="Unit rate in pence per kWh">
+                            <label class="input-label" for="custom-rate">p/kWh</label>
+                        </div>
+                    </div>
+                    <p class="custom-usage-error" id="custom-usage-error" hidden>Enter a usage and unit rate above 0.</p>
+                    <button type="button" class="choice-button custom-usage-done" id="custom-usage-done">Done</button>
+                </div>
+            </dialog>
 
             <div class="result-grid bill-results">
                 <div class="result-item is-key is-split">
@@ -2547,12 +2694,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="model-timing">
-                    <h3 class="model-timing-heading">Heating Programmer Timings</h3>
-                    <p class="model-timing-note">You may need to adjust your heating programming timings, as reducing flow temperature means it will take longer to warm up, but lead to a more stable system, so add more time if necessary.</p>
-                </div>
             </div>
         </details>
+
+        <section class="calculator-card comp-card" id="programmer-timings">
+            <h2 class="card-title">Heating Programmer Timings</h2>
+            <p class="comp-copy">You may need to adjust your heating programming timings, as reducing flow temperature means it will take longer to warm up, but lead to a more stable system, so add more time if necessary.</p>
+            <div class="programmer-photos">
+                <figure>
+                    <img src="/boiler-optimiser/images/programmer-single-channel.jpg" alt="Single channel heating programmer, such as a Honeywell Home ST9100C" width="783" height="691">
+                    <figcaption>Single channel<span>Honeywell Home ST9100C</span></figcaption>
+                </figure>
+                <figure>
+                    <img src="/boiler-optimiser/images/programmer-dual-channel.jpg" alt="Dual channel heating and hot water programmer, such as a Honeywell Home ST9400C" width="783" height="691">
+                    <figcaption>Dual channel<span>Honeywell Home ST9400C</span></figcaption>
+                </figure>
+            </div>
+        </section>
 
         <section class="calculator-card comp-card" id="load-compensation">
             <h2 class="card-title">Load compensation (OpenTherm)</h2>
@@ -2584,7 +2742,7 @@
             </figure>
         </details>
         <form class="tool-confirm" id="tool-confirm">
-            <p class="input-label">Have you turned the heating flow down? Come back here and let us know.</p>
+            <p class="input-label">Have you successfully turned the heating flow down? Come back here and let us know.</p>
             <span class="input-hint">Choose the boiler brand, then what the flow was and what you set it to. Add annual kWh and unit rate if you know them. We log this anonymously.</span>
             <div class="tool-confirm-fields">
                 <div class="tool-confirm-field">
@@ -2696,6 +2854,7 @@
             var CYLINDER_FLOW = 70;
             var SYSTEM_CONDENSING_FLOW = 70;
             var LEGIONELLA_STORE = 50;
+            var CYLINDER_HAZARD = 45;
             var CYLINDER_BELOW_FLOW = 5;
             var INHIBIT_FLOW_MAX = 60;
             var EFFICIENCY_CURVE = [
@@ -2734,6 +2893,7 @@
             var boilerDiagram = document.querySelector('#flow-card .boiler-diagram');
             var cylinderDiagram = document.getElementById('cylinder-diagram');
             var cylinderTempEl = document.getElementById('cylinder-temp');
+            var cylinderHazard = document.getElementById('cylinder-hazard');
             var primaryCircuit = document.getElementById('primary-circuit');
             var primaryFlow = document.getElementById('primary-flow');
             var primaryCoil = document.getElementById('primary-coil');
@@ -2897,6 +3057,9 @@
                 var rounded = annual === null ? null : Math.round(annual);
                 var custom = document.getElementById('usage-custom');
                 var customInput = document.getElementById('custom-kwh');
+                var customKwhLabel = document.getElementById('custom-chip-kwh');
+                var customRateLabel = document.getElementById('custom-chip-rate');
+                var customDialog = document.getElementById('custom-usage-dialog');
                 var matchedPreset = false;
                 document.querySelectorAll('#usage-chips [data-kwh]').forEach(function (button) {
                     var on = !usageCustomSelected && rounded !== null && Number(button.getAttribute('data-kwh')) === rounded;
@@ -2905,9 +3068,25 @@
                     button.setAttribute('aria-pressed', on ? 'true' : 'false');
                 });
                 var customOn = usageCustomSelected || (rounded !== null && !matchedPreset);
-                if (custom) custom.classList.toggle('active', customOn);
-                if (customInput && document.activeElement !== customInput) {
-                    customInput.value = customOn && rounded !== null ? String(rounded) : '';
+                if (custom) {
+                    custom.classList.toggle('active', customOn);
+                    custom.setAttribute('aria-pressed', customOn ? 'true' : 'false');
+                    custom.setAttribute('aria-expanded', customDialog && customDialog.open ? 'true' : 'false');
+                }
+                if (customInput && document.activeElement !== customInput && !usageCustomSelected) {
+                    customInput.value = '';
+                }
+                if (customKwhLabel) {
+                    var typedKwh = customInput && customInput.value.trim() !== '' ? Number(customInput.value) : NaN;
+                    customKwhLabel.textContent = customOn && isFinite(typedKwh)
+                        ? formatKwh(typedKwh)
+                        : 'xx,xxx';
+                }
+                if (customRateLabel) {
+                    var customPence = nonNegativeOrNull(rateInput);
+                    customRateLabel.textContent = customOn && rateTouched && customPence !== null
+                        ? ((Math.round(customPence * 100) / 100).toFixed(2) + 'p/kWh')
+                        : 'x.xxp/kWh';
                 }
             }
 
@@ -3170,6 +3349,9 @@
                 boilerDiagram.classList.toggle('no-dhw', stored);
                 if (stored) {
                     cylinderTempEl.textContent = cylinder + '°C';
+                    if (cylinderHazard) cylinderHazard.hidden = cylinder >= CYLINDER_HAZARD;
+                } else if (cylinderHazard) {
+                    cylinderHazard.hidden = true;
                 }
                 requestAnimationFrame(layoutPrimaryCircuit);
                 var minFlow = Number(flowInput.min);
@@ -3418,53 +3600,122 @@
                     usageCustomSelected = false;
                     annualInput.value = button.getAttribute('data-kwh');
                     annualTouched = true;
+                    if (customDialog && customDialog.open) customDialog.close();
                     update();
                 });
             });
             var usageCustom = document.getElementById('usage-custom');
+            var customDialog = document.getElementById('custom-usage-dialog');
             var customKwhInput = document.getElementById('custom-kwh');
             var customRateInput = document.getElementById('custom-rate');
+            var customUsageDone = document.getElementById('custom-usage-done');
+            var customUsageClose = document.getElementById('custom-usage-close');
+            var customUsageError = document.getElementById('custom-usage-error');
             function selectCustomUsage() {
                 usageCustomSelected = true;
-                if (customKwhInput && customKwhInput.value.trim() === '') {
-                    var current = nonNegativeOrNull(annualInput);
-                    if (current !== null) customKwhInput.value = String(Math.round(current));
+            }
+            function customPositive(input) {
+                if (!input || input.value.trim() === '') return false;
+                var value = Number(input.value);
+                return isFinite(value) && value > 0;
+            }
+            function markCustomField(input, ok) {
+                if (!input) return;
+                input.classList.toggle('is-invalid', !ok);
+                input.setAttribute('aria-invalid', ok ? 'false' : 'true');
+            }
+            function clearCustomUsageError() {
+                if (customUsageError) customUsageError.hidden = true;
+                markCustomField(customKwhInput, true);
+                markCustomField(customRateInput, true);
+            }
+            function closeCustomUsage() {
+                if (customDialog && customDialog.open) customDialog.close();
+            }
+            function submitCustomUsage() {
+                var kwhOk = customPositive(customKwhInput);
+                var rateOk = customPositive(customRateInput);
+                markCustomField(customKwhInput, kwhOk);
+                markCustomField(customRateInput, rateOk);
+                if (!kwhOk || !rateOk) {
+                    if (customUsageError) customUsageError.hidden = false;
+                    if (!kwhOk && customKwhInput) customKwhInput.focus();
+                    else if (customRateInput) customRateInput.focus();
+                    return;
+                }
+                clearCustomUsageError();
+                selectCustomUsage();
+                annualInput.value = customKwhInput.value;
+                annualTouched = true;
+                rateInput.value = customRateInput.value;
+                rateTouched = true;
+                update();
+                closeCustomUsage();
+            }
+            function openCustomUsage() {
+                selectCustomUsage();
+                clearCustomUsageError();
+                update();
+                if (!customDialog) return;
+                if (!customDialog.open) customDialog.showModal();
+                if (usageCustom) usageCustom.setAttribute('aria-expanded', 'true');
+                if (customKwhInput) {
+                    customKwhInput.focus();
+                    if (window.matchMedia('(pointer: fine)').matches) customKwhInput.select();
                 }
             }
-            if (usageCustom && customKwhInput) {
-                usageCustom.addEventListener('click', function (event) {
-                    if (event.target.closest('#custom-kwh, #custom-rate')) return;
-                    selectCustomUsage();
-                    customKwhInput.focus();
-                    customKwhInput.select();
+            if (usageCustom) {
+                usageCustom.addEventListener('click', function () {
+                    openCustomUsage();
+                });
+            }
+            if (customDialog) {
+                customDialog.addEventListener('click', function (event) {
+                    if (event.target === customDialog) closeCustomUsage();
+                });
+                customDialog.addEventListener('close', function () {
+                    clearCustomUsageError();
+                    if (usageCustom) usageCustom.setAttribute('aria-expanded', 'false');
+                    if (usageCustom && window.matchMedia('(pointer: fine)').matches) usageCustom.focus();
                     update();
                 });
-                customKwhInput.addEventListener('focus', function () {
-                    selectCustomUsage();
-                    update();
-                });
+            }
+            if (customUsageDone) customUsageDone.addEventListener('click', submitCustomUsage);
+            if (customUsageClose) customUsageClose.addEventListener('click', closeCustomUsage);
+            if (customKwhInput) {
                 customKwhInput.addEventListener('input', function () {
+                    markCustomField(customKwhInput, true);
+                    if (customUsageError) customUsageError.hidden = true;
+                    if (!customPositive(customKwhInput)) return;
                     usageCustomSelected = true;
                     annualInput.value = customKwhInput.value;
-                    annualTouched = customKwhInput.value.trim() !== '';
+                    annualTouched = true;
                     update();
+                });
+                customKwhInput.addEventListener('keydown', function (event) {
+                    if (event.key !== 'Enter') return;
+                    event.preventDefault();
+                    if (customRateInput) customRateInput.focus();
                 });
             }
             if (customRateInput) {
-                customRateInput.addEventListener('focus', function () {
-                    selectCustomUsage();
-                    customRateInput.select();
-                    update();
-                });
                 customRateInput.addEventListener('input', function () {
+                    markCustomField(customRateInput, true);
+                    if (customUsageError) customUsageError.hidden = true;
+                    if (!customPositive(customRateInput)) return;
                     selectCustomUsage();
                     rateInput.value = customRateInput.value;
-                    rateTouched = customRateInput.value.trim() !== '';
-                    if (customKwhInput && customKwhInput.value.trim() !== '') {
+                    rateTouched = true;
+                    if (customPositive(customKwhInput)) {
                         annualInput.value = customKwhInput.value;
                         annualTouched = true;
                     }
                     update();
+                });
+                customRateInput.addEventListener('keydown', function (event) {
+                    if (event.key !== 'Enter') return;
+                    event.preventDefault();
+                    submitCustomUsage();
                 });
             }
             document.getElementById('setup-choices').addEventListener('click', function (event) {
