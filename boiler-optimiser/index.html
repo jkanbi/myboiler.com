@@ -1903,17 +1903,22 @@
             margin-top: 1.5rem;
         }
 
-        .usage-band .input-heading {
+        #flow-card .usage-band .input-heading {
+            align-items: center;
             margin-bottom: 0.65rem;
         }
 
-        #usage-rate-hint {
-            text-decoration: none;
-        }
-
-        #usage-rate-hint:hover,
-        #usage-rate-hint:focus {
-            text-decoration: underline;
+        #change-unit-rate {
+            flex: none;
+            width: auto;
+            min-width: 0;
+            margin-left: auto;
+            padding: 0.4rem 0.85rem;
+            font-size: 0.8125rem;
+            white-space: nowrap;
+            color: var(--accent);
+            border-color: var(--accent);
+            background: var(--surface);
         }
 
         #usage-chips {
@@ -2168,7 +2173,8 @@
                 <div class="input-heading">
                     <div class="input-label" id="usage-band-label">Annual gas usage</div>
                     <a class="label-aside" id="usage-band-aside" href="#note-bill" aria-label="Note 3">[3.]</a>
-                    <a class="input-hint" id="usage-rate-hint" href="#unit-rate">at 7.97p/kWh</a>
+                    <span class="input-hint" id="usage-rate-hint">at 7.97p/kWh</span>
+                    <button type="button" class="choice-button" id="change-unit-rate">Change unit rate</button>
                 </div>
                 <div class="choice-toggle" id="usage-chips" role="group" aria-labelledby="usage-band-label" aria-describedby="usage-rate-hint">
                     <button type="button" class="choice-button" data-band="low" data-kwh="6000" aria-pressed="false">Low<span class="usage-chip-kwh">6,000 kWh</span></button>
@@ -2542,7 +2548,7 @@
             <a id="heat-pump-checker-link" href="/heat-pump-checker/">Check heat pump suitability</a>
         </div>
         <p class="tool-disclaimer">This tool is in development. We accept no responsibility for issues that arise from these adjustments. Some systems are not installed correctly and may cause problems, especially where the condensate pipe is incorrectly installed or not insulated.</p>
-        <p class="tool-version">2026-10-27 23:47 · 33</p>
+        <p class="tool-version">2026-10-28 00:10 · 34</p>
     </div>
 
     <div id="site-footer"></div>
@@ -3277,10 +3283,9 @@
                 var prompt = document.getElementById('bill-prompt');
                 if (prompt) prompt.scrollIntoView({ block: 'nearest' });
             }
-            var usageRateHint = document.getElementById('usage-rate-hint');
-            if (usageRateHint) {
-                usageRateHint.addEventListener('click', function (event) {
-                    event.preventDefault();
+            var changeUnitRate = document.getElementById('change-unit-rate');
+            if (changeUnitRate) {
+                changeUnitRate.addEventListener('click', function () {
                     revealBillCard('unit-rate');
                 });
             }
