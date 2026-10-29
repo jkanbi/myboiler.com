@@ -1470,8 +1470,57 @@
             color: var(--text);
         }
 
+        #condensate-warning-dialog {
+            width: min(26rem, calc(100vw - 1.5rem));
+        }
+
+        .condensate-warning-panel {
+            display: flex;
+            flex-direction: column;
+            max-height: min(32rem, calc(100dvh - 2rem));
+            overflow: hidden;
+        }
+
         .condensate-warning-panel .custom-usage-head h3 {
             color: #d64545;
+        }
+
+        .condensate-warning-body {
+            display: grid;
+            gap: 0.65rem;
+            margin: 0 0 0.75rem;
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            padding-right: 0.15rem;
+        }
+
+        .condensate-warning-body h4 {
+            margin: 0 0 0.2rem;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: var(--text);
+        }
+
+        .condensate-warning-body p,
+        .condensate-warning-body li {
+            margin: 0;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--text);
+        }
+
+        .condensate-warning-body ul {
+            margin: 0.25rem 0 0;
+            padding: 0 0 0 1.1rem;
+        }
+
+        .condensate-warning-body li + li {
+            margin-top: 0.28rem;
         }
 
         .tool-disclaimer {
@@ -2415,6 +2464,11 @@
                 align-items: stretch;
             }
 
+            .condensate-warning-panel {
+                max-height: none;
+                height: 100%;
+            }
+
             .custom-usage-handle {
                 display: none;
             }
@@ -2663,7 +2717,25 @@
                             <h3 id="condensate-warning-title">Warning: your condensate pipe must be correctly installed and insulated</h3>
                             <button type="button" class="custom-usage-close" id="condensate-warning-close" aria-label="Close">&times;</button>
                         </div>
-                        <p class="condensate-warning-copy">Otherwise it can freeze in winter. The temporary remedy is to increase the flow temperature and lose the savings during freezing weather.</p>
+                        <div class="condensate-warning-body">
+                            <p>That white plastic pipe under the boiler is the drain for the water a condensing boiler makes. If it freezes, the boiler usually stops.</p>
+                            <div>
+                                <h4>Fitted properly</h4>
+                                <p>It should slope downhill all the way, with no dips. Better if it stays indoors and goes into a drain. If it has to go outside, keep that bit short. Plastic pipe, not copper.</p>
+                            </div>
+                            <div>
+                                <h4>Size</h4>
+                                <p>A thin pipe on an outside wall is the one that freezes. Outside, or in a cold loft or garage, it should be a fatter 32 mm pipe.</p>
+                            </div>
+                            <div>
+                                <h4>Insulation</h4>
+                                <p>Any outdoor length needs waterproof lagging, including the bends and the open end. Bare pipe on a cold wall will freeze.</p>
+                            </div>
+                            <div>
+                                <h4>If it freezes</h4>
+                                <p>Warm it from the ground with a hot-water bottle or warm water — not boiling, and not a flame. Then press reset on the boiler. Turning the flow back up can get you through a cold night, but you lose the saving. Ask a Gas Safe engineer to lag it properly, or run it indoors.</p>
+                            </div>
+                        </div>
                         <button type="button" class="choice-button custom-usage-done" id="condensate-warning-done">Done</button>
                     </div>
                 </dialog>
