@@ -607,7 +607,7 @@
             animation: flow-thumb-pulse 3.6s ease-in-out infinite;
         }
 
-        #bill-card .cooking-toggle {
+        .cooking-toggle {
             display: flex;
             flex-wrap: nowrap;
             flex-shrink: 0;
@@ -623,7 +623,7 @@
             box-sizing: border-box;
         }
 
-        #bill-card .cooking-toggle .choice-button {
+        .cooking-toggle .choice-button {
             flex: 1 1 0;
             max-width: none;
             min-height: 2.75rem;
@@ -636,17 +636,18 @@
             touch-action: manipulation;
         }
 
-        #bill-card .cooking-toggle .choice-button.active {
+        .cooking-toggle .choice-button.active {
             background: var(--accent);
             color: #fff;
+            border-color: transparent;
             box-shadow: 0 1px 4px rgba(24, 99, 220, 0.28);
         }
 
-        #bill-card .cooking-toggle .choice-button:focus {
+        .cooking-toggle .choice-button:focus {
             outline: none;
         }
 
-        #bill-card .cooking-toggle .choice-button:focus-visible {
+        .cooking-toggle .choice-button:focus-visible {
             outline: 3px solid var(--accent);
             outline-offset: 2px;
             z-index: 1;
@@ -1429,28 +1430,48 @@
             display: none;
         }
 
-        .condensate-warning {
-            margin: 0 0 1.25rem;
-            padding: 1rem 1.15rem;
-            border: 3px solid #d64545;
-            border-radius: var(--radius);
+        .condensate-warning-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            width: fit-content;
+            max-width: 100%;
+            margin: 0.7rem auto 0;
+            padding: 0.4rem 0.75rem;
+            border: 2px solid #d64545;
+            border-radius: 999px;
             background: #fff4f4;
-        }
-
-        .condensate-warning h2 {
-            margin: 0 0 0.45rem;
-            font-size: 1.125rem;
-            font-weight: 800;
-            line-height: 1.25;
             color: #d64545;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            line-height: 1.25;
+            text-align: center;
+            cursor: pointer;
+            box-sizing: border-box;
         }
 
-        .condensate-warning p {
-            margin: 0;
-            font-size: 1rem;
-            font-weight: 600;
-            line-height: 1.5;
+        .condensate-warning-btn:hover,
+        .condensate-warning-btn:focus-visible {
+            background: #ffe8e8;
+            outline: none;
+        }
+
+        .condensate-warning-btn:focus-visible {
+            outline: 3px solid #d64545;
+            outline-offset: 2px;
+        }
+
+        .condensate-warning-copy {
+            margin: 0 0 0.85rem;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            line-height: 1.45;
             color: var(--text);
+        }
+
+        .condensate-warning-panel .custom-usage-head h3 {
+            color: #d64545;
         }
 
         .tool-disclaimer {
@@ -1578,15 +1599,6 @@
             line-height: 1.4;
             text-align: center;
             color: var(--text);
-        }
-
-        .slider-estimates-note {
-            margin: 0.45rem 0 0;
-            font-size: 0.8125rem;
-            font-weight: 400;
-            line-height: 1.4;
-            text-align: center;
-            color: var(--text-muted);
         }
 
         .timing-note {
@@ -1998,7 +2010,7 @@
                 padding-top: 0.75rem;
             }
 
-            #bill-card .cooking-toggle {
+            .cooking-toggle {
                 display: flex;
             }
 
@@ -2133,7 +2145,7 @@
             padding: 0;
             border: 0;
             background: transparent;
-            width: min(18.5rem, calc(100vw - 1.5rem));
+            width: min(22rem, calc(100vw - 1.5rem));
             max-width: none;
             margin: auto;
             color: var(--text);
@@ -2147,7 +2159,7 @@
             background: var(--surface);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
-            padding: 0.85rem 0.95rem 0.95rem;
+            padding: 0.65rem 0.8rem 0.75rem;
             overscroll-behavior: contain;
         }
 
@@ -2160,7 +2172,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 0.5rem;
-            margin-bottom: 0.7rem;
+            margin-bottom: 0.4rem;
         }
 
         .custom-usage-head h3 {
@@ -2169,6 +2181,7 @@
             font-weight: 700;
             line-height: 1.25;
             letter-spacing: -0.02em;
+            text-wrap: balance;
         }
 
         .custom-usage-close {
@@ -2198,9 +2211,124 @@
 
         .custom-usage-fields {
             display: grid;
-            gap: 0.45rem;
-            margin-top: 0.55rem;
-            margin-bottom: 0.45rem;
+            gap: 0.35rem;
+            margin-top: 0.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .custom-usage-cooking {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.28rem;
+            margin: 0.35rem 0 0;
+        }
+
+        .custom-usage-cooking .input-label {
+            margin: 0;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            line-height: 1.35;
+        }
+
+        .custom-usage-cooking .cooking-toggle {
+            width: 100%;
+            min-height: 2.4rem;
+            margin-inline: 0;
+            padding: 0.15rem;
+        }
+
+        .custom-usage-cooking .cooking-toggle .choice-button {
+            min-height: 2.05rem;
+            padding: 0.3rem 0.7rem;
+        }
+
+        .custom-usage-space {
+            margin: 0.4rem 0 0;
+            padding: 0.45rem 0.55rem 0.4rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            box-sizing: border-box;
+        }
+
+        .custom-usage-space .input-heading {
+            justify-content: center;
+            margin-bottom: 0.1rem;
+            gap: 0.3rem 0.45rem;
+        }
+
+        .custom-usage-space .input-label {
+            margin: 0;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            line-height: 1.35;
+            text-align: center;
+        }
+
+        .custom-usage-space .calculated-output {
+            align-items: center;
+            text-align: center;
+        }
+
+        .custom-usage-space .calculated-field {
+            font-size: 1.25rem;
+        }
+
+        .custom-usage-flow {
+            margin: 0.4rem 0 0;
+            padding: 0.4rem 0.55rem 0.45rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            box-sizing: border-box;
+        }
+
+        .custom-usage-flow .input-heading {
+            justify-content: center;
+            margin-bottom: 0.2rem;
+            gap: 0.3rem 0.45rem;
+        }
+
+        .custom-usage-flow .input-label {
+            margin: 0;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            line-height: 1.25;
+            text-align: center;
+        }
+
+        .custom-usage-panel .custom-usage-flow .bill-flow-pair {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.2rem 0.55rem;
+        }
+
+        .custom-usage-panel .custom-usage-flow .bill-flow-field {
+            gap: 0.15rem;
+        }
+
+        .custom-usage-panel .custom-usage-flow .bill-flow-field > .input-label {
+            max-width: 7.2rem;
+            text-wrap: balance;
+        }
+
+        .custom-usage-panel .custom-usage-flow .unit-rate-field {
+            justify-content: center;
+            gap: 0.25rem;
+            width: auto;
+        }
+
+        .custom-usage-panel .custom-usage-flow .unit-rate-field .input-field {
+            width: 3.6rem;
+            flex: 0 0 auto;
+            padding: 0.35rem 0.3rem;
+            text-align: center;
+        }
+
+        .custom-usage-panel .custom-usage-flow .unit-rate-field .input-label {
+            min-width: 0;
+            font-weight: 500;
+            color: var(--text-muted);
         }
 
         .custom-usage-panel .unit-rate-field {
@@ -2210,7 +2338,7 @@
 
         .custom-usage-panel .unit-rate-field .input-field {
             width: 100%;
-            padding: 0.55rem 0.7rem;
+            padding: 0.45rem 0.6rem;
         }
 
         .custom-usage-panel .unit-rate-field .input-label {
@@ -2234,10 +2362,10 @@
         }
 
         .custom-usage-hint {
-            margin: 0.45rem 0 0;
+            margin: 0.3rem 0 0.35rem;
             font-size: 0.8125rem;
             font-weight: 500;
-            line-height: 1.4;
+            line-height: 1.3;
             color: var(--text-muted);
         }
 
@@ -2293,7 +2421,7 @@
 
             .custom-usage-fields {
                 flex: none;
-                margin-top: 1.15rem;
+                margin-top: 0.45rem;
                 align-content: start;
             }
 
@@ -2527,8 +2655,18 @@
                     <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                 </div>
                 <p class="slider-prompt" id="slider-prompt"><span id="slider-prompt-text">Move this slider to show your savings when reducing your flow temperature.</span> <a class="label-aside" id="flow-aside" href="#note-flow" aria-label="Note 2">[2.]</a></p>
-                <p class="slider-estimates-note">Estimates only. The Boiler Optimiser is in development and early results are promising. Actual savings vary.</p>
                 <p class="timing-note" id="timing-note">You may need to add more time on the heating programmer. Lower flow takes longer to warm the house. <a class="label-aside" id="timing-aside" href="#note-timings" aria-label="Note">[.]</a></p>
+                <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog">Warning: your condensate pipe must be correctly installed and insulated</button>
+                <dialog class="custom-usage-dialog" id="condensate-warning-dialog" aria-labelledby="condensate-warning-title">
+                    <div class="custom-usage-panel condensate-warning-panel">
+                        <div class="custom-usage-head">
+                            <h3 id="condensate-warning-title">Warning: your condensate pipe must be correctly installed and insulated</h3>
+                            <button type="button" class="custom-usage-close" id="condensate-warning-close" aria-label="Close">&times;</button>
+                        </div>
+                        <p class="condensate-warning-copy">Otherwise it can freeze in winter. The temporary remedy is to increase the flow temperature and lose the savings during freezing weather.</p>
+                        <button type="button" class="choice-button custom-usage-done" id="condensate-warning-done">Done</button>
+                    </div>
+                </dialog>
                 <p class="cylinder-stat-note" id="cylinder-stat-note" hidden>Change the cylinder thermostat as well. Set it to 60°C. It is a separate control on the cylinder.</p>
                 <aside class="system-savings-note" id="system-savings-note" hidden>
                     <h3 class="system-savings-title">Keep heating cooler than the cylinder</h3>
@@ -2559,7 +2697,7 @@
                 <div class="custom-usage-panel">
                     <div class="custom-usage-handle" aria-hidden="true"></div>
                     <div class="custom-usage-head">
-                        <h3 id="custom-usage-title">Custom usage</h3>
+                        <h3 id="custom-usage-title">Custom annual gas usage and unit rates</h3>
                         <button type="button" class="custom-usage-close" id="custom-usage-close" aria-label="Close">&times;</button>
                     </div>
                     <div class="custom-usage-fields">
@@ -2570,6 +2708,44 @@
                         <div class="unit-rate-field">
                             <input type="number" id="custom-rate" class="input-field" inputmode="decimal" min="0.01" step="0.01" placeholder="x.xx" autocomplete="off" enterkeyhint="done" required aria-label="Unit rate in pence per kWh">
                             <label class="input-label" for="custom-rate">p/kWh</label>
+                        </div>
+                    </div>
+                    <div class="custom-usage-cooking">
+                        <div class="input-label" id="custom-gas-cooking-label">Do you use gas for cooking?</div>
+                        <div class="choice-toggle cooking-toggle" role="group" aria-labelledby="custom-gas-cooking-label">
+                            <button type="button" class="choice-button active" data-gas-cooking="yes" aria-pressed="true">Yes</button>
+                            <button type="button" class="choice-button" data-gas-cooking="no" aria-pressed="false">No</button>
+                        </div>
+                    </div>
+                    <div class="custom-usage-flow">
+                        <div class="input-heading">
+                            <div class="input-label" id="custom-flow-label">Flow temperature before and after</div>
+                        </div>
+                        <div class="bill-flow-pair" role="group" aria-labelledby="custom-flow-label">
+                            <div class="bill-flow-field">
+                                <label class="input-label" for="custom-initial-flow">Before</label>
+                                <div class="unit-rate-field">
+                                    <input type="number" id="custom-initial-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" value="75" aria-label="Before flow temperature">
+                                    <span class="input-label" aria-hidden="true">°C</span>
+                                </div>
+                            </div>
+                            <div class="bill-flow-field">
+                                <label class="input-label" for="custom-final-flow">After</label>
+                                <div class="unit-rate-field">
+                                    <input type="number" id="custom-final-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" value="75" aria-label="After flow temperature">
+                                    <span class="input-label" aria-hidden="true">°C</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="custom-usage-space">
+                        <div class="input-heading">
+                            <div class="input-label" id="custom-space-heating-label">Estimated annual space heating usage</div>
+                            <a class="label-aside" id="custom-space-heating-aside" href="#note-space" aria-label="Note 5">[5.]</a>
+                        </div>
+                        <div class="calculated-output">
+                            <div class="calculated-field" id="custom-space-heating-kwh" aria-labelledby="custom-space-heating-label">—</div>
+                            <p class="calculated-hint" id="custom-space-heating-hint">Bill kWh minus typical gas cooking (3% of annual use).</p>
                         </div>
                     </div>
                     <p class="custom-usage-error" id="custom-usage-error" hidden>Enter a usage and unit rate above 0.</p>
@@ -2618,101 +2794,16 @@
                     </li>
                 </ul>
             </aside>
-            <div class="bill-prompt" id="bill-prompt">
-                <p class="bill-prompt-copy">Have a bill? Enter your exact usage and unit rate for a closer saving.</p>
-                <button type="button" class="choice-button" id="show-bill-card">Enter exact gas usage and unit rates</button>
-            </div>
             </div>
         </div>
 
-        <details class="calculator-card fold" id="bill-card" hidden>
-            <summary class="card-title">Gas Usage from your bills</summary>
-            <div class="input-group">
-                <div class="input-heading">
-                    <label class="input-label" for="annual-kwh">Annual gas usage</label>
-                            <a class="label-aside" id="bill-kwh-aside" href="#note-bill" aria-label="Note 3">[3.]</a>
-                </div>
-                <div class="unit-rate-field">
-                    <input type="number" id="annual-kwh" class="input-field" inputmode="decimal" min="0" step="1" placeholder="e.g. 12000" value="12000">
-                    <label class="input-label" for="annual-kwh">kWh</label>
-                </div>
-            </div>
-
-            <div class="input-group">
-                <div class="input-heading">
-                    <div class="input-label" id="gas-cooking-label">Do you use gas for cooking?</div>
-                </div>
-                <div class="choice-toggle cooking-toggle" role="group" aria-labelledby="gas-cooking-label">
-                    <button type="button" class="choice-button active" data-gas-cooking="yes" aria-pressed="true">Yes</button>
-                    <button type="button" class="choice-button" data-gas-cooking="no" aria-pressed="false">No</button>
-                </div>
-            </div>
-
-            <div class="input-group">
-                <div class="input-heading">
-                    <label class="input-label" for="unit-rate">Unit rate</label>
-                </div>
-                <div class="unit-rate-field">
-                    <input type="number" id="unit-rate" class="input-field" inputmode="decimal" min="0" step="0.01" value="7.97">
-                    <label class="input-label" for="unit-rate">p/kWh</label>
-                </div>
-            </div>
-
-            <div class="input-group" id="bill-flow-group">
-                <div class="input-heading">
-                    <div class="input-label" id="bill-flow-label">Flow temperature</div>
-                </div>
-                <div class="bill-flow-pair" role="group" aria-labelledby="bill-flow-label">
-                    <div class="bill-flow-field">
-                        <label class="input-label" for="initial-flow">Initial</label>
-                        <div class="unit-rate-field">
-                            <input type="number" id="initial-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" value="75" aria-label="Initial flow temperature">
-                            <span class="input-label" aria-hidden="true">°C</span>
-                        </div>
-                    </div>
-                    <div class="bill-flow-field">
-                        <label class="input-label" for="final-flow">Final</label>
-                        <div class="unit-rate-field">
-                            <input type="number" id="final-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" value="75" aria-label="Final flow temperature">
-                            <span class="input-label" aria-hidden="true">°C</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="input-group" id="space-heating-group">
-                <div class="input-heading">
-                    <div class="input-label" id="space-heating-label">Estimated annual space heating usage</div>
-                            <a class="label-aside" id="space-heating-aside" href="#note-space" aria-label="Note 5">[5.]</a>
-                </div>
-                <div class="calculated-output">
-                    <div class="calculated-field" id="space-heating-kwh" aria-labelledby="space-heating-label">—</div>
-                    <p class="calculated-hint">Calculated automatically</p>
-                </div>
-            </div>
-            <div class="result-grid bill-results">
-                <div class="result-item is-key is-split">
-                    <div class="result-split">
-                        <div class="result-label">Annual condensing-mode saving</div>
-                        <div class="result-value" data-result="condensing-saving">—</div>
-                        <div class="result-unit" data-result="condensing-saving-unit">versus a 75°C flow</div>
-                    </div>
-                    <div class="result-split">
-                        <div class="result-label">Your annual space heating cost</div>
-                        <div class="result-value" data-result="heating-cost">—</div>
-                        <div class="result-unit">excluding standing charge</div>
-                    </div>
-                    <div class="result-foot">
-                        <div class="result-heading">
-                            <div class="result-label">Efficiency</div>
-                            <a class="result-aside" href="#note-5" aria-label="Note 4">[4.]</a>
-                        </div>
-                        <div class="result-value" data-result="graph-efficiency">—</div>
-                        <div class="result-unit" data-result="graph-efficiency-unit">from return temperature</div>
-                    </div>
-                </div>
-            </div>
-        </details>
+        <div id="bill-state" hidden>
+            <input type="number" id="annual-kwh" inputmode="decimal" min="0" step="1" value="12000" tabindex="-1" aria-hidden="true">
+            <input type="number" id="unit-rate" inputmode="decimal" min="0" step="0.01" value="7.97" tabindex="-1" aria-hidden="true">
+            <input type="number" id="initial-flow" inputmode="numeric" min="35" max="90" step="1" value="75" tabindex="-1" aria-hidden="true">
+            <input type="number" id="final-flow" inputmode="numeric" min="35" max="90" step="1" value="75" tabindex="-1" aria-hidden="true">
+            <div id="space-heating-kwh">—</div>
+        </div>
 
         <details class="calculator-card fold" id="model-card" open hidden>
             <summary class="card-title">
@@ -2842,11 +2933,6 @@
             <p>If this flow is keeping the house warm in peak winter, a heat pump may suit this system without many changes. <span id="heat-pump-size"></span></p>
             <a id="heat-pump-checker-link" href="/heat-pump-checker/">Check heat pump suitability</a>
         </div>
-        <aside class="condensate-warning" id="condensate-warning">
-            <h2>Warning: your condensate pipe must be insulated</h2>
-            <p>Otherwise it can freeze in winter. The temporary remedy is to increase the flow temperature and lose the savings during freezing weather.</p>
-        </aside>
-
         <details class="calculator-card fold" id="tool-results">
             <summary class="card-title">Notes, Keys and Information</summary>
             <ol class="plan-list" id="plan"></ol>
@@ -2968,7 +3054,6 @@
             var annualTouched = false;
             var usageCustomSelected = false;
             var rateTouched = false;
-            var billExactOpen = false;
             var flowHint = document.getElementById('flow-hint');
             var returnHint = document.getElementById('return-hint');
             var boilerDiagram = document.querySelector('#flow-card .boiler-diagram');
@@ -2985,6 +3070,13 @@
             var rateInput = document.getElementById('unit-rate');
             var initialFlowInput = document.getElementById('initial-flow');
             var finalFlowInput = document.getElementById('final-flow');
+            var customInitialFlowInput = document.getElementById('custom-initial-flow');
+            var customFinalFlowInput = document.getElementById('custom-final-flow');
+
+            function syncUnfocused(input, value) {
+                if (!input || document.activeElement === input) return;
+                if (input.value !== value) input.value = value;
+            }
             var usesGasCooking = true;
             var plan = document.getElementById('plan');
             var brandButtons = document.querySelectorAll('[data-brand]');
@@ -3358,9 +3450,6 @@
                 var blocked = otherType || standardBoiler;
                 document.getElementById('standard-note').hidden = !standardBoiler;
                 document.getElementById('flow-card').hidden = blocked;
-                document.getElementById('bill-card').hidden = blocked || !billExactOpen;
-                var billPrompt = document.getElementById('bill-prompt');
-                if (billPrompt) billPrompt.hidden = blocked || billExactOpen;
                 document.getElementById('tool-results').hidden = blocked;
                 document.getElementById('model-card').hidden = blocked;
                 document.getElementById('notes-card').hidden = blocked || !storesHotWater();
@@ -3372,9 +3461,10 @@
                     return;
                 }
                 var flow = Number(flowInput.value);
-                if (finalFlowInput && document.activeElement !== finalFlowInput) {
-                    finalFlowInput.value = String(Math.round(flow));
-                }
+                var flowText = String(Math.round(flow));
+                syncUnfocused(finalFlowInput, flowText);
+                syncUnfocused(customFinalFlowInput, flowText);
+                if (initialFlowInput) syncUnfocused(customInitialFlowInput, initialFlowInput.value);
                 var fromFlow = flowFromInput(initialFlowInput, FACTORY_FLOW);
                 document.getElementById('heat-pump-cta').hidden = flow > 55 || storesHotWater();
                 var ret = flow - DELTA;
@@ -3483,7 +3573,16 @@
                         ? String(Math.round(pence * 100) / 100)
                         : '';
                 }
-                document.getElementById('space-heating-kwh').textContent = spaceKwh === null ? '—' : formatKwh(spaceKwh);
+                var spaceText = spaceKwh === null ? '—' : formatKwh(spaceKwh);
+                document.getElementById('space-heating-kwh').textContent = spaceText;
+                var customSpace = document.getElementById('custom-space-heating-kwh');
+                if (customSpace) customSpace.textContent = spaceText;
+                var customSpaceHint = document.getElementById('custom-space-heating-hint');
+                if (customSpaceHint) {
+                    customSpaceHint.textContent = usesGasCooking
+                        ? 'Bill kWh minus typical gas cooking (3% of annual use).'
+                        : 'Same as annual gas usage (no cooking deducted).';
+                }
                 var pumpSize = document.getElementById('heat-pump-size');
                 var checkerLink = document.getElementById('heat-pump-checker-link');
                 if (spaceKwh === null) {
@@ -3641,6 +3740,7 @@
                     'note-space'
                 );
                 setAside('space-heating-aside', spaceStep);
+                setAside('custom-space-heating-aside', spaceStep);
                 appendNote('How this is worked out', methodNote());
                 appendNote('Smart & Modulating Controls', controlsNote(storesHotWater()));
                 var powerNote = document.createDocumentFragment();
@@ -3668,38 +3768,6 @@
                 });
             }
 
-            function revealBillCard(focusId) {
-                billExactOpen = true;
-                var bill = document.getElementById('bill-card');
-                bill.open = true;
-                update();
-                var target = focusId ? document.getElementById(focusId) : null;
-                requestAnimationFrame(function () {
-                    bill.scrollIntoView({ block: 'start' });
-                    if (target && window.matchMedia('(pointer: fine)').matches) target.focus();
-                });
-            }
-            function hideBillCard() {
-                billExactOpen = false;
-                var bill = document.getElementById('bill-card');
-                bill.open = false;
-                update();
-                var prompt = document.getElementById('bill-prompt');
-                if (prompt) prompt.scrollIntoView({ block: 'nearest' });
-            }
-            var showBillCard = document.getElementById('show-bill-card');
-            if (showBillCard) {
-                showBillCard.addEventListener('click', function () {
-                    revealBillCard('annual-kwh');
-                });
-            }
-            var billCard = document.getElementById('bill-card');
-            if (billCard) {
-                billCard.addEventListener('toggle', function () {
-                    if (billCard.open || !billExactOpen) return;
-                    hideBillCard();
-                });
-            }
             document.querySelectorAll('#usage-chips [data-kwh]').forEach(function (button) {
                 button.addEventListener('click', function () {
                     usageCustomSelected = false;
@@ -3778,6 +3846,7 @@
                 rememberCustomUsageScroll();
                 selectCustomUsage();
                 clearCustomUsageError();
+                syncGasCookingButtons();
                 update();
                 if (!customDialog) return;
                 if (!customDialog.open) customDialog.showModal();
@@ -3885,6 +3954,7 @@
                 var results = document.getElementById('tool-results');
                 if (!note || !results) return;
                 event.preventDefault();
+                closeCustomUsage();
                 results.hidden = false;
                 results.open = true;
                 if (location.hash === href) {
@@ -3902,14 +3972,17 @@
                 link.addEventListener('click', openAppendixNote);
             });
 
+            function syncGasCookingButtons() {
+                document.querySelectorAll('[data-gas-cooking]').forEach(function (other) {
+                    var on = other.getAttribute('data-gas-cooking') === (usesGasCooking ? 'yes' : 'no');
+                    other.classList.toggle('active', on);
+                    other.setAttribute('aria-pressed', on ? 'true' : 'false');
+                });
+            }
             document.querySelectorAll('[data-gas-cooking]').forEach(function (button) {
                 button.addEventListener('click', function () {
                     usesGasCooking = button.getAttribute('data-gas-cooking') === 'yes';
-                    document.querySelectorAll('[data-gas-cooking]').forEach(function (other) {
-                        var on = other === button;
-                        other.classList.toggle('active', on);
-                        other.setAttribute('aria-pressed', on ? 'true' : 'false');
-                    });
+                    syncGasCookingButtons();
                     update();
                 });
             });
@@ -3944,11 +4017,12 @@
                 rateTouched = rateInput.value.trim() !== '';
                 update();
             });
-            function applyFinalFlow(commit) {
-                var raw = Number(finalFlowInput.value);
-                if (finalFlowInput.value.trim() === '' || !isFinite(raw)) {
+            function applyFinalFlow(source, commit) {
+                if (!source) return;
+                var raw = Number(source.value);
+                if (source.value.trim() === '' || !isFinite(raw)) {
                     if (!commit) return;
-                    finalFlowInput.value = String(Math.round(Number(flowInput.value)));
+                    source.value = String(Math.round(Number(flowInput.value)));
                     update();
                     return;
                 }
@@ -3959,24 +4033,72 @@
                     flowSlider.classList.remove('is-hinting');
                     flowTouched = true;
                 }
-                if (commit) finalFlowInput.value = next;
+                if (commit) {
+                    if (finalFlowInput) finalFlowInput.value = next;
+                    if (customFinalFlowInput) customFinalFlowInput.value = next;
+                }
+                update();
+            }
+            function applyInitialFlow(source) {
+                if (!source) return;
+                var next = String(flowFromInput(source, FACTORY_FLOW));
+                source.value = next;
+                if (initialFlowInput) initialFlowInput.value = next;
+                if (customInitialFlowInput) customInitialFlowInput.value = next;
                 update();
             }
             if (initialFlowInput) {
-                initialFlowInput.addEventListener('input', update);
-                initialFlowInput.addEventListener('change', function () {
-                    initialFlowInput.value = String(flowFromInput(initialFlowInput, FACTORY_FLOW));
+                initialFlowInput.addEventListener('input', function () {
+                    syncUnfocused(customInitialFlowInput, initialFlowInput.value);
                     update();
+                });
+                initialFlowInput.addEventListener('change', function () {
+                    applyInitialFlow(initialFlowInput);
+                });
+            }
+            if (customInitialFlowInput) {
+                customInitialFlowInput.addEventListener('input', function () {
+                    if (initialFlowInput) initialFlowInput.value = customInitialFlowInput.value;
+                    update();
+                });
+                customInitialFlowInput.addEventListener('change', function () {
+                    applyInitialFlow(customInitialFlowInput);
                 });
             }
             if (finalFlowInput) {
                 finalFlowInput.addEventListener('input', function () {
-                    applyFinalFlow(false);
+                    applyFinalFlow(finalFlowInput, false);
                 });
                 finalFlowInput.addEventListener('change', function () {
-                    applyFinalFlow(true);
+                    applyFinalFlow(finalFlowInput, true);
                 });
             }
+            if (customFinalFlowInput) {
+                customFinalFlowInput.addEventListener('input', function () {
+                    applyFinalFlow(customFinalFlowInput, false);
+                });
+                customFinalFlowInput.addEventListener('change', function () {
+                    applyFinalFlow(customFinalFlowInput, true);
+                });
+            }
+            var condensateDialog = document.getElementById('condensate-warning-dialog');
+            var condensateOpen = document.getElementById('condensate-warning-open');
+            function closeCondensateWarning() {
+                if (condensateDialog && condensateDialog.open) condensateDialog.close();
+            }
+            if (condensateOpen && condensateDialog) {
+                condensateOpen.addEventListener('click', function () {
+                    if (!condensateDialog.open) condensateDialog.showModal();
+                });
+                condensateDialog.addEventListener('click', function (event) {
+                    if (event.target === condensateDialog) closeCondensateWarning();
+                });
+            }
+            var condensateClose = document.getElementById('condensate-warning-close');
+            var condensateDone = document.getElementById('condensate-warning-done');
+            if (condensateClose) condensateClose.addEventListener('click', closeCondensateWarning);
+            if (condensateDone) condensateDone.addEventListener('click', closeCondensateWarning);
+
             window.mbOptimiserConfirmMetrics = function (fromFlow, setFlow, annualKwh, unitRate) {
                 var annual = annualKwh != null && isFinite(annualKwh) ? annualKwh : nonNegativeOrNull(annualInput);
                 var pence = unitRate != null && isFinite(unitRate) ? unitRate : nonNegativeOrNull(rateInput);
