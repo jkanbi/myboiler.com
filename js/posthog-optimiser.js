@@ -235,47 +235,84 @@
         };
     }
 
-    function anonymousConfig() {
-        var config = dashboardConfig();
-        config.api_host = API_HOST;
-        config.ui_host = UI_HOST;
-        config.persistence = 'memory';
-        config.disable_session_recording = true;
-        config.session_recording = recordingConfig();
-        return config;
-    }
-
     function fullConfig() {
         var config = dashboardConfig();
         config.api_host = API_HOST;
         config.ui_host = UI_HOST;
         config.persistence = 'localStorage+cookie';
+        config.opt_out_capturing_by_default = false;
         config.disable_session_recording = false;
         config.session_recording = recordingConfig();
         return config;
     }
 
-    function startPosthog(mode) {
+    function startFullMode() {
         loadSnippet();
-        window.posthog.init(TOKEN, mode === 'full' ? fullConfig() : anonymousConfig());
-    }
-
-    function enableFullMode() {
-        if (!window.posthog || typeof window.posthog.set_config !== 'function') {
-            startPosthog('full');
-            return;
+        if (!window.posthog || typeof window.posthog.init !== 'function') return;
+        if (window.posthog.__loaded || window.posthog._i && window.posthog._i.length) {
+            if (typeof window.posthog.set_config === 'function') {
+                window.posthog.set_config({
+                    persistence: 'localStorage+cookie',
+                    autocapture: false,
+                    capture_pageview: false,
+                    capture_pageleave: false,
+                    disable_session_recording: false,
+                    session_recording: recordingConfig()
+                });
+            }
+        } else {
+            window.posthog.init(TOKEN, fullConfig());
         }
-        window.posthog.set_config({
-            persistence: 'localStorage+cookie',
-            autocapture: false,
-            capture_pageview: false,
-            capture_pageleave: false,
-            disable_session_recording: false,
-            session_recording: recordingConfig()
-        });
+        if (typeof window.posthog.opt_in_capturing === 'function') {
+            window.posthog.opt_in_capturing();
+        }
         if (typeof window.posthog.startSessionRecording === 'function') {
             window.posthog.startSessionRecording();
         }
+    }
+
+    function clearPhStorage() {
+        function expireCookie(name) {
+            document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+            document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=' + location.hostname;
+        }
+        try {
+            document.cookie.split(';').forEach(function (part) {
+                var name = part.split('=')[0].trim();
+                if (!name) return;
+                if (name.indexOf('ph_') === 0 || name.indexOf('phc_') === 0 || name.indexOf('__ph_') === 0) expireCookie(name);
+            });
+        } catch (err) { /* ignore */ }
+        function wipeStore(store) {
+            if (!store) return;
+            var keys = [];
+            for (var i = 0; i < store.length; i++) {
+                var key = store.key(i);
+                if (key && (key.indexOf('ph_') === 0 || key.indexOf('__ph_') === 0)) keys.push(key);
+            }
+            keys.forEach(function (key) { store.removeItem(key); });
+        }
+        try { wipeStore(window.localStorage); } catch (err) { /* ignore */ }
+        try { wipeStore(window.sessionStorage); } catch (err) { /* ignore */ }
+    }
+
+    function optOutAndClear() {
+        storeChoice('declined');
+        if (window.posthog) {
+            if (typeof window.posthog.stopSessionRecording === 'function') {
+                window.posthog.stopSessionRecording();
+            }
+            if (typeof window.posthog.opt_out_capturing === 'function') {
+                window.posthog.opt_out_capturing();
+            }
+            if (typeof window.posthog.set_config === 'function') {
+                window.posthog.set_config({
+                    persistence: 'memory',
+                    disable_session_recording: true
+                });
+            }
+        }
+        clearPhStorage();
     }
 
     function storedChoice() {
@@ -305,7 +342,9 @@
             '.optimiser-consent__accept{background:var(--accent);color:#fff;border:2px solid var(--accent);}',
             '.optimiser-consent__decline{background:var(--surface);color:var(--text);border:2px solid var(--border);}',
             'body.optimiser-consent-open{padding-bottom:7.5rem;}',
-            '@media (max-width:640px){body.optimiser-consent-open{padding-bottom:10.5rem;}.optimiser-consent{padding:0.7rem 16px;}}'
+            '@media (max-width:640px){body.optimiser-consent-open{padding-bottom:10.5rem;}.optimiser-consent{padding:0.7rem 16px;}}',
+            '.optimiser-cookie-settings-wrap{max-width:var(--max-width,1024px);margin:0 auto;padding:0.35rem var(--page-inline,16px) 1rem;}',
+            '.optimiser-cookie-settings{background:none;border:0;padding:0;color:var(--link,#1863dc);font:inherit;font-size:0.875rem;cursor:pointer;text-decoration:underline;}'
         ].join('');
         document.head.appendChild(style);
     }
@@ -327,7 +366,7 @@
                 '<p class="optimiser-consent__text">We\'d like to record how you use the Boiler Optimiser, only to improve the tool. No personal data is stored, and all recordings will be deleted once the tool is finished.</p>' +
                 '<div class="optimiser-consent__actions">' +
                     '<button type="button" class="optimiser-consent__accept">Accept</button>' +
-                    '<button type="button" class="optimiser-consent__decline">No thanks</button>' +
+                    '<button type="button" class="optimiser-consent__decline">Opt out</button>' +
                 '</div>' +
             '</div>';
         document.body.appendChild(banner);
@@ -335,23 +374,37 @@
         banner.querySelector('.optimiser-consent__accept').addEventListener('click', function () {
             storeChoice('accepted');
             hideBanner(banner);
-            enableFullMode();
+            startFullMode();
         });
         banner.querySelector('.optimiser-consent__decline').addEventListener('click', function () {
-            storeChoice('declined');
             hideBanner(banner);
+            optOutAndClear();
         });
+    }
+
+    function placeCookieSettings() {
+        injectStyles();
+        if (document.querySelector('.optimiser-cookie-settings')) return;
+        var wrap = document.createElement('div');
+        wrap.className = 'optimiser-cookie-settings-wrap';
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'optimiser-cookie-settings';
+        btn.textContent = 'Cookie settings';
+        btn.addEventListener('click', showBanner);
+        wrap.appendChild(btn);
+        document.body.appendChild(wrap);
     }
 
     ready(function () {
         bindConfirm();
         bindBrandVideos();
+        placeCookieSettings();
         var choiceMade = storedChoice();
         if (choiceMade === 'accepted') {
-            startPosthog('full');
-        } else {
-            startPosthog('anonymous');
-            if (choiceMade !== 'declined') showBanner();
+            startFullMode();
+        } else if (choiceMade !== 'declined') {
+            showBanner();
         }
     });
 })();

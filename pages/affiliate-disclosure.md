@@ -63,5 +63,4 @@ We maintain high standards by:
 For questions about our affiliate relationships:
 
 - Email: affiliates@myboiler.com
-- Address: A Rated House, 11 Sunnymead Road, London, NW9 8BT
-- Phone: +44 020 8123 4411 
+- Phone: 07484 842790 

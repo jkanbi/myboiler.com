@@ -183,6 +183,11 @@ tr.fc-row-match > td {
     margin: 0 0 1.25rem;
 }
 
+.installer-casing-note {
+    font-weight: 600;
+    margin: 0 0 1rem;
+}
+
 @media (max-width: 640px) {
     .fc-search__row {
         flex-direction: column;

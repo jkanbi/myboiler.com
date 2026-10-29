@@ -357,7 +357,8 @@ function main() {
             crumb: '<p class="article-back"><a href="/fault-codes/">Fault codes</a> / <a href="/fault-codes/baxi-fault-codes/">Baxi</a></p>',
             h1: "Baxi Duo-tec, Platinum &amp; Megaflo Fault Codes",
             intro: "Range-specific Baxi display codes. Recovered from the original hub.myboiler.com table.",
-            body: `<div class="table-wrap"><table><thead><tr><th>Error code</th><th>Possible fault</th><th>Installer action</th></tr></thead><tbody>
+            body: `<p class="installer-casing-note">For engineers only. Do not open the boiler casing.</p>
+<div class="table-wrap"><table><thead><tr><th>Error code</th><th>Possible fault</th><th>Installer action</th></tr></thead><tbody>
 <tr><td>E10</td><td>Outdoor Sensor Error</td><td>Outdoor sensor fault. Check the sensor and that the IP menu outdoor-sensor value reads correctly.</td></tr>
 <tr><td>E20</td><td>Central Heating Thermistor Sensor Fault</td><td>Check resistance across the sensor is about 12&nbsp;kΩ at 25&nbsp;°C. If not, suspect the sensor.</td></tr>
 <tr><td>E28</td><td>Flue Thermistor Fault</td><td>Check the flue sensor value. Check for a blocked flue.</td></tr>
@@ -385,7 +386,8 @@ function main() {
             crumb: '<p class="article-back"><a href="/fault-codes/">Fault codes</a> / <a href="/fault-codes/baxi-fault-codes/">Baxi</a></p>',
             h1: "Baxi EcoBlue Heat Only Fault Codes",
             intro: "LED flash codes for EcoBlue heat-only. Recovered from the original hub.myboiler.com table.",
-            body: `<div class="table-wrap"><table><thead><tr><th>Error code</th><th>Possible fault</th><th>Installer action</th></tr></thead><tbody>
+            body: `<p class="installer-casing-note">For engineers only. Do not open the boiler casing.</p>
+<div class="table-wrap"><table><thead><tr><th>Error code</th><th>Possible fault</th><th>Installer action</th></tr></thead><tbody>
 <tr><td>FLASHED Green 1 TIME</td><td>Boiler temp reached</td><td></td></tr>
 <tr><td>3 GREEN FLASHES</td><td>Temporary Flame Loss (No Reset Required)</td><td>Temporary error, self-reset. If it continues it goes to 3 red flashes (lockout).</td></tr>
 <tr><td>4 GREEN FLASHES</td><td>Communication Fault Between PCB And Control</td><td>Temporary error, self-reset.</td></tr>
