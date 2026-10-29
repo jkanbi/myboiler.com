@@ -187,7 +187,7 @@
         });
     }
 
-    var BRANDS_WITH_VIDEOS = { worcester: 1, vaillant: 1, main: 1, intergas: 1 };
+    var BRANDS_WITH_VIDEOS = { worcester: 1, vaillant: 1, main: 1, intergas: 1, baxi: 1 };
 
     function bindBrandVideos() {
         var picks = document.getElementById('brand-picks');

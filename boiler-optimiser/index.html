@@ -933,6 +933,7 @@
         #intergas-figure[hidden],
         #worcester-models[hidden],
         #main-models[hidden],
+        #baxi-models[hidden],
         #brand-note[hidden],
         #videos-soon-note[hidden],
         #brand-back[hidden],
@@ -1099,7 +1100,8 @@
         #vaillant-models .choice-toggle,
         #worcester-models .choice-toggle,
         #intergas-models .choice-toggle,
-        #main-models .choice-toggle {
+        #main-models .choice-toggle,
+        #baxi-models .choice-toggle {
             display: grid;
             gap: 0.5rem;
             align-items: start;
@@ -1110,7 +1112,8 @@
         }
 
         #worcester-models .choice-toggle,
-        #main-models .choice-toggle {
+        #main-models .choice-toggle,
+        #baxi-models .choice-toggle {
             grid-template-columns: minmax(0, 9.5rem);
             justify-content: center;
             width: 100%;
@@ -1126,7 +1129,8 @@
         #vaillant-models .model-pick,
         #worcester-models .model-pick,
         #intergas-models .model-pick,
-        #main-models .model-pick {
+        #main-models .model-pick,
+        #baxi-models .model-pick {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1137,7 +1141,8 @@
         #vaillant-models .choice-button,
         #worcester-models .choice-button,
         #intergas-models .choice-button,
-        #main-models .choice-button {
+        #main-models .choice-button,
+        #baxi-models .choice-button {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1160,7 +1165,9 @@
         #intergas-models .choice-button:focus,
         #intergas-models .choice-button:focus-visible,
         #main-models .choice-button:focus,
-        #main-models .choice-button:focus-visible {
+        #main-models .choice-button:focus-visible,
+        #baxi-models .choice-button:focus,
+        #baxi-models .choice-button:focus-visible {
             outline: none;
             border-color: var(--text);
         }
@@ -1168,7 +1175,8 @@
         #vaillant-models .choice-button img,
         #worcester-models .choice-button img,
         #intergas-models .choice-button img,
-        #main-models .choice-button img {
+        #main-models .choice-button img,
+        #baxi-models .choice-button img {
             display: block;
             width: 100%;
             max-width: 8.5rem;
@@ -1182,7 +1190,8 @@
         #vaillant-models .choice-button.active,
         #worcester-models .choice-button.active,
         #intergas-models .choice-button.active,
-        #main-models .choice-button.active {
+        #main-models .choice-button.active,
+        #baxi-models .choice-button.active {
             background: var(--surface);
             color: var(--text);
             border-color: var(--text);
@@ -1191,7 +1200,8 @@
         #vaillant-models .model-go,
         #worcester-models .model-go,
         #intergas-models .model-go,
-        #main-models .model-go {
+        #main-models .model-go,
+        #baxi-models .model-go {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -1208,14 +1218,16 @@
         #vaillant-models .model-go[hidden],
         #worcester-models .model-go[hidden],
         #intergas-models .model-go[hidden],
-        #main-models .model-go[hidden] {
+        #main-models .model-go[hidden],
+        #baxi-models .model-go[hidden] {
             display: none;
         }
 
         #vaillant-models,
         #intergas-models,
         #worcester-models,
-        #main-models {
+        #main-models,
+        #baxi-models {
             margin-top: 0;
         }
 
@@ -2344,7 +2356,7 @@
     twq('config','nvyf0');
     </script>
     <!-- End X conversion tracking base code -->
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=confirm-form-saving" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=baxi-how-to" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -2790,6 +2802,17 @@
                         </div>
                     </div>
                 </div>
+                <div id="baxi-models" hidden>
+                    <div class="choice-toggle" role="group" aria-label="Which Baxi">
+                        <div class="model-pick">
+                            <button type="button" class="choice-button" data-model="duo-tec" aria-pressed="false" aria-label="Duo-tec, Platinum or 600. Baxi with two grey knobs and a central display. The left knob is heating.">
+                                <span>Duo-tec, Platinum, 600</span>
+                                <img src="/boiler-optimiser/images/baxi-duo-tec-panel.png" alt="" width="720" height="432">
+                            </button>
+                            <a class="model-go" data-model="duo-tec" href="/baxi/how-to-adjust-the-flow-temperature-on-baxi-duo-tec/" hidden>Go</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </details>
 
@@ -3006,7 +3029,7 @@
             var brandBar = document.getElementById('brand-bar');
             var brandBack = document.getElementById('brand-back');
             var modelButtons = document.querySelectorAll('button[data-model]');
-            var BRANDS_WITH_STEPS = { worcester: 1, vaillant: 1, main: 1, intergas: 1 };
+            var BRANDS_WITH_STEPS = { worcester: 1, vaillant: 1, main: 1, intergas: 1, baxi: 1 };
             var BRAND_MANUALS = {
                 worcester: { name: 'Worcester Bosch', href: 'https://boilermanuals.com/brands/worcester-bosch.html' },
                 vaillant: { name: 'Vaillant', href: 'https://boilermanuals.com/brands/vaillant.html' },
@@ -3361,13 +3384,14 @@
                 brandBack.hidden = !brand;
                 brandBar.classList.toggle('is-chosen', !!brand);
                 document.getElementById('vaillant-models').hidden = brand !== 'vaillant';
-                document.querySelectorAll('#vaillant-models .model-go, #worcester-models .model-go, #intergas-models .model-go, #main-models .model-go').forEach(function (go) {
+                document.querySelectorAll('#vaillant-models .model-go, #worcester-models .model-go, #intergas-models .model-go, #main-models .model-go, #baxi-models .model-go').forEach(function (go) {
                     go.hidden = go.getAttribute('data-model') !== boilerModel;
                 });
                 document.getElementById('intergas-models').hidden = brand !== 'intergas';
                 document.getElementById('intergas-figure').hidden = brand !== 'intergas' || boilerModel !== 'intergas';
                 document.getElementById('worcester-models').hidden = brand !== 'worcester';
                 document.getElementById('main-models').hidden = brand !== 'main';
+                document.getElementById('baxi-models').hidden = brand !== 'baxi';
                 fillBrandNote(brand);
                 var otherType = system === 'combi-cylinder';
                 var standardBoiler = boilerType !== 'condensing';
