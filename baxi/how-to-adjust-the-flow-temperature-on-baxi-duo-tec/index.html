@@ -80,9 +80,12 @@
             color: var(--text);
         }
     
-        .article-content img {
+        body .article-content img {
             display: block;
-            max-width: min(100%, 720px);
+            width: auto;
+            max-width: min(100%, 800px);
+            max-height: 600px;
+            object-fit: contain;
             height: auto;
             margin: 1rem auto 1.5rem;
             border-radius: var(--radius);
@@ -91,7 +94,8 @@
 
         .article-video {
             width: 100%;
-            margin: 1.25rem 0 1.75rem;
+            max-width: 640px;
+            margin: 1.25rem auto 1.75rem;
             border-radius: var(--radius-lg);
             overflow: hidden;
             background: var(--surface);
@@ -101,6 +105,7 @@
         .article-video video {
             display: block;
             width: 100%;
+            max-width: 640px;
             aspect-ratio: 16 / 9;
             height: auto;
             border: 0;
@@ -175,7 +180,7 @@
     </header>
 
     <div class="article-container">
-        <a class="page-back" href="/boiler-optimiser/">← Back</a>
+        <a class="page-back" href="/baxi/how-to-adjust-the-flow-temperature/">← Back</a>
         <header class="article-header">
             <h1 class="article-title">How to Adjust the Flow Temperature on a Baxi Duo-tec, Platinum or 600</h1>
             <p class="article-intro">
@@ -185,7 +190,7 @@
 
         <article class="article-content">
             <p>This fascia has two grey knobs and a central display. It is the usual layout on Duo-tec, Platinum and 600 combis. Main Eco and some Potterton Promax boilers look the same. It is not the later 800 series touch controls.</p>
-            <img src="baxi-duo-tec-panel.png" width="720" height="432" alt="Baxi Duo-tec style control panel. The left knob is heating, the right knob is hot water.">
+            <img src="baxi-duo-tec-panel.png" width="266" height="179" alt="Baxi Duo-tec style control panel. The left knob is heating, the right knob is hot water.">
             <ol>
                 <li>The left knob with the radiator symbol is heating flow. The right knob with the tap is hot water — leave that if you only came to lower the heating.</li>
                 <li>Turn the radiator knob until the display shows the flow you want. Typical range is about 25°C to 80°C.</li>
@@ -194,15 +199,15 @@
             <h2>Video</h2>
             <div class="article-video">
                 <video
-                    src="baxi-heating-knob.mp4"
+                    src="baxi-heating-knob.mp4?v=640"
                     controls
                     playsinline
                     preload="metadata"
-                    poster="baxi-duo-tec-panel.png"
+                    poster="baxi-heating-knob-poster.png" width="640" height="360"
                     title="How to adjust the flow temperature on a Baxi Duo-tec, Platinum or 600"
                 ></video>
             </div>
-            <p>Look up your exact model on <a href="https://boilermanuals.com/brands/baxi.html">Boiler Manuals</a> if the fascia does not match.</p>
+            <p>Look up your exact model on <a href="https://boilermanuals.com/brands/baxi.html">Boiler Manuals</a> if the fascia does not match. Then return to the <a href="/baxi/how-to-adjust-the-flow-temperature/">Baxi flow-temperature page</a> or the <a href="/boiler-optimiser/">Boiler Optimiser</a>.</p>
         </article>
     </div>
 

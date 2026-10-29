@@ -85,12 +85,16 @@
             color: var(--text);
         }
 
-        .article-content img {
+        body .article-content img {
             display: block;
-            max-width: min(100%, 720px);
+            width: auto;
+            max-width: min(100%, 800px);
+            max-height: 600px;
+            object-fit: contain;
             height: auto;
             margin: 1rem auto 1.5rem;
             border-radius: var(--radius);
+            background: #fff;
         }
 
         .article-video {

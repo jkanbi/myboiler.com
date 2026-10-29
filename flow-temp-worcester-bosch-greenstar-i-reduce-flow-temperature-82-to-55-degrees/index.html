@@ -85,14 +85,32 @@
             color: var(--text);
         }
 
-        .article-content img {
+        body .article-content img {
             display: block;
-            max-width: min(100%, 720px);
+            width: auto;
+            max-width: min(100%, 800px);
+            max-height: 600px;
+            object-fit: contain;
             height: auto;
             margin: 1rem auto 1.5rem;
             border-radius: var(--radius);
+            background: #fff;
         }
 
+        .page-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0 0 1.25rem;
+            padding: 0.55rem 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .page-back:hover { border-color: var(--accent); }
         .article-video {
             width: 100%;
             margin: 1.25rem 0 1.75rem;
@@ -197,6 +215,7 @@
 
     <!-- Article Content -->
         <div class="article-container">
+        <a class="page-back" href="/worcester-bosch/how-to-adjust-the-flow-temperature/">← Back</a>
         <header class="article-header">
             <h1 class="article-title">Worcester Bosch Greenstar i: reduce flow temperature from 82 to 55 degrees</h1>
             <p class="article-intro">
