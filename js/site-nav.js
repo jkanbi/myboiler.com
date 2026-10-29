@@ -79,7 +79,7 @@
         '<li><a href="/affilate-activity-disclosure/">Affiliates Disclosure</a></li>' +
         '</ul></div>' +
         '<div class="footer-column"><h3>Contact Us</h3><ul>' +
-        '<li><a href="mailto:affiliates@myboiler.com">affiliates@myboiler.com</a></li>' +
+        '<li><a href="mailto:info@myboiler.com">info@myboiler.com</a></li>' +
         '<li><a href="tel:+447484842790">07484 842790</a></li>' +
         '</ul></div>' +
         '<div class="footer-column"><h3>Sister Sites</h3><ul>' +
