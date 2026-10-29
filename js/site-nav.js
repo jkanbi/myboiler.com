@@ -79,8 +79,8 @@
         '<li><a href="/affilate-activity-disclosure/">Affiliates Disclosure</a></li>' +
         '</ul></div>' +
         '<div class="footer-column"><h3>Contact Us</h3><ul>' +
-        '<li>A Rated House,</li><li>11 Sunnymead Road,</li><li>London,</li><li>NW9 8BT</li>' +
-        '<li><a href="tel:+442081234411">+44 020 8123 4411</a></li>' +
+        '<li><a href="mailto:affiliates@myboiler.com">affiliates@myboiler.com</a></li>' +
+        '<li><a href="tel:+447484842790">07484 842790</a></li>' +
         '</ul></div>' +
         '<div class="footer-column"><h3>Sister Sites</h3><ul>' +
         '<li><a href="https://boilermanuals.com">Boiler Manuals</a></li>' +

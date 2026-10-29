@@ -81,6 +81,18 @@ function polish(filePath) {
 
     html = injectXPixel(html).html;
 
+    const casingNote =
+        '<p class="installer-casing-note">For engineers only. Do not open the boiler casing.</p>';
+    if (
+        html.indexOf("<th>Installer action</th>") !== -1 &&
+        html.indexOf("Do not open the boiler casing.") === -1
+    ) {
+        html = html.replace(
+            /(<div class="table-wrap"><table><thead><tr><th>Error code<\/th><th>Possible fault<\/th><th>Installer action<\/th>)/,
+            casingNote + "\n            $1"
+        );
+    }
+
     if (rel === "ariston-fault-codes/index.html") {
         html = html.replace(
             '<p class="article-back"><a href="/advice/">Back to Advice</a></p>',
