@@ -148,6 +148,18 @@ async function snapshot(page, tracker) {
                 return el ? el.textContent.trim() : '';
             })(),
             cookieSettings: !!document.querySelector('.optimiser-cookie-settings'),
+            cookieSettingsInFooter: !!(document.querySelector('#site-footer .optimiser-cookie-settings') || document.querySelector('footer .optimiser-cookie-settings')),
+            dismiss: !!document.querySelector('.optimiser-consent__dismiss'),
+            ariaModal: (function () {
+                var el = document.querySelector('.optimiser-consent');
+                return el ? el.getAttribute('aria-modal') : null;
+            })(),
+            overlay: !!document.querySelector('.optimiser-consent-overlay, .optimiser-consent__backdrop'),
+            bodyOverflow: document.body ? (document.body.style.overflow || window.getComputedStyle(document.body).overflow) : '',
+            htmlConsentClass: document.documentElement.classList.contains('optimiser-consent-open'),
+            dismissed: (function () {
+                try { return sessionStorage.getItem('mb_optimiser_consent_dismissed') || ''; } catch (err) { return ''; }
+            })(),
             twqType: typeof window.twq
         };
     });
@@ -237,8 +249,9 @@ async function waitQuiet(page, ms) {
 async function screenshotBanner(page, filename) {
     try {
         fs.mkdirSync(ARTIFACTS, { recursive: true });
-        const banner = page.locator('.optimiser-consent');
+        const banner = page.locator('.optimiser-consent.is-visible');
         await banner.waitFor({ state: 'visible' });
+        await page.waitForTimeout(400);
         await page.screenshot({
             path: path.join(ARTIFACTS, filename),
             fullPage: false
@@ -264,7 +277,7 @@ async function screenshotBanner(page, filename) {
         const { context, page, tracker } = await newCleanPage(browser);
         await page.goto(BASE + spec.path, { waitUntil: 'domcontentloaded' });
         if (spec.optimiser) {
-            await page.waitForSelector('.optimiser-consent');
+            await page.waitForSelector('.optimiser-consent.is-visible');
             await page.waitForSelector('.optimiser-cookie-settings');
         } else {
             await waitQuiet(page, 2500);
@@ -289,12 +302,21 @@ async function screenshotBanner(page, filename) {
         if (!before.banner) fail(spec.name + ': banner missing before consent', before);
         if (before.twqType !== 'undefined') fail(spec.name + ': twq defined before consent', before);
         if (before.choice) fail(spec.name + ': choice already stored before consent', before);
+        if (before.ariaModal) fail(spec.name + ': banner must not be a modal', before);
+        if (before.overlay) fail(spec.name + ': banner must not use an overlay', before);
+        if (before.bodyOverflow === 'hidden') fail(spec.name + ': body scroll is locked', before);
+        if (!before.dismiss) fail(spec.name + ': dismiss control missing', before);
+        if (!before.cookieSettingsInFooter) fail(spec.name + ': Cookie settings is not in the footer', before);
 
         if (spec.name === 'boiler-optimiser') {
-            await screenshotBanner(page, 'optimiser_x_consent_banner_desktop.png');
+            await screenshotBanner(page, 'optimiser_slim_bar_desktop.png');
+            const choiceBtn = page.locator('[data-boiler], .choice-button').first();
+            if (await choiceBtn.count()) {
+                await choiceBtn.click({ trial: false });
+            }
             await page.setViewportSize({ width: 375, height: 812 });
-            await waitQuiet(page, 400);
-            await screenshotBanner(page, 'optimiser_x_consent_banner_mobile.png');
+            await waitQuiet(page, 500);
+            await screenshotBanner(page, 'optimiser_slim_bar_mobile.png');
             await page.setViewportSize({ width: 1280, height: 800 });
         }
 
@@ -325,6 +347,38 @@ async function screenshotBanner(page, filename) {
 
         await context.close();
     }
+
+    const dismissFlow = await newCleanPage(browser);
+    await dismissFlow.page.goto(BASE + '/boiler-optimiser/', { waitUntil: 'domcontentloaded' });
+    await dismissFlow.page.waitForSelector('.optimiser-consent.is-visible');
+    await dismissFlow.page.click('.optimiser-consent__dismiss');
+    await waitQuiet(dismissFlow.page, 400);
+    const afterDismiss = await snapshot(dismissFlow.page, dismissFlow.tracker);
+    record('boiler-optimiser', 'after dismiss', afterDismiss);
+    if (afterDismiss.banner) fail('dismiss: banner still visible', afterDismiss);
+    if (afterDismiss.choice) fail('dismiss: must not store a consent choice', afterDismiss);
+    if (afterDismiss.dismissed !== '1') fail('dismiss: session flag missing', afterDismiss);
+    if (afterDismiss.uwtRequested) fail('dismiss: uwt.js requested', afterDismiss);
+    if (afterDismiss.posthogRequested) fail('dismiss: PostHog requested', afterDismiss);
+    if (afterDismiss.twqType !== 'undefined') fail('dismiss: twq should not be defined', afterDismiss);
+
+    resetTracker(dismissFlow.tracker);
+    await dismissFlow.page.reload({ waitUntil: 'domcontentloaded' });
+    await waitQuiet(dismissFlow.page, 1500);
+    const afterReloadDismissed = await snapshot(dismissFlow.page, dismissFlow.tracker);
+    record('boiler-optimiser', 'reload after dismiss', afterReloadDismissed);
+    if (afterReloadDismissed.banner) fail('reload after dismiss: banner should stay hidden', afterReloadDismissed);
+    if (afterReloadDismissed.uwtRequested) fail('reload after dismiss: uwt.js requested', afterReloadDismissed);
+    if (afterReloadDismissed.posthogRequested) fail('reload after dismiss: PostHog requested', afterReloadDismissed);
+
+    await dismissFlow.page.click('.optimiser-cookie-settings');
+    await dismissFlow.page.waitForSelector('.optimiser-consent.is-visible');
+    const afterReopen = await snapshot(dismissFlow.page, dismissFlow.tracker);
+    record('boiler-optimiser', 'Cookie settings reopen', afterReopen);
+    if (!afterReopen.banner) fail('Cookie settings did not reopen the banner', afterReopen);
+    if (afterReopen.uwtRequested) fail('reopen: uwt.js requested before Accept', afterReopen);
+    if (afterReopen.posthogRequested) fail('reopen: PostHog requested before Accept', afterReopen);
+    await dismissFlow.context.close();
 
     const returningAccepted = await newCleanPage(browser);
     await returningAccepted.page.addInitScript(function () {

@@ -4,6 +4,7 @@
     var API_HOST = 'https://eu.i.posthog.com';
     var UI_HOST = 'https://eu.posthog.com';
     var STORAGE_KEY = 'mb_optimiser_posthog';
+    var DISMISS_KEY = 'mb_optimiser_consent_dismissed';
     var PIXEL_ID = 'nvyf0';
     var xLoaded = false;
 
@@ -396,47 +397,97 @@
         } catch (err) { /* private mode */ }
     }
 
+    function sessionDismissed() {
+        try {
+            return sessionStorage.getItem(DISMISS_KEY) === '1';
+        } catch (err) {
+            return false;
+        }
+    }
+
+    function markSessionDismissed() {
+        try {
+            sessionStorage.setItem(DISMISS_KEY, '1');
+        } catch (err) { /* private mode */ }
+    }
+
+    function prefersReducedMotion() {
+        return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+
     function injectStyles() {
         if (document.getElementById('optimiser-consent-style')) return;
         var style = document.createElement('style');
         style.id = 'optimiser-consent-style';
         style.textContent = [
-            '.optimiser-consent{position:fixed;left:0;right:0;bottom:0;z-index:1100;background:var(--surface);border-top:1px solid var(--border);box-shadow:var(--shadow-md);padding:0.75rem var(--page-inline,16px);}',
-            '.optimiser-consent__inner{max-width:var(--max-width,1024px);margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:0.65rem 1rem;}',
-            '.optimiser-consent__text{flex:1 1 16rem;margin:0;font-size:0.875rem;line-height:1.45;color:var(--text);}',
-            '.optimiser-consent__actions{display:flex;flex-wrap:wrap;gap:0.45rem;}',
-            '.optimiser-consent button{min-height:2.2rem;min-width:5.6rem;padding:0.35rem 0.85rem;font:inherit;font-size:0.8125rem;font-weight:600;border-radius:var(--radius);cursor:pointer;border:2px solid var(--text);background:var(--surface);color:var(--text);box-sizing:border-box;}',
-            '.optimiser-consent__accept,.optimiser-consent__decline{background:var(--surface);color:var(--text);border:2px solid var(--text);}',
-            'body.optimiser-consent-open{padding-bottom:6.5rem;}',
-            '@media (max-width:640px){body.optimiser-consent-open{padding-bottom:8.5rem;}.optimiser-consent{padding:0.55rem 12px;}.optimiser-consent__text{font-size:0.75rem;}.optimiser-consent button{min-height:2rem;min-width:4.8rem;font-size:0.75rem;}}',
-            '.optimiser-cookie-settings-wrap{max-width:var(--max-width,1024px);margin:0 auto;padding:0.35rem var(--page-inline,16px) 1rem;}',
-            '.optimiser-cookie-settings{background:none;border:0;padding:0;color:var(--link,#1863dc);font:inherit;font-size:0.875rem;cursor:pointer;text-decoration:underline;}'
+            'html.optimiser-consent-open body{padding-bottom:2.75rem;}',
+            '.optimiser-consent{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--surface);border-top:1px solid var(--border);box-shadow:0 -1px 4px rgba(15,23,42,0.06);padding:0.35rem var(--page-inline,16px);pointer-events:auto;transform:translateY(100%);}',
+            '.optimiser-consent.is-visible{transform:translateY(0);transition:transform 0.35s ease;}',
+            '.optimiser-consent__inner{max-width:var(--max-width,1024px);margin:0 auto;display:flex;flex-wrap:nowrap;align-items:center;gap:0.5rem 0.75rem;}',
+            '.optimiser-consent__text{flex:1 1 auto;min-width:0;margin:0;font-size:0.75rem;line-height:1.35;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}',
+            '.optimiser-consent__actions{display:flex;flex-wrap:nowrap;align-items:center;gap:0.35rem;flex:0 0 auto;}',
+            '.optimiser-consent button{font:inherit;font-size:0.75rem;font-weight:600;cursor:pointer;box-sizing:border-box;border-radius:var(--radius);}',
+            '.optimiser-consent__accept,.optimiser-consent__decline{min-height:1.7rem;min-width:4.4rem;padding:0.15rem 0.55rem;border:1px solid var(--text);background:var(--surface);color:var(--text);}',
+            '.optimiser-consent__dismiss{width:1.7rem;height:1.7rem;padding:0;border:0;background:transparent;color:var(--text);font-size:1.05rem;line-height:1;opacity:0.7;}',
+            '.optimiser-consent__dismiss:hover,.optimiser-consent__dismiss:focus{opacity:1;}',
+            '@media (max-width:640px){html.optimiser-consent-open body{padding-bottom:4.25rem;}.optimiser-consent{padding:0.3rem 10px 0.4rem;}.optimiser-consent__inner{flex-wrap:wrap;gap:0.2rem 0.5rem;}.optimiser-consent__text{flex:1 1 100%;white-space:normal;overflow:visible;text-overflow:unset;font-size:0.6875rem;line-height:1.3;}.optimiser-consent__actions{margin-left:auto;}.optimiser-consent__accept,.optimiser-consent__decline{min-width:3.8rem;min-height:1.6rem;font-size:0.6875rem;padding:0.12rem 0.45rem;}}',
+            '@media (prefers-reduced-motion:reduce){.optimiser-consent,.optimiser-consent.is-visible{transform:none;transition:none;}}',
+            '.optimiser-cookie-settings-wrap{margin:0.4rem 0 0;text-align:center;}',
+            '.optimiser-cookie-settings{background:none;border:0;padding:0;color:inherit;font:inherit;font-size:0.8125rem;cursor:pointer;text-decoration:underline;}'
         ].join('');
-        document.head.appendChild(style);
+        (document.head || document.documentElement).appendChild(style);
+    }
+
+    function reserveBannerSpace() {
+        var choiceMade = storedChoice();
+        if (choiceMade === 'accepted' || choiceMade === 'declined') return;
+        if (sessionDismissed()) return;
+        document.documentElement.classList.add('optimiser-consent-open');
     }
 
     function hideBanner(banner) {
-        if (banner && banner.parentNode) banner.parentNode.removeChild(banner);
-        document.body.classList.remove('optimiser-consent-open');
+        var bar = banner || document.querySelector('.optimiser-consent');
+        if (bar && bar.parentNode) bar.parentNode.removeChild(bar);
+        document.documentElement.classList.remove('optimiser-consent-open');
+        if (document.body) document.body.classList.remove('optimiser-consent-open');
+    }
+
+    function dismissForSession(banner) {
+        markSessionDismissed();
+        hideBanner(banner);
+    }
+
+    function revealBanner(banner) {
+        if (prefersReducedMotion()) {
+            banner.classList.add('is-visible');
+            return;
+        }
+        window.setTimeout(function () {
+            window.requestAnimationFrame(function () {
+                banner.classList.add('is-visible');
+            });
+        }, 280);
     }
 
     function showBanner() {
         injectStyles();
         if (document.querySelector('.optimiser-consent')) return;
+        if (!document.body) return;
         var banner = document.createElement('div');
         banner.className = 'optimiser-consent';
         banner.setAttribute('role', 'region');
-        banner.setAttribute('aria-label', 'Analytics consent');
+        banner.setAttribute('aria-label', 'Optional cookies');
         banner.innerHTML =
             '<div class="optimiser-consent__inner">' +
-                '<p class="optimiser-consent__text">We\'d like to use optional cookies on the Boiler Optimiser: PostHog analytics to see how the tool is used, and the X ads pixel to measure our X ads. Nothing is set unless you accept.</p>' +
+                '<p class="optimiser-consent__text">Optional cookies for PostHog analytics and X ads. Nothing is set unless you accept.</p>' +
                 '<div class="optimiser-consent__actions">' +
                     '<button type="button" class="optimiser-consent__accept">Accept</button>' +
                     '<button type="button" class="optimiser-consent__decline">Opt out</button>' +
+                    '<button type="button" class="optimiser-consent__dismiss" aria-label="Dismiss">&times;</button>' +
                 '</div>' +
             '</div>';
         document.body.appendChild(banner);
-        document.body.classList.add('optimiser-consent-open');
+        document.documentElement.classList.add('optimiser-consent-open');
         banner.querySelector('.optimiser-consent__accept').addEventListener('click', function () {
             storeChoice('accepted');
             hideBanner(banner);
@@ -446,11 +497,16 @@
             hideBanner(banner);
             optOutAndClear();
         });
+        banner.querySelector('.optimiser-consent__dismiss').addEventListener('click', function () {
+            dismissForSession(banner);
+        });
+        revealBanner(banner);
     }
 
     function placeCookieSettings() {
         injectStyles();
-        if (document.querySelector('.optimiser-cookie-settings')) return;
+        var existing = document.querySelector('.optimiser-cookie-settings-wrap');
+        if (existing && existing.parentNode) existing.parentNode.removeChild(existing);
         var wrap = document.createElement('div');
         wrap.className = 'optimiser-cookie-settings-wrap';
         var btn = document.createElement('button');
@@ -459,17 +515,36 @@
         btn.textContent = 'Cookie settings';
         btn.addEventListener('click', showBanner);
         wrap.appendChild(btn);
-        document.body.appendChild(wrap);
+        var host = document.getElementById('site-footer');
+        var copyright = host && host.querySelector('footer.copyright:last-of-type');
+        if (copyright) copyright.appendChild(wrap);
+        else if (host) host.appendChild(wrap);
+        else if (document.body) document.body.appendChild(wrap);
     }
+
+    function hookFooter() {
+        var original = window.installSiteFooter;
+        if (typeof original !== 'function' || original.__mbConsentHooked) return;
+        var wrapped = function () {
+            original.call(window);
+            placeCookieSettings();
+        };
+        wrapped.__mbConsentHooked = true;
+        window.installSiteFooter = wrapped;
+    }
+
+    injectStyles();
+    reserveBannerSpace();
 
     ready(function () {
         bindConfirm();
         bindBrandVideos();
+        hookFooter();
         placeCookieSettings();
         var choiceMade = storedChoice();
         if (choiceMade === 'accepted') {
             startFullMode();
-        } else if (choiceMade !== 'declined') {
+        } else if (choiceMade !== 'declined' && !sessionDismissed()) {
             showBanner();
         }
     });
