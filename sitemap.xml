@@ -1188,4 +1188,16 @@
     <loc>https://myboiler.com/worcester-bosch/worcester-bosch-guarantee-lengths/</loc>
     <lastmod>2026-10-04</lastmod>
   </url>
+  <url>
+    <loc>https://myboiler.com/baxi/how-to-adjust-the-flow-temperature-on-baxi-ecoblue-advance/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://myboiler.com/baxi/how-to-adjust-the-flow-temperature-on-baxi-400-600-800-heat/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
