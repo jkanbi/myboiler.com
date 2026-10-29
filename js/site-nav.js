@@ -1,4 +1,17 @@
 (function () {
+    if (window.__mbConsentLoader) return;
+    window.__mbConsentLoader = true;
+    var css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = '/css/consent.css?v=consent-1';
+    (document.head || document.documentElement).appendChild(css);
+    var script = document.createElement('script');
+    script.src = '/js/consent.js?v=consent-1';
+    script.setAttribute('data-cfasync', 'false');
+    (document.head || document.documentElement).appendChild(script);
+})();
+
+(function () {
     if (window.__mbWinterBannerLoader) return;
     window.__mbWinterBannerLoader = true;
 
@@ -76,6 +89,7 @@
         '<li><a href="/carbon-emissions/">Carbon Emissions</a></li>' +
         '<li><a href="/mission/">Our Mission</a></li>' +
         '<li><a href="/privacy-policy/">Privacy Policy</a></li>' +
+        '<li><button type="button" class="mb-cookie-settings" data-mb-cookie-settings>Cookie settings</button></li>' +
         '<li><a href="/affilate-activity-disclosure/">Affiliates Disclosure</a></li>' +
         '</ul></div>' +
         '<div class="footer-column"><h3>Contact Us</h3><ul>' +

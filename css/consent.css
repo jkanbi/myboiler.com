@@ -1,0 +1,131 @@
+/* Slim site-wide cookie bar. No overlay, no scroll lock. */
+.mb-consent {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1100;
+    background: var(--surface, #ffffff);
+    border-top: 1px solid var(--border, #dfe2e6);
+    box-shadow: 0 -4px 16px rgba(27, 27, 27, 0.06);
+    padding: 0.5rem var(--page-inline, 16px);
+    box-sizing: border-box;
+}
+
+.mb-consent__inner {
+    max-width: var(--max-width, 1024px);
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem 0.85rem;
+}
+
+.mb-consent__text {
+    flex: 1 1 14rem;
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--text, #1b1b1b);
+}
+
+.mb-consent__text a {
+    color: var(--link, #1863dc);
+    text-decoration: underline;
+}
+
+.mb-consent__actions {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.4rem;
+    flex: 0 0 auto;
+}
+
+.mb-consent__actions button {
+    min-height: 2.2rem;
+    min-width: 5.6rem;
+    padding: 0.3rem 0.85rem;
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1;
+    border-radius: var(--radius, 12px);
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.mb-consent__accept,
+.mb-consent__reject {
+    background: var(--surface, #ffffff);
+    color: var(--text, #1b1b1b);
+    border: 2px solid var(--text, #1b1b1b);
+}
+
+.mb-consent__accept:hover,
+.mb-consent__reject:hover,
+.mb-consent__accept:focus,
+.mb-consent__reject:focus {
+    border-color: var(--accent, #1863dc);
+    color: var(--accent, #1863dc);
+}
+
+body.mb-consent-open {
+    padding-bottom: 5.25rem;
+}
+
+.footer-column .mb-cookie-settings {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    color: var(--text);
+    font: inherit;
+    font-weight: 500;
+    font-size: inherit;
+    line-height: inherit;
+    cursor: pointer;
+    text-align: left;
+    display: inline;
+}
+
+.footer-column .mb-cookie-settings:hover {
+    color: var(--link);
+}
+
+.optimiser-cookie-settings-wrap {
+    max-width: var(--max-width, 1024px);
+    margin: 0 auto;
+    padding: 0.35rem var(--page-inline, 16px) 1rem;
+}
+
+.optimiser-cookie-settings {
+    background: none;
+    border: 0;
+    padding: 0;
+    color: var(--link, #1863dc);
+    font: inherit;
+    font-size: 0.875rem;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+    .mb-consent {
+        padding: 0.45rem 12px;
+    }
+
+    .mb-consent__text {
+        font-size: 0.75rem;
+        flex-basis: 100%;
+    }
+
+    .mb-consent__actions button {
+        min-height: 2rem;
+        min-width: 4.8rem;
+        font-size: 0.75rem;
+    }
+
+    body.mb-consent-open {
+        padding-bottom: 7rem;
+    }
+}
