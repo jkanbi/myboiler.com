@@ -4,6 +4,8 @@
     var API_HOST = 'https://eu.i.posthog.com';
     var UI_HOST = 'https://eu.posthog.com';
     var STORAGE_KEY = 'mb_optimiser_posthog';
+    var PIXEL_ID = 'nvyf0';
+    var xLoaded = false;
 
     var path = (location.pathname || '').replace(/\/+$/, '');
     if (path.indexOf('/boiler-optimiser') !== 0) {
@@ -247,6 +249,7 @@
     }
 
     function startFullMode() {
+        loadXPixel();
         loadSnippet();
         if (!window.posthog || typeof window.posthog.init !== 'function') return;
         if (window.posthog.__loaded || window.posthog._i && window.posthog._i.length) {
@@ -269,6 +272,69 @@
         if (typeof window.posthog.startSessionRecording === 'function') {
             window.posthog.startSessionRecording();
         }
+    }
+
+    function expireNamedCookie(name) {
+        var host = location.hostname || '';
+        var domains = ['', host];
+        if (host) domains.push('.' + host);
+        var apex = host.replace(/^www\./, '');
+        if (apex && apex !== host) {
+            domains.push(apex);
+            domains.push('.' + apex);
+        }
+        domains.push('.myboiler.com');
+        var unique = [];
+        domains.forEach(function (domain) {
+            if (unique.indexOf(domain) === -1) unique.push(domain);
+        });
+        unique.forEach(function (domain) {
+            var extra = domain ? ';domain=' + domain : '';
+            try {
+                document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;Max-Age=0' + extra;
+            } catch (err) {}
+            try {
+                document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;Max-Age=0;Secure;SameSite=Lax' + extra;
+            } catch (err) {}
+        });
+    }
+
+    function clearTwCookies() {
+        var names = { _twsid: 1, _twpid: 1, _twclid: 1, personalization_id: 1 };
+        try {
+            document.cookie.split(';').forEach(function (part) {
+                var name = part.split('=')[0].trim();
+                if (name && (names[name] || name.indexOf('_tw') === 0)) names[name] = 1;
+            });
+        } catch (err) { /* ignore */ }
+        Object.keys(names).forEach(expireNamedCookie);
+    }
+
+    function loadXPixel() {
+        if (xLoaded) return;
+        xLoaded = true;
+        try {
+            document.querySelectorAll('script[src*="ads-twitter.com/uwt.js"]').forEach(function (el) {
+                if (el.parentNode) el.parentNode.removeChild(el);
+            });
+        } catch (err) { /* ignore */ }
+        try { delete window.twq; } catch (err) {
+            try { window.twq = undefined; } catch (err2) {}
+        }
+        !function (e, t, n, s, u, a) {
+            e.twq || (s = e.twq = function () {
+                s.exe ? s.exe.apply(s, arguments) : s.queue.push(arguments);
+            }, s.version = '1.1', s.queue = [], u = t.createElement(n), u.async = !0,
+            u.src = 'https://static.ads-twitter.com/uwt.js',
+            a = t.getElementsByTagName(n)[0], a.parentNode.insertBefore(u, a));
+        }(window, document, 'script');
+        if (typeof window.twq === 'function') window.twq('config', PIXEL_ID);
+    }
+
+    function disableXPixel() {
+        xLoaded = false;
+        try { window.twq = function () {}; } catch (err) {}
+        clearTwCookies();
     }
 
     function clearPhStorage() {
@@ -313,6 +379,7 @@
             }
         }
         clearPhStorage();
+        disableXPixel();
     }
 
     function storedChoice() {
@@ -338,11 +405,10 @@
             '.optimiser-consent__inner{max-width:var(--max-width,1024px);margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:0.65rem 1rem;}',
             '.optimiser-consent__text{flex:1 1 16rem;margin:0;font-size:0.875rem;line-height:1.45;color:var(--text);}',
             '.optimiser-consent__actions{display:flex;flex-wrap:wrap;gap:0.45rem;}',
-            '.optimiser-consent button{min-height:2.5rem;padding:0.45rem 0.95rem;font:inherit;font-size:0.875rem;font-weight:600;border-radius:var(--radius);cursor:pointer;}',
-            '.optimiser-consent__accept{background:var(--accent);color:#fff;border:2px solid var(--accent);}',
-            '.optimiser-consent__decline{background:var(--surface);color:var(--text);border:2px solid var(--border);}',
-            'body.optimiser-consent-open{padding-bottom:7.5rem;}',
-            '@media (max-width:640px){body.optimiser-consent-open{padding-bottom:10.5rem;}.optimiser-consent{padding:0.7rem 16px;}}',
+            '.optimiser-consent button{min-height:2.2rem;min-width:5.6rem;padding:0.35rem 0.85rem;font:inherit;font-size:0.8125rem;font-weight:600;border-radius:var(--radius);cursor:pointer;border:2px solid var(--text);background:var(--surface);color:var(--text);box-sizing:border-box;}',
+            '.optimiser-consent__accept,.optimiser-consent__decline{background:var(--surface);color:var(--text);border:2px solid var(--text);}',
+            'body.optimiser-consent-open{padding-bottom:6.5rem;}',
+            '@media (max-width:640px){body.optimiser-consent-open{padding-bottom:8.5rem;}.optimiser-consent{padding:0.55rem 12px;}.optimiser-consent__text{font-size:0.75rem;}.optimiser-consent button{min-height:2rem;min-width:4.8rem;font-size:0.75rem;}}',
             '.optimiser-cookie-settings-wrap{max-width:var(--max-width,1024px);margin:0 auto;padding:0.35rem var(--page-inline,16px) 1rem;}',
             '.optimiser-cookie-settings{background:none;border:0;padding:0;color:var(--link,#1863dc);font:inherit;font-size:0.875rem;cursor:pointer;text-decoration:underline;}'
         ].join('');
@@ -363,7 +429,7 @@
         banner.setAttribute('aria-label', 'Analytics consent');
         banner.innerHTML =
             '<div class="optimiser-consent__inner">' +
-                '<p class="optimiser-consent__text">We\'d like to record how you use the Boiler Optimiser, only to improve the tool. No personal data is stored, and all recordings will be deleted once the tool is finished.</p>' +
+                '<p class="optimiser-consent__text">We\'d like to use optional cookies on the Boiler Optimiser: PostHog analytics to see how the tool is used, and the X ads pixel to measure our X ads. Nothing is set unless you accept.</p>' +
                 '<div class="optimiser-consent__actions">' +
                     '<button type="button" class="optimiser-consent__accept">Accept</button>' +
                     '<button type="button" class="optimiser-consent__decline">Opt out</button>' +
