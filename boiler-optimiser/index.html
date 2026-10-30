@@ -1429,8 +1429,22 @@
             color: var(--text);
         }
 
+        .tool-confirm-raise {
+            margin: 0 0 0.85rem;
+            padding: 0.55rem 0.75rem;
+            border: 2px solid #d64545;
+            border-radius: var(--radius);
+            background: #d64545;
+            color: #fff;
+            font-size: 0.875rem;
+            font-weight: 600;
+            line-height: 1.4;
+            text-align: center;
+        }
+
         .tool-confirm.is-done .tool-confirm-fields,
         .tool-confirm.is-done .input-hint,
+        .tool-confirm.is-done .tool-confirm-raise,
         .tool-confirm.is-done #tool-confirm-submit {
             display: none;
         }
@@ -2665,7 +2679,7 @@
   "description": "Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow. A cylinder still needs 60°C stored water."
 }
     </script>
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=x-consent-3" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=x-consent-4" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -3084,6 +3098,7 @@
                     </div>
                 </div>
             </div>
+            <p class="tool-confirm-raise" id="tool-confirm-raise" hidden role="status">Aim lower if you can. Raising the flow temperature is worse long term: it uses more gas, is harder on the boiler, and future heating system changes may be needed.</p>
             <button type="submit" class="choice-button" id="tool-confirm-submit">Submit</button>
             <p class="tool-confirm-done" id="tool-confirm-done" hidden>Thanks. We logged that you set it.</p>
         </form>
@@ -3838,6 +3853,7 @@
                 if (rateTouched) {
                     fillConfirmField(confirmRateInput, pence === null ? null : Math.round(pence * 100) / 100);
                 }
+                if (typeof window.mbSyncConfirmRaiseNote === 'function') window.mbSyncConfirmRaiseNote();
 
                 var graphFigure = document.getElementById('note-5-figure');
                 var results = document.getElementById('tool-results');
@@ -4212,8 +4228,23 @@
             var confirmKwhInput = document.getElementById('confirm-kwh');
             var confirmRateInput = document.getElementById('confirm-rate');
             var confirmBrandInput = document.getElementById('confirm-brand');
+            var confirmRaiseNote = document.getElementById('tool-confirm-raise');
+            window.mbSyncConfirmRaiseNote = function () {
+                if (!confirmRaiseNote || !fromFlowInput || !setFlowInput) return;
+                var was = Number(fromFlowInput.value);
+                var nowSet = Number(setFlowInput.value);
+                confirmRaiseNote.hidden = !(
+                    fromFlowInput.value.trim() !== '' &&
+                    setFlowInput.value.trim() !== '' &&
+                    isFinite(was) &&
+                    isFinite(nowSet) &&
+                    nowSet > was
+                );
+            };
             if (fromFlowInput) fromFlowInput.addEventListener('input', markConfirmEdited);
             if (setFlowInput) setFlowInput.addEventListener('input', markConfirmEdited);
+            if (fromFlowInput) fromFlowInput.addEventListener('input', window.mbSyncConfirmRaiseNote);
+            if (setFlowInput) setFlowInput.addEventListener('input', window.mbSyncConfirmRaiseNote);
             if (confirmKwhInput) confirmKwhInput.addEventListener('input', markConfirmEdited);
             if (confirmRateInput) confirmRateInput.addEventListener('input', markConfirmEdited);
             if (confirmBrandInput) confirmBrandInput.addEventListener('change', markConfirmEdited);

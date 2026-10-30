@@ -142,6 +142,17 @@
                 rateInput.focus();
                 return;
             }
+            if (setFlow > fromFlow) {
+                var raiseNote = document.getElementById('tool-confirm-raise');
+                if (raiseNote) raiseNote.hidden = false;
+                var proceed = window.confirm(
+                    'Aim lower if you can. Raising the flow temperature is worse long term: it uses more gas, is harder on the boiler, and future heating system changes may be needed.\n\nSubmit this higher setting anyway?'
+                );
+                if (!proceed) {
+                    setInput.focus();
+                    return;
+                }
+            }
             submitted = true;
             var brandLabel = '';
             var selected = brandInput.options[brandInput.selectedIndex];
