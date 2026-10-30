@@ -1935,7 +1935,8 @@
         #note-timings,
         #note-5,
         #note-bill,
-        #note-space {
+        #note-space,
+        #note-custom-flow {
             scroll-margin-top: 5.5rem;
         }
 
@@ -2030,6 +2031,10 @@
             font-weight: 700;
             color: var(--text);
             margin-top: 0.2rem;
+        }
+
+        .result-value.is-loss {
+            color: #d64545;
         }
 
         .result-unit {
@@ -2326,18 +2331,32 @@
         }
 
         .custom-usage-flow {
-            margin: 0.4rem 0 0;
-            padding: 0.4rem 0.55rem 0.45rem;
+            margin: 0.35rem 0 0;
+            padding: 0.35rem 0.55rem;
             border: 2px solid var(--border);
             border-radius: var(--radius);
             background: var(--bg);
             box-sizing: border-box;
         }
 
-        .custom-usage-flow .input-heading {
-            justify-content: center;
-            margin-bottom: 0.2rem;
-            gap: 0.3rem 0.45rem;
+        .custom-usage-flow .custom-flow-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.45rem 0.6rem;
+        }
+
+        .custom-usage-flow .custom-flow-copy {
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+
+        .custom-usage-flow .custom-flow-title {
+            display: flex;
+            align-items: baseline;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            gap: 0.15rem 0.35rem;
         }
 
         .custom-usage-flow .input-label {
@@ -2345,27 +2364,19 @@
             font-size: 0.8125rem;
             font-weight: 600;
             line-height: 1.25;
-            text-align: center;
+            text-align: left;
         }
 
-        .custom-usage-panel .custom-usage-flow .bill-flow-pair {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.2rem 0.55rem;
-        }
-
-        .custom-usage-panel .custom-usage-flow .bill-flow-field {
-            gap: 0.15rem;
-        }
-
-        .custom-usage-panel .custom-usage-flow .bill-flow-field > .input-label {
-            max-width: 7.2rem;
-            text-wrap: balance;
+        .custom-usage-flow .calculated-hint {
+            margin: 0.1rem 0 0;
+            text-align: left;
         }
 
         .custom-usage-panel .custom-usage-flow .unit-rate-field {
-            justify-content: center;
+            justify-content: flex-end;
             gap: 0.25rem;
             width: auto;
+            flex: 0 0 auto;
         }
 
         .custom-usage-panel .custom-usage-flow .unit-rate-field .input-field {
@@ -2463,6 +2474,15 @@
                 display: flex;
                 flex-direction: column;
                 align-items: stretch;
+                overflow: hidden;
+            }
+
+            .custom-usage-body {
+                flex: 1 1 auto;
+                min-height: 0;
+                overflow: auto;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior: contain;
             }
 
             .condensate-warning-panel {
@@ -2486,10 +2506,7 @@
             }
 
             .custom-usage-spacer {
-                display: block;
-                flex: 1 1 auto;
-                min-height: 0.75rem;
-                pointer-events: none;
+                display: none;
             }
 
             .custom-usage-done {
@@ -2773,6 +2790,7 @@
                         <h3 id="custom-usage-title">Custom annual gas usage and unit rates</h3>
                         <button type="button" class="custom-usage-close" id="custom-usage-close" aria-label="Close">&times;</button>
                     </div>
+                    <div class="custom-usage-body">
                     <div class="custom-usage-fields">
                         <div class="unit-rate-field">
                             <input type="number" id="custom-kwh" class="input-field" inputmode="decimal" min="1" step="1" placeholder="xx,xxx" autocomplete="off" enterkeyhint="next" required aria-label="Annual gas usage in kWh">
@@ -2791,23 +2809,17 @@
                         </div>
                     </div>
                     <div class="custom-usage-flow">
-                        <div class="input-heading">
-                            <div class="input-label" id="custom-flow-label">Flow temperature before and after</div>
-                        </div>
-                        <div class="bill-flow-pair" role="group" aria-labelledby="custom-flow-label">
-                            <div class="bill-flow-field">
-                                <label class="input-label" for="custom-initial-flow">Before</label>
-                                <div class="unit-rate-field">
-                                    <input type="number" id="custom-initial-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" value="75" aria-label="Before flow temperature">
-                                    <span class="input-label" aria-hidden="true">°C</span>
+                        <div class="custom-flow-row">
+                            <div class="custom-flow-copy">
+                                <div class="custom-flow-title">
+                                    <label class="input-label" id="custom-flow-label" for="custom-initial-flow">Starting flow temperature</label>
+                                    <a class="label-aside" id="custom-flow-aside" href="#note-custom-flow" aria-label="Note">[.]</a>
                                 </div>
+                                <p class="calculated-hint" id="custom-flow-hint">Leave blank for 75°C, or type the flow it is already set to.</p>
                             </div>
-                            <div class="bill-flow-field">
-                                <label class="input-label" for="custom-final-flow">After</label>
-                                <div class="unit-rate-field">
-                                    <input type="number" id="custom-final-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" value="75" aria-label="After flow temperature">
-                                    <span class="input-label" aria-hidden="true">°C</span>
-                                </div>
+                            <div class="unit-rate-field">
+                                <input type="number" id="custom-initial-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" aria-labelledby="custom-flow-label">
+                                <span class="input-label" aria-hidden="true">°C</span>
                             </div>
                         </div>
                     </div>
@@ -2823,6 +2835,7 @@
                     </div>
                     <p class="custom-usage-error" id="custom-usage-error" hidden>Enter a usage and unit rate above 0.</p>
                     <p class="custom-usage-hint">Did you adjust the slider to see what your savings are?</p>
+                    </div>
                     <div class="custom-usage-spacer" aria-hidden="true"></div>
                     <button type="button" class="choice-button custom-usage-done" id="custom-usage-done">Done</button>
                 </div>
@@ -2873,7 +2886,7 @@
         <div id="bill-state" hidden>
             <input type="number" id="annual-kwh" inputmode="decimal" min="0" step="1" value="12000" tabindex="-1" aria-hidden="true">
             <input type="number" id="unit-rate" inputmode="decimal" min="0" step="0.01" value="7.97" tabindex="-1" aria-hidden="true">
-            <input type="number" id="initial-flow" inputmode="numeric" min="35" max="90" step="1" value="75" tabindex="-1" aria-hidden="true">
+            <input type="number" id="initial-flow" inputmode="numeric" min="35" max="90" step="1" tabindex="-1" aria-hidden="true">
             <input type="number" id="final-flow" inputmode="numeric" min="35" max="90" step="1" value="75" tabindex="-1" aria-hidden="true">
             <div id="space-heating-kwh">—</div>
         </div>
@@ -3144,7 +3157,6 @@
             var initialFlowInput = document.getElementById('initial-flow');
             var finalFlowInput = document.getElementById('final-flow');
             var customInitialFlowInput = document.getElementById('custom-initial-flow');
-            var customFinalFlowInput = document.getElementById('custom-final-flow');
 
             function syncUnfocused(input, value) {
                 if (!input || document.activeElement === input) return;
@@ -3237,7 +3249,7 @@
             function saving(fromFlow, toFlow) {
                 var etaNew = efficiency(toFlow);
                 var etaOld = efficiency(fromFlow);
-                if (!(etaNew > etaOld)) return 0;
+                if (!(etaNew > 0) || !(etaOld > 0)) return 0;
                 return 1 - etaOld / etaNew;
             }
 
@@ -3283,10 +3295,11 @@
             }
 
             function formatGBP(amount) {
-                return '£' + amount.toLocaleString('en-GB', {
+                var formatted = Math.abs(amount).toLocaleString('en-GB', {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                 });
+                return (amount < 0 ? '-' : '') + '£' + formatted;
             }
 
             function formatKwh(amount) {
@@ -3373,7 +3386,7 @@
 
             function methodNote() {
                 var note = document.createDocumentFragment();
-                note.appendChild(document.createTextNode('The saving is from the initial flow (75°C unless you change it) to the final flow. The return is taken as 20°C under the flow. Radiator output is compared with a standard catalogue radiator in a 20°C room. The saving uses the same efficiency curve as the '));
+                note.appendChild(document.createTextNode('The saving is from the starting flow (75°C unless you type a different figure in Custom) to the flow you choose. Raise the flow above that starting point and the figure is negative — extra gas, shown in red. The form at the bottom of the page is separate: that is only for telling us what you actually set on the boiler. The return is taken as 20°C under the flow. Radiator output is compared with a standard catalogue radiator in a 20°C room. The saving uses the same efficiency curve as the '));
                 note.appendChild(linkEl('/energy-saving/combi-boiler-condensing-mode-savings/', 'condensing-mode calculator'));
                 note.appendChild(document.createTextNode('. That curve is the graph below. Standing charge is not included. See '));
                 note.appendChild(linkEl('/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/', 'how to lower flow temperature'));
@@ -3536,7 +3549,6 @@
                 var flow = Number(flowInput.value);
                 var flowText = String(Math.round(flow));
                 syncUnfocused(finalFlowInput, flowText);
-                syncUnfocused(customFinalFlowInput, flowText);
                 if (initialFlowInput) syncUnfocused(customInitialFlowInput, initialFlowInput.value);
                 var fromFlow = flowFromInput(initialFlowInput, FACTORY_FLOW);
                 document.getElementById('heat-pump-cta').hidden = flow > 55 || storesHotWater();
@@ -3694,6 +3706,9 @@
                     ? '—'
                     : formatGBP(savingAmount);
                 setResult('condensing-saving', savingText);
+                document.querySelectorAll('[data-result="condensing-saving"]').forEach(function (el) {
+                    el.classList.toggle('is-loss', savingAmount < 0);
+                });
                 var boilerSaving = document.getElementById('boiler-saving');
                 var boilerSavingWrap = boilerSaving.parentElement;
                 boilerSaving.textContent = savingText;
@@ -3766,7 +3781,7 @@
                 } else if (setupAside) {
                     setupAside.hidden = true;
                 }
-                var flowSave = ' The saving is from the initial flow (75°C unless you change it) to the final flow.';
+                var flowSave = ' The saving figure uses a starting flow of 75°C, unless you type a different figure in Custom.';
                 var flowCopy;
                 if (!condensingBoiler) {
                     flowCopy = target === flow
@@ -3814,6 +3829,12 @@
                 );
                 setAside('space-heating-aside', spaceStep);
                 setAside('custom-space-heating-aside', spaceStep);
+                var customFlowStep = appendNote(
+                    'Starting flow temperature',
+                    'This box is only a custom starting point for the saving figure. It is not the “what the flow was” form at the bottom of the page — that form is for telling us what you actually changed on the boiler. Leave this box blank to compare against a factory 75°C. If someone has already set yours to 65°C, put 65 here so the saving is from that amount. Raise the flow above this starting point and the figure is negative — extra cost.',
+                    'note-custom-flow'
+                );
+                setAside('custom-flow-aside', customFlowStep);
                 appendNote('How this is worked out', methodNote());
                 appendNote('Smart & Modulating Controls', controlsNote(storesHotWater()));
                 var powerNote = document.createDocumentFragment();
@@ -4106,14 +4127,17 @@
                     flowSlider.classList.remove('is-hinting');
                     flowTouched = true;
                 }
-                if (commit) {
-                    if (finalFlowInput) finalFlowInput.value = next;
-                    if (customFinalFlowInput) customFinalFlowInput.value = next;
-                }
+                if (commit && finalFlowInput) finalFlowInput.value = next;
                 update();
             }
             function applyInitialFlow(source) {
                 if (!source) return;
+                if (!source.value.trim()) {
+                    if (initialFlowInput) initialFlowInput.value = '';
+                    if (customInitialFlowInput) customInitialFlowInput.value = '';
+                    update();
+                    return;
+                }
                 var next = String(flowFromInput(source, FACTORY_FLOW));
                 source.value = next;
                 if (initialFlowInput) initialFlowInput.value = next;
@@ -4144,14 +4168,6 @@
                 });
                 finalFlowInput.addEventListener('change', function () {
                     applyFinalFlow(finalFlowInput, true);
-                });
-            }
-            if (customFinalFlowInput) {
-                customFinalFlowInput.addEventListener('input', function () {
-                    applyFinalFlow(customFinalFlowInput, false);
-                });
-                customFinalFlowInput.addEventListener('change', function () {
-                    applyFinalFlow(customFinalFlowInput, true);
                 });
             }
             var condensateDialog = document.getElementById('condensate-warning-dialog');
