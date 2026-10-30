@@ -1665,8 +1665,21 @@
             text-align: left;
         }
 
-        .slider-prompt {
+        .slider-notes {
             margin: 0.7rem 0 0;
+            padding: 0.7rem 0.85rem 0.85rem;
+            border: 1px solid #c5c9ce;
+            border-radius: var(--radius);
+            background: #f7f8fa;
+            box-sizing: border-box;
+        }
+
+        .slider-notes .condensate-warning-btn {
+            margin-top: 0.7rem;
+        }
+
+        .slider-prompt {
+            margin: 0;
             font-size: 0.875rem;
             font-weight: 600;
             line-height: 1.4;
@@ -1675,7 +1688,7 @@
         }
 
         .timing-note {
-            margin: 0.55rem 0 0;
+            margin: 0.45rem 0 0;
             font-size: 0.875rem;
             font-weight: 600;
             line-height: 1.4;
@@ -2807,9 +2820,11 @@
                     <input type="range" id="flow-temp" class="input-slider" min="35" max="90" step="1" value="75" aria-label="Flow temperature" aria-describedby="slider-prompt">
                     <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                 </div>
-                <p class="slider-prompt" id="slider-prompt"><span id="slider-prompt-text">Move this slider to show your savings when reducing your flow temperature.</span> <a class="label-aside" id="flow-aside" href="#note-flow" aria-label="Note 2">[2.]</a></p>
-                <p class="timing-note" id="timing-note">You may need to add more time on the heating programmer. Lower flow temperature takes longer to warm the house. <a class="label-aside" id="timing-aside" href="#note-timings" aria-label="Note">[.]</a></p>
-                <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog">Warning: your condensate pipe must be correctly installed and insulated</button>
+                <div class="slider-notes">
+                    <p class="slider-prompt" id="slider-prompt"><span id="slider-prompt-text">Move this slider to show your savings when reducing your flow temperature.</span> <a class="label-aside" id="flow-aside" href="#note-flow" aria-label="Note 2">[2.]</a></p>
+                    <p class="timing-note" id="timing-note">You may need to add more time on the heating programmer. Lower flow temperature takes longer to warm the house. <a class="label-aside" id="timing-aside" href="#note-timings" aria-label="Note">[.]</a></p>
+                    <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog">Warning: your condensate pipe must be correctly installed and insulated</button>
+                </div>
                 <dialog class="custom-usage-dialog" id="condensate-warning-dialog" aria-labelledby="condensate-warning-title">
                     <div class="custom-usage-panel condensate-warning-panel">
                         <div class="custom-usage-head">
