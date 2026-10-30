@@ -146,6 +146,10 @@
             overflow: hidden;
         }
 
+        .cylinder-tank:has(#cylinder-hazard:not([hidden])) {
+            padding-top: 0.5rem;
+        }
+
         .cylinder-name,
         .cylinder-temp {
             position: relative;
@@ -170,16 +174,21 @@
         }
 
         .cylinder-hazard {
-            position: absolute;
-            top: 0.7rem;
-            left: 50%;
+            position: relative;
             z-index: 2;
-            transform: translateX(-50%);
-            font-family: "Apple Symbols", "Segoe UI Symbol", "Noto Sans Symbols 2", sans-serif;
-            font-size: 2.6rem;
-            line-height: 1;
+            flex-shrink: 0;
+            display: block;
+            width: 1.85rem;
+            height: 1.85rem;
+            margin: 0.15rem 0 0.08rem;
             color: #111;
-            text-shadow: none;
+        }
+
+        .cylinder-hazard svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+            fill: currentColor;
         }
 
         .cylinder-hazard[hidden] {
@@ -2718,9 +2727,9 @@
                     <div class="boiler-plant">
                         <div class="cylinder" id="cylinder-diagram" hidden>
                             <div class="cylinder-tank">
-                                <span class="cylinder-hazard" id="cylinder-hazard" hidden role="img" aria-label="Danger: stored water below 45 degrees">&#x2620;&#xFE0E;</span>
+                                <span class="cylinder-hazard" id="cylinder-hazard" hidden role="img" aria-label="Danger: stored water below 45 degrees"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.2 16.4c2.1-1.4 5.1-1.2 7.8.6 2.7-1.8 5.7-2 7.8-.6l.8.5-1.4 2.2-.8-.5c-1.5-1-3.8-.8-6.4 1.1-2.6-1.9-4.9-2.1-6.4-1.1l-.8.5-1.4-2.2z"/><path fill-rule="evenodd" d="M12 1.6c4.6 0 8.1 3.3 8.1 7.3 0 2.5-1.4 4.7-3.5 6v1.3c0 1.1-.9 2-2 2H9.4c-1.1 0-2-.9-2-2V14.9c-2.1-1.3-3.5-3.5-3.5-6 0-4 3.5-7.3 8.1-7.3zm-2.9 6.1a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4zm5.8 0a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4zM12 11.2l1.35 2.15h-2.7z"/></svg></span>
                                 <span class="cylinder-name">Hot Water Cylinder</span>
-                                <span class="cylinder-temp" id="cylinder-temp">70°C</span>
+                                <span class="cylinder-temp" id="cylinder-temp">60°C</span>
                             </div>
                         </div>
                         <div class="boiler-column">
@@ -3086,7 +3095,7 @@
             <summary class="card-title">Notes, Keys and Information</summary>
             <ol class="plan-list" id="plan"></ol>
             <div id="notes-card">
-                <p class="return-note" id="cylinder-delta-note" hidden>The cylinder is assumed to sit 5°C below the flow. The gap can be higher than that.</p>
+                <p class="return-note" id="cylinder-delta-note" hidden>The cylinder is assumed to sit 5°C below the flow, and no hotter than 60°C. The gap can be higher than that.</p>
                 <p class="return-note" id="stored-campaign-note" hidden>Public campaigns usually cover combi boilers only, because stored hot water has to stay hot enough.</p>
             </div>
             <figure class="efficiency-figure" id="note-5-figure">
@@ -3181,6 +3190,7 @@
             var LEGIONELLA_STORE = 50;
             var CYLINDER_HAZARD = 45;
             var CYLINDER_BELOW_FLOW = 5;
+            var CYLINDER_STAT_MAX = 60;
             var INHIBIT_FLOW_MAX = 60;
             var EFFICIENCY_CURVE = [
                 [10, 99.7],
@@ -3331,7 +3341,11 @@
             }
 
             function cylinderTemp(flow) {
-                return flow - CYLINDER_BELOW_FLOW;
+                return Math.min(CYLINDER_STAT_MAX, flow - CYLINDER_BELOW_FLOW);
+            }
+
+            function cylinderStatCapped(flow) {
+                return flow - CYLINDER_BELOW_FLOW > CYLINDER_STAT_MAX;
             }
 
             function band(flow) {
@@ -3660,15 +3674,16 @@
                         : 'Move this slider to show your savings when reducing your flow temperature.';
                 }
                 if (condensingBoiler && stored) {
-                    cylinderDeltaNote.textContent = 'The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow. The gap can be higher than that.';
+                    cylinderDeltaNote.textContent = 'The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow, and no hotter than ' + CYLINDER_STAT_MAX + '°C. The gap can be higher than that.';
                 }
                 var bacteriaDying = condensingBoiler && stored && currentBand.key === 'amber';
                 if (stored) {
-                    var statText = 'Change the cylinder thermostat as well. Set it to ' + cylinder + '°C. It is a separate control on the cylinder.';
+                    var cylinderSet = cylinder + '°C' + (cylinderStatCapped(flow) ? ' maximum' : '');
+                    var statText = 'Change the cylinder thermostat as well. Set it to ' + cylinderSet + '. It is a separate control on the cylinder.';
                     if (legionellaRisk) {
-                        statText = 'Change the cylinder thermostat as well. Set it to ' + cylinder + '°C. Legionella is possible below ' + LEGIONELLA_STORE + '°C stored water. A pasteurisation cycle would be required.';
+                        statText = 'Change the cylinder thermostat as well. Set it to ' + cylinderSet + '. Legionella is possible below ' + LEGIONELLA_STORE + '°C stored water. A pasteurisation cycle would be required.';
                     } else if (bacteriaDying) {
-                        statText = 'Change the cylinder thermostat as well. Set it to ' + cylinder + '°C. Bacteria start dying at this store temperature. Growth is inhibited from ' + LEGIONELLA_STORE + '°C.';
+                        statText = 'Change the cylinder thermostat as well. Set it to ' + cylinderSet + '. Bacteria start dying at this store temperature. Growth is inhibited from ' + LEGIONELLA_STORE + '°C.';
                     }
                     cylinderStatNote.textContent = statText;
                     cylinderStatNote.className = 'cylinder-stat-note' + (legionellaRisk
