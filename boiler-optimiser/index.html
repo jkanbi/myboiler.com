@@ -2196,6 +2196,71 @@
             font-family: inherit;
         }
 
+        .starting-flow-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.15rem;
+            width: 100%;
+            margin-top: 0.5rem;
+            padding: 0.65rem 0.4rem;
+            line-height: 1.2;
+            background: var(--surface);
+            color: var(--text-muted);
+            border-color: var(--border);
+        }
+
+        .starting-flow-btn:hover,
+        .starting-flow-btn:focus-visible,
+        .starting-flow-btn.active {
+            background: var(--surface);
+            color: var(--text);
+            border-color: var(--border);
+        }
+
+        .starting-flow-dialog {
+            width: min(22rem, calc(100vw - 1.5rem));
+        }
+
+        .starting-flow-dialog .custom-flow-title {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.15rem 0.35rem;
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+
+        .starting-flow-dialog .custom-usage-head h3 {
+            margin: 0;
+            font-size: 0.9375rem;
+        }
+
+        .starting-flow-dialog .calculated-hint {
+            margin: 0 0 0.55rem;
+        }
+
+        .starting-flow-dialog .starting-flow-field {
+            justify-content: center;
+            gap: 0.25rem;
+            width: auto;
+            margin: 0 auto 0.75rem;
+        }
+
+        .starting-flow-dialog .starting-flow-field .input-field {
+            width: 3.6rem;
+            flex: 0 0 auto;
+            padding: 0.35rem 0.3rem;
+            text-align: center;
+        }
+
+        .starting-flow-dialog .starting-flow-field .input-label {
+            min-width: 0;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
         .custom-usage-dialog {
             padding: 0;
             border: 0;
@@ -2330,68 +2395,6 @@
             font-size: 1.25rem;
         }
 
-        .custom-usage-flow {
-            margin: 0.35rem 0 0;
-            padding: 0.35rem 0.55rem;
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            background: var(--bg);
-            box-sizing: border-box;
-        }
-
-        .custom-usage-flow .custom-flow-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.45rem 0.6rem;
-        }
-
-        .custom-usage-flow .custom-flow-copy {
-            min-width: 0;
-            flex: 1 1 auto;
-        }
-
-        .custom-usage-flow .custom-flow-title {
-            display: flex;
-            align-items: baseline;
-            justify-content: flex-start;
-            flex-wrap: wrap;
-            gap: 0.15rem 0.35rem;
-        }
-
-        .custom-usage-flow .input-label {
-            margin: 0;
-            font-size: 0.8125rem;
-            font-weight: 600;
-            line-height: 1.25;
-            text-align: left;
-        }
-
-        .custom-usage-flow .calculated-hint {
-            margin: 0.1rem 0 0;
-            text-align: left;
-        }
-
-        .custom-usage-panel .custom-usage-flow .unit-rate-field {
-            justify-content: flex-end;
-            gap: 0.25rem;
-            width: auto;
-            flex: 0 0 auto;
-        }
-
-        .custom-usage-panel .custom-usage-flow .unit-rate-field .input-field {
-            width: 3.6rem;
-            flex: 0 0 auto;
-            padding: 0.35rem 0.3rem;
-            text-align: center;
-        }
-
-        .custom-usage-panel .custom-usage-flow .unit-rate-field .input-label {
-            min-width: 0;
-            font-weight: 500;
-            color: var(--text-muted);
-        }
-
         .custom-usage-panel .unit-rate-field {
             justify-content: flex-start;
             gap: 0.5rem;
@@ -2404,6 +2407,23 @@
 
         .custom-usage-panel .unit-rate-field .input-label {
             min-width: 3.25rem;
+        }
+
+        .starting-flow-dialog .custom-usage-panel .starting-flow-field {
+            justify-content: center;
+            width: auto;
+            align-self: center;
+        }
+
+        .starting-flow-dialog .custom-usage-panel .starting-flow-field .input-field {
+            width: 3.6rem;
+            flex: 0 0 auto;
+            padding: 0.35rem 0.3rem;
+            text-align: center;
+        }
+
+        .starting-flow-dialog .custom-usage-panel .starting-flow-field .input-label {
+            min-width: 0;
         }
 
         .custom-usage-panel .input-field.is-invalid {
@@ -2516,6 +2536,29 @@
             .custom-usage-panel .input-field {
                 font-size: 1rem;
                 height: auto;
+            }
+
+            .starting-flow-dialog[open] {
+                inset: auto;
+                width: min(22rem, calc(100vw - 1.5rem));
+                height: auto;
+                max-height: none;
+                margin: auto;
+                padding: 0;
+                background: transparent;
+            }
+
+            .starting-flow-dialog .custom-usage-panel {
+                width: auto;
+                height: auto;
+                min-height: 0;
+                border-radius: var(--radius-lg);
+                box-shadow: var(--shadow-lg);
+                padding: 0.65rem 0.8rem 0.75rem;
+            }
+
+            .starting-flow-dialog .custom-usage-panel .starting-flow-field {
+                align-self: center;
             }
         }
 
@@ -2782,6 +2825,7 @@
                     <button type="button" class="choice-button" data-band="high" data-kwh="20000" aria-pressed="false">High<span class="usage-chip-kwh">20,000 kWh</span><span class="usage-chip-rate" data-usage-rate>7.97p/kWh</span></button>
                     <button type="button" class="choice-button usage-custom" id="usage-custom" data-band="custom" aria-pressed="false" aria-haspopup="dialog" aria-controls="custom-usage-dialog" aria-expanded="false">Custom<span class="usage-chip-kwh" id="custom-chip-kwh">xx,xxx</span><span class="usage-chip-rate" id="custom-chip-rate">x.xxp/kWh</span></button>
                 </div>
+                <button type="button" class="choice-button starting-flow-btn" id="starting-flow-open" aria-haspopup="dialog" aria-controls="starting-flow-dialog" aria-expanded="false">Change starting flow temperature<span class="usage-chip-kwh" id="starting-flow-chip">75°C</span></button>
             </div>
             <dialog class="custom-usage-dialog" id="custom-usage-dialog" aria-labelledby="custom-usage-title">
                 <div class="custom-usage-panel">
@@ -2808,21 +2852,6 @@
                             <button type="button" class="choice-button" data-gas-cooking="no" aria-pressed="false">No</button>
                         </div>
                     </div>
-                    <div class="custom-usage-flow">
-                        <div class="custom-flow-row">
-                            <div class="custom-flow-copy">
-                                <div class="custom-flow-title">
-                                    <label class="input-label" id="custom-flow-label" for="custom-initial-flow">Starting flow temperature</label>
-                                    <a class="label-aside" id="custom-flow-aside" href="#note-custom-flow" aria-label="Note">[.]</a>
-                                </div>
-                                <p class="calculated-hint" id="custom-flow-hint">Leave blank for 75°C, or type the flow it is already set to.</p>
-                            </div>
-                            <div class="unit-rate-field">
-                                <input type="number" id="custom-initial-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" aria-labelledby="custom-flow-label">
-                                <span class="input-label" aria-hidden="true">°C</span>
-                            </div>
-                        </div>
-                    </div>
                     <div class="custom-usage-space">
                         <div class="input-heading">
                             <div class="input-label" id="custom-space-heating-label">Estimated annual space heating usage</div>
@@ -2838,6 +2867,23 @@
                     </div>
                     <div class="custom-usage-spacer" aria-hidden="true"></div>
                     <button type="button" class="choice-button custom-usage-done" id="custom-usage-done">Done</button>
+                </div>
+            </dialog>
+            <dialog class="custom-usage-dialog starting-flow-dialog" id="starting-flow-dialog" aria-labelledby="starting-flow-title">
+                <div class="custom-usage-panel">
+                    <div class="custom-usage-head">
+                        <div class="custom-flow-title">
+                            <h3 id="starting-flow-title">Change starting flow temperature</h3>
+                            <a class="label-aside" id="custom-flow-aside" href="#note-custom-flow" aria-label="Note">[.]</a>
+                        </div>
+                        <button type="button" class="custom-usage-close" id="starting-flow-close" aria-label="Close">&times;</button>
+                    </div>
+                    <p class="calculated-hint" id="custom-flow-hint">Leave blank for 75°C, or type the flow it is already set to.</p>
+                    <div class="unit-rate-field starting-flow-field">
+                        <input type="number" id="custom-initial-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" aria-labelledby="starting-flow-title">
+                        <span class="input-label" aria-hidden="true">°C</span>
+                    </div>
+                    <button type="button" class="choice-button custom-usage-done" id="starting-flow-done">Done</button>
                 </div>
             </dialog>
 
@@ -3386,7 +3432,7 @@
 
             function methodNote() {
                 var note = document.createDocumentFragment();
-                note.appendChild(document.createTextNode('The saving is from the starting flow (75°C unless you type a different figure in Custom) to the flow you choose. Raise the flow above that starting point and the figure is negative — extra gas, shown in red. The form at the bottom of the page is separate: that is only for telling us what you actually set on the boiler. The return is taken as 20°C under the flow. Radiator output is compared with a standard catalogue radiator in a 20°C room. The saving uses the same efficiency curve as the '));
+                note.appendChild(document.createTextNode('The saving is from the starting flow (75°C unless you change the starting flow temperature) to the flow you choose. Raise the flow above that starting point and the figure is negative — extra gas, shown in red. The form at the bottom of the page is separate: that is only for telling us what you actually set on the boiler. The return is taken as 20°C under the flow. Radiator output is compared with a standard catalogue radiator in a 20°C room. The saving uses the same efficiency curve as the '));
                 note.appendChild(linkEl('/energy-saving/combi-boiler-condensing-mode-savings/', 'condensing-mode calculator'));
                 note.appendChild(document.createTextNode('. That curve is the graph below. Standing charge is not included. See '));
                 note.appendChild(linkEl('/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/', 'how to lower flow temperature'));
@@ -3551,6 +3597,8 @@
                 syncUnfocused(finalFlowInput, flowText);
                 if (initialFlowInput) syncUnfocused(customInitialFlowInput, initialFlowInput.value);
                 var fromFlow = flowFromInput(initialFlowInput, FACTORY_FLOW);
+                var startingFlowChip = document.getElementById('starting-flow-chip');
+                if (startingFlowChip) startingFlowChip.textContent = Math.round(fromFlow) + '°C';
                 document.getElementById('heat-pump-cta').hidden = flow > 55 || storesHotWater();
                 var ret = flow - DELTA;
                 var currentBand = band(flow);
@@ -3781,7 +3829,7 @@
                 } else if (setupAside) {
                     setupAside.hidden = true;
                 }
-                var flowSave = ' The saving figure uses a starting flow of 75°C, unless you type a different figure in Custom.';
+                var flowSave = ' The saving figure uses a starting flow of 75°C, unless you change the starting flow temperature.';
                 var flowCopy;
                 if (!condensingBoiler) {
                     flowCopy = target === flow
@@ -3830,8 +3878,8 @@
                 setAside('space-heating-aside', spaceStep);
                 setAside('custom-space-heating-aside', spaceStep);
                 var customFlowStep = appendNote(
-                    'Starting flow temperature',
-                    'This box is only a custom starting point for the saving figure. It is not the “what the flow was” form at the bottom of the page — that form is for telling us what you actually changed on the boiler. Leave this box blank to compare against a factory 75°C. If someone has already set yours to 65°C, put 65 here so the saving is from that amount. Raise the flow above this starting point and the figure is negative — extra cost.',
+                    'Change starting flow temperature',
+                    'This is only a custom starting point for the saving figure. It is not the “what the flow was” form at the bottom of the page — that form is for telling us what you actually changed on the boiler. Leave it blank to compare against a factory 75°C. If someone has already set yours to 65°C, put 65 here so the saving is from that amount. Raise the flow above this starting point and the figure is negative — extra cost.',
                     'note-custom-flow'
                 );
                 setAside('custom-flow-aside', customFlowStep);
@@ -3974,6 +4022,38 @@
             }
             if (customUsageDone) customUsageDone.addEventListener('click', submitCustomUsage);
             if (customUsageClose) customUsageClose.addEventListener('click', closeCustomUsage);
+            var startingFlowOpen = document.getElementById('starting-flow-open');
+            var startingFlowDialog = document.getElementById('starting-flow-dialog');
+            var startingFlowDone = document.getElementById('starting-flow-done');
+            var startingFlowClose = document.getElementById('starting-flow-close');
+            function closeStartingFlow() {
+                if (startingFlowDialog && startingFlowDialog.open) startingFlowDialog.close();
+            }
+            function openStartingFlow() {
+                if (!startingFlowDialog) return;
+                if (!startingFlowDialog.open) startingFlowDialog.showModal();
+                if (startingFlowOpen) startingFlowOpen.setAttribute('aria-expanded', 'true');
+                requestAnimationFrame(function () {
+                    if (customInitialFlowInput) customInitialFlowInput.focus({ preventScroll: true });
+                });
+            }
+            if (startingFlowOpen) {
+                startingFlowOpen.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    openStartingFlow();
+                });
+            }
+            if (startingFlowDialog) {
+                startingFlowDialog.addEventListener('click', function (event) {
+                    if (event.target === startingFlowDialog) closeStartingFlow();
+                });
+                startingFlowDialog.addEventListener('close', function () {
+                    if (startingFlowOpen) startingFlowOpen.setAttribute('aria-expanded', 'false');
+                    update();
+                });
+            }
+            if (startingFlowDone) startingFlowDone.addEventListener('click', closeStartingFlow);
+            if (startingFlowClose) startingFlowClose.addEventListener('click', closeStartingFlow);
             if (customKwhInput) {
                 customKwhInput.addEventListener('input', function () {
                     markCustomField(customKwhInput, true);
@@ -4049,6 +4129,7 @@
                 if (!note || !results) return;
                 event.preventDefault();
                 closeCustomUsage();
+                closeStartingFlow();
                 results.hidden = false;
                 results.open = true;
                 if (location.hash === href) {
