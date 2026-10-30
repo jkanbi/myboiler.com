@@ -2665,7 +2665,7 @@
   "description": "Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow. A cylinder still needs 60°C stored water."
 }
     </script>
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=x-consent-2" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=x-consent-3" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -3818,6 +3818,7 @@
                 if (confirmForm) {
                     confirmForm.setAttribute('data-tool-flow', String(flow));
                     confirmForm.setAttribute('data-saving-gbp', spaceKwh === null || pence === null ? '' : String(Math.round(savingAmount * 100) / 100));
+                    confirmForm.setAttribute('data-saving-kwh', spaceKwh === null ? '' : String(Math.round(spaceKwh * fraction)));
                     confirmForm.setAttribute('data-space-kwh', spaceKwh === null ? '' : String(Math.round(spaceKwh)));
                     confirmForm.setAttribute('data-annual-kwh', annual === null ? '' : String(Math.round(annual)));
                     confirmForm.setAttribute('data-unit-rate', pence === null ? '' : String(Math.round(pence * 100) / 100));
@@ -4320,7 +4321,8 @@
                     : Math.round(spaceKwh * (pence / 100) * fraction * 100) / 100;
                 return {
                     space_kwh: spaceKwh === null ? null : Math.round(spaceKwh),
-                    saving_gbp: savingAmount
+                    saving_gbp: savingAmount,
+                    saving_kwh: spaceKwh === null ? null : Math.round(spaceKwh * fraction)
                 };
             };
             window.addEventListener('resize', layoutPrimaryCircuit);

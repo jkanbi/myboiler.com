@@ -165,9 +165,11 @@
                 : null;
             if (metrics) {
                 props.saving_gbp = metrics.saving_gbp;
+                props.saving_kwh = metrics.saving_kwh;
                 props.space_kwh = metrics.space_kwh;
             } else {
                 props.saving_gbp = numericAttr(form, 'data-saving-gbp');
+                props.saving_kwh = numericAttr(form, 'data-saving-kwh');
                 props.space_kwh = numericAttr(form, 'data-space-kwh');
             }
             capture('optimiser_flow_turned_down', props);
