@@ -26,7 +26,6 @@
     function start() {
         enhance('load-compensation', 'load-compensation-more');
         enhance('weather-compensation', 'weather-compensation-more');
-        enhance('system-savings-note', 'system-savings-more');
     }
 
     if (document.readyState === 'loading') {

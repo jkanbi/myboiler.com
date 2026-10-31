@@ -1723,9 +1723,13 @@
             margin: 0 0 0.45rem;
         }
 
+        .slider-notes .cylinder-stat-note {
+            margin: 0.45rem 0 0;
+        }
+
         .cylinder-stat-note {
             display: block;
-            margin: 2.25rem 0 0;
+            margin: 0;
             padding: 0.55rem 0.75rem;
             border: 2px solid transparent;
             border-radius: var(--radius);
@@ -1754,64 +1758,6 @@
 
         .cylinder-stat-note[hidden] {
             display: none;
-        }
-
-        .system-savings-note {
-            margin: 1.35rem 0 0;
-            padding: 0.9rem 1rem 1rem;
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            background: #f7f8fa;
-            text-align: left;
-        }
-
-        .system-savings-note[hidden] {
-            display: none;
-        }
-
-        .system-savings-title {
-            margin: 0 0 0.45rem;
-            font-size: 0.9375rem;
-            font-weight: 700;
-            line-height: 1.3;
-            color: var(--text);
-        }
-
-        .system-savings-lead {
-            margin: 0;
-            font-size: 0.8125rem;
-            font-weight: 500;
-            line-height: 1.45;
-            color: var(--text);
-        }
-
-        .system-savings-note .comp-more {
-            margin-top: 0.7rem;
-        }
-
-        .system-savings-note .comp-more-toggle {
-            font-size: 0.8125rem;
-        }
-
-        .system-savings-note ul {
-            margin: 0;
-            padding: 0 0 0 1.15rem;
-        }
-
-        .system-savings-note li {
-            margin: 0 0 0.55rem;
-            font-size: 0.8125rem;
-            font-weight: 500;
-            line-height: 1.45;
-            color: var(--text);
-        }
-
-        .system-savings-note li:last-child {
-            margin-bottom: 0;
-        }
-
-        .system-savings-note a {
-            color: var(--accent);
         }
 
         .return-note {
@@ -1846,8 +1792,8 @@
         .input-slider.flow-cylinder::-webkit-slider-runnable-track {
             background: linear-gradient(to right,
                 #d64545 0 36.36%,
-                #e6a817 36.36% 45.45%,
-                #2f9e44 45.45% var(--red-stop),
+                #e6a817 36.36% 54.55%,
+                #2f9e44 54.55% var(--red-stop),
                 #d64545 var(--red-stop) 100%);
         }
 
@@ -1981,8 +1927,27 @@
             color: var(--accent);
         }
 
+        .plan-list li ul {
+            margin: 0.45rem 0 0;
+            padding-left: 1.15rem;
+        }
+
+        .plan-list li li {
+            margin: 0 0 0.4rem;
+            line-height: 1.5;
+        }
+
+        .plan-list li li strong {
+            display: inline;
+        }
+
+        .plan-list li li:last-child {
+            margin-bottom: 0;
+        }
+
         #note-1,
         #note-flow,
+        #note-system-savings,
         #note-timings,
         #note-5,
         #note-bill,
@@ -2821,14 +2786,15 @@
                     <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                 </div>
                 <div class="slider-notes">
-                    <p class="slider-prompt" id="slider-prompt"><span id="slider-prompt-text">Move this slider to show your savings when reducing your flow temperature.</span> <a class="label-aside" id="flow-aside" href="#note-flow" aria-label="Note 2">[2.]</a></p>
-                    <p class="timing-note" id="timing-note">You may need to add more time on the heating programmer. Lower flow temperature takes longer to warm the house. <a class="label-aside" id="timing-aside" href="#note-timings" aria-label="Note">[.]</a></p>
-                    <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog">Warning: your condensate pipe must be correctly installed and insulated</button>
+                    <p class="slider-prompt" id="slider-prompt"><span id="slider-prompt-text">Move the slider to see the saving.</span> <a class="label-aside" id="flow-aside" href="#note-flow" aria-label="Note 2">[2.]</a><span id="slider-prompt-split" hidden> Heating and hot water at different temperatures can save more. <a class="label-aside" id="system-savings-aside" href="#note-system-savings" aria-label="Note">[.]</a></span></p>
+                    <p class="cylinder-stat-note" id="cylinder-stat-note" hidden>Set the cylinder thermostat to 60°C.</p>
+                    <p class="timing-note" id="timing-note">Lower flow temperature takes longer to warm the house. Add programmer time. <a class="label-aside" id="timing-aside" href="#note-timings" aria-label="Note">[.]</a></p>
+                    <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog">Warning: condensate pipe must be correctly installed and lagged, or terminated internally</button>
                 </div>
                 <dialog class="custom-usage-dialog" id="condensate-warning-dialog" aria-labelledby="condensate-warning-title">
                     <div class="custom-usage-panel condensate-warning-panel">
                         <div class="custom-usage-head">
-                            <h3 id="condensate-warning-title">Warning: your condensate pipe must be correctly installed and insulated</h3>
+                            <h3 id="condensate-warning-title">Warning: condensate pipe must be correctly installed and lagged, or terminated internally</h3>
                             <button type="button" class="custom-usage-close" id="condensate-warning-close" aria-label="Close">&times;</button>
                         </div>
                         <div class="condensate-warning-body">
@@ -2853,18 +2819,6 @@
                         <button type="button" class="choice-button custom-usage-done" id="condensate-warning-done">Done</button>
                     </div>
                 </dialog>
-                <p class="cylinder-stat-note" id="cylinder-stat-note" hidden>Change the cylinder thermostat as well. Set it to 60°C. It is a separate control on the cylinder.</p>
-                <aside class="system-savings-note" id="system-savings-note" hidden>
-                    <h3 class="system-savings-title">Keep heating cooler than the cylinder</h3>
-                    <p class="system-savings-lead">This slider is one knob for the whole system. A cylinder usually keeps that flow high, around 70°C, so the radiators never sit in the best condensing band. Weather compensation, priority hot water, and some boiler setups can split the jobs, so heating can run cooler and you save more.</p>
-                    <div class="comp-more" id="system-savings-more">
-                        <ul>
-                            <li><strong>PDHW</strong> — priority domestic hot water. The cylinder call takes a short, hot reheat (about 70–80°C). Heating then runs at a lower condensing flow, typically 45–55°C. See <a href="/priority-domestic-hot-water/">priority domestic hot water</a>.</li>
-                            <li><strong>4-pipe system boilers</strong> — a separate flow and return to the cylinder, often with an integral diverter (Viessmann Vitodens 100-W is the usual example). External zone valves can come off. That plumbing makes two temperatures straightforward.</li>
-                            <li><strong>Manufacturer controls</strong> — weather compensation or the maker’s own modulating thermostat can drop the heating flow as the house warms, and still lift it for a cylinder call. A plain on/off room stat cannot. See <a href="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">modulating controls</a>.</li>
-                        </ul>
-                    </div>
-                </aside>
             </div>
 
             <div class="usage-band" id="usage-band">
@@ -3168,7 +3122,7 @@
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
-    <script type="text/javascript" src="/js/comp-read-more.js?v=comp-more-2" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/comp-read-more.js?v=comp-more-3" data-cfasync="false"></script>
     <script>
         (function () {
             var versionEl = document.querySelector('.tool-version');
@@ -3221,7 +3175,6 @@
             var CYLINDER_HAZARD = 45;
             var CYLINDER_BELOW_FLOW = 5;
             var CYLINDER_STAT_MAX = 60;
-            var INHIBIT_FLOW_MAX = 60;
             var EFFICIENCY_CURVE = [
                 [10, 99.7],
                 [20, 98.3],
@@ -3380,8 +3333,9 @@
 
             function band(flow) {
                 if (storesHotWater()) {
-                    if (cylinderTemp(flow) < LEGIONELLA_STORE) return { key: 'low', name: 'cylinder below ' + LEGIONELLA_STORE + '°C' };
-                    if (flow <= INHIBIT_FLOW_MAX) return { key: 'amber', name: 'condensing' };
+                    var cylinder = cylinderTemp(flow);
+                    if (cylinder < LEGIONELLA_STORE) return { key: 'low', name: 'cylinder below ' + LEGIONELLA_STORE + '°C' };
+                    if (cylinder < CYLINDER_STAT_MAX) return { key: 'amber', name: 'condensing' };
                     if (flow <= PARTIAL_FLOW) return { key: 'green', name: 'condensing' };
                     return { key: 'red', name: 'non-condensing' };
                 }
@@ -3516,6 +3470,37 @@
 
             function billUsageNote() {
                 return 'Low 6,000, Medium 12,000 and High 20,000 kWh are typical annual bands. Choose Custom to enter the exact figure from your gas bill, in kilowatt hours (kWh), and to change the unit rate. The default unit rate is 7.97p/kWh.';
+            }
+
+            function systemSavingsNote() {
+                var note = document.createDocumentFragment();
+                note.appendChild(document.createTextNode('This slider is one knob for the whole system. A cylinder usually keeps that flow high, around 70°C, so the radiators never sit in the best condensing band. Weather compensation, priority hot water, and some boiler setups can split the jobs, so heating can run cooler and you save more.'));
+                var list = document.createElement('ul');
+                function addPoint(label, nodes) {
+                    var li = document.createElement('li');
+                    var strong = document.createElement('strong');
+                    strong.textContent = label;
+                    li.appendChild(strong);
+                    nodes.forEach(function (node) {
+                        li.appendChild(typeof node === 'string' ? document.createTextNode(node) : node);
+                    });
+                    list.appendChild(li);
+                }
+                addPoint('PDHW', [
+                    ' — priority domestic hot water. The cylinder call takes a short, hot reheat (about 70–80°C). Heating then runs at a lower condensing flow, typically 45–55°C. See ',
+                    linkEl('/priority-domestic-hot-water/', 'priority domestic hot water'),
+                    '.'
+                ]);
+                addPoint('4-pipe system boilers', [
+                    ' — a separate flow and return to the cylinder, often with an integral diverter (Viessmann Vitodens 100-W is the usual example). External zone valves can come off. That plumbing makes two temperatures straightforward.'
+                ]);
+                addPoint('Manufacturer controls', [
+                    ' — weather compensation or the maker’s own modulating thermostat can drop the heating flow as the house warms, and still lift it for a cylinder call. A plain on/off room stat cannot. See ',
+                    linkEl('/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/', 'modulating controls'),
+                    '.'
+                ]);
+                note.appendChild(list);
+                return note;
             }
 
             function controlsNote(stored) {
@@ -3689,31 +3674,25 @@
                 var cylinderDeltaNote = document.getElementById('cylinder-delta-note');
                 var storedCampaignNote = document.getElementById('stored-campaign-note');
                 var cylinderStatNote = document.getElementById('cylinder-stat-note');
-                var systemSavingsNote = document.getElementById('system-savings-note');
-                var sliderPrompt = document.getElementById('slider-prompt-text') || document.getElementById('slider-prompt');
+                var sliderPromptSplit = document.getElementById('slider-prompt-split');
                 flowInput.classList.toggle('is-plain', !condensingBoiler);
                 flowInput.classList.toggle('flow-cylinder', condensingBoiler && stored);
                 flowInput.classList.toggle('flow-combi', condensingBoiler && !stored);
                 cylinderDeltaNote.hidden = !(condensingBoiler && stored);
                 storedCampaignNote.hidden = !(condensingBoiler && stored);
                 cylinderStatNote.hidden = !stored;
-                if (systemSavingsNote) systemSavingsNote.hidden = system !== 'system';
-                if (sliderPrompt) {
-                    sliderPrompt.textContent = system === 'system'
-                        ? 'Move this slider to show your savings when reducing your flow temperature. If heating and hot water can run at different temperatures, you can save more than this slider shows.'
-                        : 'Move this slider to show your savings when reducing your flow temperature.';
-                }
+                if (sliderPromptSplit) sliderPromptSplit.hidden = system !== 'system';
                 if (condensingBoiler && stored) {
                     cylinderDeltaNote.textContent = 'The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow, and no hotter than ' + CYLINDER_STAT_MAX + '°C. The gap can be higher than that.';
                 }
                 var bacteriaDying = condensingBoiler && stored && currentBand.key === 'amber';
                 if (stored) {
-                    var cylinderSet = cylinder + '°C' + (cylinderStatCapped(flow) ? ' maximum' : '');
-                    var statText = 'Change the cylinder thermostat as well. Set it to ' + cylinderSet + '. It is a separate control on the cylinder.';
+                    var cylinderSet = cylinder + '°C' + (cylinderStatCapped(flow) ? ' max' : '');
+                    var statText = 'Set the cylinder thermostat to ' + cylinderSet + '.';
                     if (legionellaRisk) {
-                        statText = 'Change the cylinder thermostat as well. Set it to ' + cylinderSet + '. Legionella is possible below ' + LEGIONELLA_STORE + '°C stored water. A pasteurisation cycle would be required.';
+                        statText = 'Set the cylinder thermostat to ' + cylinderSet + '. Legionella risk below ' + LEGIONELLA_STORE + '°C. Needs pasteurisation.';
                     } else if (bacteriaDying) {
-                        statText = 'Change the cylinder thermostat as well. Set it to ' + cylinderSet + '. Bacteria start dying at this store temperature. Growth is inhibited from ' + LEGIONELLA_STORE + '°C.';
+                        statText = 'Set the cylinder thermostat to ' + cylinderSet + '. Bacteria die at this store. Growth inhibited from ' + LEGIONELLA_STORE + '°C.';
                     }
                     cylinderStatNote.textContent = statText;
                     cylinderStatNote.className = 'cylinder-stat-note' + (legionellaRisk
@@ -3747,7 +3726,6 @@
                 if (condensingBoiler) {
                     var describedBy = ['slider-prompt', 'timing-note', 'flow-state'];
                     if (stored) describedBy.splice(1, 0, 'cylinder-stat-note', 'cylinder-delta-note');
-                    if (system === 'system') describedBy.push('system-savings-note');
                     flowInput.setAttribute('aria-describedby', describedBy.join(' '));
                     flowHint.textContent = flow + '°C';
                     returnHint.textContent = '≈ ' + ret + '°C';
@@ -3923,6 +3901,12 @@
                 }
                 var flowStep = appendNote('Flow temperature', flowCopy, 'note-flow');
                 setAside('flow-aside', flowStep);
+                var systemSavingsAside = document.getElementById('system-savings-aside');
+                if (system === 'system') {
+                    setAside('system-savings-aside', appendNote('Keep heating cooler than the cylinder', systemSavingsNote(), 'note-system-savings'));
+                } else if (systemSavingsAside) {
+                    systemSavingsAside.hidden = true;
+                }
                 var timingsCopy = document.createDocumentFragment();
                 timingsCopy.appendChild(document.createTextNode('You may need to add more time on the heating programmer. Reducing flow temperature means the house takes longer to warm up, but the system is more stable, so add more time if necessary.'));
                 var timingsStep = appendNote('Heating Programmer Timings', timingsCopy, 'note-timings');
