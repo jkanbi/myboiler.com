@@ -1453,7 +1453,8 @@
             display: none;
         }
 
-        .condensate-warning-btn {
+        .condensate-warning-btn,
+        .timing-note-btn {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1470,8 +1471,15 @@
             font-weight: 700;
             line-height: 1.25;
             text-align: center;
+            text-decoration: none;
             cursor: pointer;
             box-sizing: border-box;
+        }
+
+        .timing-note-btn {
+            margin-top: 0.45rem;
+            border-color: #6b4cae;
+            background: #6b4cae;
         }
 
         .condensate-warning-btn:hover,
@@ -1481,8 +1489,16 @@
             outline: none;
         }
 
-        .condensate-warning-btn:focus-visible {
-            outline: 3px solid #d64545;
+        .timing-note-btn:hover,
+        .timing-note-btn:focus-visible {
+            background: #5a3d99;
+            border-color: #5a3d99;
+            outline: none;
+        }
+
+        .condensate-warning-btn:focus-visible,
+        .timing-note-btn:focus-visible {
+            outline: 3px solid currentColor;
             outline-offset: 2px;
         }
 
@@ -1685,19 +1701,6 @@
             line-height: 1.4;
             text-align: center;
             color: var(--text);
-        }
-
-        .timing-note {
-            margin: 0.45rem 0 0;
-            font-size: 0.875rem;
-            font-weight: 600;
-            line-height: 1.4;
-            text-align: center;
-            color: var(--text);
-        }
-
-        .timing-note[hidden] {
-            display: none;
         }
 
         #advanced-notes {
@@ -2788,7 +2791,7 @@
                 <div class="slider-notes">
                     <p class="slider-prompt" id="slider-prompt"><span id="slider-prompt-text">Move the slider to see the saving.</span> <a class="label-aside" id="flow-aside" href="#note-flow" aria-label="Note 2">[2.]</a><span id="slider-prompt-split" hidden> Heating and hot water at different temperatures can save more. <a class="label-aside" id="system-savings-aside" href="#note-system-savings" aria-label="Note">[.]</a></span></p>
                     <p class="cylinder-stat-note" id="cylinder-stat-note" hidden>Set the cylinder thermostat to 60°C.</p>
-                    <p class="timing-note" id="timing-note">Lower flow temperature takes longer to warm the house. Add programmer time. <a class="label-aside" id="timing-aside" href="#note-timings" aria-label="Note">[.]</a></p>
+                    <a class="timing-note-btn" id="timing-note" href="#note-timings">Lower flow temperature means longer heating time, but reduced energy usage (click for info)</a>
                     <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog">Warning: Condensate pipe must be correctly installed (click for information)</button>
                 </div>
                 <dialog class="custom-usage-dialog" id="condensate-warning-dialog" aria-labelledby="condensate-warning-title">
@@ -3909,11 +3912,10 @@
                 }
                 var timingsCopy = document.createDocumentFragment();
                 timingsCopy.appendChild(document.createTextNode('You may need to add more time on the heating programmer. Reducing flow temperature means the house takes longer to warm up, but the system is more stable, so add more time if necessary.'));
-                var timingsStep = appendNote('Heating Programmer Timings', timingsCopy, 'note-timings');
+                appendNote('Heating Programmer Timings', timingsCopy, 'note-timings');
                 var timingPhotos = document.getElementById('programmer-photos');
                 var timingItem = document.getElementById('note-timings');
                 if (timingPhotos && timingItem) timingItem.appendChild(timingPhotos);
-                setAside('timing-aside', timingsStep);
 
                 fillModelSteps(target);
                 var billStep = appendNote('Annual gas usage', billUsageNote(), 'note-bill');
@@ -4187,6 +4189,8 @@
                 event.preventDefault();
                 closeCustomUsage();
                 closeStartingFlow();
+                var condensateDialogOpen = document.getElementById('condensate-warning-dialog');
+                if (condensateDialogOpen && condensateDialogOpen.open) condensateDialogOpen.close();
                 results.hidden = false;
                 results.open = true;
                 if (location.hash === href) {
@@ -4200,7 +4204,7 @@
                     requestAnimationFrame(goToNote);
                 });
             }
-            document.querySelectorAll('.label-aside, .result-aside').forEach(function (link) {
+            document.querySelectorAll('.label-aside, .result-aside, .timing-note-btn').forEach(function (link) {
                 link.addEventListener('click', openAppendixNote);
             });
 
