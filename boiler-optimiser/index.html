@@ -1766,7 +1766,7 @@
         .slider-notes {
             margin: 0.7rem 0 0;
             padding: 0.7rem 0.85rem 0.85rem;
-            border: 1px solid #c5c9ce;
+            border: none;
             border-radius: var(--radius);
             background: #f7f8fa;
             box-sizing: border-box;
@@ -1919,7 +1919,7 @@
         .reliability-note {
             margin: 1.75rem 0 0;
             padding: 1.2rem 1.25rem 1.35rem;
-            border: 2px solid #2f9e44;
+            border: 2px solid var(--border);
             border-radius: var(--radius);
             background: #eaf7ee;
             text-align: center;
@@ -2385,6 +2385,17 @@
             background: var(--surface);
             color: var(--text-muted);
             border-color: var(--border);
+        }
+
+        @media (min-width: 701px) {
+            .starting-flow-btn {
+                width: fit-content;
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 0.65rem 1.25rem;
+                flex: 0 0 auto;
+            }
         }
 
         .starting-flow-btn:hover,
