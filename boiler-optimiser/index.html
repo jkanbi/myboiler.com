@@ -947,7 +947,6 @@
         #ideal-models[hidden],
         #potterton-models[hidden],
         #brand-note[hidden],
-        #videos-soon-note[hidden],
         #brand-back[hidden],
         .brand-tile[hidden] {
             display: none;
@@ -1308,14 +1307,9 @@
             background: #fff;
         }
 
-        #videos-soon-note,
         #brand-note {
             margin: 0.85rem 0 0;
             line-height: 1.6;
-        }
-
-        #videos-soon-note {
-            color: var(--text-muted);
         }
 
         .tool-confirm {
@@ -2028,10 +2022,56 @@
 
         .result-item.is-key.is-split .result-foot {
             grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem 0.5rem;
+            align-items: start;
             border-top: 1px solid rgba(47, 158, 68, 0.28);
             margin: 0.15rem 0.6rem 0;
             padding: 0.75rem 0.25rem 0.05rem;
         }
+
+        .result-foot-col + .result-foot-col {
+            border-left: 1px solid rgba(47, 158, 68, 0.28);
+            padding-left: 0.75rem;
+        }
+
+        .result-foot:has(#energy-label-wrap[hidden]) {
+            grid-template-columns: 1fr;
+        }
+
+        .result-foot-col[hidden] {
+            display: none;
+        }
+
+        .energy-label {
+            display: flex;
+            justify-content: center;
+            margin-top: 0.35rem;
+        }
+
+        .energy-class {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 3.5rem;
+            height: 2.15rem;
+            padding: 0 1.2rem 0 0.55rem;
+            clip-path: polygon(0 0, calc(100% - 0.85rem) 0, 100% 50%, calc(100% - 0.85rem) 100%, 0 100%);
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            line-height: 1;
+            color: #fff;
+            background: #157a38;
+        }
+
+        .energy-class[data-class="ap"],
+        .energy-class[data-class="a"] { background: #157a38; }
+        .energy-class[data-class="ap"] { min-width: 4.1rem; font-size: 1.15rem; }
+        .energy-class[data-class="b"] { background: #e08c00; }
+        .energy-class[data-class="c"] { background: #e35b1c; }
+        .energy-class[data-class="d"] { background: #d64545; }
 
         .result-item.is-key .result-heading {
             justify-content: center;
@@ -2097,6 +2137,11 @@
                 border-top: 1px solid rgba(47, 158, 68, 0.28);
                 padding-left: 0;
                 padding-top: 0.75rem;
+            }
+
+            .result-foot-col + .result-foot-col {
+                border-left: 0;
+                padding-left: 0;
             }
 
             .cooking-toggle {
@@ -2918,7 +2963,7 @@
                     <div class="result-split">
                         <div class="result-label">Annual condensing-mode saving</div>
                         <div class="result-value" id="condensing-saving" data-result="condensing-saving">—</div>
-                        <div class="result-unit" id="condensing-saving-unit" data-result="condensing-saving-unit">versus a 75°C flow</div>
+                        <div class="result-unit" id="condensing-saving-unit" data-result="condensing-saving-unit">versus a 75°C flow at 55°C return</div>
                     </div>
                     <div class="result-split">
                         <div class="result-label">Your annual space heating cost</div>
@@ -2926,12 +2971,22 @@
                         <div class="result-unit">excluding standing charge</div>
                     </div>
                     <div class="result-foot">
-                        <div class="result-heading">
-                            <div class="result-label">Efficiency</div>
-                            <a class="result-aside" href="#note-5" aria-label="Note 4">[4.]</a>
+                        <div class="result-foot-col">
+                            <div class="result-heading">
+                                <div class="result-label">Efficiency</div>
+                                <a class="result-aside" href="#note-5" aria-label="Note 4">[4.]</a>
+                            </div>
+                            <div class="result-value" id="graph-efficiency" data-result="graph-efficiency">—</div>
                         </div>
-                        <div class="result-value" id="graph-efficiency" data-result="graph-efficiency">—</div>
-                        <div class="result-unit" id="graph-efficiency-unit" data-result="graph-efficiency-unit">from return temperature</div>
+                        <div class="result-foot-col" id="energy-label-wrap">
+                            <div class="result-heading">
+                                <div class="result-label">Energy label</div>
+                                <a class="result-aside" href="#note-5" aria-label="Note">[.]</a>
+                            </div>
+                            <div class="energy-label" id="energy-label" aria-label="Energy class B">
+                                <span class="energy-class" data-class="b">B</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -3023,7 +3078,6 @@
                         </a>
                     </div>
                 </div>
-                <p id="videos-soon-note">More boiler videos will be added soon.</p>
                 <p id="brand-note" hidden></p>
 
             </div>
@@ -3273,9 +3327,7 @@
 
             function fillBrandNote(selectedBrand) {
                 var note = document.getElementById('brand-note');
-                var soon = document.getElementById('videos-soon-note');
                 var hasSteps = !!BRANDS_WITH_STEPS[selectedBrand];
-                soon.hidden = !!selectedBrand && hasSteps;
                 if (!selectedBrand || hasSteps) {
                     note.hidden = true;
                     note.textContent = '';
@@ -3340,6 +3392,27 @@
             function percent(fraction) {
                 var value = Math.round(fraction * 1000) / 10;
                 return (value % 1 === 0 ? String(value) : value.toFixed(1)) + '%';
+            }
+
+            function energyClass(eta, condensingBoiler) {
+                if (!condensingBoiler) eta = 75;
+                if (eta >= 98) return { key: 'ap', letter: 'A+' };
+                if (eta >= 90) return { key: 'a', letter: 'A' };
+                if (eta >= 82) return { key: 'b', letter: 'B' };
+                if (eta >= 75) return { key: 'c', letter: 'C' };
+                return { key: 'd', letter: 'D' };
+            }
+
+            function setEnergyLabel(eta, condensingBoiler) {
+                var wrap = document.getElementById('energy-label-wrap');
+                var label = document.getElementById('energy-label');
+                var mark = label && label.querySelector('.energy-class');
+                if (!wrap || !label || !mark) return;
+                wrap.hidden = false;
+                var current = energyClass(eta, condensingBoiler);
+                mark.textContent = current.letter;
+                mark.setAttribute('data-class', current.key);
+                label.setAttribute('aria-label', 'Energy class ' + current.letter);
             }
 
             function cylinderTemp(flow) {
@@ -3470,7 +3543,16 @@
             }
 
             function graphNote() {
-                return 'Graph efficiency is read from this curve. Return is taken as 20°C under the flow. Dew point is 54°C return. The figures are gross, and include latent heat once the return is below dew point.';
+                var note = document.createDocumentFragment();
+                note.appendChild(document.createTextNode('Graph efficiency is read from this curve. Return is taken as 20°C under the flow. Dew point is 54°C return. The figures are gross, and include latent heat once the return is below dew point. The energy class applies the EU space-heating bands in Annex II of '));
+                var law = document.createElement('a');
+                law.href = 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32013R0811';
+                law.target = '_blank';
+                law.rel = 'noopener noreferrer';
+                law.textContent = 'Regulation (EU) No 811/2013';
+                note.appendChild(law);
+                note.appendChild(document.createTextNode(': A+ from 98%, A from 90%, B from 82%, C from 75%. That is this operating figure, not the seasonal sticker on the boiler.'));
+                return note;
             }
 
             function methodNote() {
@@ -3809,12 +3891,11 @@
                     ? '—'
                     : formatGBP(spaceKwh * (pence / 100)));
                 var fraction = condensingBoiler ? saving(fromFlow, flow) : 0;
+                var etaNow = condensingBoiler ? efficiency(flow) : 0;
                 setResult('graph-efficiency', condensingBoiler
-                    ? efficiency(flow).toFixed(1) + '%'
+                    ? etaNow.toFixed(1) + '%'
                     : '—');
-                setResult('graph-efficiency-unit', condensingBoiler
-                    ? 'at ' + ret + '°C return'
-                    : 'not a condensing boiler');
+                setEnergyLabel(etaNow, condensingBoiler);
                 var savingAmount = spaceKwh === null || pence === null
                     ? 0
                     : spaceKwh * (pence / 100) * fraction;
@@ -3834,7 +3915,7 @@
                 }
                 boilerSavingWrap.className = 'boiler-saving is-' + savingTone;
                 setResult('condensing-saving-unit', condensingBoiler
-                    ? percent(fraction) + ' versus ' + Math.round(fromFlow) + '°C flow'
+                    ? percent(fraction) + ' versus ' + Math.round(fromFlow) + '°C flow at ' + ret + '°C return'
                     : 'no condensing gain on this boiler');
                 syncUsageChips(annual);
                 var confirmForm = document.getElementById('tool-confirm');
