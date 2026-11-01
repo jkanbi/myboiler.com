@@ -1483,6 +1483,11 @@
             background: #e08c00;
         }
 
+        .timing-note-btn[hidden],
+        .condensate-warning-btn[hidden] {
+            display: none;
+        }
+
         .condensate-warning-btn:hover,
         .condensate-warning-btn:focus-visible {
             background: #c03939;
@@ -2876,8 +2881,8 @@
                     <a class="slider-prompt-btn" id="slider-prompt" href="#note-flow">Move the flow temperature slider to see the saving (click for info)</a>
                     <p class="slider-prompt-split" id="slider-prompt-split" hidden>Heating and hot water at different temperatures can save more. <a class="label-aside" id="system-savings-aside" href="#note-system-savings" aria-label="Note">[.]</a></p>
                     <p class="cylinder-stat-note" id="cylinder-stat-note" hidden>Set the cylinder thermostat to 60°C.</p>
-                    <a class="timing-note-btn" id="timing-note" href="#note-timings">Low flow temp, takes longer to heat, uses less energy (click for info)</a>
-                    <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog">Warning: Condense pipe must be correctly installed (click for info)</button>
+                    <a class="timing-note-btn" id="timing-note" href="#note-timings" hidden>Low flow temp, takes longer to heat, uses less energy (click for info)</a>
+                    <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog" hidden>Warning: Condense pipe must be correctly installed (click for info)</button>
                 </div>
                 <dialog class="custom-usage-dialog" id="condensate-warning-dialog" aria-labelledby="condensate-warning-title">
                     <div class="custom-usage-panel condensate-warning-panel">
@@ -3848,9 +3853,14 @@
                 var maxFlow = Number(flowInput.max);
                 flowSlider.style.setProperty('--thumb-pct', String((flow - minFlow) / (maxFlow - minFlow)));
                 flowThumbValue.textContent = flow + '°C';
+                var timingNote = document.getElementById('timing-note');
+                if (timingNote) timingNote.hidden = flow > GREEN_MAX;
+                var condensateWarning = document.getElementById('condensate-warning-open');
+                if (condensateWarning) condensateWarning.hidden = flow >= FACTORY_FLOW;
                 if (condensingBoiler) {
-                    var describedBy = ['slider-prompt', 'timing-note', 'flow-state'];
+                    var describedBy = ['slider-prompt', 'flow-state'];
                     if (stored) describedBy.splice(1, 0, 'cylinder-stat-note', 'cylinder-delta-note');
+                    if (timingNote && !timingNote.hidden) describedBy.splice(-1, 0, 'timing-note');
                     flowInput.setAttribute('aria-describedby', describedBy.join(' '));
                     flowHint.textContent = flow + '°C';
                     returnHint.textContent = '≈ ' + ret + '°C';
