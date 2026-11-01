@@ -14,6 +14,10 @@
             -webkit-text-size-adjust: 100%;
             text-size-adjust: 100%;
             touch-action: pan-x pan-y;
+            --vv-height: 100dvh;
+            --vv-width: 100%;
+            --vv-offset-top: 0px;
+            --vv-offset-left: 0px;
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -2686,24 +2690,33 @@
         @media (max-width: 700px) {
             .custom-usage-dialog[open] {
                 position: fixed;
-                inset: 0;
-                width: 100%;
-                height: 100%;
+                top: var(--vv-offset-top, 0px);
+                left: var(--vv-offset-left, 0px);
+                right: auto;
+                bottom: auto;
+                width: var(--vv-width, 100%);
+                height: var(--vv-height, 100dvh);
                 max-width: none;
-                max-height: none;
+                max-height: var(--vv-height, 100dvh);
                 margin: 0;
                 padding: 0;
                 border-radius: 0;
                 background: var(--surface);
+                box-sizing: border-box;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
             }
 
             .custom-usage-panel {
                 width: 100%;
-                height: 100%;
-                min-height: 100%;
+                flex: 1 1 auto;
+                height: auto;
+                max-height: 100%;
+                min-height: 0;
                 border-radius: 0;
                 box-shadow: none;
-                padding: max(0.85rem, env(safe-area-inset-top)) 1.15rem max(1.1rem, env(safe-area-inset-bottom));
+                padding: max(0.85rem, env(safe-area-inset-top, 0px)) 1.15rem max(1.1rem, env(safe-area-inset-bottom, 0px));
                 display: flex;
                 flex-direction: column;
                 align-items: stretch;
@@ -2720,8 +2733,10 @@
 
             .condensate-warning-panel,
             .note-info-panel {
-                max-height: none;
-                height: 100%;
+                max-height: 100%;
+                height: auto;
+                flex: 1 1 auto;
+                min-height: 0;
             }
 
             .custom-usage-handle {
@@ -2753,22 +2768,26 @@
             }
 
             .starting-flow-dialog[open] {
-                inset: auto;
-                width: min(22rem, calc(100vw - 1.5rem));
-                height: auto;
-                max-height: none;
-                margin: auto;
-                padding: 0;
+                justify-content: flex-end;
                 background: transparent;
+                padding: 0.75rem 0.75rem max(0.75rem, env(safe-area-inset-bottom, 0px));
             }
 
             .starting-flow-dialog .custom-usage-panel {
-                width: auto;
+                flex: 0 1 auto;
+                width: min(22rem, 100%);
+                max-width: 100%;
                 height: auto;
+                max-height: 100%;
                 min-height: 0;
+                margin: 0 auto;
                 border-radius: var(--radius-lg);
                 box-shadow: var(--shadow-lg);
                 padding: 0.65rem 0.8rem 0.75rem;
+                overflow-x: hidden;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior: contain;
             }
 
             .starting-flow-dialog .custom-usage-panel .starting-flow-field {
@@ -3371,7 +3390,7 @@
         </details>
 
         <p class="tool-disclaimer">This tool is in development. We accept no responsibility for issues that arise from these adjustments. Some systems are not installed correctly and may cause problems, especially where the condensate pipe is incorrectly installed or not insulated.</p>
-        <p class="tool-version" data-stamp="2026-10-30 00:00 · 35">Last updated 30 Oct 2026 · Version 35</p>
+        <p class="tool-version" data-stamp="2026-11-01 00:00 · 36">Last updated 1 Nov 2026 · Version 36</p>
     </div>
 
     <div id="site-footer"></div>
@@ -3387,6 +3406,40 @@
                 var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                 versionEl.textContent = 'Last updated ' + parseInt(match[3], 10) + ' ' + months[parseInt(match[2], 10) - 1] + ' ' + match[1] + ' · Version ' + match[4];
             }
+        })();
+        (function () {
+            var root = document.documentElement;
+            function syncSheetViewport() {
+                var vv = window.visualViewport;
+                if (!vv) return;
+                root.style.setProperty('--vv-height', Math.round(vv.height) + 'px');
+                root.style.setProperty('--vv-width', Math.round(vv.width) + 'px');
+                root.style.setProperty('--vv-offset-top', Math.round(vv.offsetTop) + 'px');
+                root.style.setProperty('--vv-offset-left', Math.round(vv.offsetLeft) + 'px');
+            }
+            syncSheetViewport();
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', syncSheetViewport);
+                window.visualViewport.addEventListener('scroll', syncSheetViewport);
+            }
+            window.addEventListener('resize', syncSheetViewport);
+            window.addEventListener('orientationchange', function () {
+                requestAnimationFrame(syncSheetViewport);
+            });
+            document.addEventListener('focusin', function (event) {
+                var field = event.target;
+                if (!field || !field.closest) return;
+                var dialog = field.closest('.custom-usage-dialog');
+                if (!dialog || !dialog.open) return;
+                if (field.tagName !== 'INPUT' && field.tagName !== 'TEXTAREA' && field.tagName !== 'SELECT') return;
+                requestAnimationFrame(function () {
+                    try {
+                        field.scrollIntoView({ block: 'center', inline: 'nearest' });
+                    } catch (err) {
+                        field.scrollIntoView();
+                    }
+                });
+            });
         })();
         (function () {
             var VIEWPORT = 'width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover';
