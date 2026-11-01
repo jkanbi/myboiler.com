@@ -1,0 +1,34 @@
+name = "optimiser-feedback"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+# Production routes on zone myboiler.com (attach in the dashboard):
+#   myboiler.com/api/optimiser-feedback*
+#   www.myboiler.com/api/optimiser-feedback*
+#   myboiler.com/api/optimiser-feedbacks*
+#   www.myboiler.com/api/optimiser-feedbacks*
+#
+# Uncomment after the zone exists in the same Cloudflare account, or attach
+# the equivalent routes in the dashboard:
+#
+# routes = [
+#   { pattern = "myboiler.com/api/optimiser-feedback*", zone_name = "myboiler.com" },
+#   { pattern = "www.myboiler.com/api/optimiser-feedback*", zone_name = "myboiler.com" },
+#   { pattern = "myboiler.com/api/optimiser-feedbacks*", zone_name = "myboiler.com" },
+#   { pattern = "www.myboiler.com/api/optimiser-feedbacks*", zone_name = "myboiler.com" }
+# ]
+
+# Workers KV — reuse the existing namespace used by affiliate-click
+# and fault-code-request. Keys use prefix `optimiser:` so they do not
+# collide with `clicks:` or `requests:`.
+[[kv_namespaces]]
+binding = "REQUESTS"
+id = "ad9fa2773ca549479e432b257fad3c48"
+
+# Secret (not in this file — never commit it):
+#   npx wrangler secret put LIST_SECRET
+# Used as: Authorization: Bearer <LIST_SECRET> on GET /api/optimiser-feedbacks
+# Local: put LIST_SECRET=... in `.dev.vars` (gitignored).
+
+[observability]
+enabled = true
