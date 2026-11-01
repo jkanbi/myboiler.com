@@ -2433,6 +2433,7 @@
 
             #flow-card .boiler-diagram {
                 align-items: flex-start;
+                padding-left: clamp(0.5rem, calc((100% - 19rem) / 2), 1.75rem);
             }
 
             #flow-card .boiler-plant {
@@ -2440,12 +2441,16 @@
                 justify-content: flex-start;
                 padding-right: 0.2rem;
                 padding-left: 0.15rem;
-                zoom: 0.76;
+                zoom: 0.95;
             }
 
             #flow-card .boiler-plant:has(#cylinder-diagram:not([hidden])) {
                 padding-left: 0;
                 zoom: 0.64;
+            }
+
+            #flow-card .boiler-diagram:has(#cylinder-diagram:not([hidden])) {
+                padding-left: 0;
             }
         }
 
