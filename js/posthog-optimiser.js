@@ -5,8 +5,16 @@
     var UI_HOST = 'https://eu.posthog.com';
     var STORAGE_KEY = 'mb_optimiser_posthog';
     var DISMISS_KEY = 'mb_optimiser_consent_dismissed';
+    var TURNED_DOWN_KEY = 'mb_optimiser_turned_down';
+    var DID_IT_WORK_KEY = 'mb_optimiser_did_it_work';
+    var STORE_ENDPOINT = '/api/optimiser-feedback';
     var PIXEL_ID = 'nvyf0';
     var xLoaded = false;
+    var DID_IT_WORK_TIPS = {
+        yes: 'Great. If you have a condensing boiler, try the next step down, about 5°C lower.',
+        cool: 'Turn it back up about 5°C, or half a number on a dial.',
+        not_yet: 'No problem. Come back once you\'ve tried it for a few days.'
+    };
 
     var path = (location.pathname || '').replace(/\/+$/, '');
     if (path.indexOf('/boiler-optimiser') !== 0) {
@@ -53,6 +61,52 @@
         window.posthog.capture(event, properties || {});
     }
 
+    function hasAcceptedConsent() {
+        return storedChoice() === 'accepted';
+    }
+
+    function readStorage(key) {
+        try {
+            return localStorage.getItem(key) || '';
+        } catch (err) {
+            return '';
+        }
+    }
+
+    function writeStorage(key, value) {
+        if (!hasAcceptedConsent()) return;
+        try {
+            localStorage.setItem(key, value);
+        } catch (err) { /* private mode */ }
+    }
+
+    function sendStore(payload) {
+        var body;
+        try {
+            body = JSON.stringify(payload);
+        } catch (err) {
+            return;
+        }
+        if (body.length > 1800) return;
+        try {
+            if (navigator.sendBeacon) {
+                var blob = new Blob([body], { type: 'text/plain;charset=UTF-8' });
+                if (navigator.sendBeacon(STORE_ENDPOINT, blob)) return;
+            }
+        } catch (err) {}
+        try {
+            fetch(STORE_ENDPOINT, {
+                method: 'POST',
+                body: body,
+                headers: { 'Content-Type': 'text/plain' },
+                keepalive: true,
+                credentials: 'omit',
+                mode: 'same-origin',
+                cache: 'no-store'
+            }).catch(function () {});
+        } catch (err) {}
+    }
+
     function numericAttr(el, name) {
         if (!el) return null;
         var n = Number(el.getAttribute(name));
@@ -86,10 +140,67 @@
         var brandInput = document.getElementById('confirm-brand');
         var done = document.getElementById('tool-confirm-done');
         var button = document.getElementById('tool-confirm-submit');
+        var checkback = document.getElementById('tool-confirm-checkback');
+        var checkbackTip = document.getElementById('tool-confirm-checkback-tip');
+        var alreadyWrap = document.getElementById('tool-confirm-already-wrap');
+        var alreadyBtn = document.getElementById('tool-confirm-already');
         if (!form || !fromInput || !setInput || !brandInput) return;
         if (form.dataset.phBound === '1') return;
         form.dataset.phBound = '1';
         var submitted = false;
+
+        function formContext() {
+            var brandKey = brandInput.value || '';
+            var brandLabel = '';
+            var selected = brandInput.options[brandInput.selectedIndex];
+            if (selected && selected.value === brandKey) brandLabel = selected.text;
+            var fromFlow = Number(fromInput.value);
+            var setFlow = Number(setInput.value);
+            return {
+                brand: brandKey,
+                brand_label: brandLabel || brandKey,
+                from_flow: validFlow(fromFlow) ? fromFlow : null,
+                set_flow: validFlow(setFlow) ? setFlow : null,
+                path: location.pathname || '/boiler-optimiser/'
+            };
+        }
+
+        function showCheckback() {
+            form.classList.add('is-done');
+            if (alreadyWrap) alreadyWrap.hidden = true;
+            if (checkback) checkback.hidden = false;
+            if (done) done.hidden = true;
+        }
+
+        function showCheckbackTip(answer) {
+            var tip = DID_IT_WORK_TIPS[answer] || '';
+            showCheckback();
+            form.classList.add('is-checkback-answered');
+            if (checkbackTip) {
+                checkbackTip.hidden = !tip;
+                checkbackTip.textContent = tip;
+            }
+        }
+
+        function recordDidItWork(answer) {
+            if (!DID_IT_WORK_TIPS[answer] || form.dataset.didItWork === '1') return;
+            form.dataset.didItWork = '1';
+            var ctx = formContext();
+            sendStore({
+                t: Date.now(),
+                type: 'did_it_work',
+                answer: answer,
+                path: ctx.path,
+                brand: ctx.brand,
+                from_flow: ctx.from_flow,
+                set_flow: ctx.set_flow
+            });
+            if (hasAcceptedConsent()) {
+                writeStorage(DID_IT_WORK_KEY, answer);
+                capture('optimiser_did_it_work', { answer: answer, section: 'confirm_form' });
+            }
+            showCheckbackTip(answer);
+        }
 
         fromInput.addEventListener('input', function () {
             fromInput.dataset.edited = '1';
@@ -184,6 +295,15 @@
                 props.space_kwh = numericAttr(form, 'data-space-kwh');
             }
             capture('optimiser_flow_turned_down', props);
+            sendStore({
+                t: Date.now(),
+                type: 'turned_down',
+                path: location.pathname || '/boiler-optimiser/',
+                brand: brandKey,
+                from_flow: fromFlow,
+                set_flow: setFlow
+            });
+            writeStorage(TURNED_DOWN_KEY, '1');
             form.classList.add('is-done');
             fromInput.disabled = true;
             setInput.disabled = true;
@@ -200,7 +320,30 @@
                 var last = parts.pop();
                 done.textContent = 'Thanks. We logged that ' + (parts.length ? parts.join(', ') + ', and ' + last : last) + '.';
             }
+            showCheckback();
         });
+        form.querySelectorAll('[data-did-it-work]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                recordDidItWork(btn.getAttribute('data-did-it-work') || '');
+            });
+        });
+        if (alreadyBtn) {
+            alreadyBtn.addEventListener('click', function () {
+                showCheckback();
+            });
+        }
+        if (hasAcceptedConsent() && readStorage(TURNED_DOWN_KEY) === '1') {
+            submitted = true;
+            fromInput.disabled = true;
+            setInput.disabled = true;
+            brandInput.disabled = true;
+            if (kwhInput) kwhInput.disabled = true;
+            if (rateInput) rateInput.disabled = true;
+            if (button) button.disabled = true;
+            var savedAnswer = readStorage(DID_IT_WORK_KEY);
+            if (savedAnswer && DID_IT_WORK_TIPS[savedAnswer]) showCheckbackTip(savedAnswer);
+            else showCheckback();
+        }
     }
 
     var BRANDS_WITH_VIDEOS = { worcester: 1, vaillant: 1, main: 1, intergas: 1, baxi: 1, ideal: 1, potterton: 1 };

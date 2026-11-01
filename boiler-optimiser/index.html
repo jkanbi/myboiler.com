@@ -1684,8 +1684,90 @@
         .tool-confirm.is-done .tool-confirm-fields,
         .tool-confirm.is-done .input-hint,
         .tool-confirm.is-done .tool-confirm-raise,
-        .tool-confirm.is-done #tool-confirm-submit {
+        .tool-confirm.is-done #tool-confirm-submit,
+        .tool-confirm.is-done .tool-confirm-already-wrap,
+        .tool-confirm.is-done #tool-confirm-done,
+        .tool-confirm.is-done > .input-label {
             display: none;
+        }
+
+        .tool-confirm-checkback {
+            margin: 0.75rem 0 0;
+        }
+
+        .tool-confirm-checkback[hidden],
+        .tool-confirm-checkback-tip[hidden],
+        .tool-confirm-already-wrap[hidden] {
+            display: none;
+        }
+
+        .tool-confirm-checkback-q {
+            margin: 0;
+        }
+
+        .tool-confirm-checkback-btns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 0.75rem 0 0;
+        }
+
+        .tool-confirm-checkback-btns .choice-button {
+            flex: 0 0 auto;
+            min-width: 8.25rem;
+            min-height: 2.75rem;
+            padding: 0.55rem 0.85rem;
+            color: var(--text);
+            background: #fff;
+        }
+
+        .tool-confirm-checkback-tip {
+            margin: 0.75rem 0 0;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            line-height: 1.5;
+            color: var(--text);
+        }
+
+        .tool-confirm.is-checkback-answered .tool-confirm-checkback-btns {
+            display: none;
+        }
+
+        .tool-confirm-already-wrap {
+            margin: 0.65rem 0 0;
+        }
+
+        .tool-confirm-already {
+            display: inline;
+            padding: 0;
+            border: 0;
+            background: none;
+            color: var(--text);
+            font: inherit;
+            font-size: 0.875rem;
+            font-weight: 600;
+            line-height: 1.45;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .tool-confirm-already:hover,
+        .tool-confirm-already:focus-visible {
+            color: var(--accent-dark, #1863dc);
+            outline: none;
+        }
+
+        @media (max-width: 700px) {
+            .tool-confirm-checkback-btns {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .tool-confirm-checkback-btns .choice-button {
+                width: 100%;
+                min-width: 0;
+            }
         }
 
         #model-card[hidden] ~ .tool-confirm {
@@ -3118,7 +3200,7 @@
   "description": "Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow. A cylinder still needs 60°C stored water."
 }
     </script>
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=x-consent-4" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=did-it-work-1" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -3643,6 +3725,18 @@
             <p class="tool-confirm-raise" id="tool-confirm-raise" hidden role="status">Aim lower if you can. Raising the flow temperature is worse long term: it uses more gas, is harder on the boiler, and future heating system changes may be needed.</p>
             <button type="submit" class="choice-button" id="tool-confirm-submit">Submit</button>
             <p class="tool-confirm-done" id="tool-confirm-done" hidden>Thanks. We logged that you set it.</p>
+            <p class="tool-confirm-already-wrap" id="tool-confirm-already-wrap">
+                <button type="button" class="tool-confirm-already" id="tool-confirm-already">Already turned it down? Tell us if it worked</button>
+            </p>
+            <div class="tool-confirm-checkback" id="tool-confirm-checkback" hidden>
+                <p class="input-label tool-confirm-checkback-q" id="tool-confirm-checkback-q">Thanks! Give it a few days, then come back and tell us: did your rooms stay warm?</p>
+                <div class="tool-confirm-checkback-btns" id="tool-confirm-checkback-btns">
+                    <button type="button" class="choice-button" data-did-it-work="yes">Yes, warm enough</button>
+                    <button type="button" class="choice-button" data-did-it-work="cool">A bit cool</button>
+                    <button type="button" class="choice-button" data-did-it-work="not_yet">Not tried yet</button>
+                </div>
+                <p class="tool-confirm-checkback-tip" id="tool-confirm-checkback-tip" hidden></p>
+            </div>
             <div class="tool-confirm-social">
                 <p class="tool-confirm-social-label">Or let us know on x.com or Facebook</p>
                 <div class="tool-confirm-social-btns">
@@ -3702,7 +3796,7 @@
         </details>
 
         <p class="tool-disclaimer">This tool is in development. We accept no responsibility for issues that arise from these adjustments. Some systems are not installed correctly and may cause problems, especially where the condensate pipe is incorrectly installed or not insulated.</p>
-        <p class="tool-version" data-stamp="2026-11-01 00:00 · 36">Last updated 1 Nov 2026 · Version 36</p>
+        <p class="tool-version" data-stamp="2026-11-01 18:45 · 37">Last updated 1 Nov 2026 · Version 37</p>
     </div>
 
     <div id="site-footer"></div>
