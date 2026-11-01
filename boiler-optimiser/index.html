@@ -1530,6 +1530,7 @@
             border-radius: 999px;
             background: #d64545;
             color: #fff;
+            font-family: inherit;
             font-size: 0.8125rem;
             font-weight: 700;
             line-height: 1.25;
@@ -1592,11 +1593,13 @@
             color: var(--text);
         }
 
-        #condensate-warning-dialog {
+        #condensate-warning-dialog,
+        .note-info-dialog {
             width: min(26rem, calc(100vw - 1.5rem));
         }
 
-        .condensate-warning-panel {
+        .condensate-warning-panel,
+        .note-info-panel {
             display: flex;
             flex-direction: column;
             max-height: min(32rem, calc(100dvh - 2rem));
@@ -1607,7 +1610,16 @@
             color: #d64545;
         }
 
-        .condensate-warning-body {
+        #slider-prompt-dialog .custom-usage-head h3 {
+            color: #1f7a32;
+        }
+
+        #timing-note-dialog .custom-usage-head h3 {
+            color: #c97800;
+        }
+
+        .condensate-warning-body,
+        .note-info-body {
             display: grid;
             gap: 0.65rem;
             margin: 0 0 0.75rem;
@@ -1619,7 +1631,8 @@
             padding-right: 0.15rem;
         }
 
-        .condensate-warning-body h4 {
+        .condensate-warning-body h4,
+        .note-info-body h4 {
             margin: 0 0 0.2rem;
             font-size: 0.8125rem;
             font-weight: 700;
@@ -1628,7 +1641,9 @@
         }
 
         .condensate-warning-body p,
-        .condensate-warning-body li {
+        .condensate-warning-body li,
+        .note-info-body p,
+        .note-info-body li {
             margin: 0;
             font-size: 0.8125rem;
             font-weight: 500;
@@ -1636,13 +1651,24 @@
             color: var(--text);
         }
 
-        .condensate-warning-body ul {
+        .condensate-warning-body ul,
+        .note-info-body ul {
             margin: 0.25rem 0 0;
             padding: 0 0 0 1.1rem;
         }
 
-        .condensate-warning-body li + li {
+        .condensate-warning-body li + li,
+        .note-info-body li + li {
             margin-top: 0.28rem;
+        }
+
+        .note-info-body .programmer-photos {
+            margin: 0.15rem 0 0;
+            max-width: none;
+        }
+
+        .note-info-body .programmer-photos img {
+            height: 7.5rem;
         }
 
         .tool-disclaimer {
@@ -2692,7 +2718,8 @@
                 overscroll-behavior: contain;
             }
 
-            .condensate-warning-panel {
+            .condensate-warning-panel,
+            .note-info-panel {
                 max-height: none;
                 height: 100%;
             }
@@ -2957,12 +2984,46 @@
                     <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                 </div>
                 <div class="slider-notes">
-                    <a class="slider-prompt-btn" id="slider-prompt" href="#note-flow">Move the flow temperature slider to see the saving (click for info)</a>
+                    <button type="button" class="slider-prompt-btn" id="slider-prompt" aria-haspopup="dialog" aria-controls="slider-prompt-dialog" aria-expanded="false">Move the flow temperature slider to see the saving (click for info)</button>
                     <p class="slider-prompt-split" id="slider-prompt-split" hidden>Heating and hot water at different temperatures can save more. <a class="label-aside" id="system-savings-aside" href="#note-system-savings" aria-label="Note">[.]</a></p>
                     <p class="cylinder-stat-note" id="cylinder-stat-note" hidden>Set the cylinder thermostat to 60°C.</p>
-                    <a class="timing-note-btn" id="timing-note" href="#note-timings" hidden>Low flow temp, takes longer to heat, uses less energy (click for info)</a>
+                    <button type="button" class="timing-note-btn" id="timing-note" aria-haspopup="dialog" aria-controls="timing-note-dialog" aria-expanded="false" hidden>Low flow temp, takes longer to heat, uses less energy (click for info)</button>
                     <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog" hidden>Warning: Condense pipe must be correctly installed (click for info)</button>
                 </div>
+                <dialog class="custom-usage-dialog note-info-dialog" id="slider-prompt-dialog" aria-labelledby="slider-prompt-title">
+                    <div class="custom-usage-panel note-info-panel">
+                        <div class="custom-usage-head">
+                            <h3 id="slider-prompt-title">Flow temperature</h3>
+                            <button type="button" class="custom-usage-close" id="slider-prompt-close" aria-label="Close">&times;</button>
+                        </div>
+                        <div class="note-info-body">
+                            <p id="slider-prompt-copy"></p>
+                        </div>
+                        <button type="button" class="choice-button custom-usage-done" id="slider-prompt-done">Done</button>
+                    </div>
+                </dialog>
+                <dialog class="custom-usage-dialog note-info-dialog" id="timing-note-dialog" aria-labelledby="timing-note-title">
+                    <div class="custom-usage-panel note-info-panel">
+                        <div class="custom-usage-head">
+                            <h3 id="timing-note-title">Heating programmer timings</h3>
+                            <button type="button" class="custom-usage-close" id="timing-note-close" aria-label="Close">&times;</button>
+                        </div>
+                        <div class="note-info-body">
+                            <p>You may need to add more time on the heating programmer. Reducing flow temperature means the house takes longer to warm up, but the system is more stable, so add more time if necessary.</p>
+                            <div class="programmer-photos">
+                                <figure>
+                                    <img src="/boiler-optimiser/images/programmer-single-channel.jpg" alt="Single channel heating programmer, such as a Honeywell Home ST9100C" width="783" height="691">
+                                    <figcaption>Single channel<span>Honeywell Home ST9100C</span></figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="/boiler-optimiser/images/programmer-dual-channel.jpg" alt="Dual channel heating and hot water programmer, such as a Honeywell Home ST9400C" width="783" height="691">
+                                    <figcaption>Dual channel<span>Honeywell Home ST9400C</span></figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                        <button type="button" class="choice-button custom-usage-done" id="timing-note-done">Done</button>
+                    </div>
+                </dialog>
                 <dialog class="custom-usage-dialog" id="condensate-warning-dialog" aria-labelledby="condensate-warning-title">
                     <div class="custom-usage-panel condensate-warning-panel">
                         <div class="custom-usage-head">
@@ -4126,6 +4187,8 @@
                         + flowSave;
                 }
                 appendNote('Flow temperature', flowCopy, 'note-flow');
+                var sliderPromptCopy = document.getElementById('slider-prompt-copy');
+                if (sliderPromptCopy) sliderPromptCopy.textContent = flowCopy;
                 var systemSavingsAside = document.getElementById('system-savings-aside');
                 if (system === 'system') {
                     setAside('system-savings-aside', appendNote('Keep heating cooler than the cylinder', systemSavingsNote(), 'note-system-savings'));
@@ -4411,8 +4474,10 @@
                 event.preventDefault();
                 closeCustomUsage();
                 closeStartingFlow();
-                var condensateDialogOpen = document.getElementById('condensate-warning-dialog');
-                if (condensateDialogOpen && condensateDialogOpen.open) condensateDialogOpen.close();
+                ['condensate-warning-dialog', 'slider-prompt-dialog', 'timing-note-dialog'].forEach(function (id) {
+                    var openDialog = document.getElementById(id);
+                    if (openDialog && openDialog.open) openDialog.close();
+                });
                 results.hidden = false;
                 results.open = true;
                 if (location.hash === href) {
@@ -4426,7 +4491,7 @@
                     requestAnimationFrame(goToNote);
                 });
             }
-            document.querySelectorAll('.label-aside, .result-aside, .timing-note-btn, .slider-prompt-btn').forEach(function (link) {
+            document.querySelectorAll('.label-aside, .result-aside').forEach(function (link) {
                 link.addEventListener('click', openAppendixNote);
             });
 
@@ -4549,23 +4614,72 @@
                     applyFinalFlow(finalFlowInput, true);
                 });
             }
-            var condensateDialog = document.getElementById('condensate-warning-dialog');
-            var condensateOpen = document.getElementById('condensate-warning-open');
+            var infoDialogs = {
+                'slider-prompt': 'slider-prompt-dialog',
+                'timing-note': 'timing-note-dialog',
+                'condensate-warning-open': 'condensate-warning-dialog'
+            };
+            var infoDialogClosers = {
+                'slider-prompt-close': 'slider-prompt-dialog',
+                'slider-prompt-done': 'slider-prompt-dialog',
+                'timing-note-close': 'timing-note-dialog',
+                'timing-note-done': 'timing-note-dialog',
+                'condensate-warning-close': 'condensate-warning-dialog',
+                'condensate-warning-done': 'condensate-warning-dialog'
+            };
+            function infoDialogById(id) {
+                return id ? document.getElementById(id) : null;
+            }
+            function closeInfoDialog(dialog) {
+                if (dialog && dialog.open) dialog.close();
+            }
             function closeCondensateWarning() {
-                if (condensateDialog && condensateDialog.open) condensateDialog.close();
+                closeInfoDialog(infoDialogById('condensate-warning-dialog'));
             }
-            if (condensateOpen && condensateDialog) {
-                condensateOpen.addEventListener('click', function () {
-                    if (!condensateDialog.open) condensateDialog.showModal();
-                });
-                condensateDialog.addEventListener('click', function (event) {
-                    if (event.target === condensateDialog) closeCondensateWarning();
+            function closeNoteInfoDialogs() {
+                Object.keys(infoDialogs).forEach(function (openId) {
+                    closeInfoDialog(infoDialogById(infoDialogs[openId]));
                 });
             }
-            var condensateClose = document.getElementById('condensate-warning-close');
-            var condensateDone = document.getElementById('condensate-warning-done');
-            if (condensateClose) condensateClose.addEventListener('click', closeCondensateWarning);
-            if (condensateDone) condensateDone.addEventListener('click', closeCondensateWarning);
+            function setInfoDialogExpanded(dialog, expanded) {
+                Object.keys(infoDialogs).forEach(function (openId) {
+                    if (infoDialogs[openId] !== (dialog && dialog.id)) return;
+                    var openEl = document.getElementById(openId);
+                    if (openEl) openEl.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+                });
+            }
+            document.addEventListener('click', function (event) {
+                var closer = event.target.closest(Object.keys(infoDialogClosers).map(function (id) { return '#' + id; }).join(','));
+                if (closer) {
+                    event.preventDefault();
+                    closeInfoDialog(infoDialogById(infoDialogClosers[closer.id]));
+                    return;
+                }
+                var opener = event.target.closest(Object.keys(infoDialogs).map(function (id) { return '#' + id; }).join(','));
+                if (!opener) return;
+                var dialog = infoDialogById(infoDialogs[opener.id]);
+                if (!dialog) return;
+                event.preventDefault();
+                try {
+                    closeCustomUsage();
+                    closeStartingFlow();
+                } catch (err) {}
+                closeNoteInfoDialogs();
+                requestAnimationFrame(function () {
+                    if (!dialog.open) dialog.showModal();
+                    setInfoDialogExpanded(dialog, dialog.open);
+                });
+            });
+            Object.keys(infoDialogs).forEach(function (openId) {
+                var dialog = infoDialogById(infoDialogs[openId]);
+                if (!dialog) return;
+                dialog.addEventListener('click', function (event) {
+                    if (event.target === dialog) closeInfoDialog(dialog);
+                });
+                dialog.addEventListener('close', function () {
+                    setInfoDialogExpanded(dialog, false);
+                });
+            });
 
             var confirmX = document.getElementById('tool-confirm-x');
             function confirmXHref() {
