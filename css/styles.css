@@ -986,6 +986,23 @@
                 grid-template-columns: 1fr;
                 gap: 1.75rem;
                 padding: 2rem var(--page-inline);
+                justify-items: center;
+                text-align: center;
+            }
+
+            .footer-column {
+                align-items: center;
+                width: 100%;
+            }
+
+            .footer-column ul {
+                align-items: center;
+            }
+
+            .footer .mc-field-group input,
+            .footer #mc-embedded-subscribe {
+                margin-left: auto;
+                margin-right: auto;
             }
         }
 
