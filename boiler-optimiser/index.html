@@ -1454,7 +1454,8 @@
         }
 
         .condensate-warning-btn,
-        .timing-note-btn {
+        .timing-note-btn,
+        .slider-prompt-btn {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1476,10 +1477,16 @@
             box-sizing: border-box;
         }
 
+        .slider-prompt-btn {
+            margin-top: 0;
+            border-color: #1f7a32;
+            background: #1f7a32;
+        }
+
         .timing-note-btn {
             margin-top: 0.45rem;
-            border-color: #6b4cae;
-            background: #6b4cae;
+            border-color: #e08c00;
+            background: #e08c00;
         }
 
         .condensate-warning-btn:hover,
@@ -1491,13 +1498,21 @@
 
         .timing-note-btn:hover,
         .timing-note-btn:focus-visible {
-            background: #5a3d99;
-            border-color: #5a3d99;
+            background: #c97800;
+            border-color: #c97800;
+            outline: none;
+        }
+
+        .slider-prompt-btn:hover,
+        .slider-prompt-btn:focus-visible {
+            background: #186428;
+            border-color: #186428;
             outline: none;
         }
 
         .condensate-warning-btn:focus-visible,
-        .timing-note-btn:focus-visible {
+        .timing-note-btn:focus-visible,
+        .slider-prompt-btn:focus-visible {
             outline: 3px solid currentColor;
             outline-offset: 2px;
         }
@@ -1694,9 +1709,9 @@
             margin-top: 0.7rem;
         }
 
-        .slider-prompt {
-            margin: 0;
-            font-size: 0.875rem;
+        .slider-prompt-split {
+            margin: 0.45rem 0 0;
+            font-size: 0.8125rem;
             font-weight: 600;
             line-height: 1.4;
             text-align: center;
@@ -2789,10 +2804,11 @@
                     <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                 </div>
                 <div class="slider-notes">
-                    <p class="slider-prompt" id="slider-prompt"><span id="slider-prompt-text">Move the slider to see the saving.</span> <a class="label-aside" id="flow-aside" href="#note-flow" aria-label="Note 2">[2.]</a><span id="slider-prompt-split" hidden> Heating and hot water at different temperatures can save more. <a class="label-aside" id="system-savings-aside" href="#note-system-savings" aria-label="Note">[.]</a></span></p>
+                    <a class="slider-prompt-btn" id="slider-prompt" href="#note-flow">Move the flow temperature slider to see the saving (click for info)</a>
+                    <p class="slider-prompt-split" id="slider-prompt-split" hidden>Heating and hot water at different temperatures can save more. <a class="label-aside" id="system-savings-aside" href="#note-system-savings" aria-label="Note">[.]</a></p>
                     <p class="cylinder-stat-note" id="cylinder-stat-note" hidden>Set the cylinder thermostat to 60°C.</p>
-                    <a class="timing-note-btn" id="timing-note" href="#note-timings">Lower flow temperature takes longer to warm the home, but reduced energy usage for same amount of heat (click for info)</a>
-                    <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog">Warning: Condensate pipe must be correctly installed (click for information)</button>
+                    <a class="timing-note-btn" id="timing-note" href="#note-timings">Low flow temp, takes longer to heat, uses less energy (click for info)</a>
+                    <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog">Warning: Condense pipe must be correctly installed (click for info)</button>
                 </div>
                 <dialog class="custom-usage-dialog" id="condensate-warning-dialog" aria-labelledby="condensate-warning-title">
                     <div class="custom-usage-panel condensate-warning-panel">
@@ -3902,8 +3918,7 @@
                     flowCopy = 'Set the heating flow to ' + target + '°C so the stored water stays hot enough. Change the cylinder thermostat to ' + cylinderTemp(target) + '°C as well. It is a separate control on the cylinder. Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow by 5°C. You can lower it again at any time. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow can sit lower.'
                         + flowSave;
                 }
-                var flowStep = appendNote('Flow temperature', flowCopy, 'note-flow');
-                setAside('flow-aside', flowStep);
+                appendNote('Flow temperature', flowCopy, 'note-flow');
                 var systemSavingsAside = document.getElementById('system-savings-aside');
                 if (system === 'system') {
                     setAside('system-savings-aside', appendNote('Keep heating cooler than the cylinder', systemSavingsNote(), 'note-system-savings'));
@@ -4204,7 +4219,7 @@
                     requestAnimationFrame(goToNote);
                 });
             }
-            document.querySelectorAll('.label-aside, .result-aside, .timing-note-btn').forEach(function (link) {
+            document.querySelectorAll('.label-aside, .result-aside, .timing-note-btn, .slider-prompt-btn').forEach(function (link) {
                 link.addEventListener('click', openAppendixNote);
             });
 
