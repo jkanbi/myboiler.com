@@ -1694,7 +1694,9 @@
 
         .condensate-warning-btn,
         .timing-note-btn,
-        .slider-prompt-btn {
+        .slider-prompt-btn,
+        .priority-controls-btn,
+        .cylinder-stat-note {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1730,7 +1732,9 @@
         }
 
         .timing-note-btn[hidden],
-        .condensate-warning-btn[hidden] {
+        .condensate-warning-btn[hidden],
+        .priority-controls-btn[hidden],
+        .cylinder-stat-note[hidden] {
             display: none;
         }
 
@@ -1755,9 +1759,24 @@
             outline: none;
         }
 
+        .priority-controls-btn {
+            margin-top: 0.7rem;
+            border-color: #6b7280;
+            background: #6b7280;
+        }
+
+        .priority-controls-btn:hover,
+        .priority-controls-btn:focus-visible {
+            background: #4b5563;
+            border-color: #4b5563;
+            outline: none;
+        }
+
         .condensate-warning-btn:focus-visible,
         .timing-note-btn:focus-visible,
-        .slider-prompt-btn:focus-visible {
+        .slider-prompt-btn:focus-visible,
+        .priority-controls-btn:focus-visible,
+        .cylinder-stat-note:focus-visible {
             outline: 3px solid currentColor;
             outline-offset: 2px;
         }
@@ -1793,6 +1812,32 @@
 
         #timing-note-dialog .custom-usage-head h3 {
             color: #c97800;
+        }
+
+        #priority-controls-dialog .custom-usage-head h3 {
+            color: #4b5563;
+        }
+
+        #cylinder-stat-dialog .custom-usage-head h3 {
+            color: var(--text);
+        }
+
+        #cylinder-stat-copy {
+            display: grid;
+            gap: 0.65rem;
+        }
+
+        #cylinder-stat-dialog .note-info-body {
+            align-content: start;
+        }
+
+        #priority-controls-dialog .note-info-body {
+            align-content: start;
+        }
+
+        #priority-controls-copy {
+            display: grid;
+            gap: 0.65rem;
         }
 
         #boiler-stats-dialog .custom-usage-head h3 {
@@ -1971,25 +2016,29 @@
         }
 
         .slider-notes {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            justify-items: stretch;
+            width: 100%;
             margin: 0.7rem 0 0;
-            padding: 0.7rem 0.85rem 0.85rem;
+            padding: 0.7rem 0 0.85rem;
             border: none;
             border-radius: var(--radius);
             background: #f7f8fa;
             box-sizing: border-box;
         }
 
-        .slider-notes .condensate-warning-btn {
-            margin-top: 0.7rem;
+        .slider-notes > * {
+            width: 100%;
+            max-width: none;
+            margin-left: 0;
+            margin-right: 0;
+            box-sizing: border-box;
         }
 
-        .slider-prompt-split {
-            margin: 0.45rem 0 0;
-            font-size: 0.8125rem;
-            font-weight: 600;
-            line-height: 1.4;
-            text-align: center;
-            color: var(--text);
+        .slider-notes .condensate-warning-btn,
+        .slider-notes .priority-controls-btn {
+            margin-top: 0.7rem;
         }
 
         #advanced-notes {
@@ -2016,30 +2065,49 @@
         }
 
         .slider-notes .cylinder-stat-note {
-            margin: 0.45rem 0 0;
-        }
-
-        .cylinder-stat-note {
-            display: block;
-            margin: 0;
-            padding: 0.55rem 0.75rem;
-            border: 2px solid transparent;
-            border-radius: var(--radius);
-            font-size: 0.875rem;
-            font-weight: 600;
-            line-height: 1.4;
-            text-align: center;
+            margin-top: 0.45rem;
+            border-color: transparent;
+            background: transparent;
             color: var(--text);
         }
 
         .cylinder-stat-note.is-green {
             background: #eaf7ee;
             border-color: #2f9e44;
+            color: var(--text);
+        }
+
+        .cylinder-stat-note.is-green:hover,
+        .cylinder-stat-note.is-green:focus-visible {
+            background: #dcefdc;
+            border-color: #25803a;
+            outline: none;
         }
 
         .cylinder-stat-note.is-amber {
             background: #fff4d6;
             border-color: #b58100;
+            color: var(--text);
+        }
+
+        .cylinder-stat-note.is-amber:hover,
+        .cylinder-stat-note.is-amber:focus-visible {
+            background: #ffe9b3;
+            border-color: #9a6d00;
+            outline: none;
+        }
+
+        .cylinder-stat-note.is-grey {
+            background: #e5e7eb;
+            border-color: #6b7280;
+            color: var(--text);
+        }
+
+        .cylinder-stat-note.is-grey:hover,
+        .cylinder-stat-note.is-grey:focus-visible {
+            background: #d1d5db;
+            border-color: #4b5563;
+            outline: none;
         }
 
         .cylinder-stat-note.is-warn {
@@ -2048,8 +2116,24 @@
             color: #fff;
         }
 
-        .cylinder-stat-note[hidden] {
-            display: none;
+        .cylinder-stat-note.is-warn:hover,
+        .cylinder-stat-note.is-warn:focus-visible {
+            background: #c03939;
+            border-color: #c03939;
+            outline: none;
+        }
+
+        .cylinder-stat-note.is-extreme {
+            background: #7f1d1d;
+            border-color: #7f1d1d;
+            color: #fff;
+        }
+
+        .cylinder-stat-note.is-extreme:hover,
+        .cylinder-stat-note.is-extreme:focus-visible {
+            background: #641616;
+            border-color: #641616;
+            outline: none;
         }
 
         .return-note {
@@ -2240,6 +2324,7 @@
         #note-1,
         #note-flow,
         #note-system-savings,
+        #note-cylinder-stat,
         #note-timings,
         #note-5,
         #note-bill,
@@ -3221,10 +3306,10 @@
                 </div>
                 <div class="slider-notes">
                     <button type="button" class="slider-prompt-btn" id="slider-prompt" aria-haspopup="dialog" aria-controls="slider-prompt-dialog" aria-expanded="false">Move the flow temperature slider to see the saving (click for info)</button>
-                    <p class="slider-prompt-split" id="slider-prompt-split" hidden>Heating and hot water at different temperatures can save more. <a class="label-aside" id="system-savings-aside" href="#note-system-savings" aria-label="Note">[.]</a></p>
-                    <p class="cylinder-stat-note" id="cylinder-stat-note" hidden>Set the cylinder thermostat to 60°C.</p>
                     <button type="button" class="timing-note-btn" id="timing-note" aria-haspopup="dialog" aria-controls="timing-note-dialog" aria-expanded="false" hidden>Low flow temp, takes longer to heat, uses less energy (click for info)</button>
+                    <button type="button" class="cylinder-stat-note" id="cylinder-stat-note" aria-haspopup="dialog" aria-controls="cylinder-stat-dialog" aria-expanded="false" hidden>Set the cylinder thermostat to 60°C (click for info)</button>
                     <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog" hidden>Warning: Condense pipe must be correctly installed (click for info)</button>
+                    <button type="button" class="priority-controls-btn" id="priority-controls-open" aria-haspopup="dialog" aria-controls="priority-controls-dialog" aria-expanded="false" hidden>Advanced System Controls can lead to automatic lower flow temperatures (click for info)</button>
                 </div>
                 <dialog class="custom-usage-dialog note-info-dialog" id="slider-prompt-dialog" aria-labelledby="slider-prompt-title">
                     <div class="custom-usage-panel note-info-panel">
@@ -3275,6 +3360,19 @@
                         <button type="button" class="choice-button custom-usage-done" id="timing-note-done">Done</button>
                     </div>
                 </dialog>
+                <dialog class="custom-usage-dialog note-info-dialog" id="cylinder-stat-dialog" aria-labelledby="cylinder-stat-title">
+                    <div class="custom-usage-panel note-info-panel">
+                        <div class="custom-usage-head">
+                            <h3 id="cylinder-stat-title">Cylinder thermostat</h3>
+                            <button type="button" class="custom-usage-close" id="cylinder-stat-close" aria-label="Close">&times;</button>
+                        </div>
+                        <div class="note-info-body">
+                            <div id="cylinder-stat-copy"></div>
+                            <p id="cylinder-stat-notes" hidden>See <a href="#note-cylinder-stat" id="cylinder-stat-notes-link">Notes, Keys and Information</a>.</p>
+                        </div>
+                        <button type="button" class="choice-button custom-usage-done" id="cylinder-stat-done">Done</button>
+                    </div>
+                </dialog>
                 <dialog class="custom-usage-dialog" id="condensate-warning-dialog" aria-labelledby="condensate-warning-title">
                     <div class="custom-usage-panel condensate-warning-panel">
                         <div class="custom-usage-head">
@@ -3301,6 +3399,19 @@
                             </div>
                         </div>
                         <button type="button" class="choice-button custom-usage-done" id="condensate-warning-done">Done</button>
+                    </div>
+                </dialog>
+                <dialog class="custom-usage-dialog note-info-dialog" id="priority-controls-dialog" aria-labelledby="priority-controls-title">
+                    <div class="custom-usage-panel note-info-panel">
+                        <div class="custom-usage-head">
+                            <h3 id="priority-controls-title">Advanced System Controls</h3>
+                            <button type="button" class="custom-usage-close" id="priority-controls-close" aria-label="Close">&times;</button>
+                        </div>
+                        <div class="note-info-body">
+                            <div id="priority-controls-copy"></div>
+                            <p id="priority-controls-notes" hidden>See <a href="#note-system-savings" id="priority-controls-notes-link">Notes, Keys and Information</a>.</p>
+                        </div>
+                        <button type="button" class="choice-button custom-usage-done" id="priority-controls-done">Done</button>
                     </div>
                 </dialog>
             </div>
@@ -3681,6 +3792,7 @@
             var CYLINDER_FLOW = 70;
             var SYSTEM_CONDENSING_FLOW = 70;
             var LEGIONELLA_STORE = 50;
+            var LEGIONELLA_EXTREME_MIN = 20;
             var CYLINDER_HAZARD = 45;
             var CYLINDER_BELOW_FLOW = 5;
             var CYLINDER_STAT_MAX = 60;
@@ -4009,9 +4121,33 @@
                 return 'Low 6,000, Medium 12,000 and High 20,000 kWh are typical annual bands. Choose Custom to enter the exact figure from your gas bill, in kilowatt hours (kWh), and to change the unit rate. The default unit rate is 7.97p/kWh.';
             }
 
-            function systemSavingsNote() {
+            function cylinderStatInfo(cylinderSet, legionellaRisk, extremeLegionella, bacteriaDying) {
                 var note = document.createDocumentFragment();
-                note.appendChild(document.createTextNode('This slider is one knob for the whole system. A cylinder usually keeps that flow high, around 70°C, so the radiators never sit in the best condensing band. Weather compensation, priority hot water, and some boiler setups can split the jobs, so heating can run cooler and you save more.'));
+                function para(text) {
+                    var p = document.createElement('p');
+                    p.textContent = text;
+                    note.appendChild(p);
+                }
+                para('Set the cylinder thermostat to ' + cylinderSet + '. It is a separate control on the cylinder.');
+                para('The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow, and no hotter than ' + CYLINDER_STAT_MAX + '°C. The gap can be higher than that.');
+                if (extremeLegionella) {
+                    para('Extreme legionella risk between ' + LEGIONELLA_EXTREME_MIN + '°C and ' + CYLINDER_HAZARD + '°C. Stored water this cool needs pasteurisation.');
+                } else if (legionellaRisk) {
+                    para('Legionella risk below ' + LEGIONELLA_STORE + '°C. Stored water this cool needs pasteurisation.');
+                } else if (bacteriaDying) {
+                    para('Bacteria die at this store. Growth is inhibited from ' + LEGIONELLA_STORE + '°C.');
+                }
+                para('Public campaigns usually cover combi boilers only, because stored hot water has to stay hot enough.');
+                return note;
+            }
+
+            function systemSavingsNote(stored) {
+                var note = document.createDocumentFragment();
+                var intro = document.createElement('p');
+                intro.textContent = stored
+                    ? 'This slider is one knob for the whole system. A cylinder usually keeps that flow high, around 70°C, so the radiators never sit in the best condensing band. Weather compensation, priority hot water, and some boiler setups can split the jobs, so heating can run cooler and you save more.'
+                    : 'This slider is a fixed flow for the heating circuit. Weather compensation and OpenTherm, or the maker’s own modulating control, can lower the flow as the house warms, so you save more than a fixed setting.';
+                note.appendChild(intro);
                 var list = document.createElement('ul');
                 function addPoint(label, nodes) {
                     var li = document.createElement('li');
@@ -4023,19 +4159,24 @@
                     });
                     list.appendChild(li);
                 }
-                addPoint('PDHW', [
-                    ' — priority domestic hot water. The cylinder call takes a short, hot reheat (about 70–80°C). Heating then runs at a lower condensing flow, typically 45–55°C. See ',
-                    linkEl('/priority-domestic-hot-water/', 'priority domestic hot water'),
-                    '.'
+                addPoint('Weather compensation', [
+                    ' — an outdoor sensor turns the flow down as the weather gets milder. That only works well if the heating curve is set for your home.'
                 ]);
-                addPoint('4-pipe system boilers', [
-                    ' — a separate flow and return to the cylinder, often with an integral diverter (Viessmann Vitodens 100-W is the usual example). External zone valves can come off. That plumbing makes two temperatures straightforward.'
-                ]);
-                addPoint('Manufacturer controls', [
-                    ' — weather compensation or the maker’s own modulating thermostat can drop the heating flow as the house warms, and still lift it for a cylinder call. A plain on/off room stat cannot. See ',
+                addPoint('OpenTherm', [
+                    ' — a load-compensating thermostat talks to the boiler and lowers the flow as rooms warm up. Some boilers use the maker’s own modulating control instead. A plain on/off room stat cannot. See ',
                     linkEl('/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/', 'modulating controls'),
                     '.'
                 ]);
+                if (stored) {
+                    addPoint('PDHW', [
+                        ' — priority domestic hot water. The cylinder call takes a short, hot reheat (about 70–80°C). Heating then runs at a lower condensing flow, typically 45–55°C. See ',
+                        linkEl('/priority-domestic-hot-water/', 'priority domestic hot water'),
+                        '.'
+                    ]);
+                    addPoint('4-pipe system boilers', [
+                        ' — a separate flow and return to the cylinder, often with an integral diverter (Viessmann Vitodens 100-W is the usual example). External zone valves can come off. That plumbing makes two temperatures straightforward.'
+                    ]);
+                }
                 note.appendChild(list);
                 return note;
             }
@@ -4207,34 +4348,37 @@
                 var stored = storesHotWater();
                 var cylinder = cylinderTemp(flow);
                 var legionellaRisk = condensingBoiler && stored && cylinder < LEGIONELLA_STORE;
+                var extremeLegionella = legionellaRisk && cylinder >= LEGIONELLA_EXTREME_MIN && cylinder <= CYLINDER_HAZARD;
                 var cylinderHint = document.getElementById('cylinder-hint');
                 var cylinderDeltaNote = document.getElementById('cylinder-delta-note');
                 var storedCampaignNote = document.getElementById('stored-campaign-note');
                 var cylinderStatNote = document.getElementById('cylinder-stat-note');
-                var sliderPromptSplit = document.getElementById('slider-prompt-split');
+                var priorityControls = document.getElementById('priority-controls-open');
                 flowInput.classList.toggle('is-plain', !condensingBoiler);
                 flowInput.classList.toggle('flow-cylinder', condensingBoiler && stored);
                 flowInput.classList.toggle('flow-combi', condensingBoiler && !stored);
                 cylinderDeltaNote.hidden = !(condensingBoiler && stored);
                 storedCampaignNote.hidden = !(condensingBoiler && stored);
                 cylinderStatNote.hidden = !stored;
-                if (sliderPromptSplit) sliderPromptSplit.hidden = system !== 'system';
+                if (priorityControls) priorityControls.hidden = false;
                 if (condensingBoiler && stored) {
                     cylinderDeltaNote.textContent = 'The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow, and no hotter than ' + CYLINDER_STAT_MAX + '°C. The gap can be higher than that.';
                 }
                 var bacteriaDying = condensingBoiler && stored && currentBand.key === 'amber';
                 if (stored) {
                     var cylinderSet = cylinder + '°C' + (cylinderStatCapped(flow) ? ' max' : '');
-                    var statText = 'Set the cylinder thermostat to ' + cylinderSet + '.';
-                    if (legionellaRisk) {
-                        statText = 'Set the cylinder thermostat to ' + cylinderSet + '. Legionella risk below ' + LEGIONELLA_STORE + '°C. Needs pasteurisation.';
-                    } else if (bacteriaDying) {
-                        statText = 'Set the cylinder thermostat to ' + cylinderSet + '. Bacteria die at this store. Growth inhibited from ' + LEGIONELLA_STORE + '°C.';
-                    }
-                    cylinderStatNote.textContent = statText;
-                    cylinderStatNote.className = 'cylinder-stat-note' + (legionellaRisk
-                        ? ' is-warn'
-                        : (currentBand.key === 'green' ? ' is-green' : (bacteriaDying ? ' is-amber' : '')));
+                    cylinderStatNote.textContent = extremeLegionella
+                        ? 'Extreme Legionella Warning ' + cylinder + '°C (click for info)'
+                        : (legionellaRisk
+                            ? 'Legionella Warning ' + cylinder + '°C (click for info)'
+                            : 'Set the cylinder thermostat to ' + cylinderSet + ' (click for info)');
+                    cylinderStatNote.className = 'cylinder-stat-note' + (extremeLegionella
+                        ? ' is-extreme'
+                        : (legionellaRisk
+                            ? ' is-warn'
+                            : (currentBand.key === 'green' ? ' is-green'
+                                : (bacteriaDying ? ' is-amber'
+                                    : (flow >= 76 ? ' is-grey' : '')))));
                 }
                 var flowState = document.getElementById('flow-state');
                 var stateName = currentBand.key === 'low'
@@ -4450,11 +4594,39 @@
                 appendNote('Flow temperature', flowCopy, 'note-flow');
                 var sliderPromptCopy = document.getElementById('slider-prompt-copy');
                 if (sliderPromptCopy) sliderPromptCopy.textContent = flowCopy;
-                var systemSavingsAside = document.getElementById('system-savings-aside');
-                if (system === 'system') {
-                    setAside('system-savings-aside', appendNote('Keep heating cooler than the cylinder', systemSavingsNote(), 'note-system-savings'));
-                } else if (systemSavingsAside) {
-                    systemSavingsAside.hidden = true;
+                var priorityCopy = document.getElementById('priority-controls-copy');
+                var priorityNotes = document.getElementById('priority-controls-notes');
+                var priorityNotesLink = document.getElementById('priority-controls-notes-link');
+                var systemSavingsStep = appendNote(
+                    stored ? 'Keep heating cooler than the cylinder' : 'Advanced System Controls',
+                    systemSavingsNote(stored),
+                    'note-system-savings'
+                );
+                if (priorityCopy) {
+                    priorityCopy.textContent = '';
+                    priorityCopy.appendChild(systemSavingsNote(stored));
+                }
+                if (priorityNotesLink) {
+                    priorityNotesLink.textContent = 'Notes, Keys and Information [' + systemSavingsStep + '.]';
+                }
+                if (priorityNotes) priorityNotes.hidden = false;
+                var cylinderStatCopy = document.getElementById('cylinder-stat-copy');
+                var cylinderStatNotes = document.getElementById('cylinder-stat-notes');
+                var cylinderStatNotesLink = document.getElementById('cylinder-stat-notes-link');
+                if (stored) {
+                    var cylinderSetNote = cylinder + '°C' + (cylinderStatCapped(flow) ? ' max' : '');
+                    var cylinderStatStep = appendNote('Cylinder thermostat', cylinderStatInfo(cylinderSetNote, legionellaRisk, extremeLegionella, bacteriaDying), 'note-cylinder-stat');
+                    if (cylinderStatCopy) {
+                        cylinderStatCopy.textContent = '';
+                        cylinderStatCopy.appendChild(cylinderStatInfo(cylinderSetNote, legionellaRisk, extremeLegionella, bacteriaDying));
+                    }
+                    if (cylinderStatNotesLink) {
+                        cylinderStatNotesLink.textContent = 'Notes, Keys and Information [' + cylinderStatStep + '.]';
+                    }
+                    if (cylinderStatNotes) cylinderStatNotes.hidden = false;
+                } else {
+                    if (cylinderStatCopy) cylinderStatCopy.textContent = '';
+                    if (cylinderStatNotes) cylinderStatNotes.hidden = true;
                 }
                 var timingsCopy = document.createDocumentFragment();
                 timingsCopy.appendChild(document.createTextNode('You may need to add more time on the heating programmer. Reducing flow temperature means the house takes longer to warm up, but the system is more stable, so add more time if necessary.'));
@@ -4883,7 +5055,9 @@
             var infoDialogs = {
                 'slider-prompt': 'slider-prompt-dialog',
                 'timing-note': 'timing-note-dialog',
+                'cylinder-stat-note': 'cylinder-stat-dialog',
                 'condensate-warning-open': 'condensate-warning-dialog',
+                'priority-controls-open': 'priority-controls-dialog',
                 'boiler-stats-open': 'boiler-stats-dialog'
             };
             var infoDialogClosers = {
@@ -4891,8 +5065,12 @@
                 'slider-prompt-done': 'slider-prompt-dialog',
                 'timing-note-close': 'timing-note-dialog',
                 'timing-note-done': 'timing-note-dialog',
+                'cylinder-stat-close': 'cylinder-stat-dialog',
+                'cylinder-stat-done': 'cylinder-stat-dialog',
                 'condensate-warning-close': 'condensate-warning-dialog',
                 'condensate-warning-done': 'condensate-warning-dialog',
+                'priority-controls-close': 'priority-controls-dialog',
+                'priority-controls-done': 'priority-controls-dialog',
                 'boiler-stats-close': 'boiler-stats-dialog',
                 'boiler-stats-done': 'boiler-stats-dialog'
             };
@@ -4918,6 +5096,14 @@
                 });
             }
             document.addEventListener('click', function (event) {
+                var notesLink = event.target.closest('#priority-controls-notes-link, #cylinder-stat-notes-link');
+                if (notesLink) {
+                    closeInfoDialog(infoDialogById('priority-controls-dialog'));
+                    closeInfoDialog(infoDialogById('cylinder-stat-dialog'));
+                    var notesFold = document.getElementById('tool-results');
+                    if (notesFold) notesFold.open = true;
+                    return;
+                }
                 var closer = event.target.closest(Object.keys(infoDialogClosers).map(function (id) { return '#' + id; }).join(','));
                 if (closer) {
                     event.preventDefault();
