@@ -1416,6 +1416,74 @@
             background: #fff;
         }
 
+        .tool-confirm-social {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.45rem;
+            margin: 0.9rem 0 0;
+        }
+
+        .tool-confirm-social-label {
+            margin: 0;
+            font-size: 0.875rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--text-muted);
+        }
+
+        .tool-confirm-social-btns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .tool-confirm-x-btn,
+        .tool-confirm-fb-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            flex: 0 0 auto;
+            min-width: 8.25rem;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .tool-confirm-x-btn {
+            background: #000;
+            border-color: #000;
+        }
+
+        .tool-confirm-fb-btn {
+            background: #1877f2;
+            border-color: #1877f2;
+        }
+
+        .tool-confirm-x-btn:hover,
+        .tool-confirm-x-btn:focus-visible {
+            color: #fff;
+            background: #141414;
+            border-color: #141414;
+            outline: none;
+        }
+
+        .tool-confirm-fb-btn:hover,
+        .tool-confirm-fb-btn:focus-visible {
+            color: #fff;
+            background: #166fe5;
+            border-color: #166fe5;
+            outline: none;
+        }
+
+        .tool-confirm-x-btn svg,
+        .tool-confirm-fb-btn svg {
+            display: block;
+            flex: 0 0 auto;
+            fill: currentColor;
+        }
+
         .tool-confirm-done {
             margin: 0.65rem 0 0;
             font-size: 0.9375rem;
@@ -3172,6 +3240,19 @@
             <p class="tool-confirm-raise" id="tool-confirm-raise" hidden role="status">Aim lower if you can. Raising the flow temperature is worse long term: it uses more gas, is harder on the boiler, and future heating system changes may be needed.</p>
             <button type="submit" class="choice-button" id="tool-confirm-submit">Submit</button>
             <p class="tool-confirm-done" id="tool-confirm-done" hidden>Thanks. We logged that you set it.</p>
+            <div class="tool-confirm-social">
+                <p class="tool-confirm-social-label">Or let us know on x.com or Facebook</p>
+                <div class="tool-confirm-social-btns">
+                    <a class="choice-button tool-confirm-x-btn" id="tool-confirm-x" href="https://x.com/intent/post?text=%40myboiler%20I%20turned%20the%20heating%20flow%20down" target="_blank" rel="noopener noreferrer" aria-label="Message @myboiler on X">
+                        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z"/></svg>
+                        @myboiler
+                    </a>
+                    <a class="choice-button tool-confirm-fb-btn" id="tool-confirm-fb" href="https://m.me/myboiler" target="_blank" rel="noopener noreferrer" aria-label="Message @myboiler on Facebook">
+                        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z"/></svg>
+                        @myboiler
+                    </a>
+                </div>
+            </div>
         </form>
         <div class="calculator-card heat-pump-cta" id="heat-pump-cta" hidden>
             <p>If this flow is keeping the house warm in peak winter, a heat pump may suit this system without many changes. <span id="heat-pump-size"></span></p>
@@ -4474,6 +4555,44 @@
             var condensateDone = document.getElementById('condensate-warning-done');
             if (condensateClose) condensateClose.addEventListener('click', closeCondensateWarning);
             if (condensateDone) condensateDone.addEventListener('click', closeCondensateWarning);
+
+            var confirmX = document.getElementById('tool-confirm-x');
+            function confirmXHref() {
+                var brandInput = document.getElementById('confirm-brand');
+                var fromInput = document.getElementById('from-flow');
+                var setInput = document.getElementById('set-flow');
+                var brandLabel = '';
+                if (brandInput && brandInput.selectedIndex > 0) {
+                    brandLabel = brandInput.options[brandInput.selectedIndex].text;
+                }
+                var fromFlow = fromInput ? Number(fromInput.value) : NaN;
+                var setFlow = setInput ? Number(setInput.value) : NaN;
+                var hasFrom = isFinite(fromFlow) && fromFlow >= 35 && fromFlow <= 90;
+                var hasSet = isFinite(setFlow) && setFlow >= 35 && setFlow <= 90;
+                var text = '@myboiler I turned the heating flow down';
+                if (hasFrom && hasSet) {
+                    text = '@myboiler I turned the heating flow down from ' + Math.round(fromFlow) + '°C to ' + Math.round(setFlow) + '°C';
+                    if (brandLabel) {
+                        text = '@myboiler I turned the ' + brandLabel + ' heating flow down from ' + Math.round(fromFlow) + '°C to ' + Math.round(setFlow) + '°C';
+                    }
+                } else if (brandLabel) {
+                    text = '@myboiler I turned the ' + brandLabel + ' heating flow down';
+                }
+                return 'https://x.com/intent/post?text=' + encodeURIComponent(text);
+            }
+            function syncConfirmXHref() {
+                if (confirmX) confirmX.href = confirmXHref();
+            }
+            if (confirmX) {
+                ['confirm-brand', 'from-flow', 'set-flow'].forEach(function (id) {
+                    var el = document.getElementById(id);
+                    if (!el) return;
+                    el.addEventListener('input', syncConfirmXHref);
+                    el.addEventListener('change', syncConfirmXHref);
+                });
+                confirmX.addEventListener('pointerdown', syncConfirmXHref);
+                syncConfirmXHref();
+            }
 
             window.mbOptimiserConfirmMetrics = function (fromFlow, setFlow, annualKwh, unitRate) {
                 var annual = annualKwh != null && isFinite(annualKwh) ? annualKwh : nonNegativeOrNull(annualInput);
