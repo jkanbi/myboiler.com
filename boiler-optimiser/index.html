@@ -3694,16 +3694,16 @@
                     </div>
                 </div>
                 <div class="tool-confirm-field">
-                    <label class="input-label" for="from-flow">What the flow was</label>
+                    <label class="input-label" for="from-flow">Flow Temp was</label>
                     <div class="tool-confirm-row">
                         <input type="number" id="from-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" placeholder="xx" required autocomplete="off">
                         <span class="tool-confirm-unit" aria-hidden="true">°C</span>
                     </div>
                 </div>
                 <div class="tool-confirm-field">
-                    <label class="input-label" for="set-flow">What it is now</label>
+                    <label class="input-label" for="set-flow">Flow temp now</label>
                     <div class="tool-confirm-row">
-                        <input type="number" id="set-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" placeholder="xx" required autocomplete="off">
+                        <input type="number" id="set-flow" class="input-field" inputmode="numeric" min="35" max="75" step="1" placeholder="xx" required autocomplete="off">
                         <span class="tool-confirm-unit" aria-hidden="true">°C</span>
                     </div>
                 </div>
@@ -5053,16 +5053,25 @@
             var confirmBrandInput = document.getElementById('confirm-brand');
             var confirmRaiseNote = document.getElementById('tool-confirm-raise');
             window.mbSyncConfirmRaiseNote = function () {
-                if (!confirmRaiseNote || !fromFlowInput || !setFlowInput) return;
+                if (!fromFlowInput || !setFlowInput) return;
                 var was = Number(fromFlowInput.value);
                 var nowSet = Number(setFlowInput.value);
-                confirmRaiseNote.hidden = !(
-                    fromFlowInput.value.trim() !== '' &&
+                var raising = fromFlowInput.value.trim() !== '' &&
                     setFlowInput.value.trim() !== '' &&
                     isFinite(was) &&
                     isFinite(nowSet) &&
-                    nowSet > was
-                );
+                    nowSet > was;
+                if (confirmRaiseNote) confirmRaiseNote.hidden = !raising;
+                var maxNow = 75;
+                if (fromFlowInput.value.trim() !== '' && isFinite(was) && was < maxNow) {
+                    maxNow = Math.max(35, Math.round(was));
+                }
+                setFlowInput.max = String(maxNow);
+                if (typeof setFlowInput.setCustomValidity === 'function') {
+                    setFlowInput.setCustomValidity(raising
+                        ? 'Set the flow to ' + Math.round(was) + '°C or lower.'
+                        : '');
+                }
             };
             if (fromFlowInput) fromFlowInput.addEventListener('input', markConfirmEdited);
             if (setFlowInput) setFlowInput.addEventListener('input', markConfirmEdited);
@@ -5243,7 +5252,7 @@
                 var fromFlow = fromInput ? Number(fromInput.value) : NaN;
                 var setFlow = setInput ? Number(setInput.value) : NaN;
                 var hasFrom = isFinite(fromFlow) && fromFlow >= 35 && fromFlow <= 90;
-                var hasSet = isFinite(setFlow) && setFlow >= 35 && setFlow <= 90;
+                var hasSet = isFinite(setFlow) && setFlow >= 35 && setFlow <= 75;
                 var text = '@myboiler I turned the heating flow down';
                 if (hasFrom && hasSet) {
                     text = '@myboiler I turned the heating flow down from ' + Math.round(fromFlow) + '°C to ' + Math.round(setFlow) + '°C';

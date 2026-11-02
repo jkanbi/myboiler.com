@@ -60,6 +60,34 @@ test("parseFeedbackBody accepts turned_down and did_it_work", () => {
   assert.equal(parseFeedbackBody(JSON.stringify({ type: "other" })).ok, false);
   assert.equal(parseFeedbackBody("not-json").ok, false);
   assert.equal(parseFeedbackBody(JSON.stringify({ type: "turned_down", path: "/x?q=1" })).ok, false);
+
+  const capped = parseFeedbackBody(JSON.stringify({
+    type: "turned_down",
+    path: "/boiler-optimiser/",
+    from_flow: 90,
+    set_flow: 80,
+  }));
+  assert.equal(capped.ok, true);
+  assert.equal(capped.event.from_flow, 90);
+  assert.equal(capped.event.set_flow, undefined);
+
+  const atCap = parseFeedbackBody(JSON.stringify({
+    type: "turned_down",
+    path: "/boiler-optimiser/",
+    from_flow: 90,
+    set_flow: 75,
+  }));
+  assert.equal(atCap.ok, true);
+  assert.equal(atCap.event.set_flow, 75);
+
+  const raised = parseFeedbackBody(JSON.stringify({
+    type: "turned_down",
+    path: "/boiler-optimiser/",
+    from_flow: 50,
+    set_flow: 60,
+  }));
+  assert.equal(raised.ok, false);
+  assert.equal(raised.status, 400);
 });
 
 test("POST /api/optimiser-feedback stores a did_it_work event", async () => {

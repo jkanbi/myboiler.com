@@ -117,6 +117,10 @@
         return isFinite(n) && n >= 35 && n <= 90;
     }
 
+    function validSetFlow(n) {
+        return isFinite(n) && n >= 35 && n <= 75;
+    }
+
     function validKwh(n) {
         return isFinite(n) && n >= 0 && n <= 200000;
     }
@@ -160,7 +164,7 @@
                 brand: brandKey,
                 brand_label: brandLabel || brandKey,
                 from_flow: validFlow(fromFlow) ? fromFlow : null,
-                set_flow: validFlow(setFlow) ? setFlow : null,
+                set_flow: validSetFlow(setFlow) ? setFlow : null,
                 path: location.pathname || '/boiler-optimiser/'
             };
         }
@@ -241,8 +245,9 @@
                 fromInput.focus();
                 return;
             }
-            if (!validFlow(setFlow)) {
-                setInput.focus();
+            if (!validSetFlow(setFlow)) {
+                if (typeof setInput.reportValidity === 'function') setInput.reportValidity();
+                else setInput.focus();
                 return;
             }
             if (annualKwh !== null && !validKwh(annualKwh)) {
@@ -256,14 +261,14 @@
             if (setFlow > fromFlow) {
                 var raiseNote = document.getElementById('tool-confirm-raise');
                 if (raiseNote) raiseNote.hidden = false;
-                var proceed = window.confirm(
-                    'Aim lower if you can. Raising the flow temperature is worse long term: it uses more gas, is harder on the boiler, and future heating system changes may be needed.\n\nSubmit this higher setting anyway?'
-                );
-                if (!proceed) {
-                    setInput.focus();
-                    return;
+                if (typeof setInput.setCustomValidity === 'function') {
+                    setInput.setCustomValidity('Set the flow to ' + Math.round(fromFlow) + '°C or lower.');
                 }
+                if (typeof setInput.reportValidity === 'function') setInput.reportValidity();
+                else setInput.focus();
+                return;
             }
+            if (typeof setInput.setCustomValidity === 'function') setInput.setCustomValidity('');
             submitted = true;
             var brandLabel = '';
             var selected = brandInput.options[brandInput.selectedIndex];

@@ -107,12 +107,12 @@ export function sanitizeField(value, max) {
 /**
  * @param {unknown} value
  */
-function optionalFlow(value) {
+function optionalFlow(value, max = 90) {
   if (value === null || value === undefined || value === "") return null;
   const n = typeof value === "number" ? value : Number(value);
   if (!Number.isFinite(n)) return null;
   const rounded = Math.round(n);
-  if (rounded < 35 || rounded > 90) return null;
+  if (rounded < 35 || rounded > max) return null;
   return rounded;
 }
 
@@ -153,7 +153,10 @@ export function parseFeedbackBody(body) {
 
   const brand = sanitizeField(data.brand, MAX_BRAND);
   const fromFlow = optionalFlow(data.from_flow);
-  const setFlow = optionalFlow(data.set_flow);
+  const setFlow = optionalFlow(data.set_flow, 75);
+  if (type === "turned_down" && fromFlow !== null && setFlow !== null && setFlow > fromFlow) {
+    return { ok: false, status: 400 };
+  }
 
   const now = Date.now();
   let t = typeof data.t === "number" && Number.isFinite(data.t) ? Math.round(data.t) : now;
