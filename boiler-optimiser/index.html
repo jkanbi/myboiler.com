@@ -2587,13 +2587,31 @@
             margin-top: 0.2rem;
         }
 
+        .bill-results .result-value {
+            font-size: 2rem;
+            line-height: 1.15;
+        }
+
         .result-value.is-loss {
             color: #d64545;
+        }
+
+        .result-value.is-gain {
+            color: #2f9e44;
         }
 
         .result-unit {
             font-size: 0.8125rem;
             color: var(--text-muted);
+        }
+
+        #condensing-saving-unit,
+        #heating-cost-label {
+            text-transform: none;
+        }
+
+        #condensing-saving-unit {
+            white-space: pre-line;
         }
 
         @media (max-width: 700px) {
@@ -3621,14 +3639,14 @@
             <div class="result-grid bill-results">
                 <div class="result-item is-key is-split">
                     <div class="result-split">
-                        <div class="result-label">Annual condensing-mode saving</div>
+                        <div class="result-label" id="condensing-saving-unit" data-result="condensing-saving-unit">Annual Condensing-Mode Saving
+0% Saving Versus 75°C Initial Flow Temp
+75°C Flow Temp And 55°C Return Temp</div>
                         <div class="result-value" id="condensing-saving" data-result="condensing-saving">—</div>
-                        <div class="result-unit" id="condensing-saving-unit" data-result="condensing-saving-unit">versus a 75°C flow at 55°C return</div>
                     </div>
                     <div class="result-split">
-                        <div class="result-label">Your annual space heating cost</div>
+                        <div class="result-label" id="heating-cost-label">Your Annual Space Heating Cost (Not Including Standing Charge)</div>
                         <div class="result-value" id="heating-cost" data-result="heating-cost">—</div>
-                        <div class="result-unit">excluding standing charge</div>
                     </div>
                 </div>
             </div>
@@ -4662,6 +4680,7 @@
                 setResult('condensing-saving', savingText);
                 document.querySelectorAll('[data-result="condensing-saving"]').forEach(function (el) {
                     el.classList.toggle('is-loss', savingAmount < 0);
+                    el.classList.toggle('is-gain', savingAmount > 0);
                 });
                 var boilerSaving = document.getElementById('boiler-saving');
                 var boilerSavingWrap = boilerSaving.parentElement;
@@ -4672,8 +4691,10 @@
                 }
                 boilerSavingWrap.className = 'boiler-saving is-' + savingTone;
                 setResult('condensing-saving-unit', condensingBoiler
-                    ? percent(fraction) + ' versus ' + Math.round(fromFlow) + '°C flow at ' + ret + '°C return'
-                    : 'no condensing gain on this boiler');
+                    ? 'Annual Condensing-Mode Saving\n' +
+                        percent(fraction) + ' Saving Versus ' + Math.round(fromFlow) + '°C Initial Flow Temp\n' +
+                        Math.round(flow) + '°C Flow Temp And ' + ret + '°C Return Temp'
+                    : 'Annual Condensing-Mode Saving\nNo Condensing Gain On This Boiler');
                 syncUsageChips(annual);
                 var confirmForm = document.getElementById('tool-confirm');
                 var fromFlowInput = document.getElementById('from-flow');
