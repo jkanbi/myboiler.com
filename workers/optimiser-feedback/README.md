@@ -72,7 +72,7 @@ Allowlisted `event` values:
 | `turned_down` | `brand`, `from_flow`, `set_flow` (30–90), `space_kwh`, `annual_kwh`, `unit_rate`, `system`, `boiler_type`, `saving_kwh`, `saving_gbp`, `is_test` |
 | `did_it_work` | `answer` in `{yes, cool, not_yet}` |
 
-`utm_source` / `utm_content` may be sent on any event (each ≤64 chars, `[A-Za-z0-9_.-]` only). Rows go into D1 table `optimiser_events`. Timestamp is rounded to the minute. A daily cron deletes rows older than 400 days (~13 months).
+`utm_source` / `utm_content` may be sent on any event (each ≤64 chars, `[A-Za-z0-9_.-]` only). Rows go into D1 table `optimiser_events`. Timestamp is rounded to the minute. On an `/api/optimiser-event` request the Worker deletes rows older than 400 days (~13 months) at most once a day (`optimiser:purge:YYYY-MM-DD`, via `ctx.waitUntil` so the response is not delayed).
 
 Daily cap: KV key `optimiser-events:YYYY-MM-DD`, ~5,000 events.
 
