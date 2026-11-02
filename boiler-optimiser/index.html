@@ -31,6 +31,10 @@
                 animation: none;
                 box-shadow: 0 0 0 3px rgba(24, 99, 220, 0.4);
             }
+
+            .flow-slider.is-hinting .flow-slider-arrow {
+                animation: none;
+            }
         }
 
         .article-page {
@@ -633,21 +637,75 @@
         .flow-slider {
             position: relative;
             line-height: 0;
-            padding-top: 1.15rem;
-            padding-bottom: calc(var(--thumb-size) / 2);
+            --flow-pad-top: 0.75rem;
+            --flow-pad-bottom: 3.85rem;
+            padding-top: var(--flow-pad-top);
+            padding-bottom: var(--flow-pad-bottom);
             --track-size: 0.7rem;
             --thumb-size: 2.75rem;
             --thumb-pct: 0.727;
             --red-stop: calc(var(--thumb-size) / 2 + (40 / 55) * (100% - var(--thumb-size)));
         }
 
-        .flow-thumb-value {
+        .flow-thumb-cluster {
             position: absolute;
-            top: 50%;
+            top: calc(var(--flow-pad-top) + var(--track-size) / 2);
             left: calc(var(--thumb-size) / 2 + var(--thumb-pct) * (100% - var(--thumb-size)));
-            transform: translate(-50%, -50%);
             width: var(--thumb-size);
             height: var(--thumb-size);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .flow-slider-arrow {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: calc(100% + 0.05rem);
+            font-size: 2.4rem;
+            line-height: 1;
+            transform: translateX(-50%);
+            user-select: none;
+        }
+
+        .flow-slider.is-hinting .flow-slider-arrow {
+            display: block;
+            will-change: transform;
+            animation: flow-arrow-nudge 2.4s linear infinite;
+        }
+
+        @keyframes flow-arrow-nudge {
+            0%, 100% {
+                transform: translate(calc(-50% - 0.85rem), 0);
+            }
+            12.5% {
+                transform: translate(calc(-50% - 0.60rem), 0);
+            }
+            25% {
+                transform: translate(-50%, 0);
+            }
+            37.5% {
+                transform: translate(calc(-50% + 0.60rem), 0);
+            }
+            50% {
+                transform: translate(calc(-50% + 0.85rem), 0);
+            }
+            62.5% {
+                transform: translate(calc(-50% + 0.60rem), 0);
+            }
+            75% {
+                transform: translate(-50%, 0);
+            }
+            87.5% {
+                transform: translate(calc(-50% - 0.60rem), 0);
+            }
+        }
+
+        .flow-thumb-value {
+            position: absolute;
+            inset: 0;
+            box-sizing: border-box;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -655,8 +713,6 @@
             font-weight: 700;
             line-height: 1;
             color: var(--text);
-            pointer-events: none;
-            z-index: 2;
             border-radius: 50%;
         }
 
@@ -3383,8 +3439,11 @@
                     </div>
                 </div>
                 <div class="flow-slider is-hinting">
+                    <span class="flow-thumb-cluster">
+                        <span class="flow-slider-arrow" aria-hidden="true">👆🏼</span>
+                        <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
+                    </span>
                     <input type="range" id="flow-temp" class="input-slider" min="35" max="90" step="1" value="75" aria-label="Flow temperature" aria-describedby="slider-prompt">
-                    <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                 </div>
                 <div class="slider-notes">
                     <button type="button" class="slider-prompt-btn" id="slider-prompt" aria-haspopup="dialog" aria-controls="slider-prompt-dialog" aria-expanded="false">Move the flow temperature slider to see the saving (click for info)</button>
