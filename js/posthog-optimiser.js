@@ -23,9 +23,10 @@
     if (path.indexOf('/boiler-optimiser') !== 0) {
         return;
     }
+    if (window.__mbOptimiserInit) return;
+    window.__mbOptimiserInit = true;
     var onOptimiserTool = path === '/boiler-optimiser';
-    var completedSteps = Object.create(null);
-    var viewSent = false;
+    var DEDUPE_MS = 2000;
 
     function ready(fn) {
         if (document.readyState === 'loading') {
@@ -136,6 +137,16 @@
         return out;
     }
 
+    function eventDedupeKey(data) {
+        return [
+            data.event || '',
+            data.brand || '',
+            data.target || '',
+            data.step != null ? String(data.step) : '',
+            data.answer || ''
+        ].join('\0');
+    }
+
     function sendEvent(payload) {
         if (!onOptimiserTool || !payload || !payload.event) return;
         var data = {};
@@ -149,19 +160,25 @@
         if (utms.utm_source && !data.utm_source) data.utm_source = utms.utm_source;
         if (utms.utm_content && !data.utm_content) data.utm_content = utms.utm_content;
         if (!data.path) data.path = location.pathname || '/boiler-optimiser/';
+        var bucket = window.__mbOptimiserEventDedupe || (window.__mbOptimiserEventDedupe = Object.create(null));
+        var dedupeKey = eventDedupeKey(data);
+        var now = Date.now();
+        if (bucket[dedupeKey] && now - bucket[dedupeKey] < DEDUPE_MS) return;
+        bucket[dedupeKey] = now;
         sendBeaconPayload(EVENT_ENDPOINT, data);
     }
 
     function recordStep(step) {
         if (!onOptimiserTool) return;
-        if (completedSteps[step]) return;
-        completedSteps[step] = true;
+        var done = window.__mbOptimiserSteps || (window.__mbOptimiserSteps = Object.create(null));
+        if (done[step]) return;
+        done[step] = true;
         sendEvent({ event: 'step', step: step, path: location.pathname || '/boiler-optimiser/' });
     }
 
     function sendView() {
-        if (!onOptimiserTool || viewSent) return;
-        viewSent = true;
+        if (!onOptimiserTool || window.__mbOptimiserViewSent) return;
+        window.__mbOptimiserViewSent = true;
         sendEvent({ event: 'view', path: location.pathname || '/boiler-optimiser/' });
     }
 
@@ -457,7 +474,8 @@
 
     function bindBrandVideos() {
         var picks = document.getElementById('brand-picks');
-        if (!picks) return;
+        if (!picks || picks.dataset.phBound === '1') return;
+        picks.dataset.phBound = '1';
         picks.addEventListener('click', function (event) {
             var tile = event.target.closest('[data-brand]');
             if (!tile || !picks.contains(tile)) return;
@@ -545,6 +563,8 @@
 
     function bindGuideClicks() {
         if (!onOptimiserTool) return;
+        if (document.documentElement.dataset.phGuideBound === '1') return;
+        document.documentElement.dataset.phGuideBound = '1';
         var guides = collectBrandGuides();
         document.addEventListener('click', function (event) {
             var link = event.target.closest('a[href]');
@@ -582,6 +602,8 @@
 
     function bindSteps() {
         if (!onOptimiserTool) return;
+        if (document.documentElement.dataset.phStepsBound === '1') return;
+        document.documentElement.dataset.phStepsBound = '1';
         document.addEventListener('click', function (event) {
             var boiler = event.target.closest('[data-boiler]');
             if (boiler) recordStep(1);
