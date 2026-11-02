@@ -477,6 +477,109 @@
         });
     }
 
+    function brandSlug(value) {
+        return String(value || '').trim().toLowerCase().replace(/\s+/g, '-');
+    }
+
+    function parseHref(href) {
+        if (!href) return null;
+        try {
+            return new URL(href, location.origin);
+        } catch (err) {
+            return null;
+        }
+    }
+
+    function manualsHost(url) {
+        return url && url.hostname.replace(/^www\./, '') === 'boilermanuals.com';
+    }
+
+    function collectBrandGuides() {
+        var prefixes = [];
+        var pathToBrand = {};
+        document.querySelectorAll('#brand-picks [data-brand]').forEach(function (tile) {
+            var brand = brandSlug(tile.getAttribute('data-brand'));
+            if (!brand) return;
+            ['href', 'data-howto'].forEach(function (attr) {
+                var url = parseHref(tile.getAttribute(attr));
+                if (!url || url.origin !== location.origin) return;
+                pathToBrand[url.pathname] = brand;
+                var first = url.pathname.split('/').filter(Boolean)[0];
+                if (first) prefixes.push({ prefix: '/' + first + '/', brand: brand });
+            });
+        });
+        return { prefixes: prefixes, pathToBrand: pathToBrand };
+    }
+
+    function brandFromGuideUrl(url, guides) {
+        if (!url || !guides) return '';
+        var i;
+        if (url.origin === location.origin && guides.pathToBrand[url.pathname]) {
+            return guides.pathToBrand[url.pathname];
+        }
+        if (manualsHost(url)) {
+            var file = (url.pathname.match(/^\/brands\/([^/]+)\.html$/i) || [])[1] || '';
+            var slug = brandSlug(file);
+            if (!slug) return '';
+            for (i = 0; i < guides.prefixes.length; i++) {
+                if (guides.prefixes[i].prefix === '/' + slug + '/') return guides.prefixes[i].brand;
+            }
+            var brands = document.querySelectorAll('#brand-picks [data-brand]');
+            for (i = 0; i < brands.length; i++) {
+                if (brandSlug(brands[i].getAttribute('data-brand')) === slug) return slug;
+            }
+            return '';
+        }
+        if (url.origin === location.origin) {
+            for (i = 0; i < guides.prefixes.length; i++) {
+                if (url.pathname.indexOf(guides.prefixes[i].prefix) === 0) return guides.prefixes[i].brand;
+            }
+        }
+        return '';
+    }
+
+    function guideTarget(url) {
+        if (manualsHost(url)) return url.origin + url.pathname;
+        return url.pathname;
+    }
+
+    function bindGuideClicks() {
+        if (!onOptimiserTool) return;
+        var guides = collectBrandGuides();
+        document.addEventListener('click', function (event) {
+            var link = event.target.closest('a[href]');
+            if (!link) return;
+            var fromTile = link.closest('#brand-picks [data-brand]');
+            var brand = fromTile ? brandSlug(fromTile.getAttribute('data-brand')) : '';
+            var url = parseHref(link.getAttribute('href'));
+            if (!url) return;
+            if (!brand) brand = brandFromGuideUrl(url, guides);
+            if (!brand) return;
+            var outbound = manualsHost(url) ? 1 : 0;
+            if (!outbound && url.origin !== location.origin) return;
+            if (!outbound && url.pathname.indexOf('/') !== 0) return;
+            if (!fromTile && !manualsHost(url)) {
+                var knownPath = !!guides.pathToBrand[url.pathname];
+                var knownPrefix = false;
+                var i;
+                for (i = 0; i < guides.prefixes.length; i++) {
+                    if (url.pathname.indexOf(guides.prefixes[i].prefix) === 0) {
+                        knownPrefix = true;
+                        break;
+                    }
+                }
+                if (!knownPath && !knownPrefix) return;
+            }
+            sendEvent({
+                event: 'guide_click',
+                brand: brand,
+                target: guideTarget(url),
+                outbound: outbound,
+                path: location.pathname || '/boiler-optimiser/'
+            });
+        }, true);
+    }
+
     function bindSteps() {
         if (!onOptimiserTool) return;
         document.addEventListener('click', function (event) {
@@ -829,6 +932,7 @@
     ready(function () {
         bindConfirm();
         bindBrandVideos();
+        bindGuideClicks();
         bindSteps();
         sendView();
         hookFooter();
