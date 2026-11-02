@@ -308,3 +308,116 @@ test("a failing background purge does not fail POST /api/optimiser-event", async
   assert.equal(env.DB.statements.filter((row) => /INSERT/.test(row.sql)).length, 1);
   assert.equal(env.DB.statements.filter((row) => /DELETE/.test(row.sql)).length, 0);
 });
+
+test("parseOptimiserEventBody accepts guide_click and rejects bad target or outbound", () => {
+  const okPath = parseOptimiserEventBody(JSON.stringify({
+    event: "guide_click",
+    brand: "vaillant",
+    target: "/vaillant/how-to-adjust-the-flow-temperature/",
+    outbound: 0,
+    path: "/boiler-optimiser/",
+  }));
+  assert.equal(okPath.ok, true);
+  assert.equal(okPath.row.event, "guide_click");
+  assert.equal(okPath.row.brand, "vaillant");
+  assert.equal(okPath.row.target, "/vaillant/how-to-adjust-the-flow-temperature/");
+  assert.equal(okPath.row.outbound, 0);
+
+  const okOut = parseOptimiserEventBody(JSON.stringify({
+    event: "guide_click",
+    brand: "glow-worm",
+    target: "https://boilermanuals.com/brands/glow-worm.html",
+    outbound: 1,
+  }));
+  assert.equal(okOut.ok, true);
+  assert.equal(okOut.row.outbound, 1);
+  assert.equal(okOut.row.target, "https://boilermanuals.com/brands/glow-worm.html");
+
+  const okWww = parseOptimiserEventBody(JSON.stringify({
+    event: "guide_click",
+    brand: "ideal",
+    target: "https://www.boilermanuals.com/brands/ideal.html",
+    outbound: 1,
+  }));
+  assert.equal(okWww.ok, true);
+
+  assert.equal(parseOptimiserEventBody(JSON.stringify({
+    event: "guide_click",
+    brand: "vaillant",
+    target: "https://evil.example/x",
+    outbound: 0,
+  })).ok, false);
+  assert.equal(parseOptimiserEventBody(JSON.stringify({
+    event: "guide_click",
+    brand: "vaillant",
+    target: "http://boilermanuals.com/brands/vaillant.html",
+    outbound: 1,
+  })).ok, false);
+  assert.equal(parseOptimiserEventBody(JSON.stringify({
+    event: "guide_click",
+    brand: "vaillant",
+    target: "//boilermanuals.com/brands/vaillant.html",
+    outbound: 1,
+  })).ok, false);
+  assert.equal(parseOptimiserEventBody(JSON.stringify({
+    event: "guide_click",
+    brand: "vaillant",
+    target: "/vaillant/how-to-adjust-the-flow-temperature/?q=1",
+    outbound: 0,
+  })).ok, false);
+  assert.equal(parseOptimiserEventBody(JSON.stringify({
+    event: "guide_click",
+    brand: "vaillant",
+    target: "/vaillant/x",
+    outbound: 2,
+  })).ok, false);
+  assert.equal(parseOptimiserEventBody(JSON.stringify({
+    event: "guide_click",
+    brand: "vaillant",
+    outbound: 0,
+  })).ok, false);
+  assert.equal(parseOptimiserEventBody(JSON.stringify({
+    event: "guide_click",
+    target: "/vaillant/x",
+    outbound: 0,
+  })).ok, false);
+  assert.equal(parseOptimiserEventBody(JSON.stringify({
+    event: "guide_click",
+    brand: "vaillant",
+    target: "x".repeat(201),
+    outbound: 0,
+  })).ok, false);
+});
+
+test("POST /api/optimiser-event stores a guide_click and rejects a bad target", async () => {
+  const env = { REQUESTS: mockKv(), DB: mockDb() };
+  const ok = await worker.fetch(
+    eventRequest({
+      event: "guide_click",
+      brand: "worcester",
+      target: "/worcester-bosch/how-to-adjust-the-flow-temperature/",
+      outbound: 0,
+      path: "/boiler-optimiser/",
+    }),
+    env
+  );
+  assert.equal(ok.status, 204);
+  assert.equal(env.DB.statements.length, 1);
+  assert.equal(env.DB.statements[0].args[2], "guide_click");
+  assert.equal(env.DB.statements[0].args[7], "worcester");
+  assert.equal(env.DB.statements[0].args[19], "beacon");
+  assert.equal(env.DB.statements[0].args[20], "/worcester-bosch/how-to-adjust-the-flow-temperature/");
+  assert.equal(env.DB.statements[0].args[21], 0);
+
+  const bad = await worker.fetch(
+    eventRequest({
+      event: "guide_click",
+      brand: "worcester",
+      target: "https://example.com/nope",
+      outbound: 0,
+    }),
+    env
+  );
+  assert.equal(bad.status, 400);
+  assert.equal(env.DB.statements.length, 1);
+});

@@ -10,7 +10,8 @@ const MAX_BRAND = 80;
 const MAX_EVENT_BRAND = 40;
 const MAX_UTM = 64;
 const ALLOWED_TYPES = new Set(["turned_down", "did_it_work"]);
-const ALLOWED_EVENT_TYPES = new Set(["view", "step", "brand", "turned_down", "did_it_work"]);
+const ALLOWED_EVENT_TYPES = new Set(["view", "step", "brand", "turned_down", "did_it_work", "guide_click"]);
+const MAX_TARGET = 200;
 const ALLOWED_ANSWERS = new Set(["yes", "cool", "not_yet"]);
 const ALLOWED_ORIGINS = new Set([
   "https://myboiler.com",
@@ -23,7 +24,7 @@ const RETENTION_DAYS = 400;
 const EVENT_KV_TTL_SECONDS = 3 * 24 * 60 * 60;
 
 const INSERT_SQL =
-  "INSERT INTO optimiser_events (ts, day, event, path, utm_source, utm_content, step, brand, from_flow, set_flow, space_kwh, annual_kwh, unit_rate, system, boiler_type, saving_kwh, saving_gbp, answer, is_test, source) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  "INSERT INTO optimiser_events (ts, day, event, path, utm_source, utm_content, step, brand, from_flow, set_flow, space_kwh, annual_kwh, unit_rate, system, boiler_type, saving_kwh, saving_gbp, answer, is_test, source, target, outbound) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 export const MAX_EVENTS_PER_DAY = 2000;
 export const MAX_ANON_EVENTS_PER_DAY = 5000;
@@ -307,6 +308,27 @@ function parseBoundedNumber(value, min, max, opts = {}) {
 }
 
 /**
+ * Pathname starting with / (not //) or a boilermanuals.com https URL, max 200.
+ * @param {unknown} value
+ */
+function parseGuideTarget(value) {
+  if (typeof value !== "string") return { ok: false, status: 400 };
+  const target = value.trim();
+  if (!target || target.length > MAX_TARGET) return { ok: false, status: 400 };
+  if (target.includes("?") || target.includes("#")) return { ok: false, status: 400 };
+  if (target.startsWith("/") && !target.startsWith("//")) {
+    return { ok: true, value: target };
+  }
+  if (
+    target.startsWith("https://boilermanuals.com/") ||
+    target.startsWith("https://www.boilermanuals.com/")
+  ) {
+    return { ok: true, value: target };
+  }
+  return { ok: false, status: 400 };
+}
+
+/**
  * Allowlisted anonymous Optimiser events. Unknown JSON keys are dropped.
  * Out-of-range or unsafe values are rejected.
  * @param {string} body
@@ -351,10 +373,19 @@ export function parseOptimiserEventBody(body) {
     row.step = step.value;
   }
 
-  if (event === "brand" || event === "turned_down") {
-    const brand = parseSafeToken(data.brand, event === "brand");
+  if (event === "brand" || event === "turned_down" || event === "guide_click") {
+    const brand = parseSafeToken(data.brand, event === "brand" || event === "guide_click");
     if (!brand.ok) return brand;
     if (brand.value) row.brand = brand.value;
+  }
+
+  if (event === "guide_click") {
+    const target = parseGuideTarget(data.target);
+    if (!target.ok) return target;
+    const outbound = parseBoundedNumber(data.outbound, 0, 1, { integer: true, required: true });
+    if (!outbound.ok) return outbound;
+    row.target = target.value;
+    row.outbound = outbound.value;
   }
 
   if (event === "turned_down") {
@@ -531,7 +562,9 @@ export async function insertOptimiserEvent(row, env, now = new Date(), source = 
     row.saving_gbp == null ? null : row.saving_gbp,
     row.answer || null,
     row.is_test === 1 ? 1 : 0,
-    source === "feedback" ? "feedback" : "beacon"
+    source === "feedback" ? "feedback" : "beacon",
+    row.target || null,
+    row.outbound == null ? null : row.outbound
   );
   if (!bound || typeof bound.run !== "function") {
     return { stored: false, reason: "no-binding" };
