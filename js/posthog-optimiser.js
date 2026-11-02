@@ -10,6 +10,7 @@
     var STORE_ENDPOINT = '/api/optimiser-feedback';
     var PIXEL_ID = 'nvyf0';
     var xLoaded = false;
+    var pageviewSent = false;
     var DID_IT_WORK_TIPS = {
         yes: 'Great. If you have a condensing boiler, try the next step down, about 5°C lower.',
         cool: 'Turn it back up about 5°C, or half a number on a dial.',
@@ -59,6 +60,13 @@
     function capture(event, properties) {
         if (!window.posthog || typeof window.posthog.capture !== 'function') return;
         window.posthog.capture(event, properties || {});
+    }
+
+    function capturePageviewOnce() {
+        if (pageviewSent) return;
+        if (!window.posthog || typeof window.posthog.capture !== 'function') return;
+        pageviewSent = true;
+        window.posthog.capture('$pageview');
     }
 
     function hasAcceptedConsent() {
@@ -434,6 +442,7 @@
         if (typeof window.posthog.startSessionRecording === 'function') {
             window.posthog.startSessionRecording();
         }
+        capturePageviewOnce();
     }
 
     function expireNamedCookie(name) {
