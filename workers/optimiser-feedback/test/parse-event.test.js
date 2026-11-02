@@ -211,6 +211,7 @@ test("existing feedback POST still stores did_it_work in KV and also writes D1",
   const res = await worker.fetch(
     new Request("https://myboiler.com/api/optimiser-feedback", {
       method: "POST",
+      headers: { Origin: "https://myboiler.com" },
       body: JSON.stringify({ type: "did_it_work", answer: "yes", path: "/boiler-optimiser/" }),
     }),
     env

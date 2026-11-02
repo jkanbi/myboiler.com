@@ -16,6 +16,7 @@ const ALLOWED_ORIGINS = new Set([
   "https://myboiler.com",
   "https://www.myboiler.com",
 ]);
+const ALLOWED_HOSTS = new Set(["myboiler.com", "www.myboiler.com"]);
 const UTM_RE = /^[A-Za-z0-9_.-]+$/;
 const SAFE_TOKEN_RE = /^[A-Za-z0-9._-]+$/;
 const RETENTION_DAYS = 400;
@@ -45,6 +46,26 @@ function corsHeaders(request) {
     "Access-Control-Max-Age": "86400",
     Vary: "Origin",
   };
+}
+
+/**
+ * Same-site check for collect POSTs. Prefer Origin; if it is missing, fall
+ * back to the Referer host. A present but disallowed Origin is never saved
+ * by a matching Referer.
+ * @param {Request} request
+ */
+export function isAllowedOrigin(request) {
+  const origin = (request.headers.get("Origin") || "").trim();
+  if (origin) return ALLOWED_ORIGINS.has(origin);
+  const referer = (request.headers.get("Referer") || "").trim();
+  if (!referer) return false;
+  try {
+    const url = new URL(referer);
+    if (url.protocol !== "https:") return false;
+    return ALLOWED_HOSTS.has(url.hostname.toLowerCase());
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -653,8 +674,7 @@ async function handleEventCollect(request, env, ctx) {
     });
   }
 
-  const origin = request.headers.get("Origin") || "";
-  if (!ALLOWED_ORIGINS.has(origin)) {
+  if (!isAllowedOrigin(request)) {
     return new Response(null, { status: 403, headers });
   }
 
@@ -703,6 +723,10 @@ export async function handleFetch(request, env, ctx) {
       status: 405,
       headers: { ...headers, Allow: "POST, OPTIONS, GET, HEAD" },
     });
+  }
+
+  if (!isAllowedOrigin(request)) {
+    return new Response(null, { status: 403, headers });
   }
 
   const body = await request.text();

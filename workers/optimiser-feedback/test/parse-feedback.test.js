@@ -23,6 +23,34 @@ function mockKv(initial = new Map()) {
   };
 }
 
+function mockDb() {
+  const statements = [];
+  return {
+    statements,
+    prepare(sql) {
+      return {
+        bind(...args) {
+          const row = { sql, args };
+          return {
+            async run() {
+              statements.push(row);
+              return { success: true };
+            },
+          };
+        },
+      };
+    },
+  };
+}
+
+function feedbackPost(body, headers = { Origin: "https://myboiler.com" }) {
+  return new Request("https://myboiler.com/api/optimiser-feedback", {
+    method: "POST",
+    headers,
+    body: typeof body === "string" ? body : JSON.stringify(body),
+  });
+}
+
 test("sanitizeField trims and rejects URLs or markup", () => {
   assert.equal(sanitizeField("  worcester  ", 80), "worcester");
   assert.equal(sanitizeField("https://evil.example", 80), "");
@@ -94,10 +122,7 @@ test("POST /api/optimiser-feedback stores a did_it_work event", async () => {
   const kv = mockKv();
   const env = { REQUESTS: kv, LIST_SECRET: "s3cret" };
   const res = await worker.fetch(
-    new Request("https://myboiler.com/api/optimiser-feedback", {
-      method: "POST",
-      body: JSON.stringify({ type: "did_it_work", answer: "cool", path: "/boiler-optimiser/" }),
-    }),
+    feedbackPost({ type: "did_it_work", answer: "cool", path: "/boiler-optimiser/" }),
     env
   );
   assert.equal(res.status, 204);
@@ -106,6 +131,85 @@ test("POST /api/optimiser-feedback stores a did_it_work event", async () => {
   assert.equal(stored.length, 1);
   assert.equal(stored[0].type, "did_it_work");
   assert.equal(stored[0].answer, "cool");
+});
+
+test("POST /api/optimiser-feedback accepts an allowed myboiler.com origin", async () => {
+  const kv = mockKv();
+  const db = mockDb();
+  const env = { REQUESTS: kv, DB: db };
+  const res = await worker.fetch(
+    feedbackPost(
+      { type: "turned_down", path: "/boiler-optimiser/", brand: "worcester", from_flow: 75, set_flow: 55 },
+      { Origin: "https://www.myboiler.com" }
+    ),
+    env
+  );
+  assert.equal(res.status, 204);
+  assert.equal(res.headers.get("Access-Control-Allow-Origin"), "https://www.myboiler.com");
+  const stored = JSON.parse(await kv.get(feedbackKey(londonDay())));
+  assert.equal(stored.length, 1);
+  assert.equal(stored[0].type, "turned_down");
+  assert.equal(db.statements.length, 0);
+});
+
+test("POST /api/optimiser-feedback rejects a foreign origin with no KV or D1 write", async () => {
+  const kv = mockKv();
+  const db = mockDb();
+  const env = { REQUESTS: kv, DB: db };
+  const res = await worker.fetch(
+    feedbackPost(
+      { type: "did_it_work", answer: "yes", path: "/boiler-optimiser/" },
+      { Origin: "https://evil.example" }
+    ),
+    env
+  );
+  assert.equal(res.status, 403);
+  assert.equal(await kv.get(feedbackKey(londonDay())), null);
+  assert.equal(db.statements.length, 0);
+  assert.notEqual(res.headers.get("Access-Control-Allow-Origin"), "https://evil.example");
+});
+
+test("POST /api/optimiser-feedback accepts a missing origin when Referer is myboiler.com", async () => {
+  const kv = mockKv();
+  const env = { REQUESTS: kv, DB: mockDb() };
+  const res = await worker.fetch(
+    feedbackPost(
+      { type: "turned_down", path: "/boiler-optimiser/", brand: "ideal", from_flow: 70, set_flow: 55 },
+      { Referer: "https://myboiler.com/boiler-optimiser/" }
+    ),
+    env
+  );
+  assert.equal(res.status, 204);
+  const stored = JSON.parse(await kv.get(feedbackKey(londonDay())));
+  assert.equal(stored.length, 1);
+});
+
+test("POST /api/optimiser-feedback rejects a missing origin with a foreign Referer", async () => {
+  const kv = mockKv();
+  const db = mockDb();
+  const env = { REQUESTS: kv, DB: db };
+  const res = await worker.fetch(
+    feedbackPost(
+      { type: "did_it_work", answer: "yes", path: "/boiler-optimiser/" },
+      { Referer: "https://evil.example/page" }
+    ),
+    env
+  );
+  assert.equal(res.status, 403);
+  assert.equal(await kv.get(feedbackKey(londonDay())), null);
+  assert.equal(db.statements.length, 0);
+});
+
+test("OPTIONS /api/optimiser-feedback from an allowed origin still works", async () => {
+  const res = await worker.fetch(
+    new Request("https://myboiler.com/api/optimiser-feedback", {
+      method: "OPTIONS",
+      headers: { Origin: "https://myboiler.com" },
+    }),
+    { REQUESTS: mockKv() }
+  );
+  assert.equal(res.status, 204);
+  assert.equal(res.headers.get("Access-Control-Allow-Origin"), "https://myboiler.com");
 });
 
 test("GET /api/optimiser-feedbacks requires Bearer LIST_SECRET", async () => {
