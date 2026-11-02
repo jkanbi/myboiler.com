@@ -1608,7 +1608,8 @@
             flex-basis: 7.5rem;
         }
 
-        .tool-confirm-row .input-field.is-brand {
+        .tool-confirm-row .input-field.is-brand,
+        .tool-confirm-row .input-field.is-type {
             width: 13rem;
             flex-basis: 13rem;
             text-align: left;
@@ -3256,7 +3257,7 @@
   "description": "Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow. A cylinder still needs 60°C stored water."
 }
     </script>
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=anon-events-1" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=confirm-type-1" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -3726,7 +3727,7 @@
 
         <form class="tool-confirm" id="tool-confirm">
             <p class="input-label">Have you successfully turned the heating flow down? Come back here and let us know.</p>
-            <span class="input-hint">Choose the boiler brand, then what the flow was and what you set it to. Add annual kWh and unit rate if you know them. We log this anonymously.</span>
+            <span class="input-hint">Choose the boiler brand and type, then what the flow was and what you set it to. Add annual kWh and unit rate if you know them. We log this anonymously.</span>
             <div class="tool-confirm-fields">
                 <div class="tool-confirm-field">
                     <label class="input-label" for="confirm-brand">Boiler brand</label>
@@ -3749,6 +3750,16 @@
                             <option value="grant">Grant</option>
                             <option value="british-gas">British Gas</option>
                             <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="tool-confirm-field">
+                    <label class="input-label" for="confirm-system">Boiler type</label>
+                    <div class="tool-confirm-row">
+                        <select id="confirm-system" class="input-field is-type" required autocomplete="off">
+                            <option value="">Select type</option>
+                            <option value="combi">Combi</option>
+                            <option value="system">System / Regular</option>
                         </select>
                     </div>
                 </div>
@@ -5139,6 +5150,8 @@
             if (confirmKwhInput) confirmKwhInput.addEventListener('input', markConfirmEdited);
             if (confirmRateInput) confirmRateInput.addEventListener('input', markConfirmEdited);
             if (confirmBrandInput) confirmBrandInput.addEventListener('change', markConfirmEdited);
+            var confirmSystemInput = document.getElementById('confirm-system');
+            if (confirmSystemInput) confirmSystemInput.addEventListener('change', markConfirmEdited);
 
             flowInput.addEventListener('input', function () {
                 flowSlider.classList.remove('is-hinting');

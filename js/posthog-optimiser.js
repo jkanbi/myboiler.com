@@ -187,6 +187,10 @@
         return isFinite(n) && n >= 0 && n <= 100;
     }
 
+    function validSystem(v) {
+        return v === 'combi' || v === 'system';
+    }
+
     function unitRateFrom(el) {
         if (!el || el.value.trim() === '') return null;
         var n = Number(el.value);
@@ -200,13 +204,14 @@
         var kwhInput = document.getElementById('confirm-kwh');
         var rateInput = document.getElementById('confirm-rate');
         var brandInput = document.getElementById('confirm-brand');
+        var typeInput = document.getElementById('confirm-system');
         var done = document.getElementById('tool-confirm-done');
         var button = document.getElementById('tool-confirm-submit');
         var checkback = document.getElementById('tool-confirm-checkback');
         var checkbackTip = document.getElementById('tool-confirm-checkback-tip');
         var alreadyWrap = document.getElementById('tool-confirm-already-wrap');
         var alreadyBtn = document.getElementById('tool-confirm-already');
-        if (!form || !fromInput || !setInput || !brandInput) return;
+        if (!form || !fromInput || !setInput || !brandInput || !typeInput) return;
         if (form.dataset.phBound === '1') return;
         form.dataset.phBound = '1';
         var submitted = false;
@@ -218,9 +223,11 @@
             if (selected && selected.value === brandKey) brandLabel = selected.text;
             var fromFlow = Number(fromInput.value);
             var setFlow = Number(setInput.value);
+            var systemKey = typeInput.value || '';
             return {
                 brand: brandKey,
                 brand_label: brandLabel || brandKey,
+                system: validSystem(systemKey) ? systemKey : '',
                 from_flow: validFlow(fromFlow) ? fromFlow : null,
                 set_flow: validSetFlow(setFlow) ? setFlow : null,
                 path: location.pathname || '/boiler-optimiser/'
@@ -289,6 +296,9 @@
         brandInput.addEventListener('change', function () {
             brandInput.dataset.edited = '1';
         });
+        typeInput.addEventListener('change', function () {
+            typeInput.dataset.edited = '1';
+        });
 
         form.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -297,6 +307,12 @@
             if (!brandKey) {
                 if (typeof brandInput.reportValidity === 'function') brandInput.reportValidity();
                 else brandInput.focus();
+                return;
+            }
+            var systemKey = typeInput.value || '';
+            if (!validSystem(systemKey)) {
+                if (typeof typeInput.reportValidity === 'function') typeInput.reportValidity();
+                else typeInput.focus();
                 return;
             }
             var fromFlow = Number(fromInput.value);
@@ -344,6 +360,7 @@
             props.unit_rate = unitRate;
             props.brand = brandKey;
             props.brand_label = brandLabel || brandKey;
+            props.system = systemKey;
             props.section = 'confirm_form';
             props.tool_flow = numericAttr(form, 'data-tool-flow');
             if (props.tool_flow === null) {
@@ -381,7 +398,7 @@
                 space_kwh: props.space_kwh,
                 annual_kwh: annualKwh,
                 unit_rate: unitRate,
-                system: props.system,
+                system: systemKey,
                 boiler_type: props.boiler_type,
                 saving_kwh: props.saving_kwh,
                 saving_gbp: props.saving_gbp
@@ -392,13 +409,18 @@
             fromInput.disabled = true;
             setInput.disabled = true;
             brandInput.disabled = true;
+            typeInput.disabled = true;
             if (kwhInput) kwhInput.disabled = true;
             if (rateInput) rateInput.disabled = true;
             if (button) button.disabled = true;
             if (done) {
                 done.hidden = false;
+                var typeLabel = '';
+                var typeSelected = typeInput.options[typeInput.selectedIndex];
+                if (typeSelected && typeSelected.value === systemKey) typeLabel = typeSelected.text;
                 var parts = ['it was ' + fromFlow + '°C', 'you set it to ' + setFlow + '°C'];
                 if (brandLabel) parts.push('the brand is ' + brandLabel);
+                if (typeLabel) parts.push('the type is ' + typeLabel);
                 if (annualKwh !== null) parts.push('annual use is ' + Math.round(annualKwh) + ' kWh');
                 if (unitRate !== null) parts.push('unit rate is ' + unitRate + ' p/kWh');
                 var last = parts.pop();
@@ -421,6 +443,7 @@
             fromInput.disabled = true;
             setInput.disabled = true;
             brandInput.disabled = true;
+            typeInput.disabled = true;
             if (kwhInput) kwhInput.disabled = true;
             if (rateInput) rateInput.disabled = true;
             if (button) button.disabled = true;
