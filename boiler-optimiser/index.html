@@ -414,37 +414,40 @@
             top: calc(100% - 2px);
             display: flex;
             align-items: flex-start;
+            width: max-content;
+            max-width: none;
             pointer-events: none;
             z-index: 3;
         }
 
         .condensate-pipe {
-            --condensate-stroke: 3px;
+            --condensate-stroke: 4px;
             position: relative;
+            flex: 0 0 7.2rem;
             width: 7.2rem;
             height: 3.25rem;
             color: #6b7280;
-            border-left: var(--condensate-stroke) solid currentColor;
-            border-bottom: var(--condensate-stroke) solid currentColor;
+            /* Paint the L with backgrounds so stroke width never shifts the tip. */
+            background:
+                linear-gradient(currentColor, currentColor) left top / var(--condensate-stroke) 100% no-repeat,
+                linear-gradient(currentColor, currentColor) left bottom / 100% var(--condensate-stroke) no-repeat;
             border-radius: 0 0 0 3px;
-            background: transparent;
             box-sizing: border-box;
         }
 
         .condensate-pipe::after {
             content: "";
             position: absolute;
-            top: 100%;
+            top: calc(100% - var(--condensate-stroke));
             right: 0;
             width: var(--condensate-stroke);
-            height: 2.05rem;
+            height: calc(2.05rem + var(--condensate-stroke));
             background: currentColor;
         }
 
         .boiler-diagram[data-condensate="1"] .condensate-pipe,
         .boiler-diagram[data-condensate="2"] .condensate-pipe,
         .boiler-diagram[data-condensate="3"] .condensate-pipe {
-            --condensate-stroke: 4px;
             color: #2ec4b6;
         }
 
@@ -452,6 +455,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            flex: 0 0 auto;
             gap: 0.16rem;
             margin: 5.25rem 0 0 -0.45rem;
             min-height: 0;
@@ -2146,6 +2150,7 @@
         }
 
         #flow-state {
+            flex: 0 0 auto;
             font-size: 0.8125rem;
             font-weight: 700;
             max-width: 6.2em;
