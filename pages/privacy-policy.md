@@ -1,12 +1,14 @@
 # Privacy policy
 
-This policy explains what happens to information when you use MyBoiler.com. It applies from 27 September 2026. We may update this page when the site changes.
+This policy explains what happens to information when you use MyBoiler.com. It applies from 2 November 2026. We may update this page when the site changes.
 
 ## Browsing the site
 
 The pages are served through Cloudflare. We do not ask for your name, email address, or any other personal detail just to view the site. Reading a page does not identify you, except on the Optimiser pages after you accept cookies.
 
 MyBoiler.com is cookieless and privacy-focused. Almost every page sets no cookies and stores nothing in your browser. A small number of pages, currently only the Boiler Optimiser pages, use cookies and browser storage for analytics (PostHog, hosted in the EU) and to measure our X (Twitter) ads for the Optimiser. On those pages we ask for your consent first, and nothing is set unless you click Accept. You can opt out at any time using the cookie banner at the bottom of the page. Wherever we can find a way to do without these cookies, or they are no longer needed, we will remove them.
+
+Boiler Optimiser usage: when you use the Boiler Optimiser, we record anonymous usage events, such as the page step you reach, the boiler brand you choose, the flow temperatures and energy figures you enter, and any campaign tag in the link you followed. This uses no cookies, and we don't store your IP address, device details or any identifier, so the events can't be linked to you. We use them only to see how the tool is used, and we delete them after 13 months.
 
 We store only your cookie choice in a first-party localStorage flag on those pages.
 

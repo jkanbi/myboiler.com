@@ -7,6 +7,8 @@ compatibility_date = "2026-09-01"
 #   www.myboiler.com/api/optimiser-feedback*
 #   myboiler.com/api/optimiser-feedbacks*
 #   www.myboiler.com/api/optimiser-feedbacks*
+#   myboiler.com/api/optimiser-event*
+#   www.myboiler.com/api/optimiser-event*
 #
 # Uncomment after the zone exists in the same Cloudflare account, or attach
 # the equivalent routes in the dashboard:
@@ -15,20 +17,33 @@ compatibility_date = "2026-09-01"
 #   { pattern = "myboiler.com/api/optimiser-feedback*", zone_name = "myboiler.com" },
 #   { pattern = "www.myboiler.com/api/optimiser-feedback*", zone_name = "myboiler.com" },
 #   { pattern = "myboiler.com/api/optimiser-feedbacks*", zone_name = "myboiler.com" },
-#   { pattern = "www.myboiler.com/api/optimiser-feedbacks*", zone_name = "myboiler.com" }
+#   { pattern = "www.myboiler.com/api/optimiser-feedbacks*", zone_name = "myboiler.com" },
+#   { pattern = "myboiler.com/api/optimiser-event*", zone_name = "myboiler.com" },
+#   { pattern = "www.myboiler.com/api/optimiser-event*", zone_name = "myboiler.com" }
 # ]
 
 # Workers KV — reuse the existing namespace used by affiliate-click
-# and fault-code-request. Keys use prefix `optimiser:` so they do not
-# collide with `clicks:` or `requests:`.
+# and fault-code-request. Keys use prefix `optimiser:` (feedback) and
+# `optimiser-events:` (daily event cap) so they do not collide with
+# `clicks:` or `requests:`.
 [[kv_namespaces]]
 binding = "REQUESTS"
 id = "ad9fa2773ca549479e432b257fad3c48"
+
+# D1 — anonymous Optimiser events. Schema is already applied; do not migrate.
+[[d1_databases]]
+binding = "DB"
+database_name = "optimiser-events"
+database_id = "a0a5fbcd-422d-4327-a0bb-eb2422ffce0b"
 
 # Secret (not in this file — never commit it):
 #   npx wrangler secret put LIST_SECRET
 # Used as: Authorization: Bearer <LIST_SECRET> on GET /api/optimiser-feedbacks
 # Local: put LIST_SECRET=... in `.dev.vars` (gitignored).
+
+# Daily purge of optimiser_events older than 400 days (~13 months).
+[triggers]
+crons = ["20 3 * * *"]
 
 [observability]
 enabled = true
