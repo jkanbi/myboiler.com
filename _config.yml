@@ -1,0 +1,12 @@
+# GitHub Pages runs Jekyll by default. Files without YAML front matter are
+# copied as static assets, so raw Markdown under /pages/ was publicly served
+# and crawled (e.g. /pages/about-us.md). The live HTML pages stay at /about/,
+# /carbon-emissions/, /mission/, /privacy-policy/, and /affilate-activity-disclosure/.
+exclude:
+  - pages/
+  - README.md
+  - HOMEPAGE_REDESIGN_NOTES.md
+  - workers/
+  - scripts/
+  - package.json
+  - package-lock.json
