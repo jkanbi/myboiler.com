@@ -8,6 +8,8 @@
     var TURNED_DOWN_KEY = 'mb_optimiser_turned_down';
     var DID_IT_WORK_KEY = 'mb_optimiser_did_it_work';
     var STORE_ENDPOINT = '/api/optimiser-feedback';
+    var EVENT_ENDPOINT = '/api/optimiser-event';
+    var UTM_SAFE = /^[A-Za-z0-9_.-]{1,64}$/;
     var PIXEL_ID = 'nvyf0';
     var xLoaded = false;
     var pageviewSent = false;
@@ -21,6 +23,9 @@
     if (path.indexOf('/boiler-optimiser') !== 0) {
         return;
     }
+    var onOptimiserTool = path === '/boiler-optimiser';
+    var completedSteps = Object.create(null);
+    var viewSent = false;
 
     function ready(fn) {
         if (document.readyState === 'loading') {
@@ -88,7 +93,7 @@
         } catch (err) { /* private mode */ }
     }
 
-    function sendStore(payload) {
+    function sendBeaconPayload(endpoint, payload) {
         var body;
         try {
             body = JSON.stringify(payload);
@@ -99,11 +104,11 @@
         try {
             if (navigator.sendBeacon) {
                 var blob = new Blob([body], { type: 'text/plain;charset=UTF-8' });
-                if (navigator.sendBeacon(STORE_ENDPOINT, blob)) return;
+                if (navigator.sendBeacon(endpoint, blob)) return;
             }
         } catch (err) {}
         try {
-            fetch(STORE_ENDPOINT, {
+            fetch(endpoint, {
                 method: 'POST',
                 body: body,
                 headers: { 'Content-Type': 'text/plain' },
@@ -113,6 +118,51 @@
                 cache: 'no-store'
             }).catch(function () {});
         } catch (err) {}
+    }
+
+    function sendStore(payload) {
+        sendBeaconPayload(STORE_ENDPOINT, payload);
+    }
+
+    function eventUtms() {
+        var out = {};
+        try {
+            var params = new URLSearchParams(location.search || '');
+            var source = params.get('utm_source') || '';
+            var content = params.get('utm_content') || '';
+            if (UTM_SAFE.test(source)) out.utm_source = source;
+            if (UTM_SAFE.test(content)) out.utm_content = content;
+        } catch (err) {}
+        return out;
+    }
+
+    function sendEvent(payload) {
+        if (!onOptimiserTool || !payload || !payload.event) return;
+        var data = {};
+        var key;
+        for (key in payload) {
+            if (Object.prototype.hasOwnProperty.call(payload, key) && payload[key] !== null && payload[key] !== undefined && payload[key] !== '') {
+                data[key] = payload[key];
+            }
+        }
+        var utms = eventUtms();
+        if (utms.utm_source && !data.utm_source) data.utm_source = utms.utm_source;
+        if (utms.utm_content && !data.utm_content) data.utm_content = utms.utm_content;
+        if (!data.path) data.path = location.pathname || '/boiler-optimiser/';
+        sendBeaconPayload(EVENT_ENDPOINT, data);
+    }
+
+    function recordStep(step) {
+        if (!onOptimiserTool) return;
+        if (completedSteps[step]) return;
+        completedSteps[step] = true;
+        sendEvent({ event: 'step', step: step, path: location.pathname || '/boiler-optimiser/' });
+    }
+
+    function sendView() {
+        if (!onOptimiserTool || viewSent) return;
+        viewSent = true;
+        sendEvent({ event: 'view', path: location.pathname || '/boiler-optimiser/' });
     }
 
     function numericAttr(el, name) {
@@ -206,6 +256,12 @@
                 brand: ctx.brand,
                 from_flow: ctx.from_flow,
                 set_flow: ctx.set_flow
+            });
+            sendEvent({
+                event: 'did_it_work',
+                answer: answer,
+                path: ctx.path,
+                brand: ctx.brand
             });
             if (hasAcceptedConsent()) {
                 writeStorage(DID_IT_WORK_KEY, answer);
@@ -316,6 +372,21 @@
                 from_flow: fromFlow,
                 set_flow: setFlow
             });
+            sendEvent({
+                event: 'turned_down',
+                path: location.pathname || '/boiler-optimiser/',
+                brand: brandKey,
+                from_flow: fromFlow,
+                set_flow: setFlow,
+                space_kwh: props.space_kwh,
+                annual_kwh: annualKwh,
+                unit_rate: unitRate,
+                system: props.system,
+                boiler_type: props.boiler_type,
+                saving_kwh: props.saving_kwh,
+                saving_gbp: props.saving_gbp
+            });
+            recordStep(10);
             writeStorage(TURNED_DOWN_KEY, '1');
             form.classList.add('is-done');
             fromInput.disabled = true;
@@ -369,12 +440,38 @@
             if (!tile || !picks.contains(tile)) return;
             var brandKey = tile.getAttribute('data-brand') || '';
             if (!brandKey) return;
+            sendEvent({
+                event: 'brand',
+                brand: brandKey,
+                path: location.pathname || '/boiler-optimiser/'
+            });
             capture('optimiser_brand_selected', {
                 brand: brandKey,
                 brand_label: tile.getAttribute('aria-label') || brandKey,
                 has_how_to: !!BRANDS_WITH_VIDEOS[brandKey],
                 section: 'how_to_videos'
             });
+        });
+    }
+
+    function bindSteps() {
+        if (!onOptimiserTool) return;
+        document.addEventListener('click', function (event) {
+            var boiler = event.target.closest('[data-boiler]');
+            if (boiler) recordStep(1);
+            var system = event.target.closest('[data-system]');
+            if (system) recordStep(2);
+            if (event.target.closest('#usage-chips [data-kwh], [data-gas-cooking]')) recordStep(3);
+            if (event.target.closest('#advanced-notes, #tool-results > summary')) recordStep(5);
+            if (event.target.closest('[data-model]')) recordStep(9);
+        });
+        document.addEventListener('input', function (event) {
+            var id = event.target && event.target.id;
+            if (id === 'annual-kwh' || id === 'unit-rate' || id === 'custom-kwh') recordStep(3);
+            if (id === 'flow-temp') recordStep(4);
+        });
+        document.addEventListener('change', function (event) {
+            if (event.target && event.target.id === 'confirm-brand') recordStep(8);
         });
     }
 
@@ -709,6 +806,8 @@
     ready(function () {
         bindConfirm();
         bindBrandVideos();
+        bindSteps();
+        sendView();
         hookFooter();
         placeCookieSettings();
         var choiceMade = storedChoice();
