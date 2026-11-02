@@ -11,23 +11,15 @@
  * other named exports on this file as handlers.
  */
 
-import { handleFetch, handleScheduled } from "./lib.js";
+import { handleFetch } from "./lib.js";
 
 export default {
   /**
    * @param {Request} request
    * @param {{ REQUESTS?: { get: Function, put: Function }, DB?: { prepare: Function }, LIST_SECRET?: string }} env
+   * @param {{ waitUntil?: Function }} [ctx]
    */
-  async fetch(request, env) {
-    return handleFetch(request, env);
-  },
-
-  /**
-   * Daily retention: delete optimiser_events older than 400 days.
-   * @param {ScheduledController} _controller
-   * @param {{ DB?: { prepare: Function } }} env
-   */
-  async scheduled(_controller, env) {
-    return handleScheduled(env);
+  async fetch(request, env, ctx) {
+    return handleFetch(request, env, ctx);
   },
 };

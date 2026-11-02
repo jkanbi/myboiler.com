@@ -7,8 +7,22 @@ import {
   insertOptimiserEvent,
   londonDay,
   parseOptimiserEventBody,
+  purgeKey,
   purgeOldEvents,
 } from "../src/lib.js";
+
+function mockWaitUntil() {
+  const pending = [];
+  return {
+    pending,
+    waitUntil(promise) {
+      pending.push(promise);
+    },
+    async flush() {
+      await Promise.all(pending.splice(0));
+    },
+  };
+}
 
 function mockKv(initial = new Map()) {
   const store = new Map(initial);
@@ -217,15 +231,79 @@ test("insertOptimiserEvent no-ops without a DB binding", async () => {
   assert.equal(result.reason, "no-binding");
 });
 
-test("scheduled purge deletes rows older than 400 days", async () => {
+test("purgeOldEvents deletes rows older than 400 days", async () => {
   const env = { DB: mockDb() };
   const now = new Date("2026-11-02T09:28:00Z");
-  await worker.scheduled({}, env);
   const result = await purgeOldEvents(env, now);
   assert.equal(result.deleted, true);
-  assert.equal(env.DB.statements.length, 2);
+  assert.equal(env.DB.statements.length, 1);
   assert.match(env.DB.statements[0].sql, /DELETE FROM optimiser_events WHERE day </);
-  assert.match(env.DB.statements[1].sql, /DELETE FROM optimiser_events WHERE day </);
   const cutoff = new Date(now.getTime() - 400 * 24 * 60 * 60 * 1000);
   assert.equal(result.before, londonDay(cutoff));
+});
+
+test("POST /api/optimiser-event purges old rows at most once a day via waitUntil", async () => {
+  let releasePurge;
+  const purgeGate = new Promise((resolve) => {
+    releasePurge = resolve;
+  });
+  const kv = mockKv();
+  const rawGet = kv.get.bind(kv);
+  kv.get = async (key) => {
+    if (String(key).startsWith("optimiser:purge:")) {
+      await purgeGate;
+      return rawGet(key);
+    }
+    return rawGet(key);
+  };
+  const env = { REQUESTS: kv, DB: mockDb() };
+  const ctx = mockWaitUntil();
+  const res = await worker.fetch(
+    eventRequest({ event: "view", path: "/boiler-optimiser/" }),
+    env,
+    ctx
+  );
+  assert.equal(res.status, 204);
+  assert.equal(ctx.pending.length, 1);
+  assert.equal(env.DB.statements.filter((row) => /INSERT/.test(row.sql)).length, 1);
+  assert.equal(env.DB.statements.filter((row) => /DELETE/.test(row.sql)).length, 0);
+
+  releasePurge();
+  await ctx.flush();
+  const deletes = env.DB.statements.filter((row) => /DELETE/.test(row.sql));
+  assert.equal(deletes.length, 1);
+  assert.match(deletes[0].sql, /DELETE FROM optimiser_events WHERE day </);
+  const day = londonDay();
+  assert.equal(await rawGet(purgeKey(day)), "1");
+
+  const ctxAgain = mockWaitUntil();
+  const again = await worker.fetch(
+    eventRequest({ event: "step", step: 1, path: "/boiler-optimiser/" }),
+    env,
+    ctxAgain
+  );
+  assert.equal(again.status, 204);
+  await ctxAgain.flush();
+  const deletesAfter = env.DB.statements.filter((row) => /DELETE/.test(row.sql));
+  assert.equal(deletesAfter.length, 1);
+});
+
+test("a failing background purge does not fail POST /api/optimiser-event", async () => {
+  const ctx = mockWaitUntil();
+  const db = mockDb();
+  const rawPrepare = db.prepare.bind(db);
+  db.prepare = (sql) => {
+    if (/DELETE/.test(sql)) throw new Error("d1 down");
+    return rawPrepare(sql);
+  };
+  const env = { REQUESTS: mockKv(), DB: db };
+  const res = await worker.fetch(
+    eventRequest({ event: "view", path: "/boiler-optimiser/" }),
+    env,
+    ctx
+  );
+  assert.equal(res.status, 204);
+  await ctx.flush();
+  assert.equal(env.DB.statements.filter((row) => /INSERT/.test(row.sql)).length, 1);
+  assert.equal(env.DB.statements.filter((row) => /DELETE/.test(row.sql)).length, 0);
 });

@@ -29,6 +29,7 @@ export const MAX_ANON_EVENTS_PER_DAY = 5000;
 export const KV_TTL_SECONDS = 40 * 24 * 60 * 60;
 const KV_KEY_PREFIX = "optimiser:";
 const EVENT_KV_PREFIX = "optimiser-events:";
+const PURGE_KV_PREFIX = "optimiser:purge:";
 
 /**
  * @param {Request} request
@@ -126,6 +127,13 @@ export function feedbackKey(day) {
  */
 export function eventCapKey(day) {
   return EVENT_KV_PREFIX + day;
+}
+
+/**
+ * @param {string} day YYYY-MM-DD
+ */
+export function purgeKey(day) {
+  return PURGE_KV_PREFIX + day;
 }
 
 /**
@@ -546,8 +554,43 @@ export async function purgeOldEvents(env, now = new Date()) {
   return { deleted: true, before };
 }
 
-export async function handleScheduled(env, now = new Date()) {
-  return purgeOldEvents(env, now);
+/**
+ * At most once per London calendar day: DELETE rows older than 400 days.
+ * KV guard optimiser:purge:YYYY-MM-DD. Never throws.
+ * @param {{ REQUESTS?: { get: Function, put: Function }, DB?: { prepare: Function } }} env
+ * @param {Date} [now]
+ */
+export async function maybePurgeOldEvents(env, now = new Date()) {
+  try {
+    if (!env || !env.REQUESTS || typeof env.REQUESTS.get !== "function" || typeof env.REQUESTS.put !== "function") {
+      return { purged: false, reason: "no-kv" };
+    }
+    const day = londonDay(now);
+    const key = purgeKey(day);
+    const existing = await env.REQUESTS.get(key);
+    if (existing) return { purged: false, reason: "already", day, key };
+    await env.REQUESTS.put(key, "1", { expirationTtl: EVENT_KV_TTL_SECONDS });
+    const result = await purgeOldEvents(env, now);
+    return { purged: !!result.deleted, day, key, before: result.before, reason: result.reason };
+  } catch {
+    return { purged: false, reason: "error" };
+  }
+}
+
+/**
+ * Queue the daily purge on ctx.waitUntil so the request is never delayed or failed.
+ * @param {{ REQUESTS?: { get: Function, put: Function }, DB?: { prepare: Function } }} env
+ * @param {{ waitUntil?: Function }} [ctx]
+ * @param {Date} [now]
+ */
+export function scheduleDailyPurge(env, ctx, now = new Date()) {
+  if (!ctx || typeof ctx.waitUntil !== "function") return false;
+  try {
+    ctx.waitUntil(maybePurgeOldEvents(env, now));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function logFeedback(event) {
@@ -589,8 +632,10 @@ async function handleList(request, env) {
 /**
  * @param {Request} request
  * @param {{ REQUESTS?: { get: Function, put: Function }, DB?: { prepare: Function } }} env
+ * @param {{ waitUntil?: Function }} [ctx]
  */
-async function handleEventCollect(request, env) {
+async function handleEventCollect(request, env, ctx) {
+  scheduleDailyPurge(env, ctx);
   const headers = corsHeaders(request);
 
   if (request.method === "OPTIONS") {
@@ -626,8 +671,9 @@ async function handleEventCollect(request, env) {
 /**
  * @param {Request} request
  * @param {{ REQUESTS?: { get: Function, put: Function }, DB?: { prepare: Function }, LIST_SECRET?: string }} env
+ * @param {{ waitUntil?: Function }} [ctx]
  */
-export async function handleFetch(request, env) {
+export async function handleFetch(request, env, ctx) {
   const url = new URL(request.url);
 
   if (isListPath(url.pathname)) {
@@ -635,7 +681,7 @@ export async function handleFetch(request, env) {
   }
 
   if (isEventPath(url.pathname)) {
-    return handleEventCollect(request, env);
+    return handleEventCollect(request, env, ctx);
   }
 
   if (!isCollectPath(url.pathname)) {
