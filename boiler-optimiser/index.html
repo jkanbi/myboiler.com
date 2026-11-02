@@ -2805,17 +2805,25 @@
 
         .starting-flow-btn {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: baseline;
             justify-content: center;
-            gap: 0.15rem;
+            gap: 0.2rem;
             width: 100%;
             margin-top: 0.5rem;
             padding: 0.65rem 0.4rem;
-            line-height: 1.2;
+            line-height: 1.3;
             background: var(--surface);
             color: var(--text-muted);
             border-color: var(--border);
+            text-align: center;
+        }
+
+        .starting-flow-btn .usage-chip-kwh {
+            display: inline;
+            font-weight: 700;
+            color: var(--text);
         }
 
         @media (min-width: 701px) {
@@ -3342,7 +3350,7 @@
                     <button type="button" class="choice-button" data-band="high" data-kwh="20000" aria-pressed="false">High<span class="usage-chip-kwh">20,000 kWh</span><span class="usage-chip-rate" data-usage-rate>7.97p/kWh</span></button>
                     <button type="button" class="choice-button usage-custom" id="usage-custom" data-band="custom" aria-pressed="false" aria-haspopup="dialog" aria-controls="custom-usage-dialog" aria-expanded="false">Custom<span class="usage-chip-kwh" id="custom-chip-kwh">xx,xxx</span><span class="usage-chip-rate" id="custom-chip-rate">x.xxp/kWh</span></button>
                 </div>
-                <button type="button" class="choice-button starting-flow-btn" id="starting-flow-open" aria-haspopup="dialog" aria-controls="starting-flow-dialog" aria-expanded="false">Change starting flow temperature<span class="usage-chip-kwh" id="starting-flow-chip">75°C</span></button>
+                <button type="button" class="choice-button starting-flow-btn" id="starting-flow-open" aria-haspopup="dialog" aria-controls="starting-flow-dialog" aria-expanded="false">My currently set flow temp is <span class="usage-chip-kwh" id="starting-flow-chip">75°C</span> (click to change)</button>
             </div>
             <div class="input-group">
                 <span class="input-hint" id="cylinder-hint" hidden>Cylinder about 70°C</span>
@@ -4684,7 +4692,14 @@
                 });
                 var boilerSaving = document.getElementById('boiler-saving');
                 var boilerSavingWrap = boilerSaving.parentElement;
-                boilerSaving.textContent = savingText;
+                var boilerSavingLabel = boilerSavingWrap.querySelector('.boiler-saving-label');
+                var boilerExtraCost = savingAmount < 0;
+                if (boilerSavingLabel) {
+                    boilerSavingLabel.textContent = boilerExtraCost ? 'Additional Costs' : 'Annual Savings';
+                }
+                boilerSaving.textContent = spaceKwh === null || pence === null
+                    ? '—'
+                    : formatGBP(boilerExtraCost ? Math.abs(savingAmount) : savingAmount);
                 var savingTone = 'red';
                 if (savingAmount > 0 && condensingBoiler) {
                     savingTone = currentBand.key === 'low' ? 'red' : currentBand.key;
@@ -5020,7 +5035,12 @@
                     update();
                 });
             }
-            if (startingFlowDone) startingFlowDone.addEventListener('click', closeStartingFlow);
+            if (startingFlowDone) {
+                startingFlowDone.addEventListener('click', function () {
+                    applyInitialFlow(customInitialFlowInput || initialFlowInput);
+                    closeStartingFlow();
+                });
+            }
             if (startingFlowClose) startingFlowClose.addEventListener('click', closeStartingFlow);
             if (customKwhInput) {
                 customKwhInput.addEventListener('input', function () {
@@ -5209,11 +5229,22 @@
                 if (commit && finalFlowInput) finalFlowInput.value = next;
                 update();
             }
+            function syncSliderToStartingFlow(celsius) {
+                var next = String(clampFlow(celsius));
+                if (flowInput.value !== next) {
+                    flowInput.value = next;
+                    flowSlider.classList.remove('is-hinting');
+                }
+                flowWas = Number(next);
+                flowTouched = true;
+                if (finalFlowInput) syncUnfocused(finalFlowInput, next);
+            }
             function applyInitialFlow(source) {
                 if (!source) return;
                 if (!source.value.trim()) {
                     if (initialFlowInput) initialFlowInput.value = '';
                     if (customInitialFlowInput) customInitialFlowInput.value = '';
+                    syncSliderToStartingFlow(FACTORY_FLOW);
                     update();
                     return;
                 }
@@ -5221,11 +5252,18 @@
                 source.value = next;
                 if (initialFlowInput) initialFlowInput.value = next;
                 if (customInitialFlowInput) customInitialFlowInput.value = next;
+                syncSliderToStartingFlow(Number(next));
                 update();
             }
             if (initialFlowInput) {
                 initialFlowInput.addEventListener('input', function () {
                     syncUnfocused(customInitialFlowInput, initialFlowInput.value);
+                    if (initialFlowInput.value.trim()) {
+                        var live = Number(initialFlowInput.value);
+                        if (isFinite(live) && live >= Number(flowInput.min) && live <= Number(flowInput.max)) {
+                            syncSliderToStartingFlow(live);
+                        }
+                    }
                     update();
                 });
                 initialFlowInput.addEventListener('change', function () {
@@ -5235,6 +5273,12 @@
             if (customInitialFlowInput) {
                 customInitialFlowInput.addEventListener('input', function () {
                     if (initialFlowInput) initialFlowInput.value = customInitialFlowInput.value;
+                    if (customInitialFlowInput.value.trim()) {
+                        var live = Number(customInitialFlowInput.value);
+                        if (isFinite(live) && live >= Number(flowInput.min) && live <= Number(flowInput.max)) {
+                            syncSliderToStartingFlow(live);
+                        }
+                    }
                     update();
                 });
                 customInitialFlowInput.addEventListener('change', function () {
