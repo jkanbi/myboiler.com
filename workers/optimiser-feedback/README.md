@@ -8,7 +8,7 @@ The green confirm box on `/boiler-optimiser/` posts `navigator.sendBeacon` (or `
 
 | Method | Path | Auth | Result |
 | --- | --- | --- | --- |
-| `POST` | `/api/optimiser-feedback` | none (same-origin beacon) | validate, append to KV, `204` |
+| `POST` | `/api/optimiser-feedback` | Origin `https://myboiler.com` or `https://www.myboiler.com` (Referer host fallback) | validate, append to KV, `204` |
 | `GET` / `HEAD` / `OPTIONS` | `/api/optimiser-feedback` | none | empty `204` (CORS / health) |
 | `GET` | `/api/optimiser-feedbacks?day=YYYY-MM-DD` | `Authorization: Bearer $LIST_SECRET` | `{ day, count, events }` |
 | `POST` | `/api/optimiser-event` | Origin `https://myboiler.com` or `https://www.myboiler.com` | validate, insert D1, `204` |
