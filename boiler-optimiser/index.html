@@ -4342,8 +4342,8 @@
                 var note = document.createDocumentFragment();
                 var intro = document.createElement('p');
                 intro.textContent = stored
-                    ? 'This slider is one knob for the whole system. A cylinder usually keeps that flow high, around 70°C, so the radiators never sit in the best condensing band. Weather compensation, priority hot water, and some boiler setups can split the jobs, so heating can run cooler and you save more.'
-                    : 'This slider is a fixed flow for the heating circuit. Weather compensation and OpenTherm, or the maker’s own modulating control, can lower the flow as the house warms, so you save more than a fixed setting.';
+                    ? 'This slider is one knob for the whole system. A cylinder usually keeps that flow high, around 70°C, so the radiators never sit in the best condensing band. Weather compensation, priority hot water, Smart TRVs, and some boiler setups can split the jobs, so heating can run cooler and you save more.'
+                    : 'This slider is a fixed flow for the heating circuit. Weather compensation, OpenTherm or the maker’s own modulating control, and Smart TRVs, can lower demand or the flow as the house warms, so you save more than a fixed setting.';
                 note.appendChild(intro);
                 var list = document.createElement('ul');
                 function addPoint(label, nodes) {
@@ -4362,6 +4362,11 @@
                 addPoint('OpenTherm', [
                     ' — a load-compensating thermostat talks to the boiler and lowers the flow as rooms warm up. Some boilers use the maker’s own modulating control instead. A plain on/off room stat cannot. See ',
                     linkEl('/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/', 'modulating controls'),
+                    '.'
+                ]);
+                addPoint('Smart TRVs', [
+                    ' — heads on each radiator cut heat in rooms that are warm enough. With a compatible smart thermostat they can also help the boiler run a lower flow when only a few rooms need heat. See ',
+                    linkEl('/best-radiator-valves-and-thermostat-radiator-valves-trv/', 'radiator valves and TRVs'),
                     '.'
                 ]);
                 if (stored) {
