@@ -690,6 +690,34 @@
         capturePageviewOnce();
     }
 
+    function stopReplayOnLeave() {
+        if (!window.posthog || typeof window.posthog.stopSessionRecording !== 'function') return;
+        try {
+            if (typeof window.posthog.sessionRecordingStarted === 'function' && !window.posthog.sessionRecordingStarted()) return;
+            window.posthog.stopSessionRecording();
+        } catch (err) { /* ignore */ }
+    }
+
+    function resumeReplayAfterBfcache() {
+        if (!hasAcceptedConsent()) return;
+        if (!window.posthog || typeof window.posthog.startSessionRecording !== 'function') return;
+        try {
+            if (typeof window.posthog.sessionRecordingStarted === 'function' && window.posthog.sessionRecordingStarted()) return;
+            if (typeof window.posthog.set_config === 'function') {
+                window.posthog.set_config({
+                    disable_session_recording: false,
+                    session_recording: recordingConfig()
+                });
+            }
+            window.posthog.startSessionRecording();
+        } catch (err) { /* ignore */ }
+    }
+
+    window.addEventListener('pagehide', stopReplayOnLeave);
+    window.addEventListener('pageshow', function (event) {
+        if (event && event.persisted) resumeReplayAfterBfcache();
+    });
+
     function expireNamedCookie(name) {
         var host = location.hostname || '';
         var domains = ['', host];
