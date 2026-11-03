@@ -25,9 +25,10 @@ preview_urls = false
 # ]
 
 # Workers KV — reuse the existing namespace used by affiliate-click
-# and fault-code-request. Keys use prefix `optimiser:` (feedback) and
-# `optimiser-events:` (daily event cap) so they do not collide with
-# `clicks:` or `requests:`.
+# and fault-code-request. Collect paths no longer read or write KV
+# (free-plan 1k writes/day). GET /api/optimiser-feedbacks still reads
+# leftover `optimiser:YYYY-MM-DD` arrays from before the D1 cutover.
+# Prefix `optimiser:` so keys do not collide with `clicks:` or `requests:`.
 [[kv_namespaces]]
 binding = "REQUESTS"
 id = "ad9fa2773ca549479e432b257fad3c48"
@@ -43,9 +44,10 @@ database_id = "a0a5fbcd-422d-4327-a0bb-eb2422ffce0b"
 # Used as: Authorization: Bearer <LIST_SECRET> on GET /api/optimiser-feedbacks
 # Local: put LIST_SECRET=... in `.dev.vars` (gitignored).
 #
-# Retention: rows older than 400 days are deleted at most once a day from
-# inside the Worker on /api/optimiser-event (KV guard optimiser:purge:YYYY-MM-DD,
-# ctx.waitUntil). No cron trigger — the account is at the free-plan cron limit.
+# Retention: rows older than 400 days are deleted at most once per isolate
+# per London day, on the first POST to /api/optimiser-event (in-memory
+# latch, ctx.waitUntil). No KV purge key. No cron trigger — the account
+# is at the free-plan cron limit (5/account used).
 
 [observability]
 enabled = true

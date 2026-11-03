@@ -2,6 +2,11 @@
  * Shared logic for the Boiler Optimiser feedback Worker.
  * Kept out of the entry module so wrangler/workerd does not treat named
  * exports as handlers.
+ *
+ * Collect paths are KV-free: a get+put per event exhausted the free-plan
+ * 1k/day write limit. Caps are a soft per-isolate counter. GET
+ * /api/optimiser-feedbacks still reads legacy `optimiser:YYYY-MM-DD` KV
+ * arrays so days stored before the D1 cutover remain listable.
  */
 
 const MAX_BODY_BYTES = 2048;
@@ -21,17 +26,59 @@ const ALLOWED_HOSTS = new Set(["myboiler.com", "www.myboiler.com"]);
 const UTM_RE = /^[A-Za-z0-9_.-]+$/;
 const SAFE_TOKEN_RE = /^[A-Za-z0-9._-]+$/;
 const RETENTION_DAYS = 400;
-const EVENT_KV_TTL_SECONDS = 3 * 24 * 60 * 60;
+const ARRIVAL_TOKEN = /^[a-z0-9][a-z0-9_.-]{0,40}$/;
 
 const INSERT_SQL =
-  "INSERT INTO optimiser_events (ts, day, event, path, utm_source, utm_content, step, brand, from_flow, set_flow, space_kwh, annual_kwh, unit_rate, system, boiler_type, saving_kwh, saving_gbp, answer, is_test, source, target, outbound) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  "INSERT INTO optimiser_events (ts, day, event, path, utm_source, utm_content, step, brand, from_flow, set_flow, space_kwh, annual_kwh, unit_rate, system, boiler_type, saving_kwh, saving_gbp, answer, is_test, source, target, outbound, arrival_src, pre_brand, pre_system, preselected) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+const FEEDBACK_INSERT_SQL =
+  "INSERT INTO optimiser_feedback (ts, day, t, type, answer, path, brand, from_flow, set_flow) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 export const MAX_EVENTS_PER_DAY = 2000;
 export const MAX_ANON_EVENTS_PER_DAY = 5000;
-export const KV_TTL_SECONDS = 40 * 24 * 60 * 60;
 const KV_KEY_PREFIX = "optimiser:";
-const EVENT_KV_PREFIX = "optimiser-events:";
-const PURGE_KV_PREFIX = "optimiser:purge:";
+
+// Ofgem price cap, GB average gas unit rate, Direct Debit, 1 Oct–31 Dec 2026 (incl. 5% VAT), pence/kWh.
+export const OFGEM_GAS_UNIT_RATE_P = 7.97;
+
+const isolateFeedbackCount = { day: "", n: 0 };
+const isolateEventCount = { day: "", n: 0 };
+// Free plan has no spare cron slot (5/account used), so each isolate
+// runs the D1 delete at most once per London day, on the first POST.
+let lastPurgeDay = "";
+
+/**
+ * Reset per-isolate caps and the daily purge latch. Tests only.
+ */
+export function resetIsolateState() {
+  isolateFeedbackCount.day = "";
+  isolateFeedbackCount.n = 0;
+  isolateEventCount.day = "";
+  isolateEventCount.n = 0;
+  lastPurgeDay = "";
+}
+
+/**
+ * Pretend this isolate has already counted `n` anonymous events today.
+ * Tests only.
+ * @param {number} n
+ * @param {string} [day]
+ */
+export function seedIsolateEventCount(n, day = londonDay()) {
+  isolateEventCount.day = day;
+  isolateEventCount.n = n;
+}
+
+/**
+ * Pretend this isolate has already counted `n` feedback rows today.
+ * Tests only.
+ * @param {number} n
+ * @param {string} [day]
+ */
+export function seedIsolateFeedbackCount(n, day = londonDay()) {
+  isolateFeedbackCount.day = day;
+  isolateFeedbackCount.n = n;
+}
 
 /**
  * @param {Request} request
@@ -142,20 +189,6 @@ export function minuteIso(date = new Date()) {
  */
 export function feedbackKey(day) {
   return KV_KEY_PREFIX + day;
-}
-
-/**
- * @param {string} day YYYY-MM-DD
- */
-export function eventCapKey(day) {
-  return EVENT_KV_PREFIX + day;
-}
-
-/**
- * @param {string} day YYYY-MM-DD
- */
-export function purgeKey(day) {
-  return PURGE_KV_PREFIX + day;
 }
 
 /**
@@ -331,6 +364,8 @@ function parseGuideTarget(value) {
 /**
  * Allowlisted anonymous Optimiser events. Unknown JSON keys are dropped.
  * Out-of-range or unsafe values are rejected.
+ * Blank, zero or sub-1p unit rates (e.g. 0.06 typed as pounds) default to
+ * the current Ofgem cap gas rate, and saving_gbp is recomputed from kWh.
  * @param {string} body
  * @returns {{ ok: true, row: object } | { ok: false, status: number }}
  */
@@ -414,9 +449,14 @@ export function parseOptimiserEventBody(body) {
     if (setFlow.value !== null) row.set_flow = setFlow.value;
     if (spaceKwh.value !== null) row.space_kwh = spaceKwh.value;
     if (annualKwh.value !== null) row.annual_kwh = annualKwh.value;
-    if (unitRate.value !== null) row.unit_rate = unitRate.value;
+    const rateDefaulted = unitRate.value === null || unitRate.value < 1;
+    row.unit_rate = rateDefaulted ? OFGEM_GAS_UNIT_RATE_P : unitRate.value;
     if (savingKwh.value !== null) row.saving_kwh = savingKwh.value;
-    if (savingGbp.value !== null) row.saving_gbp = savingGbp.value;
+    if (rateDefaulted && savingKwh.value !== null) {
+      row.saving_gbp = Math.round(savingKwh.value * OFGEM_GAS_UNIT_RATE_P) / 100;
+    } else if (savingGbp.value !== null) {
+      row.saving_gbp = savingGbp.value;
+    }
     if (system.value) row.system = system.value;
     if (boilerType.value) row.boiler_type = boilerType.value;
     row.is_test = isTest.value === 1 ? 1 : 0;
@@ -482,51 +522,67 @@ function parseStoredEvents(raw) {
 }
 
 /**
- * Append one event to KV key optimiser:YYYY-MM-DD (Europe/London).
- * Caps at MAX_EVENTS_PER_DAY. TTL ~40 days.
+ * Insert one feedback event into D1 `optimiser_feedback`.
+ * Caps at MAX_EVENTS_PER_DAY per isolate (no KV rewrite of optimiser:<day>).
  * @param {object} event
- * @param {{ REQUESTS?: { get: Function, put: Function } }} env
+ * @param {{ DB?: { prepare: Function } }} env
  * @param {Date} [now]
  */
 export async function appendFeedback(event, env, now = new Date()) {
-  if (!env || !env.REQUESTS || typeof env.REQUESTS.get !== "function" || typeof env.REQUESTS.put !== "function") {
+  if (!env || !env.DB || typeof env.DB.prepare !== "function") {
     return { stored: false, reason: "no-binding" };
   }
   const day = londonDay(now);
-  const key = feedbackKey(day);
-  const events = parseStoredEvents(await env.REQUESTS.get(key));
-  if (events.length >= MAX_EVENTS_PER_DAY) {
-    return { stored: false, reason: "cap", day, key, count: events.length };
+  if (isolateFeedbackCount.day !== day) {
+    isolateFeedbackCount.day = day;
+    isolateFeedbackCount.n = 0;
   }
-  events.push(event);
-  await env.REQUESTS.put(key, JSON.stringify(events), { expirationTtl: KV_TTL_SECONDS });
-  return { stored: true, day, key, count: events.length };
+  if (isolateFeedbackCount.n >= MAX_EVENTS_PER_DAY) {
+    return { stored: false, reason: "cap", day };
+  }
+  isolateFeedbackCount.n++;
+  try {
+    await env.DB.prepare(FEEDBACK_INSERT_SQL)
+      .bind(
+        minuteIso(now),
+        day,
+        event.t,
+        event.type,
+        event.answer || null,
+        event.path || null,
+        event.brand || null,
+        event.from_flow == null ? null : event.from_flow,
+        event.set_flow == null ? null : event.set_flow
+      )
+      .run();
+    return { stored: true, day };
+  } catch (err) {
+    console.log(JSON.stringify({ error: "feedback-d1", message: String((err && err.message) || err) }));
+    return { stored: false, reason: "error", day };
+  }
 }
 
 /**
- * Increment the anonymous-event daily counter. Over-cap returns ok:false.
- * @param {{ REQUESTS?: { get: Function, put: Function } }} env
+ * Soft per-isolate daily cap. No KV get or put on optimiser-events:<day>.
+ * @param {unknown} [_env]
  * @param {string} day
  */
-export async function takeEventSlot(env, day) {
-  if (!env || !env.REQUESTS || typeof env.REQUESTS.get !== "function" || typeof env.REQUESTS.put !== "function") {
-    return { ok: true, reason: "no-binding" };
+export async function takeEventSlot(_env, day) {
+  if (isolateEventCount.day !== day) {
+    isolateEventCount.day = day;
+    isolateEventCount.n = 0;
   }
-  const key = eventCapKey(day);
-  const raw = await env.REQUESTS.get(key);
-  const count = raw ? Number.parseInt(raw, 10) : 0;
-  const n = Number.isFinite(count) ? count : 0;
-  if (n >= MAX_ANON_EVENTS_PER_DAY) {
-    return { ok: false, reason: "cap", count: n, key };
+  if (isolateEventCount.n >= MAX_ANON_EVENTS_PER_DAY) {
+    return { ok: false, reason: "cap", count: isolateEventCount.n };
   }
-  await env.REQUESTS.put(key, String(n + 1), { expirationTtl: EVENT_KV_TTL_SECONDS });
-  return { ok: true, count: n + 1, key };
+  isolateEventCount.n++;
+  return { ok: true, count: isolateEventCount.n };
 }
 
 /**
  * Insert one allowlisted row. Never reads IP, UA, cookies, country, or IDs.
  * @param {object} row
- * @param {{ DB?: { prepare: Function }, REQUESTS?: { get: Function, put: Function } }} env
+ * @param {{ DB?: { prepare: Function } }} env
  * @param {Date} [now]
  * @param {string} [source]
  */
@@ -564,7 +620,11 @@ export async function insertOptimiserEvent(row, env, now = new Date(), source = 
     row.is_test === 1 ? 1 : 0,
     source === "feedback" ? "feedback" : "beacon",
     row.target || null,
-    row.outbound == null ? null : row.outbound
+    row.outbound == null ? null : row.outbound,
+    row.arrival_src || null,
+    row.pre_brand || null,
+    row.pre_system || null,
+    row.preselected === 1 ? 1 : 0
   );
   if (!bound || typeof bound.run !== "function") {
     return { stored: false, reason: "no-binding" };
@@ -609,42 +669,55 @@ export async function purgeOldEvents(env, now = new Date()) {
 }
 
 /**
- * At most once per London calendar day: DELETE rows older than 400 days.
- * KV guard optimiser:purge:YYYY-MM-DD. Never throws.
- * @param {{ REQUESTS?: { get: Function, put: Function }, DB?: { prepare: Function } }} env
- * @param {Date} [now]
- */
-export async function maybePurgeOldEvents(env, now = new Date()) {
-  try {
-    if (!env || !env.REQUESTS || typeof env.REQUESTS.get !== "function" || typeof env.REQUESTS.put !== "function") {
-      return { purged: false, reason: "no-kv" };
-    }
-    const day = londonDay(now);
-    const key = purgeKey(day);
-    const existing = await env.REQUESTS.get(key);
-    if (existing) return { purged: false, reason: "already", day, key };
-    await env.REQUESTS.put(key, "1", { expirationTtl: EVENT_KV_TTL_SECONDS });
-    const result = await purgeOldEvents(env, now);
-    return { purged: !!result.deleted, day, key, before: result.before, reason: result.reason };
-  } catch {
-    return { purged: false, reason: "error" };
-  }
-}
-
-/**
- * Queue the daily purge on ctx.waitUntil so the request is never delayed or failed.
- * @param {{ REQUESTS?: { get: Function, put: Function }, DB?: { prepare: Function } }} env
+ * At most once per isolate per London day: DELETE rows older than 400 days.
+ * No KV guard. Never throws; the request path is not delayed.
+ * @param {{ DB?: { prepare: Function } }} env
  * @param {{ waitUntil?: Function }} [ctx]
- * @param {Date} [now]
  */
-export function scheduleDailyPurge(env, ctx, now = new Date()) {
-  if (!ctx || typeof ctx.waitUntil !== "function") return false;
+export function maybePurgeInIsolate(env, ctx) {
   try {
-    ctx.waitUntil(maybePurgeOldEvents(env, now));
+    const day = londonDay();
+    if (lastPurgeDay === day || !ctx || typeof ctx.waitUntil !== "function") return false;
+    lastPurgeDay = day;
+    ctx.waitUntil(purgeOldEvents(env).catch(() => {}));
     return true;
   } catch {
     return false;
   }
+}
+
+/**
+ * Arrival context from the page URL the beacon was sent from (same-origin
+ * Referer carries the query string). BoilerManuals deep links:
+ * ?utm_source=boilermanuals&system=combi|system|non-condensing&brand=<slug>.
+ * Cookie-free: nothing stored client-side.
+ * @param {Request} request
+ * @returns {{ arrival_src?: string, pre_brand?: string, pre_system?: string }}
+ */
+export function arrivalContext(request) {
+  const out = {};
+  try {
+    const ref = new URL((request.headers.get("Referer") || "").trim());
+    if (!ALLOWED_HOSTS.has(ref.hostname.toLowerCase())) return out;
+    const params = ref.searchParams;
+    const get = (key) => String(params.get(key) || "").trim().toLowerCase();
+    const src = get("utm_source") || get("ref") || get("src");
+    if (/^(www\.)?boilermanuals(\.com)?$/.test(src) || src.indexOf("boilermanuals") === 0) {
+      out.arrival_src = "boilermanuals";
+    } else if (ARRIVAL_TOKEN.test(src)) {
+      out.arrival_src = src;
+    }
+    let brand = get("brand");
+    if (brand === "worcester-bosch") brand = "worcester";
+    if (brand === "glowworm") brand = "glow-worm";
+    if (ARRIVAL_TOKEN.test(brand)) out.pre_brand = brand;
+    const sys = get("system");
+    if (sys === "combi" || sys === "system") out.pre_system = sys;
+    else if (sys === "non-condensing" || sys === "standard") out.pre_system = "standard";
+  } catch {
+    // Missing or unparseable Referer: no arrival fields.
+  }
+  return out;
 }
 
 function logFeedback(event) {
@@ -660,7 +733,7 @@ function logFeedback(event) {
 
 /**
  * @param {Request} request
- * @param {{ REQUESTS?: { get: Function }, LIST_SECRET?: string }} env
+ * @param {{ REQUESTS?: { get: Function }, DB?: { prepare: Function }, LIST_SECRET?: string }} env
  */
 async function handleList(request, env) {
   if (request.method !== "GET") {
@@ -676,20 +749,48 @@ async function handleList(request, env) {
     return jsonResponse(400, { error: "day" });
   }
 
-  const raw = env && env.REQUESTS && typeof env.REQUESTS.get === "function"
-    ? await env.REQUESTS.get(feedbackKey(dayParam))
-    : null;
-  const events = parseStoredEvents(raw);
+  let legacy = [];
+  try {
+    const raw =
+      env && env.REQUESTS && typeof env.REQUESTS.get === "function"
+        ? await env.REQUESTS.get(feedbackKey(dayParam))
+        : null;
+    legacy = parseStoredEvents(raw);
+  } catch {
+    legacy = [];
+  }
+
+  let rows = [];
+  try {
+    if (env && env.DB && typeof env.DB.prepare === "function") {
+      const res = await env.DB.prepare(
+        "SELECT t, type, answer, path, brand, from_flow, set_flow FROM optimiser_feedback WHERE day = ? ORDER BY id"
+      )
+        .bind(dayParam)
+        .all();
+      rows = ((res && res.results) || []).map((r) => {
+        const event = { t: r.t, type: r.type, path: r.path, brand: r.brand || "" };
+        if (r.answer) event.answer = r.answer;
+        if (r.from_flow != null) event.from_flow = r.from_flow;
+        if (r.set_flow != null) event.set_flow = r.set_flow;
+        return event;
+      });
+    }
+  } catch {
+    rows = [];
+  }
+
+  const events = legacy.concat(rows);
   return jsonResponse(200, { day: dayParam, count: events.length, events });
 }
 
 /**
  * @param {Request} request
- * @param {{ REQUESTS?: { get: Function, put: Function }, DB?: { prepare: Function } }} env
+ * @param {{ DB?: { prepare: Function } }} env
  * @param {{ waitUntil?: Function }} [ctx]
  */
 async function handleEventCollect(request, env, ctx) {
-  scheduleDailyPurge(env, ctx);
+  if (request.method === "POST") maybePurgeInIsolate(env, ctx);
   const headers = corsHeaders(request);
 
   if (request.method === "OPTIONS") {
@@ -717,7 +818,21 @@ async function handleEventCollect(request, env, ctx) {
     return new Response(null, { status: parsed.status, headers });
   }
 
-  await insertOptimiserEvent(parsed.row, env);
+  const row = parsed.row;
+  const arrival = arrivalContext(request);
+  if (arrival.arrival_src) row.arrival_src = arrival.arrival_src;
+  if (arrival.pre_brand) row.pre_brand = arrival.pre_brand;
+  if (arrival.pre_system) row.pre_system = arrival.pre_system;
+  // Steps 1–2 are auto-completed by a ?system= deep link; a brand matching
+  // ?brand= is the link's choice, not the visitor's.
+  if (
+    (row.event === "step" && (row.step === 1 || row.step === 2) && row.pre_system) ||
+    (row.event === "brand" && row.pre_brand && row.brand === row.pre_brand)
+  ) {
+    row.preselected = 1;
+  }
+
+  await insertOptimiserEvent(row, env);
   return new Response(null, { status: 204, headers });
 }
 

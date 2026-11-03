@@ -23,11 +23,36 @@ CREATE TABLE IF NOT EXISTS optimiser_events (
   is_test INTEGER NOT NULL DEFAULT 0,
   source TEXT NOT NULL DEFAULT 'beacon',
   target TEXT,
-  outbound INTEGER
+  outbound INTEGER,
+  arrival_src TEXT,
+  pre_brand TEXT,
+  pre_system TEXT,
+  preselected INTEGER
 );
 CREATE INDEX IF NOT EXISTS idx_oe_day_event ON optimiser_events(day, event);
 
--- Live D1 already exists. Run once before deploy if the columns are missing.
+-- Feedback confirm-box posts (turned_down / did_it_work). New rows go here
+-- instead of rewriting the KV `optimiser:<day>` arrays. GET
+-- /api/optimiser-feedbacks still merges any leftover KV days with these rows.
+CREATE TABLE IF NOT EXISTS optimiser_feedback (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  ts TEXT NOT NULL,
+  day TEXT NOT NULL,
+  t INTEGER,
+  type TEXT NOT NULL,
+  answer TEXT,
+  path TEXT,
+  brand TEXT,
+  from_flow REAL,
+  set_flow REAL
+);
+CREATE INDEX IF NOT EXISTS idx_of_day ON optimiser_feedback(day);
+
+-- Live D1 already exists. Run once before deploy if the columns or table are missing.
 -- Do not run from the Worker.
 -- ALTER TABLE optimiser_events ADD COLUMN target TEXT;
 -- ALTER TABLE optimiser_events ADD COLUMN outbound INTEGER;
+-- ALTER TABLE optimiser_events ADD COLUMN arrival_src TEXT;
+-- ALTER TABLE optimiser_events ADD COLUMN pre_brand TEXT;
+-- ALTER TABLE optimiser_events ADD COLUMN pre_system TEXT;
+-- ALTER TABLE optimiser_events ADD COLUMN preselected INTEGER;
