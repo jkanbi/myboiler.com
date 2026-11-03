@@ -3318,6 +3318,7 @@
                 <a class="label-aside" id="setup-aside" href="#note-1" aria-label="Note 1">[1.]</a>
             </div>
             <div class="input-group" id="system-group">
+                <!-- Deep link: ?system=combi|system|non-condensing&brand=vaillant -->
                 <div class="choice-toggle" id="setup-choices" role="group" aria-labelledby="setup-label">
                     <button type="button" class="choice-button active" data-choice="combi" data-boiler="condensing" data-system="combi" aria-pressed="true">Condensing combi</button>
                     <button type="button" class="choice-button" data-choice="system" data-boiler="condensing" data-system="system" aria-pressed="false">Condensing system / stored hot water</button>
@@ -3898,7 +3899,7 @@
         </details>
 
         <p class="tool-disclaimer">This tool is in development. We accept no responsibility for issues that arise from these adjustments. Some systems are not installed correctly and may cause problems, especially where the condensate pipe is incorrectly installed or not insulated.</p>
-        <p class="tool-version" data-stamp="2026-11-02 17:51 · 42">Last updated 2 Nov 2026 · Version 42</p>
+        <p class="tool-version" data-stamp="2026-11-03 06:03 · 43">Last updated 3 Nov 2026 · Version 43</p>
     </div>
 
     <div id="site-footer"></div>
@@ -5444,6 +5445,39 @@
                 };
             };
             window.addEventListener('resize', layoutPrimaryCircuit);
+
+            function queryParam(name) {
+                try {
+                    var value = new URLSearchParams(location.search || '').get(name);
+                    return value ? String(value).trim().toLowerCase() : '';
+                } catch (err) {
+                    return '';
+                }
+            }
+
+            function applyDeepLink() {
+                var systemParam = queryParam('system');
+                var systemChoice = '';
+                if (systemParam === 'combi') systemChoice = 'combi';
+                else if (systemParam === 'system') systemChoice = 'system';
+                else if (systemParam === 'non-condensing' || systemParam === 'standard') systemChoice = 'standard';
+                if (systemChoice) {
+                    var setup = document.getElementById('setup-choices');
+                    var systemButton = setup && setup.querySelector('[data-choice="' + systemChoice + '"]');
+                    if (systemButton) systemButton.click();
+                }
+                var brandParam = queryParam('brand');
+                if (brandParam === 'worcester-bosch') brandParam = 'worcester';
+                if (brandParam === 'glowworm') brandParam = 'glow-worm';
+                if (!brandParam) return;
+                var brandMatch = null;
+                document.querySelectorAll('#brand-picks [data-brand]').forEach(function (tile) {
+                    if (tile.getAttribute('data-brand') === brandParam) brandMatch = tile;
+                });
+                if (brandMatch) brand = brandParam;
+            }
+
+            applyDeepLink();
             update();
         })();
     </script>
