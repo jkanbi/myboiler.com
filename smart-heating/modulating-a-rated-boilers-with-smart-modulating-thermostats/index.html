@@ -173,8 +173,8 @@
         }
 
         .mod-figure {
-            margin: 1.5rem 0 1.75rem;
-            max-width: 100%;
+            margin: 1.5rem auto 1.75rem;
+            max-width: 720px;
             min-width: 0;
         }
 
@@ -212,6 +212,7 @@
             width: 100%;
             max-width: 100%;
             height: auto;
+            overflow: visible;
             color: var(--text);
         }
 
@@ -240,24 +241,25 @@
         }
 
         .mod-chart-label {
-            font-size: 28px;
+            font-size: 20px;
         }
 
         .mod-chart-axis-title {
-            font-size: 24px;
+            font-size: 18px;
         }
 
         .mod-chart-threshold-label,
         .mod-chart-legend-text,
         .mod-chart-burner-label,
         .mod-chart-region {
-            font-size: 22px;
+            font-size: 16px;
         }
 
-        .mod-chart-flow {
+        .mod-chart-flow,
+        .mod-chart-curve {
             fill: none;
             stroke: var(--accent);
-            stroke-width: 3;
+            stroke-width: 2.5;
             stroke-linejoin: round;
             stroke-linecap: round;
         }
@@ -265,7 +267,7 @@
         .mod-chart-room {
             fill: none;
             stroke: var(--text);
-            stroke-width: 2.1;
+            stroke-width: 1.8;
             stroke-linejoin: round;
             stroke-linecap: round;
             opacity: 0.88;
@@ -303,13 +305,6 @@
             fill: none;
         }
 
-        .mod-chart-curve {
-            fill: none;
-            stroke: var(--accent);
-            stroke-width: 3;
-            stroke-linejoin: round;
-            stroke-linecap: round;
-        }
 
         .mod-legend {
             display: flex;
@@ -347,13 +342,6 @@
             border-top-style: dashed;
             border-top-width: 2px;
             border-top-color: var(--text-muted);
-        }
-
-        @media (min-width: 860px) {
-            .mod-figure-panels {
-                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-                gap: 1.25rem;
-            }
         }
 
         @media (max-width: 640px) {
@@ -432,23 +420,20 @@
                             <desc id="fig1a-desc">Illustrative chart. The flow temperature rises to about 70 to 75 degrees Celsius and falls again in a sawtooth. A burner strip underneath shows blocks of full output and off. A thinner room-temperature line overshoots and swings around the setpoint. A dashed line marks the condensing threshold, where the return is about 55 degrees Celsius.</desc>
                             <rect class="mod-chart-plot-bg" x="72" y="20" width="624" height="190"></rect>
                             <line class="mod-chart-threshold" x1="72" y1="98" x2="696" y2="98"></line>
-                            <text class="mod-chart-threshold-label" x="80" y="88">≈55 °C return</text>
+                            <text class="mod-chart-threshold-label" x="688" y="88" text-anchor="end">≈55 °C return</text>
                             <line class="mod-chart-setpoint" x1="72" y1="165" x2="696" y2="165"></line>
-                            <text class="mod-chart-threshold-label" x="690" y="158" text-anchor="end">Room 21 °C</text>
+                            <text class="mod-chart-threshold-label" x="688" y="180" text-anchor="end">Room 21 °C</text>
                             <line class="mod-chart-axis" x1="72" y1="20" x2="72" y2="210"></line>
                             <line class="mod-chart-axis" x1="72" y1="210" x2="696" y2="210"></line>
                             <line class="mod-chart-tick" x1="66" y1="168" x2="72" y2="168"></line>
                             <line class="mod-chart-tick" x1="66" y1="112" x2="72" y2="112"></line>
                             <line class="mod-chart-tick" x1="66" y1="56" x2="72" y2="56"></line>
-                            <text class="mod-chart-label" x="60" y="174" text-anchor="end">30</text>
-                            <text class="mod-chart-label" x="60" y="118" text-anchor="end">50</text>
-                            <text class="mod-chart-label" x="60" y="62" text-anchor="end">70</text>
-                            <text class="mod-chart-axis-title" transform="translate(20 115) rotate(-90)" text-anchor="middle">
-                                <tspan x="0" dy="-0.35em">Flow temperature</tspan>
-                                <tspan x="0" dy="1.2em">(°C)</tspan>
-                            </text>
+                            <text class="mod-chart-label" x="58" y="174" text-anchor="end">30</text>
+                            <text class="mod-chart-label" x="58" y="118" text-anchor="end">50</text>
+                            <text class="mod-chart-label" x="58" y="62" text-anchor="end">70</text>
+                            <text class="mod-chart-axis-title" transform="translate(18 115) rotate(-90)" text-anchor="middle">Flow (°C)</text>
                             <text class="mod-chart-axis-title" x="384" y="314" text-anchor="middle">Time</text>
-                            <polyline class="mod-chart-flow" points="72,162.4 130,42 175,145.6 240,44.8 285,151.2 350,42 395,148.4 460,44.8 505,151.2 570,47.6 615,140 696,50.4"></polyline>
+                            <polyline class="mod-chart-flow" points="72,162.4 130,42 175,145.6 240,44.8 285,151.2 350,42 395,148.4 460,44.8 505,151.2 570,47.6 615,140 660,70 696,148"></polyline>
                             <path class="mod-chart-room" d="M72,210 C110,183 130,150 150,142.5 S175,180 190,187.5 220,145 240,138 270,185 290,192 320,148 340,139.8 370,180 390,187.5 420,146 440,138 470,184 490,190.2 520,150 540,142.5 570,178 590,183 620,155 640,147 670,158 696,160.5"></path>
                             <rect class="mod-chart-burner-on" x="72" y="226" width="58" height="30"></rect>
                             <rect class="mod-chart-burner-off" x="130" y="226" width="45" height="30"></rect>
@@ -471,21 +456,18 @@
                             <desc id="fig1b-desc">Illustrative chart. The flow temperature rises once and then holds at about 45 to 50 degrees Celsius, below the dashed condensing threshold. The burner strip is a continuous bar at partial height, labelled burner at low output. A thinner room-temperature line rises smoothly and stays flat at the setpoint.</desc>
                             <rect class="mod-chart-plot-bg" x="72" y="20" width="624" height="190"></rect>
                             <line class="mod-chart-threshold" x1="72" y1="98" x2="696" y2="98"></line>
-                            <text class="mod-chart-threshold-label" x="80" y="88">≈55 °C return</text>
+                            <text class="mod-chart-threshold-label" x="688" y="88" text-anchor="end">≈55 °C return</text>
                             <line class="mod-chart-setpoint" x1="72" y1="165" x2="696" y2="165"></line>
-                            <text class="mod-chart-threshold-label" x="690" y="158" text-anchor="end">Room 21 °C</text>
+                            <text class="mod-chart-threshold-label" x="688" y="180" text-anchor="end">Room 21 °C</text>
                             <line class="mod-chart-axis" x1="72" y1="20" x2="72" y2="210"></line>
                             <line class="mod-chart-axis" x1="72" y1="210" x2="696" y2="210"></line>
                             <line class="mod-chart-tick" x1="66" y1="168" x2="72" y2="168"></line>
                             <line class="mod-chart-tick" x1="66" y1="112" x2="72" y2="112"></line>
                             <line class="mod-chart-tick" x1="66" y1="56" x2="72" y2="56"></line>
-                            <text class="mod-chart-label" x="60" y="174" text-anchor="end">30</text>
-                            <text class="mod-chart-label" x="60" y="118" text-anchor="end">50</text>
-                            <text class="mod-chart-label" x="60" y="62" text-anchor="end">70</text>
-                            <text class="mod-chart-axis-title" transform="translate(20 115) rotate(-90)" text-anchor="middle">
-                                <tspan x="0" dy="-0.35em">Flow temperature</tspan>
-                                <tspan x="0" dy="1.2em">(°C)</tspan>
-                            </text>
+                            <text class="mod-chart-label" x="58" y="174" text-anchor="end">30</text>
+                            <text class="mod-chart-label" x="58" y="118" text-anchor="end">50</text>
+                            <text class="mod-chart-label" x="58" y="62" text-anchor="end">70</text>
+                            <text class="mod-chart-axis-title" transform="translate(18 115) rotate(-90)" text-anchor="middle">Flow (°C)</text>
                             <text class="mod-chart-axis-title" x="384" y="314" text-anchor="middle">Time</text>
                             <path class="mod-chart-flow" d="M72,162.4 C120,150 145,128 160,120.4 S200,115.2 220,114.8 L696,116.2"></path>
                             <path class="mod-chart-room" d="M72,205.5 C130,185 175,170 220,165 L696,165"></path>
@@ -495,11 +477,11 @@
                     </div>
                 </div>
                 <ul class="mod-legend" aria-hidden="true">
-                    <li><span class="mod-legend-swatch"></span> Flow temperature</li>
+                    <li><span class="mod-legend-swatch"></span> Flow temperature (°C)</li>
                     <li><span class="mod-legend-swatch mod-legend-swatch--room"></span> Room temperature</li>
                     <li><span class="mod-legend-swatch mod-legend-swatch--dash"></span> Condensing threshold (return ≈55 °C)</li>
                 </ul>
-                <figcaption>Figure 1. Illustrative, not measured data. Room temperature is enlarged so the overshoot is visible; the numbered axis is flow temperature.</figcaption>
+                <figcaption>Figure 1. Illustrative, not measured data. The numbered axis is flow temperature (°C). Room temperature is enlarged so the overshoot is visible.</figcaption>
             </figure>
 
             <h2>Modulating control</h2>
@@ -514,24 +496,21 @@
                 <svg class="mod-chart" viewBox="0 0 720 320" width="720" height="320" role="img" aria-labelledby="fig2-title fig2-desc" preserveAspectRatio="xMidYMid meet">
                     <title id="fig2-title">Relative boiler efficiency against return water temperature, with a step down around 55 degrees Celsius</title>
                     <desc id="fig2-desc">Illustrative curve. Relative boiler efficiency is higher on the left, while the return water is in the condensing range. Around 55 degrees Celsius the curve steps down, then flattens in the non-condensing range toward 80 degrees. No percentage values are shown.</desc>
-                    <rect class="mod-chart-plot-bg" x="80" y="36" width="600" height="194"></rect>
-                    <line class="mod-chart-threshold" x1="380" y1="36" x2="380" y2="230"></line>
-                    <line class="mod-chart-axis" x1="80" y1="36" x2="80" y2="230"></line>
-                    <line class="mod-chart-axis" x1="80" y1="230" x2="680" y2="230"></line>
-                    <line class="mod-chart-tick" x1="80" y1="230" x2="80" y2="236"></line>
-                    <line class="mod-chart-tick" x1="380" y1="230" x2="380" y2="236"></line>
-                    <line class="mod-chart-tick" x1="680" y1="230" x2="680" y2="236"></line>
-                    <text class="mod-chart-label" x="80" y="260" text-anchor="middle">30</text>
-                    <text class="mod-chart-label" x="380" y="260" text-anchor="middle">55</text>
-                    <text class="mod-chart-label" x="680" y="260" text-anchor="middle">80</text>
-                    <text class="mod-chart-axis-title" x="380" y="300" text-anchor="middle">Return water temperature (°C)</text>
-                    <text class="mod-chart-axis-title" transform="translate(26 133) rotate(-90)" text-anchor="middle">
-                        <tspan x="0" dy="-0.35em">Relative boiler</tspan>
-                        <tspan x="0" dy="1.2em">efficiency</tspan>
-                    </text>
-                    <text class="mod-chart-region" x="230" y="58" text-anchor="middle">Condensing</text>
-                    <text class="mod-chart-region" x="530" y="58" text-anchor="middle">Non-condensing</text>
-                    <path class="mod-chart-curve" d="M80,64.4 C200,68 296,73.4 344,78.8 C360,82 368,89.6 374,110 C377,122 378,128 380,131 C384,140 388,143.6 400,146 C440,150.8 560,156.2 680,159.8"></path>
+                    <rect class="mod-chart-plot-bg" x="72" y="20" width="624" height="190"></rect>
+                    <line class="mod-chart-threshold" x1="384" y1="20" x2="384" y2="210"></line>
+                    <line class="mod-chart-axis" x1="72" y1="20" x2="72" y2="210"></line>
+                    <line class="mod-chart-axis" x1="72" y1="210" x2="696" y2="210"></line>
+                    <line class="mod-chart-tick" x1="72" y1="210" x2="72" y2="216"></line>
+                    <line class="mod-chart-tick" x1="384" y1="210" x2="384" y2="216"></line>
+                    <line class="mod-chart-tick" x1="696" y1="210" x2="696" y2="216"></line>
+                    <text class="mod-chart-label" x="72" y="236" text-anchor="middle">30</text>
+                    <text class="mod-chart-label" x="384" y="236" text-anchor="middle">55</text>
+                    <text class="mod-chart-label" x="696" y="236" text-anchor="middle">80</text>
+                    <text class="mod-chart-axis-title" x="384" y="270" text-anchor="middle">Return water temperature (°C)</text>
+                    <text class="mod-chart-axis-title" transform="translate(18 115) rotate(-90)" text-anchor="middle">Relative efficiency</text>
+                    <text class="mod-chart-region" x="228" y="40" text-anchor="middle">Condensing</text>
+                    <text class="mod-chart-region" x="540" y="40" text-anchor="middle">Non-condensing</text>
+                    <path class="mod-chart-curve" d="M72,47.8 C196.8,51.3 296.6,56.6 346.6,61.9 C363.2,65.1 371.5,72.5 377.8,92.5 C380.9,104.2 381.9,110.1 384,113 C388.2,121.9 392.3,125.4 404.8,127.7 C446.4,132.4 571.2,137.7 696,141.2"></path>
                 </svg>
                 <figcaption>Figure 2. Illustrative.</figcaption>
             </figure>
@@ -581,7 +560,7 @@
             </div>
 
             <h2>Boiler Plus in England</h2>
-            <p>When a new gas combi is fitted in an existing home in England, <a href="/boiler-plus/">Boiler Plus</a> requires one extra measure on top of an efficient boiler and time-and-temperature control. <strong>Load compensation or weather compensation</strong> is one of those options — and it is the one that actually changes the flow temperature. The original policy is on <a href="https://www.gov.uk/government/consultations/heating-and-hot-water-boiler-plus" rel="noopener noreferrer">GOV.UK: Heating and Hot Water / Boiler Plus</a>.</p>
+            <p>When a new gas combi is fitted in an existing home in England, <a href="/boiler-plus/">Boiler Plus</a> requires one extra measure on top of an efficient boiler and time-and-temperature control. <strong>Load compensation or weather compensation</strong> is one of those options — and it is the one that actually changes the flow temperature. The rules now sit in <a href="https://www.gov.uk/government/publications/conservation-of-fuel-and-power-approved-document-l" rel="noopener noreferrer">Approved Document L (conservation of fuel and power)</a>.</p>
 
             <h2>Compatibility</h2>
             <p>OpenTherm is a shared two-wire protocol: in principle a control from one maker can talk to a boiler from another. In practice the standard has optional features, so you still check the pair. Some boilers take OpenTherm on the main terminals; others need a small interface module. Brand notes for <a href="/opentherm/vaillant-opentherm/">Vaillant OpenTherm</a> and <a href="/opentherm/worcester-bosch-opentherm/">Worcester Bosch OpenTherm</a> are on this site, and there is a list of <a href="/opentherm-boilers-specific/">OpenTherm compatible boilers</a>.</p>
