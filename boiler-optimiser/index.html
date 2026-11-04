@@ -298,18 +298,25 @@
             flex-direction: column;
             align-items: center;
             gap: 0.18rem;
-            margin-top: 0.55rem;
+            width: calc(100% - 1.6rem);
+            margin: auto 0.8rem 0.28rem;
+            padding: 0.32rem 0.25rem 0.36rem;
+            border: 1.5px solid var(--text);
+            border-radius: 6px;
+            box-sizing: border-box;
             text-transform: none;
         }
 
         .boiler-saving-label {
-            font-size: 0.75rem;
+            font-size: 0.68rem;
             font-weight: 600;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.02em;
+            line-height: 1.1;
+            white-space: nowrap;
         }
 
         .boiler-saving-value {
-            font-size: 1.85rem;
+            font-size: 1.55rem;
             font-weight: 700;
             line-height: 1;
             letter-spacing: 0;
@@ -336,7 +343,7 @@
             align-items: center;
             gap: 0.4rem;
             width: calc(100% - 1.6rem);
-            margin: auto 0.8rem 0.1rem;
+            margin: 0.15rem 0.8rem 0;
             padding: 0.4rem 0.3rem 0.45rem;
             border: 1.5px solid var(--text);
             border-radius: 6px;
@@ -3403,10 +3410,6 @@
                                 </div>
                                 <div class="boiler-shape">
                                     <span class="boiler-name">Boiler</span>
-                                    <span class="boiler-saving is-red">
-                                        <span class="boiler-saving-label">Annual Savings</span>
-                                        <span class="boiler-saving-value" id="boiler-saving">£0.00</span>
-                                    </span>
                                     <button type="button" class="boiler-stats" id="boiler-stats-open" aria-haspopup="dialog" aria-controls="boiler-stats-dialog" aria-expanded="false">
                                         <div class="boiler-stat">
                                             <div class="boiler-stat-label">
@@ -3422,6 +3425,10 @@
                                             </div>
                                         </div>
                                     </button>
+                                    <span class="boiler-saving is-red">
+                                        <span class="boiler-saving-label">Annual Savings</span>
+                                        <span class="boiler-saving-value" id="boiler-saving">£0.00</span>
+                                    </span>
                                 </div>
                                 <div class="condensate">
                                     <span class="condensate-pipe" aria-hidden="true"></span>
