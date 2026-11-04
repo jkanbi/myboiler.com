@@ -4695,7 +4695,9 @@
                     : spaceKwh * (pence / 100) * fraction;
                 var savingText = spaceKwh === null || pence === null
                     ? '—'
-                    : formatGBP(savingAmount);
+                    : (savingAmount < 0
+                        ? '+' + formatGBP(Math.abs(savingAmount))
+                        : formatGBP(savingAmount));
                 setResult('condensing-saving', savingText);
                 document.querySelectorAll('[data-result="condensing-saving"]').forEach(function (el) {
                     el.classList.toggle('is-loss', savingAmount < 0);
@@ -4708,17 +4710,20 @@
                 if (boilerSavingLabel) {
                     boilerSavingLabel.textContent = boilerExtraCost ? 'Additional Costs' : 'Annual Savings';
                 }
-                boilerSaving.textContent = spaceKwh === null || pence === null
-                    ? '—'
-                    : formatGBP(boilerExtraCost ? Math.abs(savingAmount) : savingAmount);
+                boilerSaving.textContent = savingText;
                 var savingTone = 'red';
                 if (savingAmount > 0 && condensingBoiler) {
                     savingTone = currentBand.key === 'low' ? 'red' : currentBand.key;
                 }
                 boilerSavingWrap.className = 'boiler-saving is-' + savingTone;
+                var extraCondensingCost = savingAmount < 0;
                 setResult('condensing-saving-unit', condensingBoiler
-                    ? 'Annual Condensing-Mode Saving\n' +
-                        percent(fraction) + ' Saving Versus ' + Math.round(fromFlow) + '°C Initial Flow Temp\n' +
+                    ? (extraCondensingCost
+                        ? 'Annual Additional Costs\n' +
+                            '+' + percent(Math.abs(fraction)) + ' Versus '
+                        : 'Annual Condensing-Mode Saving\n' +
+                            percent(fraction) + ' Saving Versus ') +
+                        Math.round(fromFlow) + '°C Initial Flow Temp\n' +
                         Math.round(flow) + '°C Flow Temp And ' + ret + '°C Return Temp'
                     : 'Annual Condensing-Mode Saving\nNo Condensing Gain On This Boiler');
                 syncUsageChips(annual);
