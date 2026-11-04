@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modulating A Rated Boilers with Smart Modulating Thermostats - MyBoiler</title>
-    <meta name="description" content="How modulating thermostats and OpenTherm controls improve A rated boiler efficiency compared with on/off room thermostats.">
+    <title>Modulating Boilers vs On/Off Thermostats: How OpenTherm Control Works | MyBoiler</title>
+    <meta name="description" content="Why on/off room thermostats make a boiler cycle, how modulating (OpenTherm, load and weather compensation) controls keep flow temperatures low so it condenses, with a diagram.">
     <link rel="canonical" href="https://myboiler.com/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/">
     <link rel="stylesheet" type="text/css" href="/css/styles.css?v=1024-cap">
     <style>
@@ -24,8 +24,24 @@
             box-sizing: border-box;
         }
 
-.article-header {
+        .article-header {
             margin-bottom: 2.5rem;
+        }
+
+        .article-kicker {
+            margin: 0 0 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .article-kicker a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-kicker a:hover {
+            text-decoration: underline;
         }
 
         .article-title {
@@ -41,7 +57,13 @@
             font-size: 1.125rem;
             line-height: 1.6;
             color: var(--text-muted);
-            margin: 0 0 2rem;
+            margin: 0 0 0.75rem;
+        }
+
+        .article-updated {
+            margin: 0;
+            font-size: 0.875rem;
+            color: var(--text-muted);
         }
 
         .article-content {
@@ -50,6 +72,7 @@
             box-shadow: var(--shadow-sm);
             padding: clamp(1.5rem, 4vw, 3rem);
             margin-bottom: 2rem;
+            overflow-wrap: break-word;
         }
 
         .article-content p {
@@ -64,20 +87,19 @@
             font-weight: 700;
             color: var(--text);
             margin: 2rem 0 1rem;
+            line-height: 1.2;
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
         }
 
         .article-content h3 {
             font-size: 1.25rem;
             font-weight: 600;
             color: var(--text);
-            margin: 1.5rem 0 1rem;
-        }
-
-        .article-content h4 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--text);
-            margin: 1.25rem 0 0.75rem;
+            margin: 1.5rem 0 0.75rem;
+            line-height: 1.3;
         }
 
         .article-content strong {
@@ -85,54 +107,286 @@
             color: var(--text);
         }
 
-        .article-content img {
-            display: block;
-            max-width: min(100%, 720px);
-            height: auto;
-            margin: 1rem auto 1.5rem;
-            border-radius: var(--radius);
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
         }
 
-        .article-video {
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin: 0 0 0.4rem;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .article-content table {
             width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+            font-size: 0.9375rem;
+        }
+
+        .article-content th,
+        .article-content td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+            vertical-align: top;
+        }
+
+        .article-content th {
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .article-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             margin: 1.25rem 0 1.75rem;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            background: var(--surface);
-            box-shadow: var(--shadow-sm);
         }
-        .article-video iframe {
+
+        .article-callout {
+            background: var(--bg);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 0 0 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .article-callout p {
+            margin: 0;
+        }
+
+        .article-note {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+        }
+
+        .mod-figure {
+            margin: 1.5rem 0 1.75rem;
+            max-width: 100%;
+            min-width: 0;
+        }
+
+        .mod-figure figcaption {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin: 0.75rem 0 0;
+            line-height: 1.5;
+        }
+
+        .mod-figure-panels {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .mod-panel {
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        .mod-panel-title {
+            margin: 0 0 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .mod-chart {
             display: block;
             width: 100%;
-            aspect-ratio: 16 / 9;
+            max-width: 100%;
             height: auto;
-            border: 0;
+            color: var(--text);
         }
 
-        .article-resource {
-            display: block;
-            margin: 0.75rem 0 1.25rem;
+        .mod-chart-axis,
+        .mod-chart-tick {
+            stroke: var(--text-muted);
+            fill: none;
         }
 
+        .mod-chart-axis {
+            stroke-width: 1.25;
+        }
+
+        .mod-chart-tick {
+            stroke-width: 1;
+        }
+
+        .mod-chart-label,
+        .mod-chart-axis-title,
+        .mod-chart-threshold-label,
+        .mod-chart-legend-text,
+        .mod-chart-burner-label,
+        .mod-chart-region {
+            fill: var(--text-muted);
+            font-family: inherit;
+        }
+
+        .mod-chart-label {
+            font-size: 28px;
+        }
+
+        .mod-chart-axis-title {
+            font-size: 24px;
+        }
+
+        .mod-chart-threshold-label,
+        .mod-chart-legend-text,
+        .mod-chart-burner-label,
+        .mod-chart-region {
+            font-size: 22px;
+        }
+
+        .mod-chart-flow {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 3;
+            stroke-linejoin: round;
+            stroke-linecap: round;
+        }
+
+        .mod-chart-room {
+            fill: none;
+            stroke: var(--text);
+            stroke-width: 2.1;
+            stroke-linejoin: round;
+            stroke-linecap: round;
+            opacity: 0.88;
+        }
+
+        .mod-chart-threshold {
+            fill: none;
+            stroke: var(--text-muted);
+            stroke-width: 1.4;
+            stroke-dasharray: 6 5;
+        }
+
+        .mod-chart-setpoint {
+            fill: none;
+            stroke: var(--text-muted);
+            stroke-width: 1.1;
+            stroke-dasharray: 3 4;
+            opacity: 0.7;
+        }
+
+        .mod-chart-burner-on {
+            fill: var(--accent);
+        }
+
+        .mod-chart-burner-off {
+            fill: var(--border);
+        }
+
+        .mod-chart-burner-low {
+            fill: var(--accent);
+            opacity: 0.45;
+        }
+
+        .mod-chart-plot-bg {
+            fill: none;
+        }
+
+        .mod-chart-curve {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 3;
+            stroke-linejoin: round;
+            stroke-linecap: round;
+        }
+
+        .mod-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem 1.25rem;
+            margin: 0.65rem 0 0;
+            padding: 0;
+            list-style: none;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+
+        .mod-legend li {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .mod-legend-swatch {
+            display: inline-block;
+            width: 1.25rem;
+            height: 0;
+            border-top: 3px solid var(--accent);
+            flex: 0 0 auto;
+        }
+
+        .mod-legend-swatch--room {
+            border-top-width: 2px;
+            border-top-color: var(--text);
+            opacity: 0.75;
+        }
+
+        .mod-legend-swatch--dash {
+            border-top-style: dashed;
+            border-top-width: 2px;
+            border-top-color: var(--text-muted);
+        }
+
+        @media (min-width: 860px) {
+            .mod-figure-panels {
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                gap: 1.25rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .mod-figure {
+                margin-left: -0.5rem;
+                margin-right: -0.5rem;
+            }
+
+            .article-content th,
+            .article-content td {
+                padding: 0.65rem 0.55rem;
+            }
+        }
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Modulating A Rated Boilers with Smart Modulating Thermostats",
+  "@type": "Article",
+  "headline": "Modulating Boilers vs On/Off Thermostats: How OpenTherm Control Works",
+  "name": "Modulating Boilers vs On/Off Thermostats: How OpenTherm Control Works",
   "url": "https://myboiler.com/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/",
+  "dateModified": "2026-11-04",
   "isPartOf": {
     "@type": "WebSite",
     "name": "MyBoiler.com",
     "url": "https://myboiler.com/"
   },
-  "description": "How modulating thermostats and OpenTherm controls improve A rated boiler efficiency compared with on/off room thermostats."
+  "description": "Why on/off room thermostats make a boiler cycle, how modulating (OpenTherm, load and weather compensation) controls keep flow temperatures low so it condenses, with a diagram."
 }
     </script>
 </head>
 <body class="article-page">
-    <!-- Header with full navigation -->
     <div class="menu-overlay"></div>
     <div class="nav-mega-backdrop" aria-hidden="true"></div>
     <header class="header">
@@ -140,55 +394,216 @@
             <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
             <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
         </a>
-        <div class="tagline">Smarter Heating & Hot Water</div>
+        <div class="tagline">Smarter Heating &amp; Hot Water</div>
         <div class="right-header-items">
             <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
             </button>
-            
-            <nav id="nav-menu" class="nav-menu"><ul class="nav-list"><li class="nav-item"><a href="/advice/">Advice</a></li><li class="nav-item"><a href="/toolbox/">Toolbox</a></li><li class="nav-item nav-item-cta"><a href="/chat/">Ask AI</a></li></ul></nav>
+            <nav id="nav-menu" class="nav-menu"></nav>
         </div>
     </header>
 
-    <!-- Article Content -->
     <div class="article-container">
         <header class="article-header">
-            <h1 class="article-title">Modulating A Rated Boilers with Smart Modulating Thermostats</h1>
-            <p class="article-intro">
-                How modulating thermostats and OpenTherm controls run A rated boilers more efficiently than on/off room thermostats.
-            </p>
+            <p class="article-kicker"><a href="/advice/">Controls</a></p>
+            <h1 class="article-title">Modulating boilers versus on/off thermostats</h1>
+            <p class="article-intro">Why an on/off room thermostat makes a boiler cycle at a high flow temperature, and how a modulating control — OpenTherm, or a manufacturer’s own bus — asks for a lower flow so the boiler can condense.</p>
+            <p class="article-updated">Updated 4 November 2026</p>
         </header>
 
         <article class="article-content">
-            <img src="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/images/boilers.jpg" alt="Condensing boilers" width="399" height="209" loading="lazy">
+            <h2>What modulating means</h2>
+            <p>On an A-rated (ErP energy label) gas boiler, <strong>modulation</strong> can mean two different things.</p>
+            <p>The <strong>burner</strong> modulates when the boiler turns its gas rate up and down to match the heat the circuit will take. A wide modulation range helps it avoid firing at full output for a small load. That is a property of the boiler. See <a href="/vaillant/vaillant-boiler-burner-modulation-rate/">burner modulation rate</a> and <a href="/the-relationship-between-flow-temperature-and-power-output/">flow temperature and power output</a>.</p>
+            <p>The <strong>control</strong> modulates when it does more than close a switch. Instead of “on” or “off”, it sends a <strong>flow-temperature setpoint</strong>: how hot the water leaving the boiler should be. The burner then fires only as hard as it needs to hold that target. Most UK rooms still have the first kind of thermostat, even on a recent condensing boiler.</p>
 
-            <p>In Europe, a majority of boilers have modulating thermostats that regulate the boiler flow temperature dependent on the room sensor. In the UK most boilers have on/off style room thermostats. At MyBoiler, modern efficient A rated boilers are installed with these modulating thermostats as a high standard.</p>
+            <h2>On/off control</h2>
+            <p>A conventional room thermostat is a switch. When the room is below the setpoint it calls for heat; the boiler fires toward its central-heating maximum — often 70–80&nbsp;°C. Radiators run hotter than the house needs, the room overshoots, and the thermostat drops out. The boiler then sits off until the room cools, and the cycle repeats. That is short cycling: full heat, then nothing, then full heat again.</p>
+            <p>High flow water usually means a high return. Once the return is above about 55&nbsp;°C the boiler stops recovering latent heat from the flue gas, so it is no longer condensing even though the case still says “condensing”.</p>
 
-            <p>Modulating room sensors, as they are known, can increase the efficiency of the boiler much better than on/off style room thermostats. A good analogy would be that standard room thermostats tell the boiler to simply come on and off, versus a room sensor (modulating thermostat) that tells the boiler exactly the temperature it is currently at and also the temperature it needs to achieve. Also to note, whilst new A rated boilers are able to try and predict demand (also known as internal modulation), these are in no way as accurate as a room sensor (modulating thermostat) combined with a compatible boiler. OpenTherm is one such popular standard that enables this more intelligent way of controlling a boiler.</p>
+            <figure class="mod-figure" id="figure-1">
+                <div class="mod-figure-panels">
+                    <div class="mod-panel">
+                        <h3 class="mod-panel-title">On/off thermostat</h3>
+                        <svg class="mod-chart" viewBox="0 0 720 320" width="720" height="320" role="img" aria-labelledby="fig1a-title fig1a-desc" preserveAspectRatio="xMidYMid meet">
+                            <title id="fig1a-title">On/off thermostat: flow temperature sawtooth, full-on and off burner, room temperature overshooting</title>
+                            <desc id="fig1a-desc">Illustrative chart. The flow temperature rises to about 70 to 75 degrees Celsius and falls again in a sawtooth. A burner strip underneath shows blocks of full output and off. A thinner room-temperature line overshoots and swings around the setpoint. A dashed line marks the condensing threshold, where the return is about 55 degrees Celsius.</desc>
+                            <rect class="mod-chart-plot-bg" x="72" y="20" width="624" height="190"></rect>
+                            <line class="mod-chart-threshold" x1="72" y1="98" x2="696" y2="98"></line>
+                            <text class="mod-chart-threshold-label" x="80" y="88">≈55 °C return</text>
+                            <line class="mod-chart-setpoint" x1="72" y1="165" x2="696" y2="165"></line>
+                            <text class="mod-chart-threshold-label" x="690" y="158" text-anchor="end">Room 21 °C</text>
+                            <line class="mod-chart-axis" x1="72" y1="20" x2="72" y2="210"></line>
+                            <line class="mod-chart-axis" x1="72" y1="210" x2="696" y2="210"></line>
+                            <line class="mod-chart-tick" x1="66" y1="168" x2="72" y2="168"></line>
+                            <line class="mod-chart-tick" x1="66" y1="112" x2="72" y2="112"></line>
+                            <line class="mod-chart-tick" x1="66" y1="56" x2="72" y2="56"></line>
+                            <text class="mod-chart-label" x="60" y="174" text-anchor="end">30</text>
+                            <text class="mod-chart-label" x="60" y="118" text-anchor="end">50</text>
+                            <text class="mod-chart-label" x="60" y="62" text-anchor="end">70</text>
+                            <text class="mod-chart-axis-title" transform="translate(20 115) rotate(-90)" text-anchor="middle">
+                                <tspan x="0" dy="-0.35em">Flow temperature</tspan>
+                                <tspan x="0" dy="1.2em">(°C)</tspan>
+                            </text>
+                            <text class="mod-chart-axis-title" x="384" y="314" text-anchor="middle">Time</text>
+                            <polyline class="mod-chart-flow" points="72,162.4 130,42 175,145.6 240,44.8 285,151.2 350,42 395,148.4 460,44.8 505,151.2 570,47.6 615,140 696,50.4"></polyline>
+                            <path class="mod-chart-room" d="M72,210 C110,183 130,150 150,142.5 S175,180 190,187.5 220,145 240,138 270,185 290,192 320,148 340,139.8 370,180 390,187.5 420,146 440,138 470,184 490,190.2 520,150 540,142.5 570,178 590,183 620,155 640,147 670,158 696,160.5"></path>
+                            <rect class="mod-chart-burner-on" x="72" y="226" width="58" height="30"></rect>
+                            <rect class="mod-chart-burner-off" x="130" y="226" width="45" height="30"></rect>
+                            <rect class="mod-chart-burner-on" x="175" y="226" width="65" height="30"></rect>
+                            <rect class="mod-chart-burner-off" x="240" y="226" width="45" height="30"></rect>
+                            <rect class="mod-chart-burner-on" x="285" y="226" width="65" height="30"></rect>
+                            <rect class="mod-chart-burner-off" x="350" y="226" width="45" height="30"></rect>
+                            <rect class="mod-chart-burner-on" x="395" y="226" width="65" height="30"></rect>
+                            <rect class="mod-chart-burner-off" x="460" y="226" width="45" height="30"></rect>
+                            <rect class="mod-chart-burner-on" x="505" y="226" width="65" height="30"></rect>
+                            <rect class="mod-chart-burner-off" x="570" y="226" width="45" height="30"></rect>
+                            <rect class="mod-chart-burner-on" x="615" y="226" width="81" height="30"></rect>
+                            <text class="mod-chart-burner-label" x="72" y="274">Burner: full on / off</text>
+                        </svg>
+                    </div>
+                    <div class="mod-panel">
+                        <h3 class="mod-panel-title">Modulating control</h3>
+                        <svg class="mod-chart" viewBox="0 0 720 320" width="720" height="320" role="img" aria-labelledby="fig1b-title fig1b-desc" preserveAspectRatio="xMidYMid meet">
+                            <title id="fig1b-title">Modulating control: flow temperature rises once and holds near 45 to 50 degrees, burner at low output, room temperature flat at the setpoint</title>
+                            <desc id="fig1b-desc">Illustrative chart. The flow temperature rises once and then holds at about 45 to 50 degrees Celsius, below the dashed condensing threshold. The burner strip is a continuous bar at partial height, labelled burner at low output. A thinner room-temperature line rises smoothly and stays flat at the setpoint.</desc>
+                            <rect class="mod-chart-plot-bg" x="72" y="20" width="624" height="190"></rect>
+                            <line class="mod-chart-threshold" x1="72" y1="98" x2="696" y2="98"></line>
+                            <text class="mod-chart-threshold-label" x="80" y="88">≈55 °C return</text>
+                            <line class="mod-chart-setpoint" x1="72" y1="165" x2="696" y2="165"></line>
+                            <text class="mod-chart-threshold-label" x="690" y="158" text-anchor="end">Room 21 °C</text>
+                            <line class="mod-chart-axis" x1="72" y1="20" x2="72" y2="210"></line>
+                            <line class="mod-chart-axis" x1="72" y1="210" x2="696" y2="210"></line>
+                            <line class="mod-chart-tick" x1="66" y1="168" x2="72" y2="168"></line>
+                            <line class="mod-chart-tick" x1="66" y1="112" x2="72" y2="112"></line>
+                            <line class="mod-chart-tick" x1="66" y1="56" x2="72" y2="56"></line>
+                            <text class="mod-chart-label" x="60" y="174" text-anchor="end">30</text>
+                            <text class="mod-chart-label" x="60" y="118" text-anchor="end">50</text>
+                            <text class="mod-chart-label" x="60" y="62" text-anchor="end">70</text>
+                            <text class="mod-chart-axis-title" transform="translate(20 115) rotate(-90)" text-anchor="middle">
+                                <tspan x="0" dy="-0.35em">Flow temperature</tspan>
+                                <tspan x="0" dy="1.2em">(°C)</tspan>
+                            </text>
+                            <text class="mod-chart-axis-title" x="384" y="314" text-anchor="middle">Time</text>
+                            <path class="mod-chart-flow" d="M72,162.4 C120,150 145,128 160,120.4 S200,115.2 220,114.8 L696,116.2"></path>
+                            <path class="mod-chart-room" d="M72,205.5 C130,185 175,170 220,165 L696,165"></path>
+                            <rect class="mod-chart-burner-low" x="72" y="238" width="624" height="18"></rect>
+                            <text class="mod-chart-burner-label" x="72" y="274">Burner at low output</text>
+                        </svg>
+                    </div>
+                </div>
+                <ul class="mod-legend" aria-hidden="true">
+                    <li><span class="mod-legend-swatch"></span> Flow temperature</li>
+                    <li><span class="mod-legend-swatch mod-legend-swatch--room"></span> Room temperature</li>
+                    <li><span class="mod-legend-swatch mod-legend-swatch--dash"></span> Condensing threshold (return ≈55 °C)</li>
+                </ul>
+                <figcaption>Figure 1. Illustrative, not measured data. Room temperature is enlarged so the overshoot is visible; the numbered axis is flow temperature.</figcaption>
+            </figure>
 
-            <img src="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/images/smart-thermostats.png" alt="Smart modulating thermostats" width="703" height="450" loading="lazy">
+            <h2>Modulating control</h2>
+            <p>A modulating control talks to the boiler over <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm</a> or the manufacturer’s own bus. It does not slam the burner to the fascia maximum. It sends a flow-temperature setpoint, and it lowers that setpoint as the room approaches the comfort temperature — or as the weather warms. The boiler then runs <strong>lower and longer</strong>: cooler water, a longer firing period, and far less on/off cycling.</p>
+            <p>That is the same idea as the 2017 room-temperature graphs: an on/off thermostat overshoots and hunts, while a modulating loop settles on the setpoint. Figure 1 adds the missing piece those older drawings left out — the flow temperature and the burner — because that is what decides whether the boiler condenses.</p>
 
-            <p>Boiler manufacturers commonly now have their own modulating thermostats that are also available as smart thermostats. Vaillant has vSmart, Worcester Bosch has Wave, and so on. There are also independent smart control manufacturers such as Nest (3rd Generation) and Honeywell Evohome that produce OpenTherm compatible modulating controls.</p>
+            <h2>Why lower flow temperature matters</h2>
+            <p>A condensing boiler recovers extra heat when water vapour in the flue gas turns back to liquid on a cool heat-exchanger surface. For natural gas that needs the <strong>return</strong> water below about 55&nbsp;°C. Lower is better. The exact dew point is model-dependent; 55&nbsp;°C is the usual rule of thumb, not a laboratory certificate.</p>
+            <p>Flow and return move together. If the control keeps asking for 75&nbsp;°C flow, the return will sit well above the dew point on a typical radiator circuit. If it asks for 45–50&nbsp;°C, the return can stay in the condensing band for most of the heating season. The burner still modulates; it just does that work at a useful water temperature. More on that relationship is on <a href="/the-relationship-between-flow-temperature-and-power-output/">flow temperature and power output</a> and <a href="/boiler-energy-efficiency/">boiler energy efficiency</a>.</p>
 
-            <p>If your boiler has an OpenTherm connection then you can connect an OpenTherm compatible control. Some boilers such as Vaillant and Worcester have their own proprietary connections, for which you either use their own controls or, if they support OpenTherm modules, any OpenTherm control can be connected. An advantage of using a manufacturer’s own controls is that sometimes more information and control of the boiler can be obtained. A disadvantage of using a manufacturer’s own proprietary controls is that you could also be locking yourself into that manufacturer.</p>
+            <figure class="mod-figure" id="figure-2">
+                <svg class="mod-chart" viewBox="0 0 720 320" width="720" height="320" role="img" aria-labelledby="fig2-title fig2-desc" preserveAspectRatio="xMidYMid meet">
+                    <title id="fig2-title">Relative boiler efficiency against return water temperature, with a step down around 55 degrees Celsius</title>
+                    <desc id="fig2-desc">Illustrative curve. Relative boiler efficiency is higher on the left, while the return water is in the condensing range. Around 55 degrees Celsius the curve steps down, then flattens in the non-condensing range toward 80 degrees. No percentage values are shown.</desc>
+                    <rect class="mod-chart-plot-bg" x="80" y="36" width="600" height="194"></rect>
+                    <line class="mod-chart-threshold" x1="380" y1="36" x2="380" y2="230"></line>
+                    <line class="mod-chart-axis" x1="80" y1="36" x2="80" y2="230"></line>
+                    <line class="mod-chart-axis" x1="80" y1="230" x2="680" y2="230"></line>
+                    <line class="mod-chart-tick" x1="80" y1="230" x2="80" y2="236"></line>
+                    <line class="mod-chart-tick" x1="380" y1="230" x2="380" y2="236"></line>
+                    <line class="mod-chart-tick" x1="680" y1="230" x2="680" y2="236"></line>
+                    <text class="mod-chart-label" x="80" y="260" text-anchor="middle">30</text>
+                    <text class="mod-chart-label" x="380" y="260" text-anchor="middle">55</text>
+                    <text class="mod-chart-label" x="680" y="260" text-anchor="middle">80</text>
+                    <text class="mod-chart-axis-title" x="380" y="300" text-anchor="middle">Return water temperature (°C)</text>
+                    <text class="mod-chart-axis-title" transform="translate(26 133) rotate(-90)" text-anchor="middle">
+                        <tspan x="0" dy="-0.35em">Relative boiler</tspan>
+                        <tspan x="0" dy="1.2em">efficiency</tspan>
+                    </text>
+                    <text class="mod-chart-region" x="230" y="58" text-anchor="middle">Condensing</text>
+                    <text class="mod-chart-region" x="530" y="58" text-anchor="middle">Non-condensing</text>
+                    <path class="mod-chart-curve" d="M80,64.4 C200,68 296,73.4 344,78.8 C360,82 368,89.6 374,110 C377,122 378,128 380,131 C384,140 388,143.6 400,146 C440,150.8 560,156.2 680,159.8"></path>
+                </svg>
+                <figcaption>Figure 2. Illustrative.</figcaption>
+            </figure>
 
-            <p>For a list of OpenTherm compatible boilers see our <a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm capable boilers</a> page.</p>
+            <h2>Load compensation, weather compensation, or both</h2>
+            <p><strong>Load compensation</strong> looks at the room. The further the room is from the setpoint, the higher the flow temperature it asks for; as the room catches up, the flow target falls. It usually replaces the on/off room thermostat and needs no outdoor sensor.</p>
+            <p><strong>Weather compensation</strong> looks outside. An outdoor sensor — or, on some controls, local weather data — sets the flow temperature from a heating curve: colder air, hotter flow. It does not wait for the room to overshoot before it turns the boiler down.</p>
+            <p>The two work well together. Weather sets the ballpark flow; the room sensor trims it when the house is sunnier, fuller, or better insulated than the curve assumed. OpenTherm and most manufacturer buses can carry either, or both.</p>
+            <p>ErP energy labelling gives temperature controls a <strong>class</strong> and a percentage. That percentage is added to the <em>package</em> seasonal space-heating efficiency on the fiche and label. It is not a promise about your gas bill. The house, the radiators, the setpoints and how the system is commissioned decide what you actually use.</p>
 
-            <img src="/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/images/opentherm-logo.png" alt="OpenTherm logo" width="1350" height="452" loading="lazy">
+            <div class="article-table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Typical control</th>
+                            <th>Addition to the package label</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>V</td>
+                            <td>Modulating room thermostat (load compensation) with a modulating heater</td>
+                            <td>+3%</td>
+                        </tr>
+                        <tr>
+                            <td>VI</td>
+                            <td>Weather compensator and room sensor with a modulating heater</td>
+                            <td>+4%</td>
+                        </tr>
+                        <tr>
+                            <td>VII</td>
+                            <td>Weather compensator and room sensor with an on/off heater</td>
+                            <td>+3.5%</td>
+                        </tr>
+                        <tr>
+                            <td>VIII</td>
+                            <td>Multi-sensor room-temperature control with a modulating heater</td>
+                            <td>+5%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <p>To see more information about OpenTherm visit <a href="https://www.opentherm.eu/" rel="noopener noreferrer">opentherm.eu</a>.</p>
-            <p>Or see <a href="/opentherm/opentherm-boilers-and-controls/">what OpenTherm is</a> on our OpenTherm boilers and controls guide.</p>
+            <div class="article-callout">
+                <p>These class figures come from the EU temperature-control table used for the package label, not from measured household savings. See the 2014 Commission communication on regulations 811/2013 and 812/2013 (<a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52014XC0703(01)" rel="noopener noreferrer">CELEX 52014XC0703(01)</a>) and the energy-labelling regulation itself (<a href="https://eur-lex.europa.eu/eli/reg_del/2013/811/oj" rel="noopener noreferrer">Regulation (EU) No 811/2013</a>).</p>
+            </div>
+
+            <h2>Boiler Plus in England</h2>
+            <p>When a new gas combi is fitted in an existing home in England, <a href="/boiler-plus/">Boiler Plus</a> requires one extra measure on top of an efficient boiler and time-and-temperature control. <strong>Load compensation or weather compensation</strong> is one of those options — and it is the one that actually changes the flow temperature. The original policy is on <a href="https://www.gov.uk/government/consultations/heating-and-hot-water-boiler-plus" rel="noopener noreferrer">GOV.UK: Heating and Hot Water / Boiler Plus</a>.</p>
+
+            <h2>Compatibility</h2>
+            <p>OpenTherm is a shared two-wire protocol: in principle a control from one maker can talk to a boiler from another. In practice the standard has optional features, so you still check the pair. Some boilers take OpenTherm on the main terminals; others need a small interface module. Brand notes for <a href="/opentherm/vaillant-opentherm/">Vaillant OpenTherm</a> and <a href="/opentherm/worcester-bosch-opentherm/">Worcester Bosch OpenTherm</a> are on this site, and there is a list of <a href="/opentherm-boilers-specific/">OpenTherm compatible boilers</a>.</p>
+            <p>A manufacturer’s own bus — eBUS is the usual example — can expose more of that boiler’s menus, fault codes and extra zones. The trade-off is lock-in: you are then choosing that maker’s controls, not any OpenTherm unit. Neither path is “better” in the abstract. It depends on whether you want a free choice of control later, or deeper access to one brand.</p>
+            <p>The document that settles it is the boiler’s installation manual, not a compatibility badge on a box. Look the model up on <a href="https://boilermanuals.com/" rel="noopener noreferrer">boilermanuals.com</a> and read the control-connection section before you buy a thermostat.</p>
+
+            <h2>Next steps</h2>
+            <p>If the boiler already condenses when you turn the heating flow down, a modulating control keeps it there automatically instead of asking you to pick one number for the whole winter. If the radiators will not heat the house at a lower flow, that is a sizing, balancing or insulation problem — not a reason to stay on an on/off high-temperature loop forever.</p>
+            <ul>
+                <li><a href="/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/">Reducing the flow temperature on a condensing combi</a></li>
+                <li><a href="/energy-saving/adjust-your-system-regular-boiler-flow-temperature-for-increased-efficiency/">Adjusting flow temperature on a system or regular boiler</a></li>
+                <li><a href="/energy-saving/combi-boiler-condensing-mode-savings/">Combi boiler condensing-mode savings</a></li>
+                <li><a href="/boiler-energy-efficiency/">Boiler energy efficiency</a></li>
+                <li><a href="/opentherm/opentherm-boilers-and-controls/">OpenTherm boilers and controls</a></li>
+                <li><a href="/boiler-plus/">Boiler Plus</a></li>
+                <li><a href="/boiler-optimiser/">Boiler Optimiser</a> — log the current flow temperature and work out a cooler starting point</li>
+            </ul>
+            <p class="article-note">Guidance only. Commissioning, gas work and control wiring need a competent person. Use the current manufacturer instructions for the boiler and control in front of you.</p>
         </article>
     </div>
 
-    
-
-    
-
     <div id="site-footer"></div>
-    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
 </html>
