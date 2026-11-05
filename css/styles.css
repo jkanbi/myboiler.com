@@ -581,6 +581,33 @@
             box-sizing: border-box;
         }
 
+        /* Heading + intro in its own card, matching .article-content.
+           `body` prefix beats per-page `.article-header { margin-bottom: … }`
+           blocks that only set spacing. */
+        body .article-header,
+        body .calculators-header {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+        }
+
+        body .article-header > :last-child,
+        body .calculators-header > :last-child {
+            margin-bottom: 0;
+        }
+
+        /* Already inside a surface card (e.g. condensing-mode savings). */
+        body .calculator-card .article-header,
+        body .article-content .article-header {
+            background: none;
+            border-radius: 0;
+            box-shadow: none;
+            padding: 0;
+            margin-bottom: 0;
+        }
+
         .article-intro,
         .calculator-connector,
         .calculator-disclaimer,
