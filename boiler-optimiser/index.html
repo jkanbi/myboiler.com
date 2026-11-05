@@ -1650,8 +1650,17 @@
             display: inline-flex;
             justify-content: center;
             min-width: 8.25rem;
-            color: var(--text);
-            background: #fff;
+            color: #fff;
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        #tool-confirm-submit:hover,
+        #tool-confirm-submit:focus-visible {
+            color: #fff;
+            background: var(--accent-dark);
+            border-color: var(--accent-dark);
+            outline: none;
         }
 
         .tool-confirm-social {
