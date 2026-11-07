@@ -5,7 +5,6 @@
   <g fill="none" stroke="#1b1b1b" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
     <rect x="42" y="16" width="86" height="130" rx="12"/>
     <line x1="42" y1="108" x2="128" y2="108"/>
-    <circle cx="85" cy="137" r="13"/>
   </g>
   <g fill="#1b1b1b">
     <rect x="56" y="146" width="8" height="26" rx="1.5"/>
