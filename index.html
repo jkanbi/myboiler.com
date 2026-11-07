@@ -32,6 +32,19 @@
         .ar-chat-cta__button:focus-visible ~ .ar-chat-cta__subtext {
             display: block;
         }
+        /* Homepage-only highlight for the Boiler Optimiser card. */
+        .ar-box-pair--boiler-optimiser {
+            border: 1px solid rgba(46, 125, 80, 0.26);
+            box-shadow: var(--shadow-sm), 0 0 10px rgba(46, 125, 80, 0.10);
+        }
+        .ar-box-pair--boiler-optimiser:hover,
+        .ar-box-pair--boiler-optimiser:focus {
+            box-shadow: var(--shadow-md), 0 0 12px rgba(46, 125, 80, 0.14);
+        }
+        .ar-box-pair--boiler-optimiser:focus-visible {
+            outline: 2px solid #2e7d50;
+            outline-offset: 3px;
+        }
     </style>
     <!-- Add marked.js for markdown parsing -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -145,6 +158,11 @@
         <img src="img/energy-saving.jpg" alt="Save on heating bills" width="100" height="100">
         <span class="ar-box-pair-title">SAVE ON HEATING BILLS</span>
         <span class="ar-box-pair-text">Optimise your heating system and reduce energy costs with expert tips and advice</span>
+      </a>
+      <a class="ar-box-pair ar-box-pair--boiler-optimiser" href="/boiler-optimiser/">
+        <img src="img/combiboiler.jpg" alt="Boiler Optimiser" width="100" height="100">
+        <span class="ar-box-pair-title">Boiler Optimiser</span>
+        <span class="ar-box-pair-text">Adjust your boiler heating flow temperature and maximum heating output to match your system</span>
       </a>
       <a class="ar-box-pair" href="/heat-pump-checker/">
         <img src="img/heatpump.jpg" alt="Heat pumps" width="100" height="100">
