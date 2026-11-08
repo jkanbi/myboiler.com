@@ -1758,9 +1758,41 @@
             text-align: center;
         }
 
+        .tool-confirm-cylinder {
+            margin: 0 0 0.85rem;
+            padding: 0.65rem 0.75rem;
+            border: 2px solid #d64545;
+            border-radius: var(--radius);
+            background: #fff;
+            color: var(--text);
+            font-size: 0.875rem;
+            font-weight: 600;
+            line-height: 1.4;
+            text-align: left;
+        }
+
+        .tool-confirm-cylinder p {
+            margin: 0 0 0.55rem;
+        }
+
+        .tool-confirm-ack {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.55rem;
+            font-weight: 600;
+        }
+
+        .tool-confirm-ack input {
+            flex: 0 0 auto;
+            width: 1.1rem;
+            height: 1.1rem;
+            margin: 0.15rem 0 0;
+        }
+
         .tool-confirm.is-done .tool-confirm-fields,
         .tool-confirm.is-done .input-hint,
         .tool-confirm.is-done .tool-confirm-raise,
+        .tool-confirm.is-done .tool-confirm-cylinder,
         .tool-confirm.is-done #tool-confirm-submit,
         .tool-confirm.is-done .tool-confirm-already-wrap,
         .tool-confirm.is-done #tool-confirm-done,
@@ -2229,6 +2261,19 @@
             border-color: transparent;
             background: transparent;
             color: var(--text);
+        }
+
+        .lower-flow-note {
+            margin: 0.55rem 0 0;
+            font-size: 0.875rem;
+            font-weight: 600;
+            line-height: 1.4;
+            text-align: left;
+            color: var(--text);
+        }
+
+        .lower-flow-note[hidden] {
+            display: none;
         }
 
         .cylinder-stat-note.is-green {
@@ -3304,7 +3349,7 @@
   "description": "Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow. A cylinder still needs 60°C stored water."
 }
     </script>
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=replay-leave-1" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=legionella-ack-64" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -3498,6 +3543,7 @@
                     <button type="button" class="slider-prompt-btn" id="slider-prompt" aria-haspopup="dialog" aria-controls="slider-prompt-dialog" aria-expanded="false">Move the flow temperature slider to see the saving (click for info)</button>
                     <button type="button" class="timing-note-btn" id="timing-note" aria-haspopup="dialog" aria-controls="timing-note-dialog" aria-expanded="false" hidden>Low flow temp, takes longer to heat, uses less energy (click for info)</button>
                     <button type="button" class="cylinder-stat-note" id="cylinder-stat-note" aria-haspopup="dialog" aria-controls="cylinder-stat-dialog" aria-expanded="false" hidden>Set the cylinder thermostat to 60°C (click for info)</button>
+                    <p class="lower-flow-note" id="lower-flow-note" hidden>If you would like a lower flow on a system boiler, and your boiler allows it, you need <a href="/priority-domestic-hot-water/">priority domestic hot water</a> with weather compensation, OpenTherm, or a fixed temperature.</p>
                     <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog" hidden>Warning: Condense pipe must be correctly installed (click for info)</button>
                     <button type="button" class="priority-controls-btn" id="priority-controls-open" aria-haspopup="dialog" aria-controls="priority-controls-dialog" aria-expanded="false" hidden>Advanced System Controls can lead to automatic lower flow temperatures (click for info)</button>
                 </div>
@@ -3841,6 +3887,15 @@
                 </div>
             </div>
             <p class="tool-confirm-raise" id="tool-confirm-raise" hidden role="status">Aim lower if you can. Raising the flow temperature is worse long term: it uses more gas, is harder on the boiler, and future heating system changes may be needed.</p>
+            <div class="tool-confirm-cylinder" id="tool-confirm-cylinder" hidden>
+                <p>Legionella warning. At a flow of 64°C or lower, stored water sits below 60°C. Hot water should be stored at 60°C. Below that, legionella can survive.</p>
+                <p>Make sure your cylinder thermostat has been adjusted too. It is a separate control. Set it to 60°C.</p>
+                <p>If you would like a lower flow on a system boiler, and your boiler allows it, you need <a href="/priority-domestic-hot-water/">priority domestic hot water</a> with weather compensation, OpenTherm, or a fixed temperature.</p>
+                <div class="tool-confirm-ack">
+                    <input type="checkbox" id="tool-confirm-legionella" name="legionella-ack">
+                    <label for="tool-confirm-legionella">I have read and accept the legionella warning, and I have adjusted the cylinder thermostat.</label>
+                </div>
+            </div>
             <button type="submit" class="choice-button" id="tool-confirm-submit">Submit</button>
             <p class="tool-confirm-done" id="tool-confirm-done" hidden>Thanks. We logged that you set it.</p>
             <p class="tool-confirm-already-wrap" id="tool-confirm-already-wrap">
@@ -4009,6 +4064,7 @@
             var CYLINDER_HAZARD = 45;
             var CYLINDER_BELOW_FLOW = 5;
             var CYLINDER_STAT_MAX = 60;
+            var CYLINDER_WARN_FLOW = CYLINDER_STAT_MAX + CYLINDER_BELOW_FLOW - 1;
             var EFFICIENCY_CURVE = [
                 [10, 99.7],
                 [20, 98.3],
@@ -4334,7 +4390,7 @@
                 return 'Low 6,000, Medium 12,000 and High 20,000 kWh are typical annual bands. Choose Custom to enter the exact figure from your gas bill, in kilowatt hours (kWh), and to change the unit rate. The default unit rate is 7.97p/kWh.';
             }
 
-            function cylinderStatInfo(cylinderSet, legionellaRisk, extremeLegionella, bacteriaDying) {
+            function cylinderStatInfo(cylinderSet, legionellaRisk, extremeLegionella, bacteriaDying, flow) {
                 var note = document.createDocumentFragment();
                 function para(text) {
                     var p = document.createElement('p');
@@ -4347,6 +4403,8 @@
                     para('Extreme legionella risk between ' + LEGIONELLA_EXTREME_MIN + '°C and ' + CYLINDER_HAZARD + '°C. Stored water this cool needs pasteurisation.');
                 } else if (legionellaRisk) {
                     para('Legionella risk below ' + LEGIONELLA_STORE + '°C. Stored water this cool needs pasteurisation.');
+                } else if (flow <= CYLINDER_WARN_FLOW) {
+                    para('Legionella warning. At a flow of 64°C or lower, stored water sits below 60°C. Hot water should be stored at 60°C. Below that, legionella can survive.');
                 } else if (bacteriaDying) {
                     para('Bacteria die at this store. Growth is inhibited from ' + LEGIONELLA_STORE + '°C.');
                 }
@@ -4567,6 +4625,7 @@
                 var cylinder = cylinderTemp(flow);
                 var legionellaRisk = condensingBoiler && stored && cylinder < LEGIONELLA_STORE;
                 var extremeLegionella = legionellaRisk && cylinder >= LEGIONELLA_EXTREME_MIN && cylinder <= CYLINDER_HAZARD;
+                var legionellaWarn = condensingBoiler && stored && flow <= CYLINDER_WARN_FLOW;
                 var cylinderHint = document.getElementById('cylinder-hint');
                 var cylinderDeltaNote = document.getElementById('cylinder-delta-note');
                 var storedCampaignNote = document.getElementById('stored-campaign-note');
@@ -4578,6 +4637,8 @@
                 cylinderDeltaNote.hidden = !(condensingBoiler && stored);
                 storedCampaignNote.hidden = !(condensingBoiler && stored);
                 cylinderStatNote.hidden = !stored;
+                var lowerFlowNote = document.getElementById('lower-flow-note');
+                if (lowerFlowNote) lowerFlowNote.hidden = !(condensingBoiler && stored);
                 if (priorityControls) priorityControls.hidden = false;
                 if (condensingBoiler && stored) {
                     cylinderDeltaNote.textContent = 'The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow, and no hotter than ' + CYLINDER_STAT_MAX + '°C. The gap can be higher than that.';
@@ -4587,12 +4648,12 @@
                     var cylinderSet = cylinder + '°C' + (cylinderStatCapped(flow) ? ' max' : '');
                     cylinderStatNote.textContent = extremeLegionella
                         ? 'Extreme Legionella Warning ' + cylinder + '°C (click for info)'
-                        : (legionellaRisk
+                        : (legionellaWarn
                             ? 'Legionella Warning ' + cylinder + '°C (click for info)'
                             : 'Set the cylinder thermostat to ' + cylinderSet + ' (click for info)');
                     cylinderStatNote.className = 'cylinder-stat-note' + (extremeLegionella
                         ? ' is-extreme'
-                        : (legionellaRisk
+                        : (legionellaWarn
                             ? ' is-warn'
                             : (currentBand.key === 'green' ? ' is-green'
                                 : (bacteriaDying ? ' is-amber'
@@ -4821,7 +4882,7 @@
                         + ' On a combi, this is the radiator flow. Tap and shower temperature stays as it is. Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow by 5°C. You can lower it again at any time. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow can sit lower.'
                         + flowSave;
                 } else {
-                    flowCopy = 'Set the heating flow to ' + target + '°C so the stored water stays hot enough. Change the cylinder thermostat to ' + cylinderTemp(target) + '°C as well. It is a separate control on the cylinder. Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow by 5°C. You can lower it again at any time. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow can sit lower.'
+                    flowCopy = 'Set the heating flow to ' + target + '°C so the stored water stays hot enough. Change the cylinder thermostat to ' + cylinderTemp(target) + '°C as well. It is a separate control on the cylinder. If you would like a lower flow on a system boiler, and your boiler allows it, you need priority domestic hot water with weather compensation, OpenTherm, or a fixed temperature. Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow by 5°C. You can lower it again at any time. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow can sit lower.'
                         + flowSave;
                 }
                 appendNote('Flow temperature', flowCopy, 'note-flow');
@@ -4848,10 +4909,10 @@
                 var cylinderStatNotesLink = document.getElementById('cylinder-stat-notes-link');
                 if (stored) {
                     var cylinderSetNote = cylinder + '°C' + (cylinderStatCapped(flow) ? ' max' : '');
-                    var cylinderStatStep = appendNote('Cylinder thermostat', cylinderStatInfo(cylinderSetNote, legionellaRisk, extremeLegionella, bacteriaDying), 'note-cylinder-stat');
+                    var cylinderStatStep = appendNote('Cylinder thermostat', cylinderStatInfo(cylinderSetNote, legionellaRisk, extremeLegionella, bacteriaDying, flow), 'note-cylinder-stat');
                     if (cylinderStatCopy) {
                         cylinderStatCopy.textContent = '';
-                        cylinderStatCopy.appendChild(cylinderStatInfo(cylinderSetNote, legionellaRisk, extremeLegionella, bacteriaDying));
+                        cylinderStatCopy.appendChild(cylinderStatInfo(cylinderSetNote, legionellaRisk, extremeLegionella, bacteriaDying, flow));
                     }
                     if (cylinderStatNotesLink) {
                         cylinderStatNotesLink.textContent = 'Notes, Keys and Information [' + cylinderStatStep + '.]';
@@ -5204,6 +5265,41 @@
             var confirmRateInput = document.getElementById('confirm-rate');
             var confirmBrandInput = document.getElementById('confirm-brand');
             var confirmRaiseNote = document.getElementById('tool-confirm-raise');
+            var confirmCylinderNote = document.getElementById('tool-confirm-cylinder');
+            var confirmLegionella = document.getElementById('tool-confirm-legionella');
+            window.mbSyncConfirmCylinderNote = function () {
+                if (!confirmCylinderNote || !setFlowInput || !confirmSystemInput) return;
+                var nowSet = Number(setFlowInput.value);
+                var stored = confirmSystemInput.value === 'system';
+                var show = stored &&
+                    setFlowInput.value.trim() !== '' &&
+                    isFinite(nowSet) &&
+                    nowSet <= CYLINDER_WARN_FLOW;
+                if (!show) {
+                    confirmCylinderNote.hidden = true;
+                    if (confirmLegionella) {
+                        confirmLegionella.checked = false;
+                        confirmLegionella.required = false;
+                        if (typeof confirmLegionella.setCustomValidity === 'function') confirmLegionella.setCustomValidity('');
+                    }
+                    return;
+                }
+                confirmCylinderNote.hidden = false;
+                if (confirmLegionella) {
+                    confirmLegionella.required = true;
+                    if (!confirmLegionella.checked && typeof confirmLegionella.setCustomValidity === 'function') {
+                        confirmLegionella.setCustomValidity('Confirm you have read the legionella warning and adjusted the cylinder thermostat.');
+                    }
+                }
+            };
+            if (confirmLegionella) {
+                confirmLegionella.addEventListener('change', function () {
+                    if (typeof confirmLegionella.setCustomValidity !== 'function') return;
+                    confirmLegionella.setCustomValidity(confirmLegionella.checked
+                        ? ''
+                        : 'Confirm you have read the legionella warning and adjusted the cylinder thermostat.');
+                });
+            }
             window.mbSyncConfirmRaiseNote = function () {
                 if (!fromFlowInput || !setFlowInput) return;
                 var was = Number(fromFlowInput.value);
@@ -5229,11 +5325,15 @@
             if (setFlowInput) setFlowInput.addEventListener('input', markConfirmEdited);
             if (fromFlowInput) fromFlowInput.addEventListener('input', window.mbSyncConfirmRaiseNote);
             if (setFlowInput) setFlowInput.addEventListener('input', window.mbSyncConfirmRaiseNote);
+            if (setFlowInput) setFlowInput.addEventListener('input', window.mbSyncConfirmCylinderNote);
             if (confirmKwhInput) confirmKwhInput.addEventListener('input', markConfirmEdited);
             if (confirmRateInput) confirmRateInput.addEventListener('input', markConfirmEdited);
             if (confirmBrandInput) confirmBrandInput.addEventListener('change', markConfirmEdited);
             var confirmSystemInput = document.getElementById('confirm-system');
-            if (confirmSystemInput) confirmSystemInput.addEventListener('change', markConfirmEdited);
+            if (confirmSystemInput) {
+                confirmSystemInput.addEventListener('change', markConfirmEdited);
+                confirmSystemInput.addEventListener('change', window.mbSyncConfirmCylinderNote);
+            }
 
             flowInput.addEventListener('input', function () {
                 flowSlider.classList.remove('is-hinting');

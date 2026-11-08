@@ -366,6 +366,17 @@
                 return;
             }
             if (typeof setInput.setCustomValidity === 'function') setInput.setCustomValidity('');
+            var legionellaNote = document.getElementById('tool-confirm-cylinder');
+            var legionellaAck = document.getElementById('tool-confirm-legionella');
+            if (legionellaNote && !legionellaNote.hidden && legionellaAck && !legionellaAck.checked) {
+                if (typeof legionellaAck.setCustomValidity === 'function') {
+                    legionellaAck.setCustomValidity('Confirm you have read the legionella warning and adjusted the cylinder thermostat.');
+                }
+                if (typeof legionellaAck.reportValidity === 'function') legionellaAck.reportValidity();
+                else legionellaAck.focus();
+                return;
+            }
+            if (legionellaAck && typeof legionellaAck.setCustomValidity === 'function') legionellaAck.setCustomValidity('');
             submitted = true;
             var brandLabel = '';
             var selected = brandInput.options[brandInput.selectedIndex];
