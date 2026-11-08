@@ -654,8 +654,8 @@
             padding-bottom: var(--flow-pad-bottom);
             --track-size: 0.7rem;
             --thumb-size: 2.75rem;
-            --thumb-pct: 0.727;
-            --red-stop: calc(var(--thumb-size) / 2 + (40 / 55) * (100% - var(--thumb-size)));
+            --thumb-pct: 0.786;
+            --red-stop: calc(var(--thumb-size) / 2 + (55 / 70) * (100% - var(--thumb-size)));
         }
 
         .flow-thumb-cluster {
@@ -2123,9 +2123,9 @@
             height: 10px;
             border-radius: 999px;
             background: linear-gradient(to right,
-                #d64545 0 36.36%,
-                #2f9e44 36.36% 54.55%,
-                #e6a817 54.55% var(--red-stop),
+                #d64545 0 50%,
+                #2f9e44 50% 64.29%,
+                #e6a817 64.29% var(--red-stop),
                 #d64545 var(--red-stop) 100%);
             outline: none;
         }
@@ -2134,9 +2134,9 @@
             height: 10px;
             border-radius: 999px;
             background: linear-gradient(to right,
-                #d64545 0 36.36%,
-                #2f9e44 36.36% 54.55%,
-                #e6a817 54.55% var(--red-stop),
+                #d64545 0 50%,
+                #2f9e44 50% 64.29%,
+                #e6a817 64.29% var(--red-stop),
                 #d64545 var(--red-stop) 100%);
         }
 
@@ -2263,19 +2263,6 @@
             color: var(--text);
         }
 
-        .lower-flow-note {
-            margin: 0.55rem 0 0;
-            font-size: 0.875rem;
-            font-weight: 600;
-            line-height: 1.4;
-            text-align: left;
-            color: var(--text);
-        }
-
-        .lower-flow-note[hidden] {
-            display: none;
-        }
-
         .cylinder-stat-note.is-green {
             background: #eaf7ee;
             border-color: #2f9e44;
@@ -2364,17 +2351,17 @@
         .input-slider.flow-combi,
         .input-slider.flow-combi::-webkit-slider-runnable-track {
             background: linear-gradient(to right,
-                #2f9e44 0 54.55%,
-                #e6a817 54.55% var(--red-stop),
+                #2f9e44 0 64.29%,
+                #e6a817 64.29% var(--red-stop),
                 #d64545 var(--red-stop) 100%);
         }
 
         .input-slider.flow-cylinder,
         .input-slider.flow-cylinder::-webkit-slider-runnable-track {
             background: linear-gradient(to right,
-                #d64545 0 36.36%,
-                #e6a817 36.36% 54.55%,
-                #2f9e44 54.55% var(--red-stop),
+                #d64545 0 50%,
+                #e6a817 50% 64.29%,
+                #2f9e44 64.29% var(--red-stop),
                 #d64545 var(--red-stop) 100%);
         }
 
@@ -3349,7 +3336,7 @@
   "description": "Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow. A cylinder still needs 60°C stored water."
 }
     </script>
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=legionella-ack-64" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=flow-min-20" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -3537,13 +3524,12 @@
                         <span class="flow-slider-arrow" aria-hidden="true">👆🏼</span>
                         <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
                     </span>
-                    <input type="range" id="flow-temp" class="input-slider" min="35" max="90" step="1" value="75" aria-label="Flow temperature" aria-describedby="slider-prompt">
+                    <input type="range" id="flow-temp" class="input-slider" min="20" max="90" step="1" value="75" aria-label="Flow temperature" aria-describedby="slider-prompt">
                 </div>
                 <div class="slider-notes">
                     <button type="button" class="slider-prompt-btn" id="slider-prompt" aria-haspopup="dialog" aria-controls="slider-prompt-dialog" aria-expanded="false">Move the flow temperature slider to see the saving (click for info)</button>
                     <button type="button" class="timing-note-btn" id="timing-note" aria-haspopup="dialog" aria-controls="timing-note-dialog" aria-expanded="false" hidden>Low flow temp, takes longer to heat, uses less energy (click for info)</button>
                     <button type="button" class="cylinder-stat-note" id="cylinder-stat-note" aria-haspopup="dialog" aria-controls="cylinder-stat-dialog" aria-expanded="false" hidden>Set the cylinder thermostat to 60°C (click for info)</button>
-                    <p class="lower-flow-note" id="lower-flow-note" hidden>If you would like a lower flow on a system boiler, and your boiler allows it, you need <a href="/priority-domestic-hot-water/">priority domestic hot water</a> with weather compensation, OpenTherm, or a fixed temperature.</p>
                     <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog" hidden>Warning: Condense pipe must be correctly installed (click for info)</button>
                     <button type="button" class="priority-controls-btn" id="priority-controls-open" aria-haspopup="dialog" aria-controls="priority-controls-dialog" aria-expanded="false" hidden>Advanced System Controls can lead to automatic lower flow temperatures (click for info)</button>
                 </div>
@@ -3705,7 +3691,7 @@
                     </div>
                     <p class="calculated-hint" id="custom-flow-hint">Leave blank for 75°C, or type the flow it is already set to.</p>
                     <div class="unit-rate-field starting-flow-field">
-                        <input type="number" id="custom-initial-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" aria-labelledby="starting-flow-title">
+                        <input type="number" id="custom-initial-flow" class="input-field" inputmode="numeric" min="20" max="90" step="1" aria-labelledby="starting-flow-title">
                         <span class="input-label" aria-hidden="true">°C</span>
                     </div>
                     <button type="button" class="choice-button custom-usage-done" id="starting-flow-done">Done</button>
@@ -3751,8 +3737,8 @@
         <div id="bill-state" hidden>
             <input type="number" id="annual-kwh" inputmode="decimal" min="0" step="1" value="12000" tabindex="-1" aria-hidden="true">
             <input type="number" id="unit-rate" inputmode="decimal" min="0" step="0.01" value="7.97" tabindex="-1" aria-hidden="true">
-            <input type="number" id="initial-flow" inputmode="numeric" min="35" max="90" step="1" tabindex="-1" aria-hidden="true">
-            <input type="number" id="final-flow" inputmode="numeric" min="35" max="90" step="1" value="75" tabindex="-1" aria-hidden="true">
+            <input type="number" id="initial-flow" inputmode="numeric" min="20" max="90" step="1" tabindex="-1" aria-hidden="true">
+            <input type="number" id="final-flow" inputmode="numeric" min="20" max="90" step="1" value="75" tabindex="-1" aria-hidden="true">
             <div id="space-heating-kwh">—</div>
         </div>
 
@@ -3860,14 +3846,14 @@
                 <div class="tool-confirm-field">
                     <label class="input-label" for="from-flow">Flow Temp was</label>
                     <div class="tool-confirm-row">
-                        <input type="number" id="from-flow" class="input-field" inputmode="numeric" min="35" max="90" step="1" placeholder="xx" required autocomplete="off">
+                        <input type="number" id="from-flow" class="input-field" inputmode="numeric" min="20" max="90" step="1" placeholder="xx" required autocomplete="off">
                         <span class="tool-confirm-unit" aria-hidden="true">°C</span>
                     </div>
                 </div>
                 <div class="tool-confirm-field">
                     <label class="input-label" for="set-flow">Flow temp now</label>
                     <div class="tool-confirm-row">
-                        <input type="number" id="set-flow" class="input-field" inputmode="numeric" min="35" max="75" step="1" placeholder="xx" required autocomplete="off">
+                        <input type="number" id="set-flow" class="input-field" inputmode="numeric" min="20" max="75" step="1" placeholder="xx" required autocomplete="off">
                         <span class="tool-confirm-unit" aria-hidden="true">°C</span>
                     </div>
                 </div>
@@ -4637,8 +4623,6 @@
                 cylinderDeltaNote.hidden = !(condensingBoiler && stored);
                 storedCampaignNote.hidden = !(condensingBoiler && stored);
                 cylinderStatNote.hidden = !stored;
-                var lowerFlowNote = document.getElementById('lower-flow-note');
-                if (lowerFlowNote) lowerFlowNote.hidden = !(condensingBoiler && stored);
                 if (priorityControls) priorityControls.hidden = false;
                 if (condensingBoiler && stored) {
                     cylinderDeltaNote.textContent = 'The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow, and no hotter than ' + CYLINDER_STAT_MAX + '°C. The gap can be higher than that.';
@@ -4882,7 +4866,7 @@
                         + ' On a combi, this is the radiator flow. Tap and shower temperature stays as it is. Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow by 5°C. You can lower it again at any time. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow can sit lower.'
                         + flowSave;
                 } else {
-                    flowCopy = 'Set the heating flow to ' + target + '°C so the stored water stays hot enough. Change the cylinder thermostat to ' + cylinderTemp(target) + '°C as well. It is a separate control on the cylinder. If you would like a lower flow on a system boiler, and your boiler allows it, you need priority domestic hot water with weather compensation, OpenTherm, or a fixed temperature. Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow by 5°C. You can lower it again at any time. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow can sit lower.'
+                    flowCopy = 'Set the heating flow to ' + target + '°C so the stored water stays hot enough. Change the cylinder thermostat to ' + cylinderTemp(target) + '°C as well. It is a separate control on the cylinder. Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow by 5°C. You can lower it again at any time. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow can sit lower.'
                         + flowSave;
                 }
                 appendNote('Flow temperature', flowCopy, 'note-flow');
@@ -5312,7 +5296,7 @@
                 if (confirmRaiseNote) confirmRaiseNote.hidden = !raising;
                 var maxNow = 75;
                 if (fromFlowInput.value.trim() !== '' && isFinite(was) && was < maxNow) {
-                    maxNow = Math.max(35, Math.round(was));
+                    maxNow = Math.max(20, Math.round(was));
                 }
                 setFlowInput.max = String(maxNow);
                 if (typeof setFlowInput.setCustomValidity === 'function') {
@@ -5372,10 +5356,7 @@
             }
             function syncSliderToStartingFlow(celsius) {
                 var next = String(clampFlow(celsius));
-                if (flowInput.value !== next) {
-                    flowInput.value = next;
-                    flowSlider.classList.remove('is-hinting');
-                }
+                if (flowInput.value !== next) flowInput.value = next;
                 flowWas = Number(next);
                 flowTouched = true;
                 if (finalFlowInput) syncUnfocused(finalFlowInput, next);
@@ -5529,8 +5510,8 @@
                 }
                 var fromFlow = fromInput ? Number(fromInput.value) : NaN;
                 var setFlow = setInput ? Number(setInput.value) : NaN;
-                var hasFrom = isFinite(fromFlow) && fromFlow >= 35 && fromFlow <= 90;
-                var hasSet = isFinite(setFlow) && setFlow >= 35 && setFlow <= 75;
+                var hasFrom = isFinite(fromFlow) && fromFlow >= 20 && fromFlow <= 90;
+                var hasSet = isFinite(setFlow) && setFlow >= 20 && setFlow <= 75;
                 var text = '@myboiler I turned the heating flow down';
                 if (hasFrom && hasSet) {
                     text = '@myboiler I turned the heating flow down from ' + Math.round(fromFlow) + '°C to ' + Math.round(setFlow) + '°C';
