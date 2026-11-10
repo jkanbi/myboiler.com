@@ -29,8 +29,8 @@
     if (window.__mbOptimiserInit) return;
     window.__mbOptimiserInit = true;
     var onOptimiserTool = path === '/boiler-optimiser';
-    /* Google Ads: only /boiler-optimiser/ and pages under it. Not site-wide. */
-    var onGadsPage = path === '/boiler-optimiser' || path.indexOf('/boiler-optimiser/') === 0;
+    /* Google Ads: only /boiler-optimiser/, pages under it, and the advance power output page. Not site-wide. */
+    var onGadsPage = path === '/boiler-optimiser' || path.indexOf('/boiler-optimiser/') === 0 || path === '/boiler-optimiser-advance-power-output';
 
     function gtag() {
         window.dataLayer.push(arguments);
