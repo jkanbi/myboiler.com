@@ -12,6 +12,9 @@
     var UTM_SAFE = /^[A-Za-z0-9_.-]{1,64}$/;
     var PIXEL_ID = 'nvyf0';
     var xLoaded = false;
+    var GADS_CONTAINER = 'GTM-MZ3KLJGZ';
+    var GADS_KEY = 'mb_optimiser_gads';
+    var gadsLoaded = false;
     var pageviewSent = false;
     var DID_IT_WORK_TIPS = {
         yes: 'Great. If you have a condensing boiler, try the next step down, about 5°C lower.',
@@ -26,6 +29,24 @@
     if (window.__mbOptimiserInit) return;
     window.__mbOptimiserInit = true;
     var onOptimiserTool = path === '/boiler-optimiser';
+    /* Google Ads: only /boiler-optimiser/ and pages under it. Not site-wide. */
+    var onGadsPage = path === '/boiler-optimiser' || path.indexOf('/boiler-optimiser/') === 0;
+
+    function gtag() {
+        window.dataLayer.push(arguments);
+    }
+
+    if (onGadsPage) {
+        /* Consent Mode v2 defaults, set before the Google container can load. */
+        window.dataLayer = window.dataLayer || [];
+        gtag('consent', 'default', {
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            analytics_storage: 'denied'
+        });
+        gtag('set', 'ads_data_redaction', true);
+    }
     var DEDUPE_MS = 2000;
 
     function ready(fn) {
@@ -409,6 +430,12 @@
                 props.space_kwh = numericAttr(form, 'data-space-kwh');
             }
             capture('optimiser_flow_turned_down', props);
+            pushGadsTurndown({
+                optimiser_brand: brandKey,
+                optimiser_system: systemKey,
+                optimiser_from_flow: fromFlow,
+                optimiser_set_flow: setFlow
+            });
             sendStore({
                 t: Date.now(),
                 type: 'turned_down',
@@ -676,6 +703,7 @@
 
     function startFullMode() {
         loadXPixel();
+        loadGoogleAds();
         loadSnippet();
         if (!window.posthog || typeof window.posthog.init !== 'function') return;
         if (window.posthog.__loaded || window.posthog._i && window.posthog._i.length) {
@@ -765,6 +793,77 @@
         Object.keys(names).forEach(expireNamedCookie);
     }
 
+    function gadsAccepted() {
+        if (storedChoice() !== 'accepted') return false;
+        try {
+            return localStorage.getItem(GADS_KEY) === '1';
+        } catch (err) {
+            return false;
+        }
+    }
+
+    function storeGadsChoice(accepted) {
+        try {
+            if (accepted) localStorage.setItem(GADS_KEY, '1');
+            else localStorage.removeItem(GADS_KEY);
+        } catch (err) { /* private mode */ }
+    }
+
+    function loadGoogleAds() {
+        if (!onGadsPage || gadsLoaded || !gadsAccepted()) return;
+        gadsLoaded = true;
+        gtag('consent', 'update', {
+            ad_storage: 'granted',
+            ad_user_data: 'granted',
+            ad_personalization: 'granted'
+        });
+        gtag('js', new Date());
+        window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var el = document.createElement('script');
+        el.async = true;
+        el.setAttribute('data-cfasync', 'false');
+        el.src = 'https://www.googletagmanager.com/gtm.js?id=' + GADS_CONTAINER;
+        var first = document.getElementsByTagName('script')[0];
+        if (first && first.parentNode) first.parentNode.insertBefore(el, first);
+        else (document.head || document.documentElement).appendChild(el);
+    }
+
+    function disableGoogleAds() {
+        storeGadsChoice(false);
+        if (!onGadsPage) return;
+        gtag('consent', 'update', {
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            analytics_storage: 'denied'
+        });
+        try {
+            document.cookie.split(';').forEach(function (part) {
+                var name = part.split('=')[0].trim();
+                if (!name || (name.indexOf('_gcl_') !== 0 && name.indexOf('_gac_') !== 0)) return;
+                expireNamedCookie(name);
+                var labels = (location.hostname || '').split('.');
+                for (var i = 1; i < labels.length - 1; i++) {
+                    var domain = '.' + labels.slice(i).join('.');
+                    try {
+                        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;Max-Age=0;domain=' + domain;
+                    } catch (err) {}
+                }
+            });
+        } catch (err) { /* ignore */ }
+    }
+
+    /* Google Ads conversion hook: GTM Custom Event trigger "optimiser_turndown". */
+    function pushGadsTurndown(params) {
+        if (!onGadsPage) return;
+        var data = { event: 'optimiser_turndown' };
+        var key;
+        for (key in params) {
+            if (Object.prototype.hasOwnProperty.call(params, key) && params[key] !== null && params[key] !== '') data[key] = params[key];
+        }
+        window.dataLayer.push(data);
+    }
+
     function loadXPixel() {
         if (xLoaded) return;
         xLoaded = true;
@@ -835,6 +934,7 @@
         }
         clearPhStorage();
         disableXPixel();
+        disableGoogleAds();
     }
 
     function storedChoice() {
@@ -933,7 +1033,7 @@
         banner.setAttribute('aria-label', 'Optional cookies');
         banner.innerHTML =
             '<div class="optimiser-consent__inner">' +
-                '<p class="optimiser-consent__text">Optional cookies for PostHog analytics and X ads. Nothing is set unless you accept.</p>' +
+                '<p class="optimiser-consent__text">' + (onGadsPage ? 'Optional cookies for PostHog analytics, X ads and Google Ads.' : 'Optional cookies for PostHog analytics and X ads.') + ' Nothing is set unless you accept.</p>' +
                 '<div class="optimiser-consent__actions">' +
                     '<button type="button" class="optimiser-consent__accept">Accept</button>' +
                     '<button type="button" class="optimiser-consent__decline">Opt out</button>' +
@@ -944,6 +1044,7 @@
         document.documentElement.classList.add('optimiser-consent-open');
         banner.querySelector('.optimiser-consent__accept').addEventListener('click', function () {
             storeChoice('accepted');
+            if (onGadsPage) storeGadsChoice(true);
             hideBanner(banner);
             startFullMode();
         });
@@ -1001,6 +1102,8 @@
         var choiceMade = storedChoice();
         if (choiceMade === 'accepted') {
             startFullMode();
+            /* Accepted before Google Ads was added: ask again before loading Google. */
+            if (onGadsPage && !gadsAccepted() && !sessionDismissed()) showBanner();
         } else if (choiceMade !== 'declined' && !sessionDismissed()) {
             showBanner();
         }
