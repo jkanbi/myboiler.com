@@ -801,6 +801,37 @@
             width: 100%;
         }
 
+        @media (max-width: 700px) {
+            #flow-card .flow-slider.is-pinned {
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 30;
+                width: auto;
+                box-sizing: border-box;
+                margin: 0;
+                --flow-pad-bottom: calc(3.85rem + env(safe-area-inset-bottom, 0px));
+                padding-left: calc(clamp(20px, 5vw, 40px) + 1.25rem);
+                padding-right: calc(clamp(20px, 5vw, 40px) + 1.25rem);
+                background: var(--surface);
+                border-top: 1px solid var(--border);
+                box-shadow: 0 -8px 20px rgba(15, 23, 42, 0.08);
+            }
+
+            html.optimiser-consent-open #flow-card .flow-slider.is-pinned {
+                bottom: 4.75rem;
+            }
+
+            body:has(#flow-card .flow-slider.is-pinned) {
+                padding-bottom: calc(5.6rem + env(safe-area-inset-bottom, 0px));
+            }
+
+            html.optimiser-consent-open body:has(#flow-card .flow-slider.is-pinned) {
+                padding-bottom: calc(10.35rem + env(safe-area-inset-bottom, 0px));
+            }
+        }
+
         #flow-card .boiler-plant {
             padding-right: 7.5rem;
         }
@@ -3519,7 +3550,7 @@
                         </svg>
                     </div>
                 </div>
-                <div class="flow-slider is-hinting">
+                <div class="flow-slider is-hinting is-pinned">
                     <span class="flow-thumb-cluster">
                         <span class="flow-slider-arrow" aria-hidden="true">👆🏼</span>
                         <span class="flow-thumb-value" id="flow-thumb-value">75°C</span>
@@ -5319,11 +5350,18 @@
                 confirmSystemInput.addEventListener('change', window.mbSyncConfirmCylinderNote);
             }
 
+            function releaseFlowPin() {
+                if (flowSlider.classList.contains('is-hinting')) return;
+                flowSlider.classList.remove('is-pinned');
+            }
             flowInput.addEventListener('input', function () {
                 flowSlider.classList.remove('is-hinting');
                 flowTouched = true;
                 update();
             });
+            flowInput.addEventListener('change', releaseFlowPin);
+            flowInput.addEventListener('pointerup', releaseFlowPin);
+            flowInput.addEventListener('pointercancel', releaseFlowPin);
             annualInput.addEventListener('input', function () {
                 annualTouched = annualInput.value.trim() !== '';
                 var typed = nonNegativeOrNull(annualInput);
@@ -5349,6 +5387,7 @@
                 if (flowInput.value !== next) {
                     flowInput.value = next;
                     flowSlider.classList.remove('is-hinting');
+                    flowSlider.classList.remove('is-pinned');
                     flowTouched = true;
                 }
                 if (commit && finalFlowInput) finalFlowInput.value = next;
