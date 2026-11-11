@@ -97,7 +97,7 @@ async function brandState(page) {
     if (html.indexOf('<!-- Deep link: ?system=combi|system|non-condensing&brand=vaillant -->') === -1) {
         fail('source-comment', 'missing deep-link HTML comment');
     } else pass('source-comment');
-    if (!/data-stamp="2026-11-11 [^"]* · 44"/.test(html)) fail('source-stamp', 'expected Version 44 on 11 November 2026');
+    if (!/data-stamp="2026-11-11 [^"]* · 45"/.test(html)) fail('source-stamp', 'expected Version 45 on 11 November 2026');
     else pass('source-stamp');
 
     const server = await startServer();
