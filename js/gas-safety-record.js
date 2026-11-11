@@ -674,6 +674,20 @@
         return 'LGSR-' + c + '-' + d + '.pdf';
     }
 
+    function pad2(n) {
+        return String(n).padStart(2, '0');
+    }
+
+    function autoCertificateNo(when) {
+        var d = when || new Date();
+        return String(d.getFullYear()) + pad2(d.getMonth() + 1) + pad2(d.getDate()) + '-' +
+            pad2(d.getHours()) + pad2(d.getMinutes()) + pad2(d.getSeconds());
+    }
+
+    function resolveCertificateNo() {
+        return val('certificate-no') || autoCertificateNo();
+    }
+
     async function generatePdf() {
         if (typeof PDFLib === 'undefined') {
             throw new Error('PDF library did not load.');
@@ -701,8 +715,9 @@
         var combNa;
         var rate;
         var combFields;
+        var certNo = resolveCertificateNo();
 
-        drawCell(page, font, lib, val('certificate-no'), BOX.certificateNo, { maxSize: 10, align: 'left' });
+        drawCell(page, font, lib, certNo, BOX.certificateNo, { maxSize: 10, align: 'left' });
         drawParagraph(page, font, lib, val('eng-company'), BOX.engineerCompany, 8);
         drawCell(page, font, lib, val('eng-town'), BOX.engineerTown, { maxSize: 8, align: 'left' });
         drawCell(page, font, lib, val('eng-postcode'), BOX.engineerPostcode, { maxSize: 8, align: 'left' });
@@ -791,7 +806,7 @@
         await drawSignature(page, pdfDoc, lib, document.getElementById('eng-sig'), BOX.engSig);
         await drawSignature(page, pdfDoc, lib, document.getElementById('recv-sig'), BOX.recvSig);
 
-        return pdfDoc.save();
+        return { bytes: await pdfDoc.save(), certNo: certNo };
     }
 
     function downloadBytes(bytes, name) {
@@ -807,7 +822,6 @@
     }
 
     function validateGenerate() {
-        if (!val('certificate-no')) return 'Enter a certificate number.';
         if (!val('inspection-date')) return 'Enter the inspection date.';
         if (!checked('eng-confirm')) return 'Confirm that you are a Gas Safe registered engineer responsible for this record.';
         if (!canvasHasInk(document.getElementById('eng-sig'))) return 'Draw the engineer signature.';
@@ -883,8 +897,10 @@
         saveEngineer();
         generateBtn.disabled = true;
         setStatus('Building the PDF on this device…');
-        generatePdf().then(function (bytes) {
-            downloadBytes(bytes, fileName(val('certificate-no'), val('inspection-date')));
+        generatePdf().then(function (result) {
+            var certEl = document.getElementById('certificate-no');
+            if (certEl && !String(certEl.value || '').trim()) certEl.value = result.certNo;
+            downloadBytes(result.bytes, fileName(result.certNo, val('inspection-date')));
             setStatus('Saved. Check your downloads. Nothing was uploaded.');
         }).catch(function (e) {
             setStatus(e.message || 'Could not build the PDF.', true);

@@ -183,12 +183,17 @@
             color: var(--text);
         }
 
-        .field .hint {
-            margin: 0;
+        .field .hint,
+        .wizard-step > .hint {
+            margin: 0 0 1rem;
             font-size: 0.8125rem;
             line-height: 1.45;
             color: var(--text-muted);
             font-weight: 400;
+        }
+
+        .field .hint {
+            margin: 0;
         }
 
         .field input,
@@ -445,10 +450,11 @@
 
                 <section class="wizard-step" data-step-id="certificate">
                     <h2>Certificate</h2>
+                    <p class="hint">Certificate number is optional. If you leave it blank, a number is filled in automatically when the PDF is generated (the local date and time, for example 20261111-164530).</p>
                     <div class="field-grid">
                         <div class="field">
                             <label for="certificate-no">Certificate number</label>
-                            <input id="certificate-no" name="certificateNo" maxlength="24" required>
+                            <input id="certificate-no" name="certificateNo" maxlength="24">
                         </div>
                         <div class="field">
                             <label for="inspection-date">Inspection date</label>
