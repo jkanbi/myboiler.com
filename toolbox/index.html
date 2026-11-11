@@ -129,6 +129,47 @@
             text-decoration: underline;
         }
 
+        .toolbox-feature {
+            display: block;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.25rem, 3vw, 1.75rem);
+            margin: 0 0 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .toolbox-feature:hover,
+        .toolbox-feature:focus {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
+        }
+
+        .toolbox-feature__kicker {
+            margin: 0 0 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: var(--accent);
+        }
+
+        .toolbox-feature__title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text);
+            margin: 0 0 0.45rem;
+        }
+
+        .toolbox-feature__text {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
         #calculators {
             scroll-margin-top: 5.5rem;
         }
@@ -213,6 +254,12 @@
             <p class="toolbox-search__empty" id="toolbox-empty" hidden>No tools match that search.</p>
         </header>
 
+        <a class="toolbox-feature" href="/toolbox/gas-safety-record-generator/">
+            <p class="toolbox-feature__kicker">Gas safety</p>
+            <h2 class="toolbox-feature__title">Landlord Gas Safety Record (CP12)</h2>
+            <p class="toolbox-feature__text">Free in-browser generator for Gas Safe registered engineers. Your entries stay on this device.</p>
+        </a>
+
         <div class="toolbox-sections">
             <section class="toolbox-section" aria-labelledby="toolbox-vaillant">
                 <h2 class="toolbox-section__title" id="toolbox-vaillant">Vaillant</h2>
@@ -262,6 +309,7 @@
             <section class="toolbox-section" aria-labelledby="toolbox-misc">
                 <h2 class="toolbox-section__title" id="toolbox-misc">Misc</h2>
                 <ul class="toolbox-section__list">
+                    <li><a href="/toolbox/gas-safety-record-generator/">Landlord Gas Safety Record (CP12)</a></li>
                     <li><a href="/heating-expansion-vessel-calculator/">Heating expansion vessel calculator</a></li>
                     <li><a href="/inhibitor-dosing/">Inhibitor Dosing</a></li>
                     <li><a href="/how-to/repair-a-thermostatic-radiator-valve-trv-not-working-with-trv-pin-stuck/">TRV pin stuck — how to free it</a></li>
