@@ -380,7 +380,7 @@
                 var raiseNote = document.getElementById('tool-confirm-raise');
                 if (raiseNote) raiseNote.hidden = false;
                 if (typeof setInput.setCustomValidity === 'function') {
-                    setInput.setCustomValidity('Set the flow to ' + Math.round(fromFlow) + '°C or lower.');
+                    setInput.setCustomValidity('Set the flow temperature to ' + Math.round(fromFlow) + '°C or lower.');
                 }
                 if (typeof setInput.reportValidity === 'function') setInput.reportValidity();
                 else setInput.focus();
