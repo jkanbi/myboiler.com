@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
     <title>Boiler Optimiser - MyBoiler</title>
-    <meta name="description" content="Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow. A cylinder still needs 60°C stored water.">
+    <meta name="description" content="Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow temperature. A cylinder still needs 60°C stored water.">
     <link rel="canonical" href="https://myboiler.com/boiler-optimiser/">
     <link rel="stylesheet" type="text/css" href="/css/styles.css?v=header-card">
     <style>
@@ -3333,10 +3333,10 @@
     "name": "MyBoiler.com",
     "url": "https://myboiler.com/"
   },
-  "description": "Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow. A cylinder still needs 60°C stored water."
+  "description": "Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow temperature. A cylinder still needs 60°C stored water."
 }
     </script>
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=gads-1" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=gads-2" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -3375,7 +3375,7 @@
                 <div class="standard-note" id="standard-note" hidden>
                     <p>A non-condensing boiler cannot be optimised in the same way as a condensing boiler. Any saving from a lower flow temperature is much smaller than on a modern condensing boiler.</p>
                     <ul>
-                        <li>Dropping the flow from about 80°C to 70°C may save a little.</li>
+                        <li>Dropping the flow temperature from about 80°C to 70°C may save a little.</li>
                         <li>Taking it toward 60°C or below can become risky, depending on the boiler and the system.</li>
                     </ul>
                     <p>What still helps:</p>
@@ -3617,7 +3617,7 @@
                             </div>
                             <div>
                                 <h4>If it freezes</h4>
-                                <p>Warm it from the ground with a hot-water bottle or warm water — not boiling, and not a flame. Then press reset on the boiler. Turning the flow back up can get you through a cold night, but you lose the saving. Ask a Gas Safe engineer to lag it properly, or run it indoors.</p>
+                                <p>Warm it from the ground with a hot-water bottle or warm water — not boiling, and not a flame. Then press reset on the boiler. Turning the flow temperature back up can get you through a cold night, but you lose the saving. Ask a Gas Safe engineer to lag it properly, or run it indoors.</p>
                             </div>
                         </div>
                         <button type="button" class="choice-button custom-usage-done" id="condensate-warning-done">Done</button>
@@ -3689,7 +3689,7 @@
                         </div>
                         <button type="button" class="custom-usage-close" id="starting-flow-close" aria-label="Close">&times;</button>
                     </div>
-                    <p class="calculated-hint" id="custom-flow-hint">Leave blank for 75°C, or type the flow it is already set to.</p>
+                    <p class="calculated-hint" id="custom-flow-hint">Leave blank for 75°C, or type the flow temperature it is already set to.</p>
                     <div class="unit-rate-field starting-flow-field">
                         <input type="number" id="custom-initial-flow" class="input-field" inputmode="numeric" min="20" max="90" step="1" aria-labelledby="starting-flow-title">
                         <span class="input-label" aria-hidden="true">°C</span>
@@ -3806,8 +3806,8 @@
         </details>
 
         <form class="tool-confirm" id="tool-confirm">
-            <p class="input-label">Have you successfully turned the heating flow down? Come back here and let us know.</p>
-            <span class="input-hint">Choose the boiler brand and type, then what the flow was and what you set it to. Add annual kWh and unit rate if you know them. We log this anonymously.</span>
+            <p class="input-label">Have you successfully turned the heating flow temperature down? Come back here and let us know.</p>
+            <span class="input-hint">Choose the boiler brand and type, then what the flow temperature was and what you set it to. Add annual kWh and unit rate if you know them. We log this anonymously.</span>
             <div class="tool-confirm-fields">
                 <div class="tool-confirm-field">
                     <label class="input-label" for="confirm-brand">Boiler brand</label>
@@ -3874,9 +3874,9 @@
             </div>
             <p class="tool-confirm-raise" id="tool-confirm-raise" hidden role="status">Aim lower if you can. Raising the flow temperature is worse long term: it uses more gas, is harder on the boiler, and future heating system changes may be needed.</p>
             <div class="tool-confirm-cylinder" id="tool-confirm-cylinder" hidden>
-                <p>Legionella warning. At a flow of 64°C or lower, stored water sits below 60°C. Hot water should be stored at 60°C. Below that, legionella can survive.</p>
+                <p>Legionella warning. At a flow temperature of 64°C or lower, stored water sits below 60°C. Hot water should be stored at 60°C. Below that, legionella can survive.</p>
                 <p>Make sure your cylinder thermostat has been adjusted too. It is a separate control. Set it to 60°C.</p>
-                <p>If you would like a lower flow on a system boiler, and your boiler allows it, you need <a href="/priority-domestic-hot-water/">priority domestic hot water</a> with weather compensation, OpenTherm, or a fixed temperature.</p>
+                <p>If you would like a lower flow temperature on a system boiler, and your boiler allows it, you need <a href="/priority-domestic-hot-water/">priority domestic hot water</a> with weather compensation, OpenTherm, or a fixed temperature.</p>
                 <div class="tool-confirm-ack">
                     <input type="checkbox" id="tool-confirm-legionella" name="legionella-ack">
                     <label for="tool-confirm-legionella">I have read and accept the legionella warning, and I have adjusted the cylinder thermostat.</label>
@@ -3900,7 +3900,7 @@
             <div class="tool-confirm-social">
                 <p class="tool-confirm-social-label">Or let us know on x.com or Facebook</p>
                 <div class="tool-confirm-social-btns">
-                    <a class="choice-button tool-confirm-x-btn" id="tool-confirm-x" href="https://x.com/intent/post?text=%40myboiler%20I%20turned%20the%20heating%20flow%20down" target="_blank" rel="noopener noreferrer" aria-label="Message @myboiler on X">
+                    <a class="choice-button tool-confirm-x-btn" id="tool-confirm-x" href="https://x.com/intent/post?text=%40myboiler%20I%20turned%20the%20heating%20flow%20temperature%20down" target="_blank" rel="noopener noreferrer" aria-label="Message @myboiler on X">
                         <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z"/></svg>
                         @myboiler
                     </a>
@@ -3912,14 +3912,14 @@
             </div>
         </form>
         <div class="calculator-card heat-pump-cta" id="heat-pump-cta" hidden>
-            <p>If this flow is keeping the house warm in peak winter, a heat pump may suit this system without many changes. <span id="heat-pump-size"></span></p>
+            <p>If this flow temperature is keeping the house warm in peak winter, a heat pump may suit this system without many changes. <span id="heat-pump-size"></span></p>
             <a id="heat-pump-checker-link" href="/heat-pump-checker/">Check heat pump suitability</a>
         </div>
         <details class="calculator-card fold" id="tool-results">
             <summary class="card-title">Notes, Keys and Information</summary>
             <ol class="plan-list" id="plan"></ol>
             <div id="notes-card">
-                <p class="return-note" id="cylinder-delta-note" hidden>The cylinder is assumed to sit 5°C below the flow, and no hotter than 60°C. The gap can be higher than that.</p>
+                <p class="return-note" id="cylinder-delta-note" hidden>The cylinder is assumed to sit 5°C below the flow temperature, and no hotter than 60°C. The gap can be higher than that.</p>
                 <p class="return-note" id="stored-campaign-note" hidden>Public campaigns usually cover combi boilers only, because stored hot water has to stay hot enough.</p>
             </div>
             <figure class="efficiency-figure" id="note-5-figure">
@@ -3956,7 +3956,7 @@
         </details>
 
         <p class="tool-disclaimer">This tool is in development. We accept no responsibility for issues that arise from these adjustments. Some systems are not installed correctly and may cause problems, especially where the condensate pipe is incorrectly installed or not insulated.</p>
-        <p class="tool-version" data-stamp="2026-11-03 06:03 · 43">Last updated 3 Nov 2026 · Version 43</p>
+        <p class="tool-version" data-stamp="2026-11-11 06:03 · 44">Last updated 11 November 2026 · Version 44</p>
     </div>
 
     <div id="site-footer"></div>
@@ -3969,7 +3969,7 @@
             var stamp = versionEl && (versionEl.getAttribute('data-stamp') || versionEl.textContent);
             var match = stamp && String(stamp).trim().match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T]\d{2}:\d{2})?\s*·\s*(\d+)$/);
             if (versionEl && match) {
-                var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
                 versionEl.textContent = 'Last updated ' + parseInt(match[3], 10) + ' ' + months[parseInt(match[2], 10) - 1] + ' ' + match[1] + ' · Version ' + match[4];
             }
         })();
@@ -4347,7 +4347,7 @@
 
             function graphNote() {
                 var note = document.createDocumentFragment();
-                note.appendChild(document.createTextNode('Graph efficiency is read from this curve. Return is taken as 20°C under the flow. Dew point is 54°C return. The figures are gross, and include latent heat once the return is below dew point. The energy class applies the EU space-heating bands in Annex II of '));
+                note.appendChild(document.createTextNode('Graph efficiency is read from this curve. Return is taken as 20°C under the flow temperature. Dew point is 54°C return. The figures are gross, and include latent heat once the return is below dew point. The energy class applies the EU space-heating bands in Annex II of '));
                 var law = document.createElement('a');
                 law.href = 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32013R0811';
                 law.target = '_blank';
@@ -4360,7 +4360,7 @@
 
             function methodNote() {
                 var note = document.createDocumentFragment();
-                note.appendChild(document.createTextNode('The saving is from the starting flow (75°C unless you change the starting flow temperature) to the flow you choose. Raise the flow above that starting point and the figure is negative — extra gas, shown in red. The form at the bottom of the page is separate: that is only for telling us what you actually set on the boiler. The return is taken as 20°C under the flow. Radiator output is compared with a standard catalogue radiator in a 20°C room. The saving uses the same efficiency curve as the '));
+                note.appendChild(document.createTextNode('The saving is from the starting flow temperature (75°C unless you change the starting flow temperature) to the flow temperature you choose. Raise the flow temperature above that starting point and the figure is negative — extra gas, shown in red. The form at the bottom of the page is separate: that is only for telling us what you actually set on the boiler. The return is taken as 20°C under the flow temperature. Radiator output is compared with a standard catalogue radiator in a 20°C room. The saving uses the same efficiency curve as the '));
                 note.appendChild(linkEl('/energy-saving/combi-boiler-condensing-mode-savings/', 'condensing-mode calculator'));
                 note.appendChild(document.createTextNode('. That curve is the graph below. Standing charge is not included. See '));
                 note.appendChild(linkEl('/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/', 'how to lower flow temperature'));
@@ -4384,13 +4384,13 @@
                     note.appendChild(p);
                 }
                 para('Set the cylinder thermostat to ' + cylinderSet + '. It is a separate control on the cylinder.');
-                para('The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow, and no hotter than ' + CYLINDER_STAT_MAX + '°C. The gap can be higher than that.');
+                para('The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow temperature, and no hotter than ' + CYLINDER_STAT_MAX + '°C. The gap can be higher than that.');
                 if (extremeLegionella) {
                     para('Extreme legionella risk between ' + LEGIONELLA_EXTREME_MIN + '°C and ' + CYLINDER_HAZARD + '°C. Stored water this cool needs pasteurisation.');
                 } else if (legionellaRisk) {
                     para('Legionella risk below ' + LEGIONELLA_STORE + '°C. Stored water this cool needs pasteurisation.');
                 } else if (flow <= CYLINDER_WARN_FLOW) {
-                    para('Legionella warning. At a flow of 64°C or lower, stored water sits below 60°C. Hot water should be stored at 60°C. Below that, legionella can survive.');
+                    para('Legionella warning. At a flow temperature of 64°C or lower, stored water sits below 60°C. Hot water should be stored at 60°C. Below that, legionella can survive.');
                 } else if (bacteriaDying) {
                     para('Bacteria die at this store. Growth is inhibited from ' + LEGIONELLA_STORE + '°C.');
                 }
@@ -4402,8 +4402,8 @@
                 var note = document.createDocumentFragment();
                 var intro = document.createElement('p');
                 intro.textContent = stored
-                    ? 'This slider is one knob for the whole system. A cylinder usually keeps that flow high, around 70°C, so the radiators never sit in the best condensing band. Weather compensation, priority hot water, Smart TRVs, and some boiler setups can split the jobs, so heating can run cooler and you save more.'
-                    : 'This slider is a fixed flow for the heating circuit. Weather compensation, OpenTherm or the maker’s own modulating control, and Smart TRVs, can lower demand or the flow as the house warms, so you save more than a fixed setting.';
+                    ? 'This slider is one knob for the whole system. A cylinder usually keeps that flow temperature high, around 70°C, so the radiators never sit in the best condensing band. Weather compensation, priority hot water, Smart TRVs, and some boiler setups can split the jobs, so heating can run cooler and you save more.'
+                    : 'This slider is a fixed flow temperature for the heating circuit. Weather compensation, OpenTherm or the maker’s own modulating control, and Smart TRVs, can lower demand or the flow temperature as the house warms, so you save more than a fixed setting.';
                 note.appendChild(intro);
                 var list = document.createElement('ul');
                 function addPoint(label, nodes) {
@@ -4417,21 +4417,21 @@
                     list.appendChild(li);
                 }
                 addPoint('Weather compensation', [
-                    ' — an outdoor sensor turns the flow down as the weather gets milder. That only works well if the heating curve is set for your home.'
+                    ' — an outdoor sensor turns the flow temperature down as the weather gets milder. That only works well if the heating curve is set for your home.'
                 ]);
                 addPoint('OpenTherm', [
-                    ' — a load-compensating thermostat talks to the boiler and lowers the flow as rooms warm up. Some boilers use the maker’s own modulating control instead. A plain on/off room stat cannot. See ',
+                    ' — a load-compensating thermostat talks to the boiler and lowers the flow temperature as rooms warm up. Some boilers use the maker’s own modulating control instead. A plain on/off room stat cannot. See ',
                     linkEl('/smart-heating/modulating-a-rated-boilers-with-smart-modulating-thermostats/', 'modulating controls'),
                     '.'
                 ]);
                 addPoint('Smart TRVs', [
-                    ' — heads on each radiator cut heat in rooms that are warm enough. With a compatible smart thermostat they can also help the boiler run a lower flow when only a few rooms need heat. See ',
+                    ' — heads on each radiator cut heat in rooms that are warm enough. With a compatible smart thermostat they can also help the boiler run a lower flow temperature when only a few rooms need heat. See ',
                     linkEl('/best-radiator-valves-and-thermostat-radiator-valves-trv/', 'radiator valves and TRVs'),
                     '.'
                 ]);
                 if (stored) {
                     addPoint('PDHW', [
-                        ' — priority domestic hot water. The cylinder call takes a short, hot reheat (about 70–80°C). Heating then runs at a lower condensing flow, typically 45–55°C. See ',
+                        ' — priority domestic hot water. The cylinder call takes a short, hot reheat (about 70–80°C). Heating then runs at a lower condensing flow temperature, typically 45–55°C. See ',
                         linkEl('/priority-domestic-hot-water/', 'priority domestic hot water'),
                         '.'
                     ]);
@@ -4445,7 +4445,7 @@
 
             function controlsNote(stored) {
                 var note = document.createDocumentFragment();
-                note.appendChild(document.createTextNode('A fixed flow temperature is the manual version. Smart thermostats, OpenTherm controls, and a manufacturer’s own modulating control can lower the flow on their own as the room warms up, and turn the burner down with it. '));
+                note.appendChild(document.createTextNode('A fixed flow temperature is the manual version. Smart thermostats, OpenTherm controls, and a manufacturer’s own modulating control can lower the flow temperature on their own as the room warms up, and turn the burner down with it. '));
                 if (stored) {
                     note.appendChild(document.createTextNode('With stored hot water, the control also has to know the cylinder temperature, or the store never reaches about 60°C. '));
                     note.appendChild(linkEl('/priority-domestic-hot-water/', 'PDHW'));
@@ -4625,7 +4625,7 @@
                 cylinderStatNote.hidden = !stored;
                 if (priorityControls) priorityControls.hidden = false;
                 if (condensingBoiler && stored) {
-                    cylinderDeltaNote.textContent = 'The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow, and no hotter than ' + CYLINDER_STAT_MAX + '°C. The gap can be higher than that.';
+                    cylinderDeltaNote.textContent = 'The cylinder is assumed to sit ' + CYLINDER_BELOW_FLOW + '°C below the flow temperature, and no hotter than ' + CYLINDER_STAT_MAX + '°C. The gap can be higher than that.';
                 }
                 var bacteriaDying = condensingBoiler && stored && currentBand.key === 'amber';
                 if (stored) {
@@ -4850,23 +4850,23 @@
                 } else if (setupAside) {
                     setupAside.hidden = true;
                 }
-                var flowSave = ' The saving figure uses a starting flow of 75°C, unless you change the starting flow temperature.';
+                var flowSave = ' The saving figure uses a starting flow temperature of 75°C, unless you change the starting flow temperature.';
                 var flowCopy;
                 if (!condensingBoiler) {
                     flowCopy = target === flow
-                        ? 'Leave the heating flow at ' + flow + '°C. That is already a reasonably low setting. If a room is short of heat, raise it by 5°C.'
-                        : 'Set the heating flow to about ' + target + '°C. That is a reasonably low setting, well under a factory 75–80°C. If a room does not reach temperature, raise the flow by 5°C.'
+                        ? 'Leave the heating flow temperature at ' + flow + '°C. That is already a reasonably low setting. If a room is short of heat, raise it by 5°C.'
+                        : 'Set the heating flow temperature to about ' + target + '°C. That is a reasonably low setting, well under a factory 75–80°C. If a room does not reach temperature, raise the flow temperature by 5°C.'
                         + (storesHotWater()
                             ? ' Keep it high enough for stored hot water at about 60°C. Change the cylinder thermostat to ' + cylinder + '°C as well.'
-                            : ' On a combi, this is the radiator flow. Tap and shower temperature stays as it is.');
+                            : ' On a combi, this is the radiator flow temperature. Tap and shower temperature stays as it is.');
                 } else if (!storesHotWater()) {
                     flowCopy = (target === flow
-                        ? 'Leave the heating flow at ' + flow + '°C.'
-                        : 'Set the heating flow to ' + target + '°C.')
-                        + ' On a combi, this is the radiator flow. Tap and shower temperature stays as it is. Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow by 5°C. You can lower it again at any time. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow can sit lower.'
+                        ? 'Leave the heating flow temperature at ' + flow + '°C.'
+                        : 'Set the heating flow temperature to ' + target + '°C.')
+                        + ' On a combi, this is the radiator flow temperature. Tap and shower temperature stays as it is. Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow temperature by 5°C. You can lower it again at any time. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow temperature can sit lower.'
                         + flowSave;
                 } else {
-                    flowCopy = 'Set the heating flow to ' + target + '°C so the stored water stays hot enough. Change the cylinder thermostat to ' + cylinderTemp(target) + '°C as well. It is a separate control on the cylinder. Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow by 5°C. You can lower it again at any time. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow can sit lower.'
+                    flowCopy = 'Set the heating flow temperature to ' + target + '°C so the stored water stays hot enough. Change the cylinder thermostat to ' + cylinderTemp(target) + '°C as well. It is a separate control on the cylinder. Radiators will feel cooler, and the house may take longer to warm up. Try a setting for a few days. If a room stays cold, or the house is draughty, raise the flow temperature by 5°C. You can lower it again at any time. Keep it a little higher if anyone is vulnerable to a cool room, and in the coldest weather. In spring and autumn the flow temperature can sit lower.'
                         + flowSave;
                 }
                 appendNote('Flow temperature', flowCopy, 'note-flow');
@@ -4939,14 +4939,14 @@
                 setAside('custom-space-heating-aside', spaceStep);
                 var customFlowStep = appendNote(
                     'Change starting flow temperature',
-                    'This is only a custom starting point for the saving figure. It is not the “what the flow was” form at the bottom of the page — that form is for telling us what you actually changed on the boiler. Leave it blank to compare against a factory 75°C. If someone has already set yours to 65°C, put 65 here so the saving is from that amount. Raise the flow above this starting point and the figure is negative — extra cost.',
+                    'This is only a custom starting point for the saving figure. It is not the “what the flow temperature was” form at the bottom of the page — that form is for telling us what you actually changed on the boiler. Leave it blank to compare against a factory 75°C. If someone has already set yours to 65°C, put 65 here so the saving is from that amount. Raise the flow temperature above this starting point and the figure is negative — extra cost.',
                     'note-custom-flow'
                 );
                 setAside('custom-flow-aside', customFlowStep);
                 appendNote('How this is worked out', methodNote());
                 appendNote('Smart & Modulating Controls', controlsNote(storesHotWater()));
                 var powerNote = document.createDocumentFragment();
-                powerNote.appendChild(document.createTextNode('The heating output is a separate setting from the flow. Use '));
+                powerNote.appendChild(document.createTextNode('The heating output is a separate setting from the flow temperature. Use '));
                 powerNote.appendChild(linkEl('/boiler-optimiser-advance-power-output/', 'Boiler Optimisation — Power output'));
                 powerNote.appendChild(document.createTextNode(' if you have a calculated heat loss.'));
                 appendNote('Heating output', powerNote);
@@ -5301,7 +5301,7 @@
                 setFlowInput.max = String(maxNow);
                 if (typeof setFlowInput.setCustomValidity === 'function') {
                     setFlowInput.setCustomValidity(raising
-                        ? 'Set the flow to ' + Math.round(was) + '°C or lower.'
+                        ? 'Set the flow temperature to ' + Math.round(was) + '°C or lower.'
                         : '');
                 }
             };
@@ -5512,14 +5512,14 @@
                 var setFlow = setInput ? Number(setInput.value) : NaN;
                 var hasFrom = isFinite(fromFlow) && fromFlow >= 20 && fromFlow <= 90;
                 var hasSet = isFinite(setFlow) && setFlow >= 20 && setFlow <= 75;
-                var text = '@myboiler I turned the heating flow down';
+                var text = '@myboiler I turned the heating flow temperature down';
                 if (hasFrom && hasSet) {
-                    text = '@myboiler I turned the heating flow down from ' + Math.round(fromFlow) + '°C to ' + Math.round(setFlow) + '°C';
+                    text = '@myboiler I turned the heating flow temperature down from ' + Math.round(fromFlow) + '°C to ' + Math.round(setFlow) + '°C';
                     if (brandLabel) {
-                        text = '@myboiler I turned the ' + brandLabel + ' heating flow down from ' + Math.round(fromFlow) + '°C to ' + Math.round(setFlow) + '°C';
+                        text = '@myboiler I turned the ' + brandLabel + ' heating flow temperature down from ' + Math.round(fromFlow) + '°C to ' + Math.round(setFlow) + '°C';
                     }
                 } else if (brandLabel) {
-                    text = '@myboiler I turned the ' + brandLabel + ' heating flow down';
+                    text = '@myboiler I turned the ' + brandLabel + ' heating flow temperature down';
                 }
                 return 'https://x.com/intent/post?text=' + encodeURIComponent(text);
             }
