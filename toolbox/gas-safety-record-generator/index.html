@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landlord Gas Safety Record (CP12) generator | MyBoiler</title>
+    <meta name="description" content="Free Landlord Gas Safety Record (CP12) generator. Fills Form v3.2 in your browser. For Gas Safe registered engineers. Nothing is uploaded.">
+    <link rel="canonical" href="https://myboiler.com/toolbox/gas-safety-record-generator/">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?v=header-card">
+    <style>
+        .article-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .article-container {
+            flex: 1;
+            padding: clamp(2rem, 5vw, 4rem) clamp(20px, 5vw, 40px);
+            margin: 0 auto;
+            width: 100%;
+            max-width: var(--max-width, 1024px);
+            box-sizing: border-box;
+        }
+
+        .article-header {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-kicker {
+            margin: 0 0 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .article-kicker a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-kicker a:hover {
+            text-decoration: underline;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0 0 0.75rem;
+        }
+
+        .article-updated {
+            margin: 0;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .article-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+            overflow-wrap: break-word;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 0 0 0.75rem;
+            line-height: 1.2;
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-callout {
+            background: var(--bg);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            margin: 0 0 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .article-callout p {
+            margin: 0 0 0.75rem;
+        }
+
+        .article-callout p:last-child {
+            margin: 0;
+        }
+
+        .article-note {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+        }
+
+        .wizard-status {
+            margin: 0 0 1.5rem;
+        }
+
+        .wizard-step-label {
+            margin: 0 0 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .wizard-bar {
+            height: 6px;
+            border-radius: 999px;
+            background: var(--border);
+            overflow: hidden;
+        }
+
+        .wizard-bar-fill {
+            height: 100%;
+            width: 10%;
+            background: var(--accent);
+            border-radius: 999px;
+            transition: width 0.2s ease;
+        }
+
+        .wizard-step[hidden] {
+            display: none !important;
+        }
+
+        .field-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.9rem 1rem;
+            margin: 0 0 0.5rem;
+        }
+
+        .field-grid--one {
+            grid-template-columns: 1fr;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            min-width: 0;
+        }
+
+        .field--wide {
+            grid-column: 1 / -1;
+        }
+
+        .field label,
+        .check-label {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .field .hint {
+            margin: 0;
+            font-size: 0.8125rem;
+            line-height: 1.45;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            font-family: var(--font);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            box-sizing: border-box;
+            min-height: 44px;
+        }
+
+        .field textarea {
+            min-height: 5.5rem;
+            resize: vertical;
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .check-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            margin: 0.5rem 0 1rem;
+        }
+
+        .check-row input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 0.15rem;
+            flex: 0 0 auto;
+        }
+
+        .check-label {
+            font-weight: 500;
+            line-height: 1.45;
+        }
+
+        .choice-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .choice-row label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.55rem 0.85rem;
+            border: 1.5px solid var(--border);
+            border-radius: 999px;
+            background: var(--bg);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            min-height: 44px;
+            box-sizing: border-box;
+        }
+
+        .choice-row input {
+            margin: 0;
+        }
+
+        .sig-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .sig-pad {
+            width: 100%;
+            height: 140px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            background: #fff;
+            touch-action: none;
+            cursor: crosshair;
+            display: block;
+        }
+
+        .sig-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .text-btn {
+            border: 0;
+            background: none;
+            color: var(--accent);
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.25rem 0;
+        }
+
+        .text-btn:hover {
+            text-decoration: underline;
+        }
+
+        .wizard-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.75rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .wizard-btn {
+            padding: 0.85rem 1.35rem;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            min-height: 44px;
+            line-height: 1.3;
+            box-sizing: border-box;
+            border: 1.5px solid transparent;
+        }
+
+        .wizard-btn--primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(24, 99, 220, 0.25);
+        }
+
+        .wizard-btn--primary:hover,
+        .wizard-btn--primary:focus {
+            background: var(--accent-dark);
+        }
+
+        .wizard-btn--primary:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .wizard-btn--secondary {
+            background: var(--surface);
+            color: var(--text);
+            border-color: var(--border);
+        }
+
+        .wizard-btn--secondary:hover,
+        .wizard-btn--secondary:focus {
+            border-color: var(--accent);
+        }
+
+        .status-msg {
+            margin: 1rem 0 0;
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+        }
+
+        .status-msg.is-error {
+            color: #8a1f11;
+        }
+
+        .appliance-block h3 {
+            font-size: 1.125rem;
+            margin: 1.25rem 0 0.75rem;
+        }
+
+        noscript p {
+            margin: 0;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: var(--radius);
+        }
+
+        @media (max-width: 640px) {
+            .article-container {
+                padding: 1.25rem 16px;
+            }
+
+            .field-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wizard-btn {
+                width: 100%;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Landlord Gas Safety Record (CP12) generator",
+  "url": "https://myboiler.com/toolbox/gas-safety-record-generator/",
+  "dateModified": "2026-11-11",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MyBoiler.com",
+    "url": "https://myboiler.com/"
+  },
+  "description": "Free Landlord Gas Safety Record (CP12) generator. Fills Form v3.2 in your browser. For Gas Safe registered engineers. Nothing is uploaded."
+}
+    </script>
+</head>
+<body class="article-page">
+    <div class="menu-overlay"></div>
+    <div class="nav-mega-backdrop" aria-hidden="true"></div>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/img/myboiler-logo-light.svg" alt="MyBoiler Logo" width="200" height="44" class="light-mode-logo js-theme-logo">
+            <img src="/img/myboiler-logo-dark.svg" alt="MyBoiler Logo" width="200" height="44" class="dark-mode-logo js-theme-logo">
+        </a>
+        <div class="tagline">Smarter Heating &amp; Hot Water</div>
+        <div class="right-header-items">
+            <button class="hamburger-menu" onclick="toggleMenu()" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu"></nav>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <header class="article-header">
+            <p class="article-kicker"><a href="/toolbox/">Toolbox</a></p>
+            <h1 class="article-title">Landlord Gas Safety Record (CP12)</h1>
+            <p class="article-intro">A free Landlord Gas Safety Record (CP12) generator. It fills a one-page LGSR (Form v3.2) in your browser. Only a Gas Safe registered engineer may carry out the checks and issue the record. The engineer who signs it is responsible for its accuracy.</p>
+            <p class="article-updated">Updated 11 November 2026</p>
+        </header>
+
+        <article class="article-content">
+            <div class="article-callout">
+                <p>Your answers never leave this device. The page does not upload the form, store customer data, or send analytics about what you type. You may optionally keep your own engineer details in this browser.</p>
+                <p>This tool is for Gas Safe registered engineers. It does not make MyBoiler.com, or anyone named on this site, a Gas Safe registered business.</p>
+            </div>
+
+            <noscript>
+                <p>This generator needs JavaScript to fill the PDF in your browser. Nothing is uploaded.</p>
+            </noscript>
+
+            <form id="lgsr-form" autocomplete="on">
+                <div class="wizard-status">
+                    <p class="wizard-step-label" id="wizard-step-label">Step 1 of 10 — Certificate</p>
+                    <div class="wizard-bar" aria-hidden="true"><div class="wizard-bar-fill" id="wizard-bar-fill"></div></div>
+                </div>
+
+                <section class="wizard-step" data-step-id="certificate">
+                    <h2>Certificate</h2>
+                    <div class="field-grid">
+                        <div class="field">
+                            <label for="certificate-no">Certificate number</label>
+                            <input id="certificate-no" name="certificateNo" maxlength="24" required>
+                        </div>
+                        <div class="field">
+                            <label for="inspection-date">Inspection date</label>
+                            <input id="inspection-date" name="inspectionDate" type="date" required>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="wizard-step" data-step-id="engineer" hidden>
+                    <h2>Engineer and company</h2>
+                    <p class="hint">These details print in the engineer block, Gas Safe number, licence (ID card) number, and FGA fields.</p>
+                    <div class="field-grid">
+                        <div class="field field--wide">
+                            <label for="eng-company">Company name and address</label>
+                            <textarea id="eng-company" name="engCompany" rows="3"></textarea>
+                        </div>
+                        <div class="field">
+                            <label for="eng-town">Town / city</label>
+                            <input id="eng-town" name="engTown" autocomplete="address-level2">
+                        </div>
+                        <div class="field">
+                            <label for="eng-postcode">Postcode</label>
+                            <input id="eng-postcode" name="engPostcode" autocomplete="postal-code">
+                        </div>
+                        <div class="field">
+                            <label for="eng-phone">Phone</label>
+                            <input id="eng-phone" name="engPhone" type="tel" autocomplete="tel">
+                        </div>
+                        <div class="field">
+                            <label for="eng-gassafe">Gas Safe number</label>
+                            <input id="eng-gassafe" name="engGasSafe" maxlength="12" autocomplete="off">
+                        </div>
+                        <div class="field">
+                            <label for="eng-licence">Licence (ID card) number</label>
+                            <input id="eng-licence" name="engLicence" maxlength="16" autocomplete="off">
+                        </div>
+                        <div class="field">
+                            <label for="eng-fga-sn">FGA serial number</label>
+                            <input id="eng-fga-sn" name="engFgaSn" autocomplete="off">
+                        </div>
+                        <div class="field">
+                            <label for="eng-fga-cal">FGA calibration due date</label>
+                            <input id="eng-fga-cal" name="engFgaCal" type="date">
+                        </div>
+                    </div>
+                    <div class="check-row">
+                        <input type="checkbox" id="eng-remember" name="engRemember">
+                        <label class="check-label" for="eng-remember">Remember my engineer details on this device. Customer and installation details are never stored.</label>
+                    </div>
+                </section>
+
+                <section class="wizard-step" data-step-id="property" hidden>
+                    <h2>Installation and client</h2>
+                    <div class="field-grid">
+                        <div class="field field--wide">
+                            <label for="install-address">Installation address</label>
+                            <textarea id="install-address" name="installAddress" rows="3"></textarea>
+                        </div>
+                        <div class="field">
+                            <label for="install-ref">Reference</label>
+                            <input id="install-ref" name="installRef">
+                        </div>
+                        <div class="field field--wide">
+                            <label for="client-details">Client / landlord details</label>
+                            <textarea id="client-details" name="clientDetails" rows="4" placeholder="Name, address, and any other client details that belong on the record"></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="wizard-step" data-step-id="count" hidden>
+                    <h2>How many appliances?</h2>
+                    <p>The record has five appliance rows. Combustion analysis columns cover appliances 1 to 4.</p>
+                    <div class="field">
+                        <label for="appliance-count">Number of appliances</label>
+                        <select id="appliance-count" name="applianceCount">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                </section>
+
+                <div id="appliance-steps"></div>
+
+                <section class="wizard-step" data-step-id="checks" hidden>
+                    <h2>Installation checks</h2>
+                    <div class="field-grid">
+                        <div class="field">
+                            <label for="check-tested">Number of appliances tested</label>
+                            <input id="check-tested" name="checkTested">
+                            <p class="hint">Filled from the appliance count. You can still type a different figure if you need to.</p>
+                        </div>
+                        <div class="field">
+                            <label for="check-ecv">ECV accessible</label>
+                            <select id="check-ecv" name="checkEcv">
+                                <option value="">Select</option>
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="check-bonding">Equipotential bonding</label>
+                            <select id="check-bonding" name="checkBonding">
+                                <option value="">Select</option>
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="check-pipework">Pipework visual</label>
+                            <select id="check-pipework" name="checkPipework">
+                                <option value="">Select</option>
+                                <option value="Pass">Pass</option>
+                                <option value="Fail">Fail</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="check-tightness">Gas tightness</label>
+                            <select id="check-tightness" name="checkTightness">
+                                <option value="">Select</option>
+                                <option value="Pass">Pass</option>
+                                <option value="Fail">Fail</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="check-pass">Installation pass</label>
+                            <select id="check-pass" name="checkPass">
+                                <option value="">Select</option>
+                                <option value="Pass">Pass</option>
+                                <option value="Fail">Fail</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="wizard-step" data-step-id="defects" hidden>
+                    <h2>Defects, labels, warnings and notes</h2>
+                    <p>Up to five lines. Unused lines are greyed on the PDF.</p>
+                    <div class="field-grid field-grid--one">
+                        <div class="field"><label for="defect-1">Line 1</label><input id="defect-1" name="defect1" maxlength="120"></div>
+                        <div class="field"><label for="defect-2">Line 2</label><input id="defect-2" name="defect2" maxlength="120"></div>
+                        <div class="field"><label for="defect-3">Line 3</label><input id="defect-3" name="defect3" maxlength="120"></div>
+                        <div class="field"><label for="defect-4">Line 4</label><input id="defect-4" name="defect4" maxlength="120"></div>
+                        <div class="field"><label for="defect-5">Line 5</label><input id="defect-5" name="defect5" maxlength="120"></div>
+                    </div>
+                </section>
+
+                <section class="wizard-step" data-step-id="alarms" hidden>
+                    <h2>Safety alarms</h2>
+                    <h3 class="appliance-block">Carbon monoxide alarm</h3>
+                    <div class="field-grid">
+                        <div class="field">
+                            <label for="co-fitted">Fitted</label>
+                            <select id="co-fitted" name="coFitted">
+                                <option value="">Select</option>
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="co-date">Date</label>
+                            <input id="co-date" name="coDate" type="date">
+                        </div>
+                        <div class="field">
+                            <label for="co-location">Location</label>
+                            <input id="co-location" name="coLocation">
+                        </div>
+                        <div class="field">
+                            <label for="co-working">Working</label>
+                            <select id="co-working" name="coWorking">
+                                <option value="">Select</option>
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </div>
+                    </div>
+                    <h3 class="appliance-block">Smoke / heat alarm</h3>
+                    <div class="field-grid">
+                        <div class="field">
+                            <label for="smoke-fitted">Fitted</label>
+                            <select id="smoke-fitted" name="smokeFitted">
+                                <option value="">Select</option>
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="smoke-date">Date</label>
+                            <input id="smoke-date" name="smokeDate" type="date">
+                        </div>
+                        <div class="field">
+                            <label for="smoke-location">Location</label>
+                            <input id="smoke-location" name="smokeLocation">
+                        </div>
+                        <div class="field">
+                            <label for="smoke-working">Working</label>
+                            <select id="smoke-working" name="smokeWorking">
+                                <option value="">Select</option>
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="wizard-step" data-step-id="signoff" hidden>
+                    <h2>Sign-off</h2>
+                    <div class="field-grid">
+                        <div class="field">
+                            <label for="eng-name">Engineer name</label>
+                            <input id="eng-name" name="engName" autocomplete="name">
+                        </div>
+                        <div class="field">
+                            <label for="eng-date">Engineer date</label>
+                            <input id="eng-date" name="engDate" type="date">
+                        </div>
+                        <div class="field field--wide sig-wrap">
+                            <label for="eng-sig">Engineer signature</label>
+                            <canvas id="eng-sig" class="sig-pad" width="640" height="140" aria-label="Engineer signature"></canvas>
+                            <div class="sig-actions">
+                                <button type="button" class="text-btn" data-clear-sig="eng-sig">Clear signature</button>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="recv-name">Received by</label>
+                            <input id="recv-name" name="recvName">
+                        </div>
+                        <div class="field">
+                            <label for="next-due">Next due date</label>
+                            <input id="next-due" name="nextDue" type="date">
+                            <p class="hint">Suggested as the inspection date plus 12 months. You can change it.</p>
+                        </div>
+                        <div class="field field--wide sig-wrap">
+                            <label for="recv-sig">Received-by signature</label>
+                            <canvas id="recv-sig" class="sig-pad" width="640" height="140" aria-label="Received by signature"></canvas>
+                            <div class="sig-actions">
+                                <button type="button" class="text-btn" data-clear-sig="recv-sig">Clear signature</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="check-row">
+                        <input type="checkbox" id="eng-confirm" name="engConfirm">
+                        <label class="check-label" for="eng-confirm">I am a Gas Safe registered engineer. I have carried out the checks and I am responsible for the accuracy of this record.</label>
+                    </div>
+                </section>
+
+                <div class="wizard-nav">
+                    <button type="button" class="wizard-btn wizard-btn--secondary" id="wizard-back" hidden>Back</button>
+                    <button type="button" class="wizard-btn wizard-btn--primary" id="wizard-next">Continue</button>
+                    <button type="button" class="wizard-btn wizard-btn--primary" id="wizard-generate" hidden>Generate PDF</button>
+                </div>
+                <p class="status-msg" id="wizard-status" role="status"></p>
+            </form>
+
+            <p class="article-note">Guidance only. Gas work, safety checks, and the issued record remain the responsibility of the Gas Safe registered engineer. Form v3.2. The PDF is built on this device from the blank template.</p>
+        </article>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="/js/vendor/pdf-lib.min.js" data-cfasync="false"></script>
+    <script src="/js/gas-safety-record.js" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
+</body>
+</html>
