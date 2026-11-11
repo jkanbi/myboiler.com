@@ -8,6 +8,14 @@
     <link rel="canonical" href="https://myboiler.com/toolbox/gas-safety-record-generator/">
     <link rel="stylesheet" type="text/css" href="/css/styles.css?v=header-card">
     <style>
+        @font-face {
+            font-family: 'Dancing Script';
+            src: url('/webfonts/dancing-script/DancingScript-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
         .article-page {
             min-height: 100vh;
             display: flex;
@@ -177,7 +185,8 @@
         }
 
         .field label,
-        .check-label {
+        .check-label,
+        .sig-heading {
             font-size: 0.9375rem;
             font-weight: 600;
             color: var(--text);
@@ -267,6 +276,11 @@
             margin: 0;
         }
 
+        .choice-row label:has(input:checked) {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
         .sig-wrap {
             display: flex;
             flex-direction: column;
@@ -282,6 +296,19 @@
             touch-action: none;
             cursor: crosshair;
             display: block;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .sig-wrap.is-type .sig-pad {
+            cursor: default;
+            touch-action: auto;
+        }
+
+        .sig-type {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
         }
 
         .sig-actions {
@@ -682,9 +709,18 @@
                             <label for="eng-date">Engineer date</label>
                             <input id="eng-date" name="engDate" type="date">
                         </div>
-                        <div class="field field--wide sig-wrap">
-                            <label for="eng-sig">Engineer signature</label>
-                            <canvas id="eng-sig" class="sig-pad" width="640" height="140" aria-label="Engineer signature"></canvas>
+                        <div class="field field--wide sig-wrap" data-sig-wrap="eng-sig">
+                            <span class="sig-heading" id="eng-sig-label">Engineer signature</span>
+                            <div class="choice-row" role="radiogroup" aria-labelledby="eng-sig-label">
+                                <label><input type="radio" name="eng-sig-mode" value="draw" checked> Draw</label>
+                                <label><input type="radio" name="eng-sig-mode" value="type"> Type</label>
+                            </div>
+                            <canvas id="eng-sig" class="sig-pad" width="640" height="140" aria-labelledby="eng-sig-label"></canvas>
+                            <div class="sig-type" data-sig-type="eng-sig" hidden>
+                                <label for="eng-sig-text">Type your name</label>
+                                <input id="eng-sig-text" name="engSigText" maxlength="80" autocomplete="name">
+                                <p class="hint">A handwritten preview of this name is used as the signature.</p>
+                            </div>
                             <div class="sig-actions">
                                 <button type="button" class="text-btn" data-clear-sig="eng-sig">Clear signature</button>
                             </div>
@@ -698,9 +734,18 @@
                             <input id="next-due" name="nextDue" type="date">
                             <p class="hint">Suggested as the inspection date plus 12 months. You can change it.</p>
                         </div>
-                        <div class="field field--wide sig-wrap">
-                            <label for="recv-sig">Received-by signature</label>
-                            <canvas id="recv-sig" class="sig-pad" width="640" height="140" aria-label="Received by signature"></canvas>
+                        <div class="field field--wide sig-wrap" data-sig-wrap="recv-sig">
+                            <span class="sig-heading" id="recv-sig-label">Received-by signature</span>
+                            <div class="choice-row" role="radiogroup" aria-labelledby="recv-sig-label">
+                                <label><input type="radio" name="recv-sig-mode" value="draw" checked> Draw</label>
+                                <label><input type="radio" name="recv-sig-mode" value="type"> Type</label>
+                            </div>
+                            <canvas id="recv-sig" class="sig-pad" width="640" height="140" aria-labelledby="recv-sig-label"></canvas>
+                            <div class="sig-type" data-sig-type="recv-sig" hidden>
+                                <label for="recv-sig-text">Type your name</label>
+                                <input id="recv-sig-text" name="recvSigText" maxlength="80" autocomplete="name">
+                                <p class="hint">A handwritten preview of this name is used as the signature.</p>
+                            </div>
                             <div class="sig-actions">
                                 <button type="button" class="text-btn" data-clear-sig="recv-sig">Clear signature</button>
                             </div>
