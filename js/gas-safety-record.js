@@ -331,20 +331,73 @@
         try { localStorage.setItem(ENGINEER_KEY, JSON.stringify(data)); } catch (err) {}
     }
 
-    function setupPad(canvas) {
-        var ctx = canvas.getContext('2d');
+    var signatureFontReady = null;
+
+    function ensureSignatureFont() {
+        if (signatureFontReady) return signatureFontReady;
+        if (!document.fonts || !document.fonts.load) {
+            signatureFontReady = Promise.resolve();
+            return signatureFontReady;
+        }
+        signatureFontReady = document.fonts.load('48px "Dancing Script"').then(function () {}, function () {});
+        return signatureFontReady;
+    }
+
+    function setupPad(canvas, opts) {
+        opts = opts || {};
+        var ctx = canvas.getContext('2d', { willReadFrequently: true });
+        var wrap = form.querySelector('[data-sig-wrap="' + canvas.id + '"]');
+        var textEl = opts.textId ? document.getElementById(opts.textId) : null;
+        var nameEl = opts.nameId ? document.getElementById(opts.nameId) : null;
+        var typeBox = form.querySelector('[data-sig-type="' + canvas.id + '"]');
+        var modeInputs = form.querySelectorAll('input[name="' + canvas.id + '-mode"]');
         var drawing = false;
+        var signed = false;
         var last = null;
+        var pointerId = null;
+        var pointerHandled = false;
+        var mode = 'draw';
+        var typedTouched = false;
+
+        function ratio() {
+            return Math.max(window.devicePixelRatio || 1, 1);
+        }
+
+        function cssSize() {
+            return canvas.getBoundingClientRect();
+        }
+
+        function strokeStyle() {
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = '#111111';
+            ctx.fillStyle = '#111111';
+            ctx.lineWidth = 2.5;
+        }
+
+        function fillBlank() {
+            var r = ratio();
+            var rect = cssSize();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.setTransform(r, 0, 0, r, 0, 0);
+            strokeStyle();
+        }
 
         function size() {
-            var ratio = Math.max(window.devicePixelRatio || 1, 1);
-            var rect = canvas.getBoundingClientRect();
-            if (!rect.width || !rect.height) return;
-            var w = Math.max(2, Math.round(rect.width * ratio));
-            var h = Math.max(2, Math.round(rect.height * ratio));
-            if (canvas.width === w && canvas.height === h) return;
+            var r = ratio();
+            var rect = cssSize();
+            if (!rect.width || !rect.height) return false;
+            var w = Math.max(2, Math.round(rect.width * r));
+            var h = Math.max(2, Math.round(rect.height * r));
+            if (canvas.width === w && canvas.height === h) {
+                ctx.setTransform(r, 0, 0, r, 0, 0);
+                strokeStyle();
+                return false;
+            }
             var prev = null;
-            if (canvas.width > 2 && canvas.height > 2) {
+            if (signed && canvas.width > 2 && canvas.height > 2 && mode === 'draw') {
                 prev = document.createElement('canvas');
                 prev.width = canvas.width;
                 prev.height = canvas.height;
@@ -352,68 +405,224 @@
             }
             canvas.width = w;
             canvas.height = h;
-            ctx.setTransform(1, 0, 0, 1, 0, 0);
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, w, h);
-            if (prev) ctx.drawImage(prev, 0, 0, w, h);
-            ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            ctx.strokeStyle = '#111111';
-            ctx.lineWidth = 2.5;
+            fillBlank();
+            if (prev) {
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx.drawImage(prev, 0, 0, w, h);
+                ctx.setTransform(r, 0, 0, r, 0, 0);
+                strokeStyle();
+            } else if (mode === 'type') {
+                paintTyped();
+            }
+            return true;
         }
 
-        function point(ev) {
-            var rect = canvas.getBoundingClientRect();
-            var src = ev.touches ? ev.touches[0] : ev;
+        function eventPoint(ev) {
+            var rect = cssSize();
+            var src = ev;
+            if (ev.touches && ev.touches.length) src = ev.touches[0];
+            else if (ev.changedTouches && ev.changedTouches.length) src = ev.changedTouches[0];
             return { x: src.clientX - rect.left, y: src.clientY - rect.top };
         }
 
-        function start(ev) {
-            ev.preventDefault();
+        function markSigned() {
+            signed = true;
+        }
+
+        function paintDot(p) {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
+            ctx.fill();
+            markSigned();
+        }
+
+        function startDraw(ev) {
+            if (mode !== 'draw') return;
+            if (ev.pointerType === 'mouse' && ev.button != null && ev.button !== 0) return;
+            if (ev.cancelable) ev.preventDefault();
             size();
             drawing = true;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            ctx.strokeStyle = '#111111';
-            ctx.lineWidth = 2.5;
-            last = point(ev);
+            last = eventPoint(ev);
+            paintDot(last);
+            if (ev.pointerId != null && canvas.setPointerCapture) {
+                try { canvas.setPointerCapture(ev.pointerId); } catch (err) {}
+            }
+            pointerId = ev.pointerId != null ? ev.pointerId : 1;
         }
-        function move(ev) {
-            if (!drawing) return;
-            ev.preventDefault();
-            var p = point(ev);
+
+        function moveDraw(ev) {
+            if (!drawing || mode !== 'draw') return;
+            if (pointerId != null && ev.pointerId != null && ev.pointerId !== pointerId) return;
+            if (ev.cancelable) ev.preventDefault();
+            var p = eventPoint(ev);
             ctx.beginPath();
             ctx.moveTo(last.x, last.y);
             ctx.lineTo(p.x, p.y);
             ctx.stroke();
             last = p;
-        }
-        function end(ev) {
-            if (ev) ev.preventDefault();
-            drawing = false;
+            markSigned();
         }
 
-        canvas.addEventListener('mousedown', start);
-        canvas.addEventListener('mousemove', move);
-        window.addEventListener('mouseup', end);
-        canvas.addEventListener('touchstart', start, { passive: false });
-        canvas.addEventListener('touchmove', move, { passive: false });
-        canvas.addEventListener('touchend', end);
-        canvas.addEventListener('touchcancel', end);
+        function endDraw(ev) {
+            if (ev && ev.cancelable) ev.preventDefault();
+            if (ev && pointerId != null && ev.pointerId != null && ev.pointerId !== pointerId) return;
+            drawing = false;
+            pointerId = null;
+            if (ev && ev.pointerId != null && canvas.releasePointerCapture) {
+                try { canvas.releasePointerCapture(ev.pointerId); } catch (err) {}
+            }
+        }
+
+        function onPointerDown(ev) {
+            pointerHandled = true;
+            startDraw(ev);
+        }
+        function onPointerMove(ev) {
+            moveDraw(ev);
+        }
+        function onPointerUp(ev) {
+            endDraw(ev);
+            setTimeout(function () { pointerHandled = false; }, 400);
+        }
+
+        function onTouchStart(ev) {
+            if (window.PointerEvent && pointerHandled) {
+                if (ev.cancelable) ev.preventDefault();
+                return;
+            }
+            startDraw(ev);
+        }
+        function onTouchMove(ev) {
+            if (window.PointerEvent && pointerHandled) {
+                if (ev.cancelable) ev.preventDefault();
+                return;
+            }
+            moveDraw(ev);
+        }
+        function onTouchEnd(ev) {
+            if (window.PointerEvent && pointerHandled) {
+                if (ev.cancelable) ev.preventDefault();
+                return;
+            }
+            endDraw(ev);
+        }
+
+        function defaultTypedName() {
+            return nameEl ? String(nameEl.value || '').trim() : '';
+        }
+
+        function paintTyped() {
+            var text = textEl ? String(textEl.value || '').trim() : '';
+            fillBlank();
+            if (!text) {
+                signed = false;
+                return;
+            }
+            var rect = cssSize();
+            var sizePx = Math.min(56, Math.max(22, rect.height * 0.52));
+            ctx.fillStyle = '#111111';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.font = sizePx + 'px "Dancing Script", cursive';
+            while (sizePx > 16 && ctx.measureText(text).width > rect.width - 28) {
+                sizePx -= 1;
+                ctx.font = sizePx + 'px "Dancing Script", cursive';
+            }
+            ctx.fillText(text, 14, rect.height * 0.62);
+            markSigned();
+        }
+
+        function setMode(next) {
+            mode = next === 'type' ? 'type' : 'draw';
+            drawing = false;
+            pointerId = null;
+            if (wrap) wrap.classList.toggle('is-type', mode === 'type');
+            if (typeBox) typeBox.hidden = mode !== 'type';
+            canvas.style.pointerEvents = mode === 'draw' ? '' : 'none';
+            if (mode === 'type') {
+                if (textEl && !typedTouched && !String(textEl.value || '').trim()) {
+                    textEl.value = defaultTypedName();
+                }
+                ensureSignatureFont().then(paintTyped);
+            } else {
+                signed = false;
+                fillBlank();
+            }
+        }
+
+        function clear() {
+            signed = false;
+            drawing = false;
+            typedTouched = false;
+            if (textEl) textEl.value = '';
+            fillBlank();
+        }
+
+        canvas.addEventListener('pointerdown', onPointerDown);
+        canvas.addEventListener('pointermove', onPointerMove);
+        canvas.addEventListener('pointerup', onPointerUp);
+        canvas.addEventListener('pointercancel', onPointerUp);
+        canvas.addEventListener('touchstart', onTouchStart, { passive: false });
+        canvas.addEventListener('touchmove', onTouchMove, { passive: false });
+        canvas.addEventListener('touchend', onTouchEnd, { passive: false });
+        canvas.addEventListener('touchcancel', onTouchEnd, { passive: false });
+        canvas.addEventListener('mousedown', function (ev) {
+            if (window.PointerEvent) return;
+            startDraw(ev);
+        });
+        window.addEventListener('mousemove', function (ev) {
+            if (window.PointerEvent) return;
+            moveDraw(ev);
+        });
+        window.addEventListener('mouseup', function (ev) {
+            if (window.PointerEvent) return;
+            endDraw(ev);
+        });
+
+        modeInputs.forEach(function (input) {
+            input.addEventListener('change', function () {
+                if (input.checked) setMode(input.value);
+            });
+        });
+        if (textEl) {
+            textEl.addEventListener('input', function () {
+                typedTouched = true;
+                if (mode === 'type') ensureSignatureFont().then(paintTyped);
+            });
+        }
+        if (nameEl && textEl) {
+            nameEl.addEventListener('input', function () {
+                if (mode !== 'type' || typedTouched) return;
+                textEl.value = defaultTypedName();
+                ensureSignatureFont().then(paintTyped);
+            });
+        }
+
         size();
-        sigPads[canvas.id] = { canvas: canvas, ctx: ctx, resize: size };
-        return {
-            clear: function () {
-                var rect = canvas.getBoundingClientRect();
-                ctx.setTransform(Math.max(window.devicePixelRatio || 1, 1), 0, 0, Math.max(window.devicePixelRatio || 1, 1), 0, 0);
-                ctx.fillStyle = '#ffffff';
-                ctx.fillRect(0, 0, rect.width, rect.height);
+        fillBlank();
+        var api = {
+            canvas: canvas,
+            ctx: ctx,
+            resize: function () {
+                var changed = size();
+                if (mode === 'type') paintTyped();
+                return changed;
+            },
+            clear: clear,
+            isSigned: function () { return signed; },
+            prepare: function () {
+                if (mode !== 'type') return Promise.resolve();
+                return ensureSignatureFont().then(paintTyped);
             }
         };
+        sigPads[canvas.id] = api;
+        return api;
     }
 
     function canvasHasInk(canvas) {
+        var pad = sigPads[canvas.id];
+        if (pad && pad.isSigned()) return true;
+        if (!canvas.width || !canvas.height) return false;
         var ctx = canvas.getContext('2d');
         var data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
         var i;
@@ -716,6 +925,10 @@
         var rate;
         var combFields;
         var certNo = resolveCertificateNo();
+        var padIds = Object.keys(sigPads);
+        for (i = 0; i < padIds.length; i += 1) {
+            if (sigPads[padIds[i]].prepare) await sigPads[padIds[i]].prepare();
+        }
 
         drawCell(page, font, lib, certNo, BOX.certificateNo, { maxSize: 10, align: 'left' });
         drawParagraph(page, font, lib, val('eng-company'), BOX.engineerCompany, 8);
@@ -869,19 +1082,14 @@
 
     form.querySelectorAll('[data-clear-sig]').forEach(function (btn) {
         btn.addEventListener('click', function () {
-            var canvas = document.getElementById(btn.getAttribute('data-clear-sig'));
-            if (!canvas) return;
-            var rect = canvas.getBoundingClientRect();
-            var ctx = canvas.getContext('2d');
-            var ratio = Math.max(window.devicePixelRatio || 1, 1);
-            ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, rect.width, rect.height);
+            var pad = sigPads[btn.getAttribute('data-clear-sig')];
+            if (pad && pad.clear) pad.clear();
         });
     });
 
-    setupPad(document.getElementById('eng-sig'));
-    setupPad(document.getElementById('recv-sig'));
+    setupPad(document.getElementById('eng-sig'), { textId: 'eng-sig-text', nameId: 'eng-name' });
+    setupPad(document.getElementById('recv-sig'), { textId: 'recv-sig-text', nameId: 'recv-name' });
+    ensureSignatureFont();
     window.addEventListener('resize', function () {
         Object.keys(sigPads).forEach(function (key) {
             if (sigPads[key].resize) sigPads[key].resize();
