@@ -3956,14 +3956,14 @@
         </details>
 
         <p class="tool-disclaimer">This tool is in development. We accept no responsibility for issues that arise from these adjustments. Some systems are not installed correctly and may cause problems, especially where the condensate pipe is incorrectly installed or not insulated.</p>
-        <p class="tool-version" data-stamp="2026-11-11 06:03 · 44">Last updated 11 November 2026 · Version 44</p>
+        <p class="tool-version" data-stamp="2026-11-11 06:03 · 45">Last updated 11 November 2026 · Version 45</p>
     </div>
 
     <div id="site-footer"></div>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/comp-read-more.js?v=comp-more-3" data-cfasync="false"></script>
-    <script>
+    <script data-cfasync="false">
         (function () {
             var versionEl = document.querySelector('.tool-version');
             var stamp = versionEl && (versionEl.getAttribute('data-stamp') || versionEl.textContent);
@@ -5174,6 +5174,16 @@
                     other.classList.toggle('active', on);
                     other.setAttribute('aria-pressed', on ? 'true' : 'false');
                 });
+                var choice = button.getAttribute('data-choice');
+                var systemParam = choice === 'standard' ? 'non-condensing' : choice;
+                if (systemParam === 'combi' || systemParam === 'system' || systemParam === 'non-condensing') {
+                    try {
+                        var params = new URLSearchParams(location.search || '');
+                        params.set('system', systemParam);
+                        var search = params.toString();
+                        history.replaceState(null, '', location.pathname + (search ? '?' + search : '') + location.hash);
+                    } catch (err) {}
+                }
                 update();
             });
             bindChoice(brandButtons, function (button) {
@@ -5319,11 +5329,13 @@
                 confirmSystemInput.addEventListener('change', window.mbSyncConfirmCylinderNote);
             }
 
-            flowInput.addEventListener('input', function () {
+            function onFlowInput() {
                 flowSlider.classList.remove('is-hinting');
                 flowTouched = true;
                 update();
-            });
+            }
+            flowInput.addEventListener('input', onFlowInput);
+            flowInput.addEventListener('change', onFlowInput);
             annualInput.addEventListener('input', function () {
                 annualTouched = annualInput.value.trim() !== '';
                 var typed = nonNegativeOrNull(annualInput);
@@ -5585,6 +5597,10 @@
             }
 
             applyDeepLink();
+            if (Number(flowInput.value) !== FACTORY_FLOW) {
+                flowSlider.classList.remove('is-hinting');
+                flowTouched = true;
+            }
             update();
         })();
     </script>
