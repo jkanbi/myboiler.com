@@ -88,8 +88,10 @@ function attachTracker(page) {
     const tracker = {
         uwt: false,
         posthog: false,
+        bat: false,
         uwtUrls: [],
-        posthogUrls: []
+        posthogUrls: [],
+        batUrls: []
     };
     page.on('request', function (req) {
         const url = req.url();
@@ -101,6 +103,10 @@ function attachTracker(page) {
             tracker.posthog = true;
             tracker.posthogUrls.push(url);
         }
+        if (/bat\.bing\.net/i.test(url)) {
+            tracker.bat = true;
+            tracker.batUrls.push(url);
+        }
     });
     return tracker;
 }
@@ -108,8 +114,10 @@ function attachTracker(page) {
 function resetTracker(tracker) {
     tracker.uwt = false;
     tracker.posthog = false;
+    tracker.bat = false;
     tracker.uwtUrls = [];
     tracker.posthogUrls = [];
+    tracker.batUrls = [];
 }
 
 async function snapshot(page, tracker) {
@@ -139,6 +147,8 @@ async function snapshot(page, tracker) {
             }),
             phLocal: localKeys.filter(function (key) { return key && (key.indexOf('ph_') === 0 || key.indexOf('__ph_') === 0); }),
             phSession: sessionKeys.filter(function (key) { return key && (key.indexOf('ph_') === 0 || key.indexOf('__ph_') === 0); }),
+            uetLocal: localKeys.filter(function (key) { return key && key.indexOf('_uet') === 0; }),
+            uetCookies: cookieNames.filter(function (name) { return name && name.indexOf('_uet') === 0; }),
             choice: (function () {
                 try { return localStorage.getItem('mb_optimiser_posthog') || ''; } catch (err) { return ''; }
             })(),
@@ -160,13 +170,16 @@ async function snapshot(page, tracker) {
             dismissed: (function () {
                 try { return sessionStorage.getItem('mb_optimiser_consent_dismissed') || ''; } catch (err) { return ''; }
             })(),
-            twqType: typeof window.twq
+            twqType: typeof window.twq,
+            uetqType: typeof window.uetq
         };
     });
     snap.uwtRequested = tracker.uwt;
     snap.posthogRequested = tracker.posthog;
+    snap.batRequested = tracker.bat;
     snap.uwtUrls = tracker.uwtUrls.slice();
     snap.posthogUrls = tracker.posthogUrls.slice();
+    snap.batUrls = tracker.batUrls.slice();
     return snap;
 }
 
@@ -287,6 +300,7 @@ async function screenshotBanner(page, filename) {
 
         if (before.uwtRequested) fail(spec.name + ': uwt.js requested before consent', before);
         if (before.posthogRequested) fail(spec.name + ': PostHog requested before consent', before);
+        if (before.batRequested) fail(spec.name + ': bat.bing.net requested before consent', before);
         if (before.twCookies.length) fail(spec.name + ': _tw* cookies present before consent', before);
         if (before.phCookies.length || before.phLocal.length || before.phSession.length) {
             fail(spec.name + ': PostHog storage present before consent', before);
@@ -295,12 +309,20 @@ async function screenshotBanner(page, filename) {
         if (!spec.optimiser) {
             if (before.banner) fail(spec.name + ': optimiser banner shown on non-optimiser page', before);
             if (before.twqType !== 'undefined') fail(spec.name + ': twq defined on non-optimiser page', before);
+            if (before.uetqType !== 'undefined') fail(spec.name + ': uetq defined on non-optimiser page', before);
             await context.close();
             continue;
         }
 
         if (!before.banner) fail(spec.name + ': banner missing before consent', before);
         if (before.twqType !== 'undefined') fail(spec.name + ': twq defined before consent', before);
+        if (before.uetqType !== 'undefined') fail(spec.name + ': uetq defined before consent', before);
+        if (spec.name === 'boiler-optimiser' && !/Microsoft Advertising/.test(before.bannerText || '')) {
+            fail(spec.name + ': banner should list Microsoft Advertising', before);
+        }
+        if (spec.name === 'advance' && /Microsoft Advertising/.test(before.bannerText || '')) {
+            fail(spec.name + ': banner should not list Microsoft Advertising off /boiler-optimiser/', before);
+        }
         if (before.choice) fail(spec.name + ': choice already stored before consent', before);
         if (before.ariaModal) fail(spec.name + ': banner must not be a modal', before);
         if (before.overlay) fail(spec.name + ': banner must not use an overlay', before);
@@ -329,6 +351,12 @@ async function screenshotBanner(page, filename) {
         if (!afterAccept.uwtRequested) fail(spec.name + ': uwt.js was not requested after Accept', afterAccept);
         if (!afterAccept.posthogRequested) fail(spec.name + ': PostHog was not requested after Accept', afterAccept);
         if (afterAccept.twqType !== 'function') fail(spec.name + ': twq not a function after Accept', afterAccept);
+        if (spec.name === 'boiler-optimiser' && !afterAccept.batRequested) {
+            fail(spec.name + ': bat.js was not requested after Accept', afterAccept);
+        }
+        if (spec.name !== 'boiler-optimiser' && afterAccept.batRequested) {
+            fail(spec.name + ': bat.js requested off /boiler-optimiser/', afterAccept);
+        }
         if (!afterAccept.cookieSettings) fail(spec.name + ': Cookie settings missing after Accept', afterAccept);
 
         resetTracker(tracker);
@@ -344,6 +372,9 @@ async function screenshotBanner(page, filename) {
             fail(spec.name + ': PostHog storage still present after opt out', afterOptOut);
         }
         if (afterOptOut.twCookies.length) fail(spec.name + ': _tw* cookies still present after opt out', afterOptOut);
+        if ((afterOptOut.uetLocal && afterOptOut.uetLocal.length) || (afterOptOut.uetCookies && afterOptOut.uetCookies.length)) {
+            fail(spec.name + ': UET storage still present after opt out', afterOptOut);
+        }
 
         await context.close();
     }
@@ -360,7 +391,9 @@ async function screenshotBanner(page, filename) {
     if (afterDismiss.dismissed !== '1') fail('dismiss: session flag missing', afterDismiss);
     if (afterDismiss.uwtRequested) fail('dismiss: uwt.js requested', afterDismiss);
     if (afterDismiss.posthogRequested) fail('dismiss: PostHog requested', afterDismiss);
+    if (afterDismiss.batRequested) fail('dismiss: bat.bing.net requested', afterDismiss);
     if (afterDismiss.twqType !== 'undefined') fail('dismiss: twq should not be defined', afterDismiss);
+    if (afterDismiss.uetqType !== 'undefined') fail('dismiss: uetq should not be defined', afterDismiss);
 
     resetTracker(dismissFlow.tracker);
     await dismissFlow.page.reload({ waitUntil: 'domcontentloaded' });
@@ -370,6 +403,7 @@ async function screenshotBanner(page, filename) {
     if (afterReloadDismissed.banner) fail('reload after dismiss: banner should stay hidden', afterReloadDismissed);
     if (afterReloadDismissed.uwtRequested) fail('reload after dismiss: uwt.js requested', afterReloadDismissed);
     if (afterReloadDismissed.posthogRequested) fail('reload after dismiss: PostHog requested', afterReloadDismissed);
+    if (afterReloadDismissed.batRequested) fail('reload after dismiss: bat.bing.net requested', afterReloadDismissed);
 
     await dismissFlow.page.click('.optimiser-cookie-settings');
     await dismissFlow.page.waitForSelector('.optimiser-consent.is-visible');
@@ -378,11 +412,13 @@ async function screenshotBanner(page, filename) {
     if (!afterReopen.banner) fail('Cookie settings did not reopen the banner', afterReopen);
     if (afterReopen.uwtRequested) fail('reopen: uwt.js requested before Accept', afterReopen);
     if (afterReopen.posthogRequested) fail('reopen: PostHog requested before Accept', afterReopen);
+    if (afterReopen.batRequested) fail('reopen: bat.bing.net requested before Accept', afterReopen);
     await dismissFlow.context.close();
 
     const returningAccepted = await newCleanPage(browser);
     await returningAccepted.page.addInitScript(function () {
         try { localStorage.setItem('mb_optimiser_posthog', 'accepted'); } catch (err) {}
+        try { localStorage.setItem('mb_optimiser_gads', '1'); } catch (err) {}
     });
     await returningAccepted.page.goto(BASE + '/boiler-optimiser/', { waitUntil: 'domcontentloaded' });
     await waitQuiet(returningAccepted.page, 4000);
@@ -392,6 +428,7 @@ async function screenshotBanner(page, filename) {
     if (returningAcceptedSnap.choice !== 'accepted') fail('returning accepted: choice flag missing', returningAcceptedSnap);
     if (!returningAcceptedSnap.uwtRequested) fail('returning accepted: uwt.js not requested', returningAcceptedSnap);
     if (!returningAcceptedSnap.posthogRequested) fail('returning accepted: PostHog not requested', returningAcceptedSnap);
+    if (!returningAcceptedSnap.batRequested) fail('returning accepted: bat.js not requested', returningAcceptedSnap);
     await returningAccepted.context.close();
 
     const returningDeclined = await newCleanPage(browser);
@@ -406,7 +443,9 @@ async function screenshotBanner(page, filename) {
     if (returningDeclinedSnap.choice !== 'declined') fail('returning declined: choice flag missing', returningDeclinedSnap);
     if (returningDeclinedSnap.uwtRequested) fail('returning declined: uwt.js requested', returningDeclinedSnap);
     if (returningDeclinedSnap.posthogRequested) fail('returning declined: PostHog requested', returningDeclinedSnap);
+    if (returningDeclinedSnap.batRequested) fail('returning declined: bat.bing.net requested', returningDeclinedSnap);
     if (returningDeclinedSnap.twqType !== 'undefined') fail('returning declined: twq should not be defined', returningDeclinedSnap);
+    if (returningDeclinedSnap.uetqType !== 'undefined') fail('returning declined: uetq should not be defined', returningDeclinedSnap);
     await returningDeclined.context.close();
 
     await browser.close();

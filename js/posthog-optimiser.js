@@ -15,6 +15,8 @@
     var GADS_CONTAINER = 'GTM-MZ3KLJGZ';
     var GADS_KEY = 'mb_optimiser_gads';
     var gadsLoaded = false;
+    var UET_TAG_ID = '343285855';
+    var uetLoaded = false;
     var pageviewSent = false;
     var DID_IT_WORK_TIPS = {
         yes: 'Great. If you have a condensing boiler, try the next step down, about 5°C lower.',
@@ -436,6 +438,7 @@
                 optimiser_from_flow: fromFlow,
                 optimiser_set_flow: setFlow
             });
+            pushUetTurndown();
             sendStore({
                 t: Date.now(),
                 type: 'turned_down',
@@ -704,6 +707,7 @@
     function startFullMode() {
         loadXPixel();
         loadGoogleAds();
+        loadUet();
         loadSnippet();
         if (!window.posthog || typeof window.posthog.init !== 'function') return;
         if (window.posthog.__loaded || window.posthog._i && window.posthog._i.length) {
@@ -864,6 +868,69 @@
         window.dataLayer.push(data);
     }
 
+    function loadUet() {
+        /* Microsoft Advertising UET: only /boiler-optimiser/, only after Accept. */
+        if (!onOptimiserTool || uetLoaded || storedChoice() !== 'accepted') return;
+        uetLoaded = true;
+        try {
+            document.querySelectorAll('script[src*="bat.bing.net/bat.js"]').forEach(function (el) {
+                if (el.parentNode) el.parentNode.removeChild(el);
+            });
+        } catch (err) { /* ignore */ }
+        try { delete window.uetq; } catch (err) {
+            try { window.uetq = undefined; } catch (err2) {}
+        }
+        (function(w, d, t, u, o) {
+            w[u] = w[u] || [], o.ts = (new Date).getTime();
+            var n = d.createElement(t);
+            n.src = "https://bat.bing.net/bat.js?ti=" + o.ti + ("uetq" != u ? "&q=" + u : "");
+            n.async = 1;
+            n.setAttribute("data-cfasync", "false");
+            n.onload = n.onreadystatechange = function() {
+                var s = this.readyState;
+                s && "loaded" !== s && "complete" !== s || (o.q = w[u], w[u] = new UET(o), w[u].push("pageLoad"), n.onload = n.onreadystatechange = null);
+            };
+            var i = d.getElementsByTagName(t)[0];
+            i.parentNode.insertBefore(n, i);
+        })(window, document, "script", "uetq", { ti: UET_TAG_ID, enableAutoSpaTracking: true });
+    }
+
+    function disableUet() {
+        uetLoaded = false;
+        try {
+            document.querySelectorAll('script[src*="bat.bing.net/bat.js"]').forEach(function (el) {
+                if (el.parentNode) el.parentNode.removeChild(el);
+            });
+        } catch (err) { /* ignore */ }
+        try { delete window.uetq; } catch (err) {
+            try { window.uetq = undefined; } catch (err2) {}
+        }
+        try {
+            document.cookie.split(';').forEach(function (part) {
+                var name = part.split('=')[0].trim();
+                if (name && name.indexOf('_uet') === 0) expireNamedCookie(name);
+            });
+        } catch (err) { /* ignore */ }
+        function wipeUetStore(store) {
+            if (!store) return;
+            var keys = [];
+            for (var i = 0; i < store.length; i++) {
+                var key = store.key(i);
+                if (key && key.indexOf('_uet') === 0) keys.push(key);
+            }
+            keys.forEach(function (key) { store.removeItem(key); });
+        }
+        try { wipeUetStore(window.localStorage); } catch (err) { /* ignore */ }
+        try { wipeUetStore(window.sessionStorage); } catch (err) { /* ignore */ }
+    }
+
+    function pushUetTurndown() {
+        if (!onOptimiserTool) return;
+        if (storedChoice() !== 'accepted') return;
+        window.uetq = window.uetq || [];
+        window.uetq.push('event', 'turn_down', {});
+    }
+
     function loadXPixel() {
         if (xLoaded) return;
         xLoaded = true;
@@ -935,6 +1002,7 @@
         clearPhStorage();
         disableXPixel();
         disableGoogleAds();
+        disableUet();
     }
 
     function storedChoice() {
@@ -1023,6 +1091,16 @@
         }, 280);
     }
 
+    function consentBannerText() {
+        if (onOptimiserTool) {
+            return 'Optional cookies for PostHog analytics, X ads, Google Ads and Microsoft Advertising.';
+        }
+        if (onGadsPage) {
+            return 'Optional cookies for PostHog analytics, X ads and Google Ads.';
+        }
+        return 'Optional cookies for PostHog analytics and X ads.';
+    }
+
     function showBanner() {
         injectStyles();
         if (document.querySelector('.optimiser-consent')) return;
@@ -1033,7 +1111,7 @@
         banner.setAttribute('aria-label', 'Optional cookies');
         banner.innerHTML =
             '<div class="optimiser-consent__inner">' +
-                '<p class="optimiser-consent__text">' + (onGadsPage ? 'Optional cookies for PostHog analytics, X ads and Google Ads.' : 'Optional cookies for PostHog analytics and X ads.') + ' Nothing is set unless you accept.</p>' +
+                '<p class="optimiser-consent__text">' + consentBannerText() + ' Nothing is set unless you accept.</p>' +
                 '<div class="optimiser-consent__actions">' +
                     '<button type="button" class="optimiser-consent__accept">Accept</button>' +
                     '<button type="button" class="optimiser-consent__decline">Opt out</button>' +
