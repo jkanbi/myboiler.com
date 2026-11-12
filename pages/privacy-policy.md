@@ -6,7 +6,7 @@ This policy explains what happens to information when you use MyBoiler.com. It a
 
 The pages are served through Cloudflare. We do not ask for your name, email address, or any other personal detail just to view the site. Reading a page does not identify you, except on the Optimiser pages after you accept cookies.
 
-MyBoiler.com is cookieless and privacy-focused. Almost every page sets no cookies and stores nothing in your browser. A small number of pages, currently only the Boiler Optimiser pages, use cookies and browser storage for analytics (PostHog, hosted in the EU) and to measure our X (Twitter) ads for the Optimiser. On those pages we ask for your consent first, and nothing is set unless you click Accept. You can opt out at any time using the cookie banner at the bottom of the page. Wherever we can find a way to do without these cookies, or they are no longer needed, we will remove them.
+MyBoiler.com is cookieless and privacy-focused. Almost every page sets no cookies and stores nothing in your browser. A small number of pages, currently only the Boiler Optimiser pages, use cookies and browser storage for analytics (PostHog, hosted in the EU) and to measure our X (Twitter) ads for the Optimiser. The Boiler Optimiser pages (/boiler-optimiser/ and /boiler-optimiser-advance-power-output/) also use Google Ads, loaded through Google Tag Manager, to measure our Google ads: it sees that you arrived from an ad and whether you turned your boiler flow temperature down. Google Ads is not used on any other page, and we do not use Google Analytics. The Boiler Optimiser page (/boiler-optimiser/) also uses Microsoft Advertising (UET) to measure our Microsoft ads: it sees that you arrived from an ad and whether you turned your boiler flow temperature down. Microsoft Advertising is not used on any other page, and it only runs after you click Accept. On those pages we ask for your consent first, and nothing is set unless you click Accept. You can opt out at any time using the cookie banner at the bottom of the page. Wherever we can find a way to do without these cookies, or they are no longer needed, we will remove them.
 
 Boiler Optimiser usage: when you use the Boiler Optimiser, we record anonymous usage events, such as the page step you reach, the boiler brand you choose, the flow temperatures and energy figures you enter, and any campaign tag in the link you followed. This uses no cookies, and we don't store your IP address, device details or any identifier, so the events can't be linked to you. We use them only to see how the tool is used, and we delete them after 13 months.
 
@@ -14,7 +14,7 @@ We store only your cookie choice in a first-party localStorage flag on those pag
 
 The data controller is Jayesh Kanbi, a private individual who operates MyBoiler.com. Contact: info@myboiler.com.
 
-We do not use Google advertising cookies. Other than the Optimiser analytics and ads measurement described above, we do not build a profile of you from your visits.
+We do not use Google or Microsoft advertising cookies anywhere else on the site. Google Ads and Microsoft Advertising (UET) on the Optimiser pages only load after you click Accept; until then Google's consent settings stay set to denied, and the Microsoft tag is not loaded. If you opt out, we tell Google Ads that consent is withdrawn, we stop the Microsoft tag, and we remove their cookies from this site. Other than the Optimiser analytics and ads measurement described above, we do not build a profile of you from your visits.
 
 ## Measuring visits
 
