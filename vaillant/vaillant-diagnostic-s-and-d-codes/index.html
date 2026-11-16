@@ -166,6 +166,60 @@
             margin: 0.75rem 0 1.25rem;
         }
 
+        .code-search {
+            margin: 2rem 0 1.25rem;
+            max-width: 26rem;
+        }
+
+        .code-search__label {
+            display: block;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            margin: 0 0 0.45rem;
+            color: var(--text);
+        }
+
+        .code-search__input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0.85rem 1.1rem;
+            font-size: 1rem;
+            font-family: inherit;
+            color: var(--text);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            outline: none;
+        }
+
+        .code-search__input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(24, 99, 220, 0.15);
+        }
+
+        .code-search__empty {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin: 0.5rem 0 1rem;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .article-content .table-wrap table {
+            margin: 0;
+        }
+
+        tr.code-row-hidden {
+            display: none;
+        }
+
+        .code-block[hidden] {
+            display: none;
+        }
+
     </style>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="application/ld+json">
@@ -237,9 +291,17 @@
                 <p><strong>Note:</strong> Some newer ecotec models may have slightly different navigation. Always consult the specific manual for your boiler model. See <a href="/vaillant/vaillant-ecotec-boiler-anti-cycling-time/">Vaillant Anti-Cycling Time</a> for more configuration information.</p>
             </div>
 
+            <form class="code-search" role="search" onsubmit="return false;">
+                <label class="code-search__label" for="code-search">Search S and D codes</label>
+                <input class="code-search__input" id="code-search" type="search" placeholder="e.g. S.04, flame, anti-cycling" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="search">
+            </form>
+            <p class="code-search__empty" id="code-search-empty" hidden aria-live="polite">No codes match</p>
+
+            <section class="code-block" data-code-block>
             <h2>S-Codes: Status Codes</h2>
             <p>S-codes indicate the current operating status of your Vaillant boiler. These are read-only displays that help engineers understand what the boiler is doing at any given moment.</p>
 
+            <div class="table-wrap">
             <table>
                 <thead>
                     <tr>
@@ -386,7 +448,10 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
+            </section>
 
+            <section class="code-block" data-code-block>
             <h2>D-Codes: Diagnostic Parameters</h2>
             <p>D-codes are adjustable parameters that allow engineers to configure and optimize boiler performance. Each D-code controls a specific function or setting.</p>
 
@@ -394,8 +459,10 @@
                 <p><strong>Warning:</strong> Incorrect adjustment of D-codes can lead to inefficient operation, increased energy consumption, or boiler faults. Only adjust these parameters if you fully understand their function.</p>
             </div>
 
+            <section class="code-block" data-code-block>
             <h3>Key D-Codes for Central Heating</h3>
 
+            <div class="table-wrap">
             <table>
                 <thead>
                     <tr>
@@ -570,9 +637,13 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
+            </section>
 
+            <section class="code-block" data-code-block>
             <h3>Advanced Configuration D-Codes</h3>
 
+            <div class="table-wrap">
             <table>
                 <thead>
                     <tr>
@@ -649,6 +720,9 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
+            </section>
+            </section>
 
             <h2>Common D-Code Adjustments</h2>
 
@@ -714,10 +788,9 @@
                 <li><a href="/vaillant/vaillant-fga-tool/">FGA Tool and Analysis</a></li>
                 <li><a href="/fault-codes/vaillant-fault-codes/">Vaillant Fault Codes (F codes)</a></li>
                 <li><a href="/fault-codes/">Boiler Fault Codes</a></li>
+                <li><a href="/vaillant/vaillant-diagnostic-s-and-d-codes/images/screen-shot-2017-09-23-at-09.32.12.png">Vaillant S codes table (image)</a></li>
+                <li><a href="/vaillant/vaillant-diagnostic-s-and-d-codes/images/screen-shot-2017-09-23-at-09.31.04.png">Vaillant D codes table (image)</a></li>
             </ul>
-                    <img src="/vaillant/vaillant-diagnostic-s-and-d-codes/images/screen-shot-2017-09-23-at-09.32.12.png" alt="Screen Shot 2017 09 23 At 09.32.12" loading="lazy">
-
-            <img src="/vaillant/vaillant-diagnostic-s-and-d-codes/images/screen-shot-2017-09-23-at-09.31.04.png" alt="Screen Shot 2017 09 23 At 09.31.04" loading="lazy">
 
 </article>
     </div>
@@ -727,6 +800,73 @@
     
 
     <div id="site-footer"></div>
+    <script data-cfasync="false">
+        (function () {
+            var input = document.getElementById("code-search");
+            var empty = document.getElementById("code-search-empty");
+            var blocks = document.querySelectorAll("[data-code-block]");
+            if (!input || !blocks.length) return;
+
+            function normalizeCode(value) {
+                var alnum = String(value || "")
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]/g, "");
+                return alnum.replace(/^([a-z]*)0+(\d+)$/, "$1$2");
+            }
+
+            function rowText(row) {
+                return (row.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+            }
+
+            function applyFilter() {
+                var raw = input.value.trim();
+                var q = raw.toLowerCase();
+                var codeQ = normalizeCode(q);
+                var any = false;
+                var i;
+                var r;
+
+                for (i = 0; i < blocks.length; i++) {
+                    var tables = blocks[i].querySelectorAll("table");
+                    for (var t = 0; t < tables.length; t++) {
+                        var rows = tables[t].querySelectorAll("tbody tr");
+                        if (!rows.length) rows = tables[t].querySelectorAll("tr");
+                        for (r = 0; r < rows.length; r++) {
+                            var row = rows[r];
+                            if (row.querySelector("th") || !row.querySelector("td")) continue;
+                            var match = !q;
+                            if (q) {
+                                var first = row.querySelector("td");
+                                var code = first ? normalizeCode(first.textContent) : "";
+                                match =
+                                    rowText(row).indexOf(q) !== -1 ||
+                                    (codeQ && code === codeQ);
+                            }
+                            row.classList.toggle("code-row-hidden", !match);
+                            if (match) any = true;
+                        }
+                    }
+                }
+
+                for (i = blocks.length - 1; i >= 0; i--) {
+                    var block = blocks[i];
+                    var bodyRows = block.querySelectorAll("table tbody tr, table tr");
+                    var visible = 0;
+                    for (r = 0; r < bodyRows.length; r++) {
+                        var candidate = bodyRows[r];
+                        if (candidate.querySelector("th") || !candidate.querySelector("td")) continue;
+                        if (!candidate.classList.contains("code-row-hidden")) visible += 1;
+                    }
+                    block.hidden = visible === 0;
+                }
+
+                if (empty) empty.hidden = !q || any;
+            }
+
+            input.addEventListener("input", applyFilter);
+            input.addEventListener("search", applyFilter);
+        })();
+    </script>
     <script type="text/javascript" src="/js/site-nav.js" data-cfasync="false"></script>
     <script type="text/javascript" src="/js/menu.js" data-cfasync="false"></script>
 </body>
