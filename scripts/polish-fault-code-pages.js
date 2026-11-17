@@ -8,6 +8,7 @@
 const fs = require("fs");
 const path = require("path");
 const { injectXPixel } = require("./inject-x-pixel");
+const { processFile: injectOptimiserSitelink } = require("./inject-optimiser-sitelink");
 
 const ROOT = path.resolve(__dirname, "..");
 const FAULT_DIR = path.join(ROOT, "fault-codes");
@@ -134,9 +135,9 @@ function polish(filePath) {
 
     if (html !== original) {
         fs.writeFileSync(filePath, html, "utf8");
-        return true;
     }
-    return false;
+    const sitelink = injectOptimiserSitelink(filePath, true);
+    return html !== original || sitelink.status === "injected" || sitelink.status === "stripped";
 }
 
 function main() {
