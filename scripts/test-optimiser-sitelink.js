@@ -14,6 +14,8 @@ const {
     hasNonBlockOptimiserLink,
     walkHtml,
     fileToPathname,
+    isFlowTempIntentPath,
+    optimiserFollowOnPaths,
 } = require("./inject-optimiser-sitelink");
 
 function assert(cond, message) {
@@ -63,9 +65,31 @@ assert(
     skipReason(
         "/about/",
         '<html><a href="/boiler-optimiser/">Boiler Optimiser</a></html>'
-    ) === "already-linked",
-    "skip pages that already link"
+    ) === null,
+    "already-linked pages still get the card"
 );
+assert(
+    skipReason("/vaillant/how-to-adjust-the-flow-temperature/", "<html></html>") === "flow-temp-intent",
+    "brand flow-temp how-to is excluded"
+);
+assert(
+    skipReason(
+        "/combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/",
+        "<html></html>"
+    ) === "flow-temp-intent",
+    "reduction article is excluded"
+);
+assert(
+    skipReason("/opentherm/opentherm-boilers-and-controls/", "<html></html>") === "optimiser-follow-on",
+    "Optimiser follow-on content is excluded"
+);
+assert(
+    skipReason("/energy-saving/combi-boiler-condensing-mode-savings/", "<html></html>") ===
+        "optimiser-follow-on",
+    "condensing-mode savings is an Optimiser follow-on"
+);
+assert(isFlowTempIntentPath("/the-relationship-between-flow-temperature-and-power-output/"), "relationship article");
+assert(!isFlowTempIntentPath("/fault-codes/vaillant-f75-fault-code-repair/"), "fault code is not flow-temp");
 
 const articleHtml =
     "<body>\n    <div class=\"article-container\">\n        <article>copy</article>\n    </div>\n    <div id=\"site-footer\"></div>\n</body>";
@@ -96,6 +120,7 @@ const counts = {
     unexpectedBlock: [],
 };
 const fault = { total: 0, covered: 0 };
+const howto = { total: 0, withCard: [] };
 let flowCovered = false;
 
 for (const url of sitemapUrls) {
@@ -114,7 +139,14 @@ for (const url of sitemapUrls) {
     }
     if (pathname.indexOf("reducing-the-flow-temperature-for-a-condensing-combi-boiler") !== -1) {
         flowCovered = hasBlock;
-        assert(!reason, "flow temperature article should be eligible, got " + reason);
+        assert(reason === "flow-temp-intent", "flow temperature article should be excluded, got " + reason);
+        assert(!hasBlock, "flow temperature article must not have the sitelink card");
+    }
+    if (/how-to-adjust-the-flow-temperature/.test(pathname)) {
+        howto.total += 1;
+        if (hasBlock) howto.withCard.push(pathname);
+        assert(reason === "flow-temp-intent", pathname + " how-to should be flow-temp-intent, got " + reason);
+        assert(!hasBlock, pathname + " how-to must not have the sitelink card");
     }
     if (reason) {
         counts.skipped[reason] = (counts.skipped[reason] || 0) + 1;
@@ -133,12 +165,24 @@ assert(counts.missingBlock.length === 0, "pages missing sitelink:\n" + counts.mi
 assert(counts.unexpectedBlock.length === 0, "skip pages with sitelink:\n" + counts.unexpectedBlock.join("\n"));
 assert(fault.total === 88, "expected 88 fault-code sitemap pages, got " + fault.total);
 assert(fault.covered === 88, "all fault-code pages should have the sitelink");
-assert(flowCovered, "flow temperature article should have the sitelink");
-assert(counts.covered >= 236, "expected at least 236 covered sitemap pages, got " + counts.covered);
+assert(!flowCovered, "flow temperature article must not have the sitelink");
+assert(howto.withCard.length === 0, "how-to-adjust pages must not have the sitelink:\n" + howto.withCard.join("\n"));
+assert(howto.total >= 14, "expected brand how-to hubs in the sitemap, got " + howto.total);
+assert(!counts.skipped["already-linked"], "already-linked pages should now receive the card");
 assert(counts.skipped.optimiser === 2, "two optimiser pages skipped");
 assert(counts.skipped.legal === 3, "three legal pages skipped");
 assert(counts.skipped["heat-pump"] === 11, "eleven heat-pump pages skipped");
-assert(counts.skipped["already-linked"] === 65, "65 pages already linked");
+assert(counts.skipped["flow-temp-intent"] >= 50, "flow-temp-intent sitemap skips, got " + counts.skipped["flow-temp-intent"]);
+assert(counts.skipped["optimiser-follow-on"] === 7, "seven Optimiser follow-on pages skipped");
+assert(
+    counts.covered +
+        Object.keys(counts.skipped).reduce(function (sum, key) {
+            return sum + counts.skipped[key];
+        }, 0) +
+        counts.missingFile ===
+        sitemapUrls.length,
+    "sitemap coverage should account for every URL"
+);
 assert(counts.missingFile === 1, "shortcuts/ is in the sitemap but has no file");
 
 const extraContent = [
@@ -162,8 +206,25 @@ assert(skippedHeat.indexOf("id=\"mb-optimiser-sitelink\"") === -1, "heat pump gu
 const skippedOpt = fs.readFileSync(path.join(ROOT, "boiler-optimiser/index.html"), "utf8");
 assert(skippedOpt.indexOf("id=\"mb-optimiser-sitelink\"") === -1, "optimiser page has no sitelink");
 
-const already = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
-assert(already.indexOf("id=\"mb-optimiser-sitelink\"") === -1, "homepage already links; no extra block");
+const homepage = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
+assert(homepage.indexOf("id=\"mb-optimiser-sitelink\"") !== -1, "homepage should have the sitelink card");
+assert(hasNonBlockOptimiserLink(homepage), "homepage keeps its in-content Optimiser link");
+
+const howtoPage = fs.readFileSync(
+    path.join(ROOT, "vaillant/how-to-adjust-the-flow-temperature/index.html"),
+    "utf8"
+);
+assert(howtoPage.indexOf("id=\"mb-optimiser-sitelink\"") === -1, "Vaillant flow-temp how-to has no sitelink");
+
+const reduction = fs.readFileSync(
+    path.join(
+        ROOT,
+        "combi-boiler/reducing-the-flow-temperature-for-a-condensing-combi-boiler-for-upto-8-percent-saving-on-your-gas-heating-bills/index.html"
+    ),
+    "utf8"
+);
+assert(reduction.indexOf("id=\"mb-optimiser-sitelink\"") === -1, "reduction article has no sitelink");
+assert(hasNonBlockOptimiserLink(howtoPage), "Vaillant how-to keeps its in-content Optimiser link");
 
 const allHtml = walkHtml(ROOT, []);
 allHtml.forEach(function (filePath) {
@@ -174,6 +235,19 @@ allHtml.forEach(function (filePath) {
     assert(without.indexOf("mb-optimiser-sitelink") === -1 || true, "block is well marked");
 });
 
+const followOnList = [...optimiserFollowOnPaths()].sort();
+const flowTempSitemap = [];
+const followOnSitemap = [];
+for (const url of sitemapUrls) {
+    const pathname = new URL(url).pathname;
+    const file = urlToFile(url);
+    if (!fs.existsSync(file)) continue;
+    const html = fs.readFileSync(file, "utf8");
+    const reason = skipReason(pathname, html);
+    if (reason === "flow-temp-intent") flowTempSitemap.push(pathname);
+    if (reason === "optimiser-follow-on") followOnSitemap.push(pathname);
+}
+
 console.log("ok");
 console.log(
     JSON.stringify(
@@ -183,6 +257,10 @@ console.log(
             skipped: counts.skipped,
             missingFile: counts.missingFile,
             faultCodePages: fault,
+            howtoPages: howto.total,
+            flowTempIntentSitemap: flowTempSitemap.sort(),
+            optimiserFollowOnSitemap: followOnSitemap.sort(),
+            optimiserFollowOnExtracted: followOnList,
         },
         null,
         2

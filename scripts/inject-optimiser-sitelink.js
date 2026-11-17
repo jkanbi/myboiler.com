@@ -2,9 +2,11 @@
 /**
  * Insert the reusable Boiler Optimiser sitelink after main content.
  *
- * One block, used on article, fault-code, calculator, and other content pages
- * that do not already link to /boiler-optimiser/. Skip Optimiser pages, legal
- * pages, heat-pump preview pages, redirects, and noindex stubs.
+ * One block, used on article, fault-code, calculator, and other content pages.
+ * Skip Optimiser pages, legal pages, heat-pump pages, redirects, noindex stubs,
+ * flow-temperature how-to / adjustment pages, and Optimiser follow-on content.
+ * Pages that already link to the Optimiser still get the card unless they are
+ * in those skip groups. Existing in-content links are left in place.
  *
  *   node scripts/inject-optimiser-sitelink.js
  *   node scripts/inject-optimiser-sitelink.js --check
@@ -87,6 +89,90 @@ function isNoindexPage(html) {
     return /<meta[^>]+name=["']robots["'][^>]+noindex/i.test(html);
 }
 
+function visibleTitleText(html) {
+    const title = ((html.match(/<title>([^<]+)/i) || [])[1] || "");
+    const h1 = ((html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i) || [])[1] || "").replace(/<[^>]+>/g, " ");
+    return (title + " " + h1).replace(/\s+/g, " ").trim();
+}
+
+function isFlowTempIntentPath(pathname) {
+    const p = String(pathname || "").toLowerCase();
+    return (
+        /how-to-adjust-the-flow-temperature/.test(p) ||
+        /how-to-adjust-the-power-level-and-flow-temperature/.test(p) ||
+        /reducing-the-flow-temperature/.test(p) ||
+        /flow-temperature-adjustment/.test(p) ||
+        /adjust-your-system-regular-boiler-flow-temperature/.test(p) ||
+        /relationship-between-flow-temperature/.test(p) ||
+        /(^|\/)flow-temp(-|\/)/.test(p) ||
+        /reduce-flow-temperature/.test(p)
+    );
+}
+
+function isFlowTempIntentTitle(html) {
+    const text = visibleTitleText(html || "");
+    if (!/flow temperature/i.test(text)) return false;
+    return /adjust|reduc|chang|lower/i.test(text);
+}
+
+const NAV_CHROME_PATHS = new Set(["/", "/advice/", "/toolbox/", "/chat/", "/quote/"]);
+const OPTIMISER_SOURCE_PAGES = [
+    "boiler-optimiser/index.html",
+    "boiler-optimiser-advance-power-output/index.html",
+];
+
+function normaliseInternalPath(href) {
+    if (!href || href.charAt(0) === "#") return null;
+    if (/^(mailto:|tel:|javascript:)/i.test(href)) return null;
+    let pathname;
+    try {
+        const url = new URL(href, "https://myboiler.com/");
+        if (url.hostname !== "myboiler.com" && url.hostname !== "www.myboiler.com") return null;
+        pathname = url.pathname;
+    } catch (err) {
+        return null;
+    }
+    if (!pathname.endsWith("/")) pathname += "/";
+    if (/\.(css|js|mjs|map|png|jpe?g|gif|svg|webp|ico|woff2?|xml|json|txt)\/$/i.test(pathname)) return null;
+    return pathname;
+}
+
+function extractOptimiserFollowOns(html) {
+    const paths = new Set();
+    function add(href) {
+        const pathname = normaliseInternalPath(href);
+        if (!pathname) return;
+        if (NAV_CHROME_PATHS.has(pathname) || pathname.indexOf("/quote/") === 0) return;
+        if (isOptimiserPath(pathname) || isLegalPath(pathname) || isHeatPumpPath(pathname)) return;
+        paths.add(pathname);
+    }
+    const attrRe = /\b(?:href|data-howto)=["']([^"']+)["']/gi;
+    let match;
+    while ((match = attrRe.exec(html))) add(match[1]);
+    const linkElRe = /linkEl\(\s*['"]([^'"]+)['"]/g;
+    while ((match = linkElRe.exec(html))) add(match[1]);
+    return paths;
+}
+
+let cachedFollowOns = null;
+
+function optimiserFollowOnPaths() {
+    if (cachedFollowOns) return cachedFollowOns;
+    cachedFollowOns = new Set();
+    OPTIMISER_SOURCE_PAGES.forEach(function (rel) {
+        const file = path.join(ROOT, rel);
+        if (!fs.existsSync(file)) return;
+        extractOptimiserFollowOns(fs.readFileSync(file, "utf8")).forEach(function (pathname) {
+            cachedFollowOns.add(pathname);
+        });
+    });
+    return cachedFollowOns;
+}
+
+function isOptimiserFollowOnPath(pathname) {
+    return optimiserFollowOnPaths().has(pathname);
+}
+
 function stripSitelink(html) {
     return html.replace(BLOCK_RE, "");
 }
@@ -102,7 +188,8 @@ function skipReason(pathname, html) {
     if (isHeatPumpPath(pathname)) return "heat-pump";
     if (isRedirectPage(html)) return "redirect";
     if (isNoindexPage(html)) return "noindex";
-    if (hasNonBlockOptimiserLink(html)) return "already-linked";
+    if (isFlowTempIntentPath(pathname) || isFlowTempIntentTitle(html)) return "flow-temp-intent";
+    if (isOptimiserFollowOnPath(pathname)) return "optimiser-follow-on";
     return null;
 }
 
@@ -226,6 +313,8 @@ function main() {
             counts.failed
     );
     console.log("skipped by", skippedBy);
+    const followOns = [...optimiserFollowOnPaths()].sort();
+    console.log("optimiser follow-on paths (" + followOns.length + "):\n" + followOns.join("\n"));
     if (failed.length) {
         console.error("failed pages:\n" + failed.join("\n"));
         process.exit(1);
@@ -249,6 +338,10 @@ module.exports = {
     isOptimiserPath,
     isLegalPath,
     isHeatPumpPath,
+    isFlowTempIntentPath,
+    isFlowTempIntentTitle,
+    isOptimiserFollowOnPath,
+    optimiserFollowOnPaths,
 };
 
 if (require.main === module) {
