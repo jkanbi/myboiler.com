@@ -4,9 +4,10 @@
  *
  * One block, used on article, fault-code, calculator, and other content pages.
  * Skip Optimiser pages, legal pages, heat-pump pages, redirects, noindex stubs,
- * flow-temperature how-to / adjustment pages, and Optimiser follow-on content.
- * Pages that already link to the Optimiser still get the card unless they are
- * in those skip groups. Existing in-content links are left in place.
+ * and flow-temperature how-to / adjustment pages. Remaining Optimiser follow-on
+ * content is skipped unless listed in SITELINK_INCLUDE_PATHS. Pages that already
+ * link to the Optimiser still get the card unless they are in those skip groups.
+ * Existing in-content links are left in place.
  *
  *   node scripts/inject-optimiser-sitelink.js
  *   node scripts/inject-optimiser-sitelink.js --check
@@ -116,6 +117,14 @@ function isFlowTempIntentTitle(html) {
 }
 
 const NAV_CHROME_PATHS = new Set(["/", "/advice/", "/toolbox/", "/chat/", "/quote/"]);
+
+const SITELINK_INCLUDE_PATHS = new Set([
+    "/best-radiator-valves-and-thermostat-radiator-valves-trv/",
+    "/underfloor-heating-repairs/",
+    "/vaillant/vaillant-controls/",
+    "/opentherm/opentherm-boilers-and-controls/",
+    "/priority-domestic-hot-water/",
+]);
 const OPTIMISER_SOURCE_PAGES = [
     "boiler-optimiser/index.html",
     "boiler-optimiser-advance-power-output/index.html",
@@ -189,6 +198,7 @@ function skipReason(pathname, html) {
     if (isRedirectPage(html)) return "redirect";
     if (isNoindexPage(html)) return "noindex";
     if (isFlowTempIntentPath(pathname) || isFlowTempIntentTitle(html)) return "flow-temp-intent";
+    if (SITELINK_INCLUDE_PATHS.has(pathname)) return null;
     if (isOptimiserFollowOnPath(pathname)) return "optimiser-follow-on";
     return null;
 }
@@ -342,6 +352,7 @@ module.exports = {
     isFlowTempIntentTitle,
     isOptimiserFollowOnPath,
     optimiserFollowOnPaths,
+    SITELINK_INCLUDE_PATHS,
 };
 
 if (require.main === module) {

@@ -16,6 +16,7 @@ const {
     fileToPathname,
     isFlowTempIntentPath,
     optimiserFollowOnPaths,
+    SITELINK_INCLUDE_PATHS,
 } = require("./inject-optimiser-sitelink");
 
 function assert(cond, message) {
@@ -80,8 +81,24 @@ assert(
     "reduction article is excluded"
 );
 assert(
-    skipReason("/opentherm/opentherm-boilers-and-controls/", "<html></html>") === "optimiser-follow-on",
-    "Optimiser follow-on content is excluded"
+    skipReason("/opentherm/opentherm-boilers-and-controls/", "<html></html>") === null,
+    "OpenTherm controls page is allow-listed for the card"
+);
+assert(
+    skipReason("/vaillant/vaillant-controls/", "<html></html>") === null,
+    "Vaillant controls page is allow-listed for the card"
+);
+assert(
+    skipReason("/best-radiator-valves-and-thermostat-radiator-valves-trv/", "<html></html>") === null,
+    "TRV page is allow-listed for the card"
+);
+assert(
+    skipReason("/priority-domestic-hot-water/", "<html></html>") === null,
+    "priority DHW page is allow-listed for the card"
+);
+assert(
+    skipReason("/underfloor-heating-repairs/", "<html></html>") === null,
+    "underfloor heating repairs page is allow-listed for the card"
 );
 assert(
     skipReason("/energy-saving/combi-boiler-condensing-mode-savings/", "<html></html>") ===
@@ -173,7 +190,7 @@ assert(counts.skipped.optimiser === 2, "two optimiser pages skipped");
 assert(counts.skipped.legal === 3, "three legal pages skipped");
 assert(counts.skipped["heat-pump"] === 11, "eleven heat-pump pages skipped");
 assert(counts.skipped["flow-temp-intent"] >= 50, "flow-temp-intent sitemap skips, got " + counts.skipped["flow-temp-intent"]);
-assert(counts.skipped["optimiser-follow-on"] === 7, "seven Optimiser follow-on pages skipped");
+assert(counts.skipped["optimiser-follow-on"] === 3, "three remaining Optimiser follow-on pages skipped");
 assert(
     counts.covered +
         Object.keys(counts.skipped).reduce(function (sum, key) {
@@ -225,6 +242,17 @@ const reduction = fs.readFileSync(
 );
 assert(reduction.indexOf("id=\"mb-optimiser-sitelink\"") === -1, "reduction article has no sitelink");
 assert(hasNonBlockOptimiserLink(howtoPage), "Vaillant how-to keeps its in-content Optimiser link");
+
+[...SITELINK_INCLUDE_PATHS].forEach(function (pathname) {
+    const file = urlToFile("https://myboiler.com" + pathname);
+    const html = fs.readFileSync(file, "utf8");
+    assert(!skipReason(pathname, html), pathname + " should be eligible");
+    assert(html.indexOf("id=\"mb-optimiser-sitelink\"") !== -1, pathname + " should have sitelink");
+    assert(
+        /href="\/boiler-optimiser\/\?utm_source=myboiler&amp;utm_medium=organic&amp;utm_content=org_sitelink"/.test(html),
+        pathname + " should use org_sitelink"
+    );
+});
 
 const allHtml = walkHtml(ROOT, []);
 allHtml.forEach(function (filePath) {
