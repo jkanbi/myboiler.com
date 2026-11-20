@@ -1816,10 +1816,32 @@
             margin: 0.15rem 0 0;
         }
 
+        .tool-confirm-low-kwh {
+            margin: 0 0 0.85rem;
+            padding: 0.65rem 0.75rem;
+            border: 2px solid #b58100;
+            border-radius: var(--radius);
+            background: #fff4d6;
+            color: var(--text);
+            font-size: 0.875rem;
+            font-weight: 600;
+            line-height: 1.4;
+            text-align: left;
+        }
+
+        .tool-confirm-low-kwh p {
+            margin: 0 0 0.55rem;
+        }
+
+        .tool-confirm-low-kwh .tool-confirm-low-kwh-fix {
+            margin-bottom: 0;
+        }
+
         .tool-confirm.is-done .tool-confirm-fields,
         .tool-confirm.is-done .input-hint,
         .tool-confirm.is-done .tool-confirm-raise,
         .tool-confirm.is-done .tool-confirm-cylinder,
+        .tool-confirm.is-done .tool-confirm-low-kwh,
         .tool-confirm.is-done #tool-confirm-submit,
         .tool-confirm.is-done .tool-confirm-already-wrap,
         .tool-confirm.is-done #tool-confirm-done,
@@ -3516,7 +3538,7 @@
   "description": "Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow temperature. A cylinder still needs 60°C stored water."
 }
     </script>
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=buttons-1" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=low-kwh-1" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -4069,6 +4091,14 @@
                         <span class="tool-confirm-unit" aria-hidden="true">p/kWh</span>
                     </div>
                 </div>
+            </div>
+            <div class="tool-confirm-low-kwh" id="tool-confirm-low-kwh" hidden>
+                <p id="tool-confirm-low-kwh-copy">Is your annual gas usage really below 6,000 kWh?</p>
+                <div class="tool-confirm-ack">
+                    <input type="checkbox" id="tool-confirm-low-kwh-ack" name="low-kwh-ack">
+                    <label for="tool-confirm-low-kwh-ack" id="tool-confirm-low-kwh-label">Yes, this figure is correct.</label>
+                </div>
+                <p class="tool-confirm-low-kwh-fix">Or correct the number above.</p>
             </div>
             <p class="tool-confirm-raise" id="tool-confirm-raise" hidden role="status">Aim lower if you can. Raising the flow temperature is worse long term: it uses more gas, is harder on the boiler, and future heating system changes may be needed.</p>
             <div class="tool-confirm-cylinder" id="tool-confirm-cylinder" hidden>

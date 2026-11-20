@@ -323,9 +323,58 @@
         setInput.addEventListener('input', function () {
             setInput.dataset.edited = '1';
         });
+        var LOW_KWH = 6000;
+        var lowKwhNote = document.getElementById('tool-confirm-low-kwh');
+        var lowKwhAck = document.getElementById('tool-confirm-low-kwh-ack');
+        var lowKwhCopy = document.getElementById('tool-confirm-low-kwh-copy');
+        var lowKwhLabel = document.getElementById('tool-confirm-low-kwh-label');
+        var confirmedLowKwh = null;
+
+        function enteredKwh() {
+            if (!kwhInput || kwhInput.value.trim() === '') return null;
+            var n = Number(kwhInput.value);
+            return isFinite(n) ? n : null;
+        }
+
+        function formatKwhFigure(n) {
+            return Math.round(n).toLocaleString('en-GB');
+        }
+
+        function syncLowKwhNote() {
+            var n = enteredKwh();
+            var low = n !== null && validKwh(n) && n < LOW_KWH;
+            if (!low || confirmedLowKwh !== n) {
+                confirmedLowKwh = null;
+                if (lowKwhAck) lowKwhAck.checked = false;
+            }
+            if (lowKwhNote) lowKwhNote.hidden = !low;
+            if (low && lowKwhCopy) {
+                lowKwhCopy.textContent = 'Is your annual gas usage really below 6,000 kWh? You entered ' + formatKwhFigure(n) + ' kWh.';
+            }
+            if (low && lowKwhLabel) {
+                lowKwhLabel.textContent = 'Yes, ' + formatKwhFigure(n) + ' kWh is correct.';
+            }
+            if (kwhInput) {
+                if (low) kwhInput.setAttribute('aria-describedby', 'tool-confirm-low-kwh-copy');
+                else kwhInput.removeAttribute('aria-describedby');
+            }
+            if (!low && lowKwhAck && typeof lowKwhAck.setCustomValidity === 'function') {
+                lowKwhAck.setCustomValidity('');
+            }
+        }
+
         if (kwhInput) {
             kwhInput.addEventListener('input', function () {
                 kwhInput.dataset.edited = '1';
+                syncLowKwhNote();
+            });
+        }
+        if (lowKwhAck) {
+            lowKwhAck.addEventListener('change', function () {
+                var n = enteredKwh();
+                confirmedLowKwh = lowKwhAck.checked && n !== null ? n : null;
+                if (!lowKwhAck.checked) confirmedLowKwh = null;
+                if (typeof lowKwhAck.setCustomValidity === 'function') lowKwhAck.setCustomValidity('');
             });
         }
         if (rateInput) {
@@ -374,6 +423,19 @@
                 if (kwhInput) kwhInput.focus();
                 return;
             }
+            if (annualKwh !== null && annualKwh < LOW_KWH) {
+                syncLowKwhNote();
+                if (!lowKwhAck || !lowKwhAck.checked || confirmedLowKwh !== annualKwh) {
+                    if (lowKwhAck && typeof lowKwhAck.setCustomValidity === 'function') {
+                        lowKwhAck.setCustomValidity('Confirm that ' + formatKwhFigure(annualKwh) + ' kWh is your annual gas usage, or correct the figure.');
+                    }
+                    if (lowKwhAck && typeof lowKwhAck.reportValidity === 'function') lowKwhAck.reportValidity();
+                    else if (lowKwhAck) lowKwhAck.focus();
+                    else if (kwhInput) kwhInput.focus();
+                    return;
+                }
+            }
+            if (lowKwhAck && typeof lowKwhAck.setCustomValidity === 'function') lowKwhAck.setCustomValidity('');
             if (rateInput && rateInput.value.trim() !== '' && !validRate(Number(rateInput.value))) {
                 rateInput.focus();
                 return;
