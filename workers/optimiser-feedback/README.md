@@ -70,6 +70,7 @@ Allowlisted `event` values:
 | `step` | `step` (int 1–10), `path` |
 | `brand` | `brand` |
 | `guide_click` | `brand`, `target` (pathname starting `/` or a `https://boilermanuals.com/` / `www` URL, ≤200 chars), `outbound` (0/1) |
+| `button` | `target` one of `slider-prompt`, `priority-controls`, `detailed-savings`, `boiler-saving`, `boiler-stats`, `starting-flow`, `timing-note`, `cylinder-stat`, `condensate-warning` |
 | `turned_down` | `brand`, `from_flow`, `set_flow` (30–90), `space_kwh`, `annual_kwh`, `unit_rate`, `system`, `boiler_type`, `saving_kwh`, `saving_gbp`, `is_test` |
 | `did_it_work` | `answer` in `{yes, cool, not_yet}` |
 

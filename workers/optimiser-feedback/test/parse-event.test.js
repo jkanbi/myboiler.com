@@ -684,3 +684,38 @@ test("POST /api/optimiser-event stores a guide_click and rejects a bad target", 
   assert.equal(bad.status, 400);
   assert.equal(env.DB.statements.length, 1);
 });
+
+test("parseOptimiserEventBody accepts an info button and rejects an unknown one", () => {
+  const ok = parseOptimiserEventBody(JSON.stringify({
+    event: "button",
+    target: "detailed-savings",
+    path: "/boiler-optimiser/",
+  }));
+  assert.equal(ok.ok, true);
+  assert.equal(ok.row.event, "button");
+  assert.equal(ok.row.target, "detailed-savings");
+  assert.equal(ok.row.brand, undefined);
+
+  assert.equal(parseOptimiserEventBody(JSON.stringify({
+    event: "button",
+    target: "not-a-button",
+  })).ok, false);
+  assert.equal(parseOptimiserEventBody(JSON.stringify({
+    event: "button",
+  })).ok, false);
+});
+
+test("POST /api/optimiser-event stores an info button click", async () => {
+  const env = { REQUESTS: mockKv(), DB: mockDb() };
+  const ok = await worker.fetch(
+    eventRequest({
+      event: "button",
+      target: "boiler-saving",
+      path: "/boiler-optimiser/",
+    }),
+    env
+  );
+  assert.equal(ok.status, 204);
+  assert.equal(env.DB.statements[0].args[2], "button");
+  assert.equal(env.DB.statements[0].args[20], "boiler-saving");
+});

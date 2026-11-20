@@ -26,6 +26,8 @@
             }
 
             .flow-slider.is-hinting .flow-thumb-value,
+            #boiler-stats-open,
+            #boiler-saving-open,
             #annual-kwh,
             #unit-rate {
                 animation: none;
@@ -303,8 +305,21 @@
             padding: 0.32rem 0.25rem 0.36rem;
             border: 1.5px solid var(--text);
             border-radius: 6px;
+            background: transparent;
+            color: inherit;
+            font-family: inherit;
             box-sizing: border-box;
             text-transform: none;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+            animation: flow-thumb-pulse 3.6s ease-in-out infinite;
+        }
+
+        .boiler-saving:hover,
+        .boiler-saving:focus-visible {
+            border-color: var(--accent);
+            outline: none;
         }
 
         .boiler-saving-label {
@@ -355,6 +370,7 @@
             box-sizing: border-box;
             -webkit-appearance: none;
             appearance: none;
+            animation: flow-thumb-pulse 3.6s ease-in-out infinite;
         }
 
         .boiler-stats:hover,
@@ -1887,6 +1903,7 @@
         .timing-note-btn,
         .slider-prompt-btn,
         .priority-controls-btn,
+        .detailed-savings-btn,
         .cylinder-stat-note {
             display: flex;
             align-items: center;
@@ -1963,10 +1980,24 @@
             outline: none;
         }
 
+        .detailed-savings-btn {
+            margin-top: 0.7rem;
+            border-color: #1863dc;
+            background: #1863dc;
+        }
+
+        .detailed-savings-btn:hover,
+        .detailed-savings-btn:focus-visible {
+            background: #1454b8;
+            border-color: #1454b8;
+            outline: none;
+        }
+
         .condensate-warning-btn:focus-visible,
         .timing-note-btn:focus-visible,
         .slider-prompt-btn:focus-visible,
         .priority-controls-btn:focus-visible,
+        .detailed-savings-btn:focus-visible,
         .cylinder-stat-note:focus-visible {
             outline: 3px solid currentColor;
             outline-offset: 2px;
@@ -2007,6 +2038,19 @@
 
         #priority-controls-dialog .custom-usage-head h3 {
             color: #4b5563;
+        }
+
+        #detailed-savings-dialog {
+            width: min(52rem, calc(100vw - 1.5rem));
+        }
+
+        #detailed-savings-dialog .custom-usage-head h3 {
+            color: #1863dc;
+        }
+
+        #detailed-savings-dialog .saving-panel {
+            margin-top: 0;
+            box-shadow: none;
         }
 
         #cylinder-stat-dialog .custom-usage-head h3 {
@@ -2229,7 +2273,8 @@
         }
 
         .slider-notes .condensate-warning-btn,
-        .slider-notes .priority-controls-btn {
+        .slider-notes .priority-controls-btn,
+        .slider-notes .detailed-savings-btn {
             margin-top: 0.7rem;
         }
 
@@ -2397,6 +2442,32 @@
 
         .bill-results {
             margin-bottom: 0;
+        }
+
+        .saving-panel {
+            margin-top: 1.75rem;
+            border: 2px solid #2f9e44;
+            border-radius: var(--radius);
+            box-shadow: 0 6px 18px rgba(47, 158, 68, 0.28);
+            overflow: hidden;
+            background: #eaf7ee;
+        }
+
+        .saving-panel .result-grid {
+            margin-top: 0;
+        }
+
+        .saving-panel .result-item.is-key {
+            border: 0;
+            box-shadow: none;
+            border-radius: 0;
+        }
+
+        .saving-panel .reliability-note {
+            margin: 0;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
         }
 
         .reliability-note {
@@ -3336,7 +3407,7 @@
   "description": "Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow temperature. A cylinder still needs 60°C stored water."
 }
     </script>
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=uet-1" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=buttons-1" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -3466,10 +3537,10 @@
                                             </div>
                                         </div>
                                     </button>
-                                    <span class="boiler-saving is-red">
+                                    <button type="button" class="boiler-saving is-red" id="boiler-saving-open" aria-haspopup="dialog" aria-controls="detailed-savings-dialog" aria-expanded="false">
                                         <span class="boiler-saving-label">Annual Savings</span>
                                         <span class="boiler-saving-value" id="boiler-saving">£0.00</span>
-                                    </span>
+                                    </button>
                                 </div>
                                 <div class="condensate">
                                     <span class="condensate-pipe" aria-hidden="true"></span>
@@ -3527,11 +3598,12 @@
                     <input type="range" id="flow-temp" class="input-slider" min="20" max="90" step="1" value="75" aria-label="Flow temperature" aria-describedby="slider-prompt">
                 </div>
                 <div class="slider-notes">
-                    <button type="button" class="slider-prompt-btn" id="slider-prompt" aria-haspopup="dialog" aria-controls="slider-prompt-dialog" aria-expanded="false">Move the flow temperature slider to see the saving (click for info)</button>
+                    <button type="button" class="slider-prompt-btn" id="slider-prompt" aria-haspopup="dialog" aria-controls="slider-prompt-dialog" aria-expanded="false">Adjust slider to see savings (click for info)</button>
                     <button type="button" class="timing-note-btn" id="timing-note" aria-haspopup="dialog" aria-controls="timing-note-dialog" aria-expanded="false" hidden>Low flow temp, takes longer to heat, uses less energy (click for info)</button>
                     <button type="button" class="cylinder-stat-note" id="cylinder-stat-note" aria-haspopup="dialog" aria-controls="cylinder-stat-dialog" aria-expanded="false" hidden>Set the cylinder thermostat to 60°C (click for info)</button>
                     <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog" hidden>Warning: Condense pipe must be correctly installed (click for info)</button>
-                    <button type="button" class="priority-controls-btn" id="priority-controls-open" aria-haspopup="dialog" aria-controls="priority-controls-dialog" aria-expanded="false" hidden>Advanced System Controls can lead to automatic lower flow temperatures (click for info)</button>
+                    <button type="button" class="priority-controls-btn" id="priority-controls-open" aria-haspopup="dialog" aria-controls="priority-controls-dialog" aria-expanded="false" hidden>Automatic Advanced System Controls (click for info)</button>
+                    <button type="button" class="detailed-savings-btn" id="detailed-savings-open" aria-haspopup="dialog" aria-controls="detailed-savings-dialog" aria-expanded="false">Detailed Savings (click for info)</button>
                 </div>
                 <dialog class="custom-usage-dialog note-info-dialog" id="slider-prompt-dialog" aria-labelledby="slider-prompt-title">
                     <div class="custom-usage-panel note-info-panel">
@@ -3623,6 +3695,52 @@
                         <button type="button" class="choice-button custom-usage-done" id="condensate-warning-done">Done</button>
                     </div>
                 </dialog>
+                <dialog class="custom-usage-dialog note-info-dialog" id="detailed-savings-dialog" aria-labelledby="detailed-savings-title">
+                    <div class="custom-usage-panel note-info-panel">
+                        <div class="custom-usage-head">
+                            <h3 id="detailed-savings-title">Detailed Savings</h3>
+                            <button type="button" class="custom-usage-close" id="detailed-savings-close" aria-label="Close">&times;</button>
+                        </div>
+                        <div class="note-info-body">
+                            <section class="saving-panel">
+                                <div class="result-grid bill-results">
+                                    <div class="result-item is-key is-split">
+                                        <div class="result-split">
+                                            <div class="result-label" id="condensing-saving-unit" data-result="condensing-saving-unit">Annual Condensing-Mode Saving
+0% Saving Versus 75°C Initial Flow Temp
+75°C Flow Temp And 55°C Return Temp</div>
+                                            <div class="result-value" id="condensing-saving" data-result="condensing-saving">—</div>
+                                        </div>
+                                        <div class="result-split">
+                                            <div class="result-label" id="heating-cost-label">Your Annual Space Heating Cost (Not Including Standing Charge)</div>
+                                            <div class="result-value" id="heating-cost" data-result="heating-cost">—</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <aside class="reliability-note">
+                                    <h2 class="reliability-heading">The bigger saving: fewer repairs</h2>
+                                    <p class="reliability-lead">Even if your gas saving looks small, a lower flow temperature is gentler on your boiler. It works less hard, parts can last longer and breakdowns are less likely. Avoiding just one repair can be worth more than the gas you save.</p>
+                                    <ul class="reliability-scale">
+                                        <li class="reliability-band">
+                                            <p class="reliability-band-value">£200+</p>
+                                            <p class="reliability-band-label">a replacement part</p>
+                                        </li>
+                                        <li class="reliability-band">
+                                            <p class="reliability-band-value">£500+</p>
+                                            <p class="reliability-band-label">a new heat exchanger</p>
+                                        </li>
+                                        <li class="reliability-band">
+                                            <p class="reliability-band-value">£2,000+</p>
+                                            <p class="reliability-band-label">a new boiler, if yours fails early</p>
+                                        </li>
+                                    </ul>
+                                    <p class="reliability-footnote">Rough guide prices only. Actual costs vary.</p>
+                                </aside>
+                            </section>
+                        </div>
+                        <button type="button" class="choice-button custom-usage-done" id="detailed-savings-done">Done</button>
+                    </div>
+                </dialog>
                 <dialog class="custom-usage-dialog note-info-dialog" id="priority-controls-dialog" aria-labelledby="priority-controls-title">
                     <div class="custom-usage-panel note-info-panel">
                         <div class="custom-usage-head">
@@ -3698,39 +3816,6 @@
                 </div>
             </dialog>
 
-            <div class="result-grid bill-results">
-                <div class="result-item is-key is-split">
-                    <div class="result-split">
-                        <div class="result-label" id="condensing-saving-unit" data-result="condensing-saving-unit">Annual Condensing-Mode Saving
-0% Saving Versus 75°C Initial Flow Temp
-75°C Flow Temp And 55°C Return Temp</div>
-                        <div class="result-value" id="condensing-saving" data-result="condensing-saving">—</div>
-                    </div>
-                    <div class="result-split">
-                        <div class="result-label" id="heating-cost-label">Your Annual Space Heating Cost (Not Including Standing Charge)</div>
-                        <div class="result-value" id="heating-cost" data-result="heating-cost">—</div>
-                    </div>
-                </div>
-            </div>
-            <aside class="reliability-note">
-                <h2 class="reliability-heading">The bigger saving: fewer repairs</h2>
-                <p class="reliability-lead">Even if your gas saving looks small, a lower flow temperature is gentler on your boiler. It works less hard, parts can last longer and breakdowns are less likely. Avoiding just one repair can be worth more than the gas you save.</p>
-                <ul class="reliability-scale">
-                    <li class="reliability-band">
-                        <p class="reliability-band-value">£200+</p>
-                        <p class="reliability-band-label">a replacement part</p>
-                    </li>
-                    <li class="reliability-band">
-                        <p class="reliability-band-value">£500+</p>
-                        <p class="reliability-band-label">a new heat exchanger</p>
-                    </li>
-                    <li class="reliability-band">
-                        <p class="reliability-band-value">£2,000+</p>
-                        <p class="reliability-band-label">a new boiler, if yours fails early</p>
-                    </li>
-                </ul>
-                <p class="reliability-footnote">Rough guide prices only. Actual costs vary.</p>
-            </aside>
             </div>
         </div>
 
@@ -5214,7 +5299,7 @@
                 event.preventDefault();
                 closeCustomUsage();
                 closeStartingFlow();
-                ['condensate-warning-dialog', 'slider-prompt-dialog', 'timing-note-dialog', 'boiler-stats-dialog'].forEach(function (id) {
+                ['condensate-warning-dialog', 'slider-prompt-dialog', 'timing-note-dialog', 'boiler-stats-dialog', 'detailed-savings-dialog'].forEach(function (id) {
                     var openDialog = document.getElementById(id);
                     if (openDialog && openDialog.open) openDialog.close();
                 });
@@ -5433,6 +5518,8 @@
                 'cylinder-stat-note': 'cylinder-stat-dialog',
                 'condensate-warning-open': 'condensate-warning-dialog',
                 'priority-controls-open': 'priority-controls-dialog',
+                'detailed-savings-open': 'detailed-savings-dialog',
+                'boiler-saving-open': 'detailed-savings-dialog',
                 'boiler-stats-open': 'boiler-stats-dialog'
             };
             var infoDialogClosers = {
@@ -5446,6 +5533,8 @@
                 'condensate-warning-done': 'condensate-warning-dialog',
                 'priority-controls-close': 'priority-controls-dialog',
                 'priority-controls-done': 'priority-controls-dialog',
+                'detailed-savings-close': 'detailed-savings-dialog',
+                'detailed-savings-done': 'detailed-savings-dialog',
                 'boiler-stats-close': 'boiler-stats-dialog',
                 'boiler-stats-done': 'boiler-stats-dialog'
             };
@@ -5502,7 +5591,8 @@
             });
             Object.keys(infoDialogs).forEach(function (openId) {
                 var dialog = infoDialogById(infoDialogs[openId]);
-                if (!dialog) return;
+                if (!dialog || dialog.dataset.infoBound === '1') return;
+                dialog.dataset.infoBound = '1';
                 dialog.addEventListener('click', function (event) {
                     if (event.target === dialog) closeInfoDialog(dialog);
                 });

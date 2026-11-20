@@ -15,7 +15,18 @@ const MAX_BRAND = 80;
 const MAX_EVENT_BRAND = 40;
 const MAX_UTM = 64;
 const ALLOWED_TYPES = new Set(["turned_down", "did_it_work"]);
-const ALLOWED_EVENT_TYPES = new Set(["view", "step", "brand", "turned_down", "did_it_work", "guide_click"]);
+const ALLOWED_EVENT_TYPES = new Set(["view", "step", "brand", "turned_down", "did_it_work", "guide_click", "button"]);
+const BUTTON_TARGETS = new Set([
+  "slider-prompt",
+  "priority-controls",
+  "detailed-savings",
+  "boiler-saving",
+  "boiler-stats",
+  "starting-flow",
+  "timing-note",
+  "cylinder-stat",
+  "condensate-warning",
+]);
 const MAX_TARGET = 200;
 const ALLOWED_ANSWERS = new Set(["yes", "cool", "not_yet"]);
 const ALLOWED_ORIGINS = new Set([
@@ -421,6 +432,13 @@ export function parseOptimiserEventBody(body) {
     if (!outbound.ok) return outbound;
     row.target = target.value;
     row.outbound = outbound.value;
+  }
+
+  if (event === "button") {
+    const target = parseSafeToken(data.target, true);
+    if (!target.ok) return target;
+    if (!BUTTON_TARGETS.has(target.value)) return { ok: false, status: 400 };
+    row.target = target.value;
   }
 
   if (event === "turned_down") {

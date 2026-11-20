@@ -641,6 +641,39 @@
         }, true);
     }
 
+    var INFO_BUTTONS = {
+        'slider-prompt': 'slider-prompt',
+        'priority-controls-open': 'priority-controls',
+        'detailed-savings-open': 'detailed-savings',
+        'boiler-saving-open': 'boiler-saving',
+        'boiler-stats-open': 'boiler-stats',
+        'starting-flow-open': 'starting-flow',
+        'timing-note': 'timing-note',
+        'cylinder-stat-note': 'cylinder-stat',
+        'condensate-warning-open': 'condensate-warning'
+    };
+
+    function bindInfoButtons() {
+        if (!onOptimiserTool) return;
+        if (document.documentElement.dataset.phButtonsBound === '1') return;
+        document.documentElement.dataset.phButtonsBound = '1';
+        document.addEventListener('click', function (event) {
+            var button = event.target.closest && event.target.closest('button[id]');
+            if (!button) return;
+            var key = INFO_BUTTONS[button.id];
+            if (!key) return;
+            sendEvent({
+                event: 'button',
+                target: key,
+                path: location.pathname || '/boiler-optimiser/'
+            });
+            capture('optimiser_button_clicked', {
+                button: key,
+                section: 'flow_card'
+            });
+        });
+    }
+
     function bindSteps() {
         if (!onOptimiserTool) return;
         if (document.documentElement.dataset.phStepsBound === '1') return;
@@ -1173,6 +1206,7 @@
         bindConfirm();
         bindBrandVideos();
         bindGuideClicks();
+        bindInfoButtons();
         bindSteps();
         sendView();
         hookFooter();
