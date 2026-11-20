@@ -98,6 +98,7 @@
         }
 
         .boiler-diagram {
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -514,6 +515,16 @@
 
         .boiler-diagram.no-condensate .condensate {
             visibility: hidden;
+        }
+
+        .boiler-diagram > .condensate-warning-btn {
+            align-self: stretch;
+            width: 100%;
+            max-width: 100%;
+            margin: 0.75rem 0 0;
+            box-sizing: border-box;
+            z-index: 5;
+            text-align: center;
         }
 
         .boiler-pipes {
@@ -2291,19 +2302,72 @@
             align-self: stretch;
         }
 
+        .slider-note-row.is-pair:not(:has(> button:not([hidden]))) {
+            display: none;
+        }
+
         @media (min-width: 701px) {
-            .slider-note-row {
-                flex-direction: row;
-                align-items: stretch;
+            .slider-notes {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
                 gap: 0.5rem;
             }
 
-            .slider-note-row > button {
-                flex: 1 1 0;
+            .slider-note-row {
+                display: contents;
+            }
+
+            .slider-notes .slider-note-row > button,
+            .slider-notes > .timing-note-btn,
+            .slider-notes > .cylinder-stat-note {
+                width: 100%;
                 min-width: 0;
+                margin: 0;
                 padding: 0.4rem 0.6rem;
                 font-size: 0.75rem;
                 line-height: 1.2;
+            }
+
+            .boiler-diagram > .condensate-warning-btn {
+                position: absolute;
+                top: 15.375rem;
+                left: calc(50% + 6.5rem);
+                align-self: auto;
+                width: min(18rem, calc(50% - 7.2rem));
+                max-width: min(18rem, calc(50% - 7.2rem));
+                margin: 0;
+                padding: 0.4rem 0.6rem;
+                font-size: 0.75rem;
+                line-height: 1.2;
+            }
+
+            .boiler-diagram:has(#cylinder-diagram:not([hidden])) > .condensate-warning-btn {
+                left: calc(50% + 11.75rem);
+                width: min(18rem, calc(50% - 12.4rem));
+                max-width: min(18rem, calc(50% - 12.4rem));
+            }
+
+            #slider-prompt { grid-area: 1 / 1; }
+            #priority-controls-open { grid-area: 1 / 2; }
+            #detailed-savings-open { grid-area: 1 / 3; }
+
+            .slider-notes .slider-note-row.is-pair {
+                display: flex;
+                flex-direction: row;
+                grid-column: 1 / -1;
+                justify-content: center;
+                align-items: stretch;
+                gap: 0.5rem;
+                width: 100%;
+            }
+
+            .slider-notes .slider-note-row.is-pair > button {
+                flex: 0 0 calc((100% - 1rem) / 3);
+                width: calc((100% - 1rem) / 3);
+                max-width: calc((100% - 1rem) / 3);
+            }
+
+            .slider-notes .slider-note-row.is-pair:not(:has(> button:not([hidden]))) {
+                display: none;
             }
         }
 
@@ -2846,6 +2910,10 @@
 
             #flow-card .boiler-diagram:has(#cylinder-diagram:not([hidden])) {
                 padding-left: 0;
+            }
+
+            .boiler-diagram > .condensate-warning-btn:not([hidden]) {
+                margin-top: 2.75rem;
             }
         }
 
@@ -3618,6 +3686,7 @@
                             <path id="primary-return" fill="none" stroke="#1863dc" stroke-width="5" stroke-linecap="square" stroke-linejoin="miter"></path>
                         </svg>
                     </div>
+                    <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog" hidden>Warning: Condense pipe must be correctly installed (click for info)</button>
                 </div>
                 <div class="flow-slider is-hinting">
                     <span class="flow-thumb-cluster">
@@ -3632,9 +3701,10 @@
                         <button type="button" class="priority-controls-btn" id="priority-controls-open" aria-haspopup="dialog" aria-controls="priority-controls-dialog" aria-expanded="false" hidden>Automatic Advanced System Controls (click for info)</button>
                         <button type="button" class="detailed-savings-btn" id="detailed-savings-open" aria-haspopup="dialog" aria-controls="detailed-savings-dialog" aria-expanded="false">Detailed Savings (click for info)</button>
                     </div>
-                    <button type="button" class="timing-note-btn" id="timing-note" aria-haspopup="dialog" aria-controls="timing-note-dialog" aria-expanded="false" hidden>Low flow temp, takes longer to heat, uses less energy (click for info)</button>
-                    <button type="button" class="cylinder-stat-note" id="cylinder-stat-note" aria-haspopup="dialog" aria-controls="cylinder-stat-dialog" aria-expanded="false" hidden>Set the cylinder thermostat to 60°C (click for info)</button>
-                    <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog" hidden>Warning: Condense pipe must be correctly installed (click for info)</button>
+                    <div class="slider-note-row is-pair">
+                        <button type="button" class="timing-note-btn" id="timing-note" aria-haspopup="dialog" aria-controls="timing-note-dialog" aria-expanded="false" hidden>Low flow temp, takes longer to heat, uses less energy (click for info)</button>
+                        <button type="button" class="cylinder-stat-note" id="cylinder-stat-note" aria-haspopup="dialog" aria-controls="cylinder-stat-dialog" aria-expanded="false" hidden>Set the cylinder thermostat to 60°C (click for info)</button>
+                    </div>
                 </div>
                 <dialog class="custom-usage-dialog note-info-dialog" id="slider-prompt-dialog" aria-labelledby="slider-prompt-title">
                     <div class="custom-usage-panel note-info-panel">
@@ -4786,7 +4856,7 @@
                 var timingNote = document.getElementById('timing-note');
                 if (timingNote) timingNote.hidden = flow > GREEN_MAX;
                 var condensateWarning = document.getElementById('condensate-warning-open');
-                if (condensateWarning) condensateWarning.hidden = flow >= FACTORY_FLOW;
+                if (condensateWarning) condensateWarning.hidden = !condensingBoiler || flow >= FACTORY_FLOW;
                 if (condensingBoiler) {
                     var describedBy = ['slider-prompt', 'flow-state'];
                     if (stored) describedBy.splice(1, 0, 'cylinder-stat-note', 'cylinder-delta-note');
