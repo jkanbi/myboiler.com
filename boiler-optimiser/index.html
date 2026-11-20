@@ -2278,6 +2278,35 @@
             margin-top: 0.7rem;
         }
 
+        .slider-note-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            width: 100%;
+        }
+
+        .slider-notes .slider-note-row > button {
+            width: 100%;
+            margin: 0;
+            align-self: stretch;
+        }
+
+        @media (min-width: 701px) {
+            .slider-note-row {
+                flex-direction: row;
+                align-items: stretch;
+                gap: 0.5rem;
+            }
+
+            .slider-note-row > button {
+                flex: 1 1 0;
+                min-width: 0;
+                padding: 0.4rem 0.6rem;
+                font-size: 0.75rem;
+                line-height: 1.2;
+            }
+        }
+
         #advanced-notes {
             margin-top: 1.5rem;
             padding-top: 1.25rem;
@@ -3598,12 +3627,14 @@
                     <input type="range" id="flow-temp" class="input-slider" min="20" max="90" step="1" value="75" aria-label="Flow temperature" aria-describedby="slider-prompt">
                 </div>
                 <div class="slider-notes">
-                    <button type="button" class="slider-prompt-btn" id="slider-prompt" aria-haspopup="dialog" aria-controls="slider-prompt-dialog" aria-expanded="false">Adjust slider to see savings (click for info)</button>
+                    <div class="slider-note-row">
+                        <button type="button" class="slider-prompt-btn" id="slider-prompt" aria-haspopup="dialog" aria-controls="slider-prompt-dialog" aria-expanded="false">Adjust slider to see savings (click for info)</button>
+                        <button type="button" class="priority-controls-btn" id="priority-controls-open" aria-haspopup="dialog" aria-controls="priority-controls-dialog" aria-expanded="false" hidden>Automatic Advanced System Controls (click for info)</button>
+                        <button type="button" class="detailed-savings-btn" id="detailed-savings-open" aria-haspopup="dialog" aria-controls="detailed-savings-dialog" aria-expanded="false">Detailed Savings (click for info)</button>
+                    </div>
                     <button type="button" class="timing-note-btn" id="timing-note" aria-haspopup="dialog" aria-controls="timing-note-dialog" aria-expanded="false" hidden>Low flow temp, takes longer to heat, uses less energy (click for info)</button>
                     <button type="button" class="cylinder-stat-note" id="cylinder-stat-note" aria-haspopup="dialog" aria-controls="cylinder-stat-dialog" aria-expanded="false" hidden>Set the cylinder thermostat to 60°C (click for info)</button>
                     <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog" hidden>Warning: Condense pipe must be correctly installed (click for info)</button>
-                    <button type="button" class="priority-controls-btn" id="priority-controls-open" aria-haspopup="dialog" aria-controls="priority-controls-dialog" aria-expanded="false" hidden>Automatic Advanced System Controls (click for info)</button>
-                    <button type="button" class="detailed-savings-btn" id="detailed-savings-open" aria-haspopup="dialog" aria-controls="detailed-savings-dialog" aria-expanded="false">Detailed Savings (click for info)</button>
                 </div>
                 <dialog class="custom-usage-dialog note-info-dialog" id="slider-prompt-dialog" aria-labelledby="slider-prompt-title">
                     <div class="custom-usage-panel note-info-panel">
