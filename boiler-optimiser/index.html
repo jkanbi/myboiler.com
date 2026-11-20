@@ -517,11 +517,11 @@
             visibility: hidden;
         }
 
-        .boiler-diagram > .condensate-warning-btn {
+        #flow-card .input-group > .condensate-warning-btn {
             align-self: stretch;
             width: 100%;
             max-width: 100%;
-            margin: 0.75rem 0 0;
+            margin: 0.55rem 0 0;
             box-sizing: border-box;
             z-index: 5;
             text-align: center;
@@ -2306,6 +2306,17 @@
             display: none;
         }
 
+        @media (max-width: 700px) {
+            .slider-notes {
+                gap: 0.7rem;
+            }
+
+            #flow-card .input-group > .condensate-warning-btn:not([hidden]) + .slider-notes {
+                margin-top: 0.7rem;
+                padding-top: 0;
+            }
+        }
+
         @media (min-width: 701px) {
             .slider-notes {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2327,7 +2338,11 @@
                 line-height: 1.2;
             }
 
-            .boiler-diagram > .condensate-warning-btn {
+            #flow-card > .input-group {
+                position: relative;
+            }
+
+            #flow-card .input-group > .condensate-warning-btn {
                 position: absolute;
                 top: 15.375rem;
                 left: calc(50% + 6.5rem);
@@ -2340,7 +2355,7 @@
                 line-height: 1.2;
             }
 
-            .boiler-diagram:has(#cylinder-diagram:not([hidden])) > .condensate-warning-btn {
+            #flow-card .input-group:has(#cylinder-diagram:not([hidden])) > .condensate-warning-btn {
                 left: calc(50% + 11.75rem);
                 width: min(18rem, calc(50% - 12.4rem));
                 max-width: min(18rem, calc(50% - 12.4rem));
@@ -2912,9 +2927,6 @@
                 padding-left: 0;
             }
 
-            .boiler-diagram > .condensate-warning-btn:not([hidden]) {
-                margin-top: 2.75rem;
-            }
         }
 
         @media (min-width: 701px) {
@@ -3686,7 +3698,6 @@
                             <path id="primary-return" fill="none" stroke="#1863dc" stroke-width="5" stroke-linecap="square" stroke-linejoin="miter"></path>
                         </svg>
                     </div>
-                    <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog" hidden>Warning: Condense pipe must be correctly installed (click for info)</button>
                 </div>
                 <div class="flow-slider is-hinting">
                     <span class="flow-thumb-cluster">
@@ -3695,6 +3706,7 @@
                     </span>
                     <input type="range" id="flow-temp" class="input-slider" min="20" max="90" step="1" value="75" aria-label="Flow temperature" aria-describedby="slider-prompt">
                 </div>
+                <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog" hidden>Warning: Condense pipe must be correctly installed (click for info)</button>
                 <div class="slider-notes">
                     <div class="slider-note-row">
                         <button type="button" class="slider-prompt-btn" id="slider-prompt" aria-haspopup="dialog" aria-controls="slider-prompt-dialog" aria-expanded="false">Adjust slider to see savings (click for info)</button>
