@@ -1,0 +1,11 @@
+{
+  "name": "MyBoiler.com",
+  "install": "npm ci",
+  "start": "if (echo >/dev/tcp/127.0.0.1/8000) >/dev/null 2>&1; then echo \"live-server already listening on port 8000\"; exit 0; fi; exec npm run serve -- --host=0.0.0.0 --no-browser",
+  "ports": [
+    {
+      "name": "site",
+      "port": 8000
+    }
+  ]
+}
