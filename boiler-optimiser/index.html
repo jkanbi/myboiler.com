@@ -1604,7 +1604,14 @@
             margin: 0 0 0.35rem;
         }
 
-        .tool-confirm .input-hint {
+        .tool-confirm > .input-label {
+            margin: 0 0 0.45rem;
+            font-size: 1.375rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .tool-confirm > .input-hint {
             display: block;
             margin: 0 0 0.75rem;
         }
@@ -1628,6 +1635,10 @@
         .tool-confirm-field .input-label {
             margin: 0;
             font-size: 0.875rem;
+        }
+
+        .tool-confirm-req {
+            color: #d64545;
         }
 
         .tool-confirm-row {
@@ -1699,74 +1710,6 @@
             background: var(--accent-dark);
             border-color: var(--accent-dark);
             outline: none;
-        }
-
-        .tool-confirm-social {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.45rem;
-            margin: 0.9rem 0 0;
-        }
-
-        .tool-confirm-social-label {
-            margin: 0;
-            font-size: 0.875rem;
-            font-weight: 600;
-            line-height: 1.4;
-            color: var(--text-muted);
-        }
-
-        .tool-confirm-social-btns {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .tool-confirm-x-btn,
-        .tool-confirm-fb-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-            flex: 0 0 auto;
-            min-width: 8.25rem;
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .tool-confirm-x-btn {
-            background: #000;
-            border-color: #000;
-        }
-
-        .tool-confirm-fb-btn {
-            background: #1877f2;
-            border-color: #1877f2;
-        }
-
-        .tool-confirm-x-btn:hover,
-        .tool-confirm-x-btn:focus-visible {
-            color: #fff;
-            background: #141414;
-            border-color: #141414;
-            outline: none;
-        }
-
-        .tool-confirm-fb-btn:hover,
-        .tool-confirm-fb-btn:focus-visible {
-            color: #fff;
-            background: #166fe5;
-            border-color: #166fe5;
-            outline: none;
-        }
-
-        .tool-confirm-x-btn svg,
-        .tool-confirm-fb-btn svg {
-            display: block;
-            flex: 0 0 auto;
-            fill: currentColor;
         }
 
         .tool-confirm-done {
@@ -1847,87 +1790,58 @@
         .tool-confirm.is-done .tool-confirm-cylinder,
         .tool-confirm.is-done .tool-confirm-low-kwh,
         .tool-confirm.is-done #tool-confirm-submit,
-        .tool-confirm.is-done .tool-confirm-already-wrap,
-        .tool-confirm.is-done #tool-confirm-done,
         .tool-confirm.is-done > .input-label {
             display: none;
         }
 
-        .tool-confirm-checkback {
-            margin: 0.75rem 0 0;
-        }
-
-        .tool-confirm-checkback[hidden],
-        .tool-confirm-checkback-tip[hidden],
-        .tool-confirm-already-wrap[hidden] {
-            display: none;
-        }
-
-        .tool-confirm-checkback-q {
-            margin: 0;
-        }
-
-        .tool-confirm-checkback-btns {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.5rem;
-            margin: 0.75rem 0 0;
-        }
-
-        .tool-confirm-checkback-btns .choice-button {
-            flex: 0 0 auto;
-            min-width: 8.25rem;
-            min-height: 2.75rem;
-            padding: 0.55rem 0.85rem;
-            color: var(--text);
-            background: #fff;
-        }
-
-        .tool-confirm-checkback-tip {
-            margin: 0.75rem 0 0;
-            font-size: 0.9375rem;
-            font-weight: 600;
-            line-height: 1.5;
-            color: var(--text);
-        }
-
-        .tool-confirm.is-checkback-answered .tool-confirm-checkback-btns {
-            display: none;
-        }
-
-        .tool-confirm-already-wrap {
-            margin: 0.65rem 0 0;
-        }
-
-        .tool-confirm-already {
-            display: inline;
-            padding: 0;
-            border: 0;
-            background: none;
-            color: var(--text);
-            font: inherit;
-            font-size: 0.875rem;
-            font-weight: 600;
-            line-height: 1.45;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        .tool-confirm-already:hover,
-        .tool-confirm-already:focus-visible {
-            color: var(--accent-dark, #1863dc);
-            outline: none;
-        }
-
         @media (max-width: 700px) {
-            .tool-confirm-checkback-btns {
-                flex-direction: column;
-                align-items: stretch;
+            .tool-confirm {
+                padding: 1.15rem 1rem;
             }
 
-            .tool-confirm-checkback-btns .choice-button {
+            .tool-confirm > .input-label {
+                font-size: 1.2rem;
+            }
+
+            .tool-confirm-fields {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                align-items: end;
+                gap: 0.85rem 0.75rem;
+            }
+
+            .tool-confirm-field:nth-child(1),
+            .tool-confirm-field:nth-child(2) {
+                grid-column: 1 / -1;
+            }
+
+            .tool-confirm-field,
+            .tool-confirm-row {
                 width: 100%;
+                min-width: 0;
+            }
+
+            .tool-confirm-field .input-label {
+                max-width: 100%;
+                line-height: 1.3;
+            }
+
+            .tool-confirm-row .input-field,
+            .tool-confirm-row .input-field.is-brand,
+            .tool-confirm-row .input-field.is-type,
+            .tool-confirm-row .input-field.is-kwh,
+            .tool-confirm-row .input-field.is-rate {
+                width: 100%;
+                flex: 1 1 auto;
+                min-width: 0;
+                max-width: 100%;
+            }
+
+            #tool-confirm-submit {
+                width: 100%;
+            }
+
+            .tool-confirm-ack label {
                 min-width: 0;
             }
         }
@@ -3542,7 +3456,7 @@
   "description": "Set a condensing boiler’s heating flow temperature and maximum heating output. Combi boilers can run at about 55°C flow temperature. A cylinder still needs 60°C stored water."
 }
     </script>
-    <script type="text/javascript" src="/js/posthog-optimiser.js?v=low-kwh-1" data-cfasync="false"></script>
+    <script type="text/javascript" src="/js/posthog-optimiser.js?v=confirm-2" data-cfasync="false"></script>
 </head>
 <body class="article-page">
     <div class="menu-overlay"></div>
@@ -4032,11 +3946,11 @@
         </details>
 
         <form class="tool-confirm" id="tool-confirm">
-            <p class="input-label">Have you successfully turned the heating flow temperature down? Come back here and let us know.</p>
-            <span class="input-hint">Choose the boiler brand and type, then what the flow temperature was and what you set it to. Add annual kWh and unit rate if you know them. We log this anonymously.</span>
+            <p class="input-label">Successfully turned the heating flow temp down.</p>
+            <p class="input-hint" id="tool-confirm-return">Come back here and let us know. We log this anonymously.</p>
             <div class="tool-confirm-fields">
                 <div class="tool-confirm-field">
-                    <label class="input-label" for="confirm-brand">Boiler brand</label>
+                    <label class="input-label" for="confirm-brand">Boiler brand <span class="tool-confirm-req" aria-hidden="true">*</span></label>
                     <div class="tool-confirm-row">
                         <select id="confirm-brand" class="input-field is-brand" required autocomplete="off">
                             <option value="">Select brand</option>
@@ -4060,7 +3974,7 @@
                     </div>
                 </div>
                 <div class="tool-confirm-field">
-                    <label class="input-label" for="confirm-system">Boiler type</label>
+                    <label class="input-label" for="confirm-system">Boiler type <span class="tool-confirm-req" aria-hidden="true">*</span></label>
                     <div class="tool-confirm-row">
                         <select id="confirm-system" class="input-field is-type" required autocomplete="off">
                             <option value="">Select type</option>
@@ -4070,31 +3984,27 @@
                     </div>
                 </div>
                 <div class="tool-confirm-field">
-                    <label class="input-label" for="from-flow">Flow Temp was</label>
+                    <label class="input-label" for="from-flow">Flow Temp was °C <span class="tool-confirm-req" aria-hidden="true">*</span></label>
                     <div class="tool-confirm-row">
                         <input type="number" id="from-flow" class="input-field" inputmode="numeric" min="20" max="90" step="1" placeholder="xx" required autocomplete="off">
-                        <span class="tool-confirm-unit" aria-hidden="true">°C</span>
                     </div>
                 </div>
                 <div class="tool-confirm-field">
-                    <label class="input-label" for="set-flow">Flow temp now</label>
+                    <label class="input-label" for="set-flow">Flow temp now °C <span class="tool-confirm-req" aria-hidden="true">*</span></label>
                     <div class="tool-confirm-row">
                         <input type="number" id="set-flow" class="input-field" inputmode="numeric" min="20" max="75" step="1" placeholder="xx" required autocomplete="off">
-                        <span class="tool-confirm-unit" aria-hidden="true">°C</span>
                     </div>
                 </div>
                 <div class="tool-confirm-field">
-                    <label class="input-label" for="confirm-kwh">Annual gas usage (optional)</label>
+                    <label class="input-label" for="confirm-kwh">Annual gas usage kWh</label>
                     <div class="tool-confirm-row">
                         <input type="number" id="confirm-kwh" class="input-field is-kwh" inputmode="numeric" min="0" max="200000" step="1" placeholder="xx" autocomplete="off">
-                        <span class="tool-confirm-unit" aria-hidden="true">kWh</span>
                     </div>
                 </div>
                 <div class="tool-confirm-field">
-                    <label class="input-label" for="confirm-rate">Unit rate (optional)</label>
+                    <label class="input-label" for="confirm-rate">Unit rate pence/kWh</label>
                     <div class="tool-confirm-row">
                         <input type="number" id="confirm-rate" class="input-field is-rate" inputmode="decimal" min="0" max="100" step="0.01" placeholder="x.xx" autocomplete="off">
-                        <span class="tool-confirm-unit" aria-hidden="true">p/kWh</span>
                     </div>
                 </div>
             </div>
@@ -4118,32 +4028,6 @@
             </div>
             <button type="submit" class="choice-button" id="tool-confirm-submit">Submit</button>
             <p class="tool-confirm-done" id="tool-confirm-done" hidden>Thanks. We logged that you set it.</p>
-            <p class="tool-confirm-already-wrap" id="tool-confirm-already-wrap">
-                <button type="button" class="tool-confirm-already" id="tool-confirm-already">Already turned it down? Tell us if it worked</button>
-            </p>
-            <div class="tool-confirm-checkback" id="tool-confirm-checkback" hidden>
-                <p class="input-label tool-confirm-checkback-q" id="tool-confirm-checkback-q">Thanks! Give it a few days, then come back and tell us: did your rooms stay warm?</p>
-                <div class="tool-confirm-checkback-btns" id="tool-confirm-checkback-btns">
-                    <button type="button" class="choice-button" data-did-it-work="yes">Yes, warm enough</button>
-                    <button type="button" class="choice-button" data-did-it-work="cool">A bit cool</button>
-                    <button type="button" class="choice-button" data-did-it-work="not_yet">Not tried yet</button>
-                </div>
-                <p class="tool-confirm-checkback-tip" id="tool-confirm-checkback-tip" hidden></p>
-                <p class="tool-confirm-checkback-tip">Check again in the first proper cold snap. If rooms feel cool then, come back and tell us, and turn it up about 5°C.</p>
-            </div>
-            <div class="tool-confirm-social">
-                <p class="tool-confirm-social-label">Or let us know on x.com or Facebook</p>
-                <div class="tool-confirm-social-btns">
-                    <a class="choice-button tool-confirm-x-btn" id="tool-confirm-x" href="https://x.com/intent/post?text=%40myboiler%20I%20turned%20the%20heating%20flow%20temperature%20down" target="_blank" rel="noopener noreferrer" aria-label="Message @myboiler on X">
-                        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z"/></svg>
-                        @myboiler
-                    </a>
-                    <a class="choice-button tool-confirm-fb-btn" id="tool-confirm-fb" href="https://m.me/myboiler" target="_blank" rel="noopener noreferrer" aria-label="Message @myboiler on Facebook">
-                        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z"/></svg>
-                        @myboiler
-                    </a>
-                </div>
-            </div>
         </form>
         <div class="calculator-card heat-pump-cta" id="heat-pump-cta" hidden>
             <p>If this flow temperature is keeping the house warm in peak winter, a heat pump may suit this system without many changes. <span id="heat-pump-size"></span></p>
@@ -5749,44 +5633,6 @@
                     setInfoDialogExpanded(dialog, false);
                 });
             });
-
-            var confirmX = document.getElementById('tool-confirm-x');
-            function confirmXHref() {
-                var brandInput = document.getElementById('confirm-brand');
-                var fromInput = document.getElementById('from-flow');
-                var setInput = document.getElementById('set-flow');
-                var brandLabel = '';
-                if (brandInput && brandInput.selectedIndex > 0) {
-                    brandLabel = brandInput.options[brandInput.selectedIndex].text;
-                }
-                var fromFlow = fromInput ? Number(fromInput.value) : NaN;
-                var setFlow = setInput ? Number(setInput.value) : NaN;
-                var hasFrom = isFinite(fromFlow) && fromFlow >= 20 && fromFlow <= 90;
-                var hasSet = isFinite(setFlow) && setFlow >= 20 && setFlow <= 75;
-                var text = '@myboiler I turned the heating flow temperature down';
-                if (hasFrom && hasSet) {
-                    text = '@myboiler I turned the heating flow temperature down from ' + Math.round(fromFlow) + '°C to ' + Math.round(setFlow) + '°C';
-                    if (brandLabel) {
-                        text = '@myboiler I turned the ' + brandLabel + ' heating flow temperature down from ' + Math.round(fromFlow) + '°C to ' + Math.round(setFlow) + '°C';
-                    }
-                } else if (brandLabel) {
-                    text = '@myboiler I turned the ' + brandLabel + ' heating flow temperature down';
-                }
-                return 'https://x.com/intent/post?text=' + encodeURIComponent(text);
-            }
-            function syncConfirmXHref() {
-                if (confirmX) confirmX.href = confirmXHref();
-            }
-            if (confirmX) {
-                ['confirm-brand', 'from-flow', 'set-flow'].forEach(function (id) {
-                    var el = document.getElementById(id);
-                    if (!el) return;
-                    el.addEventListener('input', syncConfirmXHref);
-                    el.addEventListener('change', syncConfirmXHref);
-                });
-                confirmX.addEventListener('pointerdown', syncConfirmXHref);
-                syncConfirmXHref();
-            }
 
             window.mbOptimiserConfirmMetrics = function (fromFlow, setFlow, annualKwh, unitRate) {
                 var annual = annualKwh != null && isFinite(annualKwh) ? annualKwh : nonNegativeOrNull(annualInput);

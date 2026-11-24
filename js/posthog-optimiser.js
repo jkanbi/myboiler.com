@@ -6,7 +6,6 @@
     var STORAGE_KEY = 'mb_optimiser_posthog';
     var DISMISS_KEY = 'mb_optimiser_consent_dismissed';
     var TURNED_DOWN_KEY = 'mb_optimiser_turned_down';
-    var DID_IT_WORK_KEY = 'mb_optimiser_did_it_work';
     var STORE_ENDPOINT = '/api/optimiser-feedback';
     var EVENT_ENDPOINT = '/api/optimiser-event';
     var UTM_SAFE = /^[A-Za-z0-9_.-]{1,64}$/;
@@ -18,11 +17,6 @@
     var UET_TAG_ID = '343285855';
     var uetLoaded = false;
     var pageviewSent = false;
-    var DID_IT_WORK_TIPS = {
-        yes: 'Great. If you have a condensing boiler, try the next step down, about 5°C lower.',
-        cool: 'Turn it back up about 5°C, or half a number on a dial.',
-        not_yet: 'No problem. Come back once you\'ve tried it for a few days.'
-    };
 
     var path = (location.pathname || '').replace(/\/+$/, '');
     if (path.indexOf('/boiler-optimiser') !== 0) {
@@ -247,75 +241,10 @@
         var typeInput = document.getElementById('confirm-system');
         var done = document.getElementById('tool-confirm-done');
         var button = document.getElementById('tool-confirm-submit');
-        var checkback = document.getElementById('tool-confirm-checkback');
-        var checkbackTip = document.getElementById('tool-confirm-checkback-tip');
-        var alreadyWrap = document.getElementById('tool-confirm-already-wrap');
-        var alreadyBtn = document.getElementById('tool-confirm-already');
         if (!form || !fromInput || !setInput || !brandInput || !typeInput) return;
         if (form.dataset.phBound === '1') return;
         form.dataset.phBound = '1';
         var submitted = false;
-
-        function formContext() {
-            var brandKey = brandInput.value || '';
-            var brandLabel = '';
-            var selected = brandInput.options[brandInput.selectedIndex];
-            if (selected && selected.value === brandKey) brandLabel = selected.text;
-            var fromFlow = Number(fromInput.value);
-            var setFlow = Number(setInput.value);
-            var systemKey = typeInput.value || '';
-            return {
-                brand: brandKey,
-                brand_label: brandLabel || brandKey,
-                system: validSystem(systemKey) ? systemKey : '',
-                from_flow: validFlow(fromFlow) ? fromFlow : null,
-                set_flow: validSetFlow(setFlow) ? setFlow : null,
-                path: location.pathname || '/boiler-optimiser/'
-            };
-        }
-
-        function showCheckback() {
-            form.classList.add('is-done');
-            if (alreadyWrap) alreadyWrap.hidden = true;
-            if (checkback) checkback.hidden = false;
-            if (done) done.hidden = true;
-        }
-
-        function showCheckbackTip(answer) {
-            var tip = DID_IT_WORK_TIPS[answer] || '';
-            showCheckback();
-            form.classList.add('is-checkback-answered');
-            if (checkbackTip) {
-                checkbackTip.hidden = !tip;
-                checkbackTip.textContent = tip;
-            }
-        }
-
-        function recordDidItWork(answer) {
-            if (!DID_IT_WORK_TIPS[answer] || form.dataset.didItWork === '1') return;
-            form.dataset.didItWork = '1';
-            var ctx = formContext();
-            sendStore({
-                t: Date.now(),
-                type: 'did_it_work',
-                answer: answer,
-                path: ctx.path,
-                brand: ctx.brand,
-                from_flow: ctx.from_flow,
-                set_flow: ctx.set_flow
-            });
-            sendEvent({
-                event: 'did_it_work',
-                answer: answer,
-                path: ctx.path,
-                brand: ctx.brand
-            });
-            if (hasAcceptedConsent()) {
-                writeStorage(DID_IT_WORK_KEY, answer);
-                capture('optimiser_did_it_work', { answer: answer, section: 'confirm_form' });
-            }
-            showCheckbackTip(answer);
-        }
 
         fromInput.addEventListener('input', function () {
             fromInput.dataset.edited = '1';
@@ -411,7 +340,8 @@
             if (unitRate === null) unitRate = numericAttr(form, 'data-unit-rate');
             if (unitRate === null) unitRate = unitRateFrom(document.getElementById('unit-rate'));
             if (!validFlow(fromFlow)) {
-                fromInput.focus();
+                if (typeof fromInput.reportValidity === 'function') fromInput.reportValidity();
+                else fromInput.focus();
                 return;
             }
             if (!validSetFlow(setFlow)) {
@@ -546,20 +476,10 @@
                 var last = parts.pop();
                 done.textContent = 'Thanks. We logged that ' + (parts.length ? parts.join(', ') + ', and ' + last : last) + '.';
             }
-            showCheckback();
         });
-        form.querySelectorAll('[data-did-it-work]').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                recordDidItWork(btn.getAttribute('data-did-it-work') || '');
-            });
-        });
-        if (alreadyBtn) {
-            alreadyBtn.addEventListener('click', function () {
-                showCheckback();
-            });
-        }
         if (hasAcceptedConsent() && readStorage(TURNED_DOWN_KEY) === '1') {
             submitted = true;
+            form.classList.add('is-done');
             fromInput.disabled = true;
             setInput.disabled = true;
             brandInput.disabled = true;
@@ -567,9 +487,7 @@
             if (kwhInput) kwhInput.disabled = true;
             if (rateInput) rateInput.disabled = true;
             if (button) button.disabled = true;
-            var savedAnswer = readStorage(DID_IT_WORK_KEY);
-            if (savedAnswer && DID_IT_WORK_TIPS[savedAnswer]) showCheckbackTip(savedAnswer);
-            else showCheckback();
+            if (done) done.hidden = false;
         }
     }
 
