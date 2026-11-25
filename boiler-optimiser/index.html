@@ -1235,6 +1235,7 @@
         #potterton-models[hidden],
         #brand-note[hidden],
         #brand-back[hidden],
+        #brand-search-empty[hidden],
         .brand-tile[hidden] {
             display: none;
         }
@@ -1356,6 +1357,14 @@
         #model-card > .input-group {
             width: 100%;
             max-width: 36rem;
+        }
+
+        #brand-search {
+            margin: 0 0 0.75rem;
+        }
+
+        #brand-search-empty {
+            margin: 0 0 0.75rem;
         }
 
         .programmer-photos {
@@ -3882,6 +3891,8 @@
                 <span>How to set your flow temperature for your boiler</span>
             </summary>
             <div class="input-group">
+                <input type="search" id="brand-search" class="input-field" placeholder="Search brands" autocomplete="off" aria-label="Search brands">
+                <p id="brand-search-empty" class="input-hint" hidden>No matching brand.</p>
                 <div class="brand-bar" id="brand-bar">
                     <button type="button" class="brand-tile" id="brand-back" hidden aria-label="Back">
                         <span>←</span>
@@ -4284,18 +4295,18 @@
                 intergas: { name: 'Intergas', href: 'https://boilermanuals.com/brands/intergas.html' },
                 ariston: { name: 'Ariston', href: 'https://boilermanuals.com/brands/ariston.html' },
                 vokera: { name: 'Vokèra', href: 'https://boilermanuals.com/brands/vokera.html' },
-                firebird: { name: 'Firebird', href: 'https://boilermanuals.com/' },
-                warmflow: { name: 'Warmflow', href: 'https://boilermanuals.com/' },
-                atag: { name: 'ATAG', href: 'https://boilermanuals.com/' },
-                biasi: { name: 'Biasi', href: 'https://boilermanuals.com/' },
-                navien: { name: 'Navien', href: 'https://boilermanuals.com/' },
-                ravenheat: { name: 'Ravenheat', href: 'https://boilermanuals.com/' },
-                hrm: { name: 'HRM', href: 'https://boilermanuals.com/' },
-                mistral: { name: 'Mistral', href: 'https://boilermanuals.com/' },
-                warmhaus: { name: 'Warmhaus', href: 'https://boilermanuals.com/' },
-                sime: { name: 'Sime', href: 'https://boilermanuals.com/' },
-                'saunier-duval': { name: 'Saunier Duval', href: 'https://boilermanuals.com/' },
-                buderus: { name: 'Buderus', href: 'https://boilermanuals.com/' },
+                firebird: { name: 'Firebird', href: 'https://boilermanuals.com/brands/firebird.html' },
+                warmflow: { name: 'Warmflow', href: 'https://boilermanuals.com/brands/warmflow.html' },
+                atag: { name: 'ATAG', href: 'https://boilermanuals.com/brands/atag.html' },
+                biasi: { name: 'Biasi', href: 'https://boilermanuals.com/brands/biasi.html' },
+                navien: { name: 'Navien', href: 'https://boilermanuals.com/brands/navien.html' },
+                ravenheat: { name: 'Ravenheat', href: 'https://boilermanuals.com/brands/ravenheat.html' },
+                hrm: { name: 'HRM', href: 'https://boilermanuals.com/brands/hrm.html' },
+                mistral: { name: 'Mistral', href: 'https://boilermanuals.com/brands/mistral.html' },
+                warmhaus: { name: 'Warmhaus', href: 'https://boilermanuals.com/brands/warmhaus.html' },
+                sime: { name: 'Sime', href: 'https://boilermanuals.com/brands/sime.html' },
+                'saunier-duval': { name: 'Saunier Duval', href: 'https://boilermanuals.com/brands/saunier-duval.html' },
+                buderus: { name: 'Buderus', href: 'https://boilermanuals.com/brands/buderus.html' },
                 ferroli: { name: 'Ferroli', href: 'https://boilermanuals.com/brands/ferroli.html' },
                 grant: { name: 'Grant', href: 'https://boilermanuals.com/brands/grant.html' },
                 'british-gas': { name: 'British Gas', href: 'https://boilermanuals.com/brands/british-gas.html' }
@@ -4734,13 +4745,26 @@
                 });
             }
 
+            function brandQuery() {
+                var field = document.getElementById('brand-search');
+                var value = field ? field.value : '';
+                return String(value).trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            }
+
             function update() {
+                var query = brandQuery();
+                var visibleBrands = 0;
                 document.querySelectorAll('[data-brand]').forEach(function (tile) {
                     var on = tile.getAttribute('data-brand') === brand;
+                    var label = String(tile.getAttribute('aria-label') || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                    var matches = !query || label.indexOf(query) !== -1;
                     tile.classList.toggle('active', on);
                     tile.setAttribute('aria-pressed', on ? 'true' : 'false');
-                    tile.hidden = !!brand && !on;
+                    tile.hidden = (!!brand && !on) || !matches;
+                    if (!tile.hidden && tile.closest('#brand-picks')) visibleBrands += 1;
                 });
+                var searchEmpty = document.getElementById('brand-search-empty');
+                if (searchEmpty) searchEmpty.hidden = !query || !!brand || visibleBrands > 0;
                 brandBack.hidden = !brand;
                 brandBar.classList.toggle('is-chosen', !!brand);
                 fillBrandNote(brand);
@@ -5376,6 +5400,16 @@
                 clearModelChoice();
                 update();
             });
+            var brandSearch = document.getElementById('brand-search');
+            if (brandSearch) {
+                brandSearch.addEventListener('input', function () {
+                    if (brandSearch.value.trim() && brand) {
+                        brand = '';
+                        clearModelChoice();
+                    }
+                    update();
+                });
+            }
             bindChoice(modelButtons, function (button) {
                 boilerModel = button.getAttribute('data-model');
             });
