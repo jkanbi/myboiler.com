@@ -221,6 +221,10 @@
         return isFinite(n) && n >= 0 && n <= 100;
     }
 
+    function validConfirmRate(n) {
+        return isFinite(n) && n >= 0 && n <= 15;
+    }
+
     function validSystem(v) {
         return v === 'combi' || v === 'system';
     }
@@ -366,8 +370,9 @@
                 }
             }
             if (lowKwhAck && typeof lowKwhAck.setCustomValidity === 'function') lowKwhAck.setCustomValidity('');
-            if (rateInput && rateInput.value.trim() !== '' && !validRate(Number(rateInput.value))) {
-                rateInput.focus();
+            if (rateInput && rateInput.value.trim() !== '' && !validConfirmRate(Number(rateInput.value))) {
+                if (typeof rateInput.reportValidity === 'function') rateInput.reportValidity();
+                else rateInput.focus();
                 return;
             }
             if (setFlow > fromFlow) {
