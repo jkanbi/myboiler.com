@@ -1878,6 +1878,33 @@
             box-sizing: border-box;
         }
 
+        .slider-prompt-btn:has(.btn-cue),
+        .priority-controls-btn:has(.btn-cue),
+        .detailed-savings-btn:has(.btn-cue),
+        .cylinder-stat-note:has(.btn-cue) {
+            position: relative;
+            padding-right: 2.5rem;
+        }
+
+        .btn-cue {
+            position: absolute;
+            right: 0.7rem;
+            top: 50%;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .btn-chevron {
+            display: block;
+            width: 0.5rem;
+            height: 0.78rem;
+            flex: 0 0 auto;
+        }
+
         .slider-prompt-btn {
             margin-top: 0;
             border-color: #1f7a32;
@@ -3651,13 +3678,13 @@
                 <button type="button" class="condensate-warning-btn" id="condensate-warning-open" aria-haspopup="dialog" aria-controls="condensate-warning-dialog" hidden>Warning: Condense pipe must be correctly installed (click for info)</button>
                 <div class="slider-notes">
                     <div class="slider-note-row">
-                        <button type="button" class="slider-prompt-btn" id="slider-prompt" aria-haspopup="dialog" aria-controls="slider-prompt-dialog" aria-expanded="false">Adjust slider to see savings (click for info)</button>
-                        <button type="button" class="priority-controls-btn" id="priority-controls-open" aria-haspopup="dialog" aria-controls="priority-controls-dialog" aria-expanded="false" hidden>Automatic Advanced System Controls (click for info)</button>
-                        <button type="button" class="detailed-savings-btn" id="detailed-savings-open" aria-haspopup="dialog" aria-controls="detailed-savings-dialog" aria-expanded="false">Detailed Savings (click for info)</button>
+                        <button type="button" class="slider-prompt-btn" id="slider-prompt" aria-haspopup="dialog" aria-controls="slider-prompt-dialog" aria-expanded="false"><span class="btn-label">Adjust slider to see savings</span><span class="btn-cue" aria-hidden="true">ⓘ<svg class="btn-chevron" viewBox="0 0 8 12" aria-hidden="true" focusable="false"><path d="M2 2 6 6 2 10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                        <button type="button" class="priority-controls-btn" id="priority-controls-open" aria-haspopup="dialog" aria-controls="priority-controls-dialog" aria-expanded="false" hidden><span class="btn-label">Automatic Advanced System Controls</span><span class="btn-cue" aria-hidden="true">ⓘ<svg class="btn-chevron" viewBox="0 0 8 12" aria-hidden="true" focusable="false"><path d="M2 2 6 6 2 10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                        <button type="button" class="detailed-savings-btn" id="detailed-savings-open" aria-haspopup="dialog" aria-controls="detailed-savings-dialog" aria-expanded="false"><span class="btn-label">Detailed Savings</span><span class="btn-cue" aria-hidden="true">ⓘ<svg class="btn-chevron" viewBox="0 0 8 12" aria-hidden="true" focusable="false"><path d="M2 2 6 6 2 10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
                     </div>
                     <div class="slider-note-row is-pair">
                         <button type="button" class="timing-note-btn" id="timing-note" aria-haspopup="dialog" aria-controls="timing-note-dialog" aria-expanded="false" hidden>Low flow temp, takes longer to heat, uses less energy (click for info)</button>
-                        <button type="button" class="cylinder-stat-note" id="cylinder-stat-note" aria-haspopup="dialog" aria-controls="cylinder-stat-dialog" aria-expanded="false" hidden>Set the cylinder thermostat to 60°C (click for info)</button>
+                        <button type="button" class="cylinder-stat-note" id="cylinder-stat-note" aria-haspopup="dialog" aria-controls="cylinder-stat-dialog" aria-expanded="false" hidden><span class="btn-label">Set the cylinder thermostat to 60°C</span><span class="btn-cue" aria-hidden="true">ⓘ<svg class="btn-chevron" viewBox="0 0 8 12" aria-hidden="true" focusable="false"><path d="M2 2 6 6 2 10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
                     </div>
                 </div>
                 <dialog class="custom-usage-dialog note-info-dialog" id="slider-prompt-dialog" aria-labelledby="slider-prompt-title">
@@ -4748,11 +4775,14 @@
                 var bacteriaDying = condensingBoiler && stored && currentBand.key === 'amber';
                 if (stored) {
                     var cylinderSet = cylinder + '°C' + (cylinderStatCapped(flow) ? ' max' : '');
-                    cylinderStatNote.textContent = extremeLegionella
-                        ? 'Extreme Legionella Warning ' + cylinder + '°C (click for info)'
+                    var cylinderLabel = cylinderStatNote.querySelector('.btn-label');
+                    var cylinderText = extremeLegionella
+                        ? 'Extreme Legionella Warning ' + cylinder + '°C'
                         : (legionellaWarn
-                            ? 'Legionella Warning ' + cylinder + '°C (click for info)'
-                            : 'Set the cylinder thermostat to ' + cylinderSet + ' (click for info)');
+                            ? 'Legionella Warning ' + cylinder + '°C'
+                            : 'Set the cylinder thermostat to ' + cylinderSet);
+                    if (cylinderLabel) cylinderLabel.textContent = cylinderText;
+                    else cylinderStatNote.textContent = cylinderText;
                     cylinderStatNote.className = 'cylinder-stat-note' + (extremeLegionella
                         ? ' is-extreme'
                         : (legionellaWarn
