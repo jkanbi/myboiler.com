@@ -225,6 +225,15 @@
         return isFinite(n) && n >= 0 && n <= 15;
     }
 
+    function savingPraise(amount) {
+        if (!isFinite(amount)) return '';
+        var wear = ' You could also be saving on premature breakdown costs through better stability and reliability.';
+        if (amount >= 101) return 'Excellent. You are saving quite a bit on energy.' + wear;
+        if (amount >= 51) return 'Great. You are making a considerable saving.' + wear;
+        if (amount >= 5) return 'Good. You may be saving a small amount on your energy bills.' + wear;
+        return '';
+    }
+
     function validSystem(v) {
         return v === 'combi' || v === 'system';
     }
@@ -479,7 +488,9 @@
                 if (annualKwh !== null) parts.push('annual use is ' + Math.round(annualKwh) + ' kWh');
                 if (unitRate !== null) parts.push('unit rate is ' + unitRate + ' p/kWh');
                 var last = parts.pop();
-                done.textContent = 'Thanks. We logged that ' + (parts.length ? parts.join(', ') + ', and ' + last : last) + '.';
+                var logged = 'Thanks. We logged that ' + (parts.length ? parts.join(', ') + ', and ' + last : last) + '.';
+                var praise = savingPraise(Number(props.saving_gbp));
+                done.textContent = praise ? praise + ' ' + logged : logged;
             }
         });
         if (hasAcceptedConsent() && readStorage(TURNED_DOWN_KEY) === '1') {
