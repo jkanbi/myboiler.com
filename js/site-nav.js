@@ -80,7 +80,7 @@
         '</ul></div>' +
         '<div class="footer-column"><h3>Contact Us</h3><ul>' +
         '<li><a href="mailto:info@myboiler.com">info@myboiler.com</a></li>' +
-        '<li><a href="tel:+447484842790">07484 842790</a></li>' +
+        '<li><a href="tel:+443305204465">0330 520 4465</a></li>' +
         '</ul></div>' +
         '<div class="footer-column"><h3>Sister Sites</h3><ul>' +
         '<li><a href="https://boilermanuals.com">Boiler Manuals</a></li>' +
