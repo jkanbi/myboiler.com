@@ -2,22 +2,32 @@
 <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="bc-title">
   <title id="bc-title">Boiler cover</title>
   <rect width="200" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#1b1b1b" stroke-width="7" stroke-linejoin="round" stroke-linecap="round">
-    <rect x="74" y="20" width="52" height="70" rx="8"/>
-    <line x1="74" y1="66" x2="126" y2="66"/>
-    <circle cx="100" cy="80" r="8"/>
+  <g fill="none" stroke="#1b1b1b" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+    <rect x="42" y="16" width="86" height="130" rx="12"/>
+    <line x1="42" y1="108" x2="128" y2="108"/>
   </g>
   <g fill="#1b1b1b">
-    <rect x="82" y="90" width="6" height="10" rx="1"/>
-    <rect x="93" y="90" width="6" height="10" rx="1"/>
-    <rect x="104" y="90" width="6" height="10" rx="1"/>
-    <rect x="115" y="90" width="6" height="10" rx="1"/>
+    <rect x="56" y="146" width="8" height="26" rx="1.5"/>
+    <rect x="74" y="146" width="8" height="26" rx="1.5"/>
+    <rect x="92" y="146" width="8" height="26" rx="1.5"/>
+    <rect x="110" y="146" width="8" height="26" rx="1.5"/>
   </g>
-  <g fill="none" stroke="#1b1b1b" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
-    <path d="M50 122 C 32 110, 32 90, 54 88 C 66 88, 72 102, 68 118"/>
-    <path d="M68 118 C 66 166, 80 184, 100 184 C 126 184, 154 168, 156 124"/>
-    <path d="M82 120 C 82 104, 92 98, 100 112"/>
-    <path d="M108 112 C 116 98, 128 104, 128 122"/>
-    <path d="M134 120 C 142 102, 156 106, 156 124"/>
+  <g>
+    <circle cx="152" cy="150" r="30" fill="#ffffff" stroke="#2e7d50" stroke-width="7"/>
+    <path fill="#2e7d50" d="M133.5 151
+      C133.5 148 136 147 140 147
+      C143 147 145 141 148.5 136
+      C152 131 159.5 131 163 137
+      C165 141 163 145 158 148
+      C155.5 149.5 152 152 150.5 153.5
+      C156 150 163 147.5 168.5 147
+      C172.5 146.5 175 150 173 153
+      C172 155 169 156.5 166.5 156.5
+      C170.5 157.5 173.5 161 171.5 164
+      C169.5 167 165 167 161.5 165.5
+      C164.5 168 164 172 159.5 172.5
+      C154 173.5 146 171 141.5 168.5
+      C136.5 166 133.5 162 133.5 157
+      Z"/>
   </g>
 </svg>
